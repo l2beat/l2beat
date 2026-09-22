@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "gov",
   "description": "Token governance contract for the Security Council member removals.",
@@ -10,5 +11,46 @@
     "proposalVotes",
     "quorum",
     "state"
-  ]
+  ],
+  "fields": {
+    "VOTE_SUCCESS_DENOMINATOR": {
+      "severity": "HIGH"
+    },
+    "voteSuccessNumerator": {
+      "severity": "HIGH"
+    },
+    "proposalExpirationBlocks": {
+      "severity": "HIGH"
+    },
+    "lateQuorumVoteExtension": {
+      "severity": "HIGH"
+    },
+    "securityCouncilManager": {
+      "severity": "HIGH"
+    },
+    "quorumDenominator": {
+      "severity": "HIGH"
+    },
+    "quorumNumerator": {
+      "severity": "HIGH"
+    },
+    "votingPeriod": {
+      "severity": "HIGH"
+    },
+    "votingDelay": {
+      "severity": "HIGH"
+    },
+    "proposalThreshold": {
+      "severity": "HIGH"
+    },
+    "token": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

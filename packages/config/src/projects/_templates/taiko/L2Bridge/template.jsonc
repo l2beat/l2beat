@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // L2-side message bridge in the deposit/withdrawal validation path;
+  // compromise mints forged L2->L1 messages that release L1 escrow funds.
+  "critical": true,
   "ignoreMethods": [
     "context",
     "getMessageMinGasLimit",
@@ -7,8 +10,24 @@
     "proxiableUUID"
   ],
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "addressManager": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     // uses bytes32("signal_service"), e.g. https://tools.deth.net/string-bytes32-conversion
     "signalService": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "resolve",
@@ -19,6 +38,7 @@
       }
     },
     "quotaManager": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "resolve",
@@ -30,6 +50,7 @@
       "description": "only relevant if not zero address"
     },
     "chainWatchdog": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "resolve",
@@ -41,6 +62,7 @@
       "description": "only relevant if not zero address"
     },
     "bridgeWatchdog": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "resolve",

@@ -1,4 +1,4 @@
-import type { editor } from 'monaco-editor'
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import colors from '../../colors.json'
 
 export const editorColoring: editor.IColors = {

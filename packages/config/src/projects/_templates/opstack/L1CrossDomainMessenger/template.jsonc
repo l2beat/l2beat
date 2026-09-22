@@ -1,9 +1,41 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1CrossDomainMessenger",
+  "critical": true,
   "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
   "ignoreMethods": ["xDomainMessageSender"],
   "ignoreRelatives": ["OTHER_MESSENGER", "otherMessenger"],
   "ignoreInWatchMode": ["messageNonce"],
+  "fields": {
+    "ResolvedDelegateProxy_addressManager": {
+      // this proxy resolves its implementation through the AddressManager, so the
+      // manager is an upgrade path of its own
+      "severity": "HIGH"
+    },
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "portal": {
+      "severity": "HIGH"
+    },
+    "PORTAL": {
+      "severity": "HIGH"
+    },
+    "otherMessenger": {
+      "severity": "HIGH"
+    },
+    "OTHER_MESSENGER": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  },
   "category": "bridge-canonical"
 }

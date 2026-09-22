@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to bridge USDC tokens from L1 to L2.",
+  // Canonical USDC escrow (counted in TVS without additional trust assumptions).
+  "critical": true,
+  "ignoreMethods": ["l1USDC"],
+  "ignoreInWatchMode": ["totalBridgedUSDC"],
+  "fields": {
+    "withdrawPaused": {
+      "severity": "MEDIUM"
+    },
+    "depositPaused": {
+      "severity": "MEDIUM"
+    },
+    "circleCaller": {
+      "severity": "HIGH"
+    },
+    "l2USDC": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    }
+  }
+}

@@ -1,14 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1Timelock",
+  "critical": true,
   "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}. Proposals that passed their minimum delay can be executed by the anyone.",
   "ignoreRelatives": ["l2Timelock"],
   "category": "gov",
   "fields": {
+    "governanceChainInbox": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "l2Timelock": {
+      "severity": "HIGH",
       "edit": ["format", "ArbitrumAddress"]
     },
     "timelockAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
@@ -21,6 +30,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -29,11 +39,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "Proposer": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -50,6 +62,7 @@
       ]
     },
     "Canceller": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"

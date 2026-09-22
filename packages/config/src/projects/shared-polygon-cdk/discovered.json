@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "timestamp": 1787644553,
-  "configHash": "0x7535f307db7d5daa11ff39c8d306fe96291ce75c824e5f948bbfe1bf1e8ccd6d",
+  "configHash": "0x504f8be898964f9148cad516eee7e8258168a30610b954f89a026a9b4dc19f12",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -20,6 +21,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -36,6 +41,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "critical": true,
       "deployerAddress": "eth:0xfcFC415D6D21660b90c0545CA0e91E68172B8650",
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
@@ -160,9 +166,11 @@
       },
       "fieldMeta": {
         "aggchainVKeys": {
+          "severity": "HIGH",
           "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
         },
         "aggchainVKeysUpdated": {
+          "severity": "HIGH",
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
@@ -186,12 +194,17 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653103,
       "sinceBlock": 16896716,
       "values": {
         "$immutable": true,
         "owner": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
@@ -264,6 +277,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+      "critical": true,
       "ignoreInWatchMode": ["getRoot"],
       "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653127,
@@ -314,7 +328,7 @@
       },
       "fieldMeta": {
         "isEmergencyState": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "pauses the bridge, managed by the PolygonRollupManager."
         },
         "proxiedTokensManager": {
@@ -343,6 +357,7 @@
       ],
       "proxyType": "immutable",
       "description": "Extension contract of the AgglayerBridge for asset metadata..",
+      "critical": true,
       "deployerAddress": "eth:0xaFec0EE6D714EBe2dDf732799EEbA9F553394bE8",
       "sinceTimestamp": 1759503191,
       "sinceBlock": 23497972,
@@ -417,6 +432,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -977,6 +993,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
+      "critical": true,
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653151,
@@ -1060,6 +1077,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -1068,6 +1086,10 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -1140,6 +1162,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
+      "critical": true,
       "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653187,
       "sinceBlock": 16896723,
@@ -1860,6 +1883,7 @@
           "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ]
       },
+      "fieldMeta": { "getMinDelayFormatted": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "PolygonZkEVMTimelock"
       },
@@ -2404,7 +2428,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygon-cdk/AgglayerBridge": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
     "polygon-cdk/AgglayerGateway": "0x3119b04d3a7d74dbcbce6eb68fa36e4b7463b5b0606804a1406e5c73d8759f63",
@@ -2412,7 +2436,7 @@
     "polygon-cdk/AgglayerManager": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
     "polygon-cdk/BridgeLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d"
   },
   "usedBlockNumbers": { "ethereum": 25830854 },
   "permissionsConfigHash": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",

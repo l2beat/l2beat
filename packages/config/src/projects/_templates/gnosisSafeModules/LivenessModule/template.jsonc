@@ -1,13 +1,27 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LivenessModule",
+  "critical": true,
   "description": "used to remove members inactive for {{ livenessInterval }} while making sure that the threshold remains above {{ thresholdPercentage }}%. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig",
   "ignoreMethods": ["getRequiredThreshold"],
   "fields": {
+    "minOwners": {
+      "severity": "HIGH"
+    },
+    "thresholdPercentage": {
+      "severity": "HIGH"
+    },
+    "ownershipTransferredToFallback": {
+      // once true the Safe is held by the fallback owner alone
+      "severity": "HIGH"
+    },
     "livenessInterval": {
+      "severity": "HIGH",
       "edit": ["format", "FormatSeconds"]
     },
     "fallbackOwner": {
+      // who the Safe falls back to when liveness lapses
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "act",
@@ -17,6 +31,7 @@
       ]
     },
     "livenessGuard": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

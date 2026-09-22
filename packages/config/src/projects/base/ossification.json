@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "timestamp": 1785176507,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "transaction": "0xa9ff84a22c4de540be566f561f4ee2a0c890732b19251871b90bfe8941d9be71",
+      "updateId": "310f6e25",
+      "reason": "Set a dispute game implementation on DisputeGameFactory (ImplementationSet 0x000000000000000000000000ee303ba054c5f1e14a8ef87f1c7e285af45a1ba2 0x00000000000)."
+    },
+    {
+      "timestamp": 1785176507,
+      "type": "state",
+      "contract": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
+      "transaction": "0xa9ff84a22c4de540be566f561f4ee2a0c890732b19251871b90bfe8941d9be71",
+      "updateId": "310f6e25",
+      "reason": "SP1VerifierGateway: verifier route changed (activeVerifiers; RouteAdded  0x5a093a2f000000000000000000000000000000000000000000000000000000000000000000000)."
+    }
+  ]
+}

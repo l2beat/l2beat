@@ -2,6 +2,8 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2Timelock",
   "category": "gov",
+  // owns the L2 ProxyAdmin that can upgrade the AgglayerBridgeL2 and the L2 GER manager.
+  "critical": true,
   "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
   "ignoreMethods": [
     "CANCELLER_ROLE",
@@ -11,7 +13,11 @@
     "TIMELOCK_ADMIN_ROLE"
   ],
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "timelockAdminAC": {
+      "severity": "HIGH",
       // assuming they also have PROPOSER_ROLE, EXECUTOR_ROLE, CANCELLER_ROLE roles
       "handler": {
         "type": "accessControl",
@@ -32,6 +38,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -40,6 +47,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }

@@ -138,7 +138,7 @@ export const risc0: BaseProject = {
           'verificationSteps-0xa42b7a9c',
         ),
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of \`control_root\` and bytes32 value of \`bn254_control_id\` of contract constructor values.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
         hash: '0x10ab33bc472e3e9024d89e512d33781519ba9b1621e4fe0ffd80cd20523062a8',
@@ -178,7 +178,7 @@ export const risc0: BaseProject = {
           'verificationSteps-0x10ab33bc',
         ),
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of \`control_root\` and bytes32 value of \`bn254_control_id\` of contract constructor values.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
         // Is a dummy to show soon as using risc0 proof system. Verifier
@@ -222,7 +222,7 @@ export const risc0: BaseProject = {
           'verificationSteps-0x79325d9d',
         ),
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of \`control_root\` and bytes32 value of \`bn254_control_id\` of contract constructor values.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
         hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
@@ -263,7 +263,7 @@ export const risc0: BaseProject = {
           'verificationSteps-0x55c1a9d6',
         ),
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of \`control_root\` and bytes32 value of \`bn254_control_id\` of contract constructor values.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
         hash: '0x23aae7a460d8470faa11d2b75a9005eee1d3e0bce0e88ac2288f1ada4e4664df',
@@ -285,7 +285,7 @@ export const risc0: BaseProject = {
           'verificationSteps-0x23aae7a4',
         ),
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of \`control_root\` and bytes32 value of \`bn254_control_id\` of contract constructor values.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
     ],
   },

@@ -9,6 +9,10 @@
     "eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781": "OptimismPortal2"
   },
   "overrides": {
+    "eth:0xEa4165C5CDCA155779803A113d8391b741bA5228": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

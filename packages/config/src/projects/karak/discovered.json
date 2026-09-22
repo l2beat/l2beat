@@ -19,6 +19,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -90,6 +91,10 @@
         "isUpgrading": false,
         "owner": "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": "ProxyAdmin"
       }
@@ -157,6 +162,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
@@ -219,7 +225,20 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x622333688CC1878C7ff4205c89bDe051798788A7": "Proxy",
@@ -290,6 +309,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
@@ -326,6 +346,17 @@
         "ResolvedDelegateProxy_addressManager": "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.7.0"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d": "ResolvedDelegateProxy",
@@ -489,6 +520,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
@@ -496,6 +528,7 @@
         "$immutable": true,
         "owner": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9": "AddressManager"
       },

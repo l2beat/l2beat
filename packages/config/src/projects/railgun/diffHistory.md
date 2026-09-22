@@ -1,3 +1,246 @@
+Generated with discovered.json: 0x6a2e2bf51833a1ec14508c4a574cec02ee99dc7f
+
+# Diff at Mon, 21 Sep 2026 11:24:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789711666
+- current timestamp: 1789711666
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
+      fieldMeta.verificationKeyDelegates.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      fieldMeta.cap.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      fieldMeta.treasury.severity:
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x5fa56c5f6f59c459691c05efe64396a9af5bac73
+
+# Diff at Fri, 18 Sep 2026 10:24:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789711666
+- current timestamp: 1789711666
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8) [railgun/ProxyAdmin] {
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.state.severity:
+-        "HIGH"
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier."
++        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+      fieldMeta.state.type:
+-        "RISK_PARAMETER"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.state.severity:
+-        "HIGH"
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier."
++        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+      fieldMeta.state.type:
+-        "RISK_PARAMETER"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
++++ description: Internal permission map restricted to critical Railgun targets and wildcard permissions.
+      values.$criticalDelegatedPermissionsRaw:
++        {"eth:0x0219B4C1ADcEC8f4206b528832F66aB76766873D":[],"eth:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86":[],"eth:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a":[],"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46":[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}],"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598":[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]}
++++ description: Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.
++++ severity: HIGH
+      values.criticalDelegatedPermissions:
++        [["eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]],["eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]]]
+      fieldMeta.$delegatedPermissionsRaw.severity:
+-        "HIGH"
+      fieldMeta.delegatedPermissions.severity:
+-        "HIGH"
+      fieldMeta.delegatedCallers.severity:
+-        "HIGH"
+      fieldMeta.verificationKeyDelegates.severity:
+-        "HIGH"
+      fieldMeta.$criticalDelegatedPermissionsRaw:
++        {"description":"Internal permission map restricted to critical Railgun targets and wildcard permissions.","type":"PERMISSION"}
+      fieldMeta.criticalDelegatedPermissions:
++        {"severity":"HIGH","description":"Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.","type":"PERMISSION"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+      fieldMeta.proposalCount.severity:
+-        "HIGH"
+      fieldMeta.proposalCount.description:
++        "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
++++ description: Number of token blocklist additions, including additions later reverted.
++++ severity: MEDIUM
+      values.blocklistAdditionCount:
++        0
++++ description: Number of token blocklist removals, including removals later reverted.
++++ severity: MEDIUM
+      values.blocklistRemovalCount:
++        0
++++ description: Number of fee schedule changes, including changes later reverted.
++++ severity: HIGH
+      values.feeChangeCount:
++        1
++++ description: Number of logic ownership transfers, including changes later reverted.
++++ severity: HIGH
+      values.logicOwnershipChangeCount:
++        2
++++ description: Whether the smart wallet proxy currently blocks all calls to its implementation.
++++ severity: MEDIUM
+      values.paused:
++        0
++++ description: Number of proxy ownership transfers, including changes later reverted.
++++ severity: HIGH
+      values.proxyOwnershipChangeCount:
++        0
++++ description: Number of times the proxy has been paused.
++++ severity: MEDIUM
+      values.proxyPauseCount:
++        0
++++ description: Number of times the proxy has been unpaused.
++++ severity: MEDIUM
+      values.proxyUnpauseCount:
++        1
++++ description: Number of SNARK verification key changes, including keys later replaced or restored.
++++ severity: HIGH
+      values.verificationKeyChangeCount:
++        150
+      fieldMeta.treasury.severity:
+-        "HIGH"
+      fieldMeta.treasury.description:
+-        "Treasury contract that receives shield and unshield fees."
++        "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+      fieldMeta.tokenBlocklist.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused:
++        {"severity":"MEDIUM","description":"Whether the smart wallet proxy currently blocks all calls to its implementation."}
+      fieldMeta.proxyOwnershipChangeCount:
++        {"severity":"HIGH","description":"Number of proxy ownership transfers, including changes later reverted."}
+      fieldMeta.proxyPauseCount:
++        {"severity":"MEDIUM","description":"Number of times the proxy has been paused."}
+      fieldMeta.proxyUnpauseCount:
++        {"severity":"MEDIUM","description":"Number of times the proxy has been unpaused."}
+      fieldMeta.logicOwnershipChangeCount:
++        {"severity":"HIGH","description":"Number of logic ownership transfers, including changes later reverted."}
+      fieldMeta.feeChangeCount:
++        {"severity":"HIGH","description":"Number of fee schedule changes, including changes later reverted."}
+      fieldMeta.blocklistAdditionCount:
++        {"severity":"MEDIUM","description":"Number of token blocklist additions, including additions later reverted."}
+      fieldMeta.blocklistRemovalCount:
++        {"severity":"MEDIUM","description":"Number of token blocklist removals, including removals later reverted."}
+      fieldMeta.verificationKeyChangeCount:
++        {"severity":"HIGH","description":"Number of SNARK verification key changes, including keys later replaced or restored."}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x784217ca28287f4cb3413c9b4814fc7fd5a0f21e
 
 # Diff at Fri, 18 Sep 2026 06:24:34 GMT:

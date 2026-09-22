@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "timestamp": 1788818926,
-  "configHash": "0x3c6950ee02ddb896621a8a1051bc0d27705b9ea1c14aef3ede0123e742b56d10",
+  "timestamp": 1789727053,
+  "configHash": "0x8d2d8da2533d33205d4523db4cfaca5a03b46ab343f023aa1f511976caf33019",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -62,6 +62,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
+      "critical": true,
       "ignoreInWatchMode": ["exitNum"],
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
@@ -95,8 +96,15 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 45555,
+        "exitNum": 45708,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      },
+      "fieldMeta": {
+        "cloneableProxyHash": { "severity": "HIGH" },
+        "beaconProxyFactory": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe": "TransparentUpgradeableProxy",
@@ -190,6 +198,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
+      "critical": true,
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
@@ -247,9 +256,19 @@
         "timelockAdminAC": ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
         }
       },
       "implementationNames": {
@@ -266,6 +285,7 @@
         "0xe4d43e76384584d53cab700932fa421d994299b690b20da123bde9c061308eba"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1634920833,
       "sinceBlock": 2454760,
@@ -280,6 +300,10 @@
         "symbol": "",
         "totalSupply": 0
       },
+      "fieldMeta": {
+        "l1Address": { "severity": "HIGH" },
+        "l2Gateway": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x3f770Ac673856F105b586bb393d122721265aD46": "StandardArbERC20"
       }
@@ -292,6 +316,7 @@
         "0x7384c556c7a90691c29fd68a1e34ec97e7d24e57f02c199fdf4ee0cc5ce319c2"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784070,
       "sinceBlock": 2103,
@@ -299,6 +324,10 @@
         "$immutable": true,
         "beacon": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
+      },
+      "fieldMeta": {
+        "cloneableProxyHash": { "severity": "HIGH" },
+        "beacon": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f": "BeaconProxyFactory"
@@ -388,6 +417,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council member elections.",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
@@ -416,6 +446,17 @@
         "votingDelay": 0,
         "votingPeriod": 151200
       },
+      "fieldMeta": {
+        "fullWeightDuration": { "severity": "HIGH" },
+        "nomineeElectionGovernor": { "severity": "HIGH" },
+        "securityCouncilManager": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "proposalThreshold": { "severity": "HIGH" },
+        "token": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C": "TransparentUpgradeableProxy",
         "arb1:0xbD5016a7946a82b938242573ED63ccB8962A4acB": "SecurityCouncilMemberElectionGovernor"
@@ -439,6 +480,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Router managing token <–> gateway mapping on L2.",
+      "critical": true,
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2108,
@@ -467,6 +509,12 @@
         "defaultGateway": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "arb1:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "defaultGateway": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "TransparentUpgradeableProxy",
         "arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278": "L2GatewayRouter"
@@ -489,6 +537,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
+      "critical": true,
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1624913237,
       "sinceBlock": 38495,
@@ -527,6 +576,13 @@
         "l1Weth": "arb1:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      },
+      "fieldMeta": {
+        "l2Weth": { "severity": "HIGH" },
+        "l1Weth": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": "TransparentUpgradeableProxy",
@@ -573,6 +629,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council member removals.",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
@@ -606,6 +663,21 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "fieldMeta": {
+        "VOTE_SUCCESS_DENOMINATOR": { "severity": "HIGH" },
+        "voteSuccessNumerator": { "severity": "HIGH" },
+        "proposalExpirationBlocks": { "severity": "HIGH" },
+        "lateQuorumVoteExtension": { "severity": "HIGH" },
+        "securityCouncilManager": { "severity": "HIGH" },
+        "quorumDenominator": { "severity": "HIGH" },
+        "quorumNumerator": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "proposalThreshold": { "severity": "HIGH" },
+        "token": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad": "TransparentUpgradeableProxy",
         "arb1:0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635": "SecurityCouncilMemberRemovalGovernor"
@@ -621,6 +693,7 @@
         "0x90f9c5059447ce7c4df6424257aede8c13c8e51660604e82a90cdb2db5ac8878"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
@@ -632,6 +705,10 @@
         "l1TimelockAddr": "arb1:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "arb1:0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      },
+      "fieldMeta": {
+        "l1TimelockMinDelay": { "severity": "HIGH" },
+        "l1TimelockAddr": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder"
@@ -699,6 +776,45 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "L2WETH",
+      "address": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0xa92922a072342a3702aed2b7213639dc42544e0d218773f792bf2426868d5b68"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Canonical upgradeable WETH token burned by L2WethGateway when withdrawing against the L1 WETH escrow.",
+      "critical": true,
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "arb1:0xA4b1838cb086DDDAFA655F247716b502e87A0672",
+      "sinceTimestamp": 1622346702,
+      "sinceBlock": 55,
+      "values": {
+        "$admin": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+        "$implementation": "arb1:0x8b194bEae1d3e0788A1a35173978001ACDFba668",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xac33225466df015cad7b0e1bf31afc69a49f20d95501a98d9644ad21163469a0",
+        "l1Address": "arb1:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2Gateway": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "111974677061351008465623"
+      },
+      "fieldMeta": {
+        "l1Address": { "severity": "HIGH" },
+        "l2Gateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": "TransparentUpgradeableProxy",
+        "arb1:0x8b194bEae1d3e0788A1a35173978001ACDFba668": "aeWETH"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "name": "zachxbt",
       "address": "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
       "type": "EOA",
@@ -721,6 +837,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council nominee elections.",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
@@ -775,6 +892,23 @@
         "votingDelay": 50400,
         "votingPeriod": 50400
       },
+      "fieldMeta": {
+        "ROTATION_CUT_OFF_BLOCKS": { "severity": "HIGH" },
+        "firstNominationStartDate": { "severity": "HIGH" },
+        "cadenceInMonths": { "severity": "HIGH" },
+        "nomineeVettingDuration": { "severity": "HIGH" },
+        "nomineeVetter": { "severity": "HIGH" },
+        "securityCouncilMemberElectionGovernor": { "severity": "HIGH" },
+        "securityCouncilManager": { "severity": "HIGH" },
+        "quorumDenominator": { "severity": "HIGH" },
+        "quorumNumerator": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "proposalThreshold": { "severity": "HIGH" },
+        "token": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0": "TransparentUpgradeableProxy",
         "arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482": "SecurityCouncilNomineeElectionGovernor"
@@ -792,6 +926,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.",
+      "critical": true,
       "ignoreInWatchMode": ["getTotalDelegation"],
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
@@ -814,7 +949,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5252639792945225693065594938",
+        "getTotalDelegation": "5193335094043113981780398126",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -827,7 +962,14 @@
         "totalSupply": "9999998977610261816650915825"
       },
       "fieldMeta": {
+        "l1Address": { "severity": "HIGH" },
+        "MIN_MINT_INTERVAL": { "severity": "HIGH" },
+        "MINT_CAP_DENOMINATOR": { "severity": "HIGH" },
+        "MINT_CAP_NUMERATOR": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "mintCapPerYer": {
+          "severity": "HIGH",
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
@@ -853,6 +995,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138730,
       "sinceBlock": 121762383,
@@ -1088,6 +1231,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
+      "critical": true,
       "ignoreInWatchMode": ["exitNum"],
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968435,
@@ -1104,8 +1248,13 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2378,
+        "exitNum": 2380,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E": "TransparentUpgradeableProxy",
@@ -1124,6 +1273,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
+      "critical": true,
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
@@ -1169,6 +1319,11 @@
         ],
         "transactionFilteringPrecompile": "arb1:0x0000000000000000000000000000000000000074"
       },
+      "fieldMeta": {
+        "transactionFilteringPrecompile": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "executors": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "TransparentUpgradeableProxy",
         "arb1:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -1191,6 +1346,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
+      "critical": true,
       "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
@@ -1295,10 +1451,25 @@
         "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6"
       },
       "fieldMeta": {
+        "getSecondCohort": { "severity": "LOW" },
+        "getFirstCohort": { "severity": "LOW" },
+        "l2CoreGovTimelock": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "securityCouncils": { "severity": "HIGH" },
+        "minRotationPeriod": { "severity": "HIGH" },
+        "cohortSize": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "getBothCohorts": {
           "severity": "LOW",
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
-        }
+        },
+        "defaultAdminAC": { "severity": "HIGH" },
+        "cohortReplacerAC": { "severity": "HIGH" },
+        "memberAdderAC": { "severity": "HIGH" },
+        "memberReplacerAC": { "severity": "HIGH" },
+        "memberRotatorAC": { "severity": "HIGH" },
+        "memberRemoverAC": { "severity": "HIGH" },
+        "minRotationPeriodSetterAC": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "TransparentUpgradeableProxy",
@@ -1315,12 +1486,17 @@
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2106,
       "values": {
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "ProxyAdmin"
@@ -1340,12 +1516,17 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968400,
       "sinceBlock": 70397784,
       "values": {
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": "ProxyAdmin"
@@ -1375,6 +1556,7 @@
         "0xcf83b51a83c868f91bcdc8e0f58ce736f03c19aa7240458c5274bcb7f26a8c40"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784070,
       "sinceBlock": 2102,
@@ -1382,6 +1564,10 @@
         "$immutable": true,
         "implementation": "arb1:0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": "UpgradeableBeacon"
@@ -1408,6 +1594,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).",
+      "critical": true,
       "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
@@ -1447,7 +1634,18 @@
         "votingPeriod": 100800
       },
       "fieldMeta": {
+        "lateQuorumVoteExtension": { "severity": "HIGH" },
+        "quorumDenominator": { "severity": "HIGH" },
+        "quorumNumerator": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "proposalThreshold": { "severity": "HIGH" },
+        "token": { "severity": "HIGH" },
+        "timelock": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "l2CoreQuorumPercent": {
+          "severity": "HIGH",
           "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
         }
       },
@@ -1512,6 +1710,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.",
+      "critical": true,
       "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
@@ -1540,6 +1739,11 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "TransparentUpgradeableProxy",
@@ -1640,6 +1844,7 @@
         "0xcf83b51a83c868f91bcdc8e0f58ce736f03c19aa7240458c5274bcb7f26a8c40"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
@@ -1647,6 +1852,10 @@
         "$immutable": true,
         "implementation": "eth:0xc4940069140142236D4065b866018f7b2BeC77fD",
         "owner": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon"
@@ -1664,6 +1873,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -1709,7 +1919,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1330503,
+        "batchCount": 1338338,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -1722,9 +1932,14 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25928275,
+          "prevBlockNumber": 26003611,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25928346
+          "prevSequencedBlockNumber": 26003682
+        },
+        "bufferConfig": {
+          "max": 14400,
+          "threshold": 150,
+          "replenishRateInBasis": 500
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -1750,14 +1965,24 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2556833,
+        "totalDelayedMessagesRead": 2568205,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
+        "isUsingFeeToken": { "severity": "HIGH" },
+        "isDelayBufferable": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "maxTimeVariation": {
+          "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosters": { "severity": "LOW" },
+        "dacKeyset": { "severity": "HIGH" },
+        "bufferConfig": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "TransparentUpgradeableProxy",
@@ -1786,6 +2011,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397379,
       "sinceBlock": 21418842,
@@ -1815,6 +2041,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968515,
       "sinceBlock": 16840309,
@@ -1859,6 +2086,10 @@
           "eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "executors": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": "TransparentUpgradeableProxy",
         "eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -1901,6 +2132,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397931,
       "sinceBlock": 21418888,
@@ -1910,6 +2142,12 @@
         "proverHostIo": "eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
         "proverMath": "eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
         "proverMem": "eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6": "OneStepProofEntry"
@@ -1937,6 +2175,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
@@ -2023,6 +2262,13 @@
         "paused": false,
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "TransparentUpgradeableProxy",
         "eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10": "Inbox"
@@ -2040,6 +2286,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -2078,7 +2325,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x10c1ee22cc6d841344141846f64dd5a7ee41d1321fe8e4d8762d2c919caf2101",
+        "latestConfirmed": "0x75c7759659c6dec649e55aec873634a42c36f918cfb0c8aea83b634afbcd3ca3",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -2096,13 +2343,30 @@
         "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
       },
       "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "rollupEventInbox": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "outbox": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "loserStakeEscrow": { "severity": "HIGH" },
+        "stakeToken": { "severity": "HIGH" },
+        "baseStake": { "severity": "HIGH" },
+        "validatorAfkBlocks": { "severity": "HIGH" },
+        "challengeGracePeriodBlocks": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "getValidators": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
+          "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
+          "severity": "HIGH",
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
+          "severity": "HIGH",
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
@@ -2110,7 +2374,10 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "challengeManager": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
+        "validatorWhitelistDisabled": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": "RollupProxy",
@@ -2168,12 +2435,17 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ProxyAdmin"
@@ -2189,12 +2461,17 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968395,
       "sinceBlock": 16840300,
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin"
@@ -2212,6 +2489,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
@@ -2234,6 +2512,11 @@
         "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1": "TransparentUpgradeableProxy",
         "eth:0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5": "RollupEventInbox"
@@ -2253,6 +2536,7 @@
         "0x70ebbacb2d55339a06b88df41f2b9181e88bda21bce2a3e1eea4d1e7adb0d395"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
@@ -2283,6 +2567,12 @@
         "OUTBOX_VERSION": 0,
         "outboxesLength": 30,
         "rollup": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
+      },
+      "fieldMeta": {
+        "beacon": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": "TransparentUpgradeableProxy",
@@ -2320,6 +2610,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784095,
       "sinceBlock": 12640865,
@@ -2376,6 +2667,15 @@
         "router": "eth:0x0000000000000000000000000000000000000000",
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": "TransparentUpgradeableProxy",
         "eth:0x52595021fA01B3E14EC6C88953AFc8E35dFf423c": "L1GatewayRouter"
@@ -2391,6 +2691,7 @@
         "0x1d51b6dd26457bab1431585e9c38a9ed8e500bfdcedb77fcaa3f13c99f98bf73"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E",
       "sinceTimestamp": 1630296149,
       "sinceBlock": 13124585,
@@ -2417,6 +2718,11 @@
         "OUTBOX_VERSION": 1,
         "rollup": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "TransparentUpgradeableProxy",
         "eth:0x360861b7b245c968128F0a53d281aDb1Df760711": "Outbox"
@@ -2438,6 +2744,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -2482,7 +2789,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2556840,
+        "delayedMessageCount": 2568214,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -2496,10 +2803,12 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1330503,
-        "sequencerReportedSubMessageCount": 480608293
+        "sequencerMessageCount": 1338338,
+        "sequencerReportedSubMessageCount": 484198013
       },
       "fieldMeta": {
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -2515,7 +2824,8 @@
         "inboxHistory": {
           "severity": "HIGH",
           "description": "All Inboxes that were ever set as allowed in the bridge."
-        }
+        },
+        "rollup": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "TransparentUpgradeableProxy",
@@ -2550,12 +2860,17 @@
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784062,
       "sinceBlock": 12640863,
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "ProxyAdmin"
@@ -2572,6 +2887,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397775,
       "sinceBlock": 21418875,
@@ -2616,6 +2932,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784100,
       "sinceBlock": 12640867,
@@ -2666,6 +2983,14 @@
         "l2BeaconProxyFactory": "eth:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
+      "fieldMeta": {
+        "cloneableProxyHash": { "severity": "HIGH" },
+        "l2BeaconProxyFactory": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": "TransparentUpgradeableProxy",
         "eth:0xb4299A1F5f26fF6a98B7BA35572290C359fde900": "L1ERC20Gateway"
@@ -2683,6 +3008,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1739368811,
       "sinceBlock": 21830860,
@@ -2708,6 +3034,15 @@
         "stakeAmounts": [0, "555000000000000000000", "79000000000000000000"],
         "stakeToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "excessStakeReceiver": { "severity": "HIGH" },
+        "stakeToken": { "severity": "HIGH" },
+        "stakeAmounts": { "severity": "HIGH" },
+        "challengePeriodBlocks": { "severity": "HIGH" },
+        "oneStepProofEntry": { "severity": "HIGH" },
+        "assertionChain": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0": "TransparentUpgradeableProxy",
         "eth:0x058E1cBb62096189Bc7Cc1FE08A0859905d969Ea": "EdgeChallengeManager"
@@ -2729,6 +3064,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397631,
       "sinceBlock": 21418863,
@@ -2736,6 +3072,51 @@
       "implementationNames": {
         "eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921": "OneStepProverMath"
       }
+    },
+    {
+      "name": "L1ARBGateway",
+      "address": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x25a68e002eb51dc499c5d7f01fcd88d47679bc287df40050259e5d4b3d7c903d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.",
+      "critical": true,
+      "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
+      "sinceTimestamp": 1678968431,
+      "sinceBlock": 16840302,
+      "values": {
+        "$admin": "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
+        "$implementation": "eth:0x4e8C24617C4592895d52Ac6df29D9647e9D01Bb5",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:07:11.000Z",
+            "0x1070c1a3702b9f52ff3e080e40c331ee1a8b72b785c27b809f87566e0f47ee25",
+            ["eth:0x4e8C24617C4592895d52Ac6df29D9647e9D01Bb5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "counterpartGateway": "eth:0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+        "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "router": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "whitelist": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27": "TransparentUpgradeableProxy",
+        "eth:0x4e8C24617C4592895d52Ac6df29D9647e9D01Bb5": "L1ForceOnlyReverseCustomGateway"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Michael Lewellen - blockaid",
@@ -2756,6 +3137,7 @@
         "0xf27ca2839702248340daceb1e5c995144cb5ad3f636f7bc4057e20e142aeb2fe"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1630185130,
       "sinceBlock": 13116271,
@@ -2909,6 +3291,76 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "name": "L1WethGateway",
+      "address": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0x04f3d7394859f097a711ad6c500a7b86cf200e493812b27a8eb7f2c1b4a25e54"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.",
+      "critical": true,
+      "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
+      "sinceTimestamp": 1624913245,
+      "sinceBlock": 12724750,
+      "values": {
+        "$admin": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+        "$implementation": "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2",
+        "$pastUpgrades": [
+          [
+            "2021-06-28T22:19:37.000Z",
+            "0xabf717d1d61d4349c500a23706c81521bdbc74aceba0e9aea2c7a135fe352eae",
+            ["eth:0xbE4371dd2053D4B6113177f81F73b5F8E2075A47"]
+          ],
+          [
+            "2021-07-30T22:41:08.000Z",
+            "0x345b254dab3c0f4e9f5e541df26005b5ddf77bab96a9c8f6bd095cb74e764182",
+            ["eth:0xb0E292c2ceFd5C897883f16af6453dC111940D85"]
+          ],
+          [
+            "2021-08-26T16:14:36.000Z",
+            "0x1188226ac81336a0a00aaa33e0a818c5248c99d12ec27166e6d31b5acf7f59aa",
+            ["eth:0x91801ef40DE9ee143cD2eDFdd43e727E6A06d9F1"]
+          ],
+          [
+            "2021-08-30T17:44:00.000Z",
+            "0xd65cb1643b75e506d0278403da57ee7b1ba7dafa94ac5b677a86d4fb7913cf41",
+            ["eth:0xD21e23a237DaC0311e83f729313232C3b5039925"]
+          ],
+          [
+            "2022-08-08T17:02:04.000Z",
+            "0xf2ba2551709d23686f52c3a3ecc65ae8347f1bab1877265c57ba260e8222bf33",
+            ["eth:0x6299838C8254b59213eb56d158ebe562D23c4936"]
+          ],
+          [
+            "2023-02-10T03:00:23.000Z",
+            "0x18bcb1e0390e182dccb97680b8ca88f06496741c7599a73d8b5220272f3b7c7f",
+            ["eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "counterpartGateway": "eth:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+        "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "l1Weth": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2Weth": "eth:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "router": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      },
+      "fieldMeta": {
+        "l2Weth": { "severity": "HIGH" },
+        "l1Weth": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": "TransparentUpgradeableProxy",
+        "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2": "L1WethGateway"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "name": "OneStepProverMemory",
       "address": "eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b",
       "type": "Contract",
@@ -2918,6 +3370,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397511,
       "sinceBlock": 21418853,
@@ -2943,6 +3396,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "critical": true,
       "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968515,
       "sinceBlock": 16840309,
@@ -6990,9 +7444,21 @@
         "timelockAdminAC": ["eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
       },
       "fieldMeta": {
+        "governanceChainInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "l2Timelock": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
         }
       },
       "implementationNames": {
@@ -7702,6 +8168,16 @@
       "function postUpgradeInit()",
       "function router() view returns (address)"
     ],
+    "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -7712,6 +8188,35 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "arb1:0x8b194bEae1d3e0788A1a35173978001ACDFba668": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridgeBurn(address account, uint256 amount)",
+      "function bridgeMint(address account, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function deposit() payable",
+      "function depositTo(address account) payable",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals, address _l2Gateway, address _l1Address)",
+      "function l1Address() view returns (address)",
+      "function l2Gateway() view returns (address)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool success)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function withdraw(uint256 amount)",
+      "function withdrawTo(address account, uint256 amount)"
     ],
     "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -8436,6 +8941,29 @@
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
     ],
+    "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2": [
+      "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
+      "event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function encodeWithdrawal(uint256 _exitNum, address _initialDestination) pure returns (bytes32)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getExternalCall(uint256 _exitNum, address _initialDestination, bytes _initialData) view returns (address target, bytes data)",
+      "function getOutboundCalldata(address _l1Token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function initialize(address _l2Counterpart, address _l1Router, address _inbox, address _l1Weth, address _l2Weth)",
+      "function l1Weth() view returns (address)",
+      "function l2Weth() view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function outboundTransferCustomRefund(address _l1Token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function postUpgradeInit()",
+      "function redirectedExits(bytes32) view returns (bool isExit, address _newTo, bytes _newData)",
+      "function router() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)"
+    ],
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -8452,6 +8980,35 @@
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint256 minimumAssertionPeriod, uint64 validatorAfkBlocks, uint256[] miniStakeValues, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation, uint256 layerZeroBlockEdgeHeight, uint256 layerZeroBigStepEdgeHeight, uint256 layerZeroSmallStepEdgeHeight, tuple(tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals) globalState, uint8 machineStatus, bytes32 endHistoryRoot) genesisAssertionState, uint256 genesisInboxCount, address anyTrustFastConfirmer, uint8 numBigStepLevel, uint64 challengeGracePeriodBlocks, tuple(uint64 threshold, uint64 max, uint64 replenishRateInBasis) bufferConfig) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorWalletCreator) connectedContracts)"
+    ],
+    "eth:0x4e8C24617C4592895d52Ac6df29D9647e9D01Bb5": [
+      "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
+      "event TokenSet(address indexed l1Address, address indexed l2Address)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
+      "event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function encodeWithdrawal(uint256 _exitNum, address _initialDestination) pure returns (bytes32)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function forceRegisterTokenToL2(address[] _l1Addresses, address[] _l2Addresses, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost) payable returns (uint256)",
+      "function getExternalCall(uint256 _exitNum, address _initialDestination, bytes _initialData) view returns (address target, bytes data)",
+      "function getOutboundCalldata(address _l1Token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function initialize(address _l1Counterpart, address _l1Router, address _inbox, address _owner)",
+      "function l1ToL2Token(address) view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function outboundTransferCustomRefund(address _l1Token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function owner() view returns (address)",
+      "function postUpgradeInit()",
+      "function redirectedExits(bytes32) view returns (bool isExit, address _newTo, bytes _newData)",
+      "function registerTokenToL2(address _l2Address, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, address _creditBackAddress) payable returns (uint256)",
+      "function registerTokenToL2(address _l2Address, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost) payable returns (uint256)",
+      "function router() view returns (address)",
+      "function setOwner(address newOwner)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
+      "function whitelist() view returns (address)"
     ],
     "eth:0x52595021fA01B3E14EC6C88953AFc8E35dFf423c": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -9017,6 +9574,17 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
+    "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": [
       "function destroy()",
       "function initialize(bytes32 _root, uint256 _numInBatch)",
@@ -9148,6 +9716,16 @@
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
     ],
+    "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -9256,56 +9834,56 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
-    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
+    "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/CustomGateway2": "0x7c2c31bb9c6a7014043668aec6a82ae07a8b750c9ba8dcc2afdc3935438608d7",
-    "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",
-    "orbitstack/ERC20Gateway2": "0x7c2c31bb9c6a7014043668aec6a82ae07a8b750c9ba8dcc2afdc3935438608d7",
-    "orbitstack/GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/EdgeChallengeManager": "0xeaaa590ceeab252a14ceeb88a8d39ce03a969fdb64c2861704b072e3f885a748",
+    "orbitstack/ERC20Gateway2": "0xb84b07da11bd27f10fa07f26cd45838ab02d524fb3d509826d4e1913feae893e",
+    "orbitstack/GatewayRouter": "0x158482b47e53cd684e16e1958fafbba9719c7bcb319f6710653b4ca535034350",
+    "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
     "orbitstack/L1DaiGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/layer2/ConstitutionHash": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/layer2/CoreGovernor": "0x18f6940d82ef09bfc0a98733b1a89ff6ccc482d87e11803c91a19ec56fb00551",
-    "orbitstack/layer2/L2ARBGateway": "0x057a08e3ebdc17e381b641116fbe4420b0a5ee84271562870b462f7e33d5d685",
-    "orbitstack/layer2/L2ArbitrumToken": "0xd449c4dfb27b1f87675278d2af701ba0a2b0c9df36ff0c2091bee7c7f3d2aa84",
+    "orbitstack/layer2/CoreGovernor": "0xb44647afc4d05ce038c713651117b17f86dba039898a4c2b52e0902fcb761ec5",
+    "orbitstack/layer2/L2ARBGateway": "0xeb6ce10ad3041abd191c5f8648c90e90d5d9d6ea5382313e9d3003e5ee9a8e60",
+    "orbitstack/layer2/L2ArbitrumToken": "0xfd9b49d80c11ae904feffb43844d4ee28898186d8270a10f209a785ffb6713dd",
     "orbitstack/layer2/L2BaseFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
     "orbitstack/layer2/L2DAIGateway": "0x6e84d15542bedc9ac994031d43e4e6f727c4dfefb7536160cf1e21470a61e04f",
-    "orbitstack/layer2/L2ERC20Gateway": "0x057a08e3ebdc17e381b641116fbe4420b0a5ee84271562870b462f7e33d5d685",
-    "orbitstack/layer2/L2GatewayRouter": "0x6eb456cde28339a9bdd6fc83576b4fd75b96930f7a57be0a26c80d4c45215cbc",
+    "orbitstack/layer2/L2ERC20Gateway": "0x1a26cb8221105f4a04299a7c042cfad5cded90834bd9dc99485bb78bdd081959",
+    "orbitstack/layer2/L2GatewayRouter": "0x13887d1ffd0ea96a3574db7f0508ff9c5f209e45b49583881cedc392c1d3d17a",
     "orbitstack/layer2/L2LPTGateway": "0x58c976533d5c79670e7c953ab7971a244fc7ebb5fac488323c1e8a65f5065930",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
     "orbitstack/layer2/L2SecurityCouncilPropose": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
     "orbitstack/layer2/L2SurplusFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
-    "orbitstack/layer2/L2Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
-    "orbitstack/layer2/L2UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
-    "orbitstack/layer2/SecurityCouncilManager": "0x8ee58d6177d1870ced4ef4e182f3c54ea32d7971f1df3c40b09505321e306658",
-    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0x26c3ea80c46518b0d0c1908608521a5636db78a3a032e052ea70d2ca75e689dc",
-    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x14a17e91d1be3b088060733309d1abb417edadcd40ccdb1de08d3f889909a0b3",
+    "orbitstack/layer2/L2Timelock": "0x16cbf0312cc97ce99a2f4bd6e6ea33b4329e27a8c87067f24c8e817754bc9d4c",
+    "orbitstack/layer2/L2UpgradeExecutor": "0x0ad97f008aca979a55422d939e46c84e109bf7017d3eaf88ed4a3cc686d3aa16",
+    "orbitstack/layer2/L2WethGateway": "0xb702a317100e881e78f290c3dab401a3c751db5bcb4a6a89214405772ea222cc",
+    "orbitstack/layer2/SecurityCouncilManager": "0xcd5dae86e24892c1f68fb6f2693d8237e4c7b34ea20b48a3e08bb8c11a8c9414",
+    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0x26581d43d6db3efd556e6971079128262b73a1e433e90b6ac4830e58c8bac189",
+    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x6b15f09af95a1d698091877437dae776eb2cc951f7bece0e9d1bd9e43bed01f9",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x7a9a00e005e74d2ab1c54b395270e1d79380ed7f3ddbcef9110218412fd87144",
-    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0x2378f27da56189879226a19528e072a2896751bbd4271b1c648ed5f1826d2800",
+    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0x970831c153b3dbcfbc308dc1a4b876337ab82d8d4ecb03ca9237219b410cb59c",
     "orbitstack/layer2/TreasuryGovernor": "0x7721d2e302c1aa23b518e04c2edc28501d6c7a9aaba9f5ed9f3434d99fdc162e",
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
-    "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639",
-    "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/layer2/UpgradeExecRouteBuilder": "0x244698b07a7e4d7aba0bbe3cf267df9b185357f51b56908e1314f6b51be401ab",
+    "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
+    "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
     "orbitstack/ParentToChildRewardRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxyBoLD": "0x2698d3d5c271b76e0481b26e00170b2cee6acdd8288354954fa73af2825ede23",
+    "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
+    "orbitstack/RollupProxyBoLD": "0x72e5e9e0513e73b78195c53b0ce50cc87b648ac59ec0e226683bdfe568c69a42",
     "orbitstack/SecurityCouncil": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
-    "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
-    "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
-    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
+    "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
+    "orbitstack/Timelock": "0x81465930f787d01fa82846717353fb5b7cde94bf86218188fd4d0b6d04de1d88",
+    "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 502816522, "ethereum": 25928363 },
-  "permissionsConfigHash": "0xa0ec237f1f162d25f52a707feced9ae7acc532df71688a018f237c76fc783384",
+  "usedBlockNumbers": { "arbitrum": 506406352, "ethereum": 26003769 },
+  "permissionsConfigHash": "0xc1b4fe309c26a6ceae425ed9ffa603ec0e01b8007f911f75774cbfc1cfe86256",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
       "directlyReceivedPermissions": [
@@ -9406,6 +9984,15 @@
           "role": "admin",
           "via": [
             { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
           ]
         },
@@ -9881,7 +10468,51 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
           "role": "admin",
           "via": [
             { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
@@ -9997,6 +10628,11 @@
         {
           "permission": "upgrade",
           "from": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
           "role": "admin"
         }
       ]
@@ -10422,7 +11058,51 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
           "role": "admin",
           "via": [
             { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
@@ -10564,6 +11244,15 @@
           "role": "admin",
           "via": [
             { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
           ]
         },
@@ -10763,6 +11452,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "role": "admin"
         }
@@ -10799,6 +11493,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
           "role": "admin"
         }
       ]
@@ -10960,7 +11659,25 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
           "role": "admin",
           "via": [
             { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },

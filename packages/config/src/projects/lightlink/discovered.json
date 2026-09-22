@@ -406,6 +406,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540863,
@@ -436,6 +437,17 @@
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.4.0"
+      },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": "Proxy",
@@ -515,6 +527,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540887,
       "sinceBlock": 20684517,
@@ -536,6 +549,17 @@
         "otherBridge": "eth:0x4200000000000000000000000000000000000010",
         "paused": false,
         "version": "2.2.0"
+      },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "Proxy",
@@ -1097,8 +1121,8 @@
     "lightlink/LightLinkPortal": "0xe0fcc9299776b8384b60df1e2908abb375fe01985e75e67684bd590a74bb49c0",
     "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
     "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e"
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef"
   },
   "usedBlockNumbers": { "ethereum": 22208513 },
   "permissionsConfigHash": "0xa3143610c31eeda640c5afae23575b32b2b207360cbcbce395e7913a4040d9bb",

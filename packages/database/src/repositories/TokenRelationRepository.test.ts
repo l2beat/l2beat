@@ -7,11 +7,13 @@ import type {
   DeployedTokenRecord,
 } from './DeployedTokenRepository'
 import {
+  isMintedAtEndpoint,
   type JsonValue,
   normalizeTokenRelation,
   type TokenRelationLockedToken,
   type TokenRelationRecord,
   TokenRelationRepository,
+  type TokenRelationRoute,
 } from './TokenRelationRepository'
 
 describeTokenDatabase(TokenRelationRepository.name, (db) => {
@@ -448,88 +450,91 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
-  describe(
-    TokenRelationRepository.prototype.getMintingPluginsForMany.name,
-    () => {
-      it('returns distinct plugins keyed by every requested minted token', async () => {
-        const canonical = tokenRelation({
-          endpoints: [ethereumToken, arbitrumToken],
-          plugin: 'canonicalbridge',
-          bridgeType: 'lockAndMint',
-          lockedToken: 'A',
-        })
-        const symmetric = tokenRelation({
-          endpoints: [arbitrumToken, optimismToken],
-          plugin: 'superbridge',
-          bridgeType: 'burnAndMint',
-        })
-        const duplicatePlugin = tokenRelation({
-          endpoints: [ethereumToken, arbitrumToken],
-          plugin: 'superbridge',
-          bridgeType: 'burnAndMint',
-        })
-        const lockedHere = tokenRelation({
-          endpoints: [arbitrumToken, optimismToken],
-          plugin: 'escrowbridge',
-          bridgeType: 'lockAndMint',
-          lockedToken: 'A',
-        })
-        for (const relation of [
-          canonical,
-          symmetric,
-          duplicatePlugin,
-          lockedHere,
-        ]) {
-          await repository.insert(relation)
-        }
+  describe(TokenRelationRepository.prototype.getRelationsTouching.name, () => {
+    const foreignToken: DeployedTokenPrimaryKey = {
+      chain: 'ethereum',
+      address: '0x' + '9'.repeat(40),
+    }
 
-        expect(
-          await repository.getMintingPluginsForMany([
-            {
-              chain: arbitrumToken.chain,
-              address: arbitrumToken.address.toUpperCase(),
-            },
-            optimismToken,
-          ]),
-        ).toEqualUnsorted([
-          {
-            ...arbitrumToken,
-            plugin: 'canonicalbridge',
-            bridgeType: 'lockAndMint',
-            relatedChain: 'ethereum',
-          },
-          {
-            ...arbitrumToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'ethereum',
-          },
-          {
-            ...arbitrumToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'optimism',
-          },
-          {
-            ...optimismToken,
-            plugin: 'escrowbridge',
-            bridgeType: 'lockAndMint',
-            relatedChain: 'arbitrum',
-          },
-          {
-            ...optimismToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'arbitrum',
-          },
-        ])
+    it('returns relations mentioning any of the tokens on either endpoint', async () => {
+      const inside = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
       })
+      const halfOutside = tokenRelation({
+        endpoints: [arbitrumToken, foreignToken],
+        plugin: 'otherbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const outside = tokenRelation({
+        endpoints: [optimismToken, foreignToken],
+        plugin: 'canonicalbridge',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+      })
+      for (const relation of [inside, halfOutside, outside]) {
+        await repository.insert(relation)
+      }
 
-      it('returns an empty list when no tokens are requested', async () => {
-        expect(await repository.getMintingPluginsForMany([])).toEqual([])
+      const relations = await repository.getRelationsTouching([
+        ethereumToken,
+        arbitrumToken,
+      ])
+
+      expect(relations).toEqualUnsorted([
+        withoutTransfer(inside),
+        withoutTransfer(halfOutside),
+      ])
+    })
+
+    it('normalizes the queried addresses', async () => {
+      const relation = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
       })
-    },
-  )
+      await repository.insert(relation)
+
+      const relations = await repository.getRelationsTouching([
+        {
+          chain: ethereumToken.chain,
+          address: ethereumToken.address.toUpperCase(),
+        },
+      ])
+
+      expect(relations).toEqual([withoutTransfer(relation)])
+    })
+
+    it('returns an empty list when no tokens are requested', async () => {
+      expect(await repository.getRelationsTouching([])).toEqual([])
+    })
+  })
+
+  describe(isMintedAtEndpoint.name, () => {
+    it('mints on both endpoints of a burn-and-mint pair', () => {
+      const relation = { bridgeType: 'burnAndMint', lockedToken: null } as const
+      expect(isMintedAtEndpoint(relation, 'A')).toEqual(true)
+      expect(isMintedAtEndpoint(relation, 'B')).toEqual(true)
+    })
+
+    it('mints opposite the locked endpoint of a lock-and-mint pair', () => {
+      const relation = { bridgeType: 'lockAndMint', lockedToken: 'A' } as const
+      expect(isMintedAtEndpoint(relation, 'A')).toEqual(false)
+      expect(isMintedAtEndpoint(relation, 'B')).toEqual(true)
+    })
+
+    it('names no minted endpoint without an identified locked token', () => {
+      const relation = { bridgeType: 'lockAndMint', lockedToken: null } as const
+      expect(isMintedAtEndpoint(relation, 'A')).toEqual(false)
+      expect(isMintedAtEndpoint(relation, 'B')).toEqual(false)
+    })
+
+    it('mints nowhere for other bridge types', () => {
+      const relation = { bridgeType: 'nonMinting', lockedToken: null } as const
+      expect(isMintedAtEndpoint(relation, 'A')).toEqual(false)
+    })
+  })
 
   describe(TokenRelationRepository.prototype.deleteByPrimaryKey.name, () => {
     it('deletes a single relation by its identity', async () => {
@@ -574,6 +579,11 @@ function tokenRelation(input: TokenRelationInput): TokenRelationRecord {
         plugin: input.plugin,
       } satisfies Record<string, unknown>),
   })
+}
+
+function withoutTransfer(record: TokenRelationRecord): TokenRelationRoute {
+  const { transfer: _transfer, ...route } = record
+  return route
 }
 
 function deployedToken(pk: DeployedTokenPrimaryKey): DeployedTokenRecord {

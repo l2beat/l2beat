@@ -4,11 +4,40 @@
   "ignoreInWatchMode": ["txNonce", "queueNonce"],
   "description": "A simple Safe module for that can queue and execute transactions as {{target}} after a delay of currently {{txCooldownFmt}}, if registered as a module there.",
   "fields": {
+    "ZodiacModule_guard": {
+      "severity": "HIGH"
+    },
+    "ZodiacModule_target": {
+      "severity": "HIGH"
+    },
+    "ZodiacModule_avatar": {
+      "severity": "HIGH"
+    },
+    "getGuard": {
+      "severity": "HIGH"
+    },
+    "guard": {
+      "severity": "HIGH"
+    },
+    "target": {
+      "severity": "HIGH"
+    },
+    "avatar": {
+      "severity": "HIGH"
+    },
+    "txExpiration": {
+      "severity": "HIGH"
+    },
+    "txCooldown": {
+      "severity": "HIGH"
+    },
     "txCooldownFmt": {
+      "severity": "HIGH",
       "handler": { "type": "call", "method": "txCooldown", "args": [] },
       "edit": ["format", "FormatSeconds"]
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -17,6 +46,7 @@
       ]
     },
     "ZodiacModule_modules": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "act",

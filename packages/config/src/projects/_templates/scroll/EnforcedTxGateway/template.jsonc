@@ -1,11 +1,21 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contracts to force L1 -> L2 messages with the proper sender.",
+  "critical": true,
   "category": "core",
   "fields": {
+    "messageQueue": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "paused": {
       "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

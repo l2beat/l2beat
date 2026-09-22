@@ -1,10 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SystemConfig",
+  "critical": true,
   "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
     "batcherHash": {
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",
@@ -34,12 +39,48 @@
       "severity": "LOW"
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ]
+    },
+    "superchainConfig": {
+      // repointing this changes which contract holds the pause authority over the system
+      "severity": "HIGH"
+    },
+    "disputeGameFactory": {
+      // the factory whose games this system accepts as proofs of state
+      "severity": "HIGH"
+    },
+    "optimismPortal": {
+      "severity": "HIGH"
+    },
+    "l1CrossDomainMessenger": {
+      "severity": "HIGH"
+    },
+    "l1StandardBridge": {
+      "severity": "HIGH"
+    },
+    "delayedWETH": {
+      // custody of the dispute-game bonds
+      "severity": "HIGH"
+    },
+    "batchInbox": {
+      // where the batcher posts; changing it moves the chain's data availability target
+      "severity": "HIGH"
+    },
+    "gasPayingToken": {
+      "severity": "HIGH"
+    },
+    "resourceConfig": {
+      // bounds the gas available to deposits, and with it the cost of forcing a transaction
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
     },
     "eip1559Denominator": {
       "description": "volatility param: lower denominator -> quicker fee changes on L2"

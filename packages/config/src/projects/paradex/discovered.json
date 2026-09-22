@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "timestamp": 1784193913,
-  "configHash": "0xb8a33c16446d3526b1d24c75375213cc033d8a1dab0c10a07e627035bc6d5d59",
+  "configHash": "0xcfa1f9e17791d0498c0171d47aa3e107cca224aeae77f9e9b1f634e8cf6d1a0c",
   "entries": [
     {
       "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
@@ -294,6 +294,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
@@ -398,6 +399,9 @@
         "withdrawLimitPct": 0
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -407,15 +411,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -458,6 +467,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
+      "critical": true,
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -556,6 +566,10 @@
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
+        "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
@@ -1159,8 +1173,8 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
-    "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
+    "starknet/Starknet": "0x443048c973a40defabce9a46a86f3a71d1f19010649429ae87926e53521e3bdf",
+    "starknet/StarknetERC20Bridge": "0x4b148c56412c957c9c82b2bc3d0f22d7dd0aadf4ca529b0e1c7878db449f0d85"
   },
   "usedBlockNumbers": { "ethereum": 25544316 },
   "permissionsConfigHash": "0xf6446f545c5b2976561dc573a1d38625ba85459252696d65fddad7ffee9c524b",

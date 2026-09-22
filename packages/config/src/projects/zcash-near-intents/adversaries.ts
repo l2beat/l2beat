@@ -94,11 +94,10 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'warning', // good if Tor was default
       exposure:
-        'Zodl syncs through public lightwalletd servers, which see which transactions the wallet fetches and broadcasts, and so the payout and the later exit of the same wallet. Tor covers these calls and the swap requests but is off by default and does not cover block sync. Ethereum RPCs and NEAR relayers see only what is public anyway.',
-      advice:
-        'Turn on Tor in Zodl before the first swap, pin one server or your own lightwalletd in manual mode, and use a separate wallet account per round trip.',
+        'Zodl syncs through public lightwalletd servers, which see which transactions the wallet fetches and broadcasts, and so the payout and the later exit of the same wallet. Tor covers these calls and the swap requests including session isolation but is opt-in and does not cover block sync.',
+      advice: 'Turn on Tor in Zodl before the first swap.',
       interior: {
         sender: 'private',
         recipient: 'atRisk',
@@ -135,15 +134,12 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'The Operator runs the 1Click API, the Ethereum custody and the screening, so both legs sit in its logs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC. It has no key into the shielded pool, so joining the legs still needs IP, session or timing. It screens every address with KYT vendors, can lock any account and can hold bridged funds.',
+        'The Operator runs the 1Click bridge API, the Ethereum custody and the screening, so both legs sit in its logs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC. It has no key into the shielded pool, so joining the legs still needs IP or timing. It screens every address with KYT vendors, can lock any account and can hold bridged funds.',
       advice:
-        'Use Tor for both legs, and do them from different sessions days apart with amounts that do not match.',
+        'Always use the Zodl Tor feature, wait some time in the shielded pool and use amounts that do not match.',
       interior: {
         sender: 'private',
-        recipient: {
-          verdict: 'atRisk',
-          note: 'The 1Click API receives a fresh refund address of the Zodl account for every swap out of ZEC.',
-        },
+        recipient: 'private',
         amount: 'private',
         asset: 'exposed',
         linkage: {

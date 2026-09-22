@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x4d327249ee45bbd427186bb1e87c3d72ad3f5e32
+
+# Diff at Mon, 21 Sep 2026 11:24:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789917578
+- current timestamp: 1789917578
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917578 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x29b1C223be35CCB6bfBd43154528cD0B881756e9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x556Db8c611FE63e694413F718d795f976dcF5881. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x2ca750e03b9d71e960df966af2a40e96bbfe9e66
+
+# Diff at Sun, 20 Sep 2026 15:21:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789673752
+- current timestamp: 1789917578
+
+## Description
+
+critical contracts and severities for the ossification perimeter (re-run after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789673752 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xb89ab4cc575f1a17437190aa945cf7c5d7ea9745
 
 # Diff at Thu, 10 Sep 2026 12:48:31 GMT:

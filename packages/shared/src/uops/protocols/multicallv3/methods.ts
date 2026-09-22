@@ -1,14 +1,11 @@
-import { parseAbiItem } from 'viem/utils'
 import type { Method } from '../../types'
 import { defineMethod } from '../defineMethod'
 
 export const MULTICALLV3_methods: Method[] = [
   defineMethod(
-    parseAbiItem(
-      'function aggregate((address target, bytes callData)[] calls)',
-    ),
+    'function aggregate(tuple(address target, bytes callData)[] calls)',
     ([calls]) => {
-      return calls.map((call) => ({
+      return calls.map((call: { target: string; callData: string }) => ({
         type: 'recursive',
         calldata: call.callData,
         to: call.target,
@@ -17,11 +14,9 @@ export const MULTICALLV3_methods: Method[] = [
     'Multicall3',
   ),
   defineMethod(
-    parseAbiItem(
-      'function aggregate3((address target, bool allowFailure, bytes callData)[] calls)',
-    ),
+    'function aggregate3(tuple(address target, bool allowFailure, bytes callData)[] calls)',
     ([calls]) => {
-      return calls.map((call) => ({
+      return calls.map((call: { target: string; callData: string }) => ({
         type: 'recursive',
         calldata: call.callData,
         to: call.target,

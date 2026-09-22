@@ -29,6 +29,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1719319541,
       "sinceBlock": 16265097,
@@ -64,6 +65,17 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "base:0x4A2b7478B9646c06C3517E6f06e1232684143C00": "ResolvedDelegateProxy",
         "base:0x55b6A23e45611e5856beC4b97c433908Ef84d8c5": "L1CrossDomainMessenger"
@@ -85,12 +97,14 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "sinceTimestamp": 1719319539,
       "sinceBlock": 16265096,
       "values": {
         "$immutable": true,
         "owner": "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x5416B7421c42B9218B29f688C47a46020c23cF0d": "AddressManager"
       },
@@ -174,6 +188,10 @@
         "isUpgrading": false,
         "owner": "base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15": "ProxyAdmin"
       }
@@ -189,6 +207,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -257,6 +276,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1719319541,
       "sinceBlock": 16265097,
@@ -303,7 +323,20 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xa096dD38362bd2cE3C696474329989960722A7Fd": "Proxy",
@@ -337,6 +370,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719319541,
       "sinceBlock": 16265097,
@@ -363,6 +397,15 @@
         "SYSTEM_CONFIG": "base:0xa096dD38362bd2cE3C696474329989960722A7Fd",
         "version": "1.7.2"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514": "Proxy",
         "base:0x764b431e61972Ae785b504B373efb139F38A7694": "OptimismPortal"
@@ -380,6 +423,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "sinceTimestamp": 1719319541,
       "sinceBlock": 16265097,
       "values": {
@@ -392,6 +436,17 @@
         "MESSENGER": "base:0x4A2b7478B9646c06C3517E6f06e1232684143C00",
         "OTHER_BRIDGE": "base:0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B": "L1ChugSplashProxy",

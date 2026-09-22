@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
   "timestamp": 1769601454,
-  "configHash": "0x2865e6fc431fd122d77f3996900099c797a9a225aaa9f45f543df3469ca3060a",
+  "configHash": "0x33be799782be972f510760041942a5faf62b28fea78fe6178d6a84f18598a852",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -25,6 +26,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -55,6 +60,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1767733343,
       "sinceBlock": 24178194,
@@ -76,11 +82,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
@@ -96,6 +104,7 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -199,6 +208,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -228,6 +238,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -252,6 +263,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -278,6 +290,7 @@
       ],
       "proxyType": "immutable",
       "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -584,7 +597,7 @@
   "usedTemplates": {
     "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 24333185, "ethscriptions": 6903865 },

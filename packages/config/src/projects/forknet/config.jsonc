@@ -7,6 +7,10 @@
     "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b"
   ],
   "overrides": {
+    "eth:0x2258d4C98AaeDB54f6f1be40ca347FD3160B34C2": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": {
       "category": "spam",
       "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",

@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148899,
       "sinceBlock": 20569170,
       "values": { "$immutable": true },
@@ -41,6 +42,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -128,7 +130,8 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
+          "severity": "HIGH"
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -138,7 +141,9 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "validators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98": "RollupProxy",
@@ -190,6 +195,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148875,
       "sinceBlock": 20569168,
       "values": { "$immutable": true },
@@ -239,6 +245,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148863,
       "sinceBlock": 20569167,
       "values": { "$immutable": true },
@@ -272,6 +279,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -330,7 +338,9 @@
         "inboxHistory": {
           "severity": "HIGH",
           "description": "All Inboxes that were ever set as allowed in the bridge."
-        }
+        },
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9": "TransparentUpgradeableProxy",
@@ -349,6 +359,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "sinceTimestamp": 1722259103,
       "sinceBlock": 20412468,
       "values": {
@@ -364,6 +375,11 @@
         "$upgradeCount": 1,
         "bridge": "eth:0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
+      },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d": "TransparentUpgradeableProxy",
@@ -386,6 +402,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "sinceTimestamp": 1722259103,
       "sinceBlock": 20412468,
       "values": {
@@ -410,6 +427,13 @@
         "maxDataSize": 117964,
         "paused": false,
         "sequencerInbox": "eth:0xF75206c49c1694594E3e69252E519434f1579876"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb": "TransparentUpgradeableProxy",
@@ -443,6 +467,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "sinceTimestamp": 1722259103,
       "sinceBlock": 20412468,
       "values": {
@@ -466,6 +491,10 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
+      },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e": "TransparentUpgradeableProxy",
@@ -498,6 +527,10 @@
         "$immutable": true,
         "owner": "eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b": "ProxyAdmin"
       }
@@ -513,6 +546,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "sinceTimestamp": 1722259103,
       "sinceBlock": 20412468,
       "values": {
@@ -545,6 +579,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       },
+      "fieldMeta": {
+        "executors": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
@@ -566,6 +604,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148911,
       "sinceBlock": 20569171,
       "values": {
@@ -574,6 +613,12 @@
         "proverHostIo": "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
         "proverMath": "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD",
         "proverMem": "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC": "OneStepProofEntry"
@@ -619,6 +664,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "sinceTimestamp": 1722259103,
       "sinceBlock": 20412468,
       "values": {
@@ -705,6 +751,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "sinceTimestamp": 1722261575,
       "sinceBlock": 20412674,
       "values": {
@@ -746,6 +793,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148887,
       "sinceBlock": 20569169,
       "values": { "$immutable": true },
@@ -779,6 +827,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "sinceTimestamp": 1722261575,
       "sinceBlock": 20412674,
       "values": {
@@ -798,6 +847,13 @@
         "owner": "eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f",
         "router": "eth:0x0000000000000000000000000000000000000000",
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812": "TransparentUpgradeableProxy",
@@ -851,6 +907,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -918,8 +975,17 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
+          "severity": "HIGH"
+        },
+        "batchPosters": { "severity": "LOW" },
+        "dacKeyset": { "severity": "HIGH" },
+        "isUsingFeeToken": { "severity": "HIGH" },
+        "isDelayBufferable": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF75206c49c1694594E3e69252E519434f1579876": "TransparentUpgradeableProxy",

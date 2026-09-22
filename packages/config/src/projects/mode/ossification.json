@@ -1,0 +1,76 @@
+{
+  "events": [
+    {
+      "timestamp": 1789395323,
+      "type": "state",
+      "contract": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+      "transaction": "0xa5888be651d314fc0de435d6bef7f2c934c2c9f0328cb6af7b86210d966ac551",
+      "updateId": "1980d17b",
+      "reason": "DisputeGameFactory: owner changed (owner; 0x0000000000000000000000005a0aae59d09fccbddb6c6cceb07b7279367c3d2a 0x000000000000000000000)."
+    },
+    {
+      "timestamp": 1789407803,
+      "type": "state",
+      "contract": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+      "transaction": "0x828a400a0e3fbbb002bcea09bab6bcceed7b4996bd56cd6bde234256de417661",
+      "updateId": "1980d17b",
+      "reason": "DisputeGameFactory: dispute game implementation set (permissionedGameArgs; 0x000000000000000000000000e1dffcbe4e22b813f26d2106d943c102e7cab87e 0x000000000000000000000)."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing superchainConfig. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade, tx 0x51a87bde at 17:41 UTC, changed permissionedGameArgs; owner had already moved to the shared Superchain ProxyAdminOwner (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) in tx 0xa5888be6 at 14:15 UTC the same day. Dated to the later of the two. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing superchainConfig. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing superchainConfig. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing superchainConfig. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0xE90e1bD2C7a4547f4A318017a5403cc81F73D03a",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing config. The diffHistory entry only bounds it between two discovery runs."
+    },
+    {
+      "timestamp": 1789408883,
+      "type": "state",
+      "contract": "eth:0xEB9d917868276cee5457609dbBF470FdE41BADE8",
+      "transaction": "0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",
+      "updateId": "1980d17b",
+      "reason": "Superchain upgrade replaced the SuperchainConfig and implementations in one transaction, changing superchainConfig. The diffHistory entry only bounds it between two discovery runs."
+    }
+  ]
+}

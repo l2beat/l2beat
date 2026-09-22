@@ -3,6 +3,12 @@
   "displayName": "TimelockController",
   "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -16,6 +22,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -24,11 +31,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "Proposer": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -41,6 +50,7 @@
       ]
     },
     "Canceller": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -53,6 +63,7 @@
       ]
     },
     "Executor": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

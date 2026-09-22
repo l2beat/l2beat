@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x60cca4b2ce4524323b3d52d00686afb9573ac43c
+
+# Diff at Mon, 21 Sep 2026 07:13:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1788432124
+- current timestamp: 1788432124
+
+## Description
+
+ossification re-review: pause-role holders are identity, not mechanism (HIGH -> MEDIUM)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788432124 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x9532ac328224caa88c82c5f509e88231fea1c7ba
 
 # Diff at Mon, 07 Sep 2026 08:37:46 GMT:

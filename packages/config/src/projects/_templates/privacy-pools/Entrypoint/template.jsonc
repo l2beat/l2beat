@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Entrypoint",
+  "critical": true,
   "category": "core",
   "description": "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.",
   "ignoreInWatchMode": ["latestRoot"],
@@ -13,7 +14,11 @@
   ],
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "accessControl": {
+      "severity": "HIGH",
       "description": "Current role membership map for the Entrypoint's owner and postman roles.",
       "handler": {
         "type": "accessControl",
@@ -69,8 +74,8 @@
       ]
     },
     "aspPostmen": {
-      "description": "Addresses with ASP_POSTMAN.",
       "severity": "HIGH",
+      "description": "Addresses with ASP_POSTMAN.",
       "type": "PERMISSION",
       "handler": {
         "type": "accessControl",

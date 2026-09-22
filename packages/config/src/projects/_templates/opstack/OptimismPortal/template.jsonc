@@ -1,12 +1,29 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OptimismPortal",
+  "critical": true,
   "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
   "ignoreMethods": ["isOutputFinalized", "balance"],
   "ignoreRelatives": ["gasPayingToken"],
   "ignoreInWatchMode": ["params"],
   "fields": {
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "L1_MNT_ADDRESS": {
+      "severity": "HIGH"
+    },
+    "SYSTEM_CONFIG": {
+      "severity": "HIGH"
+    },
+    "L2_ORACLE": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "guardian": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -15,6 +32,7 @@
       ]
     },
     "GUARDIAN": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

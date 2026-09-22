@@ -1,4 +1,29 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+  "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
+  // Canonical escrow for standard bridged ERC20s (counted in TVS without additional trust assumptions).
+  "critical": true,
+  "fields": {
+    "l2TokenImplementation": {
+      "severity": "HIGH"
+    },
+    "l2TokenFactory": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    }
+  }
 }

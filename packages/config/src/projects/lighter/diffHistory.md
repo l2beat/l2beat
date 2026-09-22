@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xc231309ed793c81d4008f951d4d9204dd8fe7e54
+
+# Diff at Fri, 18 Sep 2026 16:17:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6eca6e945b1a287f385087f86e711c3126587332 block: 1789464683
+- current timestamp: 1789748170
+
+## Description
+
+lighter: critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789464683 (main branch discovery), not current.
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      fieldMeta.desertMode.description:
++        "One-way escape-hatch state: once activated (after an expired, uncensorable priority request), normal operation halts permanently and users exit via desert-mode proofs."
+      fieldMeta.governance:
++        {"severity":"HIGH"}
+      fieldMeta.stateRootUpgradeVerifier:
++        {"severity":"HIGH","description":"If set to a non-zero address, a governor can replace the current state root with any new one accompanied by a proof this verifier accepts (the pointer self-clears after one use)."}
+      fieldMeta.treasury:
++        {"severity":"MEDIUM","description":"L1 address bound to the treasury account (accountIndex 0) that collects trading fees on L2."}
+      fieldMeta.insuranceFundOperator:
++        {"severity":"MEDIUM","description":"L1 address bound to the insurance fund account that backstops trading losses on L2."}
+      fieldMeta.assetConfigUSDC:
++        {"severity":"MEDIUM"}
+      fieldMeta.assetConfigETH:
++        {"severity":"MEDIUM"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DesertVerifier (eth:0x866418061d4C1168e1c8E8f6facE79675395E008) [N/A] {
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+      description:
++        "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      description:
+-        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045."
++        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished."
+      fieldMeta.approvedUpgradeNoticePeriodFmt.description:
+-        "upgrade delay, can be skipped by the 'securityCouncil' role."
++        "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
++        "HIGH"
+      fieldMeta.managedContracts:
++        {"severity":"HIGH","description":"The proxies whose implementations this gatekeeper can upgrade."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xbe4a7b2ddb095205c8ea74f1421316a1da286dbd
 
 # Diff at Tue, 15 Sep 2026 09:44:24 GMT:

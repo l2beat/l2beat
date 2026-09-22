@@ -1,12 +1,20 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SuperchainConfig",
+  "critical": true,
   "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "paused": {
+      "severity": "MEDIUM"
+    },
+    "pauseExpiry": {
       "severity": "HIGH"
     },
     "pauseExpiryFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "pauseExpiry",
@@ -15,6 +23,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "guardian": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "timestamp": 1789571490,
-  "configHash": "0xfa973f99c691c8c7d247edf179ad9daab5c8447279b1c3a1b99dd12be53140ec",
+  "configHash": "0x395cc603f3156dbae76bd334dbda87be7632ebfaa2c73ab8bb89f2813dccb129",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -28,6 +28,7 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
@@ -41,6 +42,14 @@
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
+      },
+      "fieldMeta": {
+        "minOwners": { "severity": "HIGH" },
+        "thresholdPercentage": { "severity": "HIGH" },
+        "ownershipTransferredToFallback": { "severity": "HIGH" },
+        "livenessInterval": { "severity": "HIGH" },
+        "fallbackOwner": { "severity": "HIGH" },
+        "livenessGuard": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
@@ -62,11 +71,8 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
-      "ignoreInWatchMode": [
-        "permissionedGamesTotal",
-        "gameCount",
-        "permissionedGamesTotal"
-      ],
+      "critical": true,
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1736166323,
       "sinceBlock": 21565406,
@@ -137,12 +143,19 @@
         "wethFromDGF": "eth:0x19f4eF9dDE39a50a2EF948B7d55AA19F60d99498"
       },
       "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
-        "game8": { "severity": "HIGH" }
+        "game8": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" },
+        "game8Args": { "severity": "HIGH" },
+        "game8Vm": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": "Proxy",
@@ -254,6 +267,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1787641991,
@@ -285,6 +299,13 @@
         "systemConfig": "eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A",
         "totalSupply": 0,
         "version": "1.5.1"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "config": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x19f4eF9dDE39a50a2EF948B7d55AA19F60d99498": "Proxy",
@@ -399,6 +420,7 @@
       ],
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
@@ -443,6 +465,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432959,
       "sinceBlock": 20178184,
@@ -463,6 +486,17 @@
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A",
         "version": "2.8.2"
+      },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x470458C91978D2d929704489Ad730DC3E3001113": "L1ChugSplashProxy",
@@ -498,6 +532,10 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -512,6 +550,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432815,
       "sinceBlock": 20178172,
@@ -519,6 +558,7 @@
         "$immutable": true,
         "owner": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x5891090d5085679714cb0e62f74950a3c19146a8": "AddressManager"
       },
@@ -589,6 +629,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432947,
@@ -731,10 +772,23 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -755,6 +809,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1748963099,
       "sinceBlock": 22624903,
@@ -776,6 +831,12 @@
         "pauseMessageTypehash": "0x0ad9a3778ba0f89045b0ba6e23129cdbd178a22b085d85b5dd8a48c8af831b54",
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
+      },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "foundationSafe": { "severity": "MEDIUM" },
+        "guardianSafe": { "severity": "MEDIUM" },
+        "deputy": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
@@ -909,6 +970,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
+      "critical": true,
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1763733803,
@@ -962,9 +1024,14 @@
         "version": "3.9.0"
       },
       "fieldMeta": {
+        "disputeGameFactory": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" }
+        "retirementTimestamp": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x90BB48fe3310499Db36437dCAE642F721e32d094": "Proxy",
@@ -994,6 +1061,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
@@ -1052,7 +1120,13 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.4.2"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "pauseExpiry": { "severity": "HIGH" },
+        "pauseExpiryFmt": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
         "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
@@ -1119,6 +1193,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596735,
       "sinceBlock": 23919014,
@@ -1215,6 +1290,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432935,
@@ -1299,9 +1375,17 @@
         "version": "5.6.1"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "anchorStateRegistry": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "ethLockbox": { "severity": "HIGH" },
+        "proofMaturityDelaySeconds": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
@@ -1341,6 +1425,10 @@
         "isUpgrading": false,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D": "ProxyAdmin"
       }
@@ -1372,6 +1460,7 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -1387,6 +1476,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -1439,7 +1529,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -1512,6 +1602,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432971,
@@ -1598,6 +1689,17 @@
         "systemConfig": "eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A",
         "TX_BASE_GAS": 21000,
         "version": "2.11.1"
+      },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xf931a81D18B1766d15695ffc7c1920a62b7e710a": "ResolvedDelegateProxy",
@@ -2634,24 +2736,24 @@
   },
   "usedTemplates": {
     "circle/L1OpUSDCBridgeAdapter": "0x7b0fd1c71ea89926c8c9ca49fd95cae9afc360f88c556a040665a4e1f50221a0",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/LivenessModule": "0x24a4d0f4074d77a187583dd74c1f45190ab6764dc63efb074a632e409520a7c9",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0xa91dfce6b6f037bb47a826f76496e4a1cffe1bbcd4c14cf754c1ac91616737a7",
-    "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory_v2": "0x20561644cde03f9ac8927ac7448ff435a4b253d7001fb36b0ed58fefc29c81ee",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/AnchorStateRegistry_post20": "0xd0d625ebafed18f8b0cddb022b9698de27f66c0771011c4f833377dcb9fb522b",
+    "opstack/DelayedWETH": "0xb414c00260c9bbb0d57843aacfd5aef6f26fc6d94ccb910ef20dd3b4c29c063b",
+    "opstack/DeputyPauseModule": "0xa55a63486d540ccca73d7e3a204febdd2f4b6e8e4a872bf5806a4359af8517b9",
+    "opstack/DisputeGameFactory_v2": "0x4b0418e46a757f719bd7d23d20a4faf5d8ebf4e76d30788e8e9a88c1c6258f06",
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
+    "opstack/OptimismPortal2": "0xeba6cb42b7d4fd68db8a8faeae5717eb1943fee08d7674dcc02dfd12d7256d71",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SuperchainConfig_expiry": "0x1fc8cd90b89237398882797e866e59d613d21f6a8c9ccbb2b72d507f3f7b620f",
+    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b"
   },
   "usedBlockNumbers": { "ethereum": 25990850 },
   "permissionsConfigHash": "0xb1bdefc807e3c77fa4e50ed33c489769d8617c918d8b35590725bab396b7121b",

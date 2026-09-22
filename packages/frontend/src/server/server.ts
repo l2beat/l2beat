@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import type { Server } from 'node:http'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import timeout from 'connect-timeout'
@@ -12,7 +13,7 @@ import {
   CLIENT_ASSETS_OUTPUT_DIR,
   CLIENT_ASSETS_PATH,
   CLIENT_TEMPLATE_PATH,
-} from '../paths'
+} from '../paths.mjs'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
@@ -137,6 +138,22 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     logger.error('Unhandled server error:', err)
     process.exit(1)
   })
+
+  stopOnShutdownSignal(server, logger)
+}
+
+// Node runs as PID 1 in the container, where the kernel ignores the default
+// SIGTERM action. Without an explicit handler `docker stop` waits the full
+// grace period (30s on Coolify) on every deploy before killing the process.
+function stopOnShutdownSignal(server: Server, logger: Logger) {
+  const forceExitAfterMs = 5_000
+  for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+    process.once(signal, () => {
+      logger.info(`Received ${signal}, shutting down`)
+      server.close(() => process.exit(0))
+      setTimeout(() => process.exit(0), forceExitAfterMs).unref()
+    })
+  }
 }
 
 function createDevPageRouterMiddleware(

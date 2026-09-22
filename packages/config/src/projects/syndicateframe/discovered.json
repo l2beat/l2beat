@@ -19,6 +19,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1707369335,
       "sinceBlock": 10289994,
@@ -54,6 +55,17 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791": "ResolvedDelegateProxy",
         "base:0x06DDDA853506cECa671a06136f955f7f042FD667": "L1CrossDomainMessenger"
@@ -87,6 +99,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -145,6 +158,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1707369307,
       "sinceBlock": 10289980,
@@ -170,6 +184,15 @@
         "paused": false,
         "SYSTEM_CONFIG": "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
         "version": "1.7.2"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0x52fA397D799f1CE416a2089B964Aa293c347994F": "Proxy",
@@ -234,12 +257,14 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "sinceTimestamp": 1707369287,
       "sinceBlock": 10289970,
       "values": {
         "$immutable": true,
         "owner": "base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0": "AddressManager"
       },
@@ -266,6 +291,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1707369321,
       "sinceBlock": 10289987,
@@ -312,7 +338,20 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4": "Proxy",
@@ -352,6 +391,10 @@
         "isUpgrading": false,
         "owner": "base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E": "ProxyAdmin"
       }
@@ -367,6 +410,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "sinceTimestamp": 1707369327,
       "sinceBlock": 10289990,
       "values": {
@@ -379,6 +423,17 @@
         "MESSENGER": "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
         "OTHER_BRIDGE": "base:0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b": "L1ChugSplashProxy",

@@ -1,0 +1,60 @@
+{
+  "events": [
+    {
+      "timestamp": 1786627967,
+      "type": "code",
+      "contract": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+      "transaction": "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of SuperchainConfig (Upgraded event)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of SystemConfig (Upgraded event)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0x91493a61ab83b62943E6dCAa5475Dd330704Cc84",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of OptimismPortal2 (Upgraded event)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0xBaf9dD4C5DD9389b263A5394513943bE06f1C0F0",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of AnchorStateRegistry (Upgraded event)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of DisputeGameFactory (Upgraded event)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0xc76543A64666d9a073FaEF4e75F651c88e7DBC08",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of L1CrossDomainMessenger through the AddressManager (AddressSet)."
+    },
+    {
+      "timestamp": 1786633319,
+      "type": "code",
+      "contract": "eth:0xe07eA0436100918F157DF35D01dCE5c11b16D1F1",
+      "transaction": "0xd704d5b3a7f5ca96f70223e3baa8676f1ca1587fae3305051f090a6c5e4c62fa",
+      "updateId": "d5c8d5ea",
+      "reason": "Upgraded the implementation of L1StandardBridge (EIP-1967 slot, impl 61525eaacddb97d9184afc205827e6a4fd0bf62a -> b37a11aadf167b2f0b8dd85372de4bc66cd4a891)."
+    }
+  ]
+}

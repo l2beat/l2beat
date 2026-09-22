@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xdb55f323de2926dad85b060529160a788774e47d
+
+# Diff at Sun, 20 Sep 2026 18:21:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1787645820
+- current timestamp: 1787645820
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787645820 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x9077e46c29c4149856c167e2b93ca4b3042ed7f6
+
+# Diff at Fri, 18 Sep 2026 09:34:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1787645820
+- current timestamp: 1787645820
+
+## Description
+
+scroll: critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787645820 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x8e24931fdd4a8b8355c07fb749c940e88eca80fd
 
 # Diff at Mon, 07 Sep 2026 08:38:03 GMT:

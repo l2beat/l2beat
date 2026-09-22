@@ -19,6 +19,10 @@
     "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "WithdrawalQueueERC721"
   },
   "overrides": {
+    "eth:0xE064B565Cf2A312a3e66Fe4118890583727380C0": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115": {
       "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
     },

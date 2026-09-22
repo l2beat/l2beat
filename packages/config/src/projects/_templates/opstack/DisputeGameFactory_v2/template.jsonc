@@ -1,12 +1,9 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DisputeGameFactory",
+  "critical": true,
   "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
-  "ignoreInWatchMode": [
-    "gameCount",
-    "permissionedGameArgs",
-    "permissionedGamesTotal"
-  ],
+  "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
   "ignoreMethods": ["gameAtIndex"],
   "types": {
     "ProposerFromArgs": {
@@ -27,6 +24,15 @@
     }
   },
   "fields": {
+    "gameImpls": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
     "game1337": {
       "severity": "HIGH",
       "handler": {
@@ -111,6 +117,11 @@
       }
     },
     "permissionedGameArgs": {
+      // CWIA clone args of the permissioned game: absolutePrestate (bytes 0-32,
+      // the fault-proof program commitment), then vm, anchor registry, weth,
+      // proposer, challenger. setImplementation() can replace these WITHOUT
+      // changing the game1 impl address, so the whole blob is HIGH.
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -119,6 +130,11 @@
       }
     },
     "game8Args": {
+      // CWIA clone args of the type-8 game: absolutePrestate (bytes 0-32,
+      // the fault-proof program commitment), then vm, anchor registry, weth,
+      // chainId. setImplementation() can replace these WITHOUT changing the
+      // game8 impl address, so the whole blob is HIGH.
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -129,6 +145,7 @@
     // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
     // (prestate(32) | vm(20) -> offset 32).
     "game8Vm": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -156,6 +173,7 @@
       "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

@@ -1,12 +1,11 @@
 import { ethers } from 'ethers'
-import { parseAbiItem } from 'viem/utils'
 import type { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMethod'
 import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 
 export const SAFE_methods: Method[] = [
   defineMethod(
-    parseAbiItem('function multiSend(bytes memory transactions)'),
+    'function multiSend(bytes memory transactions)',
     ([transactions]) => {
       const txs = decodeMultiSendInput(transactions)
       return txs.flatMap((op) => {
@@ -29,9 +28,7 @@ export const SAFE_methods: Method[] = [
     'Safe:Singleton1.3.0',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeUserOp(address to, uint256 value, bytes data, uint8 operation)',
-    ),
+    'function executeUserOp(address to, uint256 value, bytes data, uint8 operation)',
     ([to, , data]) => {
       return [
         {

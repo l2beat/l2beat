@@ -1,3 +1,602 @@
+Generated with discovered.json: 0x1e65e361faa58fd1f84337e67c8a533f9a6004bf
+
+# Diff at Mon, 21 Sep 2026 11:19:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1786612387
+- current timestamp: 1786612387
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786612387 (main branch discovery), not current.
+
+```diff
+    contract FXSBridge (eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) [starknet/StarknetEthBridge] {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract USDTBridge (eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.feeCollector.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) [starknet/DelayedExecutor] {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      fieldMeta.executionExpiration:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelay:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract rETHBridge (eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract sfrxETHBridge (eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract FRAXBridge (eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UNIBridge (eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
++        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
++        "HIGH"
+      fieldMeta.isFrozen:
++        {"severity":"MEDIUM"}
+      fieldMeta.getUpgradeActivationDelay:
++        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
++        {"severity":"HIGH"}
+      fieldMeta.manager:
++        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
++        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x51428ebd598b47dc5573f96ef4435167ff876b0e
+
+# Diff at Fri, 18 Sep 2026 10:24:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1786612387
+- current timestamp: 1786612387
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786612387 (main branch discovery), not current.
+
+```diff
+    contract WBTCBridge (eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.tokenHaltSignalled.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.tokenHaltCompleted.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract FXSBridge (eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d) [starknet/L1EscrowDAI] {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.tokenHaltSignalled.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.tokenHaltCompleted.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) [starknet/StarknetEthBridge] {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract USDTBridge (eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.feeCollector.severity:
+-        "HIGH"
+      fieldMeta.messageCancellationDelay:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) [starknet/DelayedExecutor] {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"executionDelayFmt":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract rETHBridge (eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract FRAXBridge (eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract MultiBridge (eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract UNIBridge (eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
+      fieldMeta.accessControl.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x66134d2869951d529aa6a30f18130a57fbcb11bb
 
 # Diff at Mon, 07 Sep 2026 08:38:01 GMT:

@@ -1,9 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
+  "critical": true,
   "category": "bridge-canonical",
   "fields": {
+    "ethGateway": {
+      "severity": "HIGH"
+    },
+    "defaultERC20Gateway": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "gateways": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "newGateway",

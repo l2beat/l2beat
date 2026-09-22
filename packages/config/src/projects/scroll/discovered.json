@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1787147569,
-  "configHash": "0x614b0cbd94941e85646ff17bf9c32701daa181ae9f921e61d7c4e16c1f055e9a",
+  "timestamp": 1789723805,
+  "configHash": "0xe6a39633df5ddf8c2d9abe4c5027125baea3fbec2d89386ee30a16d514411667",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -67,6 +67,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
@@ -119,6 +120,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -139,6 +145,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
@@ -185,6 +192,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -287,6 +299,7 @@
         "0x4ad50f22109a8ff91daad934d6d1519aa3d186c4d8ebc1ffdc165e0986aa23ae"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1753339799,
       "sinceBlock": 22987338,
@@ -311,6 +324,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1729781135,
       "sinceBlock": 21036143,
@@ -363,6 +377,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -381,6 +400,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1764678203,
       "sinceBlock": 23925755,
@@ -390,6 +410,11 @@
         "protocolVersion": 9,
         "verifierDigest1": "0x0062333dc88631be7af046cc8d3c24f346de172aa2030a28b445ab500889d297",
         "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
+      },
+      "fieldMeta": {
+        "verifierDigest2": { "severity": "HIGH" },
+        "verifierDigest1": { "severity": "HIGH" },
+        "plonkVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5": "ZkEvmVerifierPostFeynman"
@@ -447,6 +472,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used to update the verifier and keep track of current and old versions.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1722833675,
       "sinceBlock": 20460107,
@@ -499,10 +525,12 @@
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7, 8, 9, 10]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "verifierVersions": {
           "description": "Each element of the array says which version of verifier is registered under this index in latestVerifier array."
         },
         "latestVerifier": {
+          "severity": "HIGH",
           "description": "Only verifiers of version >= 7 can be used to check Scroll STF (see _commitBatchesFromV7 on Scroll contract). Versions are NOT indices of this array, they are given by verifierVersions array."
         }
       },
@@ -522,6 +550,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getFirstUnfinalizedMessageEnqueueTime",
         "nextCrossDomainMessageIndex",
@@ -553,14 +582,23 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1787147567,
+        "getFirstUnfinalizedMessageEnqueueTime": 1789723799,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 998818,
-        "nextUnfinalizedQueueIndex": 998818,
+        "nextCrossDomainMessageIndex": 998979,
+        "nextUnfinalizedQueueIndex": 998979,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "scrollChain": { "severity": "HIGH" },
+        "enforcedTxGateway": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messageQueueV1": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
@@ -714,6 +752,7 @@
         "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696920095,
       "sinceBlock": 18318330,
@@ -733,6 +772,13 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "TransparentUpgradeableProxy",
         "eth:0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": "L1CustomERC20Gateway"
@@ -740,7 +786,7 @@
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L1ScrollMessenger",
@@ -753,6 +799,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -797,6 +844,16 @@
         "rollup": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "enforcedTxGateway": { "severity": "HIGH" },
+        "messageQueueV2": { "severity": "HIGH" },
+        "messageQueueV1": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
         "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": "L1ScrollMessenger"
@@ -832,6 +889,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the proper sender.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -867,8 +925,11 @@
         "paused": false
       },
       "fieldMeta": {
+        "messageQueue": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
       },
@@ -886,6 +947,7 @@
         "0x35ded5d00c89b25126b147567eab9e1d28535673e16322b341512fa00e573a4d"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1764678143,
       "sinceBlock": 23925750,
@@ -915,6 +977,7 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
@@ -1060,6 +1123,7 @@
         "scMinorityNoDelay": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "scNoDelay": ["eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
       },
+      "fieldMeta": { "accessControl": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner"
       },
@@ -1076,6 +1140,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge WETH from L1 to L2.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -1106,6 +1171,14 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "l2WETH": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
         "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24": "L1WETHGateway"
@@ -1126,6 +1199,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -1155,6 +1229,13 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": "TransparentUpgradeableProxy",
         "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0": "L1ETHGateway"
@@ -1172,6 +1253,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
       "sinceTimestamp": 1781774015,
       "sinceBlock": 25343479,
@@ -1181,6 +1263,11 @@
         "protocolVersion": 10,
         "verifierDigest1": "0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269",
         "verifierDigest2": "0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67"
+      },
+      "fieldMeta": {
+        "verifierDigest2": { "severity": "HIGH" },
+        "verifierDigest1": { "severity": "HIGH" },
+        "plonkVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": "ZkEvmVerifierPostFeynman"
@@ -1196,6 +1283,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
@@ -1242,6 +1330,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -1263,6 +1356,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1742476115,
       "sinceBlock": 22088274,
@@ -1298,6 +1392,12 @@
           "baseFeeScalar": 9700000000000
         },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "enforcedBatchParameters": { "severity": "HIGH" },
+        "messageQueueParameters": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
@@ -1404,6 +1504,7 @@
         "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
       "sinceTimestamp": 1781773979,
       "sinceBlock": 25343476,
@@ -1458,6 +1559,13 @@
         "owner": "eth:0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "TransparentUpgradeableProxy",
         "eth:0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03": "L1CustomERC20Gateway"
@@ -1465,7 +1573,7 @@
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ScrollChain",
@@ -1478,6 +1586,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
+      "critical": true,
       "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
@@ -1530,14 +1639,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 519245,
+        "lastFinalizedBatchIndex": 519873,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 519245,
-          "lastFinalizedBatchIndex": 519245,
-          "lastFinalizeTimestamp": 1787143739,
+          "lastCommittedBatchIndex": 519875,
+          "lastFinalizedBatchIndex": 519873,
+          "lastFinalizeTimestamp": 1789717955,
           "flags": 1,
           "reserved": 0
         },
@@ -1564,6 +1673,16 @@
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
         "verifier": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "isEnforcedModeEnabled": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messageQueueV2": { "severity": "HIGH" },
+        "messageQueueV1": { "severity": "HIGH" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "TransparentUpgradeableProxy",
         "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7": "ScrollChain"
@@ -1578,6 +1697,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1753339811,
       "sinceBlock": 22987339,
@@ -1587,6 +1707,11 @@
         "protocolVersion": 8,
         "verifierDigest1": "0x003ac2e012d8a7fb1495d94839fe36559b52fd6d60a532884c7558de2b88bf72",
         "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
+      },
+      "fieldMeta": {
+        "verifierDigest2": { "severity": "HIGH" },
+        "verifierDigest1": { "severity": "HIGH" },
+        "plonkVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485": "ZkEvmVerifierPostFeynman"
@@ -1603,6 +1728,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -1632,6 +1758,13 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff": "TransparentUpgradeableProxy",
         "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97": "L1CustomERC20Gateway"
@@ -1651,6 +1784,7 @@
         "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1753067003,
       "sinceBlock": 22964754,
@@ -1669,6 +1803,11 @@
         "PAUSE_CONTROLLER_ROLE": "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23",
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b": "TransparentUpgradeableProxy",
@@ -1797,7 +1936,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 161,
+        "nonce": 162,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1813,6 +1952,7 @@
         "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1754694995,
       "sinceBlock": 23099560,
@@ -1821,6 +1961,11 @@
         "plonkVerifier": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
         "verifierDigest1": "0x003ac2e012d8a7fb1495d94839fe36559b52fd6d60a532884c7558de2b88bf72",
         "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
+      },
+      "fieldMeta": {
+        "verifierDigest2": { "severity": "HIGH" },
+        "verifierDigest1": { "severity": "HIGH" },
+        "plonkVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid"
@@ -1876,7 +2021,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1925,6 +2070,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -1956,6 +2102,15 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "l2TokenFactory": { "severity": "HIGH" },
+        "l2TokenImplementation": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": "TransparentUpgradeableProxy",
         "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9": "L1StandardERC20Gateway"
@@ -1984,12 +2139,17 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782311,
       "sinceBlock": 18306933,
       "values": {
         "$immutable": true,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072": "ProxyAdmin"
@@ -2047,6 +2207,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge USDC tokens from L1 to L2.",
+      "critical": true,
       "ignoreInWatchMode": ["totalBridgedUSDC"],
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696919351,
@@ -2074,8 +2235,19 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 5086098798550,
+        "totalBridgedUSDC": 4891950170301,
         "withdrawPaused": false
+      },
+      "fieldMeta": {
+        "withdrawPaused": { "severity": "MEDIUM" },
+        "depositPaused": { "severity": "MEDIUM" },
+        "circleCaller": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "l2USDC": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": "TransparentUpgradeableProxy",
@@ -2097,6 +2269,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -2123,6 +2296,13 @@
           "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c": "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2"
         },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "fieldMeta": {
+        "ethGateway": { "severity": "HIGH" },
+        "defaultERC20Gateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "gateways": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "TransparentUpgradeableProxy",
@@ -2155,6 +2335,7 @@
       ],
       "proxyType": "ZeppelinOS proxy",
       "description": "Contract of the USDC token on Scroll.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919085,
       "sinceBlock": 37,
@@ -2183,6 +2364,17 @@
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "rescuer": { "severity": "MEDIUM" },
+        "pauser": { "severity": "MEDIUM" },
+        "blacklister": { "severity": "MEDIUM" },
+        "owner": { "severity": "HIGH" },
+        "masterMinter": { "severity": "HIGH" },
+        "implementation": { "severity": "HIGH" },
+        "admin": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "FiatTokenProxy",
         "scr:0x72e2451a2da1535DBf0E7CB1e8C69F56E00A7B7b": "FiatTokenV2_1"
@@ -2204,6 +2396,7 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696918061,
       "sinceBlock": 4,
@@ -2335,6 +2528,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "scNoDelay": ["scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]
       },
+      "fieldMeta": { "accessControl": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B": "ScrollOwner"
       },
@@ -2355,6 +2549,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1730295071,
       "sinceBlock": 10662938,
@@ -2407,6 +2602,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -2463,6 +2663,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696918064,
       "sinceBlock": 5,
@@ -2509,6 +2710,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -2563,6 +2769,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to propose and manage onchain governance proposals.",
+      "critical": true,
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377334,
       "sinceBlock": 8963441,
@@ -2599,6 +2806,17 @@
         "votingDelay": 129600,
         "votingPeriod": 302400
       },
+      "fieldMeta": {
+        "PROPOSAL_TYPES_CONFIGURATOR": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "proposalThreshold": { "severity": "HIGH" },
+        "token": { "severity": "HIGH" },
+        "admin": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "timelock": { "severity": "HIGH" },
+        "manager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": "TransparentUpgradeableProxy",
         "scr:0xd74aD535faE370Ec0762ECe045EeB8970Be378F7": "AgoraGovernor"
@@ -2614,6 +2832,7 @@
         "0x5f197ec2fda9a452c1f68f2749032b674f98af1fbf0d9136bc50540a76088dd4"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919404,
       "sinceBlock": 65,
@@ -2643,6 +2862,18 @@
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
         "withdrawPaused": false
       },
+      "fieldMeta": {
+        "withdrawPaused": { "severity": "MEDIUM" },
+        "depositPaused": { "severity": "MEDIUM" },
+        "circleCaller": { "severity": "HIGH" },
+        "l2USDC": { "severity": "HIGH" },
+        "l1USDC": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": "TransparentUpgradeableProxy",
         "scr:0x6E0618d128d2d861994DF7a725743F69b53C2804": "L2USDCGateway"
@@ -2658,6 +2889,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1GatewayRouter contract.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
@@ -2676,6 +2908,12 @@
         "ethGateway": "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": {
+        "ethGateway": { "severity": "HIGH" },
+        "defaultERC20Gateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": "TransparentUpgradeableProxy",
         "scr:0x3808d0F2F25839E73e0Fbf711368fC4aE80c7763": "L2GatewayRouter"
@@ -2690,16 +2928,21 @@
       ],
       "proxyType": "immutable",
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
+      "critical": true,
       "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"],
       "deployerAddress": "scr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1696917614,
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xaba2e2111575b70bf4f1fe6d3b72fa7c719d88acf8fcbed3de12d3aba6664fa7",
+        "messageRoot": "0xbf3af9abccb2b00ee3693c136b117457efca4c4d68691ca977f779ccf7aa45af",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323334,
+        "nextMessageIndex": 323579,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "fieldMeta": {
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0x5300000000000000000000000000000000000000": "L2MessageQueue"
@@ -2760,6 +3003,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
@@ -2784,6 +3028,13 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": "TransparentUpgradeableProxy",
         "scr:0x1D40306EEfCF6EBd496d6048F6edf8892346e558": "L2CustomERC20Gateway"
@@ -2804,6 +3055,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
@@ -2811,6 +3063,10 @@
         "$immutable": true,
         "implementation": "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
         "owner": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "ScrollStandardERC20Factory"
@@ -2831,6 +3087,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract of the L2ScrollMessenger contract.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
@@ -2855,6 +3112,13 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
       },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "TransparentUpgradeableProxy",
         "scr:0x191770c52309dff2c52FfEcf059ECC3862f5D721": "L2ETHGateway"
@@ -2870,6 +3134,7 @@
         "0x33c052cc2c4fdf215b0121eb60241fe83cdfde96380fee6740cef22af87011c9"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
@@ -2896,6 +3161,15 @@
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
         "WETH": "scr:0x5300000000000000000000000000000000000004"
       },
+      "fieldMeta": {
+        "WETH": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "l1WETH": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": "TransparentUpgradeableProxy",
         "scr:0x86c5CBfC03ffFC7faf5dfC7D781A9adfA9f47dD1": "L2WETHGateway"
@@ -2917,6 +3191,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
@@ -2943,6 +3218,13 @@
         "paused": false,
         "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "messageQueue": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "TransparentUpgradeableProxy",
         "scr:0x6fa66EeD8e8086f4c77204B5484D26F4e9AB7772": "L2ScrollMessenger"
@@ -2959,6 +3241,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377342,
       "sinceBlock": 8963444,
@@ -3025,6 +3308,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -3089,12 +3377,17 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377322,
       "sinceBlock": 8963437,
       "values": {
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": "ProxyAdmin"
@@ -3167,6 +3460,10 @@
         "$immutable": true,
         "owner": "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45": "ProxyAdmin"
       }
@@ -3185,12 +3482,17 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026": "ProxyAdmin"
@@ -3206,6 +3508,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1730295517,
       "sinceBlock": 10663087,
@@ -3252,6 +3555,11 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -3272,6 +3580,7 @@
         "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1753067278,
       "sinceBlock": 17428392,
@@ -3291,6 +3600,11 @@
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "TransparentUpgradeableProxy",
         "scr:0x105B9baaF75dA556c0206159481243163fAea1c9": "PauseController"
@@ -3306,6 +3620,7 @@
       ],
       "proxyType": "immutable",
       "description": " Contract that uses controllers to manage minters for USDC on Scroll.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919091,
       "sinceBlock": 38,
@@ -3313,6 +3628,10 @@
         "$immutable": true,
         "getMinterManager": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "fieldMeta": {
+        "getMinterManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": "MasterMinter"
@@ -3363,6 +3682,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract of the ERC20 standard token used by the ERC20 factory.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
@@ -3384,6 +3704,10 @@
         "name": "",
         "symbol": "",
         "totalSupply": 0
+      },
+      "fieldMeta": {
+        "counterpart": { "severity": "HIGH" },
+        "gateway": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "ScrollStandardERC20"
@@ -3441,6 +3765,7 @@
         "0x82f655ed5b736c2c40fc07c72bee354ee5f31dd0df43e6fe365525014d53e9a4"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C",
       "sinceTimestamp": 1725336741,
       "sinceBlock": 8949006,
@@ -3493,6 +3818,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C",
       "sinceTimestamp": 1725336741,
       "sinceBlock": 8949006,
@@ -3500,6 +3826,10 @@
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": "ProxyAdmin"
@@ -3515,6 +3845,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
@@ -3539,6 +3870,14 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
         "tokenFactory": "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
+      },
+      "fieldMeta": {
+        "tokenFactory": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "TransparentUpgradeableProxy",
@@ -3608,18 +3947,95 @@
         "0x6441f3b0fb49b443c0b25abe353f29f6a2360f7e34071f7d2ab83686ad8d1593"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377313,
       "sinceBlock": 8963433,
       "values": {
         "$immutable": true,
         "governor": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-        "PERCENT_DIVISOR": 10000
+        "PERCENT_DIVISOR": 10000,
+        "proposalTypes": {
+          "0": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Treasury transfers"
+          },
+          "1": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Governor changes"
+          },
+          "2": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Propose protocol upgrades"
+          },
+          "3": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Change token implementation"
+          },
+          "4": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Token emission & inflation"
+          },
+          "5": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Gov Docs & Committees"
+          },
+          "6": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Constitutional/Rights Amendments"
+          },
+          "7": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Treasury transfers - Approval Voting"
+          },
+          "8": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Governor changes - Approval Voting"
+          },
+          "9": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Propose protocol upgrades - Approval Voting"
+          },
+          "10": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Change token implementation - Approval Voting"
+          },
+          "11": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Token emission & inflation - Approval Voting"
+          },
+          "12": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Gov Docs & Committees - Approval Voting"
+          },
+          "13": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Constitutional/Rights Amendments - Approval Voting"
+          }
+        }
+      },
+      "fieldMeta": {
+        "governor": { "severity": "HIGH" },
+        "proposalTypes": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": "ProposalTypesConfigurator"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {
@@ -5869,29 +6285,29 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
-    "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
+    "scroll/EnforcedTxGateway": "0x29bffb7bf656dc7937a5f5c24fa911b37416e7e1d4b8b33b42619d92c699a0eb",
+    "scroll/L1CustomERC20Gateway": "0x83eb3718ae600367dd73eb4010b550f8d3505a9c4ef44bc8b5f0f320b1346aba",
     "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ETHGateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1GatewayRouter": "0x174e26104220ab271c8fc9bd5407a0bcb515974cf8bb7adc401a9bccfef460e1",
-    "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
-    "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
-    "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
-    "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
-    "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
-    "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
-    "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
-    "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
+    "scroll/L1ETHGateway": "0x83eb3718ae600367dd73eb4010b550f8d3505a9c4ef44bc8b5f0f320b1346aba",
+    "scroll/L1GatewayRouter": "0x10da9cdb1bad5989a352b652f1d29f8ed3c732ea5d73a23e902961ebcde16b89",
+    "scroll/L1MessageQueue": "0x7e87e30a827b84374049326053a7a4d47082aa83fb7bd496b329f0e26e6a4dc6",
+    "scroll/L1ScrollMessenger": "0xd284c9caab3818ca793ad66a8b7e5f3737522fea8fcdbd1389af581741e4671a",
+    "scroll/L1StandardERC20Gateway": "0xd24a08c9aa88501c444babb32a49b360b25e7a61dfdc71668a1e6524b3d88836",
+    "scroll/L1Timelock": "0xcf9c044d422b5c1956fd203a134ddfccd2f18a0bd8c9044b35729ce1d91ed5b0",
+    "scroll/L1USDCGateway": "0x672783869ed77f172ce1a8ea245b478cddcc3eda31edf0e1c1b3f668d08db5a2",
+    "scroll/L1WETHGateway": "0x13d13876c6d7332d4da2fa7625a90891d264d17877810b926751f0d482d20343",
+    "scroll/MultipleVersionRollupVerifier": "0xff9cd5aa3e6c2458e93060c9733349c1374dc2779ab34385fb33d11e65d328e2",
+    "scroll/PauseController": "0x22273bf385b1dfae48730cb9a521c1da630621c409d2101f90bd0b607727d8a6",
+    "scroll/ScrollChain": "0xe7eb15c51aa8f7c2a94491787d56408cd1342f985c07546c42d8c279b8e139ed",
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
-    "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "scroll/SystemConfig": "0x9b33b6c888c1460d4702e2f5ef9eb200122d6c94a2f8db964ba3d798d8e23fd8",
+    "tokens/circle/MasterMinter": "0xe88d9095642dc6c4d778fb52360056ccada60e22a1580cdeb414d6dd7ef92f3c"
   },
-  "usedBlockNumbers": { "ethereum": 25789575, "scroll": 34684167 },
+  "usedBlockNumbers": { "ethereum": 26003498, "scroll": 35080001 },
   "permissionsConfigHash": "0x7f20c32e72dcdc16bdddceaa4838b0f9cceb538a539e38fa22069243ed8de97a",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {

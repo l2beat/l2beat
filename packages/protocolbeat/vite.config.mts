@@ -1,5 +1,5 @@
 import { openPanelPlugin } from '@l2beat/shared-pure'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 
 // https://vitejs.dev/config/
@@ -10,15 +10,22 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), openPanelPlugin(env.VITE_OPENPANEL_CLIENT_ID)],
     build: {
       outDir: 'build',
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks(id) {
-            if (id.includes('node_modules/monaco-editor')) {
-              return 'monaco'
-            }
-            if (id.includes('node_modules')) {
-              return 'vendor'
-            }
+          codeSplitting: {
+            groups: [
+              {
+                name(id) {
+                  if (id.includes('node_modules/monaco-editor')) {
+                    return 'monaco'
+                  }
+                  if (id.includes('node_modules')) {
+                    return 'vendor'
+                  }
+                  return null
+                },
+              },
+            ],
           },
         },
       },

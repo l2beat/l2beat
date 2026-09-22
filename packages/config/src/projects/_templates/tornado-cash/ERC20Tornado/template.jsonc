@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ERC20Tornado",
+  "critical": true,
   "category": "core",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
   "fields": {
@@ -8,12 +9,16 @@
       "description": "Fixed deposit amount accepted by this pool.",
       "severity": "LOW"
     },
-    "token": { "description": "ERC20 token accepted by this mixer instance." },
+    "token": {
+      "severity": "HIGH",
+      "description": "ERC20 token accepted by this mixer instance."
+    },
     "verifier": {
-      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
     },
     "hasher": {
+      "severity": "HIGH",
       "description": "Merkle-tree hasher used for commitments and root updates."
     }
   },

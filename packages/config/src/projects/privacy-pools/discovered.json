@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs.",
+      "critical": true,
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265199,
       "sinceBlock": 22153709,
@@ -32,6 +33,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -65,8 +67,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -93,6 +109,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -126,8 +143,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -154,6 +185,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -187,8 +219,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -226,6 +272,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.",
+      "critical": true,
       "ignoreInWatchMode": ["latestRoot"],
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265247,
@@ -286,7 +333,9 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "accessControl": {
+          "severity": "HIGH",
           "description": "Current role membership map for the Entrypoint's owner and postman roles."
         },
         "associationSets": {
@@ -324,6 +373,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -357,8 +407,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -385,6 +449,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs.",
+      "critical": true,
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265211,
       "sinceBlock": 22153710,
@@ -445,6 +510,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -478,8 +544,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -506,6 +586,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -539,8 +620,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -567,6 +662,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -600,8 +696,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -628,6 +738,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -661,8 +772,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -689,6 +814,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -722,8 +848,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -750,6 +890,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -783,8 +924,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -840,6 +995,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -873,8 +1029,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -901,6 +1071,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -934,8 +1105,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -967,6 +1152,7 @@
       ],
       "proxyType": "immutable",
       "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -1000,8 +1186,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -1028,6 +1228,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -1061,8 +1262,22 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+        },
+        "WITHDRAWAL_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes withdrawals from this pool."
+        },
+        "RAGEQUIT_VERIFIER": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
+        },
+        "ENTRYPOINT": {
+          "severity": "HIGH",
+          "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
           "severity": "HIGH",
@@ -1975,9 +2190,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "privacy-pools/CommitmentVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "privacy-pools/Entrypoint": "0x73ace37ad5a6f13a98c7c375f4b9c77352b90b6b85ab19f58913ee9324939a61",
-    "privacy-pools/PrivacyPoolComplex": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
-    "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
+    "privacy-pools/Entrypoint": "0x8a9e902ce5ccb54e58d6ca843503088bafa2f737a78fd8d0d6c422562c1af43d",
+    "privacy-pools/PrivacyPoolComplex": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
+    "privacy-pools/PrivacyPoolSimple": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25193240 },

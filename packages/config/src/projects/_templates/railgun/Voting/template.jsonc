@@ -1,12 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Voting",
+  "critical": true,
   "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
   "category": "gov",
   "ignoreMethods": ["getActions", "proposals", "proposalsLength"],
   "fields": {
     "proposalCount": {
-      "severity": "HIGH",
+      "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed.",
       "handler": {
         "type": "eventCount",
         "topics": [

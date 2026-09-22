@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1734131819,
+      "type": "code",
+      "contract": "eth:0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+      "transaction": "0x3fe74b8c72f294ff456a997ea43070350485d48cb96da3390ae02837cf626789",
+      "reason": "Upgraded the OptimismPortal implementation (Upgraded 0x436e\u2026c03c -> 0x75a2\u2026ccf5) after the chain's shutdown announcement; the recorded update itself is a first-discovery artifact (see ignoredUpdates)."
+    }
+  ],
+  "ignoredUpdates": ["aea57d64"]
+}

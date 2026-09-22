@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
+  "critical": true,
   "description": "The main system contract defining the {{networkName}} Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.",
   "ignoreInWatchMode": [
     "lastAccInputHash",
@@ -12,6 +13,51 @@
   "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
   "ignoreRelatives": ["gasTokenAddress", "pol"],
   "fields": {
+    "pendingOptimisticModeManager": {
+      "severity": "MEDIUM"
+    },
+    "pendingAggchainManager": {
+      "severity": "MEDIUM"
+    },
+    "pendingAdmin": {
+      "severity": "MEDIUM"
+    },
+    "rollupConfigHash": {
+      "severity": "LOW"
+    },
+    "gasTokenNetwork": {
+      "severity": "HIGH"
+    },
+    "gasTokenAddress": {
+      "severity": "HIGH"
+    },
+    "submissionInterval": {
+      "severity": "HIGH"
+    },
+    "threshold": {
+      "severity": "HIGH"
+    },
+    "forceBatchTimeout": {
+      "severity": "HIGH"
+    },
+    "forceBatchAddress": {
+      "severity": "HIGH"
+    },
+    "bridgeAddress": {
+      "severity": "HIGH"
+    },
+    "globalExitRootManager": {
+      "severity": "HIGH"
+    },
+    "rollupManager": {
+      "severity": "HIGH"
+    },
+    "aggLayerGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "CONSENSUS_TYPE": {
       "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
     },
@@ -33,7 +79,12 @@
       "description:": "changes if anything in the aggchainSigners multisig changes",
       "severity": "HIGH"
     },
+    "admin": {
+      // rollup admin: can change the trusted sequencer and forced-batch parameters.
+      "severity": "HIGH"
+    },
     "optimisticModeManager": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -42,6 +93,7 @@
       ]
     },
     "aggchainManager": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -54,6 +106,9 @@
       "severity": "HIGH"
     },
     "selectedOpSuccinctConfig": {
+      // the live OP-Succinct verification keys and rollup config hash: changing any
+      // of them changes what counts as a valid state transition proof.
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",

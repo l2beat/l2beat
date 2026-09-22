@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DisputeGameFactory",
+  "critical": true,
   "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
   "ignoreInWatchMode": [
     "gameCount",
@@ -23,6 +24,13 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+
+    "owner": {
+      "severity": "HIGH"
+    },
     "gameImpls": {
       "severity": "HIGH",
       "handler": {
@@ -68,6 +76,7 @@
       }
     },
     "permissionedGameArgs": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -94,6 +103,7 @@
       "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

@@ -122,6 +122,10 @@
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
       },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
@@ -192,6 +196,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
@@ -296,11 +304,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
@@ -327,6 +337,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
+      "critical": true,
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733855519,
       "sinceBlock": 21373913,
@@ -375,11 +386,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
@@ -1009,7 +1022,7 @@
     "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/L1StandardBridge_facet": "0xf0b0a009b2460a496a4ba02e53c0b6f71714bca771cc0e657e83da6cc9a3de22",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },

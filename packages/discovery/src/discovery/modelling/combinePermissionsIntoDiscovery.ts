@@ -85,7 +85,7 @@ function reachableFromEntrypoints(
   // before it runs. The copy keeps them off the entries that get written.
   const withPermissions = clusterEntries
     .filter((entry) => entry.type !== 'Reference')
-    .map((entry) => ({ ...entry, ...(byAddress[entry.address] ?? {}) }))
+    .map((entry) => ({ ...entry, ...byAddress[entry.address] }))
 
   const entrypoints = discovery.entries.map((entry) => entry.address)
   return new Set(

@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "timestamp": 1789656344,
-  "configHash": "0x9200def3dd13832befe54cbb65db547b51289f0d47d9effb731847a64e779436",
+  "timestamp": 1789917555,
+  "configHash": "0x06f40902111ca63c12022ada8e771d1d2cdd509cd18e316b5ae75e763fe772da",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -17,12 +17,17 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241639,
       "sinceBlock": 17519057,
       "values": {
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
@@ -93,6 +98,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -123,16 +129,17 @@
         "aggregationVkey": "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 43200,
         "finalizationPeriodSeconds": 43200,
         "initializerVersion": 3,
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 100761146,
-        "latestOutputIndex": 21993,
-        "nextBlockNumber": 100762946,
-        "nextOutputIndex": 21994,
+        "latestBlockNumber": 100892546,
+        "latestOutputIndex": 22066,
+        "nextBlockNumber": 100894346,
+        "nextOutputIndex": 22067,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -145,6 +152,40 @@
         "submissionInterval": 1800,
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "2.0.1"
+      },
+      "fieldMeta": {
+        "CHALLENGER": { "severity": "HIGH" },
+        "FINALIZATION_PERIOD_SECONDS": { "severity": "HIGH" },
+        "submissionInterval": { "severity": "HIGH" },
+        "SUBMISSION_INTERVAL": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "challenger": { "severity": "HIGH" },
+        "aggregationVkey": {
+          "severity": "HIGH",
+          "description": "Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots."
+        },
+        "rangeVkeyCommitment": {
+          "severity": "HIGH",
+          "description": "Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal."
+        },
+        "rollupConfigHash": {
+          "severity": "HIGH",
+          "description": "Hash of the rollup configuration that is a public input to every validity proof."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "The SP1 verifier (gateway) contract that validity proofs are routed to."
+        },
+        "optimisticMode": {
+          "severity": "HIGH",
+          "description": "If enabled, approved proposers can submit state roots without validity proofs (trusted optimistic fallback); the ZK validity requirement only applies while this is false."
+        },
+        "finalizationPeriodSeconds": {
+          "severity": "HIGH",
+          "description": "Delay until a proposed state root can be used to finalize withdrawals."
+        },
+        "deletedOutputs": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481": "Proxy",
@@ -168,6 +209,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241795,
@@ -195,6 +237,16 @@
         "symbol": "MNT",
         "totalSupply": "6219316794889999291248757829"
       },
+      "fieldMeta": {
+        "MIN_MINT_INTERVAL": { "severity": "HIGH" },
+        "MINT_CAP_MAX_NUMERATOR": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "mintCapNumerator": {
+          "severity": "HIGH",
+          "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
+        }
+      },
       "implementationNames": {
         "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "TransparentUpgradeableProxy",
         "eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c": "L1MantleToken"
@@ -216,6 +268,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710440051,
@@ -272,10 +325,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
+        "opStackDA": { "severity": "MEDIUM" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -367,6 +423,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
+      "critical": true,
       "deployerAddress": "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "sinceTimestamp": 1739349323,
       "sinceBlock": 21829257,
@@ -407,6 +464,15 @@
         "Proposer": ["eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
+        "Executor": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
       }
@@ -427,6 +493,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687953527,
@@ -457,7 +524,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704444",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704465",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -470,6 +537,17 @@
         "ResolvedDelegateProxy_addressManager": "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
+      },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
@@ -487,6 +565,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687951883,
       "sinceBlock": 17577535,
@@ -494,6 +573,7 @@
         "$immutable": true,
         "owner": "eth:0xca35F8338054739D138884685e08b39EE2217794"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "Lib_AddressManager"
       },
@@ -515,6 +595,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687954103,
       "sinceBlock": 17577718,
@@ -529,6 +610,17 @@
         "MESSENGER": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
+      },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
@@ -577,6 +669,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439967,
@@ -598,12 +691,21 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 539404,
-          "prevBlockNum": 25995977
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 26018579
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "Proxy",
@@ -625,6 +727,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439895,
       "sinceBlock": 19434932,
@@ -633,6 +736,10 @@
         "addressManager": "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "isUpgrading": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
@@ -1119,18 +1226,18 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
+    "opstack/OptimismPortal": "0x57d64ca52a31a02a55a1ea25b0466ff641c462503c6705b5c8d6c071d4636a47",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8"
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x8c81eaa5a4485b4fb883f2f467d34febac2cf0fe9c803f30486eb4cc15868c99"
   },
-  "usedBlockNumbers": { "ethereum": 25997892 },
-  "permissionsConfigHash": "0xb3509bdf5e78cd4cabb473ecabc0dca45aada1ed172c1118d517428cd1323bd1",
+  "usedBlockNumbers": { "ethereum": 26019578 },
+  "permissionsConfigHash": "0xbc9459dd60686fdcfde40be25193f3ac9ca326d66fc728a45316a8bda171e063",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
   },
@@ -1146,6 +1253,12 @@
     },
     "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+          "description": "can delete proposed state roots, enable/disable the optimistic (proof-less) mode and change the finalization period.",
+          "role": ".challenger"
+        },
         {
           "permission": "interact",
           "from": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
@@ -1169,7 +1282,13 @@
         {
           "permission": "interact",
           "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
-          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode.",
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode, update the SP1 verification keys, the verifier address, the rollup config hash, the submission interval and manage the approved proposer set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+          "description": "can mint new MNT (up to 2% of supply per year as set by mintCapNumerator) and transfer token ownership.",
           "role": ".owner"
         },
         {

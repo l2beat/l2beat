@@ -1,7 +1,7 @@
 {
   "name": "shared-sp1",
   "timestamp": 1783679422,
-  "configHash": "0x33a477941ca8b8ef66e8470300a4cd45399a91c4a8ad1c7230fd63835588920c",
+  "configHash": "0x7bdc06925bfa89c99dd14831f0e17b99087336662f46f76acd23f11ffee1cdbf",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -20,6 +20,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -108,11 +112,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -141,6 +147,10 @@
         "VERIFIER_HASH": "0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317",
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
@@ -174,6 +184,10 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -231,6 +245,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -319,11 +337,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -352,6 +372,10 @@
         "VERIFIER_HASH": "0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317",
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
@@ -385,6 +409,10 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -435,6 +463,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -442,6 +471,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -502,11 +535,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
@@ -522,6 +557,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
@@ -595,11 +631,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -623,6 +661,10 @@
         "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
         "VERSION": "v5.0.0"
       },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
       }
@@ -642,6 +684,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771084331,
       "sinceBlock": 24456046,
@@ -650,6 +693,10 @@
         "VERIFIER_HASH": "0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317",
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
@@ -679,6 +726,10 @@
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
       },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
       }
@@ -702,6 +753,10 @@
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
       },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
       }
@@ -721,6 +776,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -729,6 +785,10 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -1150,7 +1210,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": {

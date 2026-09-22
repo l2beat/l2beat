@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SecurityCouncilManager",
+  "critical": true,
   "category": "gov",
   "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
   "ignoreMethods": ["getScheduleUpdateInnerData"],
@@ -8,11 +9,36 @@
   // it is restricted to security council member management
   "canActIndependently": false,
   "fields": {
+    "getSecondCohort": {
+      "severity": "LOW"
+    },
+    "getFirstCohort": {
+      "severity": "LOW"
+    },
+    "l2CoreGovTimelock": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "securityCouncils": {
+      "severity": "HIGH"
+    },
+    "minRotationPeriod": {
+      "severity": "HIGH"
+    },
+    "cohortSize": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "getBothCohorts": {
       "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
       "severity": "LOW"
     },
     "defaultAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -25,6 +51,7 @@
       ]
     },
     "cohortReplacerAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -40,6 +67,7 @@
       ]
     },
     "memberAdderAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -55,6 +83,7 @@
       ]
     },
     "memberReplacerAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -70,6 +99,7 @@
       ]
     },
     "memberRotatorAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -85,6 +115,7 @@
       ]
     },
     "memberRemoverAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -100,6 +131,7 @@
       ]
     },
     "minRotationPeriodSetterAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {

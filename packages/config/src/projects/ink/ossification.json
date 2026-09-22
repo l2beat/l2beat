@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "ink:0x4200000000000000000000000000000000000016",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2ToL1MessagePasser predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1787692559,
+      "type": "state",
+      "contract": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
+      "transaction": "0xbf75cc41981ecb8481f3b114697310490b72f96c74fcc34e33b57433b6d9e756",
+      "updateId": "3faa3c28",
+      "reason": "SystemConfig: owner changed (owner; 0x0000000000000000000000009ba6e03d8b90de867373db8cf1a58d2f7f006b3a 0x000000000000000000000)."
+    }
+  ]
+}

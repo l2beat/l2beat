@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "timestamp": 1785233236,
+      "type": "state",
+      "contract": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
+      "transaction": "0x6c85ef5bc9801b9a10fd6e428073ace609989ff8635db997156c3eddd44acde2",
+      "updateId": "c0a4e15c",
+      "reason": "SequencerInbox: DAC keyset changed (dacKeyset; SetValidKeyset 0xc2c008db9d0d25ca30d60080f5ebd3d114dbccd95f2bd2df05446eae6b1acadf 0x00000000000)."
+    },
+    {
+      "timestamp": 1785233276,
+      "type": "state",
+      "contract": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
+      "transaction": "0x74bb20e2a6636af46bda920d00f85dca6e34c8f8b3cfc4754f5373b6bbcd8a6c",
+      "updateId": "c0a4e15c",
+      "reason": "SequencerInbox: DAC keyset changed (dacKeyset; InvalidateKeyset 0x3d618b2236dc77e04f0569d6cbc1d66d329b7b285af1e8bc21b26e4b8585b739 0x)."
+    }
+  ]
+}

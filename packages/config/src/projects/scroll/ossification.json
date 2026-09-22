@@ -1,0 +1,40 @@
+{
+  "events": [
+    {
+      "timestamp": 1708590023,
+      "type": "code",
+      "contract": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+      "transaction": "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
+      "reason": "Upgraded the implementation of the (since retired) L1MessageQueue that gated all L1->L2 messages popped by ScrollChain at finalization."
+    },
+    {
+      "timestamp": 1724196995,
+      "type": "code",
+      "contract": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+      "transaction": "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7",
+      "reason": "Upgraded the implementation of the (since retired) L1MessageQueue that gated all L1->L2 messages popped by ScrollChain at finalization."
+    },
+    {
+      "timestamp": 1779270407,
+      "type": "state",
+      "contract": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+      "transaction": "0xe2e005c681f783fbd6d4c9c5bb5b40a554826434546377ce253e5dcd6f557461",
+      "reason": "Reduced the threshold of Scroll Multisig 3 (proposer, canceller and admin of TimelockFast) from 3 to 2; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1779270521,
+      "type": "state",
+      "contract": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+      "transaction": "0x88316f5cba9e68d6bcb54f52470e58c5a2270675c62ed4f0ca05f2b1dde173f7",
+      "reason": "Reduced the threshold of the L2 Scroll Multisig 3 (proposer, canceller and admin of the L2 TimelockFast) from 3 to 2; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1782371087,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0xef62af37d5b9f1ff354bffa8f6431f047f82754ae39dc6a87582ca22b78eae58",
+      "updateId": "bc8d7ec1",
+      "reason": "Registered ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) as proof verifier version 10 in the MultipleVersionRollupVerifier."
+    }
+  ]
+}

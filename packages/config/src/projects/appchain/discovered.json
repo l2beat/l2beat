@@ -19,6 +19,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "sinceTimestamp": 1731100211,
       "sinceBlock": 21145520,
@@ -45,6 +46,13 @@
         "paused": false,
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x010aDE5d8F9DC340531140802438798C189c36E0": "TransparentUpgradeableProxy",
         "eth:0x74110Fb401469FEA31A10680e28c9C4c17aFdd36": "Inbox"
@@ -62,6 +70,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "sinceTimestamp": 1731100211,
       "sinceBlock": 21145520,
@@ -86,6 +95,10 @@
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B"
       },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd": "TransparentUpgradeableProxy",
         "eth:0xf2078f19A9322E2e0Dfd02839C7D74215F2E7512": "Outbox"
@@ -103,6 +116,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -140,6 +154,8 @@
         "sequencerReportedSubMessageCount": 794800
       },
       "fieldMeta": {
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -203,6 +219,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "sinceTimestamp": 1731100211,
       "sinceBlock": 21145520,
@@ -220,6 +237,11 @@
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B"
       },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed": "TransparentUpgradeableProxy",
         "eth:0x1c48b5526071EB2c89ccA3F8afC061b12944eED5": "RollupEventInbox"
@@ -236,6 +258,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -302,6 +325,8 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "validators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
@@ -309,6 +334,7 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
+          "severity": "HIGH",
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
@@ -459,6 +485,10 @@
         "owner": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f": "ProxyAdmin"
       }
@@ -532,6 +562,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723493255,
       "sinceBlock": 20514818,
@@ -541,6 +572,12 @@
         "proverHostIo": "eth:0xd79fd59b73c814D9607aB93C4A1aDCea06F91692",
         "proverMath": "eth:0xFe53F58bAd7B83B01C47CC86471507911263ac91",
         "proverMem": "eth:0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163": "OneStepProofEntry"
@@ -597,6 +634,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "deployerAddress": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "sinceTimestamp": 1731100211,
       "sinceBlock": 21145520,
@@ -630,6 +668,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0x2bf43034b9559643e986A2fE3cE015a18247b904"]
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "executors": { "severity": "LOW" }
+      },
       "implementationNames": {
         "eth:0x7c4e8195FB560D1557C52f051dCdA4724a2894b3": "TransparentUpgradeableProxy",
         "eth:0x31c97a0A216CCd730bd8ab3ecAA97eACbA27b11a": "UpgradeExecutor"
@@ -647,6 +689,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -719,7 +762,9 @@
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosters": { "severity": "LOW" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473": "TransparentUpgradeableProxy",
@@ -761,6 +806,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "deployerAddress": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "sinceTimestamp": 1731100211,
       "sinceBlock": 21145520,
@@ -812,6 +858,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723493159,
       "sinceBlock": 20514810,
@@ -838,6 +885,10 @@
         "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
@@ -879,6 +930,10 @@
         "$immutable": true,
         "owner": "eth:0x7c4e8195FB560D1557C52f051dCdA4724a2894b3"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xF025D25aE360D0D33a275dF74863CCc6600E6f8E": "ProxyAdmin"
       }
@@ -893,6 +948,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723492979,
       "sinceBlock": 20514795,
@@ -916,6 +972,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723493075,
       "sinceBlock": 20514803,
@@ -934,6 +991,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723492895,
       "sinceBlock": 20514788,
@@ -1782,23 +1840,23 @@
     "espresso/Sequencing/EspressoNitroTEEVerifier_WithServices": "0x2a48dad44007597042c770d7809f685adf01c97b27ab3c748c16fec8a4e4708a",
     "espresso/Sequencing/EspressoTEEVerifier_onlyNitro": "0xa7462bba7d44a2b825082be8ddd162e2da5883f3e2690823bb53932d0773fffb",
     "espresso/Sequencing/NitroEnclaveVerifier": "0xeec57567f567c5ffa38c4f80ac540496aa560068877ce088f6f5d9e48c216bca",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
+    "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
-    "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
+    "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
-    "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
+    "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
-    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
+    "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d"
   },
   "usedBlockNumbers": { "ethereum": 25832879 },
   "permissionsConfigHash": "0x1f72925e2f6b8376c2c613ade63e59b9c2a22235c80516f047debe3cf0157dd8",

@@ -4,6 +4,7 @@
   "fields": {
     "activeVerifiers": {
       "description": "Verifiers that are routed to by their selector and not frozen.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["selector", "verifier"],
@@ -27,6 +28,7 @@
       }
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

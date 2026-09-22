@@ -25,6 +25,10 @@
         "owner": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917": "ProxyAdmin"
       }
@@ -380,6 +384,10 @@
         "$immutable": true,
         "owner": "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE": "ProxyAdmin"
@@ -744,6 +752,10 @@
         "owner": "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19": "ProxyAdmin"
       }
@@ -875,6 +887,10 @@
         "$immutable": true,
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2": "ProxyAdmin"
@@ -1719,6 +1735,7 @@
             ]
           }
         ],
+        "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
         "getFirstUnprocessedPriorityTx": 269079,
         "getGateway": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
@@ -1752,9 +1769,9 @@
       },
       "implementationNames": {
         "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "DiamondProxy",
-        "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "",
+        "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "AdminFacet",
         "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
-        "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "",
+        "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "MailboxFacet",
         "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": ""
       }
     },
@@ -1921,6 +1938,10 @@
         "$immutable": true,
         "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": "ProxyAdmin"
@@ -2437,6 +2458,10 @@
         "owner": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": "ProxyAdmin"
       }
@@ -2637,6 +2662,10 @@
         "$immutable": true,
         "owner": "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "ProxyAdmin"
@@ -2841,6 +2870,10 @@
         "$immutable": true,
         "owner": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f": "ProxyAdmin"
@@ -3200,6 +3233,10 @@
       "values": {
         "$immutable": true,
         "owner": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": "ProxyAdmin"
@@ -4476,6 +4513,35 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": [
+      "event ExecuteUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut)",
+      "event Freeze()",
+      "event InitGateway(address gateway)",
+      "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
+      "event NewGovernor(address indexed oldGovernor, address indexed newGovernor)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event NewPendingGovernor(address indexed oldPendingGovernor, address indexed newPendingGovernor)",
+      "event NewPriorityTxMaxGasLimit(uint256 oldPriorityTxMaxGasLimit, uint256 newPriorityTxMaxGasLimit)",
+      "event SecondaryChainStatusUpdate(address indexed gateway, bool isActive)",
+      "event Unfreeze()",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "function acceptAdmin()",
+      "function acceptGovernor()",
+      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function freezeDiamond()",
+      "function getName() view returns (string)",
+      "function setGateway(address _gateway)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setPendingGovernor(address _newPendingGovernor)",
+      "function setPorterAvailability(bool _zkPorterIsAvailable)",
+      "function setPriorityTxMaxGasLimit(uint256 _newPriorityTxMaxGasLimit)",
+      "function setSecondaryChainGateway(address _gateway, bool _active)",
+      "function setValidator(address _validator, bool _active)",
+      "function unfreezeDiamond()"
+    ],
     "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -4487,6 +4553,27 @@
     "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
+    ],
+    "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": [
+      "event EthWithdrawalFinalized(address indexed to, uint256 amount)",
+      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
+      "event SyncBatchRoot(address indexed secondaryChainGateway, uint256 batchNumber, uint256 forwardEthAmount)",
+      "event SyncL2Requests(address secondaryChainGateway, uint256 totalSyncedPriorityTxs, bytes32 syncHash, uint256 forwardEthAmount)",
+      "event SyncL2TxHash(bytes32 l2TxHash)",
+      "event SyncRangeBatchRoot(address indexed secondaryChainGateway, uint256 fromBatchNumber, uint256 toBatchNumber, bytes32 rangeBatchRootHash, uint256 forwardEthAmount)",
+      "function FORWARD_REQUEST_TYPE_HASH() view returns (bytes32)",
+      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function forwardRequestL2Transaction(tuple(address gateway, bool isContractCall, address sender, uint256 txId, address contractAddressL2, uint256 l2Value, bytes l2CallData, uint256 l2GasLimit, uint256 l2GasPricePerPubdata, bytes[] factoryDeps, address refundRecipient) _request) payable returns (bytes32 canonicalTxHash)",
+      "function getName() view returns (string)",
+      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
+      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2LogInclusion(uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
+      "function syncBatchRoot(address _secondaryChainGateway, uint256 _batchNumber, uint256 _forwardEthAmount) payable",
+      "function syncL2Requests(address _secondaryChainGateway, uint256 _newTotalSyncedPriorityTxs, bytes32 _syncHash, uint256 _forwardEthAmount) payable",
+      "function syncL2TxHash(bytes32 _l2TxHash) payable",
+      "function syncRangeBatchRoot(address[] _secondaryChainGateways, uint256 _fromBatchNumber, uint256 _toBatchNumber) payable"
     ],
     "linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": [
       "constructor(address _zkSync)",
@@ -5615,7 +5702,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zklinknova/secondaryGateway": "0x7c6cdb315edbc57a3856f61b3448217c343a401013f0f46fcc72d9a900b7ec6b",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"

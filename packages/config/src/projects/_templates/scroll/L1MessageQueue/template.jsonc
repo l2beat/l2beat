@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
+  "critical": true,
   "category": "core",
   // L1MessageQueueV2
   "ignoreMethods": [
@@ -18,5 +19,17 @@
     "nextCrossDomainMessageIndex",
     "nextUnfinalizedQueueIndex"
   ],
-  "ignoreRelatives": ["messageQueueV1"] // deprecated
+  "ignoreRelatives": ["messageQueueV1"], // deprecated
+  "fields": {
+    "$admin": { "severity": "HIGH" },
+    "owner": { "severity": "HIGH" },
+    "messenger": { "severity": "HIGH" },
+    "scrollChain": { "severity": "HIGH" },
+    "enforcedTxGateway": {
+      // can append messages to the queue without going through the messenger
+      "severity": "HIGH"
+    },
+    "systemConfig": { "severity": "HIGH" },
+    "messageQueueV1": { "severity": "HIGH" }
+  }
 }

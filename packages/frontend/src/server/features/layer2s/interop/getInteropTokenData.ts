@@ -1,4 +1,5 @@
-import { unique } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
+import { type UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
@@ -33,20 +34,32 @@ export type InteropTokenDashboardData = {
   snapshotTimestamp: number | undefined
 }
 
+/** Inputs the caller may already hold; anything missing is loaded here. */
+export interface InteropTokenDataContext {
+  snapshotTimestamp?: UnixTime
+  interopProjects?: Project<'interopConfig'>[]
+}
+
 export async function getInteropTokenData(
   params: InteropTokenParams,
+  context: InteropTokenDataContext = {},
 ): Promise<InteropTokenDashboardData | null> {
   if (env.MOCK) {
     return getMockInteropTokenData(params)
   }
 
-  const interopProjects = await ps.getProjects({
-    select: ['interopConfig'],
-  })
+  const interopProjects =
+    context.interopProjects ??
+    (await ps.getProjects({
+      select: ['interopConfig'],
+    }))
   const selection = getTokenDataSelection(params)
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens({ selection })
+    await getLatestAggregatedInteropTransferWithTokens({
+      selection,
+      snapshotTimestamp: context.snapshotTimestamp,
+    })
   const tokenRecords = scopeRecordsToToken(records, params.tokenId)
 
   if (tokenRecords.length === 0) {

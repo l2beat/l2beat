@@ -1,7 +1,31 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "EdgeChallengeManager",
+  "critical": true,
   "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
   "ignoreRelatives": ["stakeToken"],
-  "category": "core"
+  "category": "core",
+  "fields": {
+    "excessStakeReceiver": {
+      "severity": "HIGH"
+    },
+    "stakeToken": {
+      "severity": "HIGH"
+    },
+    "stakeAmounts": {
+      "severity": "HIGH"
+    },
+    "challengePeriodBlocks": {
+      "severity": "HIGH"
+    },
+    "oneStepProofEntry": {
+      "severity": "HIGH"
+    },
+    "assertionChain": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }
