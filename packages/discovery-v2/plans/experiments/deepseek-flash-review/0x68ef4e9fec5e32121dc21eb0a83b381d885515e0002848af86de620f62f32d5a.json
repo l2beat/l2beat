@@ -1,0 +1,94 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "MultipleVersionRollupVerifier",
+    "shapeHash": "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a",
+    "steps": [
+      {
+        "id": "updateVerifier",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateVerifier"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "version",
+          "add": [
+            {
+              "event": "UpdateVerifier"
+            }
+          ]
+        },
+        "reason": "Every version key is added by the constructor or by updateVerifier (onlyOwner), both of which emit UpdateVerifier."
+      },
+      {
+        "id": "latestVerifier",
+        "covers": [
+          "latestVerifier(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "latestVerifier(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "latestVerifier is written only by the constructor and updateVerifier (onlyOwner), whose UpdateVerifier event enumerates its version keys."
+      },
+      {
+        "id": "legacyVerifiersLength",
+        "covers": [
+          "legacyVerifiersLength(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "legacyVerifiersLength(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "legacyVerifiersLength counts the array appended only through updateVerifier (onlyOwner); its version keys are enumerated from UpdateVerifier."
+      },
+      {
+        "id": "ownershipTransferred",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OwnershipTransferred"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newOwner",
+          "add": [
+            {
+              "event": "OwnershipTransferred"
+            }
+          ]
+        },
+        "reason": "transferOwnership and renounceOwnership (onlyOwner) are the only writers of the ownership history, which has no getter and is observable only through OwnershipTransferred."
+      }
+    ],
+    "skips": [
+      {
+        "item": "getVerifier(uint256,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "legacyVerifiers(uint256,uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:58:16.973Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x2b0a7609623479ff171113dde51450e13a7ae1e38465640962ad3f183d8b2f2e"
+  }
+}

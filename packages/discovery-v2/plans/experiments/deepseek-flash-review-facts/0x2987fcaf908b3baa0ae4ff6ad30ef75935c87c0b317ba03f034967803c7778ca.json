@@ -1,0 +1,65 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "FaultDisputeGameV2",
+    "shapeHash": "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca",
+    "steps": [],
+    "skips": [
+      {
+        "item": "claimData(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "claims(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "credit(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "getChallengerDuration(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getNumToResolve(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getRequiredBond(uint128)",
+        "reason": "computation"
+      },
+      {
+        "item": "hasUnlockedCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "normalModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "refundModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolutionCheckpoints(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolvedSubgames(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "subgames(uint256,uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:13:57.817Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xc33b3e43b8f68eb4a5b07ec9d6fc69caa749bb759fdeac7684a841858cd5e6ff"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "NitroEnclaveVerifier",
+    "shapeHash": "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db",
+    "steps": [
+      {
+        "id": "getVerifierProofId",
+        "covers": [
+          "getVerifierProofId(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getVerifierProofId(uint8)",
+          "keys": {
+            "literal": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "_verifierProofIds is written only by updateVerifierId and setZkConfiguration (onlyOwner), and its keys are the fixed ZkCoProcessorType enum values Unknown/RiscZero/Succinct"
+      },
+      {
+        "id": "zkConfig",
+        "covers": [
+          "zkConfig(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zkConfig(uint8)",
+          "keys": {
+            "literal": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "zkConfig is written only by setZkConfiguration, updateVerifierId and updateAggregatorId (onlyOwner), and its keys are the fixed ZkCoProcessorType enum values Unknown/RiscZero/Succinct"
+      }
+    ],
+    "skips": [
+      {
+        "item": "checkTrustedIntermediateCerts(bytes32[][])",
+        "reason": "computation"
+      },
+      {
+        "item": "getZkVerifier(uint8,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "ownershipHandoverExpiresAt(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "trustedIntermediateCerts(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getZkConfig(uint8)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:07:55.939Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x8c803e4826ff4f8d4f18a404265ce9c1545510a438482daa380eb1b4ac0539a6"
+  }
+}

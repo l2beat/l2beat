@@ -1,0 +1,77 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEProverRegistry",
+    "shapeHash": "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2",
+    "steps": [
+      {
+        "id": "isValidProposer",
+        "covers": [
+          "isValidProposer(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ProposerSet"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "proposer",
+          "add": [
+            {
+              "event": "ProposerSet",
+              "when": {
+                "arg": "isValid",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "ProposerSet",
+              "when": {
+                "arg": "isValid",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "isValidProposer is written only by setProposer (onlyOwner) and initialize, which emit ProposerSet"
+      },
+      {
+        "id": "signerImageHash",
+        "covers": [
+          "signerImageHash(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "signerImageHash(address)",
+          "keys": {
+            "from": "$baseline.getRegisteredSigners"
+          }
+        },
+        "use": "map@1",
+        "reason": "signerImageHash is written by registerSigner (onlyOwnerOrManager) and deleted by deregisterSigner, so its live keys are exactly the signers returned by the baseline getRegisteredSigners() getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "isRegisteredSigner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "isValidSigner(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:01:35.130Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x205bd9e293a4f308f6ee57f7e6e1020e0fea9fb6b69f9928ecc288096ba93c58"
+  }
+}

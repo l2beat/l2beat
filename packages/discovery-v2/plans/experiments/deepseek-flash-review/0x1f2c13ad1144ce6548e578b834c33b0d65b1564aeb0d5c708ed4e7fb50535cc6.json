@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1CrossDomainMessenger",
+    "shapeHash": "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6",
+    "steps": [
+      {
+        "id": "initialized",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Initialized"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "version",
+          "add": [
+            {
+              "event": "Initialized"
+            }
+          ]
+        },
+        "reason": "Initialized is emitted only by initialize() (reinitializer, guarded by _assertOnlyProxyAdminOrProxyAdminOwner), recording the contract's initialization version history"
+      }
+    ],
+    "skips": [
+      {
+        "item": "baseGas(bytes,uint32)",
+        "reason": "computation"
+      },
+      {
+        "item": "failedMessages(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "successfulMessages(bytes32)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:08:24.450Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x73fc75c769aacf1b7377d871b93622cf506683ef1816e9929ab5bb85bd4f48d4"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "UpgradeExecutor",
+    "shapeHash": "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE",
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE"
+          }
+        },
+        "reason": "_roles is written by initialize (initializer), grantRole/revokeRole (onlyRole), and renounceRole (self-only account check), which emit RoleAdminChanged, RoleGranted, and RoleRevoked"
+      }
+    ],
+    "skips": [
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:40:30.955Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xa5b7b24535d774affc2e9a034a45ecc2d2035970dba31cab37955141379c7904"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SequencerInbox",
+    "shapeHash": "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
+    "steps": [
+      {
+        "id": "keysetHash",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SetValidKeyset",
+            "InvalidateKeyset"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "keysetHash",
+          "add": [
+            {
+              "event": "SetValidKeyset"
+            },
+            {
+              "event": "InvalidateKeyset"
+            }
+          ]
+        },
+        "reason": "The dasKeySetInfo keys are the keysetHash values announced by SetValidKeyset and InvalidateKeyset, the only writes of setValidKeyset and invalidateKeysetHash (both onlyRollupOwner)"
+      },
+      {
+        "id": "dasKeySetInfo",
+        "covers": [
+          "dasKeySetInfo(bytes32)",
+          "getKeysetCreationBlock(bytes32)",
+          "isValidKeysetHash(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "dasKeySetInfo(bytes32)",
+          "keys": {
+            "from": "$step.keysetHash"
+          }
+        },
+        "use": "map@1",
+        "reason": "dasKeySetInfo records every keyset created by setValidKeyset (onlyRollupOwner), which emits SetValidKeyset, so its full key set is the hashes those events announce"
+      }
+    ],
+    "skips": [
+      {
+        "item": "isBatchPoster(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isSequencer(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "forceInclusionDeadline(uint64)",
+        "reason": "computation"
+      },
+      {
+        "item": "inboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:26:16.700Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 3,
+    "decisionHash": "0x410e910f6360dc160befe756468903242daac6bb87261de989412cfaab103f3b"
+  }
+}

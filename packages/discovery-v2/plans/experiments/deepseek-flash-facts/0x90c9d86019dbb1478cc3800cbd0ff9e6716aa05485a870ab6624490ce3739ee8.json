@@ -1,0 +1,74 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "pauseExtended",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Paused",
+            "PauseExtended",
+            "Unpaused"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            },
+            {
+              "event": "PauseExtended"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Unpaused"
+            }
+          ]
+        },
+        "reason": "The keys of pauseTimestamps are the identifiers written only by pause/extend/unpause, which are restricted to the GUARDIAN or INCIDENT_RESPONDER and emit Paused, PauseExtended and Unpaused."
+      },
+      {
+        "id": "pauseTimestamps",
+        "covers": [
+          "pauseTimestamps(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "pauseTimestamps(address)",
+          "keys": {
+            "from": "$step.pauseExtended"
+          }
+        },
+        "use": "map@1",
+        "reason": "pauseTimestamps is written only by pause/unpause/extend, restricted to the GUARDIAN or INCIDENT_RESPONDER, whose events enumerate every non-zero key."
+      }
+    ],
+    "skips": [
+      {
+        "item": "expiration(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:40:30.333Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x6bcfa5472f3f19cad98df6e2280235fc44a873574fabe936c1c77865151c7308"
+  }
+}

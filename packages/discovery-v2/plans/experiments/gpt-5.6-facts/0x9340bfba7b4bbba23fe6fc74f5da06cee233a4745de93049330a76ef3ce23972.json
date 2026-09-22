@@ -1,0 +1,57 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "AnchorStateRegistry",
+    "shapeHash": "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972",
+    "steps": [],
+    "skips": [
+      {
+        "item": "anchors(uint32)",
+        "reason": "computation"
+      },
+      {
+        "item": "disputeGameBlacklist(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isGameBlacklisted(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isGameClaimValid(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameFinalized(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameProper(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRegistered(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameResolved(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRespected(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRetired(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:33:47.291Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 2,
+    "decisionHash": "0x2fde4a678a3dab63a6aa27550f375cec3f372f09ab3703994ce664b524991d0b"
+  }
+}

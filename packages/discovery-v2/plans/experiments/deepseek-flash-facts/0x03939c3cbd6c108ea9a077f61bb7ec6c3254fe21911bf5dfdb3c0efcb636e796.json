@@ -1,0 +1,25 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Inbox",
+    "shapeHash": "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796",
+    "steps": [],
+    "skips": [
+      {
+        "item": "calculateRetryableSubmissionFee(uint256,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isAllowed(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:47:09.094Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x0eec0acda054f3408ed0629e781716ec59f2b98c62804a436f2769443aea7224"
+  }
+}

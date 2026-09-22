@@ -1,0 +1,80 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "OptimismPortal2",
+    "shapeHash": "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da",
+    "steps": [
+      {
+        "id": "implementation",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the proxy implementation slot is written only by upgradeTo/upgradeToAndCall (proxyCallIfNotAdmin), which emit Upgraded, so the upgrade sequence is event-only state"
+      },
+      {
+        "id": "admin",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the proxy admin slot is written only by changeAdmin (proxyCallIfNotAdmin) and the constructor, which emit AdminChanged, so the admin-change history is event-only state"
+      }
+    ],
+    "skips": [
+      {
+        "item": "disputeGameBlacklist(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "finalizedWithdrawals(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "minimumGasLimit(uint64)",
+        "reason": "computation"
+      },
+      {
+        "item": "numProofSubmitters(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proofSubmitters(bytes32,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "provenWithdrawals(bytes32,address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:08:29.636Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x137b7261b7dc040c0196b2eeef11b812eb7199071d5d36aad9b88a42479790d1"
+  }
+}

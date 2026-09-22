@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1StandardBridge",
+    "shapeHash": "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d",
+    "steps": [],
+    "skips": [
+      {
+        "item": "deposits(address,address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:51:34.613Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xa64f835df0144721ec5928bf2f548596c67ce31e4cfb4efc156952d6895ba8ad"
+  }
+}

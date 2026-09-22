@@ -1,0 +1,57 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "AnchorStateRegistry",
+    "shapeHash": "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972",
+    "steps": [],
+    "skips": [
+      {
+        "item": "anchors(uint32)",
+        "reason": "covered"
+      },
+      {
+        "item": "disputeGameBlacklist(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isGameBlacklisted(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameClaimValid(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameFinalized(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameProper(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameRegistered(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameResolved(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameRespected(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "isGameRetired(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:10:37.249Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 4,
+    "decisionHash": "0x914990447142a0a216b779797d7ee9b2cfece3d291931e59377c83da0907245d"
+  }
+}

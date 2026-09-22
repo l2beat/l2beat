@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1StandardERC20Gateway",
+    "shapeHash": "0x225810cbe5057d2f1117e745ae4ff27fa647febbe5339dacb1ce56d82b190392",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:39:42.169Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xf426fa35b8cc2e1026266c0007e91b1f8e81692bfa58f056f90652fdad2fc983"
+  }
+}

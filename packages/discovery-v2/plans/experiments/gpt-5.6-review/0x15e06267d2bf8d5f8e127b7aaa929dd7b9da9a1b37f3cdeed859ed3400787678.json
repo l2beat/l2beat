@@ -1,0 +1,41 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1ERC721Gateway",
+    "shapeHash": "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678",
+    "steps": [
+      {
+        "id": "implementation",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "implementation is written only by upgradeTo/upgradeToAndCall (proxy admin), which emit Upgraded"
+      }
+    ],
+    "skips": [
+      {
+        "item": "tokenMapping(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:50:46.630Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 3,
+    "decisionHash": "0x00705868578f332b81573e727ad078e83be819eb1a1684adc42852c708e9e45e"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SequencerInbox",
+    "shapeHash": "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
+    "steps": [
+      {
+        "id": "setValidKeyset",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SetValidKeyset"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "keysetHash",
+          "add": [
+            {
+              "event": "SetValidKeyset"
+            }
+          ]
+        },
+        "reason": "dasKeySetInfo keys are enumerated from SetValidKeyset, emitted only by setValidKeyset (onlyRollupOwner)"
+      },
+      {
+        "id": "dasKeySetInfo",
+        "covers": [
+          "dasKeySetInfo(bytes32)",
+          "getKeysetCreationBlock(bytes32)",
+          "isValidKeysetHash(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "dasKeySetInfo(bytes32)",
+          "keys": {
+            "from": "$step.setValidKeyset"
+          }
+        },
+        "use": "map@1",
+        "reason": "dasKeySetInfo is written by setValidKeyset and invalidateKeysetHash (onlyRollupOwner), which emit SetValidKeyset and InvalidateKeyset"
+      }
+    ],
+    "skips": [
+      {
+        "item": "isBatchPoster(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isSequencer(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "forceInclusionDeadline(uint64)",
+        "reason": "computation"
+      },
+      {
+        "item": "inboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:46:36.841Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x87b7c03e52ab8be5731833cd90b48e782a846ed1d15088a99aaefcbcefb6444b"
+  }
+}

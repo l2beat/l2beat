@@ -1,0 +1,64 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Inbox",
+    "shapeHash": "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796",
+    "steps": [
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the implementation history is observable only through Upgraded, which upgradeTo and upgradeToAndCall (ifAdmin) emit"
+      },
+      {
+        "id": "adminChanged",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the proxy admin history is observable only through AdminChanged, which changeAdmin (ifAdmin) emits"
+      }
+    ],
+    "skips": [
+      {
+        "item": "calculateRetryableSubmissionFee(uint256,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isAllowed(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:27:39.273Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 4,
+    "decisionHash": "0xf69b07429828015dc2d3556d0b8223a517e03fc7f4c4ece910d699dd0e945845"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1USDCGateway",
+    "shapeHash": "0xcb1c41c6d2ba11186ca799e856035fa982533f5ecf4884c0939338afe2737b34",
+    "steps": [
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the proxy implementation is overwritten only by the admin's upgradeTo/upgradeToAndCall, which emit Upgraded, and its history is observable only through those logs"
+      },
+      {
+        "id": "adminChanged",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the proxy admin is overwritten only by the admin's changeAdmin, which emits AdminChanged, and its history is observable only through those logs"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:41:34.445Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x2fc724191696826a6156f50ba8a0d5b0f5d8abdf51488e2db2363de410efcee5"
+  }
+}

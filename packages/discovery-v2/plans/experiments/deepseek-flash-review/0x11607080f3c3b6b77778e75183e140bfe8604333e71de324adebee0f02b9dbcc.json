@@ -1,0 +1,83 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "UpgradeExecutor",
+    "shapeHash": "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE"
+          }
+        },
+        "reason": "hasRole and getRoleAdmin read _roles, written by grantRole/revokeRole/renounceRole (onlyRole(getRoleAdmin(role))) and _setRoleAdmin in initialize, which emit RoleGranted/RoleRevoked/RoleAdminChanged"
+      },
+      {
+        "id": "upgradeExecuted",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpgradeExecuted"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "upgrade",
+          "add": [
+            {
+              "event": "UpgradeExecuted"
+            }
+          ]
+        },
+        "reason": "execute (onlyRole(EXECUTOR_ROLE)) emits UpgradeExecuted; the sequence of executed upgrades has no getter and is event-only state"
+      },
+      {
+        "id": "targetCallExecuted",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "TargetCallExecuted"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "target",
+          "add": [
+            {
+              "event": "TargetCallExecuted"
+            }
+          ]
+        },
+        "reason": "executeCall (onlyRole(EXECUTOR_ROLE)) emits TargetCallExecuted; the sequence of executed target calls has no getter and is event-only state"
+      }
+    ],
+    "skips": [
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:28:43.068Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x77b83d5b7851fc9802ea0e085224c54a66d3c1484cada1daa921d72186b66368"
+  }
+}

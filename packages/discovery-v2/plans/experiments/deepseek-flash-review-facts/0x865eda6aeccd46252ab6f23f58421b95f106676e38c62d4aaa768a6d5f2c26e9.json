@@ -1,0 +1,158 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "RollupProxy",
+    "shapeHash": "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9",
+    "steps": [
+      {
+        "id": "stakersForceRefunded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "StakersForceRefunded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "staker",
+          "add": [
+            {
+              "event": "StakersForceRefunded"
+            }
+          ]
+        },
+        "reason": "the list of force-refunded stakers has no getter and is observable only through StakersForceRefunded, emitted by forceRefundStaker (whenPaused, admin-only)"
+      },
+      {
+        "id": "oldOutboxRemoved",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OldOutboxRemoved"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OldOutboxRemoved"
+            }
+          ]
+        },
+        "reason": "the history of removed outboxes has no getter and is observable only through OldOutboxRemoved, emitted by removeOldOutbox (admin-only)"
+      },
+      {
+        "id": "assertionForceCreated",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AssertionForceCreated"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "assertionHash",
+          "add": [
+            {
+              "event": "AssertionForceCreated"
+            }
+          ]
+        },
+        "reason": "the history of assertions force-created by the admin is observable only through AssertionForceCreated, emitted by forceCreateAssertion (whenPaused, admin-only)"
+      },
+      {
+        "id": "assertionForceConfirmed",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AssertionForceConfirmed"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "assertionHash",
+          "add": [
+            {
+              "event": "AssertionForceConfirmed"
+            }
+          ]
+        },
+        "reason": "the history of assertions force-confirmed by the admin is observable only through AssertionForceConfirmed, emitted by forceConfirmAssertion (whenPaused, admin-only)"
+      }
+    ],
+    "skips": [
+      {
+        "item": "_stakerMap(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "amountStaked(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "computeAssertionHash(bytes32,((bytes32[2],uint64[2]),uint8,bytes32),bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "getAssertion(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getAssertionCreationBlockForLogLookup(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getFirstChildCreationBlock(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getSecondChildCreationBlock(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getStaker(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getStakerAddress(uint64)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isFirstChild(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isPending(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isStaked(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isValidator(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "latestStakedAssertion(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawableFunds(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawalAddress(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:30:30.791Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x04f5cabe139d086c8671f4a2e3171fb55cbde3a00dcc3fb921d50aec6dfb762e"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "MultipleVersionRollupVerifier",
+    "shapeHash": "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a",
+    "steps": [
+      {
+        "id": "updateVerifier",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateVerifier"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "version",
+          "add": [
+            {
+              "event": "UpdateVerifier"
+            }
+          ]
+        },
+        "reason": "updateVerifier is the only writer of the version-keyed mappings and is guarded by onlyOwner, emitting UpdateVerifier, so the versions it emits are the complete key set."
+      },
+      {
+        "id": "latestVerifier",
+        "covers": [
+          "latestVerifier(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "latestVerifier(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "latestVerifier is written only by updateVerifier (onlyOwner), which emits UpdateVerifier."
+      },
+      {
+        "id": "legacyVerifiersLength",
+        "covers": [
+          "legacyVerifiersLength(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "legacyVerifiersLength(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "legacyVerifiersLength reads legacyVerifiers[version].length, and the version keys are written only by updateVerifier (onlyOwner), which emits UpdateVerifier."
+      }
+    ],
+    "skips": [
+      {
+        "item": "getVerifier(uint256,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "legacyVerifiers(uint256,uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:36:54.712Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xe0af918384dd3f90692f5f1d168912367a3ed2465a8cad2480a4594a64442d11"
+  }
+}

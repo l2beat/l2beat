@@ -1,0 +1,35 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SystemConfig",
+    "shapeHash": "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e",
+    "steps": [
+      {
+        "id": "isFeatureEnabled",
+        "covers": [
+          "isFeatureEnabled(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "isFeatureEnabled(bytes32)",
+          "keys": {
+            "literal": [
+              "0x4554485f4c4f434b424f58000000000000000000000000000000000000000000",
+              "0x435553544f4d5f4741535f544f4b454e00000000000000000000000000000000"
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "isFeatureEnabled is written by setFeature (restricted by _assertOnlyProxyAdminOrProxyAdminOwner), and ETH_LOCKBOX and CUSTOM_GAS_TOKEN are the complete feature constants defined in the source"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:31:02.773Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 2,
+    "decisionHash": "0xba44300a12f8286e116e2c0f0388a28b2e5fb03614e17919e0a3b230eb7b72ce"
+  }
+}

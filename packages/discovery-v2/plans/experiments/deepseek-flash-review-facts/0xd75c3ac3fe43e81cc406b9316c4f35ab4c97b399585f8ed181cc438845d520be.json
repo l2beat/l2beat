@@ -1,0 +1,77 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TimelockController",
+    "shapeHash": "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+            "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE"
+          }
+        },
+        "reason": "hasRole and getRoleAdmin read _roles, which is written by grantRole(bytes32,address) (onlyRole) emitting RoleGranted and revokeRole(bytes32,address) (onlyRole) emitting RoleRevoked, with the role names taken from the *_ROLE() baseline getters."
+      }
+    ],
+    "skips": [
+      {
+        "item": "getOperationState(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getTimestamp(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "hashOperation(address,uint256,bytes,bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "hashOperationBatch(address[],uint256[],bytes[],bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperation(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationDone(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationPending(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationReady(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:00:30.626Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x68b9d66d041181945f9253da77949cb04c51945e72b41565e4f1e2cdda4caf38"
+  }
+}

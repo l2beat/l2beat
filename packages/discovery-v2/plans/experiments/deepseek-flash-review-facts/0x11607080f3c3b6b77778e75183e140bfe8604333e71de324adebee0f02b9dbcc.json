@@ -1,0 +1,64 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "UpgradeExecutor",
+    "shapeHash": "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE"
+          }
+        },
+        "reason": "_roles is written only by grantRole/revokeRole (onlyRole) and initialize (initializer), which emit RoleGranted/RoleRevoked/RoleAdminChanged"
+      },
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "Upgraded is emitted by the privileged upgradeTo/upgradeToAndCall (ifAdmin) and records the sequence of implementation upgrades, which has no enumerable getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:35:34.000Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x19b9cb11e63777339f89ebaf3f1c3ba1b5738412cfb629f22f7dd8123908f0a0"
+  }
+}

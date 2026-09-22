@@ -1,0 +1,106 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Bridge",
+    "shapeHash": "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "steps": [
+      {
+        "id": "allowedDelayedInboxes",
+        "covers": [
+          "allowedDelayedInboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "inbox",
+          "add": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedDelayedInboxesMap and allowedDelayedInboxList are written only by setDelayedInbox (onlyRollupOrOwner), which emits InboxToggle"
+      },
+      {
+        "id": "allowedOutboxes",
+        "covers": [
+          "allowedOutboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OutboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedOutboxesMap and allowedOutboxList are written only by setOutbox (onlyRollupOrOwner), which emits OutboxToggle"
+      }
+    ],
+    "skips": [
+      {
+        "item": "allowedDelayedInboxList(uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "allowedOutboxList(uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "delayedInboxAccs(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "sequencerInboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:36:38.082Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xb45ea0c33f25acf9717796c5104d74427de725d7bf2a6df0a319d9e81e03ecb3"
+  }
+}

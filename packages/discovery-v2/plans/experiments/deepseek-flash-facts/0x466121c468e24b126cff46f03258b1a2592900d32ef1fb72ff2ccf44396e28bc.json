@@ -1,0 +1,25 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1ERC1155Gateway",
+    "shapeHash": "0x466121c468e24b126cff46f03258b1a2592900d32ef1fb72ff2ccf44396e28bc",
+    "steps": [],
+    "skips": [
+      {
+        "item": "tokenMapping(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:13:59.053Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xb557bdc9a35d93aff55a5df8a842e0cd1564624d38a6149c5a686323976fc2f9"
+  }
+}

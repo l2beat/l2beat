@@ -1,0 +1,111 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "NitroEnclaveVerifier",
+    "shapeHash": "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db",
+    "steps": [
+      {
+        "id": "zkConfig",
+        "covers": [
+          "zkConfig(uint8)",
+          "getZkConfig(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zkConfig(uint8)",
+          "keys": {
+            "literal": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "zkConfig is written only by setZkConfiguration, updateVerifierId and updateAggregatorId (all onlyOwner); the keys are the fixed ZkCoProcessorType enum values Unknown=0, RiscZero=1, Succinct=2 used by those setters"
+      },
+      {
+        "id": "getVerifierProofId",
+        "covers": [
+          "getVerifierProofId(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getVerifierProofId(uint8)",
+          "keys": {
+            "literal": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "_verifierProofIds is written only by setZkConfiguration and updateVerifierId (onlyOwner); the keys are the fixed ZkCoProcessorType enum values Unknown=0, RiscZero=1, Succinct=2"
+      },
+      {
+        "id": "_zkVerifierRoutes",
+        "covers": [
+          "getZkVerifier(uint8,bytes4)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ZkRouteAdded"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "verifier",
+          "set": [
+            {
+              "event": "ZkRouteAdded"
+            }
+          ],
+          "groupBy": "selector"
+        },
+        "reason": "_zkVerifierRoutes is written only by addVerifyRoute (onlyOwner), which emits ZkRouteAdded"
+      },
+      {
+        "id": "zkRouteWasFrozen",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ZkRouteWasFrozen"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "selector",
+          "add": [
+            {
+              "event": "ZkRouteWasFrozen"
+            }
+          ]
+        },
+        "reason": "_zkVerifierRoutes entries are set to the FROZEN sentinel only by freezeVerifyRoute (onlyOwner), which emits ZkRouteWasFrozen and has no getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "checkTrustedIntermediateCerts(bytes32[][])",
+        "reason": "computation"
+      },
+      {
+        "item": "ownershipHandoverExpiresAt(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "trustedIntermediateCerts(bytes32)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:37:28.615Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xa68ffff1d15c8f971586cbbf6febd917b74e434c4d1abc4c21f15a2c85407cb1"
+  }
+}

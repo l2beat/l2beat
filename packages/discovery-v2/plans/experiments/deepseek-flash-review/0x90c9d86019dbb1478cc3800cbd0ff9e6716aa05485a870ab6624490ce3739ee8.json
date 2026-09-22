@@ -1,0 +1,112 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "pauseExtended",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Paused",
+            "PauseExtended",
+            "Unpaused"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            },
+            {
+              "event": "PauseExtended"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Unpaused"
+            }
+          ]
+        },
+        "reason": "The identifiers written to pauseTimestamps are enumerated from Paused and PauseExtended, emitted by pause (onlyGuardianOrIncidentResponder) and extend (onlyGuardian), and removed by Unpaused from unpause (onlyGuardian)"
+      },
+      {
+        "id": "pauseTimestamps",
+        "covers": [
+          "pauseTimestamps(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "pauseTimestamps(address)",
+          "keys": {
+            "from": "$step.pauseExtended"
+          }
+        },
+        "use": "map@1",
+        "reason": "pauseTimestamps is written only by pause/extend (guardian or incident responder) and unpause (guardian), whose identifiers are the complete key set emitted as Paused, PauseExtended and Unpaused"
+      },
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "Upgraded is emitted only by _setImplementation inside upgradeTo/upgradeToAndCall (proxyCallIfNotAdmin, proxy admin only), so the sequence of installed implementations is event-only state"
+      },
+      {
+        "id": "adminChanged",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "AdminChanged is emitted only by _changeAdmin inside changeAdmin (proxyCallIfNotAdmin, proxy admin only), so the history of proxy admins is event-only state"
+      }
+    ],
+    "skips": [
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "expiration(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:14:05.385Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 3,
+    "decisionHash": "0x599f382a80b20b489b36b12da6ffe9dfb8f0f57cd9db8231702154e5a9d999d0"
+  }
+}

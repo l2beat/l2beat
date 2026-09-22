@@ -1,0 +1,88 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEProverRegistry",
+    "shapeHash": "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2",
+    "steps": [
+      {
+        "id": "isRegisteredSigner",
+        "covers": [
+          "isRegisteredSigner(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SignerRegistered",
+            "SignerDeregistered"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "signer",
+          "add": [
+            {
+              "event": "SignerRegistered"
+            }
+          ],
+          "remove": [
+            {
+              "event": "SignerDeregistered"
+            }
+          ]
+        },
+        "reason": "isRegisteredSigner is written only by registerSigner and deregisterSigner (onlyOwnerOrManager), which emit SignerRegistered and SignerDeregistered."
+      },
+      {
+        "id": "isValidProposer",
+        "covers": [
+          "isValidProposer(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ProposerSet"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "isValid",
+          "set": [
+            {
+              "event": "ProposerSet"
+            }
+          ],
+          "groupBy": "proposer"
+        },
+        "reason": "isValidProposer is written only by setProposer (onlyOwner), which emits ProposerSet, and by initialize which emits ProposerSet for the initial proposers, so the last ProposerSet per proposer is the current value."
+      },
+      {
+        "id": "signerImageHash",
+        "covers": [
+          "signerImageHash(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "signerImageHash(address)",
+          "keys": {
+            "from": "$step.isRegisteredSigner"
+          }
+        },
+        "use": "map@1",
+        "reason": "signerImageHash is set only in registerSigner and deleted in deregisterSigner (onlyOwnerOrManager); SignerRegistered carries no image hash, so the current value is read for every signer enumerated by isRegisteredSigner."
+      }
+    ],
+    "skips": [
+      {
+        "item": "isValidSigner(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:49:43.328Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xeb755b201f37efc4dac16dff1abdf6c02dcf0d8ed0aca6d01bcecfc025288572"
+  }
+}

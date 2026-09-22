@@ -1,0 +1,74 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "hasRole(bytes32,address)",
+          "getRoleAdmin(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "reason": "_roles is written by grantRole and revokeRole (onlyRole) and renounceRole (self), which emit RoleGranted and RoleRevoked"
+      },
+      {
+        "id": "targetAccess",
+        "covers": [
+          "callableRoles(address,bytes4)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "GrantAccess",
+            "RevokeAccess"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "role",
+          "add": [
+            {
+              "event": "GrantAccess"
+            }
+          ],
+          "remove": [
+            {
+              "event": "RevokeAccess"
+            }
+          ]
+        },
+        "reason": "targetAccess is written only by updateAccess (onlyRole(DEFAULT_ADMIN_ROLE)), which emits GrantAccess and RevokeAccess"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getRoleMember(bytes32,uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "getRoleMemberCount(bytes32)",
+        "reason": "covered"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:41:04.338Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x5cb117b9aab11a293eee5d1a663d770a16bdc23f4ea2c7d03b83229eb2e3a31f"
+  }
+}

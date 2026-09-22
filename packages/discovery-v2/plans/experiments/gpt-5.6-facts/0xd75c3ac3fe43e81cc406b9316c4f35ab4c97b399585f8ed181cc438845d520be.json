@@ -1,0 +1,78 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TimelockController",
+    "shapeHash": "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE",
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+            "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE"
+          }
+        },
+        "reason": "_roles is written by grantRole and revokeRole (onlyRole) and renounceRole (caller-confirmed), which emit RoleGranted and RoleRevoked"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getOperationState(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getTimestamp(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "hashOperation(address,uint256,bytes,bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "hashOperationBatch(address[],uint256[],bytes[],bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperation(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isOperationDone(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isOperationPending(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isOperationReady(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:21:11.050Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x84bb706d8879628f05e929949c60020f4f72277fc8b59de486de90997cbd8781"
+  }
+}

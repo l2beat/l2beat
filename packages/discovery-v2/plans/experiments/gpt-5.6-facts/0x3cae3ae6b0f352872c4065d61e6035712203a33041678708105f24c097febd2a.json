@@ -1,0 +1,29 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "RiscZeroVerifierRouter",
+    "shapeHash": "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getVerifier(bytes)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getVerifier(bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "verifiers(bytes4)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:32:57.254Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x7769d5f0eba11f1c4c4678c3b6575b2086a873136fd9c9912b5cf703985ca4a7"
+  }
+}

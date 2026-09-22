@@ -1,0 +1,70 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SequencerInbox",
+    "shapeHash": "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
+    "steps": [
+      {
+        "id": "setValidKeyset",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SetValidKeyset"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "keysetHash",
+          "add": [
+            {
+              "event": "SetValidKeyset"
+            }
+          ]
+        },
+        "reason": "setValidKeyset is emitted by setValidKeyset (onlyRollupOwner) when it writes dasKeySetInfo."
+      },
+      {
+        "id": "dasKeySetInfo",
+        "covers": [
+          "dasKeySetInfo(bytes32)",
+          "getKeysetCreationBlock(bytes32)",
+          "isValidKeysetHash(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "dasKeySetInfo(bytes32)",
+          "keys": {
+            "from": "$step.setValidKeyset"
+          }
+        },
+        "use": "map@1",
+        "reason": "dasKeySetInfo is written only by setValidKeyset and invalidateKeysetHash (onlyRollupOwner), which emit SetValidKeyset and InvalidateKeyset."
+      }
+    ],
+    "skips": [
+      {
+        "item": "forceInclusionDeadline(uint64)",
+        "reason": "computation"
+      },
+      {
+        "item": "inboxAccs(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isBatchPoster(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isSequencer(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:39:19.586Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 2,
+    "decisionHash": "0x9ef9da898db59d99f4e0ac61eb9b846ead8b0040341994885a63a05b58087b12"
+  }
+}

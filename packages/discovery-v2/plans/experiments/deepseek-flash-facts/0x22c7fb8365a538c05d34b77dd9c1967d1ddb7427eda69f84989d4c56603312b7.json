@@ -1,0 +1,68 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "GnosisSafe",
+    "shapeHash": "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "steps": [
+      {
+        "id": "guard",
+        "fetch": {
+          "kind": "storage",
+          "slot": "0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8",
+          "as": "address"
+        },
+        "reason": "guard is written only by setGuard (authorized) at GUARD_STORAGE_SLOT and has no getter"
+      },
+      {
+        "id": "fallbackHandler",
+        "fetch": {
+          "kind": "storage",
+          "slot": "0x6c9a6c4a39284e37ed1cf53d337577d14212a4870fb976a4366c693b939918d5",
+          "as": "address"
+        },
+        "reason": "fallbackHandler is written only by setFallbackHandler (authorized) and by setup() at FALLBACK_HANDLER_STORAGE_SLOT and has no getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "approvedHashes(address,bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "signedMessages(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getTransactionHash(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOwner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "getStorageAt(uint256,uint256)",
+        "reason": "not-state"
+      },
+      {
+        "item": "getModulesPaginated(address,uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isModuleEnabled(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:06:40.219Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x014326b2ef7be131b7e75cd8ad594d51c44974a7172cb0701a35824848b3934b"
+  }
+}

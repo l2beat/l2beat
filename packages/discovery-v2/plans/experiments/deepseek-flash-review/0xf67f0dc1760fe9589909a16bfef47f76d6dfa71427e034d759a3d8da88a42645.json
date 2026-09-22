@@ -1,0 +1,55 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SP1VerifierGateway",
+    "shapeHash": "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645",
+    "steps": [
+      {
+        "id": "routeAdded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RouteAdded",
+            "RouteFrozen"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "selector",
+          "add": [
+            {
+              "event": "RouteAdded"
+            },
+            {
+              "event": "RouteFrozen"
+            }
+          ]
+        },
+        "reason": "The complete set of routes keys is registered only by addRoute and freezeRoute (both onlyOwner), which emit RouteAdded and RouteFrozen."
+      },
+      {
+        "id": "routes",
+        "covers": [
+          "routes(bytes4)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "routes(bytes4)",
+          "keys": {
+            "from": "$step.routeAdded"
+          }
+        },
+        "use": "map@1",
+        "reason": "routes is written only by addRoute and freezeRoute (both onlyOwner), so the selectors from RouteAdded/RouteFrozen enumerate every verifier route."
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:15:13.010Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x07db58c445af21b836d010b06f26bc9188e7f78a0f077b8d29f325d4a91bccc9"
+  }
+}

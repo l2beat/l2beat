@@ -1,0 +1,53 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ProxyAdmin",
+    "shapeHash": "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512",
+    "steps": [
+      {
+        "id": "ownershipTransferred",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OwnershipTransferred"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newOwner",
+          "add": [
+            {
+              "event": "OwnershipTransferred"
+            }
+          ]
+        },
+        "reason": "the ownership history is emitted only by transferOwnership and renounceOwnership (onlyOwner), which emit OwnershipTransferred"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getProxyAdmin(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "getProxyImplementation(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "implementationName(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "proxyType(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:45:06.941Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x5dfca4ef482939986cd2d72cc049bb3f876f647f2b9f635fe3d4c2cd2afea490"
+  }
+}

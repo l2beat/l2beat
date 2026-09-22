@@ -1,0 +1,80 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PauseController",
+    "shapeHash": "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc",
+    "steps": [
+      {
+        "id": "lastUnpauseTime",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Unpause",
+            "ResetPauseCooldownPeriod"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "component",
+          "add": [
+            {
+              "event": "Unpause"
+            },
+            {
+              "event": "ResetPauseCooldownPeriod"
+            }
+          ]
+        },
+        "reason": "lastUnpauseTime is written only by unpause and resetPauseCooldownPeriod (both onlyOwner), which emit Unpause and ResetPauseCooldownPeriod"
+      },
+      {
+        "id": "getLastUnpauseTime",
+        "covers": [
+          "getLastUnpauseTime(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getLastUnpauseTime(address)",
+          "keys": {
+            "from": "$step.lastUnpauseTime"
+          }
+        },
+        "use": "map@1",
+        "reason": "the stored timestamp is block.timestamp and not carried by any event argument, so each component enumerated from the Unpause/ResetPauseCooldownPeriod events is read through the getter"
+      },
+      {
+        "id": "pause",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Pause",
+            "Unpause"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "component",
+          "add": [
+            {
+              "event": "Pause"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Unpause"
+            }
+          ]
+        },
+        "reason": "Pause is emitted only by pause (onlyOwner) and Unpause only by unpause (onlyOwner), so the set of currently paused components has no getter and is observable only through these events"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:48:47.620Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xfc10ff822b02903669eb492e81a4d62fa50c51ca19e3c2fafd80dcc90d27c809"
+  }
+}

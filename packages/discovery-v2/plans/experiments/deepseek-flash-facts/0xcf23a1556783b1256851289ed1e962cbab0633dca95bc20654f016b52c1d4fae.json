@@ -1,0 +1,132 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Bridge",
+    "shapeHash": "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "steps": [
+      {
+        "id": "allowedDelayedInboxesMap",
+        "covers": [
+          "allowedDelayedInboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "inbox",
+          "add": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedDelayedInboxesMap is written only by setDelayedInbox (onlyRollupOrOwner), which emits InboxToggle"
+      },
+      {
+        "id": "allowedOutboxesMap",
+        "covers": [
+          "allowedOutboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OutboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedOutboxesMap is written only by setOutbox (onlyRollupOrOwner), which emits OutboxToggle"
+      },
+      {
+        "id": "allowedDelayedInboxList",
+        "covers": [
+          "allowedDelayedInboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "allowedDelayedInboxList(uint256)",
+          "keys": {
+            "untilRevert": {
+              "max": 64
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "allowedDelayedInboxList is written only by setDelayedInbox (onlyRollupOrOwner) and has no length getter, so indices are read until the first revert"
+      },
+      {
+        "id": "allowedOutboxList",
+        "covers": [
+          "allowedOutboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "allowedOutboxList(uint256)",
+          "keys": {
+            "untilRevert": {
+              "max": 64
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "allowedOutboxList is written only by setOutbox (onlyRollupOrOwner) and has no length getter, so indices are read until the first revert"
+      }
+    ],
+    "skips": [
+      {
+        "item": "delayedInboxAccs(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "sequencerInboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:42:14.538Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xd0ef9795dde858e617d66f849308f5d206df17809d810c5698065276677cf26e"
+  }
+}

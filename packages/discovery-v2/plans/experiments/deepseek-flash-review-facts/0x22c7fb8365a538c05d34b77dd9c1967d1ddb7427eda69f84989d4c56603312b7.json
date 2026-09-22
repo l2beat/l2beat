@@ -1,0 +1,88 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "GnosisSafe",
+    "shapeHash": "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "steps": [
+      {
+        "id": "fallbackHandler",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ChangedFallbackHandler"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "handler",
+          "set": [
+            {
+              "event": "ChangedFallbackHandler"
+            }
+          ]
+        },
+        "reason": "the fallback handler has no getter and is written only by setFallbackHandler (authorized), which emits ChangedFallbackHandler"
+      },
+      {
+        "id": "guard",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ChangedGuard"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "guard",
+          "set": [
+            {
+              "event": "ChangedGuard"
+            }
+          ]
+        },
+        "reason": "the guard has no getter and is written only by setGuard (authorized), which emits ChangedGuard"
+      }
+    ],
+    "skips": [
+      {
+        "item": "approvedHashes(address,bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getModulesPaginated(address,uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getStorageAt(uint256,uint256)",
+        "reason": "not-state"
+      },
+      {
+        "item": "getTransactionHash(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isModuleEnabled(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isOwner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "signedMessages(bytes32)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:32:18.772Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 4,
+    "decisionHash": "0x14c7d1128f17679bbb134736df4bf16882ef209e6fd4d73e4a452c1cadd95502"
+  }
+}

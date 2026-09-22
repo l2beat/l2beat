@@ -1,0 +1,112 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "MultipleVersionRollupVerifier",
+    "shapeHash": "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a",
+    "steps": [
+      {
+        "id": "updateVerifier",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateVerifier"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "version",
+          "add": [
+            {
+              "event": "UpdateVerifier"
+            }
+          ]
+        },
+        "reason": "Verifier versions are announced by the constructor and updateVerifier (onlyOwner), which emit UpdateVerifier."
+      },
+      {
+        "id": "latestVerifier",
+        "covers": [
+          "latestVerifier(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "latestVerifier(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "latestVerifier is written after deployment only by updateVerifier (onlyOwner), which emits UpdateVerifier."
+      },
+      {
+        "id": "legacyVerifiersLength",
+        "covers": [
+          "legacyVerifiersLength(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "legacyVerifiersLength(uint256)",
+          "keys": {
+            "from": "$step.updateVerifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "legacyVerifiers is appended only by updateVerifier (onlyOwner), which emits UpdateVerifier, and the complete version set comes from those events."
+      },
+      {
+        "id": "legacyVerifiers",
+        "covers": [
+          "legacyVerifiers(uint256,uint256)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateVerifier"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "verifier",
+          "add": [
+            {
+              "event": "UpdateVerifier"
+            }
+          ]
+        },
+        "reason": "legacyVerifiers is derived from the ordered UpdateVerifier events emitted by updateVerifier (onlyOwner)."
+      },
+      {
+        "id": "ownershipTransferred",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OwnershipTransferred"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newOwner",
+          "add": [
+            {
+              "event": "OwnershipTransferred"
+            }
+          ]
+        },
+        "reason": "Ownership history is written by transferOwnership and renounceOwnership (onlyOwner), which emit OwnershipTransferred."
+      }
+    ],
+    "skips": [
+      {
+        "item": "getVerifier(uint256,uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:48:35.295Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 3,
+    "decisionHash": "0xc6eafc59e90fcaa5ba0410c670f77f11cb6e1a6a449cf0e2a60683979f31eb79"
+  }
+}

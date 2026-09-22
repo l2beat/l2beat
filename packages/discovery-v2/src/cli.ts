@@ -399,6 +399,11 @@ const report = command({
       defaultValue: () => 'BENCHMARK.html',
       description: 'output file; default BENCHMARK.html',
     }),
+    markdown: option({
+      type: optional(string),
+      long: 'markdown',
+      description: 'also write the cross-run table as a Markdown file',
+    }),
     envFile,
   },
   handler: (args) => {

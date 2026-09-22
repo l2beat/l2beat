@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "AggregateVerifier",
+    "shapeHash": "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64",
+    "steps": [],
+    "skips": [
+      {
+        "item": "intermediateOutputRoot(uint256)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:15:51.705Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x88816403f622768ee9bfb99edf3f764380c3dc58602eee980d36722b97485cd1"
+  }
+}

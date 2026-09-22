@@ -1,0 +1,98 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Bridge",
+    "shapeHash": "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "steps": [
+      {
+        "id": "allowedDelayedInboxes",
+        "covers": [
+          "allowedDelayedInboxes(address)",
+          "allowedDelayedInboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "inbox",
+          "add": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "allowedDelayedInboxes is written only by setDelayedInbox (onlyRollupOrOwner), which emits InboxToggle"
+      },
+      {
+        "id": "allowedOutboxes",
+        "covers": [
+          "allowedOutboxes(address)",
+          "allowedOutboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OutboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "allowedOutboxes is written only by setOutbox (onlyRollupOrOwner), which emits OutboxToggle"
+      }
+    ],
+    "skips": [
+      {
+        "item": "delayedInboxAccs(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "sequencerInboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:17:48.487Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x1735cf5080597ed31392a05aecc8abf0aa96897a9041cd1b001ffa73a1f4cffd"
+  }
+}

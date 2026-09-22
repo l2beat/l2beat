@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1GatewayRouter",
+    "shapeHash": "0xf3c6e738fea3021407f38297a88f51d2062b1da961a817e31ad014ae28758fad",
+    "steps": [
+      {
+        "id": "ERC20Gateway",
+        "covers": [
+          "ERC20Gateway(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SetERC20Gateway"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "newGateway",
+          "groupBy": "token",
+          "set": [
+            {
+              "event": "SetERC20Gateway"
+            }
+          ]
+        },
+        "reason": "ERC20Gateway is written only by setERC20Gateway (onlyOwner), which emits SetERC20Gateway"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getERC20Gateway(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:44:28.470Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x2a73e653963386960e1ac94464cf69fda7c8a5e553ed882a12571449ebf80cfe"
+  }
+}

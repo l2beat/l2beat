@@ -1,0 +1,16 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "RiscZeroVerifierEmergencyStop",
+    "shapeHash": "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3",
+    "steps": [],
+    "skips": []
+  },
+  "provenance": {
+    "source": "trivial",
+    "createdAt": "2026-09-22T13:17:43.606Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 0,
+    "decisionHash": "0x7de3b9cca16a2501fdb36ec6b42f19e37a75b229fe70204bba17b8d5593064cc"
+  }
+}

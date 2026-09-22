@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "GnosisSafe",
+    "shapeHash": "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "steps": [],
+    "skips": [
+      {
+        "item": "approvedHashes(address,bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getModulesPaginated(address,uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "getStorageAt(uint256,uint256)",
+        "reason": "not-state"
+      },
+      {
+        "item": "getTransactionHash(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isModuleEnabled(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "isOwner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "signedMessages(bytes32)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:10:37.036Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 2,
+    "decisionHash": "0x41d5ec36d23af43d21f1c2e22199b4e13b43e1fe11fd581a2fc4f47f256db8d9"
+  }
+}

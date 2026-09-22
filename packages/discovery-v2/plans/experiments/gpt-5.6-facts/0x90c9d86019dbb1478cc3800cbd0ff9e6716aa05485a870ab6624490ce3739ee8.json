@@ -1,0 +1,74 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "pauseExtended",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Paused",
+            "PauseExtended",
+            "Unpaused"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            },
+            {
+              "event": "PauseExtended"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Unpaused"
+            }
+          ]
+        },
+        "reason": "pauseTimestamps keys are written by pause (_assertOnlyGuardianOrIncidentResponder), extend (_assertOnlyGuardian), and unpause (_assertOnlyGuardian), which emit Paused, PauseExtended, and Unpaused"
+      },
+      {
+        "id": "pauseTimestamps",
+        "covers": [
+          "pauseTimestamps(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "pauseTimestamps(address)",
+          "keys": {
+            "from": "$step.pauseExtended"
+          }
+        },
+        "use": "map@1",
+        "reason": "pauseTimestamps is written by pause (_assertOnlyGuardianOrIncidentResponder), extend (_assertOnlyGuardian), and unpause (_assertOnlyGuardian), and their events enumerate every nonzero mapping key"
+      }
+    ],
+    "skips": [
+      {
+        "item": "expiration(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:35:14.923Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x6bcfa5472f3f19cad98df6e2280235fc44a873574fabe936c1c77865151c7308"
+  }
+}

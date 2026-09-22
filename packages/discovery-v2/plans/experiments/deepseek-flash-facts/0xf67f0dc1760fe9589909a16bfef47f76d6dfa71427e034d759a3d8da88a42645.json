@@ -1,0 +1,51 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SP1VerifierGateway",
+    "shapeHash": "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645",
+    "steps": [
+      {
+        "id": "routeAdded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RouteAdded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "selector",
+          "add": [
+            {
+              "event": "RouteAdded"
+            }
+          ]
+        },
+        "reason": "The routes mapping keys are the selectors added by addRoute (onlyOwner), each announced by RouteAdded and enumerable from no getter."
+      },
+      {
+        "id": "routes",
+        "covers": [
+          "routes(bytes4)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "routes(bytes4)",
+          "keys": {
+            "from": "$step.routeAdded"
+          }
+        },
+        "use": "map@1",
+        "reason": "routes is written only by addRoute (onlyOwner), which emits RouteAdded, so those selectors are the complete key set, and routes(bytes4) returns verifier and frozen for each."
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:40:54.970Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xc60d42a0843c6e388611fee5d7a3edc5995bc3b0bbb17b99e53e47990e9d78fd"
+  }
+}

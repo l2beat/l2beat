@@ -1,0 +1,123 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollChain",
+    "shapeHash": "0xbae3ab76c19b4b822cc30bcc4bc5965592e0bdd388d7a86780960e54eab0c327",
+    "steps": [
+      {
+        "id": "isProver",
+        "covers": [
+          "isProver(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateProver"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isProver is written only by addProver/removeProver (onlyOwner), which emit UpdateProver(account, status)"
+      },
+      {
+        "id": "isSequencer",
+        "covers": [
+          "isSequencer(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateSequencer"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer(account, status)"
+      },
+      {
+        "id": "revertBatch",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RevertBatch(uint256,uint256)"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "startBatchIndex",
+          "add": [
+            {
+              "event": "RevertBatch"
+            }
+          ]
+        },
+        "reason": "reverted batch ranges are written only by revertBatch (onlyOwner) and commitAndFinalizeBatch (OnlyTopLevelCall), which emit RevertBatch(startBatchIndex, finishBatchIndex), and have no getter since the entries are deleted"
+      }
+    ],
+    "skips": [
+      {
+        "item": "committedBatches(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "finalizedStateRoots(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isBatchFinalized(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "withdrawRoots(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:44:50.505Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 4,
+    "decisionHash": "0x7d3b8f699fc8014e7c745277a3f23d963e5ff46ac45d240048464360dc02d1d6"
+  }
+}

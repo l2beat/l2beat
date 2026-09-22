@@ -1,0 +1,29 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1CrossDomainMessenger",
+    "shapeHash": "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6",
+    "steps": [],
+    "skips": [
+      {
+        "item": "baseGas(bytes,uint32)",
+        "reason": "computation"
+      },
+      {
+        "item": "failedMessages(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "successfulMessages(bytes32)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:19:35.086Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xbd326e141d697fff56524b8effb7a84b1d8e09adc2abcb5f3ad626625ea0cf33"
+  }
+}

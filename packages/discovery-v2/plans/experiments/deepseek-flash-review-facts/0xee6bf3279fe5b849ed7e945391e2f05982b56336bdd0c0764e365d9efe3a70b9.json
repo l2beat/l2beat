@@ -1,0 +1,68 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "DelayedWETH",
+    "shapeHash": "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9",
+    "steps": [
+      {
+        "id": "implementation",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the implementation history is observable only through Upgraded, emitted by the proxy's upgradeTo/upgradeToAndCall (proxyCallIfNotAdmin)"
+      },
+      {
+        "id": "admin",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the admin history is observable only through AdminChanged, emitted by the proxy's changeAdmin (proxyCallIfNotAdmin)"
+      }
+    ],
+    "skips": [
+      {
+        "item": "allowance(address,address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "balanceOf(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawals(address,address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:13:07.746Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x12b755b3e1c2d24194c72de0c2de0bf4189ce171d53509dfabb8df968fbb37f0"
+  }
+}

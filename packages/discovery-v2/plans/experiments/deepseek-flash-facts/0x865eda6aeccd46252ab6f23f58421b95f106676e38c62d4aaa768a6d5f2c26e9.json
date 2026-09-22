@@ -1,0 +1,81 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "RollupProxy",
+    "shapeHash": "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9",
+    "steps": [],
+    "skips": [
+      {
+        "item": "_stakerMap(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "amountStaked(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "computeAssertionHash(bytes32,((bytes32[2],uint64[2]),uint8,bytes32),bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "getAssertion(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getAssertionCreationBlockForLogLookup(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getFirstChildCreationBlock(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getSecondChildCreationBlock(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getStaker(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getStakerAddress(uint64)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isFirstChild(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isPending(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isStaked(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isValidator(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "latestStakedAssertion(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawableFunds(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawalAddress(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:44:26.821Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x6c1aa6099be73df85080e2c53552a7aad57a82653e82c1b031a0b3dd33b9feb7"
+  }
+}

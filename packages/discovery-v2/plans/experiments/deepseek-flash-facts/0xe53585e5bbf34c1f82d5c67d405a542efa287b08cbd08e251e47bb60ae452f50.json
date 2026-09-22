@@ -1,0 +1,45 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "Escrow",
+    "shapeHash": "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50",
+    "steps": [
+      {
+        "id": "wards",
+        "covers": [
+          "wards(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Rely",
+            "Deny"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "usr",
+          "add": [
+            {
+              "event": "Rely"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Deny"
+            }
+          ]
+        },
+        "reason": "wards is written only by rely(address)/deny(address) (auth), which emit Rely and Deny respectively"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:36:01.195Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x18faa0aa6ea78bababf277e825dc3b85c955ef1f92a8831aa03ddba590b0c106"
+  }
+}

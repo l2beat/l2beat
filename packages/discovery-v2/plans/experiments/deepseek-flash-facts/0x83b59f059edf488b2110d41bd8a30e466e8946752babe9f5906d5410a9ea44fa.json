@@ -1,0 +1,50 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "reason": "_roles and _roleMembers are written by grantRole/revokeRole (onlyRole) and renounceRole, which emit RoleGranted/RoleRevoked, and the constructor grants DEFAULT_ADMIN_ROLE via RoleGranted."
+      }
+    ],
+    "skips": [
+      {
+        "item": "callableRoles(address,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getRoleMember(bytes32,uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "getRoleMemberCount(bytes32)",
+        "reason": "covered"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:11:50.273Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xf80539108a7b6c245f0a9948f9b6758f98866af244007cd9cf7010f370759d23"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1CustomERC20Gateway",
+    "shapeHash": "0xa4062ee0605bb59576bcc34aca508e90f3bf7ed7e33e40eaaa00b2ad7cfbe764",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "tokenMapping(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:31:27.021Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 3,
+    "decisionHash": "0xe97c217ca31a2f59c0bff75edfd49518ead6eefecded29240acf3d1ceb27308a"
+  }
+}

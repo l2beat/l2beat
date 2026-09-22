@@ -1,0 +1,50 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "hasRole(bytes32,address)",
+          "getRoleAdmin(bytes32)",
+          "getRoleMember(bytes32,uint256)",
+          "getRoleMemberCount(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE"
+          }
+        },
+        "reason": "hasRole, getRoleAdmin, getRoleMember and getRoleMemberCount read the _roles and _roleMembers tables written by grantRole/revokeRole/renounceRole (onlyRole(getRoleAdmin(role))) and _setRoleAdmin, which emit RoleGranted/RoleRevoked/RoleAdminChanged"
+      }
+    ],
+    "skips": [
+      {
+        "item": "callableRoles(address,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:38:53.348Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x934164530e59ee66233fdbec438f7e049944a9eb797e887f9c4b40e9441d7b27"
+  }
+}

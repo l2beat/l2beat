@@ -1,0 +1,79 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PermissionedDisputeGameV2",
+    "shapeHash": "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
+    "steps": [
+      {
+        "id": "claimData",
+        "covers": [
+          "claimData(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "claimData(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.claimDataLen"
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "claimData is an append-only array written only by move/attack/defend (onlyAuthorized) and pushed once by initialize, and the baseline getter claimDataLen bounds the indices."
+      }
+    ],
+    "skips": [
+      {
+        "item": "claims(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "credit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getChallengerDuration(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getNumToResolve(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getRequiredBond(uint128)",
+        "reason": "computation"
+      },
+      {
+        "item": "hasUnlockedCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "normalModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "refundModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolutionCheckpoints(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolvedSubgames(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "subgames(uint256,uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:11:34.383Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xf64d65a5f2a4ae8092b1ec5835458751783e1316ce1ac5ca9e0253c71e80b47c"
+  }
+}

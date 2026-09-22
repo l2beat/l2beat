@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1USDCGateway",
+    "shapeHash": "0x2e9da55640a68f408f8fcf0e9118234aa07af3f55b24b41c3a114449105c9c1d",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:17:14.382Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x95c036974f9400ce7434b1441c5d0d39d43c87f95cc2b80c19b467b43f9b4e34"
+  }
+}

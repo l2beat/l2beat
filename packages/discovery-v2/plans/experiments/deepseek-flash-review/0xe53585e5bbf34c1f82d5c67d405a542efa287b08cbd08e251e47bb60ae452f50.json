@@ -1,0 +1,64 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "Escrow",
+    "shapeHash": "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50",
+    "steps": [
+      {
+        "id": "wards",
+        "covers": [
+          "wards(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Rely",
+            "Deny"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "usr",
+          "add": [
+            {
+              "event": "Rely"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Deny"
+            }
+          ]
+        },
+        "reason": "wards is written only by rely/deny (auth), which emit Rely/Deny, and the constructor sets wards[msg.sender]=1 emitting Rely"
+      },
+      {
+        "id": "approve",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Approve"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "spender",
+          "add": [
+            {
+              "event": "Approve"
+            }
+          ]
+        },
+        "reason": "The escrow's granted token approvals are recorded only in the Approve event emitted by approve(address,address,uint256) (auth), and there is no getter for them"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:02:07.644Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x6afade862aff95a940c376ea0f9ab5d3b5677ef09cecd193334cc10e5a0e778a"
+  }
+}

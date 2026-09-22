@@ -1,0 +1,41 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1CustomERC20Gateway",
+    "shapeHash": "0x66c27813079fd2347a15e6ccff5c0801341969437e08f0070782345cfdd93fb7",
+    "steps": [
+      {
+        "id": "tokenMapping",
+        "covers": [
+          "tokenMapping(address)",
+          "getL2ERC20Address(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateTokenMapping"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "newL2Token",
+          "groupBy": "l1Token",
+          "set": [
+            {
+              "event": "UpdateTokenMapping"
+            }
+          ]
+        },
+        "reason": "tokenMapping is written only by updateTokenMapping (onlyOwner), which emits UpdateTokenMapping"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:43:27.813Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xddf91288aa01dbc2f4c886bc5ab507acd743f8b1b4b4c51aa0140d2824f048f5"
+  }
+}

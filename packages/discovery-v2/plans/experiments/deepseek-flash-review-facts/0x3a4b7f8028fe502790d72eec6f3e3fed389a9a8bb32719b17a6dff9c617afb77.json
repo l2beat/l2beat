@@ -1,0 +1,37 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1MessageQueueV2",
+    "shapeHash": "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77",
+    "steps": [],
+    "skips": [
+      {
+        "item": "calculateIntrinsicGasFee(bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "computeTransactionHash(address,uint256,uint256,address,uint256,bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "estimateCrossDomainMessageFee(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getMessageEnqueueTimestamp(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getMessageRollingHash(uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:35:38.745Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x5202d8f4b7d737d9a190f309cc1996129ed4d08c66b246e45c7c23cf4c9c20fb"
+  }
+}

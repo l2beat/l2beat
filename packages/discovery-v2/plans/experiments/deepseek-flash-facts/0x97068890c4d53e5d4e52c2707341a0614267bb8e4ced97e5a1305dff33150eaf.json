@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1WETHGateway",
+    "shapeHash": "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:11:58.720Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x9ee2c49c8d271c9a5906726949dbe4b26e62c3feb9a000bd09c24a7029e47dc3"
+  }
+}

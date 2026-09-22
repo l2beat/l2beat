@@ -7,6 +7,7 @@
  */
 import fs from 'fs'
 import path from 'path'
+import { renderComparisonMarkdown } from '../benchmark/renderComparison'
 import { type NamedReport, renderHtml } from '../benchmark/renderHtml'
 import type { ProjectBenchmark } from '../benchmark/types'
 import type { CommandContext } from './context'
@@ -14,11 +15,16 @@ import type { CommandContext } from './context'
 export interface ReportArgs {
   inputs: string[]
   out: string
+  /** Also write the cross-run table as Markdown, for BENCHMARK.md. */
+  markdown?: string
 }
 
 export function reportCommand(ctx: CommandContext, args: ReportArgs): void {
   const reports = args.inputs.flatMap(expandInput).map(readNamedReport)
   fs.writeFileSync(args.out, renderHtml(reports))
+  if (args.markdown !== undefined) {
+    fs.writeFileSync(args.markdown, `${renderComparisonMarkdown(reports)}\n`)
+  }
   ctx.logger.info('Report written', {
     out: args.out,
     runs: reports.map((r) => `${r.report.project}: ${r.label}`),

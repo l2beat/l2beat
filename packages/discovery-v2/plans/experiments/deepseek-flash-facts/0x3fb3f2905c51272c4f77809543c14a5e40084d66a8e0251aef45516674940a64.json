@@ -1,0 +1,34 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "AggregateVerifier",
+    "shapeHash": "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64",
+    "steps": [
+      {
+        "id": "intermediateOutputRoot",
+        "covers": [
+          "intermediateOutputRoot(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "intermediateOutputRoot(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.intermediateOutputRootsCount"
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "intermediateOutputRoot returns the CWIA immutable intermediate roots, and its valid index set is exactly 0..intermediateOutputRootsCount()-1, the baseline getter intermediateOutputRootsCount()"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:41:10.142Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xb48f0e7a1ec83b3bb2dbfdc34047679ec5f2a979b9f73ddf024bb185ce45839f"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1LidoGateway",
+    "shapeHash": "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "hasRole(bytes32,address)",
+          "getRoleMember(bytes32,uint256)",
+          "getRoleMemberCount(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6": "DEPOSITS_DISABLER_ROLE",
+            "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a": "DEPOSITS_ENABLER_ROLE",
+            "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c": "WITHDRAWALS_DISABLER_ROLE",
+            "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d": "WITHDRAWALS_ENABLER_ROLE"
+          }
+        },
+        "reason": "roles is written only by grantRole/revokeRole (onlyOwner) and __LidoGatewayManager_init (onlyInitializing), which emit RoleGranted and RoleRevoked"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:37:02.781Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x3127283e68c30b14c73d0835a91a69c7ded8ca5dccf6d3867669db9c1cbf3c00"
+  }
+}

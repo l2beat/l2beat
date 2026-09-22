@@ -1,0 +1,57 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Outbox",
+    "shapeHash": "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8",
+    "steps": [
+      {
+        "id": "roots",
+        "covers": [
+          "roots(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SendRootUpdated"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "l2BlockHash",
+          "set": [
+            {
+              "event": "SendRootUpdated"
+            }
+          ],
+          "groupBy": "outputRoot"
+        },
+        "reason": "roots is written only by updateSendRoot, restricted to msg.sender == rollup, which emits SendRootUpdated"
+      }
+    ],
+    "skips": [
+      {
+        "item": "calculateItemHash(address,address,uint256,uint256,uint256,uint256,bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "calculateMerkleRoot(bytes32[],uint256,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isSpent(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "spent(uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:31:52.157Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xa7a3bf40c223acc02a388574907e6a426feb727977dac850918922ee72adab43"
+  }
+}

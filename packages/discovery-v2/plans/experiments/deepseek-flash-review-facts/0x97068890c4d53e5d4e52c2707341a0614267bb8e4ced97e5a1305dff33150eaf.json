@@ -1,0 +1,79 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1WETHGateway",
+    "shapeHash": "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf",
+    "steps": [
+      {
+        "id": "implementation",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the implementation slot is written only by the proxy admin's upgradeTo/upgradeToAndCall, which emit Upgraded"
+      },
+      {
+        "id": "admin",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the proxy admin slot is written only by _changeAdmin, which the admin invokes, emitting AdminChanged"
+      },
+      {
+        "id": "ownershipTransferred",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OwnershipTransferred"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newOwner",
+          "add": [
+            {
+              "event": "OwnershipTransferred"
+            }
+          ]
+        },
+        "reason": "_owner is written only by transferOwnership/renounceOwnership (onlyOwner), which emit OwnershipTransferred"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:42:10.819Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x9998c8c77a7d30a769bf52e0e94e59d44c547841e30ce231e4fc75e373f00111"
+  }
+}

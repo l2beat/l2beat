@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1ERC721Bridge",
+    "shapeHash": "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2",
+    "steps": [],
+    "skips": [
+      {
+        "item": "deposits(address,address,uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:26:24.535Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x0c7107cb8df8b69e9baea59c4ec092ca795dc1b1db5173ccd688242aeb69fc9e"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1StandardERC20Gateway",
+    "shapeHash": "0x225810cbe5057d2f1117e745ae4ff27fa647febbe5339dacb1ce56d82b190392",
+    "steps": [
+      {
+        "id": "implementation",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "the ERC1967 implementation slot is overwritten only by _upgradeTo/_upgradeToAndCall, which are reached from the proxy admin's upgradeTo/upgradeToAndCall and emit Upgraded"
+      },
+      {
+        "id": "admin",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "the ERC1967 admin slot is overwritten only by _changeAdmin, which is reached from the proxy admin's changeAdmin and emits AdminChanged"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:55:28.957Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x4dc2f8c0b96ef6c2a74d022dd18d6f174943773c69f2fd08ac8b6c301a72d60c"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1USDCGateway",
+    "shapeHash": "0xcb1c41c6d2ba11186ca799e856035fa982533f5ecf4884c0939338afe2737b34",
+    "steps": [
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "Upgraded is emitted only by the admin-only proxy upgrade path (TransparentUpgradeableProxy._dispatchUpgradeTo/_dispatchUpgradeToAndCall), so it is the implementation upgrade history, which has no getter."
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "covered"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:58:13.834Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x7f32d0d72f02742dfab776278b98c8852f911223f6256dd4d776d58d139001f8"
+  }
+}

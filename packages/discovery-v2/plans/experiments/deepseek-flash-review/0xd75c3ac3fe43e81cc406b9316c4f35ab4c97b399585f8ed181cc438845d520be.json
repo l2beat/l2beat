@@ -1,0 +1,146 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TimelockController",
+    "shapeHash": "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "hasRole(bytes32,address)",
+          "getRoleAdmin(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE",
+            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+            "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE"
+          }
+        },
+        "reason": "hasRole and getRoleAdmin read _roles, written only by grantRole/revokeRole (onlyRole(getRoleAdmin)) which emit RoleGranted/RoleRevoked, and by _setRoleAdmin which emits RoleAdminChanged"
+      },
+      {
+        "id": "callScheduled",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "CallScheduled"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "id",
+          "add": [
+            {
+              "event": "CallScheduled"
+            }
+          ]
+        },
+        "reason": "the _timestamps mapping is keyed by operation id, written in schedule/scheduleBatch (onlyRole(PROPOSER_ROLE)), each emitting CallScheduled carrying that id"
+      },
+      {
+        "id": "getTimestamp",
+        "covers": [
+          "getTimestamp(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getTimestamp(bytes32)",
+          "keys": {
+            "from": "$step.callScheduled"
+          }
+        },
+        "use": "map@1",
+        "reason": "_timestamps is written by _schedule (via schedule/scheduleBatch, onlyRole(PROPOSER_ROLE), which emit CallScheduled) and set to _DONE_TIMESTAMP by _afterCall (execute/executeBatch, executor role), and its keys are exactly the scheduled operation ids"
+      },
+      {
+        "id": "cancelled",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Cancelled"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "id",
+          "add": [
+            {
+              "event": "Cancelled"
+            }
+          ]
+        },
+        "reason": "cancel (onlyRole(CANCELLER_ROLE)) deletes _timestamps[id] and emits Cancelled, the only surviving record of cancelled operations"
+      },
+      {
+        "id": "minDelayChange",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "MinDelayChange"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newDuration",
+          "add": [
+            {
+              "event": "MinDelayChange"
+            }
+          ]
+        },
+        "reason": "updateDelay (callable only by the timelock itself) and the constructor emit MinDelayChange, the only history of _minDelay changes since getMinDelay exposes only the current value"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getOperationState(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "hashOperation(address,uint256,bytes,bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "hashOperationBatch(address[],uint256[],bytes[],bytes32,bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperation(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationDone(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationPending(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOperationReady(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:48:09.248Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 3,
+    "decisionHash": "0x13b946fb2da6b448a33446687328973fc8e224282e8b7cd43ecf329548f70299"
+  }
+}

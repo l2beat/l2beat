@@ -1,0 +1,91 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "identifier",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Paused",
+            "Unpaused",
+            "PauseExtended"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            },
+            {
+              "event": "Unpaused"
+            },
+            {
+              "event": "PauseExtended"
+            }
+          ]
+        },
+        "reason": "pauseTimestamps is written only by pause(address), extend(address) and unpause(address), which are guardian-guarded and emit Paused, PauseExtended and Unpaused."
+      },
+      {
+        "id": "pauseTimestamps",
+        "covers": [
+          "pauseTimestamps(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "pauseTimestamps(address)",
+          "keys": {
+            "from": "$step.identifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "pauseTimestamps is written only by the guardian-guarded pause/extend/unpause, so its keys are exactly the identifiers seen in the Paused, PauseExtended and Unpaused events."
+      },
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "Upgraded is emitted only by upgradeTo/upgradeToAndCall (proxyCallIfNotAdmin), recording the sequence of implementations this proxy has pointed to."
+      }
+    ],
+    "skips": [
+      {
+        "item": "expiration(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:24:58.206Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x8cd1c8270e2d3c295050dab9e5b6983ba67cc77a607faf7ae6a698fe79846f94"
+  }
+}

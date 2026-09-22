@@ -1,0 +1,65 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PermissionedDisputeGameV2",
+    "shapeHash": "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
+    "steps": [],
+    "skips": [
+      {
+        "item": "claimData(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "claims(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "credit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getChallengerDuration(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getNumToResolve(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getRequiredBond(uint128)",
+        "reason": "computation"
+      },
+      {
+        "item": "hasUnlockedCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "normalModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "refundModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolutionCheckpoints(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolvedSubgames(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "subgames(uint256,uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:29:30.431Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xdf89a40fcdbb86727abc09ff6b46a8c2ae84b3b7e427ec042fad8b4b1abec2fb"
+  }
+}

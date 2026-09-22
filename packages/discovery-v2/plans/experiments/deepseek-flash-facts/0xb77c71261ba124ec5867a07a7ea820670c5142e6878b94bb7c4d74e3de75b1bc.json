@@ -1,0 +1,55 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PauseController",
+    "shapeHash": "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc",
+    "steps": [
+      {
+        "id": "lastUnpauseTime",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Unpause",
+            "ResetPauseCooldownPeriod"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "component",
+          "add": [
+            {
+              "event": "Unpause"
+            },
+            {
+              "event": "ResetPauseCooldownPeriod"
+            }
+          ]
+        },
+        "reason": "lastUnpauseTime is written only by unpause(address) and resetPauseCooldownPeriod(address) (both onlyOwner), which emit Unpause(component) and ResetPauseCooldownPeriod(component), the complete set of keys ever written"
+      },
+      {
+        "id": "getLastUnpauseTime",
+        "covers": [
+          "getLastUnpauseTime(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getLastUnpauseTime(address)",
+          "keys": {
+            "from": "$step.lastUnpauseTime"
+          }
+        },
+        "use": "map@1",
+        "reason": "lastUnpauseTime is written only by unpause(address) and resetPauseCooldownPeriod(address) (both onlyOwner) and read only through getLastUnpauseTime(address), so the getter is called for every component those events announce"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:13:41.650Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x6e0947c045b2b8beb891d50e9e005005f21056281c08028ea6743c3789338063"
+  }
+}

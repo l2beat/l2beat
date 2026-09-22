@@ -1,0 +1,41 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEVerifier",
+    "shapeHash": "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7",
+    "steps": [
+      {
+        "id": "verifierNullified",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "VerifierNullified"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "game",
+          "add": [
+            {
+              "event": "VerifierNullified"
+            }
+          ]
+        },
+        "reason": "VerifierNullified is emitted only by nullify() when a proper dispute game nullifies the verifier"
+      }
+    ],
+    "skips": [
+      {
+        "item": "verify(bytes,bytes32,bytes32)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:03:28.287Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xa633a195b50c171189e082045ae3951b00ef0ca9f2fb26ef3c61c6b558337bbe"
+  }
+}

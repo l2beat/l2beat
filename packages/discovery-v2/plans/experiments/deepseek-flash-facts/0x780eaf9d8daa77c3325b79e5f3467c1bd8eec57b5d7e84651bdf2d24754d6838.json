@@ -1,0 +1,103 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "DisputeGameFactory",
+    "shapeHash": "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838",
+    "steps": [
+      {
+        "id": "gameImpls",
+        "covers": [
+          "gameImpls(uint32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ImplementationSet"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "impl",
+          "groupBy": "gameType",
+          "set": [
+            {
+              "event": "ImplementationSet"
+            }
+          ]
+        },
+        "reason": "gameImpls is written only by setImplementation (onlyOwner), which emits ImplementationSet"
+      },
+      {
+        "id": "gameArgs",
+        "covers": [
+          "gameArgs(uint32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ImplementationArgsSet"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "args",
+          "groupBy": "gameType",
+          "set": [
+            {
+              "event": "ImplementationArgsSet"
+            }
+          ]
+        },
+        "reason": "gameArgs is written only by setImplementation (onlyOwner), which emits ImplementationArgsSet"
+      },
+      {
+        "id": "initBonds",
+        "covers": [
+          "initBonds(uint32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InitBondUpdated"
+          ]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "newBond",
+          "groupBy": "gameType",
+          "set": [
+            {
+              "event": "InitBondUpdated"
+            }
+          ]
+        },
+        "reason": "initBonds is written only by setInitBond (onlyOwner), which emits InitBondUpdated"
+      }
+    ],
+    "skips": [
+      {
+        "item": "findLatestGames(uint32,uint256,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "gameAtIndex(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "games(uint32,bytes32,bytes)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getGameUUID(uint32,bytes32,bytes)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T13:24:55.651Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xd8c2eed93b05923ad152f6c9dee10c4533843214bba7db142d9a6f188d785abf"
+  }
+}

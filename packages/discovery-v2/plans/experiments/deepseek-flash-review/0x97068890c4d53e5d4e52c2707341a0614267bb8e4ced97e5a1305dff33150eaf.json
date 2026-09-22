@@ -1,0 +1,60 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1WETHGateway",
+    "shapeHash": "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf",
+    "steps": [
+      {
+        "id": "upgraded",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Upgraded"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "implementation",
+          "add": [
+            {
+              "event": "Upgraded"
+            }
+          ]
+        },
+        "reason": "Upgraded is emitted only by the proxy's admin-only upgradeTo/upgradeToAndCall, recording the implementation history"
+      },
+      {
+        "id": "adminChanged",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "AdminChanged"
+          ]
+        },
+        "use": "list@1",
+        "args": {
+          "key": "newAdmin",
+          "add": [
+            {
+              "event": "AdminChanged"
+            }
+          ]
+        },
+        "reason": "AdminChanged is emitted only by the proxy's admin-only changeAdmin, recording each new admin"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getL2ERC20Address(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T14:28:33.720Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x0fed512bd6284f2bd5ee51d98b9e4a776737420f114124e71dfc85324a2c7855"
+  }
+}

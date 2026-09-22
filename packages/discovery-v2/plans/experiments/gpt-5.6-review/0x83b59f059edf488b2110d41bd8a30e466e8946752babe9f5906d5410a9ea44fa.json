@@ -1,0 +1,80 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked",
+            "RoleAdminChanged"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE"
+          }
+        },
+        "reason": "Access-control roles are written by grantRole and revokeRole (onlyRole of the role's admin), renounceRole (self-only), and constructor setup, which emit RoleGranted or RoleRevoked, while role-admin changes emit RoleAdminChanged"
+      },
+      {
+        "id": "targetAccess",
+        "covers": [
+          "callableRoles(address,bytes4)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "GrantAccess",
+            "RevokeAccess"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "role",
+          "add": [
+            {
+              "event": "GrantAccess"
+            }
+          ],
+          "remove": [
+            {
+              "event": "RevokeAccess"
+            }
+          ]
+        },
+        "reason": "targetAccess is written only by updateAccess (onlyRole(DEFAULT_ADMIN_ROLE)), which emits GrantAccess or RevokeAccess"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getRoleMember(bytes32,uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "getRoleMemberCount(bytes32)",
+        "reason": "covered"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:55:30.190Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 3,
+    "decisionHash": "0x204efb851ad09db92fa424d7d803fbddcc86b33a281a61764d9f0cbada324460"
+  }
+}

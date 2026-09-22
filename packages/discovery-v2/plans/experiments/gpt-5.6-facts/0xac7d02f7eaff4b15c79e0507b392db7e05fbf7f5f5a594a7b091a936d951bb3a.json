@@ -1,0 +1,15 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ZkEvmVerifierV1",
+    "shapeHash": "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a",
+    "steps": [],
+    "skips": []
+  },
+  "provenance": {
+    "source": "trivial",
+    "createdAt": "2026-09-22T15:10:38.109Z",
+    "rounds": 0,
+    "decisionHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db"
+  }
+}

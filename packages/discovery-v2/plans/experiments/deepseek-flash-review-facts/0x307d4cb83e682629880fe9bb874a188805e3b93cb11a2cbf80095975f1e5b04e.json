@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "OptimismMintableERC20Factory",
+    "shapeHash": "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e",
+    "steps": [],
+    "skips": [
+      {
+        "item": "deployments(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T15:59:41.248Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0xd4a3e02ed8dc4f7f14239ad2ee7c02b659364187a4e796e4180db6575d3bcb50"
+  }
+}

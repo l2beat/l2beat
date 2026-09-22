@@ -1,0 +1,128 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Bridge",
+    "shapeHash": "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "steps": [
+      {
+        "id": "allowedDelayedInboxList",
+        "covers": [
+          "allowedDelayedInboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "inbox",
+          "add": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedDelayedInboxList is written only by setDelayedInbox (onlyRollupOrOwner), which emits InboxToggle"
+      },
+      {
+        "id": "allowedDelayedInboxes",
+        "covers": [
+          "allowedDelayedInboxes(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "allowedDelayedInboxes(address)",
+          "keys": {
+            "from": "$step.allowedDelayedInboxList"
+          }
+        },
+        "use": "map@1",
+        "reason": "allowedDelayedInboxes reads allowedDelayedInboxesMap, written only by setDelayedInbox (onlyRollupOrOwner); the keys are the InboxToggle-derived complete set of inboxes"
+      },
+      {
+        "id": "allowedOutboxList",
+        "covers": [
+          "allowedOutboxList(uint256)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OutboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "allowedOutboxList is written only by setOutbox (onlyRollupOrOwner), which emits OutboxToggle"
+      },
+      {
+        "id": "allowedOutboxes",
+        "covers": [
+          "allowedOutboxes(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "allowedOutboxes(address)",
+          "keys": {
+            "from": "$step.allowedOutboxList"
+          }
+        },
+        "use": "map@1",
+        "reason": "allowedOutboxes reads allowedOutboxesMap, written only by setOutbox (onlyRollupOrOwner); the keys are the OutboxToggle-derived complete set of outboxes"
+      }
+    ],
+    "skips": [
+      {
+        "item": "delayedInboxAccs(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "sequencerInboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:29:02.167Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x5f0e8329c56c9fe21de2bd20cc6d9c28e53c0159647da83346520bb4d1f894f2"
+  }
+}
