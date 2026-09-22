@@ -52,26 +52,31 @@ export function RelationsDetails({
   headerClassName,
 }: Props) {
   return (
-    <div
-      className={cn(
-        'flex h-full flex-col divide-y divide-divider bg-surface-primary px-4',
-        className,
-      )}
-    >
+    <div className={cn('flex h-full flex-col bg-surface-primary', className)}>
       <Header node={node} onClose={onClose} className={headerClassName} />
-      <PanelSection
-        title="Past 24h crosschain activity"
-        hint={
-          isCluster(node)
-            ? 'Each transfer touching the cluster is counted once, so this is less than the sum of its deployments.'
-            : undefined
-        }
-      >
-        <Stats stats={node} />
-      </PanelSection>
-      <SameChainSection graph={graph} node={node} onSelectNode={onSelectNode} />
-      <BackedBySection graph={graph} node={node} onSelectNode={onSelectNode} />
-      <BacksSection graph={graph} node={node} onSelectNode={onSelectNode} />
+      <div className="min-h-0 flex-1 divide-y divide-divider overflow-y-auto px-4">
+        <PanelSection
+          title="Past 24h crosschain activity"
+          hint={
+            isCluster(node)
+              ? 'Each transfer touching the cluster is counted once, so this is less than the sum of its deployments.'
+              : undefined
+          }
+        >
+          <Stats stats={node} />
+        </PanelSection>
+        <SameChainSection
+          graph={graph}
+          node={node}
+          onSelectNode={onSelectNode}
+        />
+        <BackedBySection
+          graph={graph}
+          node={node}
+          onSelectNode={onSelectNode}
+        />
+        <BacksSection graph={graph} node={node} onSelectNode={onSelectNode} />
+      </div>
     </div>
   )
 }
@@ -97,7 +102,7 @@ function Header({
   return (
     <header
       className={cn(
-        '-top-0.5 sticky z-10 flex items-start justify-between gap-3 bg-surface-primary py-4',
+        'flex shrink-0 items-start justify-between gap-3 border-divider border-b p-4',
         className,
       )}
     >
