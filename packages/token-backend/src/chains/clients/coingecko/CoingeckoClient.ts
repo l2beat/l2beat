@@ -10,6 +10,8 @@ import {
   CoinListPlatformEntrySchema,
   type CoinMarketChartRangeData,
   CoinMarketChartRangeResultSchema,
+  type CoinMarketData,
+  CoinMarketDataSchema,
   CoinSchema,
 } from './types'
 
@@ -52,6 +54,28 @@ export class CoingeckoClient {
 
     const data = await response.json()
     return CoinSchema.parse(data)
+  }
+
+  async getCoinsMarketData(ids: string[]): Promise<CoinMarketData[]> {
+    if (ids.length === 0) return []
+
+    const url = this.buildUrl('/coins/markets', {
+      vs_currency: 'usd',
+      ids: ids.join(','),
+      per_page: ids.length.toString(),
+      sparkline: 'false',
+    })
+
+    const response = await this.fetch(url)
+
+    if (!response.ok) {
+      throw new Error(
+        `CoinGecko API error: ${response.status} ${response.statusText}`,
+      )
+    }
+
+    const data = await response.json()
+    return v.array(CoinMarketDataSchema).parse(data)
   }
 
   async getCoinList(options?: {
