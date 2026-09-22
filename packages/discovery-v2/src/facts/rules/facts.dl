@@ -1,0 +1,139 @@
+// Who writes which state, guarded by what, announced by which event.
+//
+// Inputs are compiler observations (see astFacts.ts). Everything derived
+// here is syntactic reachability: "entry point E can reach a write of V"
+// says the code path exists, not that it executes, succeeds or changes the
+// value. That is exactly the evidence a plan needs: which functions are the
+// setters of a mapping, whether they carry a modifier, and which events
+// they emit, so the model can choose an event fold and its `covers` from
+// facts rather than from reading 3000 lines.
+//
+// Scope: only declarations of the analysed contract and its linearised
+// bases count, so libraries and unrelated contracts in a flattened file do
+// not contribute entry points or variables.
+
+.decl contract(id: number, name: symbol, kind: symbol)
+.decl inherits(contract: number, base: number)
+.decl stateVariable(id: number, name: symbol, type: symbol, contract: number, visibility: symbol, mutability: symbol)
+.decl functionDefinition(id: number, name: symbol, contract: number, kind: symbol, visibility: symbol)
+.decl modifierDefinition(id: number, name: symbol, contract: number)
+.decl eventDefinition(id: number, name: symbol, signature: symbol, contract: number)
+.decl modifierInvocation(function: number, modifier: number)
+.decl child(parent: number, node: number)
+.decl reference(node: number, declaration: number)
+.decl writes(node: number, declaration: number)
+.decl emits(node: number, event: number)
+.decl internalCall(call: number, function: number)
+.decl storagePointer(local: number, variable: number)
+.decl mainContract(id: number)
+
+.input contract
+.input inherits
+.input stateVariable
+.input functionDefinition
+.input modifierDefinition
+.input eventDefinition
+.input modifierInvocation
+.input child
+.input reference
+.input writes
+.input emits
+.input internalCall
+.input storagePointer
+.input mainContract
+
+// --- Scope ------------------------------------------------------------------
+
+.decl inScope(contract: number)
+inScope(C) :- mainContract(M), inherits(M, C).
+
+.decl scopedVariable(id: number)
+scopedVariable(V) :- stateVariable(V, _, _, C, _, "mutable"), inScope(C).
+
+.decl scopedFunction(id: number)
+scopedFunction(F) :- functionDefinition(F, _, C, _, _), inScope(C).
+
+// --- Containment: a node is inside a function or modifier body -------------
+
+.decl within(owner: number, node: number)
+within(F, N) :- functionDefinition(F, _, _, _, _), child(F, N).
+within(F, N) :- modifierDefinition(F, _, _), child(F, N).
+within(F, N) :- within(F, M), child(M, N).
+
+// --- Direct effects of one body ---------------------------------------------
+
+.decl writesVariable(node: number, variable: number)
+writesVariable(N, V) :- writes(N, V), stateVariable(V, _, _, _, _, _).
+writesVariable(N, V) :- writes(N, L), storagePointer(L, V), stateVariable(V, _, _, _, _, _).
+
+.decl directWrite(owner: number, variable: number)
+directWrite(F, V) :- within(F, N), writesVariable(N, V).
+
+.decl directEmit(owner: number, event: number)
+directEmit(F, E) :- within(F, N), emits(N, E).
+
+.decl directRead(owner: number, variable: number)
+directRead(F, V) :- within(F, N), reference(N, V), stateVariable(V, _, _, _, _, _).
+
+// --- Reachability through internal calls and modifiers ----------------------
+
+.decl calls(caller: number, callee: number)
+calls(F, G) :- within(F, C), internalCall(C, G).
+calls(F, M) :- modifierInvocation(F, M).
+
+.decl reaches(from: number, to: number)
+reaches(F, F) :- functionDefinition(F, _, _, _, _).
+reaches(F, G) :- reaches(F, H), calls(H, G).
+
+.decl reachWrite(function: number, variable: number)
+reachWrite(F, V) :- reaches(F, G), directWrite(G, V).
+
+.decl reachEmit(function: number, event: number)
+reachEmit(F, E) :- reaches(F, G), directEmit(G, E).
+
+.decl reachRead(function: number, variable: number)
+reachRead(F, V) :- reaches(F, G), directRead(G, V).
+
+// --- Entry points: what a transaction can call ------------------------------
+
+.decl entryPoint(function: number)
+entryPoint(F) :- scopedFunction(F), functionDefinition(F, _, _, "function", "external").
+entryPoint(F) :- scopedFunction(F), functionDefinition(F, _, _, "function", "public").
+entryPoint(F) :- scopedFunction(F), functionDefinition(F, _, _, "fallback", _).
+entryPoint(F) :- scopedFunction(F), functionDefinition(F, _, _, "receive", _).
+
+.decl constructorOf(function: number)
+constructorOf(F) :- scopedFunction(F), functionDefinition(F, _, _, "constructor", _).
+
+// --- What the plan author needs ---------------------------------------------
+
+// An entry point that can write a scoped variable, with the modifiers it declares.
+.decl varWriter(variable: number, function: number)
+varWriter(V, F) :- entryPoint(F), reachWrite(F, V), scopedVariable(V).
+
+.decl constructorWrite(variable: number)
+constructorWrite(V) :- constructorOf(F), reachWrite(F, V), scopedVariable(V).
+
+.decl guard(function: number, modifier: number)
+guard(F, M) :- entryPoint(F), modifierInvocation(F, M).
+
+.decl writerEmits(function: number, event: number)
+writerEmits(F, E) :- varWriter(_, F), reachEmit(F, E).
+
+.decl varReader(variable: number, function: number)
+varReader(V, F) :- entryPoint(F), reachRead(F, V), scopedVariable(V).
+
+// An event declared in scope that no entry point can emit: a fold over it would return nothing.
+.decl emittedByEntry(event: number)
+emittedByEntry(E) :- entryPoint(F), reachEmit(F, E).
+
+.decl neverEmitted(event: number)
+neverEmitted(E) :- eventDefinition(E, _, _, C), inScope(C), !emittedByEntry(E).
+
+.output varWriter
+.output constructorWrite
+.output guard
+.output writerEmits
+.output varReader
+.output neverEmitted
+.output entryPoint

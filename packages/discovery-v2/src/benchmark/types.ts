@@ -149,8 +149,12 @@ export interface ProjectBenchmark {
   project: string
   chain: string
   blockNumber: number
+  provider?: string
   model?: string
   reasoning?: string
+  /** Prompt strategy flags of the run. */
+  review: boolean
+  facts: boolean
   author: boolean
   /** Every contract ran with an empty plan (the deterministic floor). */
   noPlan: boolean

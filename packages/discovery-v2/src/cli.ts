@@ -19,8 +19,14 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
+import path from 'path'
 import { REASONING_EFFORTS } from './author/codex/CodexClient'
-import { authorCommand, summariseAuthoring } from './commands/authorCommand'
+import {
+  authorCommand,
+  factsFor,
+  MODEL_PROVIDERS,
+  summariseAuthoring,
+} from './commands/authorCommand'
 import { baselineCommand } from './commands/baselineCommand'
 import {
   benchmarkCommand,
@@ -28,6 +34,7 @@ import {
 } from './commands/benchmarkCommand'
 import { createContext } from './commands/context'
 import { executeCommand } from './commands/executeCommand'
+import { FILE_NAMES, readPrepared } from './commands/files'
 import { outputCommand } from './commands/outputCommand'
 import {
   type PipelineResult,
@@ -35,6 +42,7 @@ import {
 } from './commands/pipelineCommand'
 import { prepareCommand } from './commands/prepareCommand'
 import { reportCommand } from './commands/reportCommand'
+import { suiteCommand } from './commands/suiteCommand'
 import {
   countErrors,
   formatFinding,
@@ -76,15 +84,23 @@ const preparedFile = positional({ type: string, displayName: 'preparedFile' })
 const baselineFile = positional({ type: string, displayName: 'baselineFile' })
 
 const authoring = {
+  provider: option({
+    type: oneOf(MODEL_PROVIDERS),
+    long: 'provider',
+    defaultValue: () => 'codex' as const,
+    description: 'CLI that carries the model: codex (default) or opencode',
+  }),
   model: option({
     type: optional(string),
     long: 'model',
-    description: 'Codex model; default: the Codex default',
+    description:
+      'codex: model name, default the Codex default; opencode: provider/model as `opencode models` lists them',
   }),
   reasoning: option({
     type: optional(oneOf(REASONING_EFFORTS)),
     long: 'reasoning',
-    description: 'model_reasoning_effort for Codex',
+    description:
+      'reasoning effort: codex model_reasoning_effort, opencode --variant',
   }),
   maxRounds: option({
     type: optional(number),
@@ -95,16 +111,32 @@ const authoring = {
     long: 'no-store',
     description: 'do not save an accepted plan under plans/<shapeHash>.json',
   }),
+  review: flag({
+    long: 'review',
+    description:
+      'second pass: show the model what its accepted plan produced and ask for a revision',
+  }),
+  facts: flag({
+    long: 'facts',
+    description:
+      'compile the sources and add compiler-derived writer/event facts to the prompt (needs souffle on PATH)',
+  }),
 }
 
 function authorOptions(args: {
+  provider: (typeof MODEL_PROVIDERS)[number]
   model?: string
   reasoning?: (typeof REASONING_EFFORTS)[number]
   maxRounds?: number
   noStore: boolean
+  review: boolean
+  facts: boolean
 }) {
   return {
+    provider: args.provider,
     model: args.model,
+    review: args.review,
+    facts: args.facts,
     reasoning: args.reasoning,
     maxRounds: args.maxRounds,
     store: !args.noStore,
@@ -276,6 +308,85 @@ function summarisePipeline(result: PipelineResult): string {
   ].join(' ')
 }
 
+const facts = command({
+  name: 'facts',
+  description:
+    'compile each verified source with its exact compiler, run the Datalog rules and write facts.json: who writes each state variable, under which modifiers, emitting which events',
+  args: {
+    preparedFile,
+    out,
+    envFile,
+  },
+  handler: async (args) => {
+    const ctx = createContext(args)
+    const prepared = readPrepared(args.preparedFile)
+    const file = path.join(
+      args.out ?? path.dirname(args.preparedFile),
+      FILE_NAMES.facts,
+    )
+    const result = await factsFor(ctx, prepared, file)
+    for (const source of result.sources) {
+      console.log(
+        source.error === undefined
+          ? `${source.name}: ${source.variables.length} variable(s), ${source.neverEmitted.length} never-emitted event(s), solc ${source.compilerVersion}${source.evmVersion ? ` (${source.evmVersion})` : ''}`
+          : `${source.name}: ${source.error}`,
+      )
+    }
+  },
+})
+
+const suite = command({
+  name: 'suite',
+  description:
+    'run the benchmark suite (benchmarks/suite.json) under one label; outputs runs/benchmark/<label>/<project>, plans in plans/experiments/<label>',
+  args: {
+    label: positional({ type: string, displayName: 'label' }),
+    projects: option({
+      type: optional(string),
+      long: 'projects',
+      description: 'comma-separated subset of the suite projects',
+    }),
+    suiteFile: option({
+      type: optional(string),
+      long: 'suite-file',
+      description: 'suite file; default benchmarks/suite.json',
+    }),
+    author: flag({
+      long: 'author',
+      description: 'ask the model when the experiment store has no plan',
+    }),
+    rejudge: flag({
+      long: 'rejudge',
+      description: 're-compare the existing runs under the current rules',
+    }),
+    noPlan: flag({
+      long: 'no-plan',
+      description: 'empty plan for every contract (the floor)',
+    }),
+    repeat: option({
+      type: number,
+      long: 'repeat',
+      defaultValue: () => 0,
+      description: 'extra authorings per contract; needs --author',
+    }),
+    ...authoring,
+    envFile,
+  },
+  handler: async (args) => {
+    const results = await suiteCommand(createContext(args), {
+      ...args,
+      ...authorOptions(args),
+      projects: args.projects?.split(',').map((p) => p.trim()),
+    })
+    for (const { report } of results) {
+      console.log(summariseBenchmark(report))
+    }
+    if (results.some((r) => r.report.totals.failed > 0)) {
+      process.exitCode = 1
+    }
+  },
+})
+
 const report = command({
   name: 'report',
   description:
@@ -338,8 +449,11 @@ const benchmark = command({
       description:
         'author N more times per contract with the store bypassed and report distinct decision hashes; needs --author',
     }),
+    provider: authoring.provider,
     model: authoring.model,
     reasoning: authoring.reasoning,
+    review: authoring.review,
+    facts: authoring.facts,
     maxRounds: authoring.maxRounds,
     out: option({
       type: optional(string),
@@ -371,7 +485,9 @@ const cli = subcommands({
     execute,
     output,
     pipeline,
+    facts,
     benchmark,
+    suite,
     report,
   },
 })

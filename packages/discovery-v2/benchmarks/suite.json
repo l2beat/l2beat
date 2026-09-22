@@ -1,0 +1,52 @@
+{
+  "description": "Projects and contracts every experiment runs. Add a project here and every later suite run includes it; leave addresses out to run every verified contract of the project.",
+  "projects": [
+    {
+      "name": "scroll",
+      "chain": "ethereum"
+    },
+    {
+      "name": "base",
+      "chain": "ethereum",
+      "addresses": [
+        "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
+        "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+        "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
+        "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+        "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
+        "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
+        "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
+        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+        "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
+        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53",
+        "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D",
+        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
+        "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
+        "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb",
+        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+        "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
+        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+        "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
+        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2"
+      ]
+    },
+    {
+      "name": "plumenetwork",
+      "chain": "ethereum",
+      "addresses": [
+        "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
+        "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
+        "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
+        "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
+        "eth:0xd688dabDBb14D673898689135a23a174560c8C04"
+      ]
+    }
+  ]
+}

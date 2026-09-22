@@ -6,6 +6,7 @@
  * project reads as such without renaming files.
  */
 import fs from 'fs'
+import path from 'path'
 import { type NamedReport, renderHtml } from '../benchmark/renderHtml'
 import type { ProjectBenchmark } from '../benchmark/types'
 import type { CommandContext } from './context'
@@ -16,12 +17,31 @@ export interface ReportArgs {
 }
 
 export function reportCommand(ctx: CommandContext, args: ReportArgs): void {
-  const reports = args.inputs.map(readNamedReport)
+  const reports = args.inputs.flatMap(expandInput).map(readNamedReport)
   fs.writeFileSync(args.out, renderHtml(reports))
   ctx.logger.info('Report written', {
     out: args.out,
     runs: reports.map((r) => `${r.report.project}: ${r.label}`),
   })
+}
+
+/**
+ * A suite label directory stands for every `<project>/benchmark.json` in it,
+ * labelled with the directory name, so `report runs/benchmark/deepseek`
+ * compares one experiment across projects.
+ */
+function expandInput(input: string): string[] {
+  const [label, file] = splitLabel(input)
+  if (!fs.existsSync(file) || !fs.statSync(file).isDirectory()) {
+    return [input]
+  }
+  const name = label ?? path.basename(file)
+  return fs
+    .readdirSync(file)
+    .sort()
+    .map((child) => path.join(file, child, 'benchmark.json'))
+    .filter((report) => fs.existsSync(report))
+    .map((report) => `${name}=${report}`)
 }
 
 export function readNamedReport(input: string): NamedReport {
@@ -41,10 +61,16 @@ function defaultLabel(report: ProjectBenchmark): string {
   if (report.noPlan) {
     return 'floor'
   }
-  if (report.model === undefined) {
-    return report.author ? 'model' : 'stored plans'
-  }
-  return report.reasoning === undefined
-    ? report.model
-    : `${report.model} (${report.reasoning})`
+  const model =
+    report.model === undefined
+      ? report.author
+        ? 'model'
+        : 'stored plans'
+      : report.model
+  const parts = [
+    report.reasoning === undefined ? model : `${model} (${report.reasoning})`,
+    ...(report.review ? ['review'] : []),
+    ...(report.facts ? ['facts'] : []),
+  ]
+  return parts.join(' + ')
 }

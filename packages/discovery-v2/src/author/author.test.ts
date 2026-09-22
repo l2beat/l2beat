@@ -5,7 +5,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { Library } from '../library/Library'
-import type { Plan } from '../plan/Plan'
+import type { Plan, Skip } from '../plan/Plan'
 import { decisionHash } from '../plans/decisionHash'
 import { PlanStore } from '../plans/PlanStore'
 import {
@@ -159,7 +159,8 @@ describe(author.name, () => {
     expect(result.threadId).toEqual('fake-thread')
     expect(result.model).toEqual('fake-model')
     expect(result.promptTruncated).toEqual(false)
-    expect(result.rounds[0]?.dryRun).toEqual({ status: 'ok', failedSteps: [] })
+    expect(result.rounds[0]?.dryRun?.status).toEqual('ok')
+    expect(result.rounds[0]?.dryRun?.failedSteps).toEqual([])
     expect(result.rounds[0]?.findings).toEqual([])
     expect(result.rounds[0]?.usage).toEqual({
       inputTokens: 100,
@@ -254,10 +255,10 @@ describe(author.name, () => {
 
     expect(result.status).toEqual('ok')
     expect(result.rounds.length).toEqual(2)
-    expect(result.rounds[0]?.dryRun).toEqual({
-      status: 'partial',
-      failedSteps: [{ id: 'guardian', error: 'Execution reverted' }],
-    })
+    expect(result.rounds[0]?.dryRun?.status).toEqual('partial')
+    expect(result.rounds[0]?.dryRun?.failedSteps).toEqual([
+      { id: 'guardian', error: 'Execution reverted' },
+    ])
     expect(result.rounds[0]?.findings).toEqual([
       {
         severity: 'error',
@@ -470,6 +471,48 @@ describe(author.name, () => {
           'Return the whole corrected plan as one JSON object and nothing else.',
         ].join('\n'),
       )
+    })
+  })
+
+  describe('review pass', () => {
+    it('sends the executed results back, holds the revision to the same checks and returns it when accepted', async () => {
+      const [first, ...rest] = skips
+      if (first === undefined) throw new Error('fixture has skips')
+      const reconsidered: Skip = {
+        ...first,
+        reason: first.reason === 'not-state' ? 'computation' : 'not-state',
+      }
+      const revised = { ...validPlan, skips: [reconsidered, ...rest] }
+      const { model, result: pending } = run(
+        [json(validPlan), json({ ...revised, skips: [] }), json(revised)],
+        { review: true },
+      )
+      // Round 2 drops every skip, which the validator refuses; round 3 repairs it.
+      const result = await pending
+      expect(result.status).toEqual('ok')
+      expect(result.rounds.map((r) => r.phase)).toEqual([
+        'author',
+        'review',
+        'review',
+      ])
+      expect(result.plan?.skips[0]).toEqual(reconsidered)
+      const review = model.prompts[1] ?? ''
+      expect(review).toInclude('## Review your plan')
+      expect(review).toInclude('`validators` (set@1 over logs): ')
+      expect(review).toInclude('Every skip: does the definition')
+      expect(model.calls[1]?.kind).toEqual('resume')
+    })
+
+    it('keeps the first accepted plan when the revision never passes', async () => {
+      const broken = { ...validPlan, skips: [] }
+      const { result: pending } = run(
+        [json(validPlan), json(broken), json(broken), json(broken)],
+        { review: true },
+      )
+      const result = await pending
+      expect(result.status).toEqual('ok')
+      expect(result.plan?.skips).toEqual(skips)
+      expect(result.rounds.length).toEqual(4)
     })
   })
 })

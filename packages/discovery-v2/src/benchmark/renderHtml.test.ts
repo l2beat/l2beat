@@ -15,6 +15,8 @@ describe(renderHtml.name, () => {
     chain: 'ethereum',
     blockNumber: 1,
     author: false,
+    review: false,
+    facts: false,
     noPlan: true,
     repeat: 0,
     startedAt: '',

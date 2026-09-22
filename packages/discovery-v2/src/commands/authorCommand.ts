@@ -13,9 +13,12 @@ import { FileArtifactSink } from '../author/ArtifactSink'
 import { type AuthoringResult, author } from '../author/author'
 import { CodexClient, type ReasoningEffort } from '../author/codex/CodexClient'
 import type { ModelClient } from '../author/codex/ModelClient'
+import { OpenCodeClient } from '../author/opencode/OpenCodeClient'
+import { buildFacts, readFacts } from '../facts/buildFacts'
 import { Library } from '../library/Library'
 import { PlanStore } from '../plans/PlanStore'
 import type { Baseline } from '../types/Baseline'
+import type { Facts } from '../types/Facts'
 import type { Prepared } from '../types/Prepared'
 import type { Worklist } from '../types/Worklist'
 import { providerFor } from './baselineCommand'
@@ -30,11 +33,21 @@ import {
 
 export const AUTHOR_DIR = 'author'
 
+export const MODEL_PROVIDERS = ['codex', 'opencode'] as const
+export type ModelProvider = (typeof MODEL_PROVIDERS)[number]
+
 export interface AuthorOptions {
+  /** Which CLI carries the model; default codex. */
+  provider?: ModelProvider
+  /** Codex: model name or the Codex default. opencode: `provider/model`, required. */
   model?: string
   reasoning?: ReasoningEffort
   /** Repair rounds after the first turn. */
   maxRounds?: number
+  /** Second pass over the accepted plan with its executed results. */
+  review?: boolean
+  /** Compile the sources, derive writer/event facts and put them in the prompt. */
+  facts?: boolean
   /** `false` keeps an accepted plan out of `plans/`. */
   store?: boolean
   /** Replaces Codex, for tests. */
@@ -64,10 +77,13 @@ export async function authorCommand(
   const worklist = readWorklist(args.worklistFile)
   const provider = await providerFor(ctx, prepared)
   const outDir = args.out ?? path.dirname(args.preparedFile)
+  const facts = args.facts
+    ? await factsFor(ctx, prepared, path.join(outDir, FILE_NAMES.facts))
+    : undefined
   return await runAuthor(
     ctx,
     provider,
-    { prepared, baseline, worklist },
+    { prepared, baseline, worklist, facts },
     outDir,
     args,
   )
@@ -76,7 +92,12 @@ export async function authorCommand(
 export async function runAuthor(
   ctx: CommandContext,
   provider: IProvider,
-  input: { prepared: Prepared; baseline: Baseline; worklist: Worklist },
+  input: {
+    prepared: Prepared
+    baseline: Baseline
+    worklist: Worklist
+    facts?: Facts
+  },
   outDir: string,
   options: AuthorOptions,
 ): Promise<AuthorFiles> {
@@ -85,7 +106,7 @@ export async function runAuthor(
   try {
     const result = await author(
       {
-        model: options.modelClient ?? createCodexClient(options),
+        model: options.modelClient ?? createModelClient(options),
         provider,
         library,
         planStore:
@@ -99,6 +120,7 @@ export async function runAuthor(
       {
         maxRepairRounds: options.maxRounds,
         model: options.model,
+        review: options.review,
       },
     )
     const planFile =
@@ -122,7 +144,41 @@ export async function runAuthor(
   }
 }
 
-function createCodexClient(options: AuthorOptions): CodexClient {
+/** `facts.json` is reused when the run directory already has one, else built and written. */
+export async function factsFor(
+  ctx: CommandContext,
+  prepared: Prepared,
+  file: string,
+): Promise<Facts> {
+  const existing = readFacts(file)
+  if (existing !== undefined) {
+    return existing
+  }
+  const facts = await buildFacts(prepared)
+  writeJson(file, facts)
+  ctx.logger.info('Facts built', {
+    file,
+    sources: facts.sources.map((s) =>
+      s.error === undefined
+        ? `${s.name}: ${s.variables.length} variable(s)`
+        : `${s.name}: ${s.error}`,
+    ),
+  })
+  return facts
+}
+
+export function createModelClient(options: AuthorOptions): ModelClient {
+  if (options.provider === 'opencode') {
+    if (options.model === undefined) {
+      throw new Error(
+        'opencode needs --model provider/model (see `opencode models`)',
+      )
+    }
+    return new OpenCodeClient({
+      model: options.model,
+      variant: options.reasoning,
+    })
+  }
   return new CodexClient({
     model: options.model,
     reasoningEffort: options.reasoning,

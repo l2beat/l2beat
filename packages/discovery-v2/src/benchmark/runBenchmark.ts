@@ -19,6 +19,7 @@ import type { EntryParameters } from '@l2beat/discovery'
 import path from 'path'
 import type { AuthoringResult, RoundRecord } from '../author/author'
 import type { ReasoningEffort } from '../author/codex/CodexClient'
+import type { ModelProvider } from '../commands/authorCommand'
 import { type AuthorFiles, runAuthor } from '../commands/authorCommand'
 import { providerFor } from '../commands/baselineCommand'
 import type { CommandContext } from '../commands/context'
@@ -62,9 +63,12 @@ export interface BenchmarkOptions {
   noPlan?: boolean
   /** Where per-contract run directories go (`<outDir>/contracts/<address>`). */
   outDir: string
+  provider?: ModelProvider
   model?: string
   reasoning?: ReasoningEffort
   maxRounds?: number
+  review?: boolean
+  facts?: boolean
   planStore?: PlanStore
 }
 
@@ -102,7 +106,10 @@ export async function runBenchmark(
     chain: project.chain,
     blockNumber: project.blockNumber,
     model: modelOf(contracts) ?? options.model,
+    provider: options.provider ?? 'codex',
     reasoning: options.reasoning,
+    review: options.review ?? false,
+    facts: options.facts ?? false,
     author: options.author,
     noPlan: options.noPlan ?? false,
     repeat: options.repeat,
@@ -136,7 +143,10 @@ async function benchmarkContract(
       noPlan: options.noPlan,
       out: runDir,
       model: options.model,
+      provider: options.provider,
       reasoning: options.reasoning,
+      review: options.review,
+      facts: options.facts,
       maxRounds: options.maxRounds,
       planStore: options.planStore,
     })
@@ -222,7 +232,10 @@ async function repeatAuthoring(
         path.join(runDir, `repeat-${i}`),
         {
           model: options.model,
+          provider: options.provider,
           reasoning: options.reasoning,
+          review: options.review,
+          facts: options.facts,
           maxRounds: options.maxRounds,
           store: false,
         },

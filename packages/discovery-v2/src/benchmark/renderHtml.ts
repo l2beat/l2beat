@@ -125,6 +125,7 @@ function setup(run) {
   if (run.noPlan) return 'empty plan, no model (floor)'
   const parts = [run.model ?? (run.author ? 'model' : 'stored plans only')]
   if (run.reasoning) parts.push('reasoning ' + run.reasoning)
+  parts.push(run.review && run.facts ? 'review + facts' : run.review ? 'review pass' : run.facts ? 'with facts' : 'one shot')
   if (run.repeat) parts.push('repeat ' + run.repeat)
   return parts.join(', ')
 }

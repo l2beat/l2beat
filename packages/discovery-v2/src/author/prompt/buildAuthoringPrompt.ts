@@ -17,6 +17,7 @@ import type { Library } from '../../library/Library'
 import { planSchema } from '../../plan/planSchema'
 import type { Baseline, BaselineField } from '../../types/Baseline'
 import type { ContractValue } from '../../types/ContractValue'
+import type { Facts, FactsSource, FactsVariable } from '../../types/Facts'
 import type { Prepared, PreparedSource } from '../../types/Prepared'
 import type { Worklist } from '../../types/Worklist'
 
@@ -25,6 +26,8 @@ export interface PromptContext {
   baseline: Baseline
   worklist: Worklist
   library: Library
+  /** Static-analysis facts; when present they are rendered after the events. */
+  facts?: Facts
 }
 
 export interface PromptOptions {
@@ -90,6 +93,7 @@ function renderRules(): string {
     "7. **Roles.** For OpenZeppelin AccessControl (`hasRole`, `getRoleAdmin`, events `RoleGranted`/`RoleRevoked`/`RoleAdminChanged`) use one `accessControl@1` step with id `accessControl` that covers both items, and fill `roleNames` with every `*_ROLE()` baseline getter: the getter's value (the bytes32 hash) as key, the getter's name as value. The zero hash is `DEFAULT_ADMIN_ROLE` automatically.",
     '8. **Reason.** `reason` is one sentence naming the writer function and its modifier (e.g. "sequencers is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer").',
     '9. **User activity is never fetched.** Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them.',
+    '11. **Facts.** When section 4 ends with static-analysis facts, take the writers, modifiers and events from there: a mapping whose writers all carry an owner/governor/role modifier is privileged state, and the events those writers emit are the ones to fold; an event listed as never emitted must not be used.',
     '10. **Output.** Reply with exactly one JSON object that matches the plan schema in section 2, and nothing else: no prose, no code fence, no comments. Copy `contract` from the contract facts. Omit `shapeHash` unless it is given below.',
     '',
   ].join('\n')
@@ -214,7 +218,78 @@ function renderFacts(ctx: PromptContext): string {
       ? ['(none declared)']
       : worklist.events.map((event) => `- ${event.fragment}`)),
     '',
+    ...(ctx.facts === undefined ? [] : renderStaticFacts(ctx.facts)),
   ].join('\n')
+}
+
+/**
+ * Compiler-derived facts replace guesswork about which event announces
+ * which mapping: for every mutable state variable, the externally callable
+ * functions that can write it, their modifiers and the events they emit.
+ * Rendered per source (proxy, implementation) so the model sees which code
+ * the facts describe, and a source that failed analysis says so.
+ */
+export function renderStaticFacts(facts: Facts): string[] {
+  return [
+    '### Static analysis: who writes each state variable (compiler AST + Datalog)',
+    '',
+    'Derived from the verified source by the compiler and a fixed set of rules, not by a model. "Writers" are external/public functions from which a write of the variable is reachable through internal calls and modifiers; each is shown with its own modifiers and every event it can emit. Use this to pick the events that enumerate a mapping and to tell privileged setters (modifier-guarded) from user activity. A writer list is syntactic reachability: the path exists, it need not run.',
+    '',
+    ...facts.sources.flatMap(renderFactsSource),
+  ]
+}
+
+function renderFactsSource(source: FactsSource): string[] {
+  const head = `#### ${source.name} (${source.address})`
+  if (source.error !== undefined) {
+    return [head, '', `No facts: ${source.error}`, '']
+  }
+  if (source.variables.length === 0) {
+    return [
+      head,
+      '',
+      'No mutable state variable is written by any entry point.',
+      '',
+    ]
+  }
+  return [
+    head,
+    '',
+    ...source.variables.map(renderFactsVariable),
+    ...(source.neverEmitted.length === 0
+      ? []
+      : [
+          '',
+          `Events declared here that no entry point emits (a fold over them returns nothing): ${source.neverEmitted.map((e) => `\`${e}\``).join(', ')}`,
+        ]),
+    '',
+  ]
+}
+
+function renderFactsVariable(variable: FactsVariable): string {
+  const writers =
+    variable.writers.length === 0
+      ? variable.writtenInConstructor
+        ? 'set only in the constructor'
+        : 'no external writer found'
+      : variable.writers
+          .map((writer) => {
+            const guards =
+              writer.modifiers.length === 0
+                ? ' [no modifier]'
+                : ` [${writer.modifiers.join(', ')}]`
+            const events =
+              writer.events.length === 0
+                ? ''
+                : ` emits ${writer.events.join(', ')}`
+            return `${writer.function}${guards}${events}`
+          })
+          .join('; ')
+  const readers = variable.readers.filter(
+    (r) => r.includes('(') && !r.endsWith('()'),
+  )
+  const readBy = readers.length === 0 ? '' : `; read by ${readers.join(', ')}`
+  return `- \`${variable.name}\` (${variable.type}, ${variable.visibility}, in ${variable.declaredIn}): written by ${writers}${readBy}`
 }
 
 function renderIdentity(prepared: Prepared): string[] {

@@ -22,6 +22,7 @@ export const FILE_NAMES = {
   prepared: 'prepared.json',
   baseline: 'baseline.json',
   worklist: 'worklist.json',
+  facts: 'facts.json',
   plan: 'plan.json',
   findings: 'findings.json',
   values: 'values.json',

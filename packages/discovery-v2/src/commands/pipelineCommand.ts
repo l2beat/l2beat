@@ -18,7 +18,7 @@ import type { Plan } from '../plan/Plan'
 import { validatePlan } from '../plan/validatePlan'
 import { PlanStore } from '../plans/PlanStore'
 import type { PlanStatus } from '../types/EntryMeta'
-import { type AuthorOptions, runAuthor } from './authorCommand'
+import { type AuthorOptions, factsFor, runAuthor } from './authorCommand'
 import { runBaseline } from './baselineCommand'
 import type { CommandContext } from './context'
 import { runExecute } from './executeCommand'
@@ -74,10 +74,13 @@ export async function pipelineCommand(
       : findPlan(ctx, args, prepared.shapeHash)
   let authoring: AuthoringResult | undefined
   if (found === undefined && (args.author || args.reauthor)) {
+    const facts = args.facts
+      ? await factsFor(ctx, prepared, path.join(runDir, FILE_NAMES.facts))
+      : undefined
     const authored = await runAuthor(
       ctx,
       provider,
-      { prepared, baseline, worklist },
+      { prepared, baseline, worklist, facts },
       runDir,
       args,
     )

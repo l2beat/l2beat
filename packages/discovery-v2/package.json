@@ -26,7 +26,8 @@
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
-    "jq-wasm": "^3.0.0-jq-1.8.2"
+    "jq-wasm": "^3.0.0-jq-1.8.2",
+    "solc": "0.8.34"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

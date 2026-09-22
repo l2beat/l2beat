@@ -277,6 +277,7 @@ describe(runBenchmark.name, () => {
       promptTruncated: false,
       rounds: Array.from({ length: rounds }, (_, i) => ({
         index: i + 1,
+        phase: 'author' as const,
         prompt: '',
         response: '',
         findings: [],

@@ -26,6 +26,7 @@ import { validatePlan } from '../plan/validatePlan'
 import { decisionHash } from '../plans/decisionHash'
 import type { PlanSource, PlanStore } from '../plans/PlanStore'
 import type { Baseline } from '../types/Baseline'
+import type { Facts } from '../types/Facts'
 import type { Prepared } from '../types/Prepared'
 import type { Worklist } from '../types/Worklist'
 import type { ArtifactSink } from './ArtifactSink'
@@ -47,6 +48,8 @@ export interface AuthorContext {
   prepared: Prepared
   baseline: Baseline
   worklist: Worklist
+  /** Static-analysis facts to include in the prompt (the `facts` strategy). */
+  facts?: Facts
 }
 
 export interface AuthorOptions {
@@ -55,6 +58,13 @@ export interface AuthorOptions {
   sourceCharCap?: number
   /** Recorded as provenance when the client cannot report the model itself. */
   model?: string
+  /**
+   * After a plan is accepted, send its executed results back and ask for a
+   * revision (skips to reconsider, unused privileged events, empty folds),
+   * with the same repair budget. The first accepted plan stays the answer
+   * when the revision never gets accepted.
+   */
+  review?: boolean
 }
 
 export const DEFAULT_MAX_REPAIR_ROUNDS = 2
@@ -63,10 +73,14 @@ export const DEFAULT_SOURCE_CHAR_CAP = 400_000
 export interface DryRunRecord {
   status: 'ok' | 'partial'
   failedSteps: { id: string; error: string }[]
+  /** Size of each step's result: items of a list or set, keys of a map, or `scalar`. */
+  stepResults: { id: string; size: number | 'scalar' | 'error' }[]
 }
 
 export interface RoundRecord {
   index: number
+  /** Which pass the round belongs to; repair rounds inherit their pass. */
+  phase: 'author' | 'review'
   prompt: string
   response: string
   parsed?: unknown
@@ -129,34 +143,98 @@ class AuthoringLoop {
         sourceCharCap: this.options.sourceCharCap ?? DEFAULT_SOURCE_CHAR_CAP,
       })
     }
-    let message = prompt
+    const first = await this.converge('author', prompt)
+    if (first.kind === 'refused') {
+      return this.failed(truncated, first.failure, first.candidate)
+    }
+    if (first.kind === 'exhausted') {
+      return this.failed(
+        truncated,
+        `no acceptable plan after ${this.rounds.length} round(s); last findings: ${summarise(first.lastFindings)}`,
+        first.candidate,
+      )
+    }
+    if (this.options.review !== true) {
+      return this.accepted(first.plan, truncated)
+    }
+    const revised = await this.converge(
+      'review',
+      reviewMessage(first.plan, first.dryRun, this.ctx),
+    )
+    if (revised.kind !== 'accepted') {
+      this.logger.warn(
+        'Review pass produced no accepted revision; keeping the first plan',
+        {
+          outcome: revised.kind,
+        },
+      )
+      return this.accepted(first.plan, truncated)
+    }
+    return this.accepted(revised.plan, truncated)
+  }
+
+  /**
+   * One pass: a first turn, then repair turns until the plan is accepted or
+   * the budget is spent. The same loop serves authoring and review, so a
+   * revision is held to the same validator and dry run as the original.
+   */
+  private async converge(
+    phase: RoundRecord['phase'],
+    opening: string,
+  ): Promise<Convergence> {
+    let message = opening
     let candidate: Plan | undefined
-    for (let index = 1; index <= this.maxTurns; index++) {
+    let lastFindings: Finding[] = []
+    for (let attempt = 1; attempt <= this.maxTurns; attempt++) {
+      const index = this.rounds.length + 1
       let round: RoundRecord
       try {
-        round = await this.round(index, message)
+        round = await this.round(index, phase, message)
       } catch (error) {
-        return this.failed(truncated, describeError(error), candidate)
+        this.keepRefusedEvents(index, error)
+        return { kind: 'refused', failure: describeError(error), candidate }
       }
       this.rounds.push(round)
       this.writeSummary('running')
-      if (round.parsed !== undefined && !hasErrors(round.findings)) {
-        return this.accepted(round.parsed as Plan, truncated)
+      lastFindings = round.findings
+      if (
+        round.parsed !== undefined &&
+        round.dryRun !== undefined &&
+        !hasErrors(round.findings)
+      ) {
+        return {
+          kind: 'accepted',
+          plan: round.parsed as Plan,
+          dryRun: round.dryRun,
+        }
       }
       if (round.dryRun !== undefined) {
         candidate = round.parsed as Plan
       }
       message = repairMessage(round.findings)
     }
-    const last = this.rounds[this.rounds.length - 1]
-    return this.failed(
-      truncated,
-      `no acceptable plan after ${this.rounds.length} round(s); last findings: ${summarise(last?.findings ?? [])}`,
-      candidate,
-    )
+    return { kind: 'exhausted', candidate, lastFindings }
   }
 
-  private async round(index: number, message: string): Promise<RoundRecord> {
+  /** A refused turn still happened; its events are the evidence for why. */
+  private keepRefusedEvents(index: number, error: unknown): void {
+    const events =
+      typeof error === 'object' && error !== null && 'events' in error
+        ? (error as { events: unknown }).events
+        : undefined
+    if (Array.isArray(events) && events.length > 0) {
+      this.deps.artifacts.write(
+        `round-${index}.refused-events.jsonl`,
+        events.map((event) => JSON.stringify(event)).join('\n'),
+      )
+    }
+  }
+
+  private async round(
+    index: number,
+    phase: RoundRecord['phase'],
+    message: string,
+  ): Promise<RoundRecord> {
     this.deps.artifacts.write(`round-${index}.prompt.md`, message)
     this.logger.info('Model turn', { round: index, chars: message.length })
     const turn = await this.turn(message)
@@ -168,6 +246,7 @@ class AuthoringLoop {
 
     const round: RoundRecord = {
       index,
+      phase,
       prompt: message,
       response: turn.text,
       findings: [],
@@ -236,8 +315,10 @@ class AuthoringLoop {
     })
     const findings: Finding[] = []
     const failedSteps: DryRunRecord['failedSteps'] = []
+    const stepResults: DryRunRecord['stepResults'] = []
     plan.steps.forEach((step, i) => {
       const field = executed.fields[step.id]
+      stepResults.push({ id: step.id, size: sizeOf(field) })
       if (field?.error !== undefined) {
         failedSteps.push({ id: step.id, error: field.error })
         findings.push({
@@ -255,7 +336,10 @@ class AuthoringLoop {
         findings.push(this.zeroLogsFinding(step, i))
       }
     })
-    return { record: { status: executed.status, failedSteps }, findings }
+    return {
+      record: { status: executed.status, failedSteps, stepResults },
+      findings,
+    }
   }
 
   /**
@@ -401,6 +485,88 @@ function withShapeHash(value: unknown, shapeHash: string | undefined): unknown {
 }
 
 /** Errors first, then warnings, numbered, so the model can answer point by point. */
+type Convergence =
+  | { kind: 'accepted'; plan: Plan; dryRun: DryRunRecord }
+  | { kind: 'exhausted'; candidate?: Plan; lastFindings: Finding[] }
+  | { kind: 'refused'; failure: string; candidate?: Plan }
+
+function sizeOf(
+  field: { value?: unknown; error?: string } | undefined,
+): number | 'scalar' | 'error' {
+  if (field === undefined || field.error !== undefined) return 'error'
+  const value = field.value
+  if (Array.isArray(value)) return value.length
+  if (typeof value === 'object' && value !== null)
+    return Object.keys(value).length
+  return 'scalar'
+}
+
+/**
+ * The second pass shows the model what its plan produced and asks three
+ * pointed questions, because the first benchmark's misses were of three
+ * kinds: a skip whose reason did not fit, event-only state never taken up,
+ * and a fold over an event the contract does not emit.
+ */
+export function reviewMessage(
+  plan: Plan,
+  dryRun: DryRunRecord,
+  ctx: AuthorContext,
+): string {
+  const sizes = new Map(dryRun.stepResults.map((r) => [r.id, r.size]))
+  const usedEvents = new Set(
+    plan.steps.flatMap((step) =>
+      step.fetch.kind === 'logs' ? step.fetch.events.map(eventName) : [],
+    ),
+  )
+  const unusedEvents = ctx.worklist.events
+    .map((event) => event.fragment)
+    .filter((fragment) => !usedEvents.has(eventName(fragment)))
+  return [
+    '## Review your plan',
+    '',
+    `The plan was accepted and executed at block ${ctx.prepared.blockNumber}. What each step produced:`,
+    '',
+    ...plan.steps.map((step) => {
+      const size = sizes.get(step.id)
+      const shape =
+        step.use === undefined
+          ? step.fetch.kind
+          : `${step.use} over ${step.fetch.kind}`
+      const result =
+        size === 'scalar'
+          ? 'one value'
+          : size === 'error'
+            ? 'an error'
+            : `${size} item(s)`
+      return `- \`${step.id}\` (${shape}): ${result}${size === 0 ? ' — empty' : ''}`
+    }),
+    '',
+    'Skips:',
+    '',
+    ...(plan.skips.length === 0
+      ? ['(none)']
+      : plan.skips.map((skip) => `- \`${skip.item}\`: ${skip.reason}`)),
+    '',
+    `Events this contract declares that no step reads (${unusedEvents.length}):`,
+    '',
+    ...(unusedEvents.length === 0
+      ? ['(none)']
+      : unusedEvents.map((e) => `- ${e}`)),
+    '',
+    'Check three things, then reply with the complete plan as one JSON object and nothing else (revised, or unchanged if nothing should change):',
+    '',
+    '1. Every skip: does the definition of its reason fit exactly? State written only by privileged functions (owner, governor, role holder) whose keys an event enumerates is a step, not a skip; `unbounded` is only for keys nothing enumerates.',
+    '2. Every unused event emitted by a privileged function: is it event-only state under rule 6 (a history, a set, a count a researcher tracking this contract would want)? If so add a `logs` step for it, named after its subject.',
+    '3. Every empty step: does this contract emit that event? If not, fix the event or remove the step.',
+    '',
+    'Keep every step and skip you are not changing exactly as it is.',
+  ].join('\n')
+}
+
+function eventName(fragmentOrSignature: string): string {
+  return fragmentOrSignature.replace(/^event\s+/, '').split('(')[0] ?? ''
+}
+
 export function repairMessage(findings: Finding[]): string {
   const ordered = [
     ...findings.filter((finding) => finding.severity === 'error'),

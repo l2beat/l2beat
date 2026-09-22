@@ -19,6 +19,7 @@ import { renderMarkdown } from '../benchmark/render'
 import { runBenchmark } from '../benchmark/runBenchmark'
 import type { ProjectBenchmark } from '../benchmark/types'
 import { defaultPlansDir, PlanStore } from '../plans/PlanStore'
+import type { ModelProvider } from './authorCommand'
 import type { CommandContext } from './context'
 import { packageDir, writeJson } from './files'
 
@@ -33,9 +34,14 @@ export interface BenchmarkArgs {
   /** Re-compare the run already in `out` under the current rules; no pipeline runs. */
   rejudge?: boolean
   out?: string
+  provider?: ModelProvider
   model?: string
   reasoning?: ReasoningEffort
   maxRounds?: number
+  review?: boolean
+  facts?: boolean
+  /** Plan store directory; default the package's `plans/`. */
+  plansDir?: string
 }
 
 export const BENCHMARK_FILES = {
@@ -83,7 +89,7 @@ export async function benchmarkCommand(
     outDir,
   })
   const report = await runBenchmark(
-    { ctx, planStoreBefore: storedShapeHashes() },
+    { ctx, planStoreBefore: storedShapeHashes(args.plansDir) },
     project,
     {
       author: args.author,
@@ -91,9 +97,12 @@ export async function benchmarkCommand(
       noPlan: args.noPlan,
       outDir,
       model: args.model,
+      provider: args.provider,
       reasoning: args.reasoning,
+      review: args.review,
+      facts: args.facts,
       maxRounds: args.maxRounds,
-      planStore: new PlanStore(),
+      planStore: new PlanStore(args.plansDir),
     },
   )
   return writeReport(ctx, report, outDir)
@@ -119,8 +128,8 @@ export function defaultBenchmarkDir(project: string): string {
   return path.join(packageDir(), 'runs', 'benchmark', project)
 }
 
-function storedShapeHashes(): string[] {
-  const directory = defaultPlansDir()
+function storedShapeHashes(plansDir?: string): string[] {
+  const directory = plansDir ?? defaultPlansDir()
   if (!fs.existsSync(directory)) {
     return []
   }
