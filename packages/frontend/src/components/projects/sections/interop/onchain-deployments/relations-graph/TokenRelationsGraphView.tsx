@@ -105,6 +105,7 @@ export function TokenRelationsGraphView({
                 graph={graph}
                 node={selectedNode}
                 onSelectNode={selectNode}
+                headerClassName="pt-0"
               />
             )}
           </DrawerContent>

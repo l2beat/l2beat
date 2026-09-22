@@ -40,6 +40,7 @@ interface Props {
   onSelectNode: (id: string) => void
   onClose?: () => void
   className?: string
+  headerClassName?: string
 }
 
 export function RelationsDetails({
@@ -48,6 +49,7 @@ export function RelationsDetails({
   onSelectNode,
   onClose,
   className,
+  headerClassName,
 }: Props) {
   return (
     <div
@@ -56,7 +58,7 @@ export function RelationsDetails({
         className,
       )}
     >
-      <Header node={node} onClose={onClose} />
+      <Header node={node} onClose={onClose} className={headerClassName} />
       <PanelSection
         title="Past 24h crosschain activity"
         hint={
@@ -83,15 +85,22 @@ interface SectionProps {
 function Header({
   node,
   onClose,
+  className,
 }: {
   node: InteropTokenRelationsNode
   onClose: (() => void) | undefined
+  className: string | undefined
 }) {
   const first = node.deployments[0]
   if (!first) return null
   const cluster = isCluster(node)
   return (
-    <header className="sticky top-0 z-10 flex items-start justify-between gap-3 bg-surface-primary py-4">
+    <header
+      className={cn(
+        'sticky top-0 z-10 flex items-start justify-between gap-3 bg-surface-primary py-4',
+        className,
+      )}
+    >
       <div className="flex min-w-0 items-center gap-3">
         {cluster ? (
           <span className="-space-x-2 flex shrink-0">
