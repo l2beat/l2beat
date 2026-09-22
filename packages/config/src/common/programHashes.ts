@@ -2249,6 +2249,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x00f1b104202c89fe60d973cbf456a4e2e1ec1e7d63c61453b959dda153df798c.md',
     ),
   },
+  '0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63': {
+    title: 'Morph Guest program (v0.6.3 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM. The sequencer-set public input field is zero.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.6.3/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63.md',
+    ),
+  },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:

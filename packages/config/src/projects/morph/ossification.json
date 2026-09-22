@@ -327,6 +327,22 @@
       "transaction": "0x338db42d231e1ae442daddaade174b2a20b31f2455586fbcb56862238ab34082",
       "updateId": "17fdba45",
       "reason": "Moved control of the Rollup, whose owner can pause, revert unfinalized batches, change the proof window, finalization period and verifier, from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1790063627,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0xae4d0c6ed6631fc97cdb0c0e184da389a50385bc1fe0590b1d588c0643b2f537",
+      "updateId": "da922e8f",
+      "reason": "Registered a new SP1 verifier (program vkey 0x00b450ec..., Morph v0.6.3 guest program) for all batches from index 60478, replacing the previous route for new batches (UpdateVerifier by Morph Multisig 1)."
+    },
+    {
+      "timestamp": 1790063675,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e",
+      "updateId": "da922e8f",
+      "reason": "Upgraded the Rollup and, in the same upgradeAndCall, pointed it at the new staked Submitter contract at batch 60477: batch commitment, state proposal and slashing now go through the Submitter instead of L1Staking and the BLS signature input was removed (Morph Multisig 1 via the 0-delay timelock and ProxyAdmin)."
     }
   ]
 }

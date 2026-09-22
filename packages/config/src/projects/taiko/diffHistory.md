@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2c431f39c2a5154c744507e2304cec7acd83fa86
+Generated with discovered.json: 0xafbf9b901c36aec840d1ccaa39f254eaf493fe9a
 
-# Diff at Tue, 22 Sep 2026 12:21:34 GMT:
+# Diff at Tue, 22 Sep 2026 13:48:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@31c7a6db0a014bb7f3fe6494268900a30373d29d block: 1789471567
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789471567
 - current timestamp: 1790078329
 
 ## Description
@@ -11,8 +11,7 @@ Generated with discovered.json: 0x2c431f39c2a5154c744507e2304cec7acd83fa86
 Two proposals executed: 
 
 1. Security Council reduced from 9 to 5 members, thresholds now 3/5 standard and 4/5 emergency (This removes the 'correctly set-up' qualification for a Security Council - too few participants and threshold too low). 
-2. Raiko2 proving set updated v0.6.0 -> v0.8.0-rc1 (RISC0 image IDs, SP1 vkeys, SGX mrEnclaves, old SGX instances deleted). 
-
+2. Raiko2 proving set updated v0.6.0 -> v0.8.0-rc1 (RISC0 image IDs, SP1 vkeys, SGX mrEnclaves, old SGX instances deleted).
 
 ## Watched changes
 
@@ -323,15 +322,6 @@ discovery. Values are for block 1789471567 (main branch discovery), not current.
 +        "Safe"
       category:
 -        {"name":"Spam","priority":-1}
-    }
-```
-
-```diff
-    EOA Sebastian Kugler Agent (eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8) {
-    +++ description: None
-      name:
--        "L2BEAT Agent"
-+        "Sebastian Kugler Agent"
     }
 ```
 

@@ -1,3 +1,222 @@
+Generated with discovered.json: 0x3ac5f2026abff572e72c051177a4d73c303a6be2
+
+# Diff at Tue, 22 Sep 2026 13:48:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1786719775
+- current timestamp: 1790080873
+
+## Description
+
+Rollup upgrade https://disco.l2beat.com/diff/eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB/eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d: batch commitment, state proposal and slashing are now authorized through a new staked Submitter contract (owned by Morph Multisig) instead of L1Staking. The never-verified BLS signature input was removed.
+
+A new SP1 verifier was registered with a new program vkey (Morph v0.6.3 guest program, reproduced from source).
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.1.verifier:
+-        "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
++        "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9"
+      values.latestVerifier.1.startBatchIndex:
+-        54332
++        60478
+    }
+```
+
+```diff
+    EOA (eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      sourceHashes.1:
+-        "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b"
++        "0xf24c39e5b0d3851769ddbafcad7ce6770f9aac6e89c6b220c902ab07d97ab225"
+      values.$implementation:
+-        "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"
++        "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d"
+      values.$pastUpgrades.11:
++        ["2026-09-22T07:54:35.000Z","0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e",["eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.l1StakingContract:
+-        "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"
++++ description: Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account.
+      values.legacyCutoverBatchIndex:
++        60477
++++ severity: HIGH
+      values.submitterContract:
++        "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6"
+      implementationNames.eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB:
+-        "Rollup"
+      implementationNames.eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d:
++        "Rollup"
+    }
+```
+
+```diff
+    EOA (eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"add and remove submitters (batch committers/proposers), set the minimum stake, the challenge deposit and the slashing reward share, and withdraw the non-rewarded remainder of slashed stakes.","role":".owner"}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","role":"admin","via":[{"address":"eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"},{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x651cA600813fC0126225b727EDbA617949b1d1c9) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
++   Status: CREATED
+    contract Submitter (eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6) [morph/Submitter]
+    +++ description: Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1786719775 => .flat}/Rollup/Rollup.sol  | 307 ++------
+ .../projects/morph/.flat/Submitter/Submitter.sol   | 802 +++++++++++++++++++
+ .../Submitter/TransparentUpgradeableProxy.p.sol    | 864 +++++++++++++++++++++
+ ...0x651cA600813fC0126225b727EDbA617949b1d1c9.sol} |   0
+ 4 files changed, 1747 insertions(+), 226 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786719775 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.
+      description:
+-        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented)."
++        "Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup."
+    }
+```
+
+```diff
+    EOA (eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
+    }
+```
+
+```diff
+    EOA (eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`."
+      fieldMeta.l1StakingContract:
+-        {"severity":"HIGH"}
+      fieldMeta.submitterContract:
++        {"severity":"HIGH"}
+      fieldMeta.legacyCutoverBatchIndex:
++        {"description":"Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account."}
+    }
+```
+
+```diff
+    EOA (eth:0x76F91869161dC4348230D5F60883Dd17462035f4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config."
++        "whitelist and remove stakers (the L2 sequencer set relayed to L2) and manage the staking, slashing and reward config of this contract."
+    }
+```
+
+```diff
+    EOA (eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      critical:
+-        true
+    }
+```
+
+```diff
+    EOA (eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
+    }
+```
+
 Generated with discovered.json: 0x40574d6f99e39d627c72219a15aaaa4eaddfc7c0
 
 # Diff at Mon, 21 Sep 2026 11:24:03 GMT:

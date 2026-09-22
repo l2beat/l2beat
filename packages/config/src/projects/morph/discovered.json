@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1786719775,
-  "configHash": "0x84533ed6d982237462f02349cb9bf0707e1a3ea293796016395a863c4b2cbb1c",
+  "timestamp": 1790080873,
+  "configHash": "0x691134d73ddb3ae0c915df77f5870c7d559b0f0af356e8bcf149e180ddf39f6e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -33,7 +33,7 @@
         "0x0e1d68199446451f14f2a7ef0da1b4b74fb6b05a9f004eb41d199417b1985a34"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "description": "Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.",
       "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307471,
@@ -209,7 +209,7 @@
         "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-        "totalBridgedUSDC": 530997863588,
+        "totalBridgedUSDC": 530982686484,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -310,13 +310,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1786585091,
+        "getFirstUnfinalizedMessageEnqueueTime": 1789929815,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25998,
+        "nextCrossDomainMessageIndex": 27664,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25996,
+        "pendingQueueIndex": 27647,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -544,8 +544,8 @@
             "verifier": "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624"
           },
           {
-            "startBatchIndex": 54332,
-            "verifier": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
+            "startBatchIndex": 60478,
+            "verifier": "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9"
           }
         ],
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
@@ -565,6 +565,32 @@
       "address": "eth:0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9",
+      "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
+      "sourceHashes": [
+        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
+      ],
+      "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": true,
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
+      "sinceTimestamp": 1789614347,
+      "sinceBlock": 25994406,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63",
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": { "programVkey": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": "ZkEvmVerifierV1"
+      }
     },
     {
       "address": "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
@@ -665,10 +691,10 @@
       "template": "morph/Rollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b"
+        "0xf24c39e5b0d3851769ddbafcad7ce6770f9aac6e89c6b220c902ab07d97ab225"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
+      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
       "critical": true,
       "ignoreInWatchMode": [
         "batchChallenged",
@@ -681,7 +707,7 @@
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB",
+        "$implementation": "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -737,9 +763,14 @@
             "2026-06-03T11:26:11.000Z",
             "0xe9128be913e8685a928c8e8468a030a95ad44ef4ad78534c688cd721af496a54",
             ["eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"]
+          ],
+          [
+            "2026-09-22T07:54:35.000Z",
+            "0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e",
+            ["eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d"]
           ]
         ],
-        "$upgradeCount": 11,
+        "$upgradeCount": 12,
         "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -784,10 +815,10 @@
         "finalizationPeriodSeconds": 172800,
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
-        "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 57304,
-        "lastFinalizedBatchIndex": 57151,
+        "lastCommittedBatchIndex": 60499,
+        "lastFinalizedBatchIndex": 60320,
         "LAYER_2_CHAIN_ID": 2818,
+        "legacyCutoverBatchIndex": 60477,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
@@ -796,6 +827,7 @@
         "proveRemaining": 0,
         "revertReqIndex": 0,
         "rollupDelayPeriod": 604800,
+        "submitterContract": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "fieldMeta": {
@@ -804,7 +836,10 @@
         "verifier": { "severity": "HIGH" },
         "finalizationPeriodSeconds": { "severity": "HIGH" },
         "proofWindow": { "severity": "HIGH" },
-        "l1StakingContract": { "severity": "HIGH" },
+        "submitterContract": { "severity": "HIGH" },
+        "legacyCutoverBatchIndex": {
+          "description": "Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account."
+        },
         "messageQueue": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
         "owner": { "severity": "HIGH" },
@@ -815,7 +850,7 @@
       },
       "implementationNames": {
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
-        "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB": "Rollup"
+        "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d": "Rollup"
       }
     },
     {
@@ -1011,7 +1046,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 79,
+        "nonce": 82,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1193,32 +1228,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692",
-      "type": "Contract",
-      "template": "morph/ZkEvmVerifierV1",
-      "sourceHashes": [
-        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
-      ],
-      "proxyType": "immutable",
-      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
-      "critical": true,
-      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
-      "sinceTimestamp": 1780291583,
-      "sinceBlock": 25220423,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x00f1b104202c89fe60d973cbf456a4e2e1ec1e7d63c61453b959dda153df798c",
-        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
-        "VERSION": "v6.1.0",
-        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": { "programVkey": { "severity": "HIGH" } },
-      "implementationNames": {
-        "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": "ZkEvmVerifierV1"
-      }
-    },
-    {
       "name": "L1CrossDomainMessenger",
       "address": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
       "type": "Contract",
@@ -1258,7 +1267,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25998,
+        "messageNonce": 27664,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
@@ -1334,12 +1343,66 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 25,
+        "nonce": 28,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "Submitter",
+      "address": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+      "type": "Contract",
+      "template": "morph/Submitter",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xde480175984164b6b35b116dc925586425ba8ae0d13df268a805fb3bb1dedba7"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.",
+      "critical": true,
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
+      "sinceTimestamp": 1789617215,
+      "sinceBlock": 25994644,
+      "values": {
+        "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+        "$implementation": "eth:0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576",
+        "$pastUpgrades": [
+          [
+            "2026-09-17T03:53:35.000Z",
+            "0x3d9a9fcb431bbf54d5492373165b1f33b93cc279cd54861aadcaa2fd5ee25fa9",
+            ["eth:0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "challengeDeposit": 1,
+        "minimumStake": "1000000000000000000",
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+        "rewardPercentage": 30,
+        "rollupContract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "slashRemaining": 0,
+        "submitters": [
+          "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
+        ]
+      },
+      "fieldMeta": {
+        "submitters": {
+          "description": "Submitters currently registered by the owner, reconstructed from add, remove, withdrawal and slash events. A submitter is active only while its stake is at or above minimumStake."
+        },
+        "minimumStake": { "severity": "HIGH" },
+        "challengeDeposit": { "severity": "HIGH" },
+        "rewardPercentage": { "severity": "HIGH" },
+        "rollupContract": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": "TransparentUpgradeableProxy",
+        "eth:0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576": "Submitter"
       }
     },
     {
@@ -1436,6 +1499,85 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d": [
+      "constructor(uint64 _chainID)",
+      "error ErrZeroAddress()",
+      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
+      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
+      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProveRemainingClaimed(address receiver, uint256 amount)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event SubmitterContractUpdated(address indexed oldAddr, address indexed newAddr, uint256 indexed legacyCutoverBatchIndex)",
+      "event Unpaused(address account)",
+      "event UpdateChallenger(address indexed account, bool status)",
+      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
+      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
+      "event UpdateRollupDelayPeriod(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "function LAYER_2_CHAIN_ID() view returns (uint64)",
+      "function __maxNumTxInChunk() view returns (uint256)",
+      "function addChallenger(address _account)",
+      "function batchBlobVersionedHashes(uint256 batchIndex) view returns (bytes32 blobVersionedHash)",
+      "function batchChallengeReward(address owner) view returns (uint256 amount)",
+      "function batchChallenged() view returns (uint256)",
+      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
+      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, address submitter)",
+      "function batchExist(uint256 batchIndex) view returns (bool)",
+      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
+      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
+      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
+      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
+      "function claimProveRemaining(address receiver)",
+      "function claimReward(address receiver)",
+      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput) payable",
+      "function commitBatchWithProof(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, bytes _batchHeader, bytes _batchProof)",
+      "function commitState(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput)",
+      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
+      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function finalizeBatch(bytes _batchHeader)",
+      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function importGenesisBatch(bytes _batchHeader)",
+      "function inChallenge() view returns (bool)",
+      "function initialize(address _submitterContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
+      "function initialize2(bytes32 _prevStateRoot)",
+      "function initialize3(uint256 _rollupDelayPeriod)",
+      "function initialize4(address _newSubmitter, uint256 _expectedLegacyCutoverBatchIndex)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
+      "function lastCommittedBatchIndex() view returns (uint256)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function legacyCutoverBatchIndex() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proofRewardPercent() view returns (uint256)",
+      "function proofWindow() view returns (uint256)",
+      "function proveCommittedBatchState(bytes _batchHeader, bytes _batchProof) view",
+      "function proveRemaining() view returns (uint256)",
+      "function proveState(bytes _batchHeader, bytes _batchProof)",
+      "function removeChallenger(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _batchHeader, uint256 _count)",
+      "function revertReqIndex() view returns (uint256)",
+      "function rollupDelayPeriod() view returns (uint256)",
+      "function setPause(bool _status)",
+      "function submitterContract() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
+      "function updateProofWindow(uint256 _newWindow)",
+      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
+      "function updateRollupDelayPeriod(uint256 _newPeriod)",
+      "function updateVerifier(address _newVerifier)",
+      "function verifier() view returns (address)",
+      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
+    ],
     "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1458,6 +1600,45 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576": [
+      "constructor()",
+      "event ChallengeDepositUpdated(uint256 oldValue, uint256 newValue)",
+      "event Initialized(uint8 version)",
+      "event MinimumStakeUpdated(uint256 oldValue, uint256 newValue)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RewardPercentageUpdated(uint256 oldValue, uint256 newValue)",
+      "event SlashRemainingClaimed(address indexed receiver, uint256 amount)",
+      "event Slashed(address indexed submitter, uint256 amount, uint256 reward)",
+      "event Staked(address indexed submitter, uint256 amount, uint256 total)",
+      "event SubmitterAdded(address indexed submitter)",
+      "event SubmitterRemoved(address indexed submitter)",
+      "event WithdrawalClaimed(address indexed submitter, address indexed receiver, uint256 amount)",
+      "event WithdrawalRequested(address indexed submitter, uint256 amount)",
+      "function addSubmitter(address submitter)",
+      "function challengeDeposit() view returns (uint256)",
+      "function claimSlashRemaining(address receiver)",
+      "function claimWithdrawal(address receiver)",
+      "function initialize(address owner_, address rollupContract_, uint256 minimumStake_, uint256 challengeDeposit_, uint256 rewardPercentage_)",
+      "function isActive(address submitter) view returns (bool)",
+      "function minimumStake() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function registered(address submitter) view returns (bool isRegistered)",
+      "function removeSubmitter(address submitter)",
+      "function renounceOwnership()",
+      "function rewardPercentage() view returns (uint256)",
+      "function rollupContract() view returns (address)",
+      "function setMinimumStake(uint256 value)",
+      "function slash(address submitter) returns (uint256 reward)",
+      "function slashRemaining() view returns (uint256)",
+      "function stake(address submitter) payable",
+      "function stakeOf(address submitter) view returns (uint256 amount)",
+      "function transferOwnership(address newOwner)",
+      "function updateChallengeDeposit(uint256 value)",
+      "function updateRewardPercentage(uint256 value)",
+      "function withdraw()",
+      "function withdrawalBatchIndex(address submitter) view returns (uint256 batchIndex)",
+      "function withdrawing(address submitter) view returns (bool isWithdrawing)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1615,6 +1796,22 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819": [
       "constructor()",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
@@ -1743,82 +1940,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB": [
-      "constructor(uint64 _chainID)",
-      "error ErrZeroAddress()",
-      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
-      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
-      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProveRemainingClaimed(address receiver, uint256 amount)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateChallenger(address indexed account, bool status)",
-      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
-      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
-      "event UpdateRollupDelayPeriod(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "function LAYER_2_CHAIN_ID() view returns (uint64)",
-      "function __maxNumTxInChunk() view returns (uint256)",
-      "function addChallenger(address _account)",
-      "function batchBlobVersionedHashes(uint256 batchIndex) view returns (bytes32 blobVersionedHash)",
-      "function batchChallengeReward(address owner) view returns (uint256 amount)",
-      "function batchChallenged() view returns (uint256)",
-      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
-      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
-      "function batchExist(uint256 batchIndex) view returns (bool)",
-      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
-      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
-      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
-      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
-      "function claimProveRemaining(address receiver)",
-      "function claimReward(address receiver)",
-      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
-      "function commitBatchWithProof(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput, bytes _batchHeader, bytes _batchProof)",
-      "function commitState(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput)",
-      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
-      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function finalizeBatch(bytes _batchHeader)",
-      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function importGenesisBatch(bytes _batchHeader)",
-      "function inChallenge() view returns (bool)",
-      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
-      "function initialize2(bytes32 _prevStateRoot)",
-      "function initialize3(uint256 _rollupDelayPeriod)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
-      "function l1StakingContract() view returns (address)",
-      "function lastCommittedBatchIndex() view returns (uint256)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function messageQueue() view returns (address)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proofRewardPercent() view returns (uint256)",
-      "function proofWindow() view returns (uint256)",
-      "function proveCommittedBatchState(bytes _batchHeader, bytes _batchProof) view",
-      "function proveRemaining() view returns (uint256)",
-      "function proveState(bytes _batchHeader, bytes _batchProof)",
-      "function removeChallenger(address _account)",
-      "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function revertReqIndex() view returns (uint256)",
-      "function rollupDelayPeriod() view returns (uint256)",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
-      "function updateProofWindow(uint256 _newWindow)",
-      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
-      "function updateRollupDelayPeriod(uint256 _newPeriod)",
-      "function updateVerifier(address _newVerifier)",
-      "function verifier() view returns (address)",
-      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
-    ],
     "eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0": [
       "constructor(address _l1USDC, address _l2USDC)",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
@@ -1887,22 +2008,6 @@
       "function setPause(bool _status)",
       "function transferOwnership(address newOwner)",
       "function updateFeeVault(address _newFeeVault)"
-    ],
-    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": [
       "constructor(address _messenger)",
@@ -2008,6 +2113,12 @@
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
     ],
+    "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa": [
       "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
       "error ErrZeroAddress()",
@@ -2072,12 +2183,13 @@
     "morph/L1StandardERC20Gateway": "0x62ca705060ac0ee8d3c0d56d10795164b60937a8512bd4af67eb989bdbe6e278",
     "morph/L1USDCGateway": "0x118bbebf64c3a4b1e97ce83162bc0fa36599641477cc0e4a86143f19f0f9ac1d",
     "morph/MultipleVersionRollupVerifier": "0x2bf0ae269803c2c2b3fea785f116f6fce8320cae589c86f3e2d2422d95429c8d",
-    "morph/Rollup": "0x6d149d095d35910b1957af6073bc7ed8846afa7cf45c2aa43558bfd4f2f435f9",
+    "morph/Rollup": "0x83006bbc6dde7d81dc75d1d565f36ca9fb7ed17e3be90a44e620315c59caef0e",
+    "morph/Submitter": "0xa0126b53b7bb00dd8892d83986d54516cb6051c024366115390d43961e5c26a8",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x8e1f5b8466dae2cb22b31719b8cb647638300e4327cbbfcf6cca97ef35af4213"
   },
-  "usedBlockNumbers": { "ethereum": 25754044 },
-  "permissionsConfigHash": "0x0da25145853dbb2df31ef93cd4e3b89c1b3e0d81a7d1ee1bad1088d863cfe318",
+  "usedBlockNumbers": { "ethereum": 26033092 },
+  "permissionsConfigHash": "0xc951fe965189e43ff78c307b143c1bfe398afbca04dc5e7904297beeadf0a769",
   "permissions": {
     "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {
       "receivedPermissions": [
@@ -2195,6 +2307,11 @@
           "permission": "upgrade",
           "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+          "role": "admin"
         }
       ]
     },
@@ -2213,8 +2330,14 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "description": "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls.",
           "role": ".getActiveStakers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.",
+          "role": ".submitters"
         }
       ]
     },
@@ -2288,8 +2411,14 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "description": "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls.",
           "role": ".getActiveStakers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.",
+          "role": ".submitters"
         }
       ]
     },
@@ -2328,7 +2457,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "description": "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls.",
           "role": ".getActiveStakers"
         }
       ]
@@ -2437,7 +2566,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
+          "description": "whitelist and remove stakers (the L2 sequencer set relayed to L2) and manage the staking, slashing and reward config of this contract.",
           "role": ".owner"
         },
         {
@@ -2483,8 +2612,14 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "description": "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls.",
           "role": ".getActiveStakers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.",
+          "role": ".submitters"
         }
       ]
     },
@@ -2573,6 +2708,12 @@
           "permission": "interact",
           "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "description": "set critical configs and contract references and pause/unpause.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
+          "description": "add and remove submitters (batch committers/proposers), set the minimum stake, the challenge deposit and the slashing reward share, and withdraw the non-rewarded remainder of slashed stakes.",
           "role": ".owner"
         },
         {
@@ -2676,6 +2817,15 @@
         {
           "permission": "upgrade",
           "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6",
           "role": "admin",
           "via": [
             { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
@@ -2791,7 +2941,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "description": "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls.",
           "role": ".getActiveStakers"
         }
       ]

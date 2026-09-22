@@ -1086,7 +1086,7 @@
       }
     },
     {
-      "name": "Sebastian Kugler Agent",
+      "name": "L2BEAT Agent",
       "address": "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8",
       "type": "EOA",
       "proxyType": "EOA"

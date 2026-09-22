@@ -29,9 +29,9 @@
       "critical": true
     },
     // Active zk verifier (SP1) routed to by the MultipleVersionRollupVerifier for all
-    // non-finalized batches. The superseded route (eth:0x9774CE99...) only covers
-    // long-finalized batches and is intentionally not flagged.
-    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": {
+    // batches from the Submitter cutover onwards. The superseded route (eth:0x9774CE99...)
+    // only covers long-finalized batches and is intentionally not flagged.
+    "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": {
       "critical": true
     }
   }
