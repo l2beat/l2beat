@@ -97,7 +97,7 @@ function Header({
   return (
     <header
       className={cn(
-        '-top-px sticky z-10 flex items-start justify-between gap-3 bg-surface-primary py-4',
+        '-top-0.5 sticky z-10 flex items-start justify-between gap-3 bg-surface-primary py-4',
         className,
       )}
     >
