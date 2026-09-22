@@ -1,0 +1,78 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SequencerInbox",
+    "shapeHash": "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
+    "steps": [
+      {
+        "id": "dasKeySetInfo",
+        "covers": [
+          "dasKeySetInfo(bytes32)",
+          "isValidKeysetHash(bytes32)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "SetValidKeyset",
+            "InvalidateKeyset"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "keysetHash",
+          "add": [
+            {
+              "event": "SetValidKeyset"
+            }
+          ],
+          "remove": [
+            {
+              "event": "InvalidateKeyset"
+            }
+          ]
+        },
+        "reason": "dasKeySetInfo is written only by setValidKeyset and invalidateKeysetHash (onlyRollupOwner), which emit SetValidKeyset and InvalidateKeyset"
+      },
+      {
+        "id": "getKeysetCreationBlock",
+        "covers": [
+          "getKeysetCreationBlock(bytes32)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getKeysetCreationBlock(bytes32)",
+          "keys": {
+            "from": "$step.dasKeySetInfo"
+          }
+        },
+        "use": "map@1",
+        "reason": "getKeysetCreationBlock reads dasKeySetInfo[ksHash], so its keys are exactly the keyset hashes enumerated from SetValidKeyset events by the dasKeySetInfo step"
+      }
+    ],
+    "skips": [
+      {
+        "item": "forceInclusionDeadline(uint64)",
+        "reason": "computation"
+      },
+      {
+        "item": "inboxAccs(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isBatchPoster(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isSequencer(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:59:29.422Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 2,
+    "decisionHash": "0x3fe7e253558cbd7f1f3e1a69706f8193f7d3bda2368dd4b6721b3b5c1134556e"
+  }
+}

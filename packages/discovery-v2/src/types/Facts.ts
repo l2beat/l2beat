@@ -35,8 +35,10 @@ export const FactsSource = v.object({
   compilerVersion: v.string(),
   evmVersion: v.string().optional(),
   variables: v.array(FactsVariable),
-  /** Events declared in scope that no entry point can emit. */
+  /** Events declared in scope that neither an entry point nor the constructor can emit. */
   neverEmitted: v.array(v.string()),
+  /** Events the constructor can emit: state set at deployment that a fold must include. */
+  constructorEmits: v.array(v.string()),
   /** Why analysis of this source produced nothing, when it did not. */
   error: v.string().optional(),
 })

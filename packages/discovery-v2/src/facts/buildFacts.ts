@@ -13,7 +13,12 @@
 import fs from 'fs'
 import path from 'path'
 import { AbiIndex } from '../abi/AbiIndex'
-import type { Facts, FactsSource, FactsVariable } from '../types/Facts'
+import {
+  type Facts,
+  Facts as FactsSchema,
+  type FactsSource,
+  type FactsVariable,
+} from '../types/Facts'
 import type { Prepared, PreparedSource } from '../types/Prepared'
 import { type AstRelations, extractRelations } from './astFacts'
 import {
@@ -36,6 +41,7 @@ export const FACTS_OUTPUTS = [
   'writerEmits',
   'varReader',
   'neverEmitted',
+  'constructorEmits',
   'entryPoint',
 ] as const
 
@@ -71,6 +77,7 @@ async function analyseSource(
     compilerVersion: source.solidityVersion,
     variables: [],
     neverEmitted: [],
+    constructorEmits: [],
   }
   if (source.flattened.trim() === '') {
     return { ...base, error: 'no verified source' }
@@ -142,7 +149,7 @@ function nameResults(
   relations: AstRelations,
   derived: Relations,
   abi: AbiIndex,
-): Pick<FactsSource, 'variables' | 'neverEmitted'> {
+): Pick<FactsSource, 'variables' | 'neverEmitted' | 'constructorEmits'> {
   const variables = new Map(relations.stateVariable.map((row) => [row[0], row]))
   const functions = new Map(
     relations.functionDefinition.map((row) => [row[0], row]),
@@ -229,21 +236,28 @@ function nameResults(
   }
   return {
     variables: named.sort((a, b) => a.name.localeCompare(b.name)),
-    neverEmitted: unique(
-      (derived.neverEmitted ?? []).map((r) => r[0] as number),
-    )
-      .map((e) => events.get(e) ?? `#${e}`)
-      .sort(),
+    neverEmitted: eventNames(derived.neverEmitted ?? [], events),
+    constructorEmits: eventNames(derived.constructorEmits ?? [], events),
   }
+}
+
+function eventNames(rows: Row[], events: Map<number, string>): string[] {
+  return unique(rows.map((r) => r[0] as number))
+    .map((e) => events.get(e) ?? `#${e}`)
+    .sort()
 }
 
 function unique<T>(items: T[]): T[] {
   return [...new Set(items)]
 }
 
+/** A file from before a schema change is treated as absent, so it is rebuilt rather than trusted. */
 export function readFacts(file: string): Facts | undefined {
   if (!fs.existsSync(file)) {
     return undefined
   }
-  return JSON.parse(fs.readFileSync(file, 'utf8')) as Facts
+  const parsed = FactsSchema.safeParse(
+    JSON.parse(fs.readFileSync(file, 'utf8')),
+  )
+  return parsed.success ? parsed.data : undefined
 }

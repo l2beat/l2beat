@@ -70,6 +70,7 @@ body { margin: 0; background: var(--surface-1); color: var(--text-primary);
 main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
 h1 { font-size: 24px; margin: 0 0 4px; }
 h2 { font-size: 17px; margin: 40px 0 12px; }
+h3 { font-size: 13px; margin: 18px 0 8px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; }
 p.lede { color: var(--text-secondary); margin: 0 0 24px; max-width: 70ch; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 16px; color: var(--text-secondary); font-size: 13px; }
 .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
@@ -148,11 +149,25 @@ function runName(run) {
   return '<div class="name"><b>' + esc(run.project) + '</b> · ' + esc(run.label) + '<small>' + esc(setup(run)) + ' · ' + run.totals.contracts + ' contracts · block ' + run.blockNumber + '</small></div>'
 }
 
+/** Runs of one project sit together, in the order given, so a reader compares setups down a column. */
+function byProject(list) {
+  const projects = [...new Set(list.map(run => run.project))]
+  return projects.map(project => [project, list.filter(run => run.project === project)])
+}
+
+function chart(list, counts) {
+  return byProject(list).map(([project, group]) =>
+    '<h3>' + esc(project) + '</h3><div class="bars">' + group.map(run => {
+      const c = counts(run)
+      const total = c.v1Fields
+      const denominator = c === run.totals ? EXTRACTED(c) : total
+      return runName(run) + bar(c, total) + '<div class="pct">' + pct(FOUND(c), denominator) + '</div>'
+    }).join('') + '</div>'
+  ).join('')
+}
+
 function coverageChart() {
-  return '<div class="bars">' + runs.map(run => {
-    const c = run.totals
-    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(FOUND(c), EXTRACTED(c)) + '</div>'
-  }).join('') + '</div>'
+  return chart(runs, run => run.totals)
 }
 
 /** The same split, restricted to V1 fields a researcher wrote a handler for. */
@@ -170,11 +185,7 @@ function handlerCounts(run) {
 }
 
 function handlerChart() {
-  const modelRuns = runs.filter(run => !run.noPlan)
-  return '<div class="bars">' + modelRuns.map(run => {
-    const c = handlerCounts(run)
-    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(FOUND(c), c.v1Fields) + '</div>'
-  }).join('') + '</div>'
+  return chart(runs.filter(run => !run.noPlan), handlerCounts)
 }
 
 function summaryTable() {

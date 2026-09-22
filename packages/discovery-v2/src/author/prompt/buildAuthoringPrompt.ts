@@ -256,11 +256,17 @@ function renderFactsSource(source: FactsSource): string[] {
     head,
     '',
     ...source.variables.map(renderFactsVariable),
+    ...(source.constructorEmits.length === 0
+      ? []
+      : [
+          '',
+          `Events the constructor emits (deployment-time state a fold must include): ${source.constructorEmits.map((e) => `\`${e}\``).join(', ')}`,
+        ]),
     ...(source.neverEmitted.length === 0
       ? []
       : [
           '',
-          `Events declared here that no entry point emits (a fold over them returns nothing): ${source.neverEmitted.map((e) => `\`${e}\``).join(', ')}`,
+          `Events declared here that nothing emits (a fold over them returns nothing): ${source.neverEmitted.map((e) => `\`${e}\``).join(', ')}`,
         ]),
     '',
   ]

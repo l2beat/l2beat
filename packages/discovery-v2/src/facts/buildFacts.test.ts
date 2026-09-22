@@ -27,7 +27,8 @@ abstract contract Ownable {
   event OwnershipTransferred(address previousOwner, address newOwner);
   event NeverUsed(uint256 x);
   modifier onlyOwner() { require(msg.sender == owner, "no"); _; }
-  constructor() { owner = msg.sender; }
+  event Deployed(address by);
+  constructor() { owner = msg.sender; emit Deployed(msg.sender); }
   function transferOwnership(address next) external onlyOwner {
     emit OwnershipTransferred(owner, next);
     owner = next;
@@ -79,7 +80,7 @@ describe(extractRelations.name, () => {
     // entries is written only through the `entry` storage pointer.
     const pointerTargets = relations.storagePointer.map(([, v]) => names.get(v))
     expect(pointerTargets).toEqual(['entries'])
-    expect(relations.emits.length).toEqual(3)
+    expect(relations.emits.length).toEqual(4)
     expect(relations.internalCall.length).toEqual(2)
     // onlyOwner on three setters and transferOwnership, counting on setVerifier.
     expect(relations.modifierInvocation.length).toEqual(5)
@@ -157,6 +158,8 @@ describe(buildFacts.name, () => {
     // Out of scope: the unrelated contract's variable never appears.
     expect(byName.other).toEqual(undefined)
     expect(source.neverEmitted).toEqual(['NeverUsed(uint256)'])
+    // Emitted only at deployment: not "never", and called out so a fold includes it.
+    expect(source.constructorEmits).toEqual(['Deployed(address)'])
   })
 
   it('records a compile failure on the source instead of throwing', async () => {

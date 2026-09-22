@@ -123,12 +123,17 @@ writerEmits(F, E) :- varWriter(_, F), reachEmit(F, E).
 .decl varReader(variable: number, function: number)
 varReader(V, F) :- entryPoint(F), reachRead(F, V), scopedVariable(V).
 
-// An event declared in scope that no entry point can emit: a fold over it would return nothing.
+// Events the deployment itself emits (RoleAdminChanged from a constructor's
+// _setRoleAdmin): state set once, at construction, that a fold must still see.
+.decl constructorEmits(event: number)
+constructorEmits(E) :- constructorOf(F), reachEmit(F, E).
+
+// An event declared in scope that nothing can emit: a fold over it would return nothing.
 .decl emittedByEntry(event: number)
 emittedByEntry(E) :- entryPoint(F), reachEmit(F, E).
 
 .decl neverEmitted(event: number)
-neverEmitted(E) :- eventDefinition(E, _, _, C), inScope(C), !emittedByEntry(E).
+neverEmitted(E) :- eventDefinition(E, _, _, C), inScope(C), !emittedByEntry(E), !constructorEmits(E).
 
 .output varWriter
 .output constructorWrite
@@ -136,4 +141,5 @@ neverEmitted(E) :- eventDefinition(E, _, _, C), inScope(C), !emittedByEntry(E).
 .output writerEmits
 .output varReader
 .output neverEmitted
+.output constructorEmits
 .output entryPoint
