@@ -1,0 +1,59 @@
+name: Bench Docker builds
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.image }} ${{ matrix.variant }} ${{ matrix.run }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [frontend, backend, public-api, tools-api, token-backend, disco-ui]
+        variant: [old, new]
+        run: [1, 2, 3]
+        include:
+          - image: frontend
+            dockerfile: packages/frontend/Dockerfile
+          - image: backend
+            dockerfile: packages/backend/Dockerfile
+          - image: public-api
+            dockerfile: packages/public-api/Dockerfile
+          - image: tools-api
+            dockerfile: packages/tools-api/Dockerfile
+          - image: token-backend
+            dockerfile: packages/token-backend/Dockerfile
+          - image: disco-ui
+            dockerfile: packages/l2b/Dockerfile.disco-ui
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+      - name: Use old Dockerfile
+        if: matrix.variant == 'old'
+        run: |
+          git fetch --depth=1 origin 9ab2740ddd2f4ce98952baae437478f25bc9d8b3
+          git show 9ab2740ddd2f4ce98952baae437478f25bc9d8b3:${{ matrix.dockerfile }} > ${{ matrix.dockerfile }}
+          test "$(grep -c 'mount=type=cache' ${{ matrix.dockerfile }})" = 0
+      - name: Set up Docker.io mirror
+        uses: docker/setup-buildx-action@v4
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
+      - name: Build container
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: false
+          build-args: |
+            TURBO_TEAM=${{ vars.TURBO_TEAM }}
+          secrets: |
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            TURBO_API=${{ secrets.TURBO_API_RO }}
+          no-cache: true
