@@ -55,22 +55,6 @@ export function getPrivacyRosetteArcs(
   return half === 'right' ? arcs : arcs.reverse()
 }
 
-/**
- * One arc per slice around the whole ring, the first centred at 12 o'clock
- * and the rest following clockwise - the layout of the L2 risk rosette.
- */
-export function getPrivacyRosetteRingArcs(count: number): PrivacyRosetteArc[] {
-  if (count <= 0) {
-    return []
-  }
-
-  const sliceSpan = (360 - SLICE_GAP * count) / count
-  return Array.from({ length: count }, (_, index) => {
-    const sliceStart = -sliceSpan / 2 + index * (sliceSpan + SLICE_GAP)
-    return { start: sliceStart, end: sliceStart + sliceSpan }
-  })
-}
-
 /** The annular sector of one slice, as an SVG path. */
 export function describePrivacyRosetteSlice(
   arc: PrivacyRosetteArc,

@@ -15,7 +15,7 @@ import { groupByPrivacyType } from '../privacySummaryViews'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
 /**
- * V1: every kind of privacy at once, as a 2x2 grid of compact tables instead
+ * V2: every kind of privacy at once, as a 2x2 grid of compact tables instead
  * of tabs. There are three kinds, so the fourth cell explains the rosette the
  * tables share.
  */

@@ -4,6 +4,7 @@ import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
+import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
@@ -21,6 +22,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import {
   getPrivacyAdversariesScore,
   getPrivacyAdversariesSentence,
+  getPrivacyAdversaryRosetteValues,
 } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
@@ -242,7 +244,7 @@ const attributesColumn: PrivacyColumn = columnHelper.display({
 const privacyScoreAccessor = (entry: PrivacySummaryEntry) =>
   getPrivacyAdversariesScore(entry.adversaries)
 
-/** V1 and V2: one rosette over the adversaries and the protocol risks. */
+/** V2 and V3: one rosette over the adversaries and the protocol risks. */
 const getRosetteColumn = (compact: boolean): PrivacyColumn =>
   columnHelper.accessor(privacyScoreAccessor, {
     // Also the label in the columns picker, which shows the id whenever the
@@ -280,8 +282,8 @@ const getRosetteColumn = (compact: boolean): PrivacyColumn =>
   })
 
 /**
- * V3: the adversaries alone, as a five-slice ring like the L2 rosette, with
- * the count next to it - the number the column sorts by.
+ * V1: the adversaries alone on the L2 risk rosette - five adversaries, five
+ * slices - with the count next to it, the number the column sorts by.
  */
 const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
   privacyScoreAccessor,
@@ -293,22 +295,23 @@ const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
         ctx.row.original.adversaries,
       )
       return (
-        <PrivacyRosetteCell
-          layout="adversaries"
-          adversaries={ctx.row.original.adversaries}
-          trustedSetup={ctx.row.original.trustedSetup}
-          exitWindow={ctx.row.original.exitWindow}
-          reproducibility={ctx.row.original.reproducibility}
-          href={ctx.row.original.href}
-          isUnderReview={ctx.row.original.isUnderReview}
-        >
+        <div className="flex items-center gap-2.5">
+          <div className="shrink-0">
+            <PizzaRosetteCell
+              href={ctx.row.original.href}
+              values={getPrivacyAdversaryRosetteValues(
+                ctx.row.original.adversaries,
+              )}
+              isUnderReview={ctx.row.original.isUnderReview}
+            />
+          </div>
           <span className="flex flex-col text-left">
             <span className="font-bold text-base tabular-nums leading-none">
               {held}/{total}
             </span>
             <span className="text-[11px] text-secondary">adversaries</span>
           </span>
-        </PrivacyRosetteCell>
+        </div>
       )
     },
     sortDescFirst: true,
@@ -319,7 +322,7 @@ const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
   },
 )
 
-/** V3: the protocol risks as they were on main, grouped under one header. */
+/** V1: the protocol risks as they were on main, grouped under one header. */
 const protocolRiskColumns: PrivacyColumn = columnHelper.group({
   id: 'protocolRisks',
   header: 'Protocol risks',

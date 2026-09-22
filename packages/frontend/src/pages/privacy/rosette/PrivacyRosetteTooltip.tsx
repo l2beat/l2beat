@@ -5,10 +5,7 @@ import { cn } from '~/utils/cn'
 import { PrivacyAdversaryTooltipContent } from '../adversaries/PrivacyAdversaryTooltipContent'
 import { getPrivacyAdversariesSentence } from '../adversaries/privacyAdversaryUi'
 import { PrivacyWalkawayTestTooltipContent } from '../PrivacyWalkawayTestIcon'
-import {
-  PrivacyRosetteIcon,
-  type PrivacyRosetteLayout,
-} from './PrivacyRosetteIcon'
+import { PrivacyRosetteIcon } from './PrivacyRosetteIcon'
 import type {
   PrivacyRosetteGroup,
   PrivacyRosetteGroups,
@@ -17,8 +14,6 @@ import type {
 
 interface Props {
   groups: PrivacyRosetteGroups
-  /** With `adversaries`, the protocol risks are left out of the legend too. */
-  layout?: PrivacyRosetteLayout
   adversaries: PrivacyAdversariesSummary
   isUnderReview?: boolean
 }
@@ -33,17 +28,12 @@ interface Props {
  */
 export function PrivacyRosetteTooltip({
   groups,
-  layout = 'split',
   adversaries,
   isUnderReview,
 }: Props) {
   const [selectedId, setSelectedId] = useState<string>()
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-  const showRisks = layout === 'split'
-  const slices = [
-    ...groups.adversaries.slices,
-    ...(showRisks ? groups.risks.slices : []),
-  ]
+  const slices = [...groups.adversaries.slices, ...groups.risks.slices]
   const selected = slices.find((slice) => slice.id === selectedId)
 
   return (
@@ -59,7 +49,6 @@ export function PrivacyRosetteTooltip({
       >
         <PrivacyRosetteIcon
           groups={groups}
-          layout={layout}
           isUnderReview={isUnderReview}
           selectedId={selectedId}
           onSelect={setSelectedId}
@@ -71,7 +60,7 @@ export function PrivacyRosetteTooltip({
         >
           <LegendSection
             group={groups.adversaries}
-            half={showRisks ? 'left' : undefined}
+            half="left"
             selectedId={selectedId}
             onSelect={setSelectedId}
           />
@@ -89,14 +78,12 @@ export function PrivacyRosetteTooltip({
               project page.
             </p>
           </div>
-          {showRisks && (
-            <LegendSection
-              group={groups.risks}
-              half="right"
-              selectedId={selectedId}
-              onSelect={setSelectedId}
-            />
-          )}
+          <LegendSection
+            group={groups.risks}
+            half="right"
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+          />
         </div>
       </div>
       {selected && (
@@ -115,15 +102,15 @@ function LegendSection({
   onSelect,
 }: {
   group: PrivacyRosetteGroup
-  /** Which half of the rosette the section fills; none for a whole ring. */
-  half?: 'left' | 'right'
+  /** Which half of the rosette the section fills. */
+  half: 'left' | 'right'
   selectedId: string | undefined
   onSelect: (id: string) => void
 }) {
   return (
     <div>
       <div className="mb-1 flex items-center gap-1.5 font-medium text-[11px] text-secondary uppercase tracking-wide">
-        {half && <HalfGlyph half={half} />}
+        <HalfGlyph half={half} />
         {group.title}
       </div>
       <ul className="-mx-1.5 grid grid-cols-[auto_minmax(0,1fr)_auto] text-xs">

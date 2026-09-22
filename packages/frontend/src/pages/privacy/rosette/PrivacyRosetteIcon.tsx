@@ -3,7 +3,6 @@ import { riskToFillColor } from '../sentimentToRiskDot'
 import {
   describePrivacyRosetteSlice,
   getPrivacyRosetteArcs,
-  getPrivacyRosetteRingArcs,
   PRIVACY_ROSETTE_SIZE,
   type PrivacyRosetteArc,
 } from './privacyRosetteGeometry'
@@ -12,16 +11,8 @@ import type {
   PrivacyRosetteSlice,
 } from './privacyRosetteSlices'
 
-/**
- * `split`: adversaries on the left half, protocol risks on the right.
- * `adversaries`: the adversaries alone around the whole ring, for layouts that
- * show the protocol risks in columns of their own.
- */
-export type PrivacyRosetteLayout = 'split' | 'adversaries'
-
 interface Props {
   groups: PrivacyRosetteGroups
-  layout?: PrivacyRosetteLayout
   isUnderReview?: boolean
   /** Replaces the generic label where the rosette is the only thing in a cell. */
   label?: string
@@ -33,20 +24,20 @@ interface Props {
 }
 
 /**
- * The privacy assessment in one ring, one slice per graded item. It replaces a
+ * The privacy assessment in one ring, one slice per graded item: the
+ * adversaries on the left half, the protocol risks on the right. It replaces a
  * strip of dots, so it has to stay readable at table-cell size - which is why
  * it is a plain graphic, with the per-item detail left to its tooltip.
  */
 export function PrivacyRosetteIcon({
   groups,
-  layout = 'split',
   isUnderReview,
   label = 'Rosette showing the privacy risk summary',
   selectedId,
   onSelect,
   className,
 }: Props) {
-  const placed = placeSlices(groups, layout)
+  const placed = placeSlices(groups)
 
   return (
     <svg
@@ -76,7 +67,6 @@ export function PrivacyRosetteIcon({
 
 function placeSlices(
   groups: PrivacyRosetteGroups,
-  layout: PrivacyRosetteLayout,
 ): { slice: PrivacyRosetteSlice; arc: PrivacyRosetteArc }[] {
   const pair = (slices: PrivacyRosetteSlice[], arcs: PrivacyRosetteArc[]) =>
     slices.flatMap((slice, index) => {
@@ -85,12 +75,6 @@ function placeSlices(
     })
 
   const { adversaries, risks } = groups
-  if (layout === 'adversaries') {
-    return pair(
-      adversaries.slices,
-      getPrivacyRosetteRingArcs(adversaries.slices.length),
-    )
-  }
 
   return [
     ...pair(

@@ -5,6 +5,7 @@ import type {
   PrivacyFieldExposure,
   TableReadyValue,
 } from '@l2beat/config'
+import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
@@ -114,6 +115,28 @@ export function getPrivacyAdversariesTableValue(
           : 'good',
     orderHint: -(bad * 10 + warnings),
   }
+}
+
+const ADVERSARY_ROSETTE_VALUE: Record<PrivacyAdversarySentiment, string> = {
+  good: 'Private',
+  warning: 'At risk',
+  bad: 'Exposed',
+}
+
+/**
+ * The five adversaries as values of the L2 risk rosette, in spine order, which
+ * the rosette lays out clockwise from bottom left. Labels break after their
+ * first word to fit around the rosette like the L2 risk names do.
+ */
+export function getPrivacyAdversaryRosetteValues(
+  adversaries: PrivacyAdversariesSummary,
+): RosetteValue[] {
+  return adversaries.cells.map((cell) => ({
+    name: cell.label.replace(' ', '\n'),
+    value: ADVERSARY_ROSETTE_VALUE[cell.sentiment],
+    sentiment: cell.sentiment,
+    description: cell.exposure,
+  }))
 }
 
 /** Anchor of an adversary block inside the project page section. */

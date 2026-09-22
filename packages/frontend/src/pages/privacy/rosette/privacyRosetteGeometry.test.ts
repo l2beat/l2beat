@@ -2,7 +2,6 @@ import { expect } from 'earl'
 import {
   describePrivacyRosetteSlice,
   getPrivacyRosetteArcs,
-  getPrivacyRosetteRingArcs,
 } from './privacyRosetteGeometry'
 
 describe('getPrivacyRosetteArcs', () => {
@@ -40,19 +39,6 @@ describe('getPrivacyRosetteArcs', () => {
 
   it('gives a lone slice the whole half', () => {
     expect(getPrivacyRosetteArcs(1, 'right')).toEqual([{ start: 14, end: 166 }])
-  })
-})
-
-describe('getPrivacyRosetteRingArcs', () => {
-  it('centres the first slice at the top and closes the ring', () => {
-    const arcs = getPrivacyRosetteRingArcs(5)
-
-    expect(arcs.length).toEqual(5)
-    expect(arcs[0]!.start + arcs[0]!.end).toEqual(0)
-    // The last slice ends one gap short of where the first one starts.
-    expect(
-      Math.round((arcs[4]!.end + 3 - (arcs[0]!.start + 360)) * 1e9),
-    ).toEqual(0)
   })
 })
 

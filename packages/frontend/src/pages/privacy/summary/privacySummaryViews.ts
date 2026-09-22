@@ -8,22 +8,22 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
  */
 export const PRIVACY_SUMMARY_VIEWS = [
   {
+    id: 'split',
+    label: 'V1 · Split',
+    description:
+      'A tab per kind of privacy, the L2 risk rosette for the adversaries alone, and the protocol risks in columns of their own.',
+  },
+  {
     id: 'grid',
-    label: 'V1 · Grid',
+    label: 'V2 · Grid',
     description:
       'One compact table per kind of privacy, side by side, each with a single rosette over the privacy and protocol risks.',
   },
   {
     id: 'rosette',
-    label: 'V2 · Rosette',
+    label: 'V3 · Rosette',
     description:
       'A tab per kind of privacy and a single rosette: adversaries on the left half, protocol risks on the right.',
-  },
-  {
-    id: 'split',
-    label: 'V3 · Split',
-    description:
-      'A tab per kind of privacy, a rosette for the adversaries alone, and the protocol risks in columns of their own.',
   },
   {
     id: 'cards',
@@ -35,7 +35,7 @@ export const PRIVACY_SUMMARY_VIEWS = [
 
 export type PrivacySummaryView = (typeof PRIVACY_SUMMARY_VIEWS)[number]['id']
 
-export const DEFAULT_PRIVACY_SUMMARY_VIEW: PrivacySummaryView = 'grid'
+export const DEFAULT_PRIVACY_SUMMARY_VIEW: PrivacySummaryView = 'split'
 
 export function toPrivacySummaryView(value: string): PrivacySummaryView {
   return (
