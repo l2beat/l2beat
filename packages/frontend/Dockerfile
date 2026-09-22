@@ -31,8 +31,12 @@ COPY --from=pruner /src/out/full/ ./
 # credentials both ways. The secret mounts below take precedence when present.
 ARG TURBO_TOKEN
 ARG TURBO_API
-RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
-  --mount=type=secret,id=TURBO_API,env=TURBO_API \
+# Secrets are read from files rather than mounted as env, because an absent
+# secret mounted with env= blanks the variable and overrides the build arg.
+RUN --mount=type=secret,id=TURBO_TOKEN \
+  --mount=type=secret,id=TURBO_API \
+  export TURBO_TOKEN="$(cat /run/secrets/TURBO_TOKEN 2>/dev/null || echo "$TURBO_TOKEN")" && \
+  export TURBO_API="$(cat /run/secrets/TURBO_API 2>/dev/null || echo "$TURBO_API")" && \
   pnpm build:frontend
 
 # Replace node_modules with production dependencies only. Switching dev -> prod
