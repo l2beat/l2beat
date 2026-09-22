@@ -1,103 +1,211 @@
+import { useState } from 'react'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
+import { PrivacyAdversaryTooltipContent } from '../adversaries/PrivacyAdversaryTooltipContent'
 import { getPrivacyAdversariesSentence } from '../adversaries/privacyAdversaryUi'
-import { PrivacyRosetteIcon } from './PrivacyRosetteIcon'
+import { PrivacyWalkawayTestTooltipContent } from '../PrivacyWalkawayTestIcon'
+import {
+  PrivacyRosetteIcon,
+  type PrivacyRosetteLayout,
+} from './PrivacyRosetteIcon'
 import type {
   PrivacyRosetteGroup,
   PrivacyRosetteGroups,
+  PrivacyRosetteSlice,
 } from './privacyRosetteSlices'
 
 interface Props {
   groups: PrivacyRosetteGroups
+  /** With `adversaries`, the protocol risks are left out of the legend too. */
+  layout?: PrivacyRosetteLayout
   adversaries: PrivacyAdversariesSummary
   isUnderReview?: boolean
 }
 
 /**
- * The rosette blown up, with one legend column per half placed on the side of
- * the rosette that half occupies - so the columns say which slices are which
- * without needing a leader line or a label ring.
+ * The rosette blown up beside a legend of both halves. Hovering a row or a
+ * slice fades the rest of the rosette and opens that item's full assessment
+ * underneath - the same detail each adversary dot used to show on its own.
+ *
+ * The detail only ever grows the tooltip downward: the cell opens it to the
+ * right, aligned to its top, so the rows under the pointer stay put.
  */
 export function PrivacyRosetteTooltip({
   groups,
+  layout = 'split',
   adversaries,
   isUnderReview,
 }: Props) {
+  const [selectedId, setSelectedId] = useState<string>()
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
+  const showRisks = layout === 'split'
+  const slices = [
+    ...groups.adversaries.slices,
+    ...(showRisks ? groups.risks.slices : []),
+  ]
+  const selected = slices.find((slice) => slice.id === selectedId)
 
   return (
     // The tooltip inherits `white-space: pre` from the table, so the wrapping
     // has to be asked for explicitly or every line runs past the panel.
-    <div className="flex max-w-[560px] flex-col gap-3 text-wrap">
-      <div>
-        <span className="text-heading-16">Privacy risk analysis</span>
-        <p className="mt-1 text-secondary text-xs leading-normal">
-          {adversaries.promise.text}
-        </p>
-      </div>
-      <div className="flex items-center gap-3">
-        <Legend group={groups.risks} align="right" />
+    <div className="flex w-[460px] max-w-full flex-col text-wrap">
+      <div className="font-bold text-label-value-15">Privacy risk analysis</div>
+      <div
+        className={cn(
+          'mt-3 flex items-center gap-5 border-divider border-t pt-3',
+          selected && 'border-b pb-3',
+        )}
+      >
         <PrivacyRosetteIcon
           groups={groups}
+          layout={layout}
           isUnderReview={isUnderReview}
-          className="size-24 shrink-0"
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          className="size-[104px] shrink-0"
         />
-        <Legend group={groups.adversaries} align="left" />
+        <div
+          className="flex min-w-0 flex-1 flex-col gap-3"
+          onMouseLeave={() => setSelectedId(undefined)}
+        >
+          <LegendSection
+            group={groups.adversaries}
+            half={showRisks ? 'left' : undefined}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+          />
+          <div className="flex flex-col gap-1.5 text-xs leading-normal">
+            <p className="text-secondary">{adversaries.promise.text}</p>
+            <p>
+              <span className="font-bold">{subject}</span> is private against{' '}
+              <span className="font-bold tabular-nums">
+                {held}/{total}
+              </span>{' '}
+              adversaries.
+            </p>
+            <p className="text-secondary">
+              Hover a row or slice for the full assessment, click for the
+              project page.
+            </p>
+          </div>
+          {showRisks && (
+            <LegendSection
+              group={groups.risks}
+              half="right"
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          )}
+        </div>
       </div>
-      <p className="text-secondary text-xs leading-normal">
-        <span className="font-medium text-primary">
-          {subject} is private against {held}/{total} adversaries.
-        </span>{' '}
-        Click for the full assessment.
-      </p>
+      {selected && (
+        <div className="mt-2.5">
+          <PrivacyRosetteSliceDetail slice={selected} />
+        </div>
+      )}
     </div>
   )
 }
 
-function Legend({
+function LegendSection({
   group,
-  align,
+  half,
+  selectedId,
+  onSelect,
 }: {
   group: PrivacyRosetteGroup
-  align: 'left' | 'right'
+  /** Which half of the rosette the section fills; none for a whole ring. */
+  half?: 'left' | 'right'
+  selectedId: string | undefined
+  onSelect: (id: string) => void
 }) {
   return (
-    <div
-      className={cn(
-        'flex flex-1 flex-col gap-1.5',
-        align === 'right' && 'items-end text-right',
-      )}
-    >
-      <div className="font-medium text-[11px] text-secondary uppercase tracking-wide">
+    <div>
+      <div className="mb-1 flex items-center gap-1.5 font-medium text-[11px] text-secondary uppercase tracking-wide">
+        {half && <HalfGlyph half={half} />}
         {group.title}
       </div>
-      <ul className="flex flex-col gap-1">
+      <ul className="-mx-1.5 grid grid-cols-[auto_minmax(0,1fr)_auto] text-xs">
         {group.slices.map((slice) => (
           <li
             key={slice.id}
             className={cn(
-              'flex items-start gap-1.5 text-xs leading-[16px]',
-              align === 'right' && 'flex-row-reverse',
+              'col-span-3 grid grid-cols-subgrid items-center gap-x-2 rounded px-1.5 py-0.5',
+              slice.id === selectedId && 'bg-surface-secondary',
             )}
+            onMouseEnter={() => onSelect(slice.id)}
           >
             <TrustedSetupRiskDot
               risk={slice.risk}
               size="xs"
-              className="mt-0.5 shrink-0"
+              className="shrink-0"
             />
-            <span className="min-w-0">
-              <span className="font-medium">{slice.label}:</span>{' '}
-              <span className="text-secondary">{slice.value}</span>
-              {slice.detail && (
-                <span className="block text-[11px] text-secondary">
-                  {slice.detail}
-                </span>
-              )}
+            <span className="truncate font-medium">{slice.label}</span>
+            <span className="whitespace-nowrap text-right text-secondary">
+              {slice.value}
             </span>
+            {slice.detail && (
+              <span
+                className={cn(
+                  'col-start-3 whitespace-nowrap text-right text-[11px]',
+                  slice.detail.negative ? 'text-negative' : 'text-secondary',
+                )}
+              >
+                {slice.detail.text}
+              </span>
+            )}
           </li>
         ))}
       </ul>
     </div>
+  )
+}
+
+/** The full assessment behind one slice. */
+export function PrivacyRosetteSliceDetail({
+  slice,
+}: {
+  slice: PrivacyRosetteSlice
+}) {
+  if (slice.source.type === 'adversary') {
+    return <PrivacyAdversaryTooltipContent cell={slice.source.cell} />
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <span className="font-bold text-label-value-14">{slice.label}</span>
+        <TrustedSetupRiskDot risk={slice.risk} size="xs" />
+        <span className="font-medium text-sm">{slice.value}</span>
+      </div>
+      <p className="text-xs leading-normal">{slice.source.description}</p>
+      {slice.source.walkawayTest && (
+        <PrivacyWalkawayTestTooltipContent
+          walkawayTest={slice.source.walkawayTest}
+        />
+      )}
+    </div>
+  )
+}
+
+/** A ring with one half filled: which half of the rosette a section covers. */
+function HalfGlyph({ half }: { half: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 12 12" className="size-3 shrink-0" aria-hidden>
+      <circle
+        cx="6"
+        cy="6"
+        r="5"
+        className="fill-none stroke-current"
+        strokeWidth="1.2"
+      />
+      <path
+        d={
+          half === 'left' ? 'M6 1 A5 5 0 0 0 6 11 Z' : 'M6 1 A5 5 0 0 1 6 11 Z'
+        }
+        className="fill-current"
+      />
+    </svg>
   )
 }

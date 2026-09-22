@@ -7,8 +7,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
-import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
-import { PrivacySummaryTable } from './components/PrivacySummaryTable'
+import { PrivacySummaryBody } from './components/PrivacySummaryBody'
 
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]
@@ -31,13 +30,10 @@ export function PrivacySummaryPage({
           <MainPageHeader description="Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).">
             Privacy
           </MainPageHeader>
-          <PrivacySummaryChartsSection
-            projects={entries
-              .filter((e) => e.isTracked || e.hasTvl)
-              .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl }))}
-            defaultRange={defaultChartRange}
+          <PrivacySummaryBody
+            entries={entries}
+            defaultChartRange={defaultChartRange}
           />
-          <PrivacySummaryTable entries={entries} />
           <PrivacyBestPracticesBanner
             backgroundImage={bestPracticesBannerImageUrl}
           />

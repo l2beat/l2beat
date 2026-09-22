@@ -1,6 +1,6 @@
 /**
  * Geometry of the privacy rosette: one ring split into two halves - the
- * adversaries on the right, the remaining protocol risks on the left - and
+ * adversaries on the left, the remaining protocol risks on the right - and
  * each half split into one slice per risk. Angles are degrees clockwise from
  * 12 o'clock, so they read the way the slices do.
  */
@@ -53,6 +53,22 @@ export function getPrivacyRosetteArcs(
   })
 
   return half === 'right' ? arcs : arcs.reverse()
+}
+
+/**
+ * One arc per slice around the whole ring, the first centred at 12 o'clock
+ * and the rest following clockwise - the layout of the L2 risk rosette.
+ */
+export function getPrivacyRosetteRingArcs(count: number): PrivacyRosetteArc[] {
+  if (count <= 0) {
+    return []
+  }
+
+  const sliceSpan = (360 - SLICE_GAP * count) / count
+  return Array.from({ length: count }, (_, index) => {
+    const sliceStart = -sliceSpan / 2 + index * (sliceSpan + SLICE_GAP)
+    return { start: sliceStart, end: sliceStart + sliceSpan }
+  })
 }
 
 /** The annular sector of one slice, as an SVG path. */
