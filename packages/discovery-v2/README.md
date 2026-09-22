@@ -54,7 +54,9 @@ subcommand, so each can be tested and benchmarked alone.
 | `output` | prepared, baseline, values | `entry.json` in V1 `EntryParameters` shape, plus `entry.meta.json` | yes |
 | `pipeline` | chain, address, block | all of the above; skips `author` when a stored plan applies | |
 | `benchmark` | V1 project name | `benchmark.json`, `benchmark.md`: field-by-field comparison against the committed `discovered.json` at its block | yes, once every shape has a stored plan |
-| `report` | several `benchmark.json` | `BENCHMARK.html`: one self-contained page with the runs as bars, side by side | yes |
+| `facts` | prepared | `facts.json`: per state variable, the externally callable writers, their modifiers and the events they emit, from the compiler AST and Datalog rules (Soufflé) | yes (needs `souffle` on PATH) |
+| `suite` | label | `runs/benchmark/<label>/<project>/` for every project in `benchmarks/suite.json`, plans in `plans/experiments/<label>/` | as `benchmark` |
+| `report` | several `benchmark.json` or a suite label directory | `BENCHMARK.html`: one self-contained page with the runs as bars, side by side | yes |
 
 RPC access goes through V1's `AllProviders` with the shared SQLite cache
 (`.discovery.json` → `packages/config/cache/discovery.sqlite`), so benchmark
@@ -104,6 +106,25 @@ pnpm start author $R/prepared.json $R/baseline.json $R/worklist.json
 
 # Options: --model M, --reasoning low|medium|high, --max-rounds N (repair rounds
 # after the first turn, default 2), --no-store (keep the plan out of plans/), --out DIR
+
+# Another model through opencode (any `opencode models` entry); tools are disabled
+# by config in a scratch directory and the event stream is checked for tool parts
+pnpm start author $R/prepared.json $R/baseline.json $R/worklist.json \
+  --provider opencode --model opencode/deepseek-v4.1-flash
+
+# Prompt strategies, each an experiment axis the benchmark can vary alone:
+#   --review  second pass: the accepted plan's executed results go back to the model
+#             with three questions (skip reasons, unused privileged events, empty
+#             folds); the revision passes the same validator and dry run, and the
+#             first plan stays when it never does
+#   --facts   compile each verified source with its exact compiler, run the Datalog
+#             rules and add "who writes each state variable, guarded by what,
+#             emitting which events" to the prompt (see `facts` below)
+pnpm start author $R/prepared.json $R/baseline.json $R/worklist.json --review --facts
+
+# The facts alone, as a file, for reading or for another tool
+pnpm start facts $R/prepared.json
+# ScrollChain: 14 variable(s), 1 never-emitted event(s), solc 0.8.24+commit.e11b9ed9 (cancun)
 
 # The whole pipeline, authoring only when the store has no plan for the shape
 pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575 --author
@@ -161,6 +182,28 @@ pnpm start report floor=benchmarks/scroll-noplan.json benchmarks/scroll.json --o
 `BENCHMARK.md` and `BENCHMARK.html` (the `runs/` directory is not committed),
 so the page can be regenerated and a new run compared with the old ones.
 See `BENCHMARK.md` for the results and what they mean.
+
+An *experiment* is one setup over the whole suite. `benchmarks/suite.json`
+names the projects and, where a project is too large for one run, the
+contracts; adding a project there adds it to every later experiment.
+`suite <label>` runs them all under one label with a plan store of its own,
+so two experiments never share a decision:
+
+```sh
+pnpm start suite deepseek-flash --author --provider opencode --model opencode/deepseek-v4.1-flash
+pnpm start suite deepseek-flash-facts --author --provider opencode --model opencode/deepseek-v4.1-flash --facts
+pnpm start suite gpt-5.6-review --author --review
+pnpm start report runs/benchmark/deepseek-flash runs/benchmark/deepseek-flash-facts --out BENCHMARK.html
+```
+
+When the verdict rules change, `--rejudge` re-compares a finished run from
+the `entry.json` files on disk, so old runs stay comparable with new ones
+without spending a token:
+
+```sh
+pnpm start benchmark scroll --rejudge --out runs/benchmark/scroll
+pnpm start suite deepseek-flash --rejudge
+```
 
 `$R/author/` holds `round-N.prompt.md`, `round-N.response.txt`,
 `round-N.findings.json`, `round-N.dryrun.json`, `codex-events.jsonl` and
@@ -353,6 +396,41 @@ not hang a run.
    decision and differ only in wording, and consistency must count that as
    the same plan.
 
+## Facts
+
+`facts` is the static-analysis tool behind `--facts`. It follows the
+repository's `queryable-facts` division of labour: the compiler observes,
+Datalog infers, nothing is guessed by a walker with special cases.
+
+1. Each verified source is compiled by the exact compiler the explorer
+   recorded (`v0.8.24+commit.e11b9ed9`), downloaded once from
+   binaries.soliditylang.org into `~/.cache/discovery-v2/solc/`, with only the
+   AST requested. A source that needs a newer EVM (Yul `blobhash`, `tstore`)
+   is retried on later EVM versions; the explorer's settings are not in the
+   source, so this is inferred from the error.
+2. `facts/astFacts.ts` turns the AST into flat relations: contracts and
+   their linearised bases, state variables, functions with visibility and
+   kind, modifiers and their invocations, events with canonical signatures,
+   AST nesting, resolved references, written expressions (assignment,
+   `++`/`--`/`delete`, `push`/`pop`, tuple targets, writes through local
+   storage pointers), emit statements and internal or library calls.
+3. `facts/rules/facts.dl` (Soufflé) derives, within the analysed contract's
+   inheritance chain only: which external or public functions can reach a
+   write of each mutable variable through internal calls and modifiers,
+   which modifiers those functions declare, which events they can emit,
+   which functions read each variable, and which declared events no entry
+   point emits. Reachability is syntactic: the path exists, it need not run.
+4. `facts/buildFacts.ts` names the ids back and writes `facts.json`; the
+   prompt renders one line per variable, for example
+   `isSequencer (mapping(address => bool)): written by addSequencer(address)
+   [onlyOwner] emits UpdateSequencer(address,bool); removeSequencer(address)
+   [onlyOwner] emits UpdateSequencer(address,bool)`.
+
+A source that fails to compile or analyse is recorded with its error and the
+prompt says so; the rest of the contract's facts still apply. Tests compile a
+fixture with the bundled solc-js and skip the rule test when `souffle` is not
+installed.
+
 ## Output compatibility
 
 `output` produces a V1 `EntryParameters` object: `type`, `name`, `address`,
@@ -387,8 +465,14 @@ Values then get one of five verdicts: `equal` (same name, deep-equal after
 chain-prefixed addresses are normalised on both sides, since V1 templates
 re-prefix some getters for display), `equal-renamed` (a V1 handler or
 projection field whose value V2 produced under another name, as
-`sequencers` → `isSequencer`), `different` (same name, other value, with a
-one-line diff), `v1-only` (with its attribution) and `v2-only`, split into
+`sequencers` → `isSequencer`), `equal-by-value` (every value V1 held is in
+V2 under another shape: the same name with another nesting, or every
+distinctive leaf, an address, a hash, a long number, found among V2 fields
+no V1 field claimed; this is how `game0`…`game8` are credited against one
+`gameImpls` map, because a researcher chose that shape by hand and the
+benchmark measures extraction, not presentation), `different` (same name,
+other value, with a one-line diff), `v1-only` (with its attribution) and
+`v2-only`, split into
 `ignored-by-v1` (the name is in V1's effective `ignoreMethods`) and `new`.
 `proxyType`, `sourceHashes`, `sinceBlock` and `implementationNames` are
 compared as entry facts. Per contract the report keeps plan status and source
