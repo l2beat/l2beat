@@ -59,10 +59,10 @@ const STYLE = `
   --text-muted: #8a8880;
   --equal: #2a78d6;
   --renamed: #1baf7a;
-  --different: #eb6834;
-  --v1-getter: #4a3aa7;
-  --v1-handler: #eda100;
-  --v1-projection: #e87ba4;
+  --by-value: #4a3aa7;
+  --different: #eda100;
+  --missed: #e34948;
+  --display-only: #b8b6ad;
   --v2-only: #b8b6ad;
 }
 body { margin: 0; background: var(--surface-1); color: var(--text-primary);
@@ -104,29 +104,22 @@ details > div { padding: 0 14px 14px; }
 const SCRIPT = `
 const runs = JSON.parse(document.getElementById('data').textContent)
 const SEGMENTS = [
-  ['equal', 'equal', 'V2 value equals V1 value', c => c.equal],
-  ['renamed', 'equal, other name', 'same value, V2 uses the Solidity name', c => c.equalRenamed],
-  ['different', 'different value', 'both have the field, values differ', c => c.different],
-  ['v1-getter', 'missed proxy/getter', 'V1 has it from a proxy or a 0-arg getter, V2 does not (a tooling bug)', c => c.v1Only.proxy + c.v1Only.getter],
-  ['v1-handler', 'missed handler field', 'V1 has it from a handler, V2 has no value for it (the decision missed)', c => c.v1Only.handler],
-  ['v1-projection', 'V1 template projection', 'a V1 pickRoleMembers/copy/edit field with no V2 counterpart, by design', c => c.v1Only['template-projection']],
+  ['equal', 'equal', 'same field name, same value', c => c.equal],
+  ['renamed', 'equal, other name', 'same value, V2 names the field after the Solidity getter', c => c.equalRenamed],
+  ['by-value', 'same values, other shape', 'every value V1 had is in V2, under another key or nesting (one map instead of one field per key, a struct as a list)', c => c.equalByValue],
+  ['different', 'different value', 'same field on both sides, values differ (formatting, type, or a real disagreement); listed per contract below', c => c.different],
+  ['missed', 'missed', 'V1 has the value, V2 has nothing holding it', c => c.v1Only.proxy + c.v1Only.getter + c.v1Only.handler],
+  ['display-only', 'V1 display-only', 'a V1 template field that repeats or reformats a value counted elsewhere (role member picks, copies, formatted delays); V2 leaves that to the consumer', c => c.v1Only['template-projection']],
 ]
+const FOUND = c => c.equal + c.equalRenamed + c.equalByValue
+const EXTRACTED = c => c.v1Fields - c.v1Only['template-projection']
 
 const pct = (a, b) => b === 0 ? '-' : (100 * a / b).toFixed(1) + '%'
-const coverage = c => c.v1Fields === 0 ? 0 : (c.equal + c.equalRenamed) / c.v1Fields
-const handlerCoverage = c => {
-  const handlerTotal = c.v1Only.handler + (c.handlerEqual ?? 0)
-  return handlerTotal === 0 ? null : (c.handlerEqual ?? 0) / handlerTotal
-}
+const coverage = c => EXTRACTED(c) === 0 ? 0 : FOUND(c) / EXTRACTED(c)
 const seconds = ms => (ms / 1000).toFixed(0) + ' s'
 const kTokens = t => (t / 1000).toFixed(0) + 'k'
 const esc = s => String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]))
 
-function withHandlerEquals(run) {
-  const handlerEqual = run.contracts.flatMap(c => c.fields)
-    .filter(f => (f.verdict === 'equal' || f.verdict === 'equal-renamed') && f.attribution.kind === 'handler').length
-  return { ...run.totals, handlerEqual }
-}
 
 function setup(run) {
   if (run.noPlan) return 'empty plan, no model (floor)'
@@ -157,7 +150,7 @@ function runName(run) {
 function coverageChart() {
   return '<div class="bars">' + runs.map(run => {
     const c = run.totals
-    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(c.equal + c.equalRenamed, c.v1Fields) + '</div>'
+    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(FOUND(c), EXTRACTED(c)) + '</div>'
   }).join('') + '</div>'
 }
 
@@ -169,58 +162,59 @@ function handlerCounts(run) {
     v1Fields: fields.length,
     equal: count('equal'),
     equalRenamed: count('equal-renamed'),
+    equalByValue: count('equal-by-value'),
     different: count('different'),
     v1Only: { proxy: 0, getter: 0, handler: count('v1-only'), 'template-projection': 0 },
   }
 }
 
 function handlerChart() {
-  return '<div class="bars">' + runs.map(run => {
+  const modelRuns = runs.filter(run => !run.noPlan)
+  return '<div class="bars">' + modelRuns.map(run => {
     const c = handlerCounts(run)
-    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(c.equal + c.equalRenamed, c.v1Fields) + '</div>'
+    return runName(run) + bar(c, c.v1Fields) + '<div class="pct">' + pct(FOUND(c), c.v1Fields) + '</div>'
   }).join('') + '</div>'
 }
 
 function summaryTable() {
-  const head = ['run', 'contracts', 'V1 fields', 'V2 fields', 'equal', 'renamed', 'different', 'missed proxy/getter', 'missed handler', 'V1 projection', 'V2-only ignored', 'V2-only new', 'coverage', 'handler coverage', 'model calls', 'tokens in / out', 'wall']
+  const head = ['run', 'contracts', 'V1 fields', 'equal', 'other name', 'other shape', 'different', 'missed getter', 'missed handler', 'V1 display-only', 'V2 new', 'found', 'handler fields', 'handler found', 'model calls', 'tokens in / out', 'wall']
   const rows = runs.map(run => {
-    const c = withHandlerEquals(run)
-    const calls = Object.entries(run.totals.roundsDistribution).reduce((s, [, n]) => s + n, 0)
-    const hc = handlerCoverage(c)
-    return [run.project + ' · ' + run.label, c.contracts + (c.failed ? ' (' + c.failed + ' failed)' : ''), c.v1Fields, c.v2Fields, c.equal, c.equalRenamed, c.different,
-      c.v1Only.proxy + c.v1Only.getter, c.v1Only.handler, c.v1Only['template-projection'], c.v2Only['ignored-by-v1'], c.v2Only.new,
-      pct(c.equal + c.equalRenamed, c.v1Fields), hc === null ? '-' : (100 * hc).toFixed(0) + '%', calls, kTokens(c.tokens.input) + ' / ' + kTokens(c.tokens.output), seconds(c.wallMs)]
+    const c = run.totals
+    const h = handlerCounts(run)
+    const calls = Object.entries(c.roundsDistribution).reduce((s, [, n]) => s + n, 0)
+    return [run.project + ' · ' + run.label, c.contracts + (c.failed ? ' (' + c.failed + ' failed)' : ''), c.v1Fields, c.equal, c.equalRenamed, c.equalByValue, c.different,
+      c.v1Only.proxy + c.v1Only.getter, c.v1Only.handler, c.v1Only['template-projection'], c.v2Only.new,
+      pct(FOUND(c), EXTRACTED(c)), h.v1Fields, FOUND(h) + ' (' + pct(FOUND(h), h.v1Fields) + ')', calls, kTokens(c.tokens.input) + ' / ' + kTokens(c.tokens.output), seconds(c.wallMs)]
   })
   return '<div class="scroll"><table><thead><tr>' + head.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>'
     + rows.map(r => '<tr>' + r.map((v, i) => '<td class="' + (i === 0 ? 'l' : '') + '">' + esc(v) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>'
-    + '<p class="note">coverage = (equal + renamed) / V1 fields. handler coverage = equal handler fields / V1 handler fields: the share of the values V1 needed a researcher-written handler for that V2 got right without one. V1 projections are excluded from both by design.</p>'
+    + '<p class="note">found = (equal + other name + other shape) / (V1 fields − V1 display-only). handler fields = the V1 fields a researcher wrote a handler for; handler found = how many of those V2 has the values of. V2 new = fields V2 produced that V1 never had (not counted anywhere else; V2 fields V1 listed in ignoreMethods are dropped).</p>'
 }
 
 function missList(contract) {
   const interesting = contract.fields.filter(f => f.verdict !== 'equal' && !(f.verdict === 'v2-only' && f.class === 'ignored-by-v1'))
   if (interesting.length === 0) return '<p class="miss">every V1 field matched</p>'
   return '<ul class="miss">' + interesting.map(f => {
-    if (f.verdict === 'v2-only') return '<li><span class="tag" style="--c:var(--v2-only)">V2 only</span><code>' + esc(f.name) + '</code> (' + esc(f.class) + ')</li>'
+    if (f.verdict === 'v2-only') return '<li><span class="tag" style="--c:var(--v2-only)">V2 new</span><code>' + esc(f.name) + '</code></li>'
     const a = f.attribution
-    const kind = a.kind === 'handler' ? 'handler ' + a.handlerType : a.kind === 'template-projection' ? 'projection via ' + a.via : a.kind
-    const seg = f.verdict === 'equal-renamed' ? 'renamed' : f.verdict === 'different' ? 'different' : a.kind === 'handler' ? 'v1-handler' : a.kind === 'template-projection' ? 'v1-projection' : 'v1-getter'
-    const label = f.verdict === 'equal-renamed' ? 'renamed → ' + f.v2Name : f.verdict === 'different' ? 'different' : 'V1 only'
+    const kind = a.kind === 'handler' ? 'V1 handler ' + a.handlerType : a.kind === 'template-projection' ? 'V1 display-only via ' + a.via : 'V1 ' + a.kind
+    const seg = f.verdict === 'equal-renamed' ? 'renamed' : f.verdict === 'equal-by-value' ? 'by-value' : f.verdict === 'different' ? 'different' : a.kind === 'template-projection' ? 'display-only' : 'missed'
+    const label = f.verdict === 'equal-renamed' ? 'other name → ' + f.v2Name : f.verdict === 'equal-by-value' ? 'other shape, in ' + f.v2Names.join(', ') : f.verdict === 'different' ? 'different' : a.kind === 'template-projection' ? 'display-only' : 'missed'
     return '<li><span class="tag" style="--c:var(--' + seg + ')">' + esc(label) + '</span><code>' + esc(f.name) + '</code> · ' + esc(kind) + (f.diff ? ' · ' + esc(f.diff) : '') + '</li>'
   }).join('') + '</ul>'
 }
 
 function contractsTable(run) {
-  const head = ['contract', 'template', 'plan', 'V1 fields', 'equal', 'renamed', 'different', 'V1 only', 'V2 only', 'coverage', 'rounds', 'tokens in', 'distinct plans']
+  const head = ['contract', 'template', 'plan', 'V1 fields', 'equal', 'other name', 'other shape', 'different', 'missed', 'display-only', 'V2 new', 'found', 'rounds', 'tokens in', 'distinct plans']
   const sorted = [...run.contracts].sort((a, b) => coverage(a.counts) - coverage(b.counts))
   return '<div class="scroll"><table><thead><tr>' + head.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' + sorted.map(c => {
     const k = c.counts
-    const v1Only = Object.values(k.v1Only).reduce((s, n) => s + n, 0)
-    const v2Only = Object.values(k.v2Only).reduce((s, n) => s + n, 0)
+    const missed = k.v1Only.proxy + k.v1Only.getter + k.v1Only.handler
     const plan = c.status === 'failed' ? 'FAILED: ' + (c.error ?? '') : c.planStatus + ' (' + c.planSource + ')'
     return '<tr><td class="l">' + esc(c.name ?? c.address) + '</td><td class="l">' + esc(c.template ?? '-') + '</td><td class="l">' + esc(plan) + '</td>'
-      + [k.v1Fields, k.equal, k.equalRenamed, k.different, v1Only, v2Only, pct(k.equal + k.equalRenamed, k.v1Fields), c.rounds, kTokens(c.tokens.input),
+      + [k.v1Fields, k.equal, k.equalRenamed, k.equalByValue, k.different, missed, k.v1Only['template-projection'], k.v2Only.new, pct(FOUND(k), EXTRACTED(k)), c.rounds, kTokens(c.tokens.input),
          c.repeats ? c.repeats.distinctDecisionHashes + '/' + c.repeats.plans : '-'].map(v => '<td>' + esc(v) + '</td>').join('')
-      + '</tr><tr><td colspan="13" class="l">' + missList(c) + '</td></tr>'
+      + '</tr><tr><td colspan="15" class="l">' + missList(c) + '</td></tr>'
   }).join('') + '</tbody></table></div>'
 }
 
@@ -247,11 +241,14 @@ const tile = (v, k) => '<div class="tile"><div class="v">' + esc(v) + '</div><di
 
 document.getElementById('app').innerHTML =
   '<h1>Discovery V2 against V1 discovered.json</h1>'
-  + '<p class="lede">Each bar is one project at V1\\'s committed block. It splits V1\\'s value fields by what V2 produced for them, so a bar that is mostly blue means V2 reproduced V1. The percentage is the share of V1 fields V2 got (equal or equal under the Solidity name). Runs of the same project differ only in what wrote the plan: nothing (floor), a stored plan, or a model.</p>'
-  + legend() + coverageChart()
-  + '<h2>Only the fields V1 needed a handler for</h2>'
-  + '<p class="lede">Proxy values and 0-arg getters need no decision and are the same in every run. This chart keeps only the V1 fields a researcher wrote a handler for (events, accessControl, array, call with arguments, ...). It is the part a model, a tool or a library recipe can move, so this is the bar to compare models on.</p>'
+  + '<p class="lede">Every run re-extracts a V1 project at the block of its committed discovered.json and compares values field by field. Each bar splits V1\\'s fields by what V2 produced for them. Only red means a value V1 had and V2 does not. The percentage is the share of V1\\'s extracted fields whose values V2 has, in any shape or name.</p>'
+  + legend()
+  + '<h2>The fields V1 needed a handler for</h2>'
+  + '<p class="lede">Proxy values and 0-argument getters need no decision and come out the same in every run, so they are left out here. These bars keep only the V1 fields a researcher wrote a handler for (events, access control, arrays, calls with arguments, custom code). This is the part a model, a prompt, a tool or a recipe can move, so this is the bar to compare setups on.</p>'
   + handlerChart()
+  + '<h2>All V1 fields, for completeness</h2>'
+  + '<p class="lede">The same split over every V1 field. The floor rows run with an empty plan and no model, so they show what the deterministic tools alone reproduce; the difference to the run below each is what the plan bought.</p>'
+  + coverageChart()
   + '<h2>Numbers behind the bars</h2>' + summaryTable()
   + '<h2>Cost of the model runs</h2>' + costTiles()
   + '<h2>Contracts, worst coverage first</h2>' + runDetails()

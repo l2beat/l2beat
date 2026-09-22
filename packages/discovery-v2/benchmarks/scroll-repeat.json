@@ -64,22 +64,26 @@
           }
         },
         {
-          "verdict": "different",
+          "verdict": "equal-by-value",
           "name": "latestVerifier",
+          "v2Names": [
+            "latestVerifier"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "array"
-          },
-          "diff": "V1=[{\"startBatchIndex\":0,\"verifier\":\"0x585dfad7bf4099e011d185e2… V2={\"0\":{\"startBatchIndex\":0,\"verifier\":\"0x585dfad7bf4099e011d1…"
+          }
         },
         {
-          "verdict": "different",
+          "verdict": "equal-by-value",
           "name": "legacyVerifiersLength",
+          "v2Names": [
+            "legacyVerifiersLength"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "array"
-          },
-          "diff": "V1=[0,0,0,0,0,0,1,0,0,0] V2={\"0\":0,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"6\":0,\"7\":1,\"8\":0,\"9\":0,\"10\":…"
+          }
         },
         {
           "verdict": "equal",
@@ -138,10 +142,11 @@
       ],
       "counts": {
         "v1Fields": 5,
-        "v2Fields": 5,
+        "v2Fields": 3,
         "equal": 2,
         "equalRenamed": 0,
-        "different": 2,
+        "equalByValue": 2,
+        "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
@@ -318,17 +323,17 @@
           }
         },
         {
-          "verdict": "v1-only",
-          "name": "revertedBatches",
+          "verdict": "equal-renamed",
+          "name": "sequencers",
+          "v2Name": "isSequencer",
           "attribution": {
             "kind": "handler",
             "handlerType": "event"
           }
         },
         {
-          "verdict": "equal-renamed",
-          "name": "sequencers",
-          "v2Name": "isSequencer",
+          "verdict": "v1-only",
+          "name": "revertedBatches",
           "attribution": {
             "kind": "handler",
             "handlerType": "event"
@@ -378,6 +383,7 @@
         "v2Fields": 17,
         "equal": 15,
         "equalRenamed": 2,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -549,6 +555,7 @@
         "v2Fields": 9,
         "equal": 8,
         "equalRenamed": 1,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -595,10 +602,11 @@
   ],
   "totals": {
     "v1Fields": 32,
-    "v2Fields": 31,
+    "v2Fields": 29,
     "equal": 25,
     "equalRenamed": 3,
-    "different": 2,
+    "equalByValue": 2,
+    "different": 0,
     "v1Only": {
       "proxy": 0,
       "getter": 0,

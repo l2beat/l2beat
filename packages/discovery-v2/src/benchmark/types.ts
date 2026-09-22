@@ -42,6 +42,14 @@ export type FieldVerdict =
       attribution: V1Attribution
     }
   | {
+      /** Every value V1 held is in V2, under another structure or key. */
+      verdict: 'equal-by-value'
+      name: string
+      /** V2 fields whose values contained V1's; the namesake alone when the shape differs. */
+      v2Names: string[]
+      attribution: V1Attribution
+    }
+  | {
       verdict: 'different'
       name: string
       attribution: V1Attribution
@@ -77,6 +85,7 @@ export interface VerdictCounts {
   v2Fields: number
   equal: number
   equalRenamed: number
+  equalByValue: number
   different: number
   v1Only: Record<AttributionKind, number>
   v2Only: Record<V2OnlyClass, number>

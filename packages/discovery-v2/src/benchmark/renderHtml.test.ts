@@ -29,6 +29,7 @@ describe(renderHtml.name, () => {
       v2Fields: 0,
       equal: 0,
       equalRenamed: 0,
+      equalByValue: 0,
       different: 0,
       v1Only: { proxy: 0, getter: 0, handler: 0, 'template-projection': 0 },
       v2Only: { 'ignored-by-v1': 0, new: 0 },

@@ -153,6 +153,7 @@
         "v2Fields": 4,
         "equal": 4,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -228,6 +229,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -402,6 +404,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -576,6 +579,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -732,6 +736,7 @@
         "v2Fields": 12,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -807,6 +812,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -899,6 +905,7 @@
         "v2Fields": 3,
         "equal": 3,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -974,6 +981,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1148,6 +1156,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1254,6 +1263,7 @@
         "v2Fields": 5,
         "equal": 5,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1339,6 +1349,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1414,6 +1425,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1524,6 +1536,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1703,6 +1716,7 @@
         "v2Fields": 15,
         "equal": 14,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1788,6 +1802,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1921,6 +1936,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2006,6 +2022,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2190,6 +2207,7 @@
         "v2Fields": 16,
         "equal": 14,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2322,6 +2340,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2491,6 +2510,7 @@
         "v2Fields": 13,
         "equal": 13,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2637,6 +2657,7 @@
         "v2Fields": 10,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2712,6 +2733,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2838,6 +2860,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2984,6 +3007,7 @@
         "v2Fields": 10,
         "equal": 9,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3117,6 +3141,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3223,6 +3248,7 @@
         "v2Fields": 5,
         "equal": 5,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3397,6 +3423,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3529,6 +3556,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3604,6 +3632,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3679,6 +3708,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3835,6 +3865,7 @@
         "v2Fields": 12,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3910,6 +3941,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4043,6 +4075,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4248,6 +4281,7 @@
         "v2Fields": 15,
         "equal": 15,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4354,6 +4388,7 @@
         "v2Fields": 5,
         "equal": 5,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4487,6 +4522,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4619,6 +4655,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4752,6 +4789,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4925,6 +4963,7 @@
         "v2Fields": 14,
         "equal": 14,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5081,6 +5120,7 @@
         "v2Fields": 12,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5180,6 +5220,7 @@
         "v2Fields": 4,
         "equal": 4,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5272,6 +5313,7 @@
         "v2Fields": 3,
         "equal": 3,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5428,6 +5470,7 @@
         "v2Fields": 12,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5577,6 +5620,7 @@
         "v2Fields": 10,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5663,6 +5707,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5819,6 +5864,7 @@
         "v2Fields": 12,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5993,6 +6039,7 @@
         "v2Fields": 14,
         "equal": 13,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -6133,6 +6180,7 @@
         "v2Fields": 8,
         "equal": 8,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -6152,6 +6200,7 @@
     "v2Fields": 326,
     "equal": 311,
     "equalRenamed": 0,
+    "equalByValue": 0,
     "different": 0,
     "v1Only": {
       "proxy": 0,

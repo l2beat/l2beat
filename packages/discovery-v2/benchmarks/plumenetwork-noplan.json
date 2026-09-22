@@ -244,6 +244,7 @@
         "v2Fields": 12,
         "equal": 12,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -557,6 +558,7 @@
         "v2Fields": 30,
         "equal": 30,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -731,6 +733,7 @@
         "v2Fields": 14,
         "equal": 14,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -897,13 +900,15 @@
           }
         },
         {
-          "verdict": "different",
+          "verdict": "equal-by-value",
           "name": "maxTimeVariation",
+          "v2Names": [
+            "maxTimeVariation"
+          ],
           "attribution": {
             "kind": "getter",
             "edited": true
-          },
-          "diff": "V1={\"delayBlocks\":7200,\"delaySeconds\":86400,\"futureBlocks\":48,\"… V2=[7200,48,86400,3600]"
+          }
         },
         {
           "verdict": "equal",
@@ -1015,10 +1020,11 @@
       ],
       "counts": {
         "v1Fields": 29,
-        "v2Fields": 23,
+        "v2Fields": 22,
         "equal": 22,
         "equalRenamed": 0,
-        "different": 1,
+        "equalByValue": 1,
+        "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
@@ -1164,6 +1170,7 @@
         "v2Fields": 10,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1306,6 +1313,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1322,10 +1330,11 @@
   ],
   "totals": {
     "v1Fields": 111,
-    "v2Fields": 96,
+    "v2Fields": 95,
     "equal": 95,
     "equalRenamed": 0,
-    "different": 1,
+    "equalByValue": 1,
+    "different": 0,
     "v1Only": {
       "proxy": 0,
       "getter": 2,

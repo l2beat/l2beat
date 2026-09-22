@@ -14,6 +14,7 @@ import fs from 'fs'
 import path from 'path'
 import type { ReasoningEffort } from '../author/codex/CodexClient'
 import { loadV1Project } from '../benchmark/loadProject'
+import { rejudgeBenchmark } from '../benchmark/rejudge'
 import { renderMarkdown } from '../benchmark/render'
 import { runBenchmark } from '../benchmark/runBenchmark'
 import type { ProjectBenchmark } from '../benchmark/types'
@@ -29,6 +30,8 @@ export interface BenchmarkArgs {
   author: boolean
   repeat: number
   noPlan?: boolean
+  /** Re-compare the run already in `out` under the current rules; no pipeline runs. */
+  rejudge?: boolean
   out?: string
   model?: string
   reasoning?: ReasoningEffort
@@ -61,6 +64,15 @@ export async function benchmarkCommand(
     addresses: args.addresses,
   })
   const outDir = args.out ?? defaultBenchmarkDir(args.project)
+  if (args.rejudge) {
+    const previous = readReport(path.join(outDir, BENCHMARK_FILES.json))
+    ctx.logger.info('Re-judging benchmark', {
+      project: project.name,
+      contracts: previous.contracts.length,
+      outDir,
+    })
+    return writeReport(ctx, rejudgeBenchmark(previous, project, outDir), outDir)
+  }
   ctx.logger.info('Benchmark', {
     project: project.name,
     chain: project.chain,
@@ -84,11 +96,23 @@ export async function benchmarkCommand(
       planStore: new PlanStore(),
     },
   )
+  return writeReport(ctx, report, outDir)
+}
+
+function writeReport(
+  ctx: CommandContext,
+  report: ProjectBenchmark,
+  outDir: string,
+): BenchmarkFiles {
   const jsonFile = writeJson(path.join(outDir, BENCHMARK_FILES.json), report)
   const markdownFile = path.join(outDir, BENCHMARK_FILES.markdown)
   fs.writeFileSync(markdownFile, renderMarkdown(report))
   ctx.logger.info('Benchmark written', { jsonFile, markdownFile })
   return { report, jsonFile, markdownFile }
+}
+
+export function readReport(file: string): ProjectBenchmark {
+  return JSON.parse(fs.readFileSync(file, 'utf8')) as ProjectBenchmark
 }
 
 export function defaultBenchmarkDir(project: string): string {
@@ -116,6 +140,7 @@ export function summariseBenchmark(report: ProjectBenchmark): string {
     `failed=${totals.failed}`,
     `equal=${totals.equal}`,
     `renamed=${totals.equalRenamed}`,
+    `byvalue=${totals.equalByValue}`,
     `different=${totals.different}`,
     `v1only=${Object.values(totals.v1Only).reduce((a, b) => a + b, 0)}`,
     `v2only=${totals.v2Only['ignored-by-v1'] + totals.v2Only.new}`,

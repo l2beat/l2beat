@@ -101,6 +101,7 @@
         "v2Fields": 1,
         "equal": 1,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -202,6 +203,7 @@
         "v2Fields": 4,
         "equal": 4,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -328,6 +330,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -496,6 +499,7 @@
         "v2Fields": 7,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -667,6 +671,7 @@
         "v2Fields": 15,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -845,6 +850,7 @@
         "v2Fields": 15,
         "equal": 13,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -953,6 +959,7 @@
         "v2Fields": 5,
         "equal": 5,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1101,6 +1108,7 @@
         "v2Fields": 10,
         "equal": 9,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1209,6 +1217,7 @@
         "v2Fields": 5,
         "equal": 5,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1398,6 +1407,7 @@
         "v2Fields": 16,
         "equal": 16,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -1511,56 +1521,77 @@
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game0",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game1",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game1337",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game42",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game621",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game8",
+          "v2Names": [
+            "gameImpls"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "game8Args",
+          "v2Names": [
+            "gameArgs"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
@@ -1576,16 +1607,22 @@
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "initBondGame0",
+          "v2Names": [
+            "initBonds"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "initBondGame1",
+          "v2Names": [
+            "initBonds"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
@@ -1600,24 +1637,33 @@
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "initBondGame621",
+          "v2Names": [
+            "initBonds"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "initBondGame8",
+          "v2Names": [
+            "initBonds"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "permissionedGameArgs",
+          "v2Names": [
+            "gameArgs"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
@@ -1708,11 +1754,12 @@
         "v2Fields": 13,
         "equal": 10,
         "equalRenamed": 0,
+        "equalByValue": 12,
         "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
-          "handler": 14,
+          "handler": 2,
           "template-projection": 4
         },
         "v2Only": {
@@ -1941,6 +1988,7 @@
         "v2Fields": 21,
         "equal": 21,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2271,6 +2319,7 @@
         "v2Fields": 35,
         "equal": 33,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2453,6 +2502,7 @@
         "v2Fields": 15,
         "equal": 15,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2635,6 +2685,7 @@
         "v2Fields": 15,
         "equal": 15,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -2941,6 +2992,7 @@
         "v2Fields": 30,
         "equal": 30,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3087,13 +3139,12 @@
           }
         },
         {
-          "verdict": "different",
+          "verdict": "equal",
           "name": "batcherHash",
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
-          },
-          "diff": "V1=0x5050f69a9786f081509234f1a7f4684b5e5b76c9 V2=0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e…"
+          }
         },
         {
           "verdict": "equal",
@@ -3389,9 +3440,10 @@
       "counts": {
         "v1Fields": 52,
         "v2Fields": 51,
-        "equal": 49,
+        "equal": 50,
         "equalRenamed": 0,
-        "different": 1,
+        "equalByValue": 0,
+        "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
@@ -3479,6 +3531,7 @@
         "v2Fields": 2,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -3562,32 +3615,48 @@
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "verifierProofIdRiscZero",
+          "v2Names": [
+            "getVerifierProofId",
+            "zkConfig"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "verifierProofIdSuccinct",
+          "v2Names": [
+            "getVerifierProofId",
+            "zkConfig"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "zkConfigRiscZero",
+          "v2Names": [
+            "getVerifierProofId",
+            "zkConfig"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "zkConfigSuccinct",
+          "v2Names": [
+            "getVerifierProofId",
+            "zkConfig"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "call"
@@ -3651,11 +3720,12 @@
         "v2Fields": 9,
         "equal": 7,
         "equalRenamed": 0,
+        "equalByValue": 4,
         "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
-          "handler": 5,
+          "handler": 1,
           "template-projection": 0
         },
         "v2Only": {
@@ -3938,6 +4008,7 @@
         "v2Fields": 30,
         "equal": 30,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4080,6 +4151,7 @@
         "v2Fields": 3,
         "equal": 3,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4297,6 +4369,7 @@
         "v2Fields": 19,
         "equal": 18,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4484,6 +4557,7 @@
         "v2Fields": 15,
         "equal": 13,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -4532,16 +4606,24 @@
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "activeVerifiers",
+          "v2Names": [
+            "routeAdded",
+            "routes"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "event"
           }
         },
         {
-          "verdict": "v1-only",
+          "verdict": "equal-by-value",
           "name": "allVerifiers",
+          "v2Names": [
+            "routeAdded",
+            "routes"
+          ],
           "attribution": {
             "kind": "handler",
             "handlerType": "event"
@@ -4597,11 +4679,12 @@
         "v2Fields": 4,
         "equal": 2,
         "equalRenamed": 0,
+        "equalByValue": 2,
         "different": 0,
         "v1Only": {
           "proxy": 0,
           "getter": 0,
-          "handler": 2,
+          "handler": 0,
           "template-projection": 0
         },
         "v2Only": {
@@ -5015,6 +5098,7 @@
         "v2Fields": 47,
         "equal": 46,
         "equalRenamed": 0,
+        "equalByValue": 0,
         "different": 0,
         "v1Only": {
           "proxy": 0,
@@ -5032,13 +5116,14 @@
   "totals": {
     "v1Fields": 421,
     "v2Fields": 394,
-    "equal": 371,
+    "equal": 372,
     "equalRenamed": 0,
-    "different": 1,
+    "equalByValue": 18,
+    "different": 0,
     "v1Only": {
       "proxy": 0,
       "getter": 4,
-      "handler": 29,
+      "handler": 11,
       "template-projection": 16
     },
     "v2Only": {

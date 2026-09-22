@@ -59,6 +59,7 @@ describe(renderMarkdown.name, () => {
       v2Fields: 5,
       equal: 1,
       equalRenamed: 1,
+      equalByValue: 0,
       different: 1,
       v1Only: { proxy: 0, getter: 0, handler: 1, 'template-projection': 0 },
       v2Only: { 'ignored-by-v1': 1, new: 1 },
@@ -82,6 +83,7 @@ describe(renderMarkdown.name, () => {
       v2Fields: 0,
       equal: 0,
       equalRenamed: 0,
+      equalByValue: 0,
       different: 0,
       v1Only: { proxy: 0, getter: 0, handler: 0, 'template-projection': 0 },
       v2Only: { 'ignored-by-v1': 0, new: 0 },
@@ -155,14 +157,14 @@ describe(renderMarkdown.name, () => {
     expect(md).toInclude('- Model: gpt-test')
     expect(md).toInclude('Plan store before the run: 1 plan(s) (0xabababab)')
     expect(md).toInclude(
-      '| scroll | 4 (1) | 4 | 5 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1 |',
+      '| scroll | 4 (1) | 4 | 5 | 1 | 1 | 0 | 1 | 0 | 0 | 1 | 0 | 1 | 1 |',
     )
     expect(md).toInclude('## Consistency (--repeat)')
     expect(md).toInclude(
       '| MultipleVersionRollupVerifier (0x4CEA…ad3F) | 2 | 0 | 3 | 2 | 0xdecision, 0xother000 |',
     )
     expect(md).toInclude(
-      '| ScrollChain (0xa13B…E556) | scroll/ScrollChain | ok | store | 0 | 0+0 | 1.5 | 1 | 1 | 1 | 1 | 2 | - |',
+      '| ScrollChain (0xa13B…E556) | scroll/ScrollChain | ok | store | 0 | 0+0 | 1.5 | 1 | 1 | 0 | 1 | 1 | 2 | - |',
     )
     expect(md).toInclude(
       '- ScrollChain (0xa13B…E556) `revertedBatches`: v1-only (handler (event))',

@@ -286,7 +286,7 @@ function failedContract(
   }
 }
 
-function proxyValueNames(runDir: string): string[] {
+export function proxyValueNames(runDir: string): string[] {
   try {
     const prepared = readPrepared(path.join(runDir, FILE_NAMES.prepared))
     return Object.keys(prepared.proxy.values)
@@ -363,7 +363,7 @@ export function totalsOf(contracts: ContractBenchmark[]): ProjectTotals {
   return totals
 }
 
-function addressOf(address: string): string {
+export function addressOf(address: string): string {
   const colon = address.indexOf(':')
   return colon === -1 ? address : address.slice(colon + 1)
 }

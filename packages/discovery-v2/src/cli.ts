@@ -321,6 +321,11 @@ const benchmark = command({
       long: 'author',
       description: 'ask Codex when the store has no plan for a shape',
     }),
+    rejudge: flag({
+      long: 'rejudge',
+      description:
+        're-compare the run already in --out under the current verdict rules, without running any pipeline',
+    }),
     noPlan: flag({
       long: 'no-plan',
       description:
