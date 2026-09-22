@@ -4,12 +4,15 @@ import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const API_URL = 'https://api.relay.link'
+const MAX_PAGE_SIZE = 100
 
 interface GetRequestsOptions {
   limit?: number
   continuation?: string
   startTimestamp?: number
   endTimestamp?: number
+  status?: 'success'
+  chainId?: number
   sortBy?: 'createdAt' | 'updatedAt'
   sortDirection?: 'asc' | 'desc'
 }
@@ -115,7 +118,7 @@ interface RelayApiClientOptions {
 }
 
 const DEFAULT_OPTIONS: RelayApiClientOptions = {
-  callsPerMinute: 200,
+  callsPerMinute: 300,
   maxAttempts: 4,
   initialRetryDelayMs: 1_000,
   maxRetryDelayMs: 4_000,
@@ -183,7 +186,7 @@ export class RelayApiClient {
         ...options,
         sortBy: 'updatedAt',
         sortDirection: 'asc',
-        limit: Math.min(remaining, 50),
+        limit: Math.min(remaining, MAX_PAGE_SIZE),
         continuation,
       })
 

@@ -102,10 +102,11 @@ export async function getInteropFeatureConfig(
       ? {
           apiKey: env.string('INTEROP_RELAY_API_KEY'),
           batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
-          callsPerMinute: env.integer('INTEROP_RELAY_CALLS_PER_MINUTE', 200),
-          maxRequestsPerUpdate: env.integer(
-            'INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE',
-            10_000,
+          callsPerMinute: env.integer('INTEROP_RELAY_CALLS_PER_MINUTE', 300),
+          concurrency: env.integer('INTEROP_RELAY_CONCURRENCY', 3),
+          maxRequestsPerChunk: env.integer(
+            'INTEROP_RELAY_MAX_REQUESTS_PER_CHUNK',
+            env.integer('INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE', 10_000),
           ),
           safeTimeOffset: env.integer('INTEROP_RELAY_SAFE_TIME_OFFSET', 10),
         }
