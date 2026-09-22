@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
-import { exitOnShutdownSignal, type Logger } from '@l2beat/backend-tools'
+import type { Server } from 'node:http'
+import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import timeout from 'connect-timeout'
 import type { NextFunction, Request, Response } from 'express'
@@ -138,7 +139,21 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     process.exit(1)
   })
 
-  exitOnShutdownSignal(logger, server)
+  stopOnShutdownSignal(server, logger)
+}
+
+// Node runs as PID 1 in the container, where the kernel ignores the default
+// SIGTERM action. Without an explicit handler `docker stop` waits the full
+// grace period (30s on Coolify) on every deploy before killing the process.
+function stopOnShutdownSignal(server: Server, logger: Logger) {
+  const forceExitAfterMs = 5_000
+  for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+    process.once(signal, () => {
+      logger.info(`Received ${signal}, shutting down`)
+      server.close(() => process.exit(0))
+      setTimeout(() => process.exit(0), forceExitAfterMs).unref()
+    })
+  }
 }
 
 function createDevPageRouterMiddleware(

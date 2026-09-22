@@ -1,4 +1,4 @@
-import { exitOnShutdownSignal, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import type { Config } from '../config/types'
 import { createDecoderModule } from '../modules/decoder-module/createDecoderModule'
 import { createHttpServer } from './HttpServer'
@@ -14,8 +14,7 @@ export class Application {
     const httpServer = createHttpServer(config, modules, logger.for('Router'))
 
     this.start = async () => {
-      const server = await httpServer.start()
-      exitOnShutdownSignal(appLogger, server)
+      await httpServer.start()
       appLogger.info('Started')
     }
   }
