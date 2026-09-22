@@ -1,4 +1,4 @@
-import { getEnv } from '@l2beat/backend-tools'
+import { exitOnShutdownSignal, getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import { InMemoryCache } from '@l2beat/shared-pure'
@@ -127,9 +127,10 @@ function main() {
 
   app.use(errorHandler(logger))
 
-  app.listen(config.api.port, () => {
+  const server = app.listen(config.api.port, () => {
     logger.info('Started', { port: config.api.port })
   })
+  exitOnShutdownSignal(logger, server)
 }
 
 main()

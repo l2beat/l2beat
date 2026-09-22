@@ -1,4 +1,5 @@
 export * from './env'
+export * from './exitOnShutdownSignal'
 export * from './logger/ConsoleTransport'
 export * from './logger/formatEcsLog'
 export * from './logger/Logger'

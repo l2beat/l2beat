@@ -41,10 +41,11 @@ RUN --mount=type=secret,id=TURBO_TOKEN \
 
 # Replace node_modules with production dependencies only. Switching dev -> prod
 # in place does not garbage-collect the virtual store, so purge and reinstall
-# offline from the store (cached native builds are reused).
+# from the store. Not --offline: pnpm occasionally misses a store snapshot it
+# just wrote and would fail the build instead of fetching the one package.
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
   rm -rf node_modules packages/*/node_modules && \
-  CI=true pnpm install --prod --frozen-lockfile --offline --store-dir /pnpm/store
+  CI=true pnpm install --prod --frozen-lockfile --store-dir /pnpm/store
 
 FROM node:22.22.0-slim AS release
 
