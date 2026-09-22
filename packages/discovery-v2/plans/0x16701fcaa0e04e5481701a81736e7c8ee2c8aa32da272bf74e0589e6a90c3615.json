@@ -1,0 +1,81 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PreimageOracle",
+    "shapeHash": "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615",
+    "steps": [
+      {
+        "id": "zeroHashes",
+        "covers": ["zeroHashes(uint256)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zeroHashes(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.KECCAK_TREE_DEPTH"
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "zeroHashes is written only by the constructor, and KECCAK_TREE_DEPTH gives the complete fixed index range"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getTreeRootLPP(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "preimageLengths(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "preimagePartOk(bytes32,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "preimageParts(bytes32,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBlocks(address,uint256,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBlocksLen(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBonds(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBranches(address,uint256,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalMetadata(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalParts(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposals(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "readPreimage(bytes32,uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:06:35.320Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x0c06f50afa578ca821e8f970f0bcc9e5f8840d628a874f40e45b24dd758e3d0f"
+  }
+}

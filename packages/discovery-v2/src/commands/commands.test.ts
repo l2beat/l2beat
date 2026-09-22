@@ -5,6 +5,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import type { Executed } from '../execute/executePlan'
+import { decisionHash } from '../plans/decisionHash'
 import { planHash } from '../plans/planHash'
 import {
   fixtureBaseline,
@@ -76,6 +77,7 @@ describe('commands', () => {
       expect(metaFile).toEqual(path.join(directory, FILE_NAMES.entryMeta))
       expect(output.meta.planStatus).toEqual('missing')
       expect(output.meta.planHash).toEqual(undefined)
+      expect(output.meta.decisionHash).toEqual(undefined)
       expect(output.entry.values?.$implementation).toEqual(
         fixturePrepared().proxy.values.$implementation,
       )
@@ -112,6 +114,7 @@ describe('commands', () => {
       })
       expect(output.meta.planStatus).toEqual('partial')
       expect(output.meta.planHash).toEqual(planHash(fixturePlan()))
+      expect(output.meta.decisionHash).toEqual(decisionHash(fixturePlan()))
       expect(output.meta.stepCount).toEqual(fixturePlan().steps.length)
       expect(output.meta.failedSteps).toEqual(['committeeThresholds'])
       expect(output.entry.values?.validators).toEqual([

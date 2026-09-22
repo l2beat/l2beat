@@ -30,6 +30,8 @@ export const PlanProvenance = v.object({
   createdAt: v.string(),
   model: v.string().optional(),
   rounds: v.number().optional(),
+  /** `decisionHash(plan)` at acceptance, so consistency across runs is a file diff. */
+  decisionHash: v.string().optional(),
 })
 export type PlanProvenance = v.infer<typeof PlanProvenance>
 

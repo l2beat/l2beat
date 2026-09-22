@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import { Library } from '../../library/Library'
+import { SKIP_REASONS } from '../../plan/Plan'
 import {
   fixtureBaseline,
   fixturePrepared,
@@ -51,10 +52,31 @@ describe(buildAuthoringPrompt.name, () => {
     const { prompt } = buildAuthoringPrompt(ctx, { sourceCharCap: 400_000 })
     expect(prompt).toInclude('`user-activity`')
     expect(prompt).toInclude('`accessControl@1`')
+    expect(prompt).toInclude('10. **Output.**')
     expect(prompt).toInclude('"additionalProperties": false')
     expect(prompt).toInclude('"contract": "ZkLink"')
     expect(prompt).toInclude('## set@1')
     expect(prompt).toInclude('exactly one JSON object')
+  })
+
+  it('defines every skip reason with one example and invites event-only steps without covers', () => {
+    const { prompt } = buildAuthoringPrompt(ctx, { sourceCharCap: 400_000 })
+    const rules = prompt.slice(
+      prompt.indexOf(SECTION_HEADERS.rules),
+      prompt.indexOf(SECTION_HEADERS.schema),
+    )
+    for (const reason of SKIP_REASONS) {
+      const definition = rules
+        .split('\n')
+        .find((line) => line.trimStart().startsWith(`- \`${reason}\`:`))
+      expect(definition ?? '').toInclude('Example:')
+    }
+    expect(rules).toInclude('`isBatchFinalized(uint256)`')
+    expect(rules).toInclude('`committedBatches(uint256)`')
+    expect(rules).toInclude('**Event-only state.**')
+    expect(rules).toInclude('a step without `covers`')
+    expect(rules).toInclude('`revertBatch`')
+    expect(rules).toInclude('Never do this for user-activity events')
   })
 
   it('lists every worklist item and event, the ABI and the identity facts', () => {

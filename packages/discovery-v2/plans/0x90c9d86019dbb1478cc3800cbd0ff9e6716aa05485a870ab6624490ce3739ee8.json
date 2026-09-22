@@ -1,0 +1,60 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "pauseTimestamps",
+        "fetch": {
+          "kind": "logs",
+          "events": ["Paused"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            }
+          ]
+        },
+        "reason": "pauseTimestamps keys are created only by pause (onlyGuardianOrIncidentResponder), which emits Paused"
+      },
+      {
+        "id": "expiration",
+        "covers": ["expiration(address)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "expiration(address)",
+          "keys": {
+            "from": "$step.pauseTimestamps"
+          }
+        },
+        "use": "map@1",
+        "reason": "Every identifier written by pause, extend, or unpause originates in pause (onlyGuardianOrIncidentResponder), which emits Paused"
+      }
+    ],
+    "skips": [
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "pauseTimestamps(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:17:14.332Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x574b32efb951932eaf30fd3eb3a97466ab533e14d01a67c00d124fba476245b8"
+  }
+}

@@ -572,8 +572,27 @@ describe(validatePlan.name, () => {
           severity: 'error',
           path: 'steps[2].id',
           message:
-            '"thresholds" is neither an ABI function name, a fixed name (accessControl, constructorArgs) nor an identifier in the source; name the field after the getter or state variable it comes from; covered items suggest: committeeThresholds',
+            '"thresholds" is neither an ABI function name, a fixed name (accessControl, constructorArgs), a fetched event\'s name in lowerCamelCase nor an identifier in the source; name the field after the getter or state variable it comes from; covered items suggest: committeeThresholds',
         },
+      ])
+    })
+
+    it('accepts a logs step named after a fetched event in lowerCamelCase, and only a logs step', () => {
+      const eventOnly: Step = {
+        id: 'ownershipTransferred',
+        fetch: { kind: 'logs', events: ['OwnershipTransferred'] },
+        use: 'list@1',
+        args: { key: 'newOwner', add: [{ event: 'OwnershipTransferred' }] },
+        reason:
+          'the owner history is visible only through OwnershipTransferred',
+      }
+      const plan = fixturePlan()
+      plan.steps.push(eventOnly)
+      expect(errorsOf(plan)).toEqual([])
+
+      const notLogs = withStep({ id: 'ownershipTransferred' }, 4)
+      expect(errorsOf(notLogs).map((finding) => finding.path)).toEqual([
+        'steps[4].id',
       ])
     })
 

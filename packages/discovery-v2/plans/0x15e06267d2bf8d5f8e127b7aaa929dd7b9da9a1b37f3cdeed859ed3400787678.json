@@ -1,0 +1,36 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1ERC721Gateway",
+    "shapeHash": "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678",
+    "steps": [
+      {
+        "id": "tokenMapping",
+        "covers": ["tokenMapping(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["UpdateTokenMapping"]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "newL2Token",
+          "set": [
+            {
+              "event": "UpdateTokenMapping"
+            }
+          ],
+          "groupBy": "l1Token"
+        },
+        "reason": "tokenMapping is written only by updateTokenMapping (onlyOwner), which emits UpdateTokenMapping"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:48:52.030Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x995fe6180b7c6fbfb7b58ccef02f22b34674371b1c0e3ba182b8ba58d6c47250"
+  }
+}

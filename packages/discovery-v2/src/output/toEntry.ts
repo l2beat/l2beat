@@ -38,6 +38,7 @@ import type { Prepared } from '../types/Prepared'
 export interface EntryMetaInput {
   planStatus: PlanStatus
   planHash?: string
+  decisionHash?: string
   model?: string
   /** The executed plan, for step and skip counts; absent when no plan exists. */
   plan?: Pick<Plan, 'steps' | 'skips'>
@@ -162,6 +163,7 @@ function buildMeta(
     version: 1,
     planStatus: meta.planStatus,
     planHash: meta.planHash,
+    decisionHash: meta.decisionHash,
     shapeHash: prepared.shapeHash,
     stepCount: meta.plan?.steps.length ?? 0,
     failedSteps: Object.entries(executed.fields)

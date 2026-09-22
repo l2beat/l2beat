@@ -21,7 +21,7 @@
             "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5": "TIMELOCK_ADMIN_ROLE"
           }
         },
-        "reason": "Role membership is written by constructor setup, grantRole/revokeRole (onlyRole), and renounceRole (self-only), while role administration is written by constructor calls to _setRoleAdmin, and these writes emit RoleGranted, RoleRevoked, or RoleAdminChanged."
+        "reason": "The role table is written by grantRole and revokeRole (onlyRole(getRoleAdmin(role))), renounceRole (self-account check), and constructor setup, which emit RoleGranted, RoleRevoked, and RoleAdminChanged."
       }
     ],
     "skips": [
@@ -61,8 +61,9 @@
   },
   "provenance": {
     "source": "model",
-    "createdAt": "2026-09-21T21:29:40.688Z",
+    "createdAt": "2026-09-22T05:37:10.616Z",
     "model": "gpt-5.6-sol",
-    "rounds": 1
+    "rounds": 1,
+    "decisionHash": "0x3d0ca7d08fd64bcb2ae0b5cd338d9e441ad0f808f1b07f685be307472a6182be"
   }
 }

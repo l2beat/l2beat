@@ -23,6 +23,7 @@ import type { Finding } from '../plan/Finding'
 import type { Plan } from '../plan/Plan'
 import { planSchema } from '../plan/planSchema'
 import { validatePlan } from '../plan/validatePlan'
+import { decisionHash } from '../plans/decisionHash'
 import type { PlanStore } from '../plans/PlanStore'
 import type { Baseline } from '../types/Baseline'
 import type { Prepared } from '../types/Prepared'
@@ -291,6 +292,7 @@ class AuthoringLoop {
       createdAt: (this.deps.now ?? (() => new Date()))().toISOString(),
       model: this.model,
       rounds: this.rounds.length,
+      decisionHash: decisionHash(plan),
     })
   }
 

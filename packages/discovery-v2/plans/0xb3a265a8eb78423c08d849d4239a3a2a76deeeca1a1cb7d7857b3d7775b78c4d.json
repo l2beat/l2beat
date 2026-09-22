@@ -1,0 +1,16 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ZkEvmVerifierPostEuclid",
+    "shapeHash": "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d",
+    "steps": [],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:44:50.268Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x7b80b1a2103b2b6f6cf5693fdd049f0492ce535d0f3f16eceba67d5e2e5b1095"
+  }
+}

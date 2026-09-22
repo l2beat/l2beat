@@ -29,8 +29,9 @@
   },
   "provenance": {
     "source": "model",
-    "createdAt": "2026-09-21T21:32:37.769Z",
+    "createdAt": "2026-09-22T05:37:26.237Z",
     "model": "gpt-5.6-sol",
-    "rounds": 1
+    "rounds": 1,
+    "decisionHash": "0x5202d8f4b7d737d9a190f309cc1996129ed4d08c66b246e45c7c23cf4c9c20fb"
   }
 }

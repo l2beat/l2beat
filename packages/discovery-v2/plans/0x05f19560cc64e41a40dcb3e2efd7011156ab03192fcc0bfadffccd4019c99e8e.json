@@ -1,0 +1,48 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SystemConfig",
+    "shapeHash": "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e",
+    "steps": [
+      {
+        "id": "isFeatureEnabled",
+        "covers": ["isFeatureEnabled(bytes32)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["FeatureSet"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "feature",
+          "add": [
+            {
+              "event": "FeatureSet",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "FeatureSet",
+              "when": {
+                "arg": "enabled",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isFeatureEnabled is written only by setFeature (only ProxyAdmin or ProxyAdmin owner), which emits FeatureSet"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:11:05.142Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xbf3a9ab393b1c9edbaf781fb2b5777e6e4108e380bc8dccaa17a044e29f809dd"
+  }
+}

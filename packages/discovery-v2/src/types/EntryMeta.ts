@@ -19,6 +19,8 @@ export const EntryMeta = v.object({
    */
   planStatus: v.enum(PLAN_STATUSES),
   planHash: v.string().optional(),
+  /** Hash of the plan's decisions only (no step `reason`); see `plans/decisionHash.ts`. */
+  decisionHash: v.string().optional(),
   shapeHash: v.string().optional(),
   stepCount: v.number(),
   failedSteps: v.array(v.string()),

@@ -1,0 +1,99 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PermissionedDisputeGameV2",
+    "shapeHash": "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
+    "steps": [
+      {
+        "id": "claimData",
+        "covers": ["claimData(uint256)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "claimData(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.claimDataLen"
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "claimData is appended by initialize and move (onlyAuthorized), and claimDataLen gives the complete index range"
+      },
+      {
+        "id": "resolutionCheckpoints",
+        "covers": ["resolutionCheckpoints(uint256)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "resolutionCheckpoints(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.claimDataLen"
+            }
+          }
+        },
+        "use": "map@1",
+        "reason": "resolutionCheckpoints is written by resolveClaim (externally callable), and its complete keys are the claim indices enumerated by claimDataLen"
+      },
+      {
+        "id": "resolvedSubgames",
+        "covers": ["resolvedSubgames(uint256)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "resolvedSubgames(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.claimDataLen"
+            }
+          }
+        },
+        "use": "map@1",
+        "reason": "resolvedSubgames is written by resolveClaim (externally callable), and its complete keys are the claim indices enumerated by claimDataLen"
+      }
+    ],
+    "skips": [
+      {
+        "item": "claims(bytes32)",
+        "reason": "computation"
+      },
+      {
+        "item": "credit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getChallengerDuration(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getNumToResolve(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getRequiredBond(uint128)",
+        "reason": "computation"
+      },
+      {
+        "item": "hasUnlockedCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "normalModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "refundModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "subgames(uint256,uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:09:54.679Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xf61953f7be19cbcc7edd3d849e30e9260350849e727073b73a3c04de910525d8"
+  }
+}

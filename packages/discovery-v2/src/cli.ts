@@ -21,6 +21,10 @@ import {
 import { REASONING_EFFORTS } from './author/codex/CodexClient'
 import { authorCommand, summariseAuthoring } from './commands/authorCommand'
 import { baselineCommand } from './commands/baselineCommand'
+import {
+  benchmarkCommand,
+  summariseBenchmark,
+} from './commands/benchmarkCommand'
 import { createContext } from './commands/context'
 import { executeCommand } from './commands/executeCommand'
 import { outputCommand } from './commands/outputCommand'
@@ -270,6 +274,61 @@ function summarisePipeline(result: PipelineResult): string {
   ].join(' ')
 }
 
+const benchmark = command({
+  name: 'benchmark',
+  description:
+    "run the pipeline over a V1 project's contracts at its committed block and compare field by field with discovered.json",
+  args: {
+    project: positional({ type: string, displayName: 'project' }),
+    chain: option({
+      type: string,
+      long: 'chain',
+      defaultValue: () => 'ethereum',
+      description: 'chain whose entries are compared; default ethereum',
+    }),
+    limit: option({
+      type: optional(number),
+      long: 'limit',
+      description: 'at most N contracts, in discovered.json order',
+    }),
+    addresses: option({
+      type: optional(string),
+      long: 'addresses',
+      description: 'comma-separated addresses to restrict the run to',
+    }),
+    author: flag({
+      long: 'author',
+      description: 'ask Codex when the store has no plan for a shape',
+    }),
+    repeat: option({
+      type: number,
+      long: 'repeat',
+      defaultValue: () => 0,
+      description:
+        'author N more times per contract with the store bypassed and report distinct decision hashes; needs --author',
+    }),
+    model: authoring.model,
+    reasoning: authoring.reasoning,
+    maxRounds: authoring.maxRounds,
+    out: option({
+      type: optional(string),
+      long: 'out',
+      description: 'output directory; default runs/benchmark/<project>',
+    }),
+    envFile,
+  },
+  handler: async (args) => {
+    const { report } = await benchmarkCommand(createContext(args), {
+      ...args,
+      addresses: args.addresses?.split(',').map((a) => a.trim()),
+    })
+    console.log(summariseBenchmark(report))
+    if (report.totals.failed > 0) {
+      process.exitCode = 1
+    }
+  },
+})
+
 const cli = subcommands({
   name: 'discovery-v2',
   cmds: {
@@ -281,6 +340,7 @@ const cli = subcommands({
     execute,
     output,
     pipeline,
+    benchmark,
   },
 })
 

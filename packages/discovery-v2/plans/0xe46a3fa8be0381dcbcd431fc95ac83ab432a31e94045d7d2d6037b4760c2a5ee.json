@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "EnforcedTxGateway",
+    "shapeHash": "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee",
+    "steps": [],
+    "skips": [
+      {
+        "item": "nonces(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:50:15.669Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x5830f9c89e0077bbac2725b08d0541d9b7ce0959220071d85996dc10bdf35154"
+  }
+}

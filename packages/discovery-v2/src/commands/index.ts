@@ -9,6 +9,14 @@ export {
 } from './authorCommand'
 export { type BaselineArgs, baselineCommand } from './baselineCommand'
 export {
+  BENCHMARK_FILES,
+  type BenchmarkArgs,
+  type BenchmarkFiles,
+  benchmarkCommand,
+  defaultBenchmarkDir,
+  summariseBenchmark,
+} from './benchmarkCommand'
+export {
   type CommandContext,
   type ContextOptions,
   createCliLogger,

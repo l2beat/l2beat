@@ -1,0 +1,40 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "Escrow",
+    "shapeHash": "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50",
+    "steps": [
+      {
+        "id": "wards",
+        "covers": ["wards(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["Rely", "Deny"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "usr",
+          "add": [
+            {
+              "event": "Rely"
+            }
+          ],
+          "remove": [
+            {
+              "event": "Deny"
+            }
+          ]
+        },
+        "reason": "wards is written only by the constructor and rely/deny (auth), which emit Rely and Deny"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:11:17.993Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x18faa0aa6ea78bababf277e825dc3b85c955ef1f92a8831aa03ddba590b0c106"
+  }
+}

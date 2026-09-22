@@ -1,0 +1,71 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "AnchorStateRegistry",
+    "shapeHash": "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972",
+    "steps": [
+      {
+        "id": "disputeGameBlacklist",
+        "covers": [
+          "disputeGameBlacklist(address)",
+          "isGameBlacklisted(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": ["DisputeGameBlacklisted"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "disputeGame",
+          "add": [
+            {
+              "event": "DisputeGameBlacklisted"
+            }
+          ]
+        },
+        "reason": "disputeGameBlacklist is written only by blacklistDisputeGame, which is guarded by _assertOnlyGuardian and emits DisputeGameBlacklisted"
+      }
+    ],
+    "skips": [
+      {
+        "item": "anchors(uint32)",
+        "reason": "covered"
+      },
+      {
+        "item": "isGameClaimValid(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameFinalized(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameProper(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRegistered(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameResolved(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRespected(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isGameRetired(address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:15:05.241Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xfcdff8c49205de7a1e747e9030ccacdab32656daa668515ab5a6f2bf1244fc46"
+  }
+}

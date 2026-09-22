@@ -1,0 +1,60 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "NitroEnclaveVerifier",
+    "shapeHash": "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db",
+    "steps": [
+      {
+        "id": "zkConfig",
+        "covers": ["getZkConfig(uint8)", "zkConfig(uint8)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zkConfig(uint8)",
+          "keys": {
+            "literal": [0, 1, 2]
+          }
+        },
+        "use": "map@1",
+        "reason": "zkConfig is initialized by the constructor and written by setZkConfiguration, updateVerifierId, and updateAggregatorId (onlyOwner), which emit ZKConfigurationUpdated, VerifierIdUpdated, and AggregatorIdUpdated, and 0, 1, and 2 are the complete ZkCoProcessorType enum."
+      },
+      {
+        "id": "getVerifierProofId",
+        "covers": ["getVerifierProofId(uint8)"],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getVerifierProofId(uint8)",
+          "keys": {
+            "literal": [0, 1, 2]
+          }
+        },
+        "use": "map@1",
+        "reason": "_verifierProofIds is initialized by the constructor and written by setZkConfiguration and updateVerifierId (onlyOwner), which emit ZKConfigurationUpdated and VerifierIdUpdated, and 0, 1, and 2 are the complete ZkCoProcessorType enum."
+      }
+    ],
+    "skips": [
+      {
+        "item": "checkTrustedIntermediateCerts(bytes32[][])",
+        "reason": "computation"
+      },
+      {
+        "item": "getZkVerifier(uint8,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "ownershipHandoverExpiresAt(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "trustedIntermediateCerts(bytes32)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:13:54.413Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x84aaa8bf7b26e31b46afadc1fd4c669db94eaada254784ad6a01806810d72dac"
+  }
+}

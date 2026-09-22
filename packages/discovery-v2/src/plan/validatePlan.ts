@@ -185,7 +185,8 @@ class PlanValidator {
       if (
         FIXED_STEP_IDS.includes(step.id) ||
         functionNames.has(step.id) ||
-        this.ownMethodName(step) === step.id
+        this.ownMethodName(step) === step.id ||
+        this.eventSubjectNames(step).has(step.id)
       ) {
         return
       }
@@ -199,7 +200,7 @@ class PlanValidator {
       }
       this.findings.error(
         path,
-        `"${step.id}" is neither an ABI function name, a fixed name (${FIXED_STEP_IDS.join(', ')}) nor an identifier in the source; name the field after the getter or state variable it comes from${suggestions}`,
+        `"${step.id}" is neither an ABI function name, a fixed name (${FIXED_STEP_IDS.join(', ')}), a fetched event's name in lowerCamelCase nor an identifier in the source; name the field after the getter or state variable it comes from${suggestions}`,
       )
     })
   }
@@ -210,6 +211,25 @@ class PlanValidator {
       return undefined
     }
     return this.abi.lookupFunction(step.fetch.method).fragment?.name
+  }
+
+  /**
+   * Event-only state (a list of reverted batches, a history of upgrades) has
+   * no getter or variable to be named after, so a `logs` step may carry the
+   * name of an event it folds, in lowerCamelCase as a Solidity variable would
+   * be (`revertBatch` for `RevertBatch`). Only the events the step fetches
+   * qualify, so the name still says where the value comes from.
+   */
+  private eventSubjectNames(step: Step): Set<string> {
+    if (step.fetch.kind !== 'logs') {
+      return new Set()
+    }
+    return new Set(
+      step.fetch.events.flatMap((event) => {
+        const name = this.abi.lookupEvent(event).fragment?.name
+        return name === undefined ? [] : [lowerFirst(name)]
+      }),
+    )
   }
 
   private suggestIds(step: Step): string {
@@ -710,4 +730,8 @@ function isIntegerValue(value: ContractValue): boolean {
     (typeof value === 'number' && Number.isInteger(value) && value >= 0) ||
     (typeof value === 'string' && /^\d+$/.test(value))
   )
+}
+
+function lowerFirst(name: string): string {
+  return name.charAt(0).toLowerCase() + name.slice(1)
 }

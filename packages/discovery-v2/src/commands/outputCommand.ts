@@ -14,6 +14,7 @@ import {
   toEntry,
 } from '../output/toEntry'
 import type { Plan } from '../plan/Plan'
+import { decisionHash } from '../plans/decisionHash'
 import { planHash } from '../plans/planHash'
 import type { Baseline } from '../types/Baseline'
 import type { PlanStatus } from '../types/EntryMeta'
@@ -80,6 +81,8 @@ export function writeEntry(
   const meta: EntryMetaInput = {
     planStatus: status ?? defaultStatus(input.executed),
     planHash: input.plan === undefined ? undefined : planHash(input.plan),
+    decisionHash:
+      input.plan === undefined ? undefined : decisionHash(input.plan),
     model: input.model,
     plan: input.plan,
   }

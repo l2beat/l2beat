@@ -1,0 +1,86 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "GnosisSafe",
+    "shapeHash": "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "steps": [
+      {
+        "id": "modules",
+        "covers": [
+          "getModulesPaginated(address,uint256)",
+          "isModuleEnabled(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": ["EnabledModule", "DisabledModule"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "module",
+          "add": [
+            {
+              "event": "EnabledModule"
+            }
+          ],
+          "remove": [
+            {
+              "event": "DisabledModule"
+            }
+          ]
+        },
+        "reason": "Active module membership is written by enableModule and disableModule (authorized), which emit EnabledModule and DisabledModule."
+      },
+      {
+        "id": "fallbackHandler",
+        "fetch": {
+          "kind": "storage",
+          "slot": "0x6c9a6c4a39284e37ed1cf53d337577d14212a4870fb976a4366c693b939918d5",
+          "as": "address"
+        },
+        "reason": "fallbackHandler is written by setup (one-time initialization) and setFallbackHandler (authorized), which emit SafeSetup and ChangedFallbackHandler."
+      },
+      {
+        "id": "guard",
+        "fetch": {
+          "kind": "storage",
+          "slot": "0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8",
+          "as": "address"
+        },
+        "reason": "guard is written only by setGuard (authorized), which emits ChangedGuard."
+      }
+    ],
+    "skips": [
+      {
+        "item": "approvedHashes(address,bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getStorageAt(uint256,uint256)",
+        "reason": "not-state"
+      },
+      {
+        "item": "getTransactionHash(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "isOwner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "signedMessages(bytes32)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:46:43.771Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 2,
+    "decisionHash": "0xced258fe640d9aadbed21961b32b5cd80c6bbcb84d8f9a41cf9665b42a1ccb54"
+  }
+}

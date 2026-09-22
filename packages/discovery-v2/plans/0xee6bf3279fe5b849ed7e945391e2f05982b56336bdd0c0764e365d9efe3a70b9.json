@@ -1,0 +1,29 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "DelayedWETH",
+    "shapeHash": "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9",
+    "steps": [],
+    "skips": [
+      {
+        "item": "allowance(address,address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "balanceOf(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "withdrawals(address,address)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:10:15.103Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x77c232c83674c366255ab4cb27e0741afce42cc8e01eafa1c1b490c152c488ed"
+  }
+}

@@ -1,3 +1,4 @@
+export { decisionHash, decisionsOf } from './decisionHash'
 export {
   defaultPlansDir,
   PLAN_SOURCES,

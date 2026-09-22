@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": ["getRoleAdmin(bytes32)", "hasRole(bytes32,address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["RoleGranted", "RoleRevoked", "RoleAdminChanged"]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE"
+          }
+        },
+        "reason": "Roles are written by grantRole/revokeRole (onlyRole), renounceRole (self-only), and the constructor, which emit RoleGranted/RoleRevoked, while role admins are written by _setRoleAdmin, which emits RoleAdminChanged."
+      }
+    ],
+    "skips": [
+      {
+        "item": "callableRoles(address,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getRoleMember(bytes32,uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "getRoleMemberCount(bytes32)",
+        "reason": "covered"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:51:18.103Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x4c357ea600247f5345a1ae145c6504da68c83cccfa57274b0948ac9d62f68cd1"
+  }
+}

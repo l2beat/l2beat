@@ -33,7 +33,7 @@
             }
           ]
         },
-        "reason": "isProver is written only by addProver/removeProver (onlyOwner), which emit UpdateProver."
+        "reason": "isProver is written only by addProver/removeProver (onlyOwner), which emit UpdateProver"
       },
       {
         "id": "isSequencer",
@@ -64,32 +64,33 @@
             }
           ]
         },
-        "reason": "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer."
+        "reason": "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer"
       }
     ],
     "skips": [
       {
         "item": "committedBatches(uint256)",
-        "reason": "user-activity"
+        "reason": "unbounded"
       },
       {
         "item": "finalizedStateRoots(uint256)",
-        "reason": "user-activity"
+        "reason": "unbounded"
       },
       {
         "item": "isBatchFinalized(uint256)",
-        "reason": "covered"
+        "reason": "computation"
       },
       {
         "item": "withdrawRoots(uint256)",
-        "reason": "user-activity"
+        "reason": "unbounded"
       }
     ]
   },
   "provenance": {
     "source": "model",
-    "createdAt": "2026-09-21T21:32:21.499Z",
+    "createdAt": "2026-09-22T05:38:07.297Z",
     "model": "gpt-5.6-sol",
-    "rounds": 1
+    "rounds": 1,
+    "decisionHash": "0x1fff867b77cf04dd92e1cc4d294ce9381c4b6468bf1ce35c2592775988520741"
   }
 }

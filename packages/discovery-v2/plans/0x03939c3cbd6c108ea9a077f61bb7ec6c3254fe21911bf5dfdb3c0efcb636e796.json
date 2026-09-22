@@ -1,0 +1,53 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Inbox",
+    "shapeHash": "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796",
+    "steps": [
+      {
+        "id": "isAllowed",
+        "covers": ["isAllowed(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["AllowListAddressSet"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "user",
+          "add": [
+            {
+              "event": "AllowListAddressSet",
+              "when": {
+                "arg": "val",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "AllowListAddressSet",
+              "when": {
+                "arg": "val",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isAllowed is written only by setAllowList (onlyRollupOrOwner), which emits AllowListAddressSet"
+      }
+    ],
+    "skips": [
+      {
+        "item": "calculateRetryableSubmissionFee(uint256,uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:22:15.391Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x906b368ee6a37733dfe5e28b452fb4c8a2ffae2e188b21c2881a9e98054a2eec"
+  }
+}

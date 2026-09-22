@@ -1,0 +1,36 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1CustomERC20Gateway",
+    "shapeHash": "0xa4062ee0605bb59576bcc34aca508e90f3bf7ed7e33e40eaaa00b2ad7cfbe764",
+    "steps": [
+      {
+        "id": "tokenMapping",
+        "covers": ["getL2ERC20Address(address)", "tokenMapping(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["UpdateTokenMapping"]
+        },
+        "use": "latest@1",
+        "args": {
+          "value": "newL2Token",
+          "set": [
+            {
+              "event": "UpdateTokenMapping"
+            }
+          ],
+          "groupBy": "l1Token"
+        },
+        "reason": "tokenMapping is written only by updateTokenMapping (onlyOwner), which emits UpdateTokenMapping."
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T05:52:53.186Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x6af2d97a15f293d1c1612601f05f4b085329327a2f5b929669212548e8486205"
+  }
+}

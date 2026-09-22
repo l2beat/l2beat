@@ -53,7 +53,7 @@ subcommand, so each can be tested and benchmarked alone.
 | `execute` | prepared, plan | `values.json`: raw step results, shaped fields, errors | yes |
 | `output` | prepared, baseline, values | `entry.json` in V1 `EntryParameters` shape, plus `entry.meta.json` | yes |
 | `pipeline` | chain, address, block | all of the above; skips `author` when a stored plan applies | |
-| `benchmark` | V1 project name | field-by-field comparison against the committed `discovered.json` at its block | |
+| `benchmark` | V1 project name | `benchmark.json`, `benchmark.md`: field-by-field comparison against the committed `discovered.json` at its block | yes, once every shape has a stored plan |
 
 RPC access goes through V1's `AllProviders` with the shared SQLite cache
 (`.discovery.json` → `packages/config/cache/discovery.sqlite`), so benchmark
@@ -112,6 +112,38 @@ pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 
 pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575 \
   --reauthor --no-store --out runs/ethereum/0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44-run2
 ```
+
+### Running the benchmark
+
+`benchmark <project>` runs the pipeline over every verified `Contract` entry
+of a V1 project on one chain, at the block of the committed `discovered.json`
+(`usedBlockNumbers[chain]`), and compares each entry with V1's field by
+field. Outputs go to `--out` or `runs/benchmark/<project>/`: `benchmark.json`
+(everything recorded) and `benchmark.md` (the tables), with each contract's
+pipeline files under `contracts/<address>/` so every row can be traced to the
+prompt, plan and values behind it.
+
+```sh
+# Every ethereum contract of scroll, authoring where the store has no plan
+pnpm start benchmark scroll --author
+
+# Three contracts, two extra authorings each with the store bypassed and not
+# saved, to count distinct decision hashes
+pnpm start benchmark scroll --author --repeat 2 \
+  --addresses 0xa13BAF47339d63B743e7Da8741db5456DAc1E556,0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F
+
+# Bound the model cost: the first 25 contracts in discovered.json order, or
+# an explicit list when the first 25 would miss the templated ones
+pnpm start benchmark plumenetwork --author --limit 25
+pnpm start benchmark base --author --addresses 0x0b144E07A0826182B6b59788c34b32Bfa86Fb711,…
+
+# Options: --chain ethereum (default), --model M, --reasoning low|medium|high,
+# --max-rounds N, --out DIR, --env-file F
+```
+
+Without `--author` a run costs no tokens: shapes with a stored plan use it
+and the rest end as `missing` entries whose proxy and baseline values are
+still compared. See `BENCHMARK.md` for the results of the real runs.
 
 `$R/author/` holds `round-N.prompt.md`, `round-N.response.txt`,
 `round-N.findings.json`, `round-N.dryrun.json`, `codex-events.jsonl` and
@@ -183,10 +215,14 @@ References: `$baseline.<field>` (a baseline getter value), `$step.<id>` (a prior
 step's shaped output), `$self` (the contract address). A `length` in a range may
 be a number or a reference.
 
-Skip reasons: `user-activity` (state written by anyone, e.g. balances),
-`computation` (pure function of its inputs), `unbounded` (state we cannot
-enumerate from anything available), `covered` (already produced by another
-step or a 0-arg getter), `not-state` (helpers, versions, interface checks).
+Skip reasons: `computation` (a pure function of its inputs, or derivable
+from already fetched values, e.g. `isBatchFinalized` from
+`lastFinalizedBatchIndex`), `user-activity` (per-user, per-message or
+per-operation state written through unprivileged calls, e.g. balances),
+`unbounded` (privileged-written state whose keys cannot be enumerated from
+events, getters or literals, e.g. one hash per committed batch), `covered`
+(already produced by another step or a 0-arg getter), `not-state` (interface
+checks, version strings, helpers).
 
 The validator enforces: JSON schema; every `covers` and every `skips.item` is a
 worklist item, and their union is the whole worklist; every method and event
@@ -196,12 +232,15 @@ or a recipe's fixed name; literals type-check against the ABI. Then a dry run at
 the target block reports reverts, zero-log event sets and recipe errors back to
 the model.
 
-Three refinements the implementation adds: a step whose `at` names another
+Four refinements the implementation adds: a step whose `at` names another
 contract may give `method` as a full fragment that is not in this ABI (the
 target's ABI is not available), and may be named after that method; a plan
 whose `shapeHash` differs from `prepared.shapeHash` is rejected, because it was
-authored for other code; and a `constructorArgs` fetch must use the id
-`constructorArgs`, which is what V1 calls the field. Each recipe declares the
+authored for other code; a `constructorArgs` fetch must use the id
+`constructorArgs`, which is what V1 calls the field; and a `logs` step may
+carry no `covers` and be named after an event it folds in lowerCamelCase
+(`revertBatch` for `RevertBatch`), for state that exists only in the events
+of privileged functions and has no getter (V1's `revertedBatches`). Each recipe declares the
 fetch kind it accepts (`logs`, `callEach` or a scalar `call`/`storage`/
 `hardcoded`), and the validator rejects a recipe fed by the wrong kind.
 
@@ -233,8 +272,9 @@ not hang a run.
 1. Build the prompt (`src/author/prompt/buildAuthoringPrompt.ts`), a pure
    function of the prepared, baseline and worklist files plus the library, in
    five fixed sections: the rules (the four pinned axes in imperative form,
-   the closed skip reasons, "prefer events of privileged setters", "never
-   fetch user activity"), the plan JSON schema with the ZkLink worked
+   the closed skip reasons each defined with one example, "prefer events of
+   privileged setters", an invitation to fold event-only state of privileged
+   functions into a step without `covers`, "never fetch user activity"), the plan JSON schema with the ZkLink worked
    example, the library documentation rendered from `recipe.json`, the
    contract facts (identity, proxy values, ABI fragments, baseline values with
    long ones elided, the worklist, the events), and the flattened sources,
@@ -280,11 +320,15 @@ not hang a run.
    sent with `codex exec resume`. The model gets one first turn plus at most
    `maxRepairRounds` (default 2) repairs.
 4. An accepted plan is stored under `plans/<shapeHash>.json` with provenance
-   (`source: model`, model, rounds, `createdAt`). A failed authoring leaves
+   (`source: model`, model, rounds, `createdAt`, `decisionHash`). A failed authoring leaves
    `plan.json` (the last statically valid candidate, if any) and the round
    trail under the run directory, never in the store, and the entry gets
-   `planStatus: failed`; `entry.meta.json` carries `model` and `planHash` on
-   success.
+   `planStatus: failed`; `entry.meta.json` carries `model`, `planHash` and
+   `decisionHash` on success. `decisionHash` (`src/plans/decisionHash.ts`)
+   hashes the plan without its step `reason`s and with steps and skips in
+   canonical order: two authorings of ScrollChain were seen to agree on every
+   decision and differ only in wording, and consistency must count that as
+   the same plan.
 
 ## Output compatibility
 
@@ -298,14 +342,40 @@ live in `entry.meta.json` so V1 consumers see no unknown keys.
 
 ## Benchmark
 
-For every `Contract` entry of a V1 project at the project's committed block:
-run the pipeline and compare `values` field by field as `equal`,
-`different`, `v1-only` or `v2-only`. `v1-only` is split into "system getter"
-and "handler" by consulting the template and config, because a missed handler
-field means the model missed an enumeration, while a missed getter is a bug.
-`v2-only` fields that V1 lists in `ignoreMethods` count against precision.
-`--repeat N` authors N times and reports how many canonical plans were
-identical, which is the consistency requirement expressed as a number.
+`benchmark <project>` compares V2 with the committed V1 output, one contract
+at a time and at V1's block, so what is measured is the extractor and not
+chain activity. Only verified `Contract` entries on the chain are run (EOAs,
+`Reference`s and unverified contracts are skipped); `--limit N` and
+`--addresses a,b` bound the run, `--author` asks the model where the store has
+no plan, and a contract whose pipeline throws is recorded and the run goes on.
+
+Each V1 field is first *attributed* from the project's effective config,
+read through V1's `ConfigReader` and `TemplateService` and merged exactly as
+`AddressAnalyzer` merges template and override: `proxy` (`$…` values and the
+proxy detector's other names), `getter` (no field config), `handler` (a
+template or override field with a handler, reported with the handler type),
+or `template-projection` (`pickRoleMembers`, `copy`, or a `call` handler whose
+`edit` only formats a getter). A missed proxy value or getter is a bug in the
+deterministic tools, a missed handler field is the model missing an
+enumeration, and a missed projection is left to consumers by design; the
+report never adds them up into one number.
+
+Values then get one of five verdicts: `equal` (same name, deep-equal after
+chain-prefixed addresses are normalised on both sides, since V1 templates
+re-prefix some getters for display), `equal-renamed` (a V1 handler or
+projection field whose value V2 produced under another name, as
+`sequencers` → `isSequencer`), `different` (same name, other value, with a
+one-line diff), `v1-only` (with its attribution) and `v2-only`, split into
+`ignored-by-v1` (the name is in V1's effective `ignoreMethods`) and `new`.
+`proxyType`, `sourceHashes`, `sinceBlock` and `implementationNames` are
+compared as entry facts. Per contract the report keeps plan status and source
+(store, model, none), rounds, tokens, wall time and the verdict counts.
+
+`--repeat N` (with `--author`) authors N more times with the store bypassed
+and nothing saved, and reports how many distinct `decisionHash`es the N+1
+plans have: the consistency requirement expressed as a number.
+`BENCHMARK.md` holds the results of the real runs, with every V1 handler
+field V2 missed or got different and where its fix belongs.
 
 ## Working on this package
 

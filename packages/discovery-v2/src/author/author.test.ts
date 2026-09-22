@@ -6,6 +6,7 @@ import os from 'os'
 import path from 'path'
 import { Library } from '../library/Library'
 import type { Plan } from '../plan/Plan'
+import { decisionHash } from '../plans/decisionHash'
 import { PlanStore } from '../plans/PlanStore'
 import {
   FIXTURE_ABI,
@@ -179,6 +180,7 @@ describe(author.name, () => {
         createdAt: NOW.toISOString(),
         model: 'fake-model',
         rounds: 1,
+        decisionHash: decisionHash(result.plan as Plan),
       },
     })
 

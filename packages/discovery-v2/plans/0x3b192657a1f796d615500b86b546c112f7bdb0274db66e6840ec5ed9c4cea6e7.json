@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEVerifier",
+    "shapeHash": "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7",
+    "steps": [],
+    "skips": [
+      {
+        "item": "verify(bytes,bytes32,bytes32)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T06:06:59.370Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xe341083152c2c14a1ca6f42c77cc2e84452a97c6d8aa51a9c10f01d46a78e810"
+  }
+}
