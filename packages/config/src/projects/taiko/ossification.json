@@ -717,6 +717,70 @@
       "updateId": "ebe21a45",
       "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
       "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+      "updateId": "10c6eeed",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council proposal replaced 6 of 9 council members with 2 new EOA members (5 members total) and lowered minSignerListLength from 8 to 4 in the SignerList."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+      "updateId": "10c6eeed",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council proposal lowered the standard proposal approval threshold from 5 to 3 on the Multisig plugin."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+      "updateId": "10c6eeed",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council proposal lowered the emergency proposal approval threshold from 7 to 4 on the EmergencyMultisig plugin."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "10c6eeed",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced trusted RISC Zero image IDs on the TaikoRisc0Verifier (Raiko2 v0.6.0 -> v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F",
+      "updateId": "10c6eeed",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced trusted SP1 program verification keys on the TaikoSP1Verifier (Raiko2 v0.6.0 -> v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "10c6eeed",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal changed the trusted SGX enclave measurement (mrEnclave) in the DCAP attestation contract backing the SGX Geth verifier (Raiko2 v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "10c6eeed",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract backing the SGX Reth verifier (Raiko2 v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1789975667,
+      "type": "state",
+      "contract": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+      "updateId": "10c6eeed",
+      "transaction": "0x0e536d7f0e32a93e9c5d7153d55506d5a5aaa5e4cc1338896d31e97796291764",
+      "reason": "A new standard proposal was forwarded from the Multisig plugin to the OptimisticTokenVotingPlugin (proposalCount 39 -> 40) and entered its veto period; no governance settings changed."
     }
   ]
 }
