@@ -1,0 +1,71 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "NitroEnclaveVerifier",
+    "shapeHash": "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db",
+    "steps": [
+      {
+        "id": "zkConfig",
+        "covers": [
+          "zkConfig(uint8)",
+          "getZkConfig(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zkConfig(uint8)",
+          "keys": {
+            "literal": [
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "zkConfig is written only by setZkConfiguration (onlyOwner), which emits ZKConfigurationUpdated; the keys are the ZkCoProcessorType enum values RiscZero (1) and Succinct (2)."
+      },
+      {
+        "id": "getVerifierProofId",
+        "covers": [
+          "getVerifierProofId(uint8)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getVerifierProofId(uint8)",
+          "keys": {
+            "literal": [
+              1,
+              2
+            ]
+          }
+        },
+        "use": "map@1",
+        "reason": "_verifierProofIds is written only by updateVerifierId and setZkConfiguration (onlyOwner), which emit VerifierIdUpdated and ZKConfigurationUpdated; the keys are the ZkCoProcessorType enum values RiscZero (1) and Succinct (2)."
+      }
+    ],
+    "skips": [
+      {
+        "item": "checkTrustedIntermediateCerts(bytes32[][])",
+        "reason": "computation"
+      },
+      {
+        "item": "getZkVerifier(uint8,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "ownershipHandoverExpiresAt(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "trustedIntermediateCerts(bytes32)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:46:36.304Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x22c86e7ab21f505f9b2698a9c7894d7db03d0dea4412391a6dcdda0c11fa9097"
+  }
+}

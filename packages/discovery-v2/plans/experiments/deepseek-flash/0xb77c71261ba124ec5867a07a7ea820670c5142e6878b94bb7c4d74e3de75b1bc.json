@@ -1,0 +1,51 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PauseController",
+    "shapeHash": "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc",
+    "steps": [
+      {
+        "id": "unpause",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Unpause"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "component",
+          "add": [
+            {
+              "event": "Unpause"
+            }
+          ]
+        },
+        "reason": "unpause (onlyOwner) is the only function that writes a non-zero lastUnpauseTime[component] and emits Unpause(component), so these components are the complete set of keys holding non-trivial state"
+      },
+      {
+        "id": "lastUnpauseTime",
+        "covers": [
+          "getLastUnpauseTime(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "getLastUnpauseTime(address)",
+          "keys": {
+            "from": "$step.unpause"
+          }
+        },
+        "use": "map@1",
+        "reason": "getLastUnpauseTime returns lastUnpauseTime[component], which is written to block.timestamp in unpause (onlyOwner), whose Unpause event enumerates every component that can hold a value"
+      }
+    ],
+    "skips": []
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:40:17.512Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x02b6bcfb88c7d6eeb76aad3998751029e3d55b7f3a73fe74c7d26cf824f6a483"
+  }
+}

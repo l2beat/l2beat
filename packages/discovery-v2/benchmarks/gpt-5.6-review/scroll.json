@@ -1,0 +1,3981 @@
+{
+  "project": "scroll",
+  "chain": "ethereum",
+  "blockNumber": 25789575,
+  "model": "gpt-5.6-sol",
+  "provider": "codex",
+  "review": true,
+  "facts": false,
+  "author": true,
+  "noPlan": false,
+  "repeat": 0,
+  "startedAt": "2026-09-22T15:40:33.905Z",
+  "finishedAt": "2026-09-22T15:55:33.586Z",
+  "planStoreBefore": [],
+  "contracts": [
+    {
+      "address": "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
+      "name": "ZkEvmVerifierPostEuclid",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x7b80b1a2103b2b6f6cf5693fdd049f0492ce535d0f3f16eceba67d5e2e5b1095",
+      "decisionHash": "0x7b80b1a2103b2b6f6cf5693fdd049f0492ce535d0f3f16eceba67d5e2e5b1095",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 121,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest1",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest2",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+          ],
+          "v2": [
+            "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 22142559,
+          "v2": 22142559
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": "ZkEvmVerifierPostEuclid"
+          },
+          "v2": {
+            "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": "ZkEvmVerifierPostEuclid"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 4,
+        "v2Fields": 4,
+        "equal": 4,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x03a72B00D036C479105fF98A1953b15d9c510110",
+      "name": "PlonkVerifierV1-1",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 424,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 20173741,
+          "v2": 20173741
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": ""
+          },
+          "v2": {
+            "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+      "name": "TimelockSCEmergency",
+      "template": "scroll/L1Timelock",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x79a30aa79c929f2e06122176096c8096c30073442956cc98734c15ab9f93de91",
+      "decisionHash": "0xc861c136ff2a5d8fd3b000b7d79f348d8e8681fbd47eea04e3895a771420cace",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 92581,
+        "cached": 30208,
+        "output": 3779,
+        "reasoning": 2024
+      },
+      "wallMs": 98306,
+      "modelMs": 97678,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "CANCELLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "EXECUTOR_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "PROPOSER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "TIMELOCK_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getMinDelay",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Canceller",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Executor",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Proposer",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "getMinDelayFormatted",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "edit",
+            "handlerType": "call"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "timelockAdminAC",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_minDelay",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_timestamps",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "getTimestamp",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ],
+          "v2": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21078719,
+          "v2": 21078719
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
+          },
+          "v2": {
+            "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 13,
+        "v2Fields": 11,
+        "equal": 8,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 5
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 3
+        }
+      }
+    },
+    {
+      "address": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+      "name": "TimelockFast",
+      "template": "scroll/L1Timelock",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "store",
+      "planHash": "0x79a30aa79c929f2e06122176096c8096c30073442956cc98734c15ab9f93de91",
+      "decisionHash": "0xc861c136ff2a5d8fd3b000b7d79f348d8e8681fbd47eea04e3895a771420cace",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 346,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "CANCELLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "EXECUTOR_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "PROPOSER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "TIMELOCK_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getMinDelay",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Canceller",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Executor",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Proposer",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "getMinDelayFormatted",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "edit",
+            "handlerType": "call"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "timelockAdminAC",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_minDelay",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_timestamps",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "getTimestamp",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ],
+          "v2": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306947,
+          "v2": 18306947
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockController"
+          },
+          "v2": {
+            "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockController"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 13,
+        "v2Fields": 11,
+        "equal": 8,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 5
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 3
+        }
+      }
+    },
+    {
+      "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+      "name": "Scroll Multisig 1",
+      "template": "GnosisSafe",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x946952a1bc14ef4e28db50cda679942d4fb21c4fc26fe1c46fc72faebe76e733",
+      "decisionHash": "0x1eb2e87db6c58a093d8174b43e18c48efd15eff7ba43eb05bf71598633b1d0f4",
+      "model": "gpt-5.6-sol",
+      "rounds": 3,
+      "tokens": {
+        "input": 190162,
+        "cached": 116608,
+        "output": 10694,
+        "reasoning": 8381
+      },
+      "wallMs": 172557,
+      "modelMs": 172028,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$members",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$threshold",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "GnosisSafe_modules",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "VERSION",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "domainSeparator",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getChainId",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "multisigThreshold",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nonce",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "getOwners",
+          "class": "ignored-by-v1"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "getThreshold",
+          "class": "ignored-by-v1"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "gnosis safe",
+          "v2": "gnosis safe"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+            "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+          ],
+          "v2": [
+            "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+            "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18296951,
+          "v2": 18296951
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "GnosisSafeProxy",
+            "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+          },
+          "v2": {
+            "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "GnosisSafeProxy",
+            "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 10,
+        "v2Fields": 12,
+        "equal": 10,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 2,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941",
+      "name": "PlonkVerifierV1",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 410,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 19638084,
+          "v2": 19638084
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941": ""
+          },
+          "v2": {
+            "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB",
+      "name": "ZkEvmVerifierV2",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x8c0d83cc9ab8ea7bd606558216990053efa9102e666704ce81d21af45d07ad2d",
+      "decisionHash": "0x8c0d83cc9ab8ea7bd606558216990053efa9102e666704ce81d21af45d07ad2d",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 23,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"
+          ],
+          "v2": [
+            "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 20460054,
+          "v2": 20460054
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": "ZkEvmVerifierV2"
+          },
+          "v2": {
+            "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": "ZkEvmVerifierV2"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 3,
+        "v2Fields": 3,
+        "equal": 3,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+      "name": "PlonkVerifierPostEuclid-2",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 144,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0x4ad50f22109a8ff91daad934d6d1519aa3d186c4d8ebc1ffdc165e0986aa23ae"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 22987338,
+          "v2": 22987338
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": ""
+          },
+          "v2": {
+            "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+      "name": "TimelockSCSlow",
+      "template": "scroll/L1Timelock",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "store",
+      "planHash": "0x79a30aa79c929f2e06122176096c8096c30073442956cc98734c15ab9f93de91",
+      "decisionHash": "0xc861c136ff2a5d8fd3b000b7d79f348d8e8681fbd47eea04e3895a771420cace",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 341,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "CANCELLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "EXECUTOR_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "PROPOSER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "TIMELOCK_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getMinDelay",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Canceller",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Executor",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Proposer",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "getMinDelayFormatted",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "edit",
+            "handlerType": "call"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "timelockAdminAC",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_minDelay",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "_timestamps",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "getTimestamp",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ],
+          "v2": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21036143,
+          "v2": 21036143
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": "TimelockController"
+          },
+          "v2": {
+            "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": "TimelockController"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 13,
+        "v2Fields": 11,
+        "equal": 8,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 5
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 3
+        }
+      }
+    },
+    {
+      "address": "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x32b6a262276934a2a9b54d2ba964d6869fefdfe73a1f60c043672bc2cba4e769",
+      "decisionHash": "0x32b6a262276934a2a9b54d2ba964d6869fefdfe73a1f60c043672bc2cba4e769",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 16,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "protocolVersion",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest1",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest2",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
+          ],
+          "v2": [
+            "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 23925755,
+          "v2": 23925755
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5": "ZkEvmVerifierPostFeynman"
+          },
+          "v2": {
+            "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5": "ZkEvmVerifierPostFeynman"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 5,
+        "v2Fields": 5,
+        "equal": 5,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247",
+      "name": "ZkEvmVerifierV1",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "decisionHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 17,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ],
+          "v2": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 19638087,
+          "v2": 19638087
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
+          },
+          "v2": {
+            "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 2,
+        "v2Fields": 2,
+        "equal": 2,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1",
+      "name": "PlonkVerifierV0",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 140,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306805,
+          "v2": 18306805
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": ""
+          },
+          "v2": {
+            "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "name": "MultipleVersionRollupVerifier",
+      "template": "scroll/MultipleVersionRollupVerifier",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0xc8f12124aa8dc860899dc6b4f9a2a113822af7ee4440c8d31381d060c957125e",
+      "decisionHash": "0xc6eafc59e90fcaa5ba0410c670f77f11cb6e1a6a449cf0e2a60683979f31eb79",
+      "model": "gpt-5.6-sol",
+      "rounds": 3,
+      "tokens": {
+        "input": 139248,
+        "cached": 65024,
+        "output": 15026,
+        "reasoning": 11773
+      },
+      "wallMs": 208781,
+      "modelMs": 208146,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal-by-value",
+          "name": "latestVerifier",
+          "v2Names": [
+            "latestVerifier"
+          ],
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "array"
+          }
+        },
+        {
+          "verdict": "equal-by-value",
+          "name": "legacyVerifiersLength",
+          "v2Names": [
+            "legacyVerifiersLength"
+          ],
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "array"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal-renamed",
+          "name": "verifierVersions",
+          "v2Name": "updateVerifier",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "legacyVerifiers",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "ownershipTransferred",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a"
+          ],
+          "v2": [
+            "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 20460107,
+          "v2": 20460107
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier"
+          },
+          "v2": {
+            "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 5,
+        "v2Fields": 5,
+        "equal": 2,
+        "equalRenamed": 1,
+        "equalByValue": 2,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 2
+        }
+      }
+    },
+    {
+      "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+      "name": "L1MessageQueueV2",
+      "template": "scroll/L1MessageQueue",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0xd39c7a10f5802d9cc19e4783ba053c67b0a473c18f51a47fb379ec96aaadd2d0",
+      "decisionHash": "0xc6f323b5bea56ba04a51d4a5182e747444010560ac509aad9eb53a4ea9d9caca",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 117277,
+        "cached": 38656,
+        "output": 1944,
+        "reasoning": 1400
+      },
+      "wallMs": 62214,
+      "modelMs": 61697,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "enforcedTxGateway",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "firstCrossDomainMessageIndex",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getFirstUnfinalizedMessageEnqueueTime",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messageQueueV1",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messenger",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nextCrossDomainMessageIndex",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nextUnfinalizedQueueIndex",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "scrollChain",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "systemConfig",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "estimateL2BaseFee",
+          "class": "ignored-by-v1"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "implementation",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 22088276,
+          "v2": 22088276
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
+            "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa": "L1MessageQueueV2"
+          },
+          "v2": {
+            "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
+            "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa": "L1MessageQueueV2"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 14,
+        "v2Fields": 16,
+        "equal": 14,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 1,
+          "new": 1
+        }
+      }
+    },
+    {
+      "address": "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D",
+      "name": "ZkEvmVerifierV0",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "store",
+      "planHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "decisionHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 21,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ],
+          "v2": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306933,
+          "v2": 18306933
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV1"
+          },
+          "v2": {
+            "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV1"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 2,
+        "v2Fields": 2,
+        "equal": 2,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+      "name": "L1ERC721Gateway",
+      "template": "scroll/L1ERC721Gateway",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x9b1bd6eccf2ce911d9c84806849277407ec230439132faad550c161043125ed8",
+      "decisionHash": "0x00705868578f332b81573e727ad078e83be819eb1a1684adc42852c708e9e45e",
+      "model": "gpt-5.6-sol",
+      "rounds": 3,
+      "tokens": {
+        "input": 244627,
+        "cached": 145280,
+        "output": 2472,
+        "reasoning": 1702
+      },
+      "wallMs": 69037,
+      "modelMs": 68523,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "counterpart",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messenger",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "router",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "implementation",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306934,
+          "v2": 18306934
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "TransparentUpgradeableProxy",
+            "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A": "L1ERC721Gateway"
+          },
+          "v2": {
+            "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "TransparentUpgradeableProxy",
+            "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A": "L1ERC721Gateway"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 8,
+        "v2Fields": 9,
+        "equal": 8,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 1
+        }
+      }
+    },
+    {
+      "address": "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2",
+      "name": "ZkEvmVerifierV1-1",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "store",
+      "planHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "decisionHash": "0x4083b81dc3db1f5c671ceac405a1ed2e739eb46a14ca49aad4039280251836db",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 16,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ],
+          "v2": [
+            "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 20173752,
+          "v2": 20173752
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1"
+          },
+          "v2": {
+            "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 2,
+        "v2Fields": 2,
+        "equal": 2,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+      "name": "wstETHescrowLido",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x9687fbe180316598070c66af4a2bbcb043cd506f14116a35d6e123d96ab6af9b",
+      "decisionHash": "0xd6e8101778134bc4a0cfdc4eb8533f0bcd16e8e1d6287bff2850d5156587d779",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 148200,
+        "cached": 64768,
+        "output": 3102,
+        "reasoning": 1773
+      },
+      "wallMs": 75008,
+      "modelMs": 74453,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEPOSITS_DISABLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEPOSITS_ENABLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "WITHDRAWALS_DISABLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "WITHDRAWALS_ENABLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "counterpart",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "isDepositsEnabled",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "isWithdrawalsEnabled",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messenger",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "router",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "accessControl",
+          "class": "new"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "l1Token",
+          "class": "ignored-by-v1"
+        },
+        {
+          "verdict": "v2-only",
+          "name": "l2Token",
+          "class": "ignored-by-v1"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18318364,
+          "v2": 18318364
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "TransparentUpgradeableProxy",
+            "eth:0xF4f2066EE72D62e3caF9678459149BA7FCf2262F": "L1LidoGateway"
+          },
+          "v2": {
+            "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "TransparentUpgradeableProxy",
+            "eth:0xF4f2066EE72D62e3caF9678459149BA7FCf2262F": "L1LidoGateway"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 14,
+        "v2Fields": 17,
+        "equal": 14,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 2,
+          "new": 1
+        }
+      }
+    },
+    {
+      "address": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "name": "DaiEscrow",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x37cdc044f349a7b74b6ee5f49993ca9d99280469910410210d347e33078ae83c",
+      "decisionHash": "0xc881fc35c504795f0ee9539fcbf5807987c817262433c712fc9f28b67deb3418",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 126166,
+        "cached": 41600,
+        "output": 1036,
+        "reasoning": 559
+      },
+      "wallMs": 31541,
+      "modelMs": 31063,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "counterpart",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messenger",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "router",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "tokenMapping",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18318330,
+          "v2": 18318330
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "TransparentUpgradeableProxy",
+            "eth:0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": "L1CustomERC20Gateway"
+          },
+          "v2": {
+            "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "TransparentUpgradeableProxy",
+            "eth:0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": "L1CustomERC20Gateway"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 8,
+        "v2Fields": 9,
+        "equal": 8,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 1
+        }
+      }
+    },
+    {
+      "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+      "name": "L1ScrollMessenger",
+      "template": "scroll/L1ScrollMessenger",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x4305c03f3f00030eb1844bde3efba48b758d2f8d493b1888ac5dc5843f24ece9",
+      "decisionHash": "0x4305c03f3f00030eb1844bde3efba48b758d2f8d493b1888ac5dc5843f24ece9",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 120931,
+        "cached": 39936,
+        "output": 763,
+        "reasoning": 365
+      },
+      "wallMs": 30880,
+      "modelMs": 30801,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "counterpart",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "enforcedTxGateway",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "feeVault",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messageQueueV1",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messageQueueV2",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "paused",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollup",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "xDomainMessageSender",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x6bec1db10c626a5dec51592412891e6f9e23f8bce071ef7ba6c0ca3f0fa73e9d"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x6bec1db10c626a5dec51592412891e6f9e23f8bce071ef7ba6c0ca3f0fa73e9d"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306934,
+          "v2": 18306934
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
+            "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": "L1ScrollMessenger"
+          },
+          "v2": {
+            "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
+            "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": "L1ScrollMessenger"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 13,
+        "v2Fields": 13,
+        "equal": 13,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+      "name": "EnforcedTxGateway",
+      "template": "scroll/EnforcedTxGateway",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x5830f9c89e0077bbac2725b08d0541d9b7ce0959220071d85996dc10bdf35154",
+      "decisionHash": "0x5830f9c89e0077bbac2725b08d0541d9b7ce0959220071d85996dc10bdf35154",
+      "model": "gpt-5.6-sol",
+      "rounds": 2,
+      "tokens": {
+        "input": 129934,
+        "cached": 59136,
+        "output": 445,
+        "reasoning": 200
+      },
+      "wallMs": 24928,
+      "modelMs": 24828,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DOMAIN_SEPARATOR",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "eip712Domain",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "feeVault",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messageQueue",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "paused",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306934,
+          "v2": 18306934
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": "TransparentUpgradeableProxy",
+            "eth:0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc": "EnforcedTxGateway"
+          },
+          "v2": {
+            "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": "TransparentUpgradeableProxy",
+            "eth:0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc": "EnforcedTxGateway"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 10,
+        "v2Fields": 10,
+        "equal": 10,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x749fC77A1a131632a8b88e8703E489557660C75e",
+      "name": "PlonkVerifierGalileo",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 427,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0x35ded5d00c89b25126b147567eab9e1d28535673e16322b341512fa00e573a4d"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 23925750,
+          "v2": 23925750
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": ""
+          },
+          "v2": {
+            "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+      "name": "ScrollOwner",
+      "template": "scroll/ScrollOwner",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0xde3b2e583971623361e242d8f6b012f6a648fb3c11dd53b1e00687c097462256",
+      "decisionHash": "0x204efb851ad09db92fa424d7d803fbddcc86b33a281a61764d9f0cbada324460",
+      "model": "gpt-5.6-sol",
+      "rounds": 3,
+      "tokens": {
+        "input": 189149,
+        "cached": 116608,
+        "output": 7361,
+        "reasoning": 5640
+      },
+      "wallMs": 120811,
+      "modelMs": 120173,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "different",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "scrollAccessControl"
+          },
+          "diff": "objects; keys only in V1: roles, targets (2); keys only in V2: DEFAULT_ADMIN_ROLE, 0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff…, 0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca0386… (+7 more) (10)"
+        },
+        {
+          "verdict": "v1-only",
+          "name": "opsFast",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "copy"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "opsNoDelay",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "copy"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "scMinorityNoDelay",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "copy"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "scNoDelay",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "copy"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "targetAccess",
+          "class": "new"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa"
+          ],
+          "v2": [
+            "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306947,
+          "v2": 18306947
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner"
+          },
+          "v2": {
+            "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 7,
+        "v2Fields": 4,
+        "equal": 2,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 1,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 4
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 1
+        }
+      }
+    },
+    {
+      "address": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+      "name": "L1WETHGateway",
+      "template": "scroll/L1WETHGateway",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 3125,
+      "modelMs": 0,
+      "authoringFailure": "codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. Add credits to continue.",
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "counterpart",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2WETH",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "messenger",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "router",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v2-only",
+          "name": "WETH",
+          "class": "ignored-by-v1"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf"
+          ],
+          "v2": [
+            "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+            "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 18306934,
+          "v2": 18306934
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
+            "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24": "L1WETHGateway"
+          },
+          "v2": {
+            "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
+            "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24": "L1WETHGateway"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 9,
+        "v2Fields": 10,
+        "equal": 9,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 1,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
+      "name": "L1ETHGateway",
+      "template": "scroll/L1ETHGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+      "name": "TimelockEmergency",
+      "template": "scroll/L1Timelock",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+      "name": "SystemConfig",
+      "template": "scroll/SystemConfig",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
+      "name": "PlonkVerifierV2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
+      "name": "PlonkVerifierV2-1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
+      "name": "Scroll Multisig 4",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
+      "name": "PlonkVerifierFeynmanV2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
+      "name": "pufETHEscrow",
+      "template": "scroll/L1CustomERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+      "name": "ScrollChain",
+      "template": "scroll/ScrollChain",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+      "name": "L1CustomERC20Gateway",
+      "template": "scroll/L1CustomERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b",
+      "name": "PauseController",
+      "template": "scroll/PauseController",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
+      "name": "L1ERC1155Gateway",
+      "template": "scroll/L1ERC1155Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2",
+      "name": "L1USDCGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+      "name": "Scroll Multisig 2",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA",
+      "name": "ZkEvmVerifierPostEuclid-2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3",
+      "name": "ZkEvmVerifierV2-1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761",
+      "name": "ScrollAdminMultisig",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+      "name": "L1StandardERC20Gateway",
+      "template": "scroll/L1StandardERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "name": "ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+      "name": "Scroll Multisig 3",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+      "name": "L1USDCGateway",
+      "template": "scroll/L1USDCGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+      "name": "L1GatewayRouter",
+      "template": "scroll/L1GatewayRouter",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    }
+  ],
+  "totals": {
+    "v1Fields": 160,
+    "v2Fields": 161,
+    "equal": 137,
+    "equalRenamed": 1,
+    "equalByValue": 2,
+    "different": 1,
+    "v1Only": {
+      "proxy": 0,
+      "getter": 0,
+      "handler": 0,
+      "template-projection": 19
+    },
+    "v2Only": {
+      "ignored-by-v1": 6,
+      "new": 16
+    },
+    "contracts": 48,
+    "compared": 24,
+    "failed": 24,
+    "tokens": {
+      "input": 1498275,
+      "cached": 717824,
+      "output": 46622,
+      "reasoning": 33817
+    },
+    "wallMs": 899634,
+    "modelMs": 889390,
+    "roundsDistribution": {
+      "2": 6,
+      "3": 4
+    }
+  }
+}

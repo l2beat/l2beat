@@ -1,0 +1,436 @@
+{
+  "project": "plumenetwork",
+  "chain": "ethereum",
+  "blockNumber": 25832885,
+  "provider": "codex",
+  "review": true,
+  "facts": false,
+  "author": true,
+  "noPlan": false,
+  "repeat": 0,
+  "startedAt": "2026-09-22T15:55:36.478Z",
+  "finishedAt": "2026-09-22T15:55:39.523Z",
+  "planStoreBefore": [
+    "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678",
+    "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77",
+    "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a",
+    "0x6bec1db10c626a5dec51592412891e6f9e23f8bce071ef7ba6c0ca3f0fa73e9d",
+    "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09",
+    "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588",
+    "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61",
+    "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55",
+    "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a",
+    "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d",
+    "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d",
+    "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee"
+  ],
+  "contracts": [
+    {
+      "address": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+      "name": "Bridge",
+      "template": "orbitstack/Bridge",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 3041,
+      "modelMs": 0,
+      "authoringFailure": "codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. Add credits to continue.",
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "activeOutbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "delayedMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nativeToken",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nativeTokenDecimals",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollup",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerInbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerReportedSubMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "allowedDelayedInboxList",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "allowedOutboxList",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "inboxHistory",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "outboxHistory",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x35381f63091926750F43b2A7401B083263aDEF83": "TransparentUpgradeableProxy",
+            "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
+          },
+          "v2": {
+            "eth:0x35381f63091926750F43b2A7401B083263aDEF83": "TransparentUpgradeableProxy",
+            "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 16,
+        "v2Fields": 12,
+        "equal": 12,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 2,
+          "handler": 2,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
+      "name": "RollupProxy",
+      "template": "orbitstack/RollupProxyBoLD",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
+      "name": "Outbox",
+      "template": "orbitstack/Outbox",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
+      "name": "SequencerInbox",
+      "template": "orbitstack/SequencerInbox",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
+      "name": "Inbox",
+      "template": "orbitstack/Inbox",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xd688dabDBb14D673898689135a23a174560c8C04",
+      "name": "UpgradeExecutor",
+      "template": "orbitstack/UpgradeExecutor",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    }
+  ],
+  "totals": {
+    "v1Fields": 16,
+    "v2Fields": 12,
+    "equal": 12,
+    "equalRenamed": 0,
+    "equalByValue": 0,
+    "different": 0,
+    "v1Only": {
+      "proxy": 0,
+      "getter": 2,
+      "handler": 2,
+      "template-projection": 0
+    },
+    "v2Only": {
+      "ignored-by-v1": 0,
+      "new": 0
+    },
+    "contracts": 6,
+    "compared": 1,
+    "failed": 5,
+    "tokens": {
+      "input": 0,
+      "cached": 0,
+      "output": 0,
+      "reasoning": 0
+    },
+    "wallMs": 3041,
+    "modelMs": 0,
+    "roundsDistribution": {}
+  }
+}

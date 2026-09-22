@@ -32,8 +32,9 @@ export function reportCommand(ctx: CommandContext, args: ReportArgs): void {
 }
 
 /**
- * A suite label directory stands for every `<project>/benchmark.json` in it,
- * labelled with the directory name, so `report runs/benchmark/deepseek`
+ * A label directory stands for every run in it, `<project>/benchmark.json`
+ * under `runs/benchmark/<label>/` or `<project>.json` under
+ * `benchmarks/<label>/`, labelled with the directory name, so one argument
  * compares one experiment across projects.
  */
 function expandInput(input: string): string[] {
@@ -45,7 +46,11 @@ function expandInput(input: string): string[] {
   return fs
     .readdirSync(file)
     .sort()
-    .map((child) => path.join(file, child, 'benchmark.json'))
+    .map((child) =>
+      child.endsWith('.json')
+        ? path.join(file, child)
+        : path.join(file, child, 'benchmark.json'),
+    )
     .filter((report) => fs.existsSync(report))
     .map((report) => `${name}=${report}`)
 }

@@ -1,0 +1,33 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ProxyAdmin",
+    "shapeHash": "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getProxyAdmin(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getProxyImplementation(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "implementationName(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "proxyType(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:43:25.789Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x4fa8535675adcb5c55fa5b4c74e2ecb098aa017f1221251be0b1a8c248b96a82"
+  }
+}

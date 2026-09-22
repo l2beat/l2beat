@@ -1,0 +1,84 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PreimageOracle",
+    "shapeHash": "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615",
+    "steps": [
+      {
+        "id": "zeroHashes",
+        "covers": [
+          "zeroHashes(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "zeroHashes(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.KECCAK_TREE_DEPTH",
+              "start": 0
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "zeroHashes is written only in the constructor for indices 0..KECCAK_TREE_DEPTH-1, a fixed complete key set bounded by the baseline KECCAK_TREE_DEPTH getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "getTreeRootLPP(address,uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "preimageLengths(bytes32)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "preimagePartOk(bytes32,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "preimageParts(bytes32,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBlocks(address,uint256,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBlocksLen(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBonds(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalBranches(address,uint256,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalMetadata(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposalParts(address,uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "proposals(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "readPreimage(bytes32,uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:44:22.949Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xebdbdcfea6d6a95c1cdc6f3e4b9cd52dc8103dfe67941664f465cc0ec0a39c96"
+  }
+}

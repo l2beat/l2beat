@@ -1,0 +1,98 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ERC20Bridge",
+    "shapeHash": "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "steps": [
+      {
+        "id": "allowedDelayedInboxList",
+        "covers": [
+          "allowedDelayedInboxList(uint256)",
+          "allowedDelayedInboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "InboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "inbox",
+          "add": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "InboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "allowedDelayedInboxesMap and allowedDelayedInboxList are written only by setDelayedInbox (onlyRollupOrOwner), which emits InboxToggle"
+      },
+      {
+        "id": "allowedOutboxList",
+        "covers": [
+          "allowedOutboxList(uint256)",
+          "allowedOutboxes(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "OutboxToggle"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "outbox",
+          "add": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "OutboxToggle",
+              "when": {
+                "arg": "enabled",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "allowedOutboxesMap and allowedOutboxList are written only by setOutbox (onlyRollupOrOwner), which emits OutboxToggle"
+      }
+    ],
+    "skips": [
+      {
+        "item": "delayedInboxAccs(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "sequencerInboxAccs(uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:51:19.088Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x202637217d6dd18ec253f895407428dba9bee590070abf735d1feabd9ffe4d7c"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "SuperchainConfig",
+    "shapeHash": "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "steps": [
+      {
+        "id": "identifier",
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "Paused",
+            "Unpaused",
+            "PauseExtended"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "identifier",
+          "add": [
+            {
+              "event": "Paused"
+            },
+            {
+              "event": "Unpaused"
+            },
+            {
+              "event": "PauseExtended"
+            }
+          ]
+        },
+        "reason": "pause, unpause and extend are restricted to the guardian or incident responder and emit Paused, Unpaused and PauseExtended, whose identifier argument enumerates every key of pauseTimestamps"
+      },
+      {
+        "id": "pauseTimestamps",
+        "covers": [
+          "pauseTimestamps(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "pauseTimestamps(address)",
+          "keys": {
+            "from": "$step.identifier"
+          }
+        },
+        "use": "map@1",
+        "reason": "pauseTimestamps is written only by pause/unpause/extend (guardian or incident responder), keyed by the identifier their events emit"
+      }
+    ],
+    "skips": [
+      {
+        "item": "expiration(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "pausable(address)",
+        "reason": "computation"
+      },
+      {
+        "item": "paused(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:49:23.320Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x1a869b9f2e59b717631c6d269d7b9381e9875d881fc9676476f3ce2056f8dc83"
+  }
+}

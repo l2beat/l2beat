@@ -1,0 +1,29 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "RiscZeroVerifierRouter",
+    "shapeHash": "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getVerifier(bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "getVerifier(bytes4)",
+        "reason": "computation"
+      },
+      {
+        "item": "verifiers(bytes4)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T16:46:47.959Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xc7bfdcff9b9b6f5fe652155134e7aa4cbf1d1c0acef49fee97dfdfc28b42faf2"
+  }
+}

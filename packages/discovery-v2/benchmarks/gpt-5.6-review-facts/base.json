@@ -1,0 +1,1075 @@
+{
+  "project": "base",
+  "chain": "ethereum",
+  "blockNumber": 25630023,
+  "provider": "codex",
+  "review": true,
+  "facts": true,
+  "author": true,
+  "noPlan": false,
+  "repeat": 0,
+  "startedAt": "2026-09-22T15:55:46.580Z",
+  "finishedAt": "2026-09-22T15:55:49.928Z",
+  "planStoreBefore": [
+    "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+  ],
+  "contracts": [
+    {
+      "address": "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
+      "name": "HistoryStorage",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 153,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0x47fe877e83f803ca1b745526a2d9081cfd94fe072dcfb58809c2ea54087d9a14"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21881387,
+          "v2": 21881387
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0000F90827F1C53a10cb7A02335B175320002935": ""
+          },
+          "v2": {
+            "eth:0x0000F90827F1C53a10cb7A02335B175320002935": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+      "name": "ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 3194,
+      "modelMs": 0,
+      "authoringFailure": "codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. Add credits to continue.",
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "addressManager",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "isUpgrading",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+          ],
+          "v2": [
+            "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 17482143,
+          "v2": 17482143
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": "ProxyAdmin"
+          },
+          "v2": {
+            "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": "ProxyAdmin"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 4,
+        "v2Fields": 4,
+        "equal": 4,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
+      "name": "OptimismMintableERC20Factory",
+      "template": "opstack/OptimismMintableERC20Factory",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "name": "TimelockController",
+      "template": "global/TimelockController",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+      "name": "Base Multisig 1",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
+      "name": "TEEProverRegistry",
+      "template": "base/TEEProverRegistry",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+      "name": "RiscZeroVerifierEmergencyStop",
+      "template": "risc0/RiscZeroVerifierEmergencyStop",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
+      "name": "PreimageOracle",
+      "template": "opstack/PreimageOracle",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
+      "name": "TEEVerifier",
+      "template": "base/TEEVerifier",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+      "name": "L1StandardBridge",
+      "template": "opstack/L1StandardBridge",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "name": "DisputeGameFactory",
+      "template": "opstack/DisputeGameFactory_v2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+      "name": "OptimismPortal2",
+      "template": "opstack/OptimismPortal2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
+      "name": "PermissionedDisputeGame",
+      "template": "opstack/PermissionedDisputeGame",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53",
+      "name": "L1ERC721Bridge",
+      "template": "opstack/L1ERC721Bridge",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D",
+      "name": "DelayedWETH",
+      "template": "opstack/DelayedWETH",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
+      "name": "FaultDisputeGame",
+      "template": "opstack/FaultDisputeGame",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
+      "name": "SystemConfig",
+      "template": "opstack/SystemConfig",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+      "name": "Escrow",
+      "template": "maker/L1Escrow",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb",
+      "name": "NitroEnclaveVerifier",
+      "template": "base/NitroEnclaveVerifier",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+      "name": "L1CrossDomainMessenger",
+      "template": "opstack/L1CrossDomainMessenger",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "name": "RiscZeroVerifierRouter",
+      "template": "risc0/RiscZeroVerifierRouter",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
+      "name": "AnchorStateRegistry",
+      "template": "opstack/AnchorStateRegistry_post20",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+      "name": "SuperchainConfig",
+      "template": "opstack/SuperchainConfig_base",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
+      "name": "SP1VerifierGateway",
+      "template": "succinct/SP1VerifierGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2",
+      "name": "AggregateVerifier",
+      "template": "opstack/AggregateVerifier",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    }
+  ],
+  "totals": {
+    "v1Fields": 5,
+    "v2Fields": 5,
+    "equal": 5,
+    "equalRenamed": 0,
+    "equalByValue": 0,
+    "different": 0,
+    "v1Only": {
+      "proxy": 0,
+      "getter": 0,
+      "handler": 0,
+      "template-projection": 0
+    },
+    "v2Only": {
+      "ignored-by-v1": 0,
+      "new": 0
+    },
+    "contracts": 25,
+    "compared": 2,
+    "failed": 23,
+    "tokens": {
+      "input": 0,
+      "cached": 0,
+      "output": 0,
+      "reasoning": 0
+    },
+    "wallMs": 3347,
+    "modelMs": 0,
+    "roundsDistribution": {}
+  }
+}

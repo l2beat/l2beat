@@ -1,6 +1,202 @@
 # Benchmark: Discovery V2 against committed V1 output
 
-## Purpose
+Two things are measured here, always at V1's own block so chain activity
+cannot move the numbers: how much of a project's committed `discovered.json`
+the V2 extractor reproduces, and how that changes when one thing about the
+setup changes (the model, the prompt strategy, the evidence in the prompt).
+`BENCHMARK.html` draws the same data; open it with
+
+```sh
+xdg-open packages/discovery-v2/BENCHMARK.html   # or any browser
+```
+
+and regenerate it from the committed inputs with
+
+```sh
+cd packages/discovery-v2
+pnpm start report benchmarks/floor benchmarks/gpt-5.6 benchmarks/gpt-5.6-facts \
+  benchmarks/deepseek-flash benchmarks/deepseek-flash-facts benchmarks/deepseek-flash-review \
+  benchmarks/deepseek-flash-review-facts "gpt-5.6 repeat x3=benchmarks/gpt-5.6-repeat" \
+  --out BENCHMARK.html --markdown runs/comparison.md
+```
+
+## How a field is judged
+
+Each V1 field is first attributed to its origin from the project's effective
+config: `proxy` (`$…` values), `getter` (a 0-argument view with no handler),
+`handler` (a researcher-written handler, with its type) or
+`template-projection` (`pickRoleMembers`, `copy`, a formatted `call`: a V1
+display convenience, not extraction, left to consumers by design). Then one
+verdict:
+
+- **equal**: same name, same value (addresses normalised to lowercase
+  `0x…` whatever the chain prefix; a bytes32 that pads an address equals the
+  address).
+- **equal, other name** (`equal-renamed`): same whole value under another
+  name, as `sequencers` → `isSequencer`.
+- **same values, other shape** (`equal-by-value`): every value V1 held is in
+  V2 under another structure or key: the same name with another nesting
+  (`legacyVerifiersLength` as a list vs a map), or, for a V1 field with no
+  namesake, every *distinctive* leaf (address, hash, long number or string)
+  found among the V2 fields no V1 field claimed (`game0`…`game8` against
+  one `gameImpls` map). Short leaves (`0`, `false`, small counts) never
+  credit a nameless match. A researcher chose V1's shape by hand and the
+  benchmark measures extraction, so this counts as found.
+- **different**: same name, values differ.
+- **missed**: V1 has the value, V2 has nothing holding it.
+
+"Found" is the first three over V1's extracted fields (display-only fields
+excluded from the denominator). Because 93% of V1's values are plain getters
+that every setup reproduces, the number that separates setups is **handler
+fields found**: the V1 fields a researcher wrote a handler for that V2 has
+the values of, in any shape. That is the first chart on the page.
+
+## Experiments (2026-09-22)
+
+Same three projects and contracts in every run (`benchmarks/suite.json`:
+scroll all 48 verified Ethereum contracts, base 25 with `--addresses`,
+plumenetwork 6 with `--addresses`; selection rationale under Run 1 below).
+Each run has its own plan store under `plans/experiments/<label>/`, so no
+run inherits another's decisions. Axes:
+
+- **Model**: `gpt-5.6-sol` through Codex at its default reasoning effort
+  (`plumenetwork` in Run 1 at `medium`), or `deepseek-v4.1-flash` through
+  opencode, both with tools disabled and the event stream checked for tool
+  parts.
+- **Strategy**: *one shot* (prompt, validate, dry-run, up to two repair
+  rounds); *review* (after acceptance, the executed results go back with
+  three questions: skip reasons, unused privileged events, empty folds;
+  the revision passes the same checks, the first plan stays if it never
+  does); *facts* (the prompt carries, per state variable, the externally
+  callable writers, their modifiers and the events they emit, derived from
+  the compiler AST by Datalog rules; see README "Facts").
+- **Floor**: an empty plan and no model, so the bars show what proxy
+  detection and 0-argument getters alone reproduce.
+
+| Project | Run | Setup | Contracts (failed) | V1 fields found | Handler fields found | Handler missed | Different | Model calls | Tokens in / out | Wall |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| base | floor | no plan (floor) | 25 | 369/405 (91.1%) | 1/32 (3.1%) | 31 | 0 | 0 | 0k / 0k | 2 s |
+| plumenetwork | floor | no plan (floor) | 6 | 96/109 (88.1%) | 0/11 (0.0%) | 11 | 0 | 0 | 0k / 0k | 1 s |
+| scroll | floor | no plan (floor) | 48 | 311/323 (96.3%) | 0/12 (0.0%) | 12 | 0 | 0 | 0k / 0k | 4 s |
+| base | gpt-5.6 | gpt-5.6-sol, one shot | 25 | 390/405 (96.3%) | 21/32 (65.6%) | 11 | 0 | 24 | 1126k / 18k | 877 s |
+| plumenetwork | gpt-5.6 | gpt-5.6-sol (medium), one shot | 6 | 99/109 (90.8%) | 1/11 (9.1%) | 10 | 0 | 6 | 311k / 6k | 271 s |
+| scroll | gpt-5.6 | gpt-5.6-sol, one shot | 48 | 320/323 (99.1%) | 9/12 (75.0%) | 2 | 1 | 33 | 1072k / 16k | 722 s |
+| base | gpt-5.6-facts | gpt-5.6-sol, facts | 25 | 389/405 (96.0%) | 21/32 (65.6%) | 11 | 0 | 22 | 1350k / 18k | 963 s |
+| plumenetwork | gpt-5.6-facts | gpt-5.6-sol, facts | 6 | 99/109 (90.8%) | 3/11 (27.3%) | 8 | 0 | 6 | 528k / 9k | 280 s |
+| scroll | gpt-5.6-facts | gpt-5.6-sol, facts | 48 | 321/323 (99.4%) | 10/12 (83.3%) | 1 | 1 | 22 | 1247k / 21k | 675 s |
+| base | deepseek-flash | opencode/deepseek-v4.1-flash, one shot | 25 | 390/405 (96.3%) | 21/32 (65.6%) | 11 | 0 | 6 | 80k / 2k | 414 s |
+| plumenetwork | deepseek-flash | opencode/deepseek-v4.1-flash, one shot | 6 | 99/109 (90.8%) | 1/11 (9.1%) | 10 | 0 | 1 | 0k / 1k | 80 s |
+| scroll | deepseek-flash | opencode/deepseek-v4.1-flash, one shot | 48 | 321/323 (99.4%) | 10/12 (83.3%) | 1 | 1 | 6 | 142k / 3k | 449 s |
+| base | deepseek-flash-facts | opencode/deepseek-v4.1-flash, facts | 25 | 389/405 (96.0%) | 21/32 (65.6%) | 11 | 0 | 22 | 866k / 7k | 1476 s |
+| plumenetwork | deepseek-flash-facts | opencode/deepseek-v4.1-flash, facts | 6 | 101/109 (92.7%) | 3/11 (27.3%) | 8 | 0 | 6 | 158k / 3k | 672 s |
+| scroll | deepseek-flash-facts | opencode/deepseek-v4.1-flash, facts | 48 | 318/323 (98.5%) | 7/12 (58.3%) | 4 | 1 | 21 | 657k / 7k | 667 s |
+| base | deepseek-flash-review | opencode/deepseek-v4.1-flash, review | 25 | 389/405 (96.0%) | 21/32 (65.6%) | 11 | 0 | 21 | 768k / 15k | 1883 s |
+| plumenetwork | deepseek-flash-review | opencode/deepseek-v4.1-flash, review | 6 | 99/109 (90.8%) | 3/11 (27.3%) | 8 | 0 | 6 | 239k / 7k | 772 s |
+| scroll | deepseek-flash-review | opencode/deepseek-v4.1-flash, review | 48 | 321/323 (99.4%) | 10/12 (83.3%) | 1 | 1 | 22 | 638k / 15k | 3123 s |
+| base | deepseek-flash-review-facts | opencode/deepseek-v4.1-flash, review + facts | 25 | 386/405 (95.3%) | 17/32 (53.1%) | 15 | 0 | 21 | 855k / 13k | 1637 s |
+| plumenetwork | deepseek-flash-review-facts | opencode/deepseek-v4.1-flash, review + facts | 6 | 99/109 (90.8%) | 1/11 (9.1%) | 10 | 0 | 6 | 256k / 6k | 579 s |
+| scroll | deepseek-flash-review-facts | opencode/deepseek-v4.1-flash, review + facts | 48 | 321/323 (99.4%) | 10/12 (83.3%) | 1 | 1 | 22 | 621k / 18k | 1792 s |
+| scroll | gpt-5.6 repeat x3 | model, one shot | 3 | 30/32 (93.8%) | 5/7 (71.4%) | 2 | 0 | 0 | 215k / 10k | 1 s |
+
+`deepseek-flash` tokens and wall time are those of the re-authoring pass
+only (see "Refused turns" below); the first pass cost 792k+5k tokens and
+1520 s for scroll, 1108k+5k and 797 s for base, 371k+3k and 536 s for
+plumenetwork. `gpt-5.6-review` and `gpt-5.6-review-facts` ran out of Codex
+credits after 14 and 1 authored contracts and are not in the page; their
+labels rerun as soon as the quota resets, reusing the plans already stored.
+
+### What the runs show
+
+- **The floor is high and flat.** 88–96% of V1's extracted fields are
+  plain getters and proxy values, and every setup reproduces every one of
+  them. Model, prompt and evidence change only the handler fields, so the
+  whole-field number barely moves (96–99%) and the handler number is the
+  one to read.
+- **DeepSeek V4.1 Flash matches GPT-5.6 one shot for one twentieth of the
+  tokens.** Handler fields found are the same or better on all three
+  projects (scroll 10/12 against GPT's 9/12, base 21/32, plumenetwork 1/11), at 3–7k output tokens per project against 16–18k and with a plan
+  accepted after one round in most cases. Its weakness is behavioural, not
+  analytical: 13 of 79 first-pass turns were refused for emitting tool calls
+  when no tool was offered (see below).
+- **Facts help where events are the answer.** With the writer/event facts,
+  both models take the two `Bridge` event-only histories on plumenetwork
+  that neither found one shot (`inboxHistory`, `outboxHistory`, now
+  `allowedDelayedInboxes`/`allowedOutboxes`): plumenetwork goes from 1/11 to
+  3/11 for both. GPT with facts also takes `verifierVersions` on scroll
+  (9/12 → 10/12). Facts cost 10–25% more input tokens. DeepSeek with facts
+  lost three MultipleVersionRollupVerifier fields on scroll that it had one
+  shot (7/12): the facts list `latestVerifier` and `legacyVerifiers` as
+  written only by owner functions with no event, and the model skipped them
+  as `unbounded` instead of enumerating the array with `untilRevert`; a
+  prompt rule about arrays with a length getter would fix it.
+- **Review helps DeepSeek exactly as much as facts do on plumenetwork
+  (3/11) and nothing on scroll or base**, at 2–4× the wall time of one
+  shot because every contract gets a second full turn. Review plus facts
+  was worse than either alone on base (17/32: the revision dropped four
+  `NitroEnclaveVerifier` values it had) and plumenetwork (1/11). Two
+  passes give the model two chances to be wrong; the validator only
+  catches structural errors, not a skip that should have been a step.
+- **The stable misses are the same in every setup**, which is what makes
+  them actionable: on base, the six `RiscZeroVerifierRouter.verifier_*`
+  literal-selector fields (V1 hard-codes six selectors; V2 needs a
+  `VerifierAdded`-event fold that no model chose), `zkVerifierRoutes`
+  (same), `permissionedGamesTotal` (an `eventCount`, which `count@1` can
+  do), `initBondGame42` (its value is a short number, so the by-value rule
+  cannot credit it inside `initBonds`) and the two custom OP Stack handlers
+  (`opStackDA`, `sequencerInbox`, no V2 data source by design). On
+  plumenetwork, the Orbit templates' custom TypeScript handlers
+  (`arbitrumActors`, `arbitrumDACKeyset`, `arbitrumSequencerVersion`,
+  `orbitPostsBlobs`), two `eventCount`s, and `challenges`. On scroll,
+  `revertedBatches` in every setup, and `ScrollOwner.accessControl`
+  (Scroll's custom role table, `different` in every setup).
+- **Consistency**: GPT's three repeated authorings of three scroll contracts
+  gave identical plan steps in 8 of 9 plans (Run 1). Across the four
+  DeepSeek setups the handler verdicts are identical on base for three of
+  them, which is the same stability seen through another lens.
+
+### Refused turns
+
+DeepSeek's first one-shot pass had 13 of 79 turns refused: the model emitted
+tool calls (`bash`, `grep`, `read`) although the opencode configuration
+offered no tool, and the client refuses any turn whose event stream shows a
+tool part. One turn hung for the full 15 minutes. The fix was a "you have no
+tools" instruction in the scratch configuration, one retry with a fresh
+session on a refused first turn, and an 8-minute timeout; the three later
+DeepSeek suites had 2, 2 and 2 refusals, and the re-authoring pass over the
+one-shot label had none. GPT never emitted a tool call.
+
+### Cost
+
+| Setup | Model calls | Input tokens | Output tokens | Wall |
+| --- | --- | --- | --- | --- |
+| gpt-5.6 one shot (Run 1) | 63 | 2.5M | 40k | 31 min |
+| gpt-5.6 facts | 50 | 3.1M | 48k | 32 min |
+| deepseek-flash one shot (first pass) | ~63 | 2.3M | 13k | 48 min |
+| deepseek-flash facts | 49 | 1.7M | 17k | 47 min |
+| deepseek-flash review | 49 | 1.6M | 37k | 96 min |
+| deepseek-flash review + facts | 49 | 1.7M | 37k | 67 min |
+
+Contracts with an empty worklist need no model call and are not counted.
+DeepSeek's provider reports about 0.25 USD per million input tokens; a
+whole-suite DeepSeek run costs well under a dollar, a GPT run about a
+tenth of a 5-hour Codex window.
+
+### Still to run
+
+- `gpt-5.6-review` and `gpt-5.6-review-facts` over the full suite (quota).
+- A second `--repeat` consistency run per model, now that the by-value
+  verdict exists, to put a number on shape variance rather than decision
+  variance.
+- More projects in `benchmarks/suite.json`, in particular one with few or no
+  templates, where V1's field set is not a strong prior.
+
+## Run 1 in detail: GPT-5.6 one shot
+
+The first full run, before the by-value verdict, the floor, the facts and the
+review pass existed. Numbers below are as recorded then; the summary table
+above re-judges the same entries under the current rules.
+
+### Purpose
 
 This benchmark measures how much of a V1 `discovered.json` entry the
 single-address extractor reproduces, contract by contract, when the
@@ -33,7 +229,7 @@ split into `ignored-by-v1` (the name is in the contract's effective
 measure the extractor, not chain activity. `proxyType`, `sourceHashes`,
 `sinceBlock` and `implementationNames` are compared as entry facts.
 
-## Setup
+### Setup
 
 - Model: `gpt-5.6-sol`, the Codex CLI default (codex-cli 0.155.1, ChatGPT
   login), default reasoning effort for `scroll` and `base`; `--reasoning
@@ -77,7 +273,7 @@ measure the extractor, not chain activity. `proxyType`, `sourceHashes`,
   files (prompt, response, plan, values, entry) are under
   `runs/benchmark/<project>/` (gitignored).
 
-## Summary
+### Summary
 
 | Project | Contracts (failed) | V1 fields | V2 fields | equal | equal-renamed | different | v1-only proxy | v1-only getter | v1-only handler | v1-only template-projection | v2-only ignored-by-v1 | v2-only new |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -133,7 +329,7 @@ templates' custom handlers (`arbitrumActors`, `arbitrumDACKeyset`,
 `event` folds; one of them, `batchPosters`, V2 answered *wrongly* rather than
 not at all (see below).
 
-## Consistency (`--repeat 2`)
+### Consistency (`--repeat 2`)
 
 Three plans per contract: the one the pipeline stored plus two more
 authorings with the store bypassed, compared by `decisionHash` (steps and
@@ -150,13 +346,13 @@ sets, per-key latest, mappings over a step's keys); the variation is in
 borderline skip reasons and in `list@1` against `set@1` for an
 append-only version list. The repeats cost 215,236 input + 9,915 output tokens.
 
-## V1 handler fields V2 missed or got different
+### V1 handler fields V2 missed or got different
 
 Every `handler` and `template-projection` field whose verdict is not `equal`,
 with the cause and where the fix belongs. Projections are grouped because
 they share one cause.
 
-### Scroll
+#### Scroll
 
 | Field | Verdict | Cause | Fix belongs |
 | --- | --- | --- | --- |
@@ -169,7 +365,7 @@ they share one cause.
 | ScrollChain `sequencers`, `provers` (event) | equal-renamed → `isSequencer`, `isProver` | Same value; V2 names after the getter. | by design (naming axis) |
 | Timelocks ×5: `Proposer`, `Canceller`, `Executor`, `timelockAdminAC` (pickRoleMembers), `getMinDelayFormatted` (edit on call) | v1-only | Role pickers over `accessControl` and a formatted copy of `getMinDelay`; V2's `accessControl` is equal on all five. | by design (consumer-side) |
 
-### Base
+#### Base
 
 | Field | Verdict | Cause | Fix belongs |
 | --- | --- | --- | --- |
@@ -183,7 +379,7 @@ they share one cause.
 | SP1VerifierGateway `activeVerifiers`, `allVerifiers` (event) | v1-only | V2 produced `routes` (`latest@1` per selector with `frozen`) and `routeAdded` (`list@1` of selectors) whose content is the same information (`0x4388a21c` frozen, `0x5a093a2f` active) in another shape than V1's two filtered lists. | by design (shape axis: V1's `where` filter + `select` of two fields has no one-to-one recipe; `latest@1` per key is the closest) |
 | TimelockController `Proposer`, `Canceller`, `Executor`, `defaultAdminAC`, `getMinDelayFormatted`; DisputeGameFactory `challengerFromDGF`, `proposerFromDGF`, `wethFromDGF`, `game8Vm`; OptimismPortal2 and AnchorStateRegistry `RespectedGameString`; Fault/PermissionedDisputeGame `absolutePrestateDecoded`; SuperchainConfig `pauseExpiryFmt`; AggregateVerifier `fastFinalizationDelayFmt`, `slowFinalizationDelayFmt` (16 projections) | v1-only | `pickRoleMembers`, `copy` and `edit`-only `call`s deriving from fields V2 has. | by design (consumer-side) |
 
-### plumenetwork
+#### plumenetwork
 
 | Field | Verdict | Cause | Fix belongs |
 | --- | --- | --- | --- |
@@ -196,7 +392,7 @@ they share one cause.
 | RollupProxy `arbOsFromWmRoot` (edit on call), UpgradeExecutor `executors` (pickRoleMembers) | v1-only | Projections; `accessControl` is equal on UpgradeExecutor. | by design (consumer-side) |
 | SequencerInbox `maxTimeVariation` (getter, edited) | different | Not a handler: V1's template `edit: ["shape", …]` turns the 4-tuple into a named object; V2 returns the tuple as the ABI gives it (`[7200, 48, 86400, 3600]`, same numbers). | by design (consumer-side edit) |
 
-## `v2-only new` fields of interest
+### `v2-only new` fields of interest
 
 Fields V2 produced that V1 neither has nor lists in `ignoreMethods`.
 
@@ -246,7 +442,7 @@ None of the `new` fields is user activity; the model's `user-activity`/`
 unbounded` skips held on every balance, message and per-game getter in all
 three projects.
 
-## Entry facts
+### Entry facts
 
 `proxyType`, `sinceBlock` and `implementationNames` were equal on every
 compared contract. `sourceHashes` differed on 9 contracts, all with V1
@@ -259,7 +455,7 @@ plans were not stored because `prepared.json` has no shape hash for unverified
 code. Fix belongs in `prepare` (honour `manualSourcePaths`) or in the
 benchmark's selection (skip contracts V1 itself sourced manually).
 
-## Cost
+### Cost
 
 | Run | contracts | model calls (store hits) | rounds | input tokens (cached) | output (reasoning) | wall s | model s | failures |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -296,7 +492,7 @@ Observations:
 - Wall time is almost all model time (Scroll 648 of 722 s, Base 823 of 877 s);
   the RPC side replays V1's SQLite cache.
 
-## What this shows and does not show
+### What this shows and does not show
 
 Shows: the deterministic 93% holds up. Across three projects every proxy value
 and every plain 0-arg getter V1 has, V2 has with the same value, and the
@@ -328,7 +524,7 @@ accepted because an empty event fold is only a warning; the benchmark caught
 it only because V1 had the handler, which is exactly the coverage this
 benchmark cannot claim for projects without templates.
 
-## Changes made after these runs, not yet re-benchmarked
+### Changes made after these runs, not yet re-benchmarked
 
 Two fixes followed directly from the findings above and landed after the
 numbers in this file were produced, so a re-run will differ in two ways:
@@ -341,7 +537,7 @@ numbers in this file were produced, so a re-run will differ in two ways:
   plan is stored as `source: trivial`. That removes 16 of the 69 model calls
   and roughly 290k of the 2.7M input tokens.
 
-## Plans authored during these runs
+### Plans authored during these runs
 
 Every accepted model plan is stored under `plans/<shapeHash>.json` with
 `decisionHash` in its provenance and stays reusable: a later run over the

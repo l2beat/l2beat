@@ -1,0 +1,2042 @@
+{
+  "project": "scroll",
+  "chain": "ethereum",
+  "blockNumber": 25789575,
+  "provider": "codex",
+  "review": true,
+  "facts": true,
+  "author": true,
+  "noPlan": false,
+  "repeat": 0,
+  "startedAt": "2026-09-22T15:55:42.074Z",
+  "finishedAt": "2026-09-22T15:55:46.548Z",
+  "planStoreBefore": [],
+  "contracts": [
+    {
+      "address": "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
+      "name": "ZkEvmVerifierPostEuclid",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "model",
+      "planHash": "0x7b80b1a2103b2b6f6cf5693fdd049f0492ce535d0f3f16eceba67d5e2e5b1095",
+      "decisionHash": "0x7b80b1a2103b2b6f6cf5693fdd049f0492ce535d0f3f16eceba67d5e2e5b1095",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 917,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "plonkVerifier",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest1",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "verifierDigest2",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+          ],
+          "v2": [
+            "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 22142559,
+          "v2": 22142559
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": "ZkEvmVerifierPostEuclid"
+          },
+          "v2": {
+            "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": "ZkEvmVerifierPostEuclid"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 4,
+        "v2Fields": 4,
+        "equal": 4,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x03a72B00D036C479105fF98A1953b15d9c510110",
+      "name": "PlonkVerifierV1-1",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "planHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "decisionHash": "0xa95baeb9d2cdd9e1a8763f8ba95e4bf774a608a41c14499eb34bb3f4326c30f0",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 423,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": false,
+          "v1": [
+            "0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 20173741,
+          "v2": 20173741
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": ""
+          },
+          "v2": {
+            "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": ""
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 1,
+        "v2Fields": 1,
+        "equal": 1,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+      "name": "TimelockSCEmergency",
+      "template": "scroll/L1Timelock",
+      "status": "compared",
+      "planStatus": "failed",
+      "planSource": "model",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 3124,
+      "modelMs": 0,
+      "authoringFailure": "codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. Add credits to continue.",
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$immutable",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "CANCELLER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "EXECUTOR_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "PROPOSER_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "TIMELOCK_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getMinDelay",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Canceller",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Executor",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "Proposer",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "getMinDelayFormatted",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "edit",
+            "handlerType": "call"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "timelockAdminAC",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "immutable",
+          "v2": "immutable"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ],
+          "v2": [
+            "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21078719,
+          "v2": 21078719
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
+          },
+          "v2": {
+            "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 13,
+        "v2Fields": 7,
+        "equal": 7,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 1,
+          "template-projection": 5
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+      "name": "TimelockFast",
+      "template": "scroll/L1Timelock",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+      "name": "Scroll Multisig 1",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941",
+      "name": "PlonkVerifierV1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB",
+      "name": "ZkEvmVerifierV2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+      "name": "PlonkVerifierPostEuclid-2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+      "name": "TimelockSCSlow",
+      "template": "scroll/L1Timelock",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247",
+      "name": "ZkEvmVerifierV1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1",
+      "name": "PlonkVerifierV0",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "name": "MultipleVersionRollupVerifier",
+      "template": "scroll/MultipleVersionRollupVerifier",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+      "name": "L1MessageQueueV2",
+      "template": "scroll/L1MessageQueue",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D",
+      "name": "ZkEvmVerifierV0",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+      "name": "L1ERC721Gateway",
+      "template": "scroll/L1ERC721Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2",
+      "name": "ZkEvmVerifierV1-1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+      "name": "wstETHescrowLido",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "name": "DaiEscrow",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+      "name": "L1ScrollMessenger",
+      "template": "scroll/L1ScrollMessenger",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+      "name": "EnforcedTxGateway",
+      "template": "scroll/EnforcedTxGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x749fC77A1a131632a8b88e8703E489557660C75e",
+      "name": "PlonkVerifierGalileo",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+      "name": "ScrollOwner",
+      "template": "scroll/ScrollOwner",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+      "name": "L1WETHGateway",
+      "template": "scroll/L1WETHGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
+      "name": "L1ETHGateway",
+      "template": "scroll/L1ETHGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+      "name": "TimelockEmergency",
+      "template": "scroll/L1Timelock",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+      "name": "SystemConfig",
+      "template": "scroll/SystemConfig",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
+      "name": "PlonkVerifierV2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
+      "name": "PlonkVerifierV2-1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
+      "name": "Scroll Multisig 4",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
+      "name": "PlonkVerifierFeynmanV2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
+      "name": "pufETHEscrow",
+      "template": "scroll/L1CustomERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+      "name": "ScrollChain",
+      "template": "scroll/ScrollChain",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485",
+      "name": "ZkEvmVerifierPostFeynman",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+      "name": "L1CustomERC20Gateway",
+      "template": "scroll/L1CustomERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b",
+      "name": "PauseController",
+      "template": "scroll/PauseController",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
+      "name": "L1ERC1155Gateway",
+      "template": "scroll/L1ERC1155Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2",
+      "name": "L1USDCGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+      "name": "Scroll Multisig 2",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA",
+      "name": "ZkEvmVerifierPostEuclid-2",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3",
+      "name": "ZkEvmVerifierV2-1",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761",
+      "name": "ScrollAdminMultisig",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+      "name": "L1StandardERC20Gateway",
+      "template": "scroll/L1StandardERC20Gateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "name": "ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+      "name": "Scroll Multisig 3",
+      "template": "GnosisSafe",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+      "name": "L1USDCGateway",
+      "template": "scroll/L1USDCGateway",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+      "name": "L1GatewayRouter",
+      "template": "scroll/L1GatewayRouter",
+      "status": "failed",
+      "error": "skipped: codex reported an error: Your workspace is out of credits. Add credits to continue.; Your workspace is out of credits. A",
+      "planSource": "none",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 0,
+      "modelMs": 0,
+      "fields": [],
+      "facts": [],
+      "counts": {
+        "v1Fields": 0,
+        "v2Fields": 0,
+        "equal": 0,
+        "equalRenamed": 0,
+        "equalByValue": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    }
+  ],
+  "totals": {
+    "v1Fields": 18,
+    "v2Fields": 12,
+    "equal": 12,
+    "equalRenamed": 0,
+    "equalByValue": 0,
+    "different": 0,
+    "v1Only": {
+      "proxy": 0,
+      "getter": 0,
+      "handler": 1,
+      "template-projection": 5
+    },
+    "v2Only": {
+      "ignored-by-v1": 0,
+      "new": 0
+    },
+    "contracts": 48,
+    "compared": 3,
+    "failed": 45,
+    "tokens": {
+      "input": 0,
+      "cached": 0,
+      "output": 0,
+      "reasoning": 0
+    },
+    "wallMs": 4464,
+    "modelMs": 0,
+    "roundsDistribution": {}
+  }
+}
