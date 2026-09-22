@@ -1,6 +1,7 @@
 import {
   ConsoleTransport,
   type Env,
+  exitOnShutdownSignal,
   getEnv,
   Logger,
   type LoggerOptions,
@@ -25,6 +26,7 @@ async function main() {
   const env = getEnv()
 
   const logger = createLogger(env)
+  exitOnShutdownSignal(logger)
 
   apm.start({
     active: process.env.ES_APM_ENABLED === 'true',
