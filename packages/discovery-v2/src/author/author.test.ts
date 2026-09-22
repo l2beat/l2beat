@@ -353,15 +353,50 @@ describe(author.name, () => {
     )
   })
 
-  it('warns, without failing, when a logs step matched no logs', async () => {
+  it('treats no logs on a step that covers a getter as an error and asks the model to find the real events or skip', async () => {
     const quiet = mockObject<IProvider>({
       chain: prepared.chain,
       blockNumber: prepared.blockNumber,
       getLogs: async () => [],
     })
+    const model = new FakeModelClient([
+      json(validPlan),
+      json({
+        ...validPlan,
+        steps: [],
+        skips: [...skips, { item: 'validators(address)', reason: 'unbounded' }],
+      }),
+    ])
+    const result = await author(
+      { model, provider: quiet, library, artifacts: new MemoryArtifactSink() },
+      ctx,
+    )
+    expect(result.status).toEqual('ok')
+    expect(result.rounds.length).toEqual(2)
+    expect(result.rounds[0]?.findings[0]?.severity).toEqual('error')
+    expect(result.rounds[0]?.findings[0]?.message ?? '').toMatchRegex(
+      /no logs found for events ValidatorStatusUpdate up to block 1000, yet the step covers validators\(address\)/,
+    )
+    expect(model.prompts[1] ?? '').toInclude(
+      '1. error at steps[0].fetch.events',
+    )
+  })
+
+  it('only warns when a logs step that covers nothing matched no logs, because an empty history can be the truth', async () => {
+    const quiet = mockObject<IProvider>({
+      chain: prepared.chain,
+      blockNumber: prepared.blockNumber,
+      getLogs: async () => [],
+    })
+    const { covers: _covers, ...uncovered } = validatorsStep
+    const plan = {
+      ...validPlan,
+      steps: [{ ...uncovered, id: 'validatorStatusUpdate' }],
+      skips: [...skips, { item: 'validators(address)', reason: 'unbounded' }],
+    }
     const result = await author(
       {
-        model: new FakeModelClient([json(validPlan)]),
+        model: new FakeModelClient([json(plan)]),
         provider: quiet,
         library,
         artifacts: new MemoryArtifactSink(),
@@ -369,6 +404,7 @@ describe(author.name, () => {
       ctx,
     )
     expect(result.status).toEqual('ok')
+    expect(result.rounds.length).toEqual(1)
     expect(result.rounds[0]?.findings).toEqual([
       {
         severity: 'warning',
@@ -377,7 +413,35 @@ describe(author.name, () => {
           'no logs found for events ValidatorStatusUpdate up to block 1000; confirm the event names and that this contract emits them',
       },
     ])
-    expect(result.storedFile).toEqual(undefined)
+  })
+
+  it('accepts an empty plan without a model turn when the worklist has nothing to rule on, and stores it as trivial', async () => {
+    const model = new FakeModelClient([])
+    const planStore = new PlanStore(plansDir)
+    const result = await author(
+      {
+        model,
+        provider: provider(),
+        library,
+        planStore,
+        artifacts: new MemoryArtifactSink(),
+        now: () => NOW,
+      },
+      { ...ctx, worklist: { items: [], events: ctx.worklist.events } },
+    )
+    expect(result.status).toEqual('ok')
+    expect(result.rounds).toEqual([])
+    expect(model.prompts).toEqual([])
+    expect(result.plan).toEqual({
+      version: 1,
+      contract: prepared.name,
+      shapeHash: prepared.shapeHash,
+      steps: [],
+      skips: [],
+    })
+    expect(
+      planStore.load(prepared.shapeHash as string)?.provenance.source,
+    ).toEqual('trivial')
   })
 
   it('reports a model failure as a failed authoring instead of throwing', async () => {

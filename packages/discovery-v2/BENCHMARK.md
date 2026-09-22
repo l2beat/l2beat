@@ -301,6 +301,19 @@ accepted because an empty event fold is only a warning; the benchmark caught
 it only because V1 had the handler, which is exactly the coverage this
 benchmark cannot claim for projects without templates.
 
+## Changes made after these runs, not yet re-benchmarked
+
+Two fixes followed directly from the findings above and landed after the
+numbers in this file were produced, so a re-run will differ in two ways:
+
+- A `logs` step that matched no logs and `covers` a getter is now an error,
+  not a warning, forcing a repair round. The plumenetwork `isBatchPoster`
+  and `isSequencer` wrong answers would have gone back to the model instead
+  of being accepted.
+- A contract with an empty worklist no longer calls the model; its empty
+  plan is stored as `source: trivial`. That removes 16 of the 69 model calls
+  and roughly 290k of the 2.7M input tokens.
+
 ## Plans authored during these runs
 
 Every accepted model plan is stored under `plans/<shapeHash>.json` with

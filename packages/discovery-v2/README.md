@@ -314,8 +314,14 @@ not hang a run.
    is a fact about the code, not a decision), `validatePlan`, and when there
    is no error, dry-run `executePlan` on the real provider. Step errors become
    `steps[i]` findings; a `logs` step that matched nothing becomes a warning
-   ("no logs found for events …; confirm the event names and that this
-   contract emits them"). Any error produces a repair message: the findings
+   when the step covers no getter (an empty history can be the truth) and an
+   error when it does (the benchmark caught an `isBatchPoster = []` accepted
+   as a warning while the getter returned true for five addresses), so the
+   model must find the events the setters actually emit or skip the item. A
+   contract whose worklist is empty never reaches the model: its plan is
+   empty by construction and is stored with `source: trivial`; 16 of the 69
+   calls in the first benchmark were spent on exactly such plans. Any error
+   produces a repair message: the findings
    as a numbered list, errors first, then "Return the whole corrected plan",
    sent with `codex exec resume`. The model gets one first turn plus at most
    `maxRepairRounds` (default 2) repairs.

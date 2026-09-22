@@ -20,11 +20,11 @@ import type { IProvider } from '@l2beat/discovery'
 import { executePlan } from '../execute/executePlan'
 import type { Library } from '../library/Library'
 import type { Finding } from '../plan/Finding'
-import type { Plan } from '../plan/Plan'
+import type { Plan, Step } from '../plan/Plan'
 import { planSchema } from '../plan/planSchema'
 import { validatePlan } from '../plan/validatePlan'
 import { decisionHash } from '../plans/decisionHash'
-import type { PlanStore } from '../plans/PlanStore'
+import type { PlanSource, PlanStore } from '../plans/PlanStore'
 import type { Baseline } from '../types/Baseline'
 import type { Prepared } from '../types/Prepared'
 import type { Worklist } from '../types/Worklist'
@@ -117,6 +117,9 @@ class AuthoringLoop {
   }
 
   async run(): Promise<AuthoringResult> {
+    if (this.ctx.worklist.items.length === 0) {
+      return this.acceptedWithoutModel(trivialPlan(this.ctx.prepared))
+    }
     const { prompt, truncated } = buildAuthoringPrompt(
       { ...this.ctx, library: this.deps.library },
       { sourceCharCap: this.options.sourceCharCap ?? DEFAULT_SOURCE_CHAR_CAP },
@@ -249,14 +252,53 @@ class AuthoringLoop {
         Array.isArray(raw) &&
         raw.length === 0
       ) {
-        findings.push({
-          severity: 'warning',
-          path: `steps[${i}].fetch.events`,
-          message: `no logs found for events ${step.fetch.events.join(', ')} up to block ${this.ctx.prepared.blockNumber}; confirm the event names and that this contract emits them`,
-        })
+        findings.push(this.zeroLogsFinding(step, i))
       }
     })
     return { record: { status: executed.status, failedSteps }, findings }
+  }
+
+  /**
+   * A fold over events nobody emitted is the truth for an event-only step,
+   * but for a step that claims to answer a getter it is more likely the
+   * wrong event: the benchmark caught an `isBatchPoster = []` accepted this
+   * way while the getter returned true for five addresses. So the finding
+   * is an error whenever `covers` is non-empty, and the model must probe
+   * the getter or skip the item.
+   */
+  private zeroLogsFinding(step: Step, index: number): Finding {
+    const events = step.fetch.kind === 'logs' ? step.fetch.events : []
+    const where = `no logs found for events ${events.join(', ')} up to block ${this.ctx.prepared.blockNumber}`
+    if ((step.covers ?? []).length === 0) {
+      return {
+        severity: 'warning',
+        path: `steps[${index}].fetch.events`,
+        message: `${where}; confirm the event names and that this contract emits them`,
+      }
+    }
+    return {
+      severity: 'error',
+      path: `steps[${index}].fetch.events`,
+      message: `${where}, yet the step covers ${step.covers?.join(', ')}; this contract does not emit these events, so find the events its setters actually emit (check the flattened source, including inherited contracts), enumerate the getter another way, or skip the item with a reason`,
+    }
+  }
+
+  /**
+   * Nothing to rule on means nothing for the model to decide: the plan is
+   * empty by construction. Skipping the turn saved about a tenth of all
+   * tokens in the first benchmark, where 16 of 69 calls returned `[]`.
+   */
+  private acceptedWithoutModel(plan: Plan): AuthoringResult {
+    const result: AuthoringResult = {
+      status: 'ok',
+      plan,
+      rounds: [],
+      promptTruncated: false,
+    }
+    result.storedFile = this.store(plan, 'trivial')
+    this.writeSummary('ok', result)
+    this.logger.info('Plan accepted without a model turn: empty worklist')
+    return result
   }
 
   private accepted(plan: Plan, truncated: boolean): AuthoringResult {
@@ -268,7 +310,7 @@ class AuthoringLoop {
       model: this.model,
       promptTruncated: truncated,
     }
-    result.storedFile = this.store(plan)
+    result.storedFile = this.store(plan, 'model')
     this.writeSummary('ok', result)
     this.logger.info('Plan accepted', {
       rounds: this.rounds.length,
@@ -279,7 +321,7 @@ class AuthoringLoop {
     return result
   }
 
-  private store(plan: Plan): string | undefined {
+  private store(plan: Plan, source: PlanSource): string | undefined {
     if (this.deps.planStore === undefined) {
       return undefined
     }
@@ -288,7 +330,7 @@ class AuthoringLoop {
       return undefined
     }
     return this.deps.planStore.save(plan, {
-      source: 'model',
+      source,
       createdAt: (this.deps.now ?? (() => new Date()))().toISOString(),
       model: this.model,
       rounds: this.rounds.length,
@@ -398,4 +440,14 @@ function toJsonl(events: unknown[]): string {
 
 function describeError(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
+}
+
+function trivialPlan(prepared: Prepared): Plan {
+  return {
+    version: 1,
+    contract: prepared.name,
+    shapeHash: prepared.shapeHash,
+    steps: [],
+    skips: [],
+  }
 }

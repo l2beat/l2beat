@@ -21,7 +21,7 @@ import { validateSchema } from '../library/validateSchema'
 import type { Plan } from '../plan/Plan'
 import { planSchema } from '../plan/planSchema'
 
-export const PLAN_SOURCES = ['model', 'manual'] as const
+export const PLAN_SOURCES = ['model', 'manual', 'trivial'] as const
 export type PlanSource = (typeof PLAN_SOURCES)[number]
 
 export const PlanProvenance = v.object({
