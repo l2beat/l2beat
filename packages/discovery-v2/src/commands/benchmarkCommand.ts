@@ -28,6 +28,7 @@ export interface BenchmarkArgs {
   addresses?: string[]
   author: boolean
   repeat: number
+  noPlan?: boolean
   out?: string
   model?: string
   reasoning?: ReasoningEffort
@@ -52,6 +53,9 @@ export async function benchmarkCommand(
   if (args.repeat > 0 && !args.author) {
     throw new Error('--repeat needs --author: a repeat is an authoring run')
   }
+  if (args.noPlan && args.author) {
+    throw new Error('--no-plan and --author exclude each other')
+  }
   const project = loadV1Project(args.project, args.chain, {
     limit: args.limit,
     addresses: args.addresses,
@@ -72,6 +76,7 @@ export async function benchmarkCommand(
     {
       author: args.author,
       repeat: args.repeat,
+      noPlan: args.noPlan,
       outDir,
       model: args.model,
       reasoning: args.reasoning,

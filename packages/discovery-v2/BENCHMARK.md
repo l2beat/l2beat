@@ -89,6 +89,33 @@ The `scroll` row is the full project run; the `--repeat 2` run over three
 Scroll contracts (all store hits, so the same entries) is reported under
 Consistency and Cost only.
 
+### Against the floor
+
+`--no-plan` runs the same contracts with an empty plan and no model, so the
+difference between a floor row and a model row is what the model's decisions
+bought. Same addresses and blocks as above; floor runs cost no tokens.
+
+| Project | Run | V1 fields | equal (+renamed) | coverage | V1 handler fields | handler fields equal (+renamed) | handler coverage |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| scroll | floor | 347 | 311 | 89.6% | 12 | 0 | 0% |
+| scroll | gpt-5.6-sol | 347 | 315 (+3) | 91.6% | 12 | 4 (+3) | 58% |
+| base | floor | 421 | 368 | 87.4% | 32 | 0 | 0% |
+| base | gpt-5.6-sol | 421 | 371 | 88.1% | 32 | 2 | 6% |
+| plumenetwork | floor | 111 | 95 | 85.6% | 11 | 0 | 0% |
+| plumenetwork | gpt-5.6-sol (medium) | 111 | 98 | 88.3% | 11 | 1 | 9% |
+
+Reading it: the floor is already high because 93% of V1's fields are plain
+getters, and V2 gets every one of them. The model moves only the handler
+fields, and there the picture differs per project: on Scroll it reproduces
+7 of 12; on Base 2 of 32, because 20 of the 32 are literal-key `call`
+fields that V2 returns as one map (same information, other shape, not
+credited) and most of the rest are bespoke handlers; on plumenetwork 1 of
+11, the rest being Orbit's custom TypeScript handlers. So the whole-field
+coverage number barely moves between floor and model, and the handler
+coverage number is the one to watch when a model, a reasoning level or a
+recipe changes. `BENCHMARK.html` draws both; `benchmarks/*.json` are the
+inputs.
+
 Reading the table: on Scroll 315 of 347 V1 fields are equal by name and value
 and 3 more by value under another name; the 2 missed handler fields are
 `revertedBatches` and `verifierVersions`, the 24 missed projections are the

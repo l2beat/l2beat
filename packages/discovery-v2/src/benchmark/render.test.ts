@@ -140,6 +140,7 @@ describe(renderMarkdown.name, () => {
     blockNumber: 25789575,
     model: 'gpt-test',
     author: true,
+    noPlan: false,
     repeat: 2,
     startedAt: '2026-09-22T00:00:00.000Z',
     finishedAt: '2026-09-22T01:00:00.000Z',

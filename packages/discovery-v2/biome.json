@@ -16,5 +16,14 @@
         "noUselessElse": "error"
       }
     }
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!BENCHMARK.html",
+      "!benchmarks/**",
+      "!runs/**",
+      "!plans/**"
+    ]
   }
 }

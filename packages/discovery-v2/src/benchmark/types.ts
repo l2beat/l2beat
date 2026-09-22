@@ -143,6 +143,8 @@ export interface ProjectBenchmark {
   model?: string
   reasoning?: string
   author: boolean
+  /** Every contract ran with an empty plan (the deterministic floor). */
+  noPlan: boolean
   repeat: number
   startedAt: string
   finishedAt: string

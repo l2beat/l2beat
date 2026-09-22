@@ -59,7 +59,7 @@ export function renderMarkdown(report: ProjectBenchmark): string {
 function renderSetup(report: ProjectBenchmark): string[] {
   return [
     `- Model: ${report.model ?? 'none (no model call in this run)'}${report.reasoning === undefined ? '' : ` (reasoning ${report.reasoning})`}`,
-    `- Authoring: ${report.author ? 'on' : 'off'}; repeats per contract: ${report.repeat}`,
+    `- Authoring: ${report.author ? 'on' : 'off'}${report.noPlan ? ' (empty plan for every contract: deterministic floor)' : ''}; repeats per contract: ${report.repeat}`,
     `- Started ${report.startedAt}, finished ${report.finishedAt}`,
     `- Plan store before the run: ${report.planStoreBefore.length} plan(s)${report.planStoreBefore.length === 0 ? '' : ` (${report.planStoreBefore.map(shortHash).join(', ')})`}`,
   ]

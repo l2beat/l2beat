@@ -442,7 +442,7 @@ function describeError(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
 }
 
-function trivialPlan(prepared: Prepared): Plan {
+export function trivialPlan(prepared: Prepared): Plan {
   return {
     version: 1,
     contract: prepared.name,

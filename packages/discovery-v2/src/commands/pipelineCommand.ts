@@ -12,7 +12,7 @@
  * the same validate step as a stored one, so the pipeline has one path.
  */
 import path from 'path'
-import type { AuthoringResult } from '../author/author'
+import { type AuthoringResult, trivialPlan } from '../author/author'
 import { Library } from '../library/Library'
 import type { Plan } from '../plan/Plan'
 import { validatePlan } from '../plan/validatePlan'
@@ -39,9 +39,17 @@ export interface PipelineArgs extends AuthorOptions {
   author?: boolean
   /** Ask the model even when a stored plan applies. */
   reauthor?: boolean
+  /**
+   * Run with an empty plan, ignoring the store and the model. This is the
+   * floor of every benchmark: what the deterministic tools alone (proxy
+   * values, 0-arg getters) produce before anybody decides anything. The
+   * plan is not validated, because an empty plan rules on nothing and the
+   * validator would rightly call every worklist item undecided.
+   */
+  noPlan?: boolean
 }
 
-export type PipelinePlanSource = 'file' | 'store' | 'model'
+export type PipelinePlanSource = 'file' | 'store' | 'model' | 'trivial'
 
 export interface PipelineResult extends OutputFiles {
   runDir: string
@@ -59,9 +67,11 @@ export async function pipelineCommand(
   const { baseline } = await runBaseline(ctx, provider, prepared, runDir)
   const { worklist } = writeWorklist(ctx, prepared.abi, runDir)
 
-  let found = args.reauthor
-    ? undefined
-    : findPlan(ctx, args, prepared.shapeHash)
+  let found = args.noPlan
+    ? { plan: trivialPlan(prepared), source: 'trivial' as const }
+    : args.reauthor
+      ? undefined
+      : findPlan(ctx, args, prepared.shapeHash)
   let authoring: AuthoringResult | undefined
   if (found === undefined && (args.author || args.reauthor)) {
     const authored = await runAuthor(
@@ -97,9 +107,11 @@ export async function pipelineCommand(
   const model = authoring?.model
   writeJson(path.join(runDir, FILE_NAMES.plan), found.plan)
 
-  const findings = await withLibrary((library) =>
-    validatePlan(found.plan, { prepared, baseline, worklist, library }),
-  )
+  const findings = args.noPlan
+    ? []
+    : await withLibrary((library) =>
+        validatePlan(found.plan, { prepared, baseline, worklist, library }),
+      )
   writeJson(path.join(runDir, FILE_NAMES.findings), findings)
   const errors = countErrors(findings)
   ctx.logger.info('Plan validated', {

@@ -54,6 +54,7 @@ subcommand, so each can be tested and benchmarked alone.
 | `output` | prepared, baseline, values | `entry.json` in V1 `EntryParameters` shape, plus `entry.meta.json` | yes |
 | `pipeline` | chain, address, block | all of the above; skips `author` when a stored plan applies | |
 | `benchmark` | V1 project name | `benchmark.json`, `benchmark.md`: field-by-field comparison against the committed `discovered.json` at its block | yes, once every shape has a stored plan |
+| `report` | several `benchmark.json` | `BENCHMARK.html`: one self-contained page with the runs as bars, side by side | yes |
 
 RPC access goes through V1's `AllProviders` with the shared SQLite cache
 (`.discovery.json` → `packages/config/cache/discovery.sqlite`), so benchmark
@@ -143,7 +144,23 @@ pnpm start benchmark base --author --addresses 0x0b144E07A0826182B6b59788c34b32B
 
 Without `--author` a run costs no tokens: shapes with a stored plan use it
 and the rest end as `missing` entries whose proxy and baseline values are
-still compared. See `BENCHMARK.md` for the results of the real runs.
+still compared. `--no-plan` runs every contract with an empty plan and no
+model: the floor, what proxy detection and 0-arg getters alone reproduce.
+Every other run is judged by how far it climbs above that floor, so a floor
+run over the same addresses should sit next to every model run.
+
+```sh
+# The floor for the same 25 Base contracts a model run used
+pnpm start benchmark base --no-plan --addresses "$(node -e "console.log(require('./runs/benchmark/base/benchmark.json').contracts.map(c=>c.address).join(','))")" --out runs/benchmark/base-noplan
+
+# One page from several runs; `label=path` names a run, else its setup does
+pnpm start report floor=benchmarks/scroll-noplan.json benchmarks/scroll.json --out BENCHMARK.html
+```
+
+`benchmarks/` keeps the `benchmark.json` of every run reported in
+`BENCHMARK.md` and `BENCHMARK.html` (the `runs/` directory is not committed),
+so the page can be regenerated and a new run compared with the old ones.
+See `BENCHMARK.md` for the results and what they mean.
 
 `$R/author/` holds `round-N.prompt.md`, `round-N.response.txt`,
 `round-N.findings.json`, `round-N.dryrun.json`, `codex-events.jsonl` and
@@ -381,7 +398,10 @@ compared as entry facts. Per contract the report keeps plan status and source
 and nothing saved, and reports how many distinct `decisionHash`es the N+1
 plans have: the consistency requirement expressed as a number.
 `BENCHMARK.md` holds the results of the real runs, with every V1 handler
-field V2 missed or got different and where its fix belongs.
+field V2 missed or got different and where its fix belongs. `BENCHMARK.html`
+(from `report`) shows the same runs as bars: one over all V1 fields, and one
+over the V1 fields a researcher wrote a handler for, which is the only part a
+model, a tool or a recipe can move and therefore the bar to compare setups on.
 
 ## Working on this package
 

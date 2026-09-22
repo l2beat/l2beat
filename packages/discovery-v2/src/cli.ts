@@ -14,6 +14,7 @@ import {
   option,
   optional,
   positional,
+  restPositionals,
   run,
   string,
   subcommands,
@@ -33,6 +34,7 @@ import {
   pipelineCommand,
 } from './commands/pipelineCommand'
 import { prepareCommand } from './commands/prepareCommand'
+import { reportCommand } from './commands/reportCommand'
 import {
   countErrors,
   formatFinding,
@@ -274,6 +276,25 @@ function summarisePipeline(result: PipelineResult): string {
   ].join(' ')
 }
 
+const report = command({
+  name: 'report',
+  description:
+    'render one self-contained HTML page comparing several benchmark.json runs; an input may be label=path',
+  args: {
+    inputs: restPositionals({ type: string, displayName: 'benchmark.json' }),
+    out: option({
+      type: string,
+      long: 'out',
+      defaultValue: () => 'BENCHMARK.html',
+      description: 'output file; default BENCHMARK.html',
+    }),
+    envFile,
+  },
+  handler: (args) => {
+    reportCommand(createContext(args), args)
+  },
+})
+
 const benchmark = command({
   name: 'benchmark',
   description:
@@ -299,6 +320,11 @@ const benchmark = command({
     author: flag({
       long: 'author',
       description: 'ask Codex when the store has no plan for a shape',
+    }),
+    noPlan: flag({
+      long: 'no-plan',
+      description:
+        'empty plan for every contract: measures proxy values and 0-arg getters alone, the floor without any decision',
     }),
     repeat: option({
       type: number,
@@ -341,6 +367,7 @@ const cli = subcommands({
     output,
     pipeline,
     benchmark,
+    report,
   },
 })
 

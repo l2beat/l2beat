@@ -58,6 +58,8 @@ export interface BenchmarkOptions {
   author: boolean
   /** Extra authoring runs per contract, store bypassed; needs `author`. */
   repeat: number
+  /** Empty plan for every contract: the no-decision floor. */
+  noPlan?: boolean
   /** Where per-contract run directories go (`<outDir>/contracts/<address>`). */
   outDir: string
   model?: string
@@ -102,6 +104,7 @@ export async function runBenchmark(
     model: modelOf(contracts) ?? options.model,
     reasoning: options.reasoning,
     author: options.author,
+    noPlan: options.noPlan ?? false,
     repeat: options.repeat,
     startedAt: startedAt.toISOString(),
     finishedAt: finishedAt.toISOString(),
@@ -130,6 +133,7 @@ async function benchmarkContract(
       address: entry.address,
       blockNumber: project.blockNumber,
       author: options.author,
+      noPlan: options.noPlan,
       out: runDir,
       model: options.model,
       reasoning: options.reasoning,

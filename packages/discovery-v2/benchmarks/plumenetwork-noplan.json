@@ -1,0 +1,1352 @@
+{
+  "project": "plumenetwork",
+  "chain": "ethereum",
+  "blockNumber": 25832885,
+  "author": false,
+  "noPlan": true,
+  "repeat": 0,
+  "startedAt": "2026-09-22T10:34:30.226Z",
+  "finishedAt": "2026-09-22T10:34:30.865Z",
+  "planStoreBefore": [
+    "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796",
+    "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e",
+    "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc",
+    "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678",
+    "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615",
+    "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6",
+    "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2",
+    "0x225810cbe5057d2f1117e745ae4ff27fa647febbe5339dacb1ce56d82b190392",
+    "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7",
+    "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da",
+    "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3",
+    "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca",
+    "0x2e9da55640a68f408f8fcf0e9118234aa07af3f55b24b41c3a114449105c9c1d",
+    "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e",
+    "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77",
+    "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7",
+    "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a",
+    "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64",
+    "0x466121c468e24b126cff46f03258b1a2592900d32ef1fb72ff2ccf44396e28bc",
+    "0x66c27813079fd2347a15e6ccff5c0801341969437e08f0070782345cfdd93fb7",
+    "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db",
+    "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a",
+    "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f",
+    "0x6bec1db10c626a5dec51592412891e6f9e23f8bce071ef7ba6c0ca3f0fa73e9d",
+    "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838",
+    "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9",
+    "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09",
+    "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8",
+    "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972",
+    "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10",
+    "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512",
+    "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf",
+    "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2",
+    "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588",
+    "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61",
+    "0xa4062ee0605bb59576bcc34aca508e90f3bf7ed7e33e40eaaa00b2ad7cfbe764",
+    "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55",
+    "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a",
+    "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d",
+    "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d",
+    "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc",
+    "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8",
+    "0xbae3ab76c19b4b822cc30bcc4bc5965592e0bdd388d7a86780960e54eab0c327",
+    "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
+    "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d",
+    "0xcb1c41c6d2ba11186ca799e856035fa982533f5ecf4884c0939338afe2737b34",
+    "0xcec827564def7e6158f8e730388b3bc0cf1ef0fc4ce5402825941d12fc969370",
+    "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae",
+    "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be",
+    "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
+    "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f",
+    "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee",
+    "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50",
+    "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9",
+    "0xf3c6e738fea3021407f38297a88f51d2062b1da961a817e31ad014ae28758fad",
+    "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+  ],
+  "contracts": [
+    {
+      "address": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+      "name": "Bridge",
+      "template": "orbitstack/Bridge",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0xf79e99cabfa06db32bd1f60cd577518d55ccbd043a35b7ec4e34c84276377037",
+      "decisionHash": "0xf79e99cabfa06db32bd1f60cd577518d55ccbd043a35b7ec4e34c84276377037",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 169,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "activeOutbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "delayedMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nativeToken",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "nativeTokenDecimals",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollup",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerInbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerReportedSubMessageCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "allowedDelayedInboxList",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "allowedOutboxList",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "inboxHistory",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "outboxHistory",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x35381f63091926750F43b2A7401B083263aDEF83": "TransparentUpgradeableProxy",
+            "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
+          },
+          "v2": {
+            "eth:0x35381f63091926750F43b2A7401B083263aDEF83": "TransparentUpgradeableProxy",
+            "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 16,
+        "v2Fields": 12,
+        "equal": 12,
+        "equalRenamed": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 2,
+          "handler": 2,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
+      "name": "RollupProxy",
+      "template": "orbitstack/RollupProxyBoLD",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0x4b4a22c7f33fad1323e71d6f9feeeda52aa5c7abc3c8dd3a27fd7dd2b38a78b4",
+      "decisionHash": "0x4b4a22c7f33fad1323e71d6f9feeeda52aa5c7abc3c8dd3a27fd7dd2b38a78b4",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 252,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "anyTrustFastConfirmer",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "baseStake",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "bridge",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "chainId",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "challengeGracePeriodBlocks",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "challengeManager",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "confirmPeriodBlocks",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "genesisAssertionHash",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getValidators",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "inbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "latestConfirmed",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "loserStakeEscrow",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "minimumAssertionPeriod",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "outbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "owner",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "paused",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollupDeploymentBlock",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollupEventInbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerInbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "stakeToken",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "stakerCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "totalWithdrawableFunds",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "validatorAfkBlocks",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "validatorWalletCreator",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "validatorWhitelistDisabled",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "wasmModuleRoot",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "arbOsFromWmRoot",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "edit",
+            "handlerType": "call"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "challenges",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "event"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "isPostBoLD",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "hardcoded"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "Arbitrum proxy",
+          "v2": "Arbitrum proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2",
+            "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
+          ],
+          "v2": [
+            "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2",
+            "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 24389677,
+          "v2": 24389677
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8": "RollupProxy",
+            "eth:0x16aD566aaa05fe6977A033DE2472c05C84CAB724": "RollupAdminLogic",
+            "eth:0xA4892FFE3Deab25337D7D1A5b94b35dABa255451": "RollupUserLogic"
+          },
+          "v2": {
+            "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8": "RollupProxy",
+            "eth:0x16aD566aaa05fe6977A033DE2472c05C84CAB724": "RollupAdminLogic",
+            "eth:0xA4892FFE3Deab25337D7D1A5b94b35dABa255451": "RollupUserLogic"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 33,
+        "v2Fields": 30,
+        "equal": 30,
+        "equalRenamed": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 2,
+          "template-projection": 1
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
+      "name": "Outbox",
+      "template": "orbitstack/Outbox",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0x046440d4d75bdc4dbeb2b64c5ce1ea1dbf41691444ef428f9b279193a5649349",
+      "decisionHash": "0x046440d4d75bdc4dbeb2b64c5ce1ea1dbf41691444ef428f9b279193a5649349",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 35,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "OUTBOX_VERSION",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "bridge",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1BatchNum",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1Block",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1EthBlock",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1OutputId",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1Sender",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1Timestamp",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "l2ToL1WithdrawalAmount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollup",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71": "TransparentUpgradeableProxy",
+            "eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386": "ERC20Outbox"
+          },
+          "v2": {
+            "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71": "TransparentUpgradeableProxy",
+            "eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386": "ERC20Outbox"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 14,
+        "v2Fields": 14,
+        "equal": 14,
+        "equalRenamed": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
+      "name": "SequencerInbox",
+      "template": "orbitstack/SequencerInbox",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0x13057576050be6e49cd0ddb84007cd6eb275bf1eee51925b66df69be461f037d",
+      "decisionHash": "0x13057576050be6e49cd0ddb84007cd6eb275bf1eee51925b66df69be461f037d",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 77,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "BROTLI_MESSAGE_HEADER_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DAS_MESSAGE_HEADER_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DATA_AUTHENTICATED_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DATA_BLOB_HEADER_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "HEADER_LENGTH",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "TREE_DAS_MESSAGE_HEADER_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "ZERO_HEAVY_MESSAGE_HEADER_FLAG",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "batchCount",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "batchPosterManager",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "bridge",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "buffer",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "feeTokenPricer",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "isDelayBufferable",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "isUsingFeeToken",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "maxDataSize",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "different",
+          "name": "maxTimeVariation",
+          "attribution": {
+            "kind": "getter",
+            "edited": true
+          },
+          "diff": "V1={\"delayBlocks\":7200,\"delaySeconds\":86400,\"futureBlocks\":48,\"… V2=[7200,48,86400,3600]"
+        },
+        {
+          "verdict": "equal",
+          "name": "reader4844",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "rollup",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "totalDelayedMessagesRead",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "batchPosters",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "arbitrumActors"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "dacKeyset",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "arbitrumDACKeyset"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "keySetUpdates",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "eventCount"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "postsBlobs",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "orbitPostsBlobs"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "sequencerVersion",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "arbitrumSequencerVersion"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "setIsBatchPosterCount",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "eventCount"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59": "TransparentUpgradeableProxy",
+            "eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324": "SequencerInbox"
+          },
+          "v2": {
+            "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59": "TransparentUpgradeableProxy",
+            "eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324": "SequencerInbox"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 29,
+        "v2Fields": 23,
+        "equal": 22,
+        "equalRenamed": 0,
+        "different": 1,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 6,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
+      "name": "Inbox",
+      "template": "orbitstack/Inbox",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0x40d4a08450e402f5215f22877f3a01a63e79c9938610f130c9be634e235ee1c8",
+      "decisionHash": "0x40d4a08450e402f5215f22877f3a01a63e79c9938610f130c9be634e235ee1c8",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 55,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "allowListEnabled",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "bridge",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "getProxyAdmin",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "maxDataSize",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "paused",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "sequencerInbox",
+          "attribution": {
+            "kind": "getter"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D": "TransparentUpgradeableProxy",
+            "eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e": "ERC20Inbox"
+          },
+          "v2": {
+            "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D": "TransparentUpgradeableProxy",
+            "eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e": "ERC20Inbox"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 10,
+        "v2Fields": 10,
+        "equal": 10,
+        "equalRenamed": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 0,
+          "template-projection": 0
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    },
+    {
+      "address": "eth:0xd688dabDBb14D673898689135a23a174560c8C04",
+      "name": "UpgradeExecutor",
+      "template": "orbitstack/UpgradeExecutor",
+      "status": "compared",
+      "planStatus": "ok",
+      "planSource": "trivial",
+      "planHash": "0x678d855ab90fcac9007a9f2716bb643711a6877d5242383f656e780540bed385",
+      "decisionHash": "0x678d855ab90fcac9007a9f2716bb643711a6877d5242383f656e780540bed385",
+      "rounds": 0,
+      "tokens": {
+        "input": 0,
+        "cached": 0,
+        "output": 0,
+        "reasoning": 0
+      },
+      "wallMs": 30,
+      "modelMs": 0,
+      "fields": [
+        {
+          "verdict": "equal",
+          "name": "$admin",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$implementation",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$pastUpgrades",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "$upgradeCount",
+          "attribution": {
+            "kind": "proxy"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "DEFAULT_ADMIN_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "equal",
+          "name": "EXECUTOR_ROLE",
+          "attribution": {
+            "kind": "getter"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "accessControl",
+          "attribution": {
+            "kind": "handler",
+            "handlerType": "accessControl"
+          }
+        },
+        {
+          "verdict": "v1-only",
+          "name": "executors",
+          "attribution": {
+            "kind": "template-projection",
+            "via": "pickRoleMembers",
+            "handlerType": "accessControl"
+          }
+        }
+      ],
+      "facts": [
+        {
+          "fact": "proxyType",
+          "equal": true,
+          "v1": "EIP1967 proxy",
+          "v2": "EIP1967 proxy"
+        },
+        {
+          "fact": "sourceHashes",
+          "equal": true,
+          "v1": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+          ],
+          "v2": [
+            "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+            "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+          ]
+        },
+        {
+          "fact": "sinceBlock",
+          "equal": true,
+          "v1": 21887008,
+          "v2": 21887008
+        },
+        {
+          "fact": "implementationNames",
+          "equal": true,
+          "v1": {
+            "eth:0xd688dabDBb14D673898689135a23a174560c8C04": "TransparentUpgradeableProxy",
+            "eth:0x011d8F10fbC20C14B453768253CdFF7EB5B96917": "UpgradeExecutor"
+          },
+          "v2": {
+            "eth:0xd688dabDBb14D673898689135a23a174560c8C04": "TransparentUpgradeableProxy",
+            "eth:0x011d8F10fbC20C14B453768253CdFF7EB5B96917": "UpgradeExecutor"
+          }
+        }
+      ],
+      "counts": {
+        "v1Fields": 9,
+        "v2Fields": 7,
+        "equal": 7,
+        "equalRenamed": 0,
+        "different": 0,
+        "v1Only": {
+          "proxy": 0,
+          "getter": 0,
+          "handler": 1,
+          "template-projection": 1
+        },
+        "v2Only": {
+          "ignored-by-v1": 0,
+          "new": 0
+        }
+      }
+    }
+  ],
+  "totals": {
+    "v1Fields": 111,
+    "v2Fields": 96,
+    "equal": 95,
+    "equalRenamed": 0,
+    "different": 1,
+    "v1Only": {
+      "proxy": 0,
+      "getter": 2,
+      "handler": 11,
+      "template-projection": 2
+    },
+    "v2Only": {
+      "ignored-by-v1": 0,
+      "new": 0
+    },
+    "contracts": 6,
+    "compared": 6,
+    "failed": 0,
+    "tokens": {
+      "input": 0,
+      "cached": 0,
+      "output": 0,
+      "reasoning": 0
+    },
+    "wallMs": 618,
+    "modelMs": 0,
+    "roundsDistribution": {}
+  }
+}

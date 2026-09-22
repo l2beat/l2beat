@@ -9,7 +9,7 @@ import type { AuthoringResult } from '../author/author'
 import type { AuthorFiles } from '../commands/authorCommand'
 import { createContext } from '../commands/context'
 import { FILE_NAMES, writeJson } from '../commands/files'
-import type { PipelineResult } from '../commands/pipelineCommand'
+import type { PipelineArgs, PipelineResult } from '../commands/pipelineCommand'
 import type { Plan } from '../plan/Plan'
 import { decisionHash } from '../plans/decisionHash'
 import {
@@ -85,6 +85,24 @@ describe(runBenchmark.name, () => {
       ignoreMethods: ['registry'],
     }),
   }
+
+  it('with noPlan passes the flag to every pipeline run and records it on the report', async () => {
+    const seen: PipelineArgs[] = []
+    const report = await runBenchmark(
+      {
+        ctx,
+        runPipeline: (c, args) => {
+          seen.push(args)
+          return fakePipeline(c, args)
+        },
+        now: () => new Date(0),
+      },
+      project,
+      { author: false, repeat: 0, noPlan: true, outDir },
+    )
+    expect(report.noPlan).toEqual(true)
+    expect(seen.map((a) => a.noPlan)).toEqual([true, true, true])
+  })
 
   it('records a throw on its contract, compares the others and sums the cost', async () => {
     const report = await runBenchmark(
