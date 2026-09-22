@@ -31,6 +31,7 @@ COPY --from=pruner /src/out/full/ ./
 # credentials both ways. The secret mounts below take precedence when present.
 ARG TURBO_TOKEN
 ARG TURBO_API
+RUN echo "diag: TURBO_TEAM=${TURBO_TEAM:+set} TURBO_TOKEN=${TURBO_TOKEN:+set} TURBO_API=${TURBO_API:+set}"
 RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:frontend
