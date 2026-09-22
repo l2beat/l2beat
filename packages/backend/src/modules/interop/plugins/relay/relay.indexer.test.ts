@@ -16,7 +16,7 @@ import {
 
 const FROM = 1787583059
 const BATCH_SIZE = 60
-const MAX_REQUESTS_PER_UPDATE = 10_000
+const MAX_REQUESTS_PER_CHUNK = 10_000
 const SAFE_TIME_OFFSET = 10
 const CHAINS = [
   { id: 1, name: 'ethereum' },
@@ -50,6 +50,7 @@ describe(RelayIndexer.name, () => {
         startTimestamp: FROM,
         endTimestamp: FROM + BATCH_SIZE + 1,
         limit: 10_000,
+        status: 'success',
       })
       expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
@@ -64,8 +65,78 @@ describe(RelayIndexer.name, () => {
         startTimestamp: FROM,
         endTimestamp: FROM + 6,
         limit: 10_000,
+        status: 'success',
       })
       expect(syncedTo).toEqual(FROM + 5)
+    })
+
+    it('partitions the window for concurrent fetching', async () => {
+      const getAllRequests = mockFn<
+        RelayApiClient['getAllRequests']
+      >().resolvesTo({ requests: [] })
+      const indexer = createIndexer(
+        mockObject<RelayApiClient>({ getAllRequests }),
+        { concurrency: 3 },
+      )
+
+      const syncedTo = await indexer.update(FROM, FROM + 10_000)
+
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(getAllRequests.calls.map((call) => call.args[0])).toEqual([
+        {
+          startTimestamp: FROM,
+          endTimestamp: FROM + 21,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+        },
+        {
+          startTimestamp: FROM + 21,
+          endTimestamp: FROM + 41,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+        },
+        {
+          startTimestamp: FROM + 41,
+          endTimestamp: FROM + BATCH_SIZE + 1,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+        },
+      ])
+    })
+
+    it('filters by chain when exactly one tracked chain can be resolved', async () => {
+      const relayApiClient = clientReturning({ requests: [] })
+      const indexer = createIndexer(relayApiClient, {
+        chains: CHAINS,
+        trackedChains: ['optimism'],
+      })
+
+      await indexer.update(FROM, FROM)
+
+      expect(relayApiClient.getAllRequests).toHaveBeenCalledWith({
+        startTimestamp: FROM,
+        endTimestamp: FROM + 1,
+        limit: MAX_REQUESTS_PER_CHUNK,
+        status: 'success',
+        chainId: 10,
+      })
+    })
+
+    it('serializes saves across concurrent partitions for deduplication', async () => {
+      const relayApiClient = clientReturning({
+        requests: [successRequest('a')],
+      })
+      const saveNewEvents =
+        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const indexer = createIndexer(relayApiClient, {
+        chains: CHAINS,
+        concurrency: 3,
+        interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+      })
+
+      await indexer.update(FROM, FROM + BATCH_SIZE)
+
+      expect(savedIds(saveNewEvents)).toEqual([['a']])
     })
 
     it('advances through a second holding more entries than one page', async () => {
@@ -88,62 +159,11 @@ describe(RelayIndexer.name, () => {
       expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
-    it('halves the window when the fetch hits the request cap', async () => {
-      const getAllRequests = mockFn<RelayApiClient['getAllRequests']>()
-        .resolvesToOnce({
-          requests: manyInSameSecond(3, '2026-08-24T14:50:59'),
-          continuation: 'cursor-1',
-        })
-        .resolvesToOnce({ requests: [] })
-      const indexer = createIndexer(
-        mockObject<RelayApiClient>({ getAllRequests }),
-      )
-
-      const syncedTo = await indexer.update(FROM, FROM + 10_000)
-
-      expect(getAllRequests).toHaveBeenCalledTimes(2)
-      expect(getAllRequests).toHaveBeenNthCalledWith(1, {
-        startTimestamp: FROM,
-        endTimestamp: FROM + BATCH_SIZE + 1,
-        limit: MAX_REQUESTS_PER_UPDATE,
-      })
-      expect(getAllRequests).toHaveBeenNthCalledWith(2, {
-        startTimestamp: FROM,
-        endTimestamp: FROM + BATCH_SIZE / 2 + 1,
-        limit: MAX_REQUESTS_PER_UPDATE,
-      })
-      expect(syncedTo).toEqual(FROM + BATCH_SIZE / 2)
-    })
-
-    it('keeps halving down to a single second', async () => {
-      const getAllRequests = mockFn<
-        RelayApiClient['getAllRequests']
-      >().executes(async (options) =>
-        options?.endTimestamp === FROM + 1
-          ? { requests: [] }
-          : { requests: [], continuation: 'cursor-1' },
-      )
-      const indexer = createIndexer(
-        mockObject<RelayApiClient>({ getAllRequests }),
-      )
-
-      const syncedTo = await indexer.update(FROM, FROM + 10_000)
-
-      const windowLengths = getAllRequests.calls.map(
-        (call) => (call.args[0]?.endTimestamp ?? 0) - 1 - FROM,
-      )
-      expect(windowLengths).toEqual([60, 30, 15, 7, 3, 1, 0])
-      expect(syncedTo).toEqual(FROM)
-    })
-
-    it('follows the continuation when a single second exceeds the cap', async () => {
+    it('follows continuations without refetching or shrinking the window', async () => {
       const getAllRequests = mockFn<
         RelayApiClient['getAllRequests']
       >().executes(async (options) => {
-        if (options?.endTimestamp !== FROM + 1) {
-          return { requests: [], continuation: 'cursor-0' }
-        }
-        switch (options.continuation) {
+        switch (options?.continuation) {
           case undefined:
             return { requests: [successRequest('a')], continuation: 'cursor-1' }
           case 'cursor-1':
@@ -164,15 +184,39 @@ describe(RelayIndexer.name, () => {
 
       const syncedTo = await indexer.update(FROM, FROM + 10_000)
 
-      expect(syncedTo).toEqual(FROM)
-      const continuations = getAllRequests.calls
-        .filter((call) => call.args[0]?.endTimestamp === FROM + 1)
-        .map((call) => call.args[0]?.continuation)
-      expect(continuations).toEqual([undefined, 'cursor-1', 'cursor-2'])
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
+      expect(getAllRequests).toHaveBeenCalledTimes(3)
+      expect(getAllRequests.calls.map((call) => call.args[0])).toEqual([
+        {
+          startTimestamp: FROM,
+          endTimestamp: FROM + BATCH_SIZE + 1,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+          chainId: 1,
+        },
+        {
+          startTimestamp: FROM,
+          endTimestamp: FROM + BATCH_SIZE + 1,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+          chainId: 1,
+          continuation: 'cursor-1',
+        },
+        {
+          startTimestamp: FROM,
+          endTimestamp: FROM + BATCH_SIZE + 1,
+          limit: MAX_REQUESTS_PER_CHUNK,
+          status: 'success',
+          chainId: 1,
+          continuation: 'cursor-2',
+        },
+      ])
       expect(getAllRequests).toHaveBeenLastCalledWith({
         startTimestamp: FROM,
-        endTimestamp: FROM + 1,
-        limit: MAX_REQUESTS_PER_UPDATE,
+        endTimestamp: FROM + BATCH_SIZE + 1,
+        limit: MAX_REQUESTS_PER_CHUNK,
+        status: 'success',
+        chainId: 1,
         continuation: 'cursor-2',
       })
       expect(savedIds(saveNewEvents)).toEqual([['a'], ['b'], ['c']])
@@ -204,7 +248,7 @@ describe(RelayIndexer.name, () => {
     it('advances at exactly the cap when no continuation remains', async () => {
       const relayApiClient = clientReturning({
         requests: manyInSameSecond(
-          MAX_REQUESTS_PER_UPDATE,
+          MAX_REQUESTS_PER_CHUNK,
           '2026-08-24T14:50:59',
         ),
       })
@@ -216,70 +260,7 @@ describe(RelayIndexer.name, () => {
       expect(relayApiClient.getAllRequests).toHaveBeenCalledTimes(1)
     })
 
-    it('splits a capped window and resumes after the complete prefix without skipping events', async () => {
-      const deferred = successRequest('deferred')
-      const complete = successRequest('complete')
-      const capped = {
-        requests: [
-          deferred,
-          ...manyInSameSecond(
-            MAX_REQUESTS_PER_UPDATE - 1,
-            '2026-08-24T14:50:59',
-          ),
-        ],
-        continuation: 'cursor-1',
-      }
-      const getAllRequests = mockFn<RelayApiClient['getAllRequests']>()
-        .resolvesToOnce(capped)
-        .resolvesToOnce(capped)
-        .resolvesToOnce({ requests: [complete] })
-        .resolvesToOnce({ requests: [deferred] })
-      const saveNewEvents =
-        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
-      const indexer = createIndexer(
-        mockObject<RelayApiClient>({ getAllRequests }),
-        {
-          chains: CHAINS,
-          interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
-        },
-      )
-
-      const syncedTo = await indexer.update(FROM, FROM + BATCH_SIZE)
-
-      expect(syncedTo).toEqual(FROM + 15)
-      expect(
-        getAllRequests.calls.map((call) => call.args[0]?.endTimestamp),
-      ).toEqual([FROM + 61, FROM + 31, FROM + 16])
-      expect(savedIds(saveNewEvents)).toEqual([['complete']])
-
-      const nextSyncedTo = await indexer.update(syncedTo + 1, FROM + BATCH_SIZE)
-
-      expect(nextSyncedTo).toEqual(FROM + BATCH_SIZE)
-      expect(getAllRequests).toHaveBeenLastCalledWith({
-        startTimestamp: FROM + 16,
-        endTimestamp: FROM + 61,
-        limit: MAX_REQUESTS_PER_UPDATE,
-      })
-      expect(savedIds(saveNewEvents)).toEqual([['complete'], ['deferred']])
-    })
-
-    it('can reduce a two-second window to a complete single second', async () => {
-      const getAllRequests = mockFn<RelayApiClient['getAllRequests']>()
-        .resolvesToOnce({ requests: [], continuation: 'cursor-1' })
-        .resolvesToOnce({ requests: [] })
-      const indexer = createIndexer(
-        mockObject<RelayApiClient>({ getAllRequests }),
-      )
-
-      expect(await indexer.update(FROM, FROM + 1)).toEqual(FROM)
-      expect(getAllRequests).toHaveBeenLastCalledWith({
-        startTimestamp: FROM,
-        endTimestamp: FROM + 1,
-        limit: MAX_REQUESTS_PER_UPDATE,
-      })
-    })
-
-    it('propagates a refetch failure without saving the partial window', async () => {
+    it('saves a completed chunk before propagating a later fetch failure', async () => {
       const getAllRequests = mockFn<RelayApiClient['getAllRequests']>()
         .resolvesToOnce({
           requests: [successRequest('partial')],
@@ -300,7 +281,7 @@ describe(RelayIndexer.name, () => {
         'network timeout',
       )
       expect(getAllRequests).toHaveBeenCalledTimes(2)
-      expect(saveNewEvents).toHaveBeenCalledTimes(0)
+      expect(savedIds(saveNewEvents)).toEqual([['partial']])
     })
 
     it('retries events whose save failed instead of skipping them', async () => {
@@ -547,6 +528,7 @@ function createIndexer(
   options: {
     chains?: { id: number; name: string }[]
     trackedChains?: string[]
+    concurrency?: number
     interopEventStore?: InteropEventStore
   } = {},
 ) {
@@ -556,7 +538,8 @@ function createIndexer(
     options.trackedChains ?? ['ethereum'],
     {
       batchSize: BATCH_SIZE,
-      maxRequestsPerUpdate: MAX_REQUESTS_PER_UPDATE,
+      concurrency: options.concurrency ?? 1,
+      maxRequestsPerChunk: MAX_REQUESTS_PER_CHUNK,
       safeTimeOffset: SAFE_TIME_OFFSET,
     },
     relayApiClient,

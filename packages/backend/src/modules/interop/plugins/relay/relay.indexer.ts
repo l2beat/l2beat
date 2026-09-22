@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropEventContext } from '@l2beat/database'
-import { Address32, UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
+import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
@@ -13,7 +14,8 @@ import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export interface RelayIndexerConfig {
   batchSize: number
-  maxRequestsPerUpdate: number
+  concurrency: number
+  maxRequestsPerChunk: number
   safeTimeOffset: number
 }
 
@@ -64,6 +66,7 @@ export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
   private readonly bootstrapChainNamesById: Map<number, string>
+  private readonly relayChainId: number | undefined
 
   constructor(
     chains: { id: number; name: string }[],
@@ -88,7 +91,15 @@ export class RelayIndexer extends ManagedChildIndexer {
       logger,
     )
 
+    assert(
+      Number.isInteger(relayConfig.concurrency) && relayConfig.concurrency > 0,
+      'Relay concurrency must be a positive integer',
+    )
     this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(chains)
+    this.relayChainId =
+      trackedChains.length === 1
+        ? chains.find((chain) => chain.name === trackedChains[0])?.id
+        : undefined
   }
 
   override async start(): Promise<void> {
@@ -123,71 +134,84 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
-    let syncedTo = Math.min(from + this.relayConfig.batchSize, to)
-    let res = await this.fetchWindow(from, syncedTo)
+    const syncedTo = Math.min(from + this.relayConfig.batchSize, to)
+    const windows = splitRange(from, syncedTo, this.relayConfig.concurrency)
+    const saveMutex = new AsyncMutex()
+    const startedAt = Date.now()
+    const results = await Promise.allSettled(
+      windows.map((window) =>
+        this.syncWindow(window.from, window.to, saveMutex),
+      ),
+    )
 
-    // A window holding more requests than the cap cannot be fetched in one go.
-    // Retrying it unchanged would fail forever, so halve it until it fits or
-    // until it cannot shrink any further.
-    while (res.continuation && syncedTo > from) {
-      const shrunkTo = from + Math.floor((syncedTo - from) / 2)
-      this.logger.warn('Window exceeds request cap, shrinking it', {
-        from,
-        syncedTo,
-        shrunkTo,
-        fetched: res.requests.length,
-        cap: this.relayConfig.maxRequestsPerUpdate,
-      })
-      syncedTo = shrunkTo
-      res = await this.fetchWindow(from, syncedTo)
-    }
-
-    await this.saveRequests(res.requests)
-
-    // The narrowest window cannot be split by time, so the only way forward is
-    // to follow the continuation until it is exhausted. Requests are saved per
-    // chunk to keep memory bounded; ids already saved are skipped on retry.
-    let continuation = res.continuation
-    if (continuation) {
-      this.logger.warn(
-        'Narrowest window exceeds request cap, following continuation',
-        {
-          from,
-          fetched: res.requests.length,
-          cap: this.relayConfig.maxRequestsPerUpdate,
-        },
-      )
-    }
-    const seenCursors = new Set<string>()
-    while (continuation) {
-      // An API that hands back a cursor it already returned, or a cursor with
-      // nothing behind it, would otherwise keep this loop running forever.
-      if (seenCursors.has(continuation)) {
-        throw new Error(
-          `Relay API returned a repeated continuation cursor for window ${from}-${syncedTo}`,
-        )
+    let chunks = 0
+    let requests = 0
+    for (const result of results) {
+      if (result.status === 'rejected') {
+        throw result.reason
       }
-      seenCursors.add(continuation)
-      res = await this.fetchWindow(from, syncedTo, continuation)
-      if (res.requests.length === 0 && res.continuation) {
-        throw new Error(
-          `Relay API returned a continuation cursor without requests for window ${from}-${syncedTo}`,
-        )
-      }
-      await this.saveRequests(res.requests)
-      continuation = res.continuation
+      chunks += result.value.chunks
+      requests += result.value.requests
     }
+
+    this.logger.info('Processed Relay window', {
+      from,
+      to: syncedTo,
+      partitions: windows.length,
+      chunks,
+      requests,
+      durationMs: Date.now() - startedAt,
+    })
 
     return syncedTo
   }
 
-  private fetchWindow(from: number, syncedTo: number, continuation?: string) {
+  private async syncWindow(from: number, to: number, saveMutex: AsyncMutex) {
+    let continuation: string | undefined
+    const seenCursors = new Set<string>()
+    let chunks = 0
+    let requests = 0
+
+    do {
+      const res = await this.fetchWindow(from, to, continuation)
+
+      // An API that hands back a cursor it already returned, or a cursor with
+      // nothing behind it, would otherwise keep this loop running forever.
+      if (res.continuation && seenCursors.has(res.continuation)) {
+        throw new Error(
+          `Relay API returned a repeated continuation cursor for window ${from}-${to}`,
+        )
+      }
+      if (res.requests.length === 0 && res.continuation) {
+        throw new Error(
+          `Relay API returned a continuation cursor without requests for window ${from}-${to}`,
+        )
+      }
+
+      await saveMutex.runExclusive(() => this.saveRequests(res.requests))
+      chunks++
+      requests += res.requests.length
+
+      if (res.continuation) {
+        seenCursors.add(res.continuation)
+      }
+      continuation = res.continuation
+    } while (continuation)
+
+    return { chunks, requests }
+  }
+
+  private fetchWindow(from: number, to: number, continuation?: string) {
     return this.relayApiClient.getAllRequests({
       startTimestamp: from,
       // Both bounds are inclusive. The extra second covers sub-second updatedAt
       // values right at the boundary; duplicates are dropped by request id.
-      endTimestamp: syncedTo + 1,
-      limit: this.relayConfig.maxRequestsPerUpdate,
+      endTimestamp: to + 1,
+      limit: this.relayConfig.maxRequestsPerChunk,
+      status: 'success',
+      ...(this.relayChainId !== undefined
+        ? { chainId: this.relayChainId }
+        : {}),
       ...(continuation !== undefined ? { continuation } : {}),
     })
   }
@@ -306,4 +330,23 @@ export class RelayIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+function splitRange(from: number, to: number, requestedParts: number) {
+  const length = to - from + 1
+  const parts = Math.min(requestedParts, length)
+  const baseSize = Math.floor(length / parts)
+  let remainder = length % parts
+  let start = from
+
+  return Array.from({ length: parts }, () => {
+    const size = baseSize + (remainder > 0 ? 1 : 0)
+    remainder = Math.max(0, remainder - 1)
+    const range = {
+      from: start,
+      to: start + size - 1,
+    }
+    start = range.to + 1
+    return range
+  })
 }
