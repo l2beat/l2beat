@@ -31,9 +31,11 @@ COPY --from=pruner /src/out/full/ ./
 # credentials both ways. The secret mounts below take precedence when present.
 ARG TURBO_TOKEN
 ARG TURBO_API
-RUN echo "diag: TURBO_TEAM=${TURBO_TEAM:+set} TURBO_TOKEN=${TURBO_TOKEN:+set} TURBO_API=${TURBO_API:+set}"
-RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
-  --mount=type=secret,id=TURBO_API,env=TURBO_API \
+RUN --mount=type=secret,id=TURBO_TOKEN \
+  --mount=type=secret,id=TURBO_API \
+  export TURBO_TOKEN="$(cat /run/secrets/TURBO_TOKEN 2>/dev/null || echo "$TURBO_TOKEN")" && \
+  export TURBO_API="$(cat /run/secrets/TURBO_API 2>/dev/null || echo "$TURBO_API")" && \
+  echo "diag: TEAM=${TURBO_TEAM:+set} TOKEN=${TURBO_TOKEN:+set} API=${TURBO_API:+set} SOURCE_COMMIT=${SOURCE_COMMIT:+set}" && \
   pnpm build:frontend
 
 # Replace node_modules with production dependencies only. Switching dev -> prod
