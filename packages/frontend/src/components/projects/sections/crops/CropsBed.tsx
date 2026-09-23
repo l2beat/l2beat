@@ -217,12 +217,16 @@ function Sky({ inGarden }: { inGarden: boolean }) {
         className={cn(
           'absolute inset-0 bg-gradient-to-b',
           inGarden
-            ? 'from-garden-canvas via-garden-tint to-garden-tint'
+            ? 'from-garden-sky via-garden-tint to-garden-tint'
             : 'from-surface-secondary/70 via-surface-secondary/30 to-surface-secondary/20',
         )}
       />
       {inGarden && (
-        <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+        <>
+          <Sun />
+          <Moon />
+          <Stars />
+        </>
       )}
       <svg
         className="absolute inset-x-0 bottom-0 h-10 w-full"
@@ -238,6 +242,49 @@ function Sky({ inGarden }: { inGarden: boolean }) {
           }
         />
       </svg>
+    </div>
+  )
+}
+
+function Sun() {
+  return (
+    <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+  )
+}
+
+/** A crescent: the inset shadow paints the lit side of an otherwise transparent disc. */
+function Moon() {
+  return (
+    <span className="absolute top-3 right-5 hidden size-12 rotate-[-20deg] rounded-full shadow-[inset_-13px_-5px_0_0_var(--garden-moon)] drop-shadow-[0_0_6px_var(--garden-moon)] dark:block" />
+  )
+}
+
+const STARS = [
+  { left: '6%', top: '18%', size: 2 },
+  { left: '17%', top: '42%', size: 1.5 },
+  { left: '29%', top: '12%', size: 1.5 },
+  { left: '41%', top: '30%', size: 2 },
+  { left: '54%', top: '10%', size: 1.5 },
+  { left: '63%', top: '38%', size: 1.5 },
+  { left: '74%', top: '16%', size: 2 },
+  { left: '96%', top: '46%', size: 1.5 },
+]
+
+function Stars() {
+  return (
+    <div className="absolute inset-0 hidden dark:block">
+      {STARS.map((star) => (
+        <span
+          key={star.left}
+          className="absolute rounded-full bg-garden-moon/70"
+          style={{
+            left: star.left,
+            top: star.top,
+            width: star.size,
+            height: star.size,
+          }}
+        />
+      ))}
     </div>
   )
 }
