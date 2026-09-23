@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type ConfigRegistry,
@@ -9,7 +8,10 @@ import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import {
+  type CliLogger,
+  createCliLogger,
+} from '../implementations/common/CliLogger'
 import { TimePredictor } from '../implementations/common/TimePredictor'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 import { Separated } from './types'
@@ -66,7 +68,8 @@ export const RefreshDiscovery = command({
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
-    const logger = getPlainLogger(args.concise ? 'WARN' : 'INFO')
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
+    const logger = cli.toLogger(args.concise ? 'WARN' : 'INFO')
 
     const projectChain = configReader
       .readAllDiscoveredProjects()
@@ -119,19 +122,13 @@ export const RefreshDiscovery = command({
       logger.info(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
-      const predictor = new TimePredictor()
-      const failedProjects: { name: string; message: string }[] = []
       if (args.confirmed || keyInYN('Do you want to continue?')) {
-        for (const [i, { config }] of toRefresh.entries()) {
-          let failureMessage: string | undefined
-          const startTime = performance.now()
-          try {
-            await discoverAndUpdateDiffHistory(
-              {
-                project: config.name,
-                dev: true,
-                overwriteCache: args.overwriteCache,
-              },
+        const failedProjects = await refreshProjects(
+          toRefresh.map(({ config }) => config.name),
+          cli,
+          (project) =>
+            discoverAndUpdateDiffHistory(
+              { project, dev: true, overwriteCache: args.overwriteCache },
               {
                 description: args.message,
                 configReader,
@@ -139,22 +136,8 @@ export const RefreshDiscovery = command({
                 paths,
                 logger,
               },
-            )
-          } catch (error) {
-            failureMessage = getErrorMessage(error)
-            failedProjects.push({ name: config.name, message: failureMessage })
-          }
-
-          reportStatus(
-            logger,
-            predictor,
-            i + 1,
-            toRefresh.length,
-            performance.now() - startTime,
-            config.name,
-            failureMessage !== undefined ? chalk.red('FAILED') : undefined,
-          )
-        }
+            ),
+        )
 
         if (failedProjects.length > 0) {
           logger.error(
@@ -169,30 +152,67 @@ export const RefreshDiscovery = command({
   },
 })
 
-function reportStatus(
-  logger: Logger,
-  predictor: TimePredictor,
+async function refreshProjects(
+  projects: string[],
+  cli: CliLogger,
+  refresh: (project: string) => Promise<void>,
+): Promise<{ name: string; message: string }[]> {
+  const predictor = new TimePredictor()
+  const failedProjects: { name: string; message: string }[] = []
+  const progress = cli.status()
+  let current = { index: 0, startedAt: performance.now() }
+  const draw = () => {
+    const elapsedSeconds = (performance.now() - current.startedAt) / 1000
+    const predicted = predictor.predict(projects.length - current.index)
+    const timeLeftSeconds =
+      predicted === undefined
+        ? undefined
+        : Math.max(0, predicted - elapsedSeconds)
+    progress.update(
+      formatReport(
+        current.index,
+        projects.length,
+        timeLeftSeconds,
+        projects[current.index],
+      ),
+    )
+  }
+  const ticker = setInterval(draw, 1000)
+  try {
+    for (const [i, project] of projects.entries()) {
+      current = { index: i, startedAt: performance.now() }
+      draw()
+      try {
+        await refresh(project)
+      } catch (error) {
+        failedProjects.push({ name: project, message: getErrorMessage(error) })
+      }
+      predictor.update((performance.now() - current.startedAt) / 1000)
+    }
+  } finally {
+    clearInterval(ticker)
+  }
+  progress.done(`Refreshed ${projects.length} projects`)
+  return failedProjects
+}
+
+function formatReport(
   finishedCount: number,
   count: number,
-  runTime: number,
-  project: string,
-  note?: string,
-) {
+  timeLeftSeconds: number | undefined,
+  status: string,
+): string {
   const bar = chalk.cyan(asciiProgressBar(finishedCount, count))
-  const timeLeft = formatSeconds(
-    predictor.updateAndPredict(runTime / 1000, count - finishedCount),
-  )
+  const timeLeft =
+    timeLeftSeconds === undefined ? '?' : formatSeconds(timeLeftSeconds)
   const eta = `ETA: ${timeLeft.padEnd(6)}`
   const countDigits = count.toString().length
   const counter = colorMap(
-    `[${finishedCount.toFixed().padStart(countDigits)}/${count}]`,
+    `[${(finishedCount + 1).toFixed().padStart(countDigits)}/${count}]`,
     finishedCount,
     count,
   )
-  const status = `${counter} ${project}${note ? ` (${note})` : ''}`
-
-  const report = [bar, eta, status]
-  logger.warn(report.join(' | '))
+  return [bar, eta, `${counter} ${status}`].join(' | ')
 }
 
 function getErrorMessage(error: unknown): string {
