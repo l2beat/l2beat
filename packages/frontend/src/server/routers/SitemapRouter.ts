@@ -1,12 +1,18 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import express from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
+import {
+  type ChangelogEntry,
+  getChangelogEntries,
+} from '~/server/features/changelog/getChangelogEntries'
+import { newestTimestamp } from '~/server/lastModified'
 import { getPages, type Page } from '~/server/pagePaths'
+
+export type DatedChangelogEntry = Pick<ChangelogEntry, 'publishedAt'>
 
 interface SitemapSources {
   getPages: () => Promise<Page[]>
-  getChangelogEntries: () => { publishedAt: Date }[]
+  getChangelogEntries: () => DatedChangelogEntry[]
 }
 
 export function createSitemapRouter(
@@ -37,13 +43,14 @@ ${urls}
 
 /** The changelog records site-wide changes, so it dates pages that have no data of their own. */
 function getLatestPublished(
-  entries: { publishedAt: Date }[],
+  entries: DatedChangelogEntry[],
 ): UnixTime | undefined {
   const now = UnixTime.now()
-  const published = entries
-    .map((entry) => UnixTime.fromDate(entry.publishedAt))
-    .filter((timestamp) => timestamp <= now)
-  return published.length > 0 ? UnixTime(Math.max(...published)) : undefined
+  return newestTimestamp(
+    entries
+      .map((entry) => UnixTime.fromDate(entry.publishedAt))
+      .filter((timestamp) => timestamp <= now),
+  )
 }
 
 function renderUrl(path: string, lastModified: UnixTime | undefined) {

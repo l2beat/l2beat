@@ -7,7 +7,7 @@ import {
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
-import { getProjectLastModified } from './getProjectLastModified'
+import { getProjectLastModified, newestTimestamp } from './lastModified'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -115,46 +115,16 @@ async function getDynamicPages(): Promise<Page[]> {
       : Promise.resolve([]),
   ])
 
-  const pages: Page[] = []
-
-  for (const project of l2Projects) {
-    const lastModified = getProjectLastModified(project)
-    pages.push({ path: `/layer2s/projects/${project.slug}`, lastModified })
-    if (project.tvsConfig) {
-      pages.push({
-        path: `/layer2s/projects/${project.slug}/tvs-breakdown`,
-        lastModified,
-      })
-    }
-  }
-
-  for (const project of zkCatalogProjects) {
-    pages.push({
-      path: `/zk-catalog/${project.slug}`,
-      lastModified: getProjectLastModified(project),
-    })
-  }
-
-  for (const project of ecosystemProjects) {
-    pages.push({
-      path: `/ecosystems/${project.slug}`,
-      lastModified: getProjectLastModified(project),
-    })
-  }
-
-  for (const project of privacyProjects) {
-    pages.push({
-      path: `/privacy/projects/${project.slug}`,
-      lastModified: getProjectLastModified(project),
-    })
-  }
-
-  for (const project of defiProjects) {
-    pages.push({
-      path: `/defi/projects/${project.slug}`,
-      lastModified: getProjectLastModified(project),
-    })
-  }
+  const pages: Page[] = [
+    ...l2Projects.map(projectPage('/layer2s/projects')),
+    ...l2Projects
+      .filter((project) => project.tvsConfig)
+      .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
+    ...zkCatalogProjects.map(projectPage('/zk-catalog')),
+    ...ecosystemProjects.map(projectPage('/ecosystems')),
+    ...privacyProjects.map(projectPage('/privacy/projects')),
+    ...defiProjects.map(projectPage('/defi/projects')),
+  ]
 
   for (const layer of daLayers) {
     const layerLastModified = getProjectLastModified(layer)
@@ -165,7 +135,10 @@ async function getDynamicPages(): Promise<Page[]> {
       pages.push({
         path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
         // The page shows both the layer and the bridge.
-        lastModified: newest(layerLastModified, getProjectLastModified(bridge)),
+        lastModified: newestTimestamp([
+          layerLastModified,
+          getProjectLastModified(bridge),
+        ]),
       })
     }
     if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
@@ -190,7 +163,11 @@ async function getDynamicPages(): Promise<Page[]> {
   return pages
 }
 
-function newest(...timestamps: (UnixTime | undefined)[]): UnixTime | undefined {
-  const known = timestamps.filter((t) => t !== undefined)
-  return known.length > 0 ? UnixTime(Math.max(...known)) : undefined
+function projectPage(prefix: PagePath, suffix = '') {
+  return (
+    project: Parameters<typeof getProjectLastModified>[0] & { slug: string },
+  ): Page => ({
+    path: `${prefix}/${project.slug}${suffix}`,
+    lastModified: getProjectLastModified(project),
+  })
 }

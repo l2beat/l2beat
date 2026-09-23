@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { Page } from '~/server/pagePaths'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
-import { createSitemapRouter } from './SitemapRouter'
+import { createSitemapRouter, type DatedChangelogEntry } from './SitemapRouter'
 
 // Method: serve the sitemap over HTTP with injected pages and changelog, then
 // read back each <url> entry's <loc> and <lastmod>.
@@ -71,7 +71,7 @@ describe(createSitemapRouter.name, () => {
   })
 })
 
-async function fetchSitemap(pages: Page[], changelog: { publishedAt: Date }[]) {
+async function fetchSitemap(pages: Page[], changelog: DatedChangelogEntry[]) {
   const router = createSitemapRouter({
     getPages: () => Promise.resolve(pages),
     getChangelogEntries: () => changelog,
@@ -79,7 +79,7 @@ async function fetchSitemap(pages: Page[], changelog: { publishedAt: Date }[]) {
   return fetchFromRouter(router, '/sitemap.xml')
 }
 
-async function getEntries(pages: Page[], changelog: { publishedAt: Date }[]) {
+async function getEntries(pages: Page[], changelog: DatedChangelogEntry[]) {
   const xml = await (await fetchSitemap(pages, changelog)).text()
 
   return [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, url]) => ({

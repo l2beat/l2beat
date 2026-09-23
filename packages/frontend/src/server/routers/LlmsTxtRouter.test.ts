@@ -40,8 +40,12 @@ describe(createLlmsTxtRouter.name, () => {
     )
   })
 
-  it('lists exactly the public API endpoints the server registers', async () => {
-    const urls = getLinks(await getLlmsTxt(), 'Public API').map((l) => l.url)
+  it('lists exactly the /api endpoints the public API router registers', async () => {
+    // Non-/api entries (e.g. markdown page alternates) are not JSON API
+    // routes, so only /api links are held to the router.
+    const urls = getLinks(await getLlmsTxt(), 'Public API')
+      .map((l) => l.url)
+      .filter((url) => url.startsWith('https://l2beat.com/api/'))
 
     const registered = getRegisteredPaths(createPublicApiRouter()).map(
       (path) => `https://l2beat.com${path.replaceAll(/:(\w+)/g, '{$1}')}`,

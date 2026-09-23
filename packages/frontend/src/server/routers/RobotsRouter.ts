@@ -37,10 +37,11 @@ export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
   return router
 }
 
+const DISALLOW_EVERYTHING = 'User-agent: *\nDisallow: /\n'
+
 function getRobotsTxtBody(deploymentEnv: DeploymentEnv): string {
-  // Non-production deployments must never be indexed.
   if (deploymentEnv !== 'production') {
-    return 'User-agent: *\nDisallow: /\n'
+    return DISALLOW_EVERYTHING
   }
 
   const groups = ['*', ...AI_USER_AGENTS].map((userAgent) =>
