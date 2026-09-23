@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xf36e9b2907f6d603be405f1d0ae70298651ad606
+
+# Diff at Wed, 23 Sep 2026 05:48:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1784193913
+- current timestamp: 1784193913
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784193913 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
++++ description: Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately.
++++ severity: MEDIUM
+      values.withdrawalLimitEnabled:
++        []
+      fieldMeta.getUpgradeActivationDelay:
+-        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin.severity:
+-        "HIGH"
+      fieldMeta.withdrawalLimitStatus.severity:
+-        "HIGH"
+      fieldMeta.withdrawLimitPct.severity:
+-        "HIGH"
+      fieldMeta.manager:
+-        {"severity":"HIGH"}
+      fieldMeta.bridgedToken:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenContract:
+-        {"severity":"HIGH"}
+      fieldMeta.messagingContract:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl.severity:
+-        "HIGH"
+      fieldMeta.withdrawalLimitEnabled:
++        {"severity":"MEDIUM","description":"Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."}
+      fieldMeta.secAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.secAgentAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.getUpgradeActivationDelay:
+-        {"severity":"HIGH"}
+      fieldMeta.StarkWareProxy_upgradeDelay:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin.severity:
+-        "HIGH"
+      fieldMeta.programHashHistory.severity:
+-        "HIGH"
+      fieldMeta.aggregatorProgramHashHistory.severity:
+-        "HIGH"
+      fieldMeta.configHashHistory.severity:
+-        "HIGH"
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.feeCollector.severity:
+-        "HIGH"
+      fieldMeta.programHashMapped.severity:
++        "HIGH"
+      fieldMeta.aggregatorHashMapped.severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x324a5f06d86aa8a1ed0842e76e2a2716724f2d78
 
 # Diff at Sun, 20 Sep 2026 18:14:00 GMT:

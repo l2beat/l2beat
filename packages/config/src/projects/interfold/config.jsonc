@@ -987,6 +987,12 @@
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": {
       "description": "CRISP encrypted-ballot application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.",
       "category": "core",
+      "ignoreMethods": [
+        "censusModeOf",
+        "getParamsHash",
+        "getRoundData",
+        "votingPowerDivisorOf"
+      ],
       "fields": {
         "owner": {
           "description": "Account controlling application-level proof configuration and requester-supplied census roots.",

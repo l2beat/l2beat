@@ -1,7 +1,7 @@
 {
   "name": "jovay",
   "timestamp": 1762443722,
-  "configHash": "0xe9658509362dc22f96663fb2977ba48c373e2761dea67695dd22b78dcc311c20",
+  "configHash": "0x5f4798f08e70a8898fc0c48cb5414f5de269bd09c9ee56a4c7428f4b350c36e2",
   "entries": [
     {
       "name": "DcapAttestationRouter",
@@ -404,10 +404,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": "ProxyAdmin"

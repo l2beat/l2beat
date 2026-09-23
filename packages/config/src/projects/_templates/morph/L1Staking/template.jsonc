@@ -8,18 +8,6 @@
     "rewardPercentage": {
       "severity": "HIGH"
     },
-    "messenger": {
-      "severity": "HIGH"
-    },
-    "OTHER_STAKING": {
-      "severity": "HIGH"
-    },
-    "MESSENGER": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     // Identity churn inside the unchanged staker role is not HIGH.
     "getActiveStakers": {
       "permissions": [
@@ -28,9 +16,6 @@
           "description": "Actors allowed to commit transaction batches and propose and prove state roots"
         }
       ]
-    },
-    "rollupContract": {
-      "severity": "HIGH"
     },
     // Bond every sequencer/proposer posts, slashed when their batch is successfully challenged.
     "stakingValue": {
@@ -41,12 +26,7 @@
     "challengeDeposit": {
       "severity": "HIGH"
     },
-    // Blocks a staker must wait before withdrawing its bond after exiting.
-    "withdrawalLockBlocks": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

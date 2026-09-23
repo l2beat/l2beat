@@ -15,18 +15,92 @@
       "reason": "Upgraded the implementation of the (since retired) L1MessageQueue that gated all L1->L2 messages popped by ScrollChain at finalization."
     },
     {
+      "timestamp": 1748243099,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0xba98265b96c11b6b22d44f813082daf29a4dd0dd3dc40057ac4f9f6619362d0d",
+      "updateId": "5133e1b1",
+      "reason": "Replaced proof verifier version 7 in the MultipleVersionRollupVerifier."
+    },
+    {
+      "timestamp": 1754391250,
+      "type": "state",
+      "contract": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+      "transaction": "0x2079b856f7719b5340e68eeb2d4448b4fddd19938d1913c656d7a821f38af391",
+      "updateId": "9807e3db",
+      "reason": "Changed the AgoraGovernor voting delay from 86,400 to 3,600 blocks and voting period from 201,600 to 432,000 blocks."
+    },
+    {
+      "timestamp": 1754761103,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x3367e24b6cb138cea321f4556259660f24aba1b79ccce8f798ed135e28905f17",
+      "updateId": "6ed7fbd2",
+      "reason": "Replaced proof verifier version 7 after a soundness bug and retained the preceding verifier as a legacy verifier."
+    },
+    {
+      "timestamp": 1755485183,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+      "updateId": "a0ae31ea",
+      "reason": "Registered ZkEvmVerifierPostFeynman as proof verifier version 8."
+    },
+    {
+      "timestamp": 1756488827,
+      "type": "state",
+      "contract": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+      "transaction": "0x455e47a459a169806ab89a0d59237cf64660808785e17458d5585fefb44725e8",
+      "updateId": "8d34a425",
+      "reason": "Changed the AgoraGovernor voting delay from 3,600 to 172,800 blocks and voting period from 432,000 to 403,200 blocks."
+    },
+    {
+      "timestamp": 1764490172,
+      "type": "state",
+      "contract": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+      "transaction": "0xfd9a11e3ba07814cd05137dee0f9d6045a3a80d600d42bb30eed290858b08715",
+      "updateId": "dd400141",
+      "reason": "Changed the AgoraGovernor voting delay from 172,800 to 129,600 blocks and voting period from 403,200 to 302,400 blocks."
+    },
+    {
+      "timestamp": 1765784711,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x48bdee6843a6ec81ca613cdc4877d5273d76ac036f1719bdd430aef42fc0f135",
+      "updateId": "316f6807",
+      "reason": "Registered the Galileo proof verifiers for versions 9 and 10."
+    },
+    {
+      "timestamp": 1770602759,
+      "type": "state",
+      "contract": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+      "transaction": "0x7aa2a6547769f6c5cd671ac45d8b674e17e459cd7e1a4d10da1bfa1ea498fed5",
+      "updateId": "5986410f",
+      "reason": "Registered the EURC gateway in the L1GatewayRouter token-to-gateway mapping."
+    },
+    {
+      "timestamp": 1771825979,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799",
+      "updateId": "3d076cfd",
+      "reason": "Replaced proof verifier version 10 after a guest prover bug."
+    },
+    {
       "timestamp": 1779270407,
       "type": "state",
-      "contract": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+      "contract": "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "transaction": "0xe2e005c681f783fbd6d4c9c5bb5b40a554826434546377ce253e5dcd6f557461",
-      "reason": "Reduced the threshold of Scroll Multisig 3 (proposer, canceller and admin of TimelockFast) from 3 to 2; the Safe itself is outside the perimeter."
+      "updateId": "82e0b905",
+      "reason": "Reduced the threshold of Scroll Multisig 3, the proposer, canceller and admin of TimelockFast, from 3 to 2."
     },
     {
       "timestamp": 1779270521,
       "type": "state",
-      "contract": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+      "contract": "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "transaction": "0x88316f5cba9e68d6bcb54f52470e58c5a2270675c62ed4f0ca05f2b1dde173f7",
-      "reason": "Reduced the threshold of the L2 Scroll Multisig 3 (proposer, canceller and admin of the L2 TimelockFast) from 3 to 2; the Safe itself is outside the perimeter."
+      "updateId": "82e0b905",
+      "reason": "Reduced the threshold of the L2 Scroll Multisig 3, the proposer, canceller and admin of the L2 TimelockFast, from 3 to 2."
     },
     {
       "timestamp": 1782371087,
@@ -35,6 +109,13 @@
       "transaction": "0xef62af37d5b9f1ff354bffa8f6431f047f82754ae39dc6a87582ca22b78eae58",
       "updateId": "bc8d7ec1",
       "reason": "Registered ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) as proof verifier version 10 in the MultipleVersionRollupVerifier."
+    },
+    {
+      "timestamp": 1790041547,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x9583c940852a52717f6f6d7fd3edaf8b3da2254d9f3136cbbcad07d29f9ee77e",
+      "reason": "Replaced proof verifier version 10 with ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254)."
     }
   ]
 }

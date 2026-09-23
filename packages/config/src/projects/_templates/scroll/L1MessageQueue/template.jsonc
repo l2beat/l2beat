@@ -19,17 +19,5 @@
     "nextCrossDomainMessageIndex",
     "nextUnfinalizedQueueIndex"
   ],
-  "ignoreRelatives": ["messageQueueV1"], // deprecated
-  "fields": {
-    "$admin": { "severity": "HIGH" },
-    "owner": { "severity": "HIGH" },
-    "messenger": { "severity": "HIGH" },
-    "scrollChain": { "severity": "HIGH" },
-    "enforcedTxGateway": {
-      // can append messages to the queue without going through the messenger
-      "severity": "HIGH"
-    },
-    "systemConfig": { "severity": "HIGH" },
-    "messageQueueV1": { "severity": "HIGH" }
-  }
+  "ignoreRelatives": ["messageQueueV1"] // deprecated
 }

@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registers and escrows stake from batch submitters. The Rollup only accepts permissionless proof-carrying batches from active registered submitters and uses this contract for challenge slashing.",
+  "critical": true,
+  "ignoreMethods": [
+    "registered",
+    "stakeOf",
+    "withdrawing",
+    "withdrawalBatchIndex"
+  ],
+  "ignoreInWatchMode": ["slashRemaining"],
+  "fields": {
+    "minimumStake": {
+      "severity": "HIGH",
+      "description": "Minimum escrowed stake required for a registered submitter to propose a batch."
+    },
+    "challengeDeposit": {
+      "severity": "HIGH",
+      "description": "Deposit required to challenge a batch proposed through the submitter path."
+    },
+    "rewardPercentage": {
+      "severity": "HIGH",
+      "description": "Share of a slashed submitter's stake paid to the successful challenger."
+    },
+    "submitters": {
+      "description": "Addresses registered by the owner to become active batch submitters after staking the minimum amount.",
+      "handler": {
+        "type": "event",
+        "select": "submitter",
+        "add": { "event": "SubmitterAdded" },
+        "remove": { "event": "SubmitterRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can propose proof-carrying batches after staking the configured minimum amount."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can register and remove submitters, change stake and challenge economics, and claim stake left after slashing."
+        }
+      ]
+    }
+  }
+}

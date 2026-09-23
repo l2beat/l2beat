@@ -6,7 +6,6 @@
   "canActIndependently": false,
   "fields": {
     "accessControl": {
-      "severity": "HIGH",
       "handler": {
         "type": "scrollAccessControl",
         "roleNames": {

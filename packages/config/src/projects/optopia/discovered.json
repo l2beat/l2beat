@@ -1,7 +1,7 @@
 {
   "name": "optopia",
   "timestamp": 1768569941,
-  "configHash": "0x88425be4a028f74e1dffb94539872d4662578913a2e76b566cf221ce1c05c48e",
+  "configHash": "0x9b822015770803830e577e1be2381cd2f6d3704c927edb7c55a51830937878d6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -19,13 +19,13 @@
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "critical": true,
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334959,
       "sinceBlock": 19838878,
       "values": {
         "$immutable": true,
         "owner": "eth:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C": "AddressManager"
       },
@@ -38,12 +38,13 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
+        "0xb5cdeba050b0d5fed747efec2a9d555a5ed7bb2ec4261d47d68083a1bbe20e11"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -77,17 +78,7 @@
         "superchainConfig": "eth:0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
         "version": "2.3.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3": "ResolvedDelegateProxy",
         "eth:0xD09C8E2C6D124bCE71235046B95ab676bE1d5601": "L1CrossDomainMessenger"
@@ -103,6 +94,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -110,10 +102,6 @@
         "addressManager": "eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C",
         "isUpgrading": false,
         "owner": "eth:0x2C73A1610EE822a8C2C21eddd455e725A3334c8C"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948": "ProxyAdmin"
@@ -125,9 +113,10 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x710fc3f6ed40ea4a5162760cb3c7201edd6bdc10b1462da5f27b5dc809a532db"
+        "0x7ccab8db631918c4f8ca6f19b1f9ee3b3ffa5b255ca194ceff93b6c853fded68"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -157,10 +146,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334959,
       "sinceBlock": 19838878,
       "values": {
@@ -195,9 +185,10 @@
       "type": "Contract",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x94485995648eb1348d02f16b00f8be4872ab3d1da83d8ebb27b4cd2bf8bad0b3"
+        "0xb93748ad03a3bdd8cc3ed2ff062aabb7f1d55e195cc3aebe78e37a5022aeb343"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -274,11 +265,12 @@
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "critical": true,
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -317,12 +309,13 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
+        "0x0ac0fae0ed2876181efd8e1d628f619f4723b088e8afe466f00e008d69b13375"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -378,26 +371,15 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "$admin": { "severity": "HIGH" },
-        "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
+        }
       },
       "implementationNames": {
         "eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9": "Proxy",
@@ -412,10 +394,11 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
+        "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -460,7 +443,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
+        "0xdd6f0ffd7f9350b0645ec66d1174cdd6434d367842932e6a9763741aaf943542"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
@@ -471,6 +454,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
       "sinceTimestamp": 1715334983,
       "sinceBlock": 19838880,
       "values": {
@@ -887,11 +871,11 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 24247575 },
   "permissionsConfigHash": "0x49cd676fb4e24b7c391898741bd1b10f5d101a67040e164ed82feff8fb140338",

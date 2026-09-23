@@ -5,16 +5,16 @@
   "description": "A simple Safe module for that can queue and execute transactions as {{target}} after a delay of currently {{txCooldownFmt}}, if registered as a module there.",
   "fields": {
     "ZodiacModule_guard": {
-      "severity": "HIGH"
+      "description": "Legacy alias of guard."
     },
     "ZodiacModule_target": {
-      "severity": "HIGH"
+      "description": "Legacy alias of target."
     },
     "ZodiacModule_avatar": {
-      "severity": "HIGH"
+      "description": "Legacy alias of avatar."
     },
     "getGuard": {
-      "severity": "HIGH"
+      "description": "Alias of guard."
     },
     "guard": {
       "severity": "HIGH"
@@ -37,7 +37,6 @@
       "edit": ["format", "FormatSeconds"]
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

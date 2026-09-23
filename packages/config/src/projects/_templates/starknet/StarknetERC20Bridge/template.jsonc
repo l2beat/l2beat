@@ -25,15 +25,8 @@
     "isFrozen": {
       "severity": "MEDIUM"
     },
-    "getUpgradeActivationDelay": {
-      "severity": "HIGH"
-    },
-    "StarkWareProxy_upgradeDelay": {
-      "severity": "HIGH"
-    },
     "$admin": {
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "upgrade",
@@ -43,13 +36,22 @@
     },
     "withdrawalLimitStatus": {
       "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.",
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
         "args": ["{{bridgedToken}}"]
       },
       "edit": ["format", "UintMaxMeansInactive"]
+    },
+    "withdrawalLimitEnabled": {
+      "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "token",
+        "add": { "event": "WithdrawalLimitEnabled" },
+        "remove": { "event": "WithdrawalLimitDisabled" }
+      }
     },
     "maxTotalBalance": {
       "severity": "HIGH",
@@ -70,7 +72,6 @@
       "edit": ["format", "TokenStatus"]
     },
     "withdrawLimitPct": {
-      "severity": "HIGH",
       "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.",
       "handler": {
         "type": "starkWareNamedStorage",
@@ -79,7 +80,6 @@
       }
     },
     "manager": {
-      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
@@ -93,7 +93,6 @@
       ]
     },
     "bridgedToken": {
-      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_ERC20_TOKEN_BRIDGE_TOKEN_ADDRESS",
@@ -101,7 +100,6 @@
       }
     },
     "l2TokenContract": {
-      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_L2_TOKEN_CONTRACT",
@@ -109,7 +107,6 @@
       }
     },
     "messagingContract": {
-      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_MESSAGING_CONTRACT",
@@ -125,7 +122,6 @@
     },
     "accessControl": {
       "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active.",
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -157,6 +153,7 @@
       ]
     },
     "secAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -172,6 +169,7 @@
       ]
     },
     "secAgentAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {

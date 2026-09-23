@@ -1,7 +1,7 @@
 {
   "name": "gpt",
   "timestamp": 1762264385,
-  "configHash": "0x42c148df3207e47049dba7f484d31c5d12df536e19d72e070e2f1cc64daaf9d4",
+  "configHash": "0x1f795cc0ff047513b2c8e3223bade0450debddf3555d27144c27cfcc72b34104",
   "entries": [
     {
       "name": "Verifier",
@@ -125,10 +125,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xada59D145126A746976F0F56477aafFEB3acc8e3": "ProxyAdmin"

@@ -492,6 +492,14 @@
       "reason": "Upgraded the implementation of the (since retired, Pacaya) PreconfRouter, the exclusive proposal route for whitelisted preconf operators."
     },
     {
+      "timestamp": 1754913371,
+      "type": "state",
+      "contract": "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+      "updateId": "ca91bdf8",
+      "transaction": "0x1000b14e86d8db17931f65e877e2eb13cb3990d0a129eee1aff21ce6ba96d2cf",
+      "reason": "The then-live resolver registered the PreconfWhitelist and PreconfRouter addresses, making the new preconfirmation route reachable by the rollup."
+    },
+    {
       "timestamp": 1754919911,
       "type": "code",
       "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -513,6 +521,22 @@
       "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
       "transaction": "0x9888aa4ec088ca3558b16e7ef0a94f7ebcf6164f592969fdd40bd3cc2b8eb74c",
       "reason": "Raised the threshold of the Taiko Multisig from 4 to 5; at that block the Safe was still the owner of TaikoL1 and of the Pacaya verifier gateways. The Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1755140843,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "ca91bdf8",
+      "transaction": "0xd3991950b9def188617a6bb521fcc1027aa55e9da846953cc3bd55854aa263ca",
+      "reason": "Added two trusted SGX enclave measurements to the DCAP attestation contract used by Taiko's verifier."
+    },
+    {
+      "timestamp": 1755170747,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "ca91bdf8",
+      "transaction": "0x6e71f2f4d8bafec45a97929dd999feaf7cd7591e63f175ce4d9f496ef4e3a0dc",
+      "reason": "Added two further trusted SGX enclave measurements to the same DCAP attestation contract."
     },
     {
       "timestamp": 1756244927,
@@ -601,6 +625,22 @@
       "reason": "Upgraded the implementation of the (since retired, Pacaya) PreconfRouter, the exclusive proposal route for whitelisted preconf operators."
     },
     {
+      "timestamp": 1768829555,
+      "type": "state",
+      "contract": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+      "updateId": "6defe874",
+      "transaction": "0xfbf88b1a39924e9cc8e2c29467464746fe5d8d603ce9f569890ff2ce1d7e5fe5",
+      "reason": "Security Council expansion raised the emergency multisig approval threshold from six to seven."
+    },
+    {
+      "timestamp": 1772676527,
+      "type": "state",
+      "contract": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+      "updateId": "af40d70c",
+      "transaction": "0xc2ebac9e1631f685bc92763d0c8b5878d25a3ea02e647ba57a8ce8309092f70e",
+      "reason": "DAO proposal shortened the standard Security Council proposal veto period from 21 to 10 days."
+    },
+    {
       "timestamp": 1774964687,
       "type": "state",
       "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
@@ -687,6 +727,38 @@
       "reason": "DAO proposal replaced trusted SP1 program verification keys on the then-live TaikoSP1Verifier."
     },
     {
+      "timestamp": 1782739115,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "423dca4a",
+      "transaction": "0xae7122add731c935d54d726ebe542e7d4f9f7321e3bdf4ec794309f813d981f7",
+      "reason": "Restricted-inbox upgrade replaced the trusted RISC Zero image IDs on the TaikoRisc0Verifier."
+    },
+    {
+      "timestamp": 1782739115,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "423dca4a",
+      "transaction": "0xae7122add731c935d54d726ebe542e7d4f9f7321e3bdf4ec794309f813d981f7",
+      "reason": "Restricted-inbox upgrade replaced trusted SGX signer and enclave measurements in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1782739115,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "423dca4a",
+      "transaction": "0xae7122add731c935d54d726ebe542e7d4f9f7321e3bdf4ec794309f813d981f7",
+      "reason": "Restricted-inbox upgrade replaced trusted SGX signer and enclave measurements in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1783141271,
+      "type": "state",
+      "contract": "eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC",
+      "updateId": "83beb47d",
+      "transaction": "0xf040cded12b41caab41369cdd570bfb56d226e9ebdb2861998ec4bbef1204813",
+      "reason": "Raised both canonical USDC and USDT withdrawal quotas from 150,000 to 250,000 tokens per refill period."
+    },
+    {
       "timestamp": 1785761183,
       "type": "state",
       "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
@@ -717,6 +789,55 @@
       "updateId": "ebe21a45",
       "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
       "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council restructuring lowered the SignerList minimum length from eight to four."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council restructuring lowered the emergency multisig approval threshold from seven to four."
+    },
+    {
+      "timestamp": 1789654379,
+      "type": "state",
+      "contract": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+      "transaction": "0x89453a1b768bc492fd23aebc8b9f67bbc3ceb4f8fa78a269594769d2da633fcd",
+      "reason": "Security Council restructuring lowered the standard multisig approval threshold from five to three."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced two trusted RISC Zero image IDs on the TaikoRisc0Verifier."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced the trusted SGX enclave measurement in this DCAP attestation contract."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced four trusted SP1 program verification keys on the TaikoSP1Verifier."
+    },
+    {
+      "timestamp": 1789952579,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
+      "reason": "DAO proposal replaced two trusted SGX enclave measurements in this DCAP attestation contract."
     }
   ]
 }

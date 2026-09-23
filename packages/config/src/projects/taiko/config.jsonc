@@ -164,6 +164,10 @@
     "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": {
       // L1SharedAddressManager: resolved the Bridge's trusted SignalService/vault addresses (remapping acted as an upgrade)
       "critical": { "untilTimestamp": 1782824701 }
+    },
+    "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a": {
+      // pre-Shasta DefaultResolver: remapped trusted bridge and preconfirmation components; retired at the Shasta discovery boundary
+      "critical": { "untilTimestamp": 1775747881 }
     }
   }
 }

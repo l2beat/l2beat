@@ -21,10 +21,6 @@
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
@@ -148,10 +144,6 @@
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
       }
@@ -184,10 +176,6 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -245,10 +233,6 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -373,10 +357,6 @@
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
       }
@@ -409,10 +389,6 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -471,10 +447,6 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
@@ -661,10 +633,6 @@
         "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
         "VERSION": "v5.0.0"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
       }
@@ -694,10 +662,6 @@
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
       }
@@ -726,10 +690,6 @@
         "VERSION": "v6.0.0",
         "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
       }
@@ -752,10 +712,6 @@
         "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
@@ -785,10 +741,6 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -1210,7 +1162,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": {

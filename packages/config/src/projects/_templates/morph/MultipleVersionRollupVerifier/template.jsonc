@@ -5,9 +5,6 @@
   "critical": true,
   "ignoreMethods": ["getVerifier", "legacyVerifiersLength"],
   "fields": {
-    "rollup": {
-      "severity": "HIGH"
-    },
     "verifierVersions": {
       "handler": {
         "type": "event",
@@ -26,7 +23,6 @@
       "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

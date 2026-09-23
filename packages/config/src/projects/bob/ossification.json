@@ -15,6 +15,202 @@
       "reason": "Changed the Bob Multisig threshold while it controlled the ProxyAdmins and protocol upgrades (Safe is the owner of ProxyAdmin; the Safe itself is outside the perimeter)."
     },
     {
+      "timestamp": 1752686123,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x89dc1b9fcdb343663ecc90dba9d11db47b0411a8708c805511f582aa26cdce48",
+      "reason": "Set an initial dispute-game implementation after deploying DisputeGameFactory."
+    },
+    {
+      "timestamp": 1752759527,
+      "type": "code",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",
+      "updateId": "2f577ebe",
+      "reason": "Upgraded L1StandardBridge during BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752759527,
+      "type": "state",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",
+      "updateId": "2f577ebe",
+      "reason": "Initialized L1StandardBridge's security-critical references during BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752761915,
+      "type": "code",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
+      "reason": "Upgraded DisputeGameFactory during BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752761915,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
+      "reason": "Changed the dispute-game implementation during BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752764699,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x1a251d0f5e97941161315234bc55b0d0a10f0311fa02e1b2519ee948b0c14d32",
+      "reason": "Changed a dispute-game implementation after BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1752765491,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x01b433c617318711c8eb1493001794eded66d7352d7bbaa3a0be9f2d62d83a63",
+      "reason": "Changed a dispute-game implementation after BOB's fault-proof migration."
+    },
+    {
+      "timestamp": 1753361039,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x624173acad617ad7032fc22f7fc2f6b2fa75c9a8cea374c7e8ed03bcc5a59c41",
+      "updateId": "7493af41",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1753361759,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation during the proof-system intervention."
+    },
+    {
+      "timestamp": 1755555779,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0xf7bb19085a64d4cb1d7a01ef94e2dacee677ff4f445a508f043f9d80526fec01",
+      "updateId": "5d7229ab",
+      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+    },
+    {
+      "timestamp": 1756823843,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x37c00530e1b52452843f4f1bc2ec1dfdbc47aee80daef6f54cb332ab51f00a9c",
+      "updateId": "983d5bd1",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1756838747,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0xe726ec54d72102626dd1b0b34b07ab87e3e7e953da75a72e789ab33f58dbe7f6",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1757106887,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0x73d1b0bc059bf4a920e9017acd31695c2760a6e716b724aa760c893b312c218f",
+      "updateId": "d25db477",
+      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+    },
+    {
+      "timestamp": 1762813583,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0x4034a5ff890175a954f604129de7a6971ecf55183c8fd76aec3d20d597936f21",
+      "updateId": "c1f6733c",
+      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+    },
+    {
+      "timestamp": 1762813655,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0x17e31ee3b1308a5b30253935460e6dc8dd6f3e65eadc08893559b8d6e22a88a7",
+      "reason": "Executed a second RISC Zero governance call changing a verifier route used by Kailua."
+    },
+    {
+      "timestamp": 1764685823,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x7e5a439e3040d6ae3a3b604b8a92c584755cb389991c47c6c557979c49c50ec9",
+      "updateId": "7742af1a",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1764687071,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x3afce50f425057d0505cec3c97729811011862fade71ec3f04ed5d372eb84d69",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1764861527,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x6b74acde42b607d019af670b35d337648316d24faade43d12a7002ee551c317d",
+      "updateId": "0af4c649",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1764861971,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0xdd390ece9b53aff931a80ac2808273d34c69b64478a4a18ef7af621c4b4c5f6f",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation after the Kona derivation incident."
+    },
+    {
+      "timestamp": 1768920023,
+      "type": "code",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0xd025dbac937aa7bd1c53511421d35cc97c18a848ebb123cc85e910ab517a8922",
+      "updateId": "9a3232bd",
+      "reason": "Upgraded L1StandardBridge during BOB's January 2026 system migration."
+    },
+    {
+      "timestamp": 1768920023,
+      "type": "state",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0xd025dbac937aa7bd1c53511421d35cc97c18a848ebb123cc85e910ab517a8922",
+      "updateId": "9a3232bd",
+      "reason": "Updated L1StandardBridge's security-critical references during BOB's January 2026 system migration."
+    },
+    {
+      "timestamp": 1769450699,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0xa3ab9cc49c7ee9aad2ff378904f16c966955b2da4d09d2903f8a0549d530e92a",
+      "updateId": "fa1c0e70",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1772045687,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x42b1c22717c3f755ecad9eb37dd29a82979cdf8949ed86c5d466d0a6ae21731d",
+      "updateId": "d3b597f3",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1772046431,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0xc05d85e0e5d9fe8a7e0139c6395cfa30c24e61f4fdf17df2123d92bf80aafd28",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1772624639,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x945e6fa288664d6bfbcaf8d3e570bc58334395fb9b528fc323c57c38d47f5c86",
+      "updateId": "c0a5cd9a",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
+      "timestamp": 1772638067,
+      "type": "state",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "transaction": "0x05fba81ef7dd92ed1fc9c340c44cd2f258f5f62221b48cc2a1579c8377cc0724",
+      "reason": "Changed the type 1337 Kailua dispute-game implementation."
+    },
+    {
       "timestamp": 1777981427,
       "type": "state",
       "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
@@ -69,6 +265,13 @@
       "transaction": "0x47727aec55e03cce2663a7a5cdfeb2dc02fc34bd2a5ec27e7850300c4d23fdec",
       "updateId": "6e0a0f51",
       "reason": "Revoked the former owner's roles on the RISC Zero verifier governance timelock."
+    },
+    {
+      "timestamp": 1789547003,
+      "type": "code",
+      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "transaction": "0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7",
+      "reason": "Upgraded L1StandardBridge during BOB's migration from Kailua back to a permissioned dispute game."
     }
   ]
 }

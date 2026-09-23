@@ -14,24 +14,17 @@
   "ignoreMethods": ["depositors", "nullifierHashes", "roots"],
   "ignoreRelatives": ["ASSET", "assetConfigFromEntrypoint"],
   "fields": {
-    "ASSET": {
-      "severity": "HIGH"
-    },
     "SCOPE": {
-      "severity": "HIGH",
       "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
     },
     "WITHDRAWAL_VERIFIER": {
-      "description": "Groth16 verifier that authorizes withdrawals from this pool.",
-      "severity": "HIGH"
+      "description": "Groth16 verifier that authorizes withdrawals from this pool."
     },
     "RAGEQUIT_VERIFIER": {
-      "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool.",
-      "severity": "HIGH"
+      "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
     },
     "ENTRYPOINT": {
-      "description": "Entrypoint whose latest association-set root every withdrawal proof must match.",
-      "severity": "HIGH"
+      "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
     },
     "dead": {
       "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits.",

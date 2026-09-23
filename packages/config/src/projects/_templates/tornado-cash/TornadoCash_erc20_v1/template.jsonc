@@ -26,7 +26,6 @@
       "edit": ["=", "eth:0x0000000000000000000000000000000000000000"]
     },
     "token": {
-      "severity": "HIGH",
       "description": "ERC20 token accepted by this mixer instance."
     },
     "verifier": {

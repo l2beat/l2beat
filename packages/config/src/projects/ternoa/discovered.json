@@ -1,7 +1,7 @@
 {
   "name": "ternoa",
   "timestamp": 1768816541,
-  "configHash": "0x15bd789f39aa244d44d8f1b0c39326eef09af8273391a0765d036a259528ed70",
+  "configHash": "0x7568497a1c13dd786b2ae052fe865ef960309541194ab1575a1e408b95958792",
   "entries": [
     {
       "name": "AgglayerBridge",
@@ -187,10 +187,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b": "ProxyAdmin"

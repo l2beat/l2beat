@@ -4,28 +4,13 @@
   "critical": true,
   "category": "bridge-canonical",
   "fields": {
-    "router": {
-      "severity": "HIGH"
-    },
-    "messenger": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "l2TokenFactory": {
-      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     },
     "l2TokenImplementation": {
-      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     },
     "counterpart": {
-      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     }
   }
