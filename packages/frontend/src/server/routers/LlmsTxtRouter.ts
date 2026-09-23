@@ -84,6 +84,17 @@ const LLMS_TXT = {
       ],
     },
     {
+      heading: 'Markdown pages',
+      links: [
+        {
+          name: 'Scaling project',
+          path: '/layer2s/projects/{slug}.md',
+          description:
+            'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. The HTML page URL with Accept: text/markdown returns the same.',
+        },
+      ],
+    },
+    {
       heading: 'Public API',
       links: [
         {
