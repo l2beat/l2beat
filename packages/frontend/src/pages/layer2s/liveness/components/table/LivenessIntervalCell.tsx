@@ -59,7 +59,11 @@ export function LivenessIntervalCell(props: {
           <DurationCell durationInSeconds={durationInSeconds} />
         </SyncStatusWrapper>
         {data.warning && (
-          <RoundedWarningIcon className="size-5" sentiment="warning" />
+          <RoundedWarningIcon
+            className="size-5"
+            sentiment="warning"
+            aria-label={data.warning}
+          />
         )}
       </TooltipTrigger>
       <TooltipContent>

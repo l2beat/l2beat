@@ -1,8 +1,8 @@
-import { SvgIcon } from '../SvgIcon'
+import { SvgIcon, type SvgIconProps } from '../SvgIcon'
 
-export function SuperchainIcon() {
+export function SuperchainIcon(props: SvgIconProps) {
   return (
-    <SvgIcon width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <SvgIcon width="16" height="16" viewBox="0 0 16 16" fill="none" {...props}>
       <g clipPath="url(#clip0_38_145)">
         <path
           d="M14.968 0H1.032C.462 0 0 .462 0 1.032v13.936C0 15.538.462 16 1.032 16h13.936c.57 0 1.032-.462 1.032-1.032V1.032C16 .462 15.538 0 14.968 0"

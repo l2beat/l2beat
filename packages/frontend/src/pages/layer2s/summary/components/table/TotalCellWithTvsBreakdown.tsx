@@ -24,6 +24,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { sentimentToText } from '~/utils/sentiment'
 
 interface TotalCellProps {
   breakdown:
@@ -49,12 +50,16 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
   const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')
 
+  const iconSentiment = anyBadWarnings
+    ? 'bad'
+    : anyWarningWarnings
+      ? 'warning'
+      : 'neutral'
   const icon = tvsWarnings.length ? (
     <RoundedWarningIcon
       className="mr-1 size-4"
-      sentiment={
-        anyBadWarnings ? 'bad' : anyWarningWarnings ? 'warning' : 'neutral'
-      }
+      sentiment={iconSentiment}
+      aria-label={`Value secured warning, ${sentimentToText(iconSentiment)}`}
     />
   ) : null
 

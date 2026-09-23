@@ -30,6 +30,7 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
+import { STATUS_ICON_LABELS } from './statusIconLabels'
 
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   isLayer3?: boolean
@@ -83,26 +84,56 @@ function DesktopStatusIcons({
 }) {
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
-      {project.isLayer3 && <Layer3Icon className="size-4" />}
-      {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
+      {project.isLayer3 && (
+        <Layer3Icon className="size-4" aria-label={STATUS_ICON_LABELS.layer3} />
+      )}
+      {project.ecosystemInfo?.isPartOfSuperchain && (
+        <SuperchainIcon aria-label={STATUS_ICON_LABELS.superchain} />
+      )}
       {project.quantumResistance && (
-        <QuantumResistanceIcon className="size-4" />
+        <QuantumResistanceIcon
+          className="size-4"
+          role="img"
+          aria-label={STATUS_ICON_LABELS.quantumResistance}
+        />
       )}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
-        ) && <UnverifiedIcon className="size-4 fill-red-300" />}
+        ) && (
+          <UnverifiedIcon
+            className="size-4 fill-red-300"
+            aria-label={STATUS_ICON_LABELS.unverified}
+          />
+        )}
       {project.statuses?.redWarning && (
-        <ShieldIcon className="size-4 fill-red-300" />
+        <ShieldIcon
+          className="size-4 fill-red-300"
+          aria-label={STATUS_ICON_LABELS.redWarning}
+        />
       )}
       {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-        <UnderReviewIcon className="size-4" />
+        <UnderReviewIcon
+          className="size-4"
+          aria-label={STATUS_ICON_LABELS.underReview}
+        />
       )}
       {project.statuses?.yellowWarning && (
-        <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+        <ShieldIcon
+          className="size-4 fill-yellow-700 dark:fill-yellow-300"
+          aria-label={STATUS_ICON_LABELS.yellowWarning}
+        />
       )}
-      {project.statuses?.syncWarning && <ClockIcon className="size-4" />}
-      {project.statuses?.ongoingAnomaly && <LiveIndicator />}
+      {project.statuses?.syncWarning && (
+        <ClockIcon
+          className="size-4"
+          role="img"
+          aria-label={STATUS_ICON_LABELS.syncWarning}
+        />
+      )}
+      {project.statuses?.ongoingAnomaly && (
+        <LiveIndicator label={STATUS_ICON_LABELS.ongoingAnomaly} />
+      )}
     </div>
   )
 }
@@ -120,12 +151,21 @@ export function ProjectNameMobileStatusIcons({
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && (
-        <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
+        <MobileProjectIconTooltip
+          icon={
+            <Layer3Icon
+              className="size-4"
+              aria-label={STATUS_ICON_LABELS.layer3}
+            />
+          }
+        >
           {project.nameSecondLine}
         </MobileProjectIconTooltip>
       )}
       {project.ecosystemInfo?.isPartOfSuperchain && (
-        <MobileProjectIconTooltip icon={<SuperchainIcon />}>
+        <MobileProjectIconTooltip
+          icon={<SuperchainIcon aria-label={STATUS_ICON_LABELS.superchain} />}
+        >
           The project is officially part of the Superchain - it contributes
           revenue to the Optimism Collective and uses the SuperchainConfig to
           manage chain configuration values.
@@ -133,7 +173,13 @@ export function ProjectNameMobileStatusIcons({
       )}
       {project.quantumResistance && (
         <MobileProjectIconTooltip
-          icon={<QuantumResistanceIcon className="size-4" />}
+          icon={
+            <QuantumResistanceIcon
+              className="size-4"
+              role="img"
+              aria-label={STATUS_ICON_LABELS.quantumResistance}
+            />
+          }
         >
           {QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance]}
         </MobileProjectIconTooltip>
@@ -143,7 +189,12 @@ export function ProjectNameMobileStatusIcons({
           (value) => value !== undefined,
         ) && (
           <MobileProjectIconTooltip
-            icon={<UnverifiedIcon className="size-4 fill-red-300" />}
+            icon={
+              <UnverifiedIcon
+                className="size-4 fill-red-300"
+                aria-label={STATUS_ICON_LABELS.unverified}
+              />
+            }
             contentClassName="flex flex-col gap-2"
           >
             {project.statuses.verificationWarnings.contracts && (
@@ -181,7 +232,12 @@ export function ProjectNameMobileStatusIcons({
         )}
       {project.statuses?.redWarning && (
         <MobileProjectIconTooltip
-          icon={<ShieldIcon className="size-4 fill-red-300" />}
+          icon={
+            <ShieldIcon
+              className="size-4 fill-red-300"
+              aria-label={STATUS_ICON_LABELS.redWarning}
+            />
+          }
           contentClassName="flex flex-col gap-2"
         >
           <Markdown inline ignoreGlossary>
@@ -198,14 +254,24 @@ export function ProjectNameMobileStatusIcons({
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-        <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+        <MobileProjectIconTooltip
+          icon={
+            <UnderReviewIcon
+              className="size-4"
+              aria-label={STATUS_ICON_LABELS.underReview}
+            />
+          }
+        >
           {getUnderReviewText(project.statuses.underReview)}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.yellowWarning && (
         <MobileProjectIconTooltip
           icon={
-            <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+            <ShieldIcon
+              className="size-4 fill-yellow-700 dark:fill-yellow-300"
+              aria-label={STATUS_ICON_LABELS.yellowWarning}
+            />
           }
         >
           <Markdown inline ignoreGlossary>
@@ -214,13 +280,21 @@ export function ProjectNameMobileStatusIcons({
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.syncWarning && (
-        <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
+        <MobileProjectIconTooltip
+          icon={
+            <ClockIcon
+              className="size-4"
+              role="img"
+              aria-label={STATUS_ICON_LABELS.syncWarning}
+            />
+          }
+        >
           {project.statuses.syncWarning}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.ongoingAnomaly && (
         <MobileProjectIconTooltip
-          icon={<LiveIndicator />}
+          icon={<LiveIndicator label={STATUS_ICON_LABELS.ongoingAnomaly} />}
           contentClassName="flex flex-col gap-2"
         >
           <p>

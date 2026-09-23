@@ -25,6 +25,7 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { sentimentToText } from '~/utils/sentiment'
 import { TableLink } from '../../../../../components/table/TableLink'
 
 interface TotalValueSecuredCellProps {
@@ -58,6 +59,7 @@ interface TotalValueSecuredCellProps {
 export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
   const tvsWarnings = props.tvsWarnings ?? []
   const anyBadWarnings = tvsWarnings.some((w) => w?.sentiment === 'bad')
+  const warningSentiment = anyBadWarnings ? 'bad' : 'warning'
 
   return (
     <Tooltip>
@@ -69,7 +71,8 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 {tvsWarnings.length ? (
                   <RoundedWarningIcon
                     className="size-4"
-                    sentiment={anyBadWarnings ? 'bad' : 'warning'}
+                    sentiment={warningSentiment}
+                    aria-label={`Value secured warning, ${sentimentToText(warningSentiment)}`}
                   />
                 ) : null}
                 <ValueWithPercentageChange

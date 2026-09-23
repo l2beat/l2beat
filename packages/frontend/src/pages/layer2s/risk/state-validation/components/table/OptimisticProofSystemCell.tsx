@@ -57,11 +57,24 @@ export function OptimisticProofSystemCell({
                     )}
                   >
                     {zkCatalog.name}
-                    {hasSuccessful && <VerifiedIcon className="size-4" />}
-                    {hasNotVerified && (
-                      <CircleQuestionMarkIcon className="size-4" />
+                    {hasSuccessful && (
+                      <VerifiedIcon
+                        className="size-4"
+                        aria-label={getSuccessfulText(zkCatalog.successful)}
+                      />
                     )}
-                    {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
+                    {hasNotVerified && (
+                      <CircleQuestionMarkIcon
+                        className="size-4"
+                        aria-label={getNotVerifiedText(zkCatalog.notVerified)}
+                      />
+                    )}
+                    {hasUnsuccessful && (
+                      <UnverifiedIcon
+                        className="size-4"
+                        aria-label={getUnsuccessfulText(zkCatalog.unsuccessful)}
+                      />
+                    )}
                   </Badge>
                 </a>
               </TooltipTrigger>
