@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-
+import { ParentHeadingLevelProvider } from '~/components/markdown/ParentHeadingLevelContext'
 import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { cn } from '~/utils/cn'
@@ -28,7 +28,7 @@ export interface ExtendedProjectSectionProps {
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   const content = (
-    <>
+    <ParentHeadingLevelProvider value={sectionHeadingLevel(props.nested)}>
       {props.children}
       {props.compareUrl && (
         <CompareProjectsLink
@@ -39,7 +39,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           Compare with other projects
         </CompareProjectsLink>
       )}
-    </>
+    </ParentHeadingLevelProvider>
   )
   return (
     <HighlightablePrimaryCard
@@ -103,8 +103,7 @@ interface ProjectDetailsSectionHeaderProps {
 }
 
 function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
-  // The project title is the page's h1; grouped sections sit under their group.
-  const Heading = props.nested ? 'h3' : 'h2'
+  const Heading = `h${sectionHeadingLevel(props.nested)}` as const
   return (
     <div
       className={cn(
@@ -138,4 +137,9 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.headerAccessory}
     </div>
   )
+}
+
+/** The project title is the page's h1; grouped sections sit under their group. */
+function sectionHeadingLevel(nested: boolean | undefined): 2 | 3 {
+  return nested ? 3 : 2
 }

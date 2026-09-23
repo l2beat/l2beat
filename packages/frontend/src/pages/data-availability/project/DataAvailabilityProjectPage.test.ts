@@ -2,13 +2,16 @@ import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { expect } from 'earl'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type {
+  ProjectDetailsSection,
+  ProjectSectionId,
+} from '~/components/projects/sections/types'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { DataAvailabilityProjectPage } from './DataAvailabilityProjectPage'
 
 // Why: screen readers and LLMs navigate a page by its heading outline, so the
-// project title must be the only h1, top-level sections h2 and grouped
-// sections h3.
+// project title must be the only h1, top-level sections h2, grouped sections
+// h3, and headings authored inside section content sit below their section.
 //
 // How: server-render the whole page, layout included, the way ServerEntry
 // does, then read the h1-h6 elements back out of the HTML in document order.
@@ -31,21 +34,27 @@ describe(DataAvailabilityProjectPage.name, () => {
     ])
   })
 
-  it('renders top-level sections as h2 and grouped sections as h3', () => {
+  it('nests sections and their authored headings below the project title', () => {
     const outline = getHeadingOutline(renderPage())
 
-    // Page chrome (search dialog, links accordion) precedes the sections and
-    // is not what this test is about, so the outline is read from the first
-    // section on.
-    const firstSection = outline.indexOf('h2 Detailed description')
-    expect(outline.slice(firstSection)).toEqual([
+    expect(headingsFromFirstSection(outline)).toEqual([
       'h2 Detailed description',
+      'h3 Architecture',
+      'h4 Upgradeability',
       'h2 Ethereum layer',
       'h3 Technology',
+      'h4 Consensus',
       'h2 Enshrined bridge',
       'h3 Bridge technology',
       'h3 Permissions',
     ])
+  })
+
+  it('keeps the authored look of headings moved below their section', () => {
+    const html = renderPage()
+
+    expect(html).toInclude('<h3 class="mdc-h1">Architecture</h3>')
+    expect(html).toInclude('<h4 class="mdc-h2">Upgradeability</h4>')
   })
 
   it('keeps each section heading linked to its section anchor', () => {
@@ -62,13 +71,23 @@ function renderPage(): string {
   return renderToString(
     createElement(DataAvailabilityProjectPage, {
       entry: ethereumEntry([
-        markdownSection('detailed-description', 'Detailed description'),
+        markdownSection(
+          'detailed-description',
+          'Detailed description',
+          '# Architecture\n\nBody\n\n## Upgradeability\n\nBody',
+        ),
         {
           type: 'Group',
           props: {
             id: 'da-layer',
             title: 'Ethereum layer',
-            items: [markdownSection('da-layer-technology', 'Technology')],
+            items: [
+              markdownSection(
+                'da-layer-technology',
+                'Technology',
+                '# Consensus\n\nBody',
+              ),
+            ],
           },
         },
         {
@@ -94,14 +113,11 @@ function renderPage(): string {
 }
 
 function markdownSection(
-  id:
-    | 'detailed-description'
-    | 'da-layer-technology'
-    | 'da-bridge-technology'
-    | 'da-bridge-permissions',
+  id: ProjectSectionId,
   title: string,
+  content = 'Body',
 ): ProjectDetailsSection {
-  return { type: 'MarkdownSection', props: { id, title, content: 'Body' } }
+  return { type: 'MarkdownSection', props: { id, title, content } }
 }
 
 function ethereumEntry(
@@ -137,6 +153,12 @@ function getHeadingOutline(html: string): string[] {
   return [...html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)].map(
     ([, level, inner]) => `h${level} ${stripTags(inner ?? '')}`,
   )
+}
+
+// Page chrome (search dialog, links accordion) precedes the sections and is
+// not what these tests are about.
+function headingsFromFirstSection(outline: string[]): string[] {
+  return outline.slice(outline.indexOf('h2 Detailed description'))
 }
 
 function stripTags(html: string): string {
