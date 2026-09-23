@@ -48,6 +48,9 @@ const ROWS: Row[] = [
   { slug: 'arbitrum', name: 'Arbitrum', tvs: 1, activity: 2, stage: 'S1' },
 ]
 
+const FIRST_SHOWN_ATTRIBUTE = ' data-first-shown=""'
+const LAST_SHOWN_ATTRIBUTE = ' data-last-shown=""'
+
 const LEAF_COLUMN_IDS = ['name', 'tvs', 'activity', 'stage']
 
 describe(BasicTable.name, () => {
@@ -93,6 +96,59 @@ describe(BasicTable.name, () => {
     const groupHeader = html.match(/<th\b[^>]*>Metrics</)?.[0] ?? ''
     expect(groupHeader).toInclude('scope="colgroup"')
   })
+
+  it('keeps hidden columns in the markup, hidden with CSS', () => {
+    const html = render({
+      columnVisibility: { activity: false, stage: false },
+    })
+
+    for (const id of LEAF_COLUMN_IDS) {
+      const isHidden = id === 'activity' || id === 'stage'
+      for (const tag of [getTag(html, 'th', id), getTag(html, 'td', id)]) {
+        expect(tag.includes(' hidden=""')).toEqual(isHidden)
+      }
+    }
+    expect(html).toInclude('>S1<')
+  })
+
+  it('lays out shown cells exactly as if hidden columns did not exist', () => {
+    const withHiddenColumns = render({
+      columnVisibility: { activity: false, stage: false },
+    })
+    const withoutColumns = render({
+      columns: [
+        NAME_COLUMN,
+        columnHelper.group({
+          id: 'metrics',
+          header: 'Metrics',
+          columns: [columnHelper.accessor('tvs', { header: 'TVS' })],
+        }),
+      ],
+    })
+
+    // Edge marks stand in for :last-child and have their own test below.
+    expect(
+      withoutHiddenCells(withHiddenColumns).replaceAll(
+        LAST_SHOWN_ATTRIBUTE,
+        '',
+      ),
+    ).toEqual(withoutColumns)
+  })
+
+  it('marks the last shown cell when hidden cells follow it', () => {
+    const html = render({ columnVisibility: { stage: false } })
+
+    expect(getTag(html, 'th', 'activity')).toInclude(LAST_SHOWN_ATTRIBUTE)
+    expect(getTag(html, 'td', 'activity')).toInclude(LAST_SHOWN_ATTRIBUTE)
+    expect(getTag(html, 'td', 'tvs')).not.toInclude(LAST_SHOWN_ATTRIBUTE)
+  })
+
+  it('leaves edge marks out when no hidden cell sits beyond the edge', () => {
+    const html = render({})
+
+    expect(html).not.toInclude(LAST_SHOWN_ATTRIBUTE)
+    expect(html).not.toInclude(FIRST_SHOWN_ATTRIBUTE)
+  })
 })
 
 function render(params: {
@@ -128,6 +184,10 @@ function createRowTable(params: {
     },
   }))
   return table
+}
+
+function withoutHiddenCells(html: string) {
+  return html.replace(/<(th|td)\b[^>]* hidden=""[^>]*>.*?<\/\1>/g, '')
 }
 
 function getTags(html: string, tagName: 'th' | 'td') {

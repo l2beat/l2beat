@@ -132,6 +132,7 @@ const TableHead = ({
     className={cn(
       'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
+      'data-last-shown:pr-2 data-first-shown:pl-2',
       className,
     )}
     {...props}
@@ -162,6 +163,7 @@ const TableCell = ({
     className={cn(
       'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-14 md:text-sm',
       'pr-3 first:pl-3 last:pr-3 md:pr-4',
+      'data-last-shown:pr-3 data-first-shown:pl-3',
       align === 'center' && 'text-center',
       align === 'right' && 'text-right',
       className,

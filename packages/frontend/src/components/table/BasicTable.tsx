@@ -1,6 +1,7 @@
 import { unique } from '@l2beat/shared-pure'
 import type {
   Cell,
+  Column,
   Header,
   HeaderGroup,
   Row,
@@ -41,9 +42,14 @@ import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
 import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
 import { getBasicTableRowSpanDenominator } from './utils/getBasicTableRowSpanDenominator'
 import {
+  getHeaderGroupsWithHiddenColumns,
   getRenderedCells,
+  getRenderedCellsWithHiddenColumns,
   getRenderedColSpan,
   getRenderedHeaders,
+  getShownEdgeAttributes,
+  getShownHeaders,
+  isShownHeader,
 } from './utils/renderedTableColumns'
 import {
   getRowClassNames,
@@ -86,11 +92,13 @@ type BasicTableCellData = {
   props: React.ComponentProps<typeof TableCell>
 }
 
-type BasicTableVisibleCellData<T extends BasicTableRow> = {
-  index: number
+type BasicTableRenderedCellData<T extends BasicTableRow> = {
+  /** Position among the shown cells, undefined for hidden columns. */
+  index: number | undefined
   cell: Cell<T, unknown>
   additionalRows: React.ReactNode[] | undefined
-  isHidden: boolean
+  /** A neighbour's colSpan covers this cell, so it is not rendered at all. */
+  isSpannedOver: boolean
   colSpan: number | undefined
   meta: Cell<T, unknown>['column']['columnDef']['meta']
   rowSpan: number
@@ -102,7 +110,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   }
 
   const { groupedHeader, actualHeader } = getBasicTableHeaderSections(
-    props.table.getHeaderGroups(),
+    getHeaderGroupsWithHiddenColumns(props.table),
   )
 
   const rows = applyBasicTableRowSorting(
@@ -171,38 +179,37 @@ function BasicTableGroupedHeaderRow<T>({
     return null
   }
 
+  const headers = getRenderedHeaders(groupedHeader.headers)
+  const lastShownIndex = headers.findLastIndex(isShownHeader)
+
   return (
     <TableHeaderRow>
-      {getRenderedHeaders(groupedHeader.headers).map(
-        (header, index, headers) => {
-          const isLast = index === headers.length - 1
-          const hasTitle =
-            !header.isPlaceholder && !!header.column.columnDef.header
-          return (
-            <React.Fragment key={header.id}>
-              <th
-                colSpan={getRenderedColSpan(header)}
-                scope={hasTitle ? 'colgroup' : undefined}
-                className={getBasicTableGroupedHeaderCellClassName({
-                  isPlaceholder: header.isPlaceholder,
-                  hasHeader: !!header.column.columnDef.header,
-                  isPinned: header.column.getIsPinned() !== false,
-                })}
-                style={getCommonPinningStyles(header.column)}
-              >
-                {hasTitle &&
-                  flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-              </th>
-              {!header.isPlaceholder && !isLast && (
-                <BasicTableColumnFiller as="th" />
-              )}
-            </React.Fragment>
-          )
-        },
-      )}
+      {headers.map((header, index) => {
+        const isShown = isShownHeader(header)
+        const hasTitle =
+          !header.isPlaceholder && !!header.column.columnDef.header
+        return (
+          <React.Fragment key={header.id}>
+            <th
+              hidden={!isShown}
+              colSpan={isShown ? getRenderedColSpan(header) : undefined}
+              scope={hasTitle ? 'colgroup' : undefined}
+              className={getBasicTableGroupedHeaderCellClassName({
+                isPlaceholder: header.isPlaceholder,
+                hasHeader: !!header.column.columnDef.header,
+                isPinned: header.column.getIsPinned() !== false,
+              })}
+              style={getCommonPinningStyles(header.column)}
+            >
+              {hasTitle &&
+                flexRender(header.column.columnDef.header, header.getContext())}
+            </th>
+            {isShown && !header.isPlaceholder && index < lastShownIndex && (
+              <BasicTableColumnFiller as="th" />
+            )}
+          </React.Fragment>
+        )
+      })}
     </TableHeaderRow>
   )
 }
@@ -214,38 +221,44 @@ function BasicTableActualHeaderRow<T>({
   actualHeader: HeaderGroup<T>
   compact: boolean | undefined
 }) {
+  const headers = getRenderedHeaders(actualHeader.headers)
+  const shownEdgeAttributes = getShownEdgeAttributes(headers.map(isShownHeader))
+  const lastShownIndex = headers.findLastIndex(isShownHeader)
+
   return (
     <TableHeaderRow>
-      {getRenderedHeaders(actualHeader.headers).map(
-        (header, index, headers) => {
-          const isLast = index === headers.length - 1
-          const groupParams = getBasicTableGroupParams(header.column)
-          return (
-            <React.Fragment key={`${actualHeader.id}-${header.id}`}>
-              <TableHead
-                colSpan={getRenderedColSpan(header)}
-                className={getBasicTableHeaderCellClassName({
-                  groupParams,
-                  isPinned: header.column.getIsPinned() !== false,
-                  headClassName: header.column.columnDef.meta?.headClassName,
-                  compact,
-                })}
-                align={header.column.columnDef.meta?.align}
-                tooltip={header.column.columnDef.meta?.tooltip}
-                style={getCommonPinningStyles(header.column)}
-                {...getPersistedColumnAttributes(header.column)}
-              >
-                {header.isPlaceholder ? null : (
-                  <ValueAndChangeSortingHeader header={header} />
-                )}
-              </TableHead>
-              {groupParams?.isLastInGroup && !isLast && (
-                <BasicTableColumnFiller as="th" />
+      {headers.map((header, index) => {
+        const isShown = isShownHeader(header)
+        const groupParams = isShown
+          ? getBasicTableGroupParams(header.column)
+          : undefined
+        return (
+          <React.Fragment key={`${actualHeader.id}-${header.id}`}>
+            <TableHead
+              hidden={!isShown}
+              colSpan={isShown ? getRenderedColSpan(header) : undefined}
+              className={getBasicTableHeaderCellClassName({
+                groupParams,
+                isPinned: header.column.getIsPinned() !== false,
+                headClassName: header.column.columnDef.meta?.headClassName,
+                compact,
+              })}
+              align={header.column.columnDef.meta?.align}
+              tooltip={header.column.columnDef.meta?.tooltip}
+              style={getCommonPinningStyles(header.column)}
+              {...getPersistedColumnAttributes(header.column)}
+              {...shownEdgeAttributes[index]}
+            >
+              {header.isPlaceholder ? null : (
+                <ValueAndChangeSortingHeader header={header} />
               )}
-            </React.Fragment>
-          )
-        },
-      )}
+            </TableHead>
+            {groupParams?.isLastInGroup && index < lastShownIndex && (
+              <BasicTableColumnFiller as="th" />
+            )}
+          </React.Fragment>
+        )
+      })}
     </TableHeaderRow>
   )
 }
@@ -264,7 +277,10 @@ export function BasicTableRow<T extends BasicTableRow>({
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
   const { highlightedIds } = useHighlightedTableRowContext()
-  const { cells, denominator } = prepareBasicTableVisibleCells(row)
+  const { cells, denominator } = prepareBasicTableRenderedCells(
+    row,
+    props.table,
+  )
 
   const cellDataMap = new Map<number, BasicTableCellData>()
 
@@ -279,7 +295,7 @@ export function BasicTableRow<T extends BasicTableRow>({
     : undefined
 
   for (const cellData of cells) {
-    if (cellData.isHidden) {
+    if (cellData.isSpannedOver || cellData.index === undefined) {
       continue
     }
 
@@ -307,6 +323,21 @@ export function BasicTableRow<T extends BasicTableRow>({
     })
   }
 
+  const getCellProps = (cellData: BasicTableRenderedCellData<T>) =>
+    cellData.index === undefined
+      ? getHiddenColumnCellProps(cellData.cell.column)
+      : cellDataMap.get(cellData.index)?.props
+
+  const getPrevCell = (cellData: BasicTableRenderedCellData<T>) =>
+    cellData.index === undefined
+      ? undefined
+      : cellDataMap.get(cellData.index - 1)
+
+  const mainRowCells = cells.filter((cellData) => !cellData.isSpannedOver)
+  const mainRowEdgeAttributes = getShownEdgeAttributes(
+    mainRowCells.map((cellData) => cellData.index !== undefined),
+  )
+
   return (
     <>
       <TableRow
@@ -317,17 +348,8 @@ export function BasicTableRow<T extends BasicTableRow>({
           className,
         )}
       >
-        {cells.map((cellData) => {
-          if (cellData.isHidden) {
-            return null
-          }
-
-          const currentCell = cellDataMap.get(cellData.index)
-          if (!currentCell) {
-            return null
-          }
-
-          const prevCell = cellDataMap.get(cellData.index - 1)
+        {mainRowCells.map((cellData, position) => {
+          const prevCell = getPrevCell(cellData)
           return (
             <React.Fragment key={`${row.id}-${cellData.cell.id}`}>
               {prevCell && prevCell.isLastInGroup && (
@@ -336,7 +358,8 @@ export function BasicTableRow<T extends BasicTableRow>({
               <TableCell
                 rowSpan={cellData.rowSpan}
                 colSpan={cellData.colSpan}
-                {...currentCell.props}
+                {...getCellProps(cellData)}
+                {...mainRowEdgeAttributes[position]}
               >
                 {flexRender(
                   cellData.cell.column.columnDef.cell,
@@ -348,33 +371,26 @@ export function BasicTableRow<T extends BasicTableRow>({
         })}
       </TableRow>
       {range(denominator - 1).map((additionalRowIndex) => {
+        const additionalRowCells = cells.flatMap((cellData) => {
+          const actualIndex = getBasicTableAdditionalRowIndex(
+            additionalRowIndex,
+            cellData.rowSpan,
+          )
+          const content =
+            actualIndex === undefined
+              ? undefined
+              : cellData.additionalRows?.[actualIndex]
+          return content ? [{ cellData, content }] : []
+        })
         return (
           <TableRow
             key={`additional-row-${additionalRowIndex}`}
             highlightId={highlightId}
             className={getRowClassNames(row.original.backgroundColor)}
           >
-            {cells.map((cellData) => {
-              const additionalRows = cellData.additionalRows
-              if (!additionalRows) {
-                return null
-              }
-
-              const actualIndex = getBasicTableAdditionalRowIndex(
-                additionalRowIndex,
-                cellData.rowSpan,
-              )
-              if (actualIndex === undefined) {
-                return null
-              }
-
-              const additionalRow = additionalRows[actualIndex]
-              if (!additionalRow) {
-                return null
-              }
-
-              const cellProps = cellDataMap.get(cellData.index)
-              const prevCell = cellDataMap.get(cellData.index - 1)
+            {additionalRowCells.map(({ cellData, content }) => {
+              const cellProps = getCellProps(cellData)
+              const prevCell = getPrevCell(cellData)
               return (
                 <React.Fragment
                   key={`${cellData.cell.id}-${additionalRowIndex}`}
@@ -387,10 +403,10 @@ export function BasicTableRow<T extends BasicTableRow>({
                   )}
                   <TableCell
                     rowSpan={cellData.rowSpan}
-                    {...cellProps?.props}
-                    className={cn(cellProps?.props.className, 'first:pl-0')}
+                    {...cellProps}
+                    className={cn(cellProps?.className, 'first:pl-0')}
                   >
-                    {additionalRow}
+                    {content}
                   </TableCell>
                 </React.Fragment>
               )
@@ -413,21 +429,37 @@ export function BasicTableRow<T extends BasicTableRow>({
   )
 }
 
-function prepareBasicTableVisibleCells<T extends BasicTableRow>(
+function getHiddenColumnCellProps<T>(
+  column: Column<T>,
+): React.ComponentProps<typeof TableCell> {
+  return { hidden: true, ...getPersistedColumnAttributes(column) }
+}
+
+/**
+ * Additional rows are laid out for the shown cells only, so hiding a column
+ * never adds or removes rows. A hidden column therefore renders just its main
+ * cell, and additional rows never contain hidden cells.
+ */
+function prepareBasicTableRenderedCells<T extends BasicTableRow>(
   row: Row<T>,
-): { cells: BasicTableVisibleCellData<T>[]; denominator: number } {
-  const preparedCells = getRenderedCells(row.getVisibleCells()).map(
-    (cell, index) => {
+  table: TanstackTable<T>,
+): { cells: BasicTableRenderedCellData<T>[]; denominator: number } {
+  let shownCount = 0
+  const preparedCells = getRenderedCellsWithHiddenColumns(row, table).map(
+    (cell) => {
       const { meta } = cell.column.columnDef
       const context = cell.getContext()
-      const additionalRows = meta?.additionalRows?.(context)
+      const isShown = cell.column.getIsVisible()
+      const additionalRows = isShown
+        ? meta?.additionalRows?.(context)
+        : undefined
       const rowCount = (additionalRows?.length ?? 0) + 1
 
       return {
-        index,
+        index: isShown ? shownCount++ : undefined,
         cell,
         additionalRows,
-        isHidden: !!(meta?.hideIfNull && cell.renderValue() === null),
+        isSpannedOver: !!(meta?.hideIfNull && cell.renderValue() === null),
         colSpan: meta?.colSpan ? meta.colSpan(context) : undefined,
         meta,
         rowSpan: rowCount,
@@ -435,20 +467,24 @@ function prepareBasicTableVisibleCells<T extends BasicTableRow>(
     },
   )
 
-  const uniqueRowsCount = unique(preparedCells.map((cell) => cell.rowSpan))
+  const uniqueRowsCount = unique(
+    preparedCells
+      .filter((cell) => cell.index !== undefined)
+      .map((cell) => cell.rowSpan),
+  )
   const denominator = getBasicTableRowSpanDenominator(uniqueRowsCount)
 
   return {
     denominator,
     cells: preparedCells.map((cell) => ({
       ...cell,
-      rowSpan: denominator / cell.rowSpan,
+      rowSpan: cell.index === undefined ? 1 : denominator / cell.rowSpan,
     })),
   }
 }
 
 function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
-  return getRenderedHeaders(props.headers).map((header, index, headers) => {
+  return getShownHeaders(props.headers).map((header, index, headers) => {
     const isLast = index === headers.length - 1
     return (
       <React.Fragment key={header.id}>
@@ -470,7 +506,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
     <tr>
-      {getRenderedHeaders(props.headers).map((header, index, headers) => {
+      {getShownHeaders(props.headers).map((header, index, headers) => {
         const isLast = index === headers.length - 1
         return (
           <React.Fragment key={header.id}>

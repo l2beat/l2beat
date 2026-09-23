@@ -210,7 +210,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         tooltip:
           'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
         headClassName: getColumnHeaderUnderline(
-          'before:bg-chart-stacked-yellow last:pr-3',
+          'before:bg-chart-stacked-yellow last:pr-3 data-last-shown:pr-3',
         ),
       },
     }),
@@ -274,7 +274,9 @@ function getTokenAssetCategoryColumns(opts: {
       isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
-        headClassName: getColumnHeaderUnderline('before:bg-lime-650 last:pr-3'),
+        headClassName: getColumnHeaderUnderline(
+          'before:bg-lime-650 last:pr-3 data-last-shown:pr-3',
+        ),
       },
     }),
     ...(!opts.excludeRwaRestrictedTokens
@@ -287,7 +289,7 @@ function getTokenAssetCategoryColumns(opts: {
           meta: {
             align: 'right',
             headClassName: getColumnHeaderUnderline(
-              'before:bg-pink-750 last:pr-3',
+              'before:bg-pink-750 last:pr-3 data-last-shown:pr-3',
             ),
           },
         })
