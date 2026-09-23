@@ -6,7 +6,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { ChartRange } from '~/utils/range/range'
-import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
 import { PrivacySummaryBody } from './components/PrivacySummaryBody'
 
 interface Props extends AppLayoutProps {
@@ -33,9 +32,7 @@ export function PrivacySummaryPage({
           <PrivacySummaryBody
             entries={entries}
             defaultChartRange={defaultChartRange}
-          />
-          <PrivacyBestPracticesBanner
-            backgroundImage={bestPracticesBannerImageUrl}
+            bestPracticesBannerImageUrl={bestPracticesBannerImageUrl}
           />
         </SideNavLayout>
       </HydrationBoundary>

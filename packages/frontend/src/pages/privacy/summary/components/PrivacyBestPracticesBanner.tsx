@@ -5,11 +5,18 @@ import { cn } from '~/utils/cn'
 
 interface Props {
   backgroundImage: string
+  /**
+   * The artwork is a 1176x104 strip, lit at both ends and dark in the middle,
+   * so cropping it to cover a tall box leaves only the dark part. `stretch`
+   * fits the whole strip instead, which a gradient takes without artefacts.
+   */
+  backgroundFit?: 'cover' | 'stretch'
   className?: string
 }
 
 export function PrivacyBestPracticesBanner({
   backgroundImage,
+  backgroundFit = 'cover',
   className,
 }: Props) {
   return (
@@ -24,8 +31,11 @@ export function PrivacyBestPracticesBanner({
         className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
       >
         <div
-          className="absolute inset-0 origin-left bg-center bg-cover transition-[scale] ease-in-out group-hover:scale-110"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
+          className="absolute inset-0 origin-left bg-center transition-[scale] ease-in-out group-hover:scale-110"
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: backgroundFit === 'cover' ? 'cover' : '100% 100%',
+          }}
         />
         <div className="absolute inset-0 bg-pure-black/35" />
         <div className="relative flex w-full items-center justify-between gap-4 p-5 md:p-6">

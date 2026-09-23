@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
@@ -16,6 +17,10 @@ interface Props {
   groups: PrivacyRosetteGroups
   adversaries: PrivacyAdversariesSummary
   isUnderReview?: boolean
+  /** Drawn instead of the split rosette, e.g. the L2 one for the adversaries. */
+  rosette?: ReactNode
+  /** Without the protocol risks, for layouts that give them columns instead. */
+  adversariesOnly?: boolean
 }
 
 /**
@@ -30,10 +35,15 @@ export function PrivacyRosetteTooltip({
   groups,
   adversaries,
   isUnderReview,
+  rosette,
+  adversariesOnly,
 }: Props) {
   const [selectedId, setSelectedId] = useState<string>()
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-  const slices = [...groups.adversaries.slices, ...groups.risks.slices]
+  const slices = [
+    ...groups.adversaries.slices,
+    ...(adversariesOnly ? [] : groups.risks.slices),
+  ]
   const selected = slices.find((slice) => slice.id === selectedId)
 
   return (
@@ -47,20 +57,22 @@ export function PrivacyRosetteTooltip({
           selected && 'border-b pb-3',
         )}
       >
-        <PrivacyRosetteIcon
-          groups={groups}
-          isUnderReview={isUnderReview}
-          selectedId={selectedId}
-          onSelect={setSelectedId}
-          className="size-[104px] shrink-0"
-        />
+        {rosette ?? (
+          <PrivacyRosetteIcon
+            groups={groups}
+            isUnderReview={isUnderReview}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            className="size-[104px] shrink-0"
+          />
+        )}
         <div
           className="flex min-w-0 flex-1 flex-col gap-3"
           onMouseLeave={() => setSelectedId(undefined)}
         >
           <LegendSection
             group={groups.adversaries}
-            half="left"
+            half={adversariesOnly ? undefined : 'left'}
             selectedId={selectedId}
             onSelect={setSelectedId}
           />
@@ -78,12 +90,14 @@ export function PrivacyRosetteTooltip({
               project page.
             </p>
           </div>
-          <LegendSection
-            group={groups.risks}
-            half="right"
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
+          {!adversariesOnly && (
+            <LegendSection
+              group={groups.risks}
+              half="right"
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          )}
         </div>
       </div>
       {selected && (
@@ -102,15 +116,15 @@ function LegendSection({
   onSelect,
 }: {
   group: PrivacyRosetteGroup
-  /** Which half of the rosette the section fills. */
-  half: 'left' | 'right'
+  /** Which half of the rosette the section fills; none when it fills it all. */
+  half?: 'left' | 'right'
   selectedId: string | undefined
   onSelect: (id: string) => void
 }) {
   return (
     <div>
       <div className="mb-1 flex items-center gap-1.5 font-medium text-[11px] text-secondary uppercase tracking-wide">
-        <HalfGlyph half={half} />
+        {half && <HalfGlyph half={half} />}
         {group.title}
       </div>
       <ul className="-mx-1.5 grid grid-cols-[auto_minmax(0,1fr)_auto] text-xs">

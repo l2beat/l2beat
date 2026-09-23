@@ -3,10 +3,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import { TableLink } from '~/components/table/TableLink'
-import { cn } from '~/utils/cn'
-import { getPrivacyAdversariesSentence } from '../adversaries/privacyAdversaryUi'
-import { PrivacyRosetteIcon } from './PrivacyRosetteIcon'
+import {
+  getPrivacyAdversariesSentence,
+  getPrivacyAdversaryRosetteValues,
+} from '../adversaries/privacyAdversaryUi'
 import { PrivacyRosetteTooltip } from './PrivacyRosetteTooltip'
 import {
   getPrivacyRosetteGroups,
@@ -17,45 +19,39 @@ interface Props extends PrivacyRosetteInput {
   /** Project page the rosette links into. */
   href: string
   isUnderReview?: boolean
-  /** Overrides the table-cell size of the rosette. */
-  iconClassName?: string
-  /** Overrides the table-row link styling, e.g. its 52px height cap. */
-  linkClassName?: string
 }
 
 /**
- * The privacy column: one rosette over everything the page grades. It carries
- * the shape of the assessment; the verdict behind every slice is left to the
- * tooltip, which labels the two halves on the sides they occupy.
+ * The adversaries on the L2 risk rosette, one slice each. The tooltip is the
+ * privacy one rather than the L2 "Risk analysis" card: it names the promise,
+ * lists every adversary, and opens the full assessment on hover.
  */
-export function PrivacyRosetteCell({
+export function PrivacyAdversaryRosetteCell({
   href,
   isUnderReview,
-  iconClassName,
-  linkClassName,
   ...input
 }: Props) {
   const groups = getPrivacyRosetteGroups(input)
+  const values = getPrivacyAdversaryRosetteValues(input.adversaries)
   const { subject, held, total } = getPrivacyAdversariesSentence(
     input.adversaries,
   )
 
   return (
-    // Hoverable so the pointer can move into the tooltip and pick a slice.
+    // Hoverable so the pointer can move into the tooltip and pick a row.
     <Tooltip disableHoverableContent={false}>
       <TooltipTrigger
         className="flex size-full items-center justify-center"
         disabledOnMobile
       >
-        <TableLink
-          href={href}
-          className={cn('flex items-center gap-2.5', linkClassName)}
-        >
-          <PrivacyRosetteIcon
-            groups={groups}
+        <TableLink href={href}>
+          <PizzaRosetteIcon
+            values={values}
             isUnderReview={isUnderReview}
-            className={cn('size-6 shrink-0 md:size-8', iconClassName)}
-            label={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
+            background={false}
+            disableSectionLinking
+            className="size-6 md:size-8"
+            alt-text={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
           />
         </TableLink>
       </TooltipTrigger>
@@ -66,6 +62,16 @@ export function PrivacyRosetteCell({
           groups={groups}
           adversaries={input.adversaries}
           isUnderReview={isUnderReview}
+          adversariesOnly
+          rosette={
+            <PizzaRosetteIcon
+              values={values}
+              isUnderReview={isUnderReview}
+              background="surface"
+              disableSectionLinking
+              className="size-[104px] shrink-0"
+            />
+          }
         />
       </TooltipContent>
     </Tooltip>

@@ -15,13 +15,13 @@ import {
 import { PrivacySummaryCards } from './PrivacySummaryCards'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
-/** V1, V3 and V4: a tab per kind of privacy, holding a table or cards. */
+/** V1, V4 and V5: a tab per kind of privacy, holding a table or cards. */
 export function PrivacySummaryTabs({
   entries,
   view,
 }: {
   entries: PrivacySummaryEntry[]
-  view: Exclude<PrivacySummaryView, 'grid'>
+  view: Exclude<PrivacySummaryView, 'grid' | 'gridSplit'>
 }) {
   const groups = groupByPrivacyType(entries)
 
@@ -36,7 +36,13 @@ export function PrivacySummaryTabs({
       </DirectoryTabsList>
       {groups.map((group) => (
         <DirectoryTabsContent key={group.field} value={group.field}>
-          <TabInfoWithDrawer title={group.title} content={group.description} />
+          {/* [&>div]:mb-2 trims the shared tab info's 12px bottom margin. */}
+          <div className="[&>div]:mb-2">
+            <TabInfoWithDrawer
+              title={group.title}
+              content={group.description}
+            />
+          </div>
           {view === 'cards' ? (
             <PrivacySummaryCards
               entries={group.entries}

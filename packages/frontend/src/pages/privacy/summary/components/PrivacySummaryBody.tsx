@@ -5,6 +5,7 @@ import {
   DEFAULT_PRIVACY_SUMMARY_VIEW,
   toPrivacySummaryView,
 } from '../privacySummaryViews'
+import { PrivacyBestPracticesBanner } from './PrivacyBestPracticesBanner'
 import { PrivacySummaryChartsSection } from './PrivacySummaryChartsSection'
 import { PrivacySummaryGrid } from './PrivacySummaryGrid'
 import { PrivacySummaryTabs } from './PrivacySummaryTabs'
@@ -14,9 +15,11 @@ import { PrivacyViewSwitch } from './PrivacyViewSwitch'
 export function PrivacySummaryBody({
   entries,
   defaultChartRange,
+  bestPracticesBannerImageUrl,
 }: {
   entries: PrivacySummaryEntry[]
   defaultChartRange: ChartRange
+  bestPracticesBannerImageUrl: string
 }) {
   const [rawView, setView] = useQueryParam(
     'view',
@@ -36,10 +39,19 @@ export function PrivacySummaryBody({
           .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl }))}
         defaultRange={defaultChartRange}
       />
-      {view === 'grid' ? (
-        <PrivacySummaryGrid entries={entries} />
+      {view === 'grid' || view === 'gridSplit' ? (
+        <PrivacySummaryGrid
+          entries={entries}
+          view={view}
+          bestPracticesBannerImageUrl={bestPracticesBannerImageUrl}
+        />
       ) : (
-        <PrivacySummaryTabs entries={entries} view={view} />
+        <>
+          <PrivacySummaryTabs entries={entries} view={view} />
+          <PrivacyBestPracticesBanner
+            backgroundImage={bestPracticesBannerImageUrl}
+          />
+        </>
       )}
     </>
   )

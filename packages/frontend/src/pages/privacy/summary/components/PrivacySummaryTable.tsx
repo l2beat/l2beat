@@ -33,6 +33,11 @@ export function PrivacySummaryTable({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    // The server already hands the entries over in privacy order; starting the
+    // table on the same column marks its arrow so the ordering is visible.
+    initialState: {
+      sorting: [{ id: 'privacy', desc: true }],
+    },
     state: {
       columnPinning: {
         left: ['#', 'logo'],

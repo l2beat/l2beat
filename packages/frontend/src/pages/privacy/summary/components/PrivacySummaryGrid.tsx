@@ -1,135 +1,61 @@
 import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { TabInfoWithDrawer } from '~/components/TabInfoWithDrawer'
-import {
-  type TrustedSetupRisk,
-  TrustedSetupRiskDot,
-} from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { PrivacyRosetteIcon } from '../../rosette/PrivacyRosetteIcon'
-import type {
-  PrivacyRosetteGroups,
-  PrivacyRosetteSlice,
-} from '../../rosette/privacyRosetteSlices'
 import { groupByPrivacyType } from '../privacySummaryViews'
+import { PrivacyBestPracticesBanner } from './PrivacyBestPracticesBanner'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
 /**
- * V2: every kind of privacy at once, as a 2x2 grid of compact tables instead
- * of tabs. There are three kinds, so the fourth cell explains the rosette the
- * tables share.
+ * V2 and V3: every kind of privacy at once, as a 2x2 grid of compact tables
+ * instead of tabs. There are three kinds, so the best practices banner takes
+ * the fourth cell rather than repeating under the grid.
  */
 export function PrivacySummaryGrid({
   entries,
+  view,
+  bestPracticesBannerImageUrl,
 }: {
   entries: PrivacySummaryEntry[]
+  /** `gridSplit` splits the protocol risks off into columns of their own. */
+  view: 'grid' | 'gridSplit'
+  bestPracticesBannerImageUrl: string
 }) {
   return (
-    <div className="mt-4 grid gap-4 xl:grid-cols-2">
+    // Three shared rows - heading, description, table - so both cards of a row
+    // start their table on the same line whatever their description runs to.
+    <div className="mt-4 grid gap-4 xl:grid-cols-2 xl:grid-rows-[auto_auto_1fr]">
       {groupByPrivacyType(entries).map((group) => (
-        <PrimaryCard key={group.field} className="flex min-w-0 flex-col">
-          <h2 className="flex items-center gap-2 font-bold text-heading-20">
+        <PrimaryCard
+          key={group.field}
+          // gap-0: the subgrid would otherwise inherit the grid's gap-4
+          // between the heading, the description and the table.
+          className="flex min-w-0 flex-col xl:row-span-3 xl:grid xl:grid-rows-subgrid xl:gap-0"
+        >
+          <h2 className="flex items-center gap-2 font-bold text-heading-16 md:text-heading-20">
             {group.label}
             <CountBadge>{group.entries.length}</CountBadge>
           </h2>
-          <div className="mt-2">
-            <TabInfoWithDrawer
-              title={group.title}
-              content={group.description}
+          {/* Spaced like the interop widgets: heading, subtitle, content. */}
+          <p className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
+            {group.shortDescription}
+          </p>
+          {/* The header plus five rows, then it scrolls, so a long table
+              cannot stretch the card past the one beside it. */}
+          <div className="mt-2 max-h-[324px] min-w-0 overflow-y-auto">
+            <PrivacySummaryTable
+              view={view}
+              entries={group.entries}
+              hiddenColumns={group.hiddenColumns}
+              compact
             />
           </div>
-          <PrivacySummaryTable
-            view="grid"
-            entries={group.entries}
-            hiddenColumns={group.hiddenColumns}
-            compact
-          />
         </PrimaryCard>
       ))}
-      <RosetteGuide />
+      <PrivacyBestPracticesBanner
+        backgroundImage={bestPracticesBannerImageUrl}
+        backgroundFit="stretch"
+        className="mt-0 h-full min-h-[200px] xl:row-span-3"
+      />
     </div>
-  )
-}
-
-const EXAMPLE_ADVERSARIES: [string, TrustedSetupRisk][] = [
-  ['Public observer', 'green'],
-  ['Chain analyst', 'green'],
-  ['Network observer', 'yellow'],
-  ['Privileged insider', 'green'],
-  ['Future adversary', 'red'],
-]
-
-const EXAMPLE_RISKS: [string, TrustedSetupRisk][] = [
-  ['Trusted setup', 'yellow'],
-  ['Exit window', 'green'],
-  ['Reproducibility', 'green'],
-]
-
-const toExampleSlices = (
-  items: [string, TrustedSetupRisk][],
-): PrivacyRosetteSlice[] =>
-  items.map(([label, risk]) => ({
-    id: label,
-    label,
-    value: '',
-    risk,
-    source: { type: 'risk', description: '' },
-  }))
-
-const EXAMPLE_GROUPS: PrivacyRosetteGroups = {
-  adversaries: { title: '', slices: toExampleSlices(EXAMPLE_ADVERSARIES) },
-  risks: { title: '', slices: toExampleSlices(EXAMPLE_RISKS) },
-}
-
-const COLOUR_KEY: [TrustedSetupRisk, string][] = [
-  ['green', 'Private, or low risk'],
-  ['yellow', 'At risk, or only with care'],
-  ['red', 'Exposed, or high risk'],
-  ['None', 'Does not apply'],
-]
-
-function RosetteGuide() {
-  return (
-    <PrimaryCard className="flex flex-col">
-      <h2 className="font-bold text-heading-20">How to read the rosette</h2>
-      <p className="mt-2 text-secondary text-xs md:text-[13px]">
-        Every protocol gets one rosette. Hover it in any table for the verdict
-        behind each slice.
-      </p>
-      <div className="mt-4 flex flex-1 flex-col items-center gap-6 sm:flex-row">
-        <PrivacyRosetteIcon
-          groups={EXAMPLE_GROUPS}
-          className="size-32 shrink-0"
-          label="Example rosette"
-        />
-        <div className="flex flex-col gap-3 text-xs md:text-[13px]">
-          <div>
-            <div className="font-bold">Left half: privacy</div>
-            <p className="text-secondary">
-              One slice per adversary, top to bottom:{' '}
-              {EXAMPLE_ADVERSARIES.map(([label]) => label.toLowerCase()).join(
-                ', ',
-              )}
-              . Can a careful user stay private against it?
-            </p>
-          </div>
-          <div>
-            <div className="font-bold">Right half: protocol risks</div>
-            <p className="text-secondary">
-              Risks that apply whoever is watching:{' '}
-              {EXAMPLE_RISKS.map(([label]) => label.toLowerCase()).join(', ')}.
-            </p>
-          </div>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
-            {COLOUR_KEY.map(([risk, text]) => (
-              <li key={risk} className="flex items-center gap-1.5">
-                <TrustedSetupRiskDot risk={risk} size="xs" />
-                <span className="text-secondary">{text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </PrimaryCard>
   )
 }

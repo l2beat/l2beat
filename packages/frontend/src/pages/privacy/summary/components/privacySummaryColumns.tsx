@@ -4,7 +4,6 @@ import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
-import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
@@ -19,12 +18,9 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import {
-  getPrivacyAdversariesScore,
-  getPrivacyAdversariesSentence,
-  getPrivacyAdversaryRosetteValues,
-} from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PrivacyAdversaryRosetteCell } from '../../rosette/PrivacyAdversaryRosetteCell'
 import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
 import type {
   PrivacySummaryOptionalColumn,
@@ -236,17 +232,26 @@ const attributesColumn: PrivacyColumn = columnHelper.display({
   },
   enableSorting: false,
   meta: {
-    cellClassName: 'py-2',
     tooltip: 'Protocol attributes and capabilities.',
   },
 })
 
-const privacyScoreAccessor = (entry: PrivacySummaryEntry) =>
-  getPrivacyAdversariesScore(entry.adversaries)
+const privacyAccessor = (entry: PrivacySummaryEntry) =>
+  getPrivacyAdversariesTableValue(entry.adversaries)
+
+/** The folded adversary value, the same order the server sends entries in. */
+const privacySortingFn = (
+  a: { original: PrivacySummaryEntry },
+  b: { original: PrivacySummaryEntry },
+) =>
+  sortTableValues(
+    getPrivacyAdversariesTableValue(a.original.adversaries),
+    getPrivacyAdversariesTableValue(b.original.adversaries),
+  )
 
 /** V2 and V3: one rosette over the adversaries and the protocol risks. */
 const getRosetteColumn = (compact: boolean): PrivacyColumn =>
-  columnHelper.accessor(privacyScoreAccessor, {
+  columnHelper.accessor(privacyAccessor, {
     // Also the label in the columns picker, which shows the id whenever the
     // header is not a plain string.
     id: 'privacy',
@@ -274,58 +279,48 @@ const getRosetteColumn = (compact: boolean): PrivacyColumn =>
       />
     ),
     sortDescFirst: true,
+    sortingFn: privacySortingFn,
     meta: {
       align: 'center',
-      cellClassName: 'py-2',
       tooltip: PRIVACY_ASSESSMENT.rosetteTooltip,
     },
   })
 
 /**
- * V1: the adversaries alone on the L2 risk rosette - five adversaries, five
- * slices - with the count next to it, the number the column sorts by.
+ * V1 and V2: the adversaries alone on the L2 risk rosette - five adversaries,
+ * five slices. It still sorts by the score behind it; the count itself is in
+ * the rosette's tooltip.
  */
 const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
-  privacyScoreAccessor,
+  privacyAccessor,
   {
     id: 'privacy',
     header: 'Privacy',
-    cell: (ctx) => {
-      const { held, total } = getPrivacyAdversariesSentence(
-        ctx.row.original.adversaries,
-      )
-      return (
-        <div className="flex items-center gap-2.5">
-          <div className="shrink-0">
-            <PizzaRosetteCell
-              href={ctx.row.original.href}
-              values={getPrivacyAdversaryRosetteValues(
-                ctx.row.original.adversaries,
-              )}
-              isUnderReview={ctx.row.original.isUnderReview}
-            />
-          </div>
-          <span className="flex flex-col text-left">
-            <span className="font-bold text-base tabular-nums leading-none">
-              {held}/{total}
-            </span>
-            <span className="text-[11px] text-secondary">adversaries</span>
-          </span>
-        </div>
-      )
-    },
+    cell: (ctx) => (
+      <PrivacyAdversaryRosetteCell
+        adversaries={ctx.row.original.adversaries}
+        trustedSetup={ctx.row.original.trustedSetup}
+        exitWindow={ctx.row.original.exitWindow}
+        reproducibility={ctx.row.original.reproducibility}
+        href={ctx.row.original.href}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
+    ),
     sortDescFirst: true,
+    sortingFn: privacySortingFn,
     meta: {
-      cellClassName: 'py-2',
+      align: 'center',
       tooltip: PRIVACY_ASSESSMENT.tooltip,
     },
   },
 )
 
-/** V1: the protocol risks as they were on main, grouped under one header. */
+/** V1 and V2: the protocol risks as they were on main, shaded as one group. */
 const protocolRiskColumns: PrivacyColumn = columnHelper.group({
   id: 'protocolRisks',
-  header: 'Protocol risks',
+  // No group title: the shaded, rounded background already sets the three
+  // risk columns apart, and a title row would push the table down by its own
+  // height for the sake of two words.
   columns: [
     columnHelper.display({
       id: 'trustedSetup',
@@ -393,6 +388,10 @@ export function getPrivacySummaryColumns({
     { afterName: PrivacyColumn[]; afterMetrics: PrivacyColumn[] }
   > = {
     grid: { afterName: [getRosetteColumn(!!compact)], afterMetrics: [] },
+    gridSplit: {
+      afterName: [adversaryRosetteColumn],
+      afterMetrics: [protocolRiskColumns],
+    },
     rosette: { afterName: [getRosetteColumn(false)], afterMetrics: [] },
     split: {
       afterName: [adversaryRosetteColumn],
