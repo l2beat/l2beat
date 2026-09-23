@@ -6,7 +6,7 @@ import { serveMarkdown, serveMarkdownIfPreferred } from './markdownAlternate'
 // Method: mount both handlers the way a page router does (`:slug.md` next to
 // the HTML route) over a fake markdown source, then make real HTTP requests
 // with the Accept headers browsers and agents send and check what comes back.
-describe('markdown alternate', () => {
+describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('serves the .md suffix as markdown', async () => {
     const response = await fetchFromRouter(
       createRouter(),

@@ -90,7 +90,7 @@ const LLMS_TXT = {
           name: 'Scaling project',
           path: '/layer2s/projects/{slug}.md',
           description:
-            'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. The HTML page URL with Accept: text/markdown returns the same.',
+            'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
         },
       ],
     },

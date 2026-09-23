@@ -14,8 +14,6 @@ export function serveMarkdown<P>(getMarkdown: MarkdownSource<P>) {
   }
 }
 
-const NOT_FOUND_MARKDOWN = '# Not found\n'
-
 /**
  * Put before the HTML handler of a page: requests whose Accept header prefers
  * text/markdown get the markdown, the rest fall through to the HTML.
@@ -39,3 +37,5 @@ export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
 function prefersMarkdown(req: Request<unknown>) {
   return req.accepts(['text/html', 'text/markdown']) === 'text/markdown'
 }
+
+const NOT_FOUND_MARKDOWN = '# Not found\n'

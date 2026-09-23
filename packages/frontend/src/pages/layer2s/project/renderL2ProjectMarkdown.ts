@@ -18,6 +18,8 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
   const api = `${PRODUCTION_ORIGIN}/api/scaling`
   return renderProjectMarkdown({
     name: entry.name,
+    // Production URLs, like the canonical link: the document is meant to be
+    // cited, whichever deployment rendered it.
     pageUrl: `${PRODUCTION_ORIGIN}/layer2s/projects/${entry.slug}`,
     summary: {
       warnings: compact([
@@ -32,14 +34,17 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
     sections: entry.sections,
     apiLinks: {
       tvs: [
-        { name: 'TVS chart (JSON)', url: `${api}/tvs/${entry.slug}` },
+        { title: 'TVS chart (JSON)', url: `${api}/tvs/${entry.slug}` },
         {
-          name: 'TVS breakdown by token (JSON)',
+          title: 'TVS breakdown by token (JSON)',
           url: `${api}/tvs/${entry.slug}/breakdown`,
         },
       ],
       activity: [
-        { name: 'Activity chart (JSON)', url: `${api}/activity/${entry.slug}` },
+        {
+          title: 'Activity chart (JSON)',
+          url: `${api}/activity/${entry.slug}`,
+        },
       ],
     },
   })

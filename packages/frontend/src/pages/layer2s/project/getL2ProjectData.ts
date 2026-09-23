@@ -51,11 +51,11 @@ function getCachedL2ProjectPage(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getCachedData(manifest, slug),
+    () => loadL2ProjectPage(manifest, slug),
   )
 }
 
-async function getCachedData(manifest: Manifest, slug: string) {
+async function loadL2ProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
     slug,

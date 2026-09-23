@@ -1,12 +1,21 @@
 import type { Sentiment } from '@l2beat/config'
 
-/** Blocks are separated by a blank line; empty blocks are dropped so optional parts need no special casing. */
+/** Separates blocks with a blank line and drops empty ones, so an optional part is just '' when absent. */
 export function joinBlocks(blocks: string[]) {
   return blocks.filter((block) => block !== '').join('\n\n')
 }
 
 export function heading(level: number, text: string) {
   return `${'#'.repeat(level)} ${text}`
+}
+
+/** A heading only makes sense above content, so an empty body drops both. */
+export function subsection(
+  level: number,
+  title: string,
+  body: string | undefined,
+) {
+  return body ? joinBlocks([heading(level, title), body]) : ''
 }
 
 export function bulletList(items: string[]) {
@@ -29,6 +38,11 @@ export function withSentiment(value: string, sentiment: Sentiment | undefined) {
   return sentiment ? `${value} (sentiment: ${sentiment})` : value
 }
 
+/** Same marker placement as the HTML risk lists: before the closing punctuation. */
+export function markCritical(text: string, isCritical: boolean | undefined) {
+  return isCritical ? `${text.slice(0, -1)} (CRITICAL)${text.slice(-1)}` : text
+}
+
 /**
  * Config text can carry its own headings (e.g. "## Architecture"). Shifted so
  * the shallowest one lands at `level`, they nest under the heading the text is
@@ -36,37 +50,37 @@ export function withSentiment(value: string, sentiment: Sentiment | undefined) {
  */
 export function nestHeadings(content: string, level: number) {
   const lines = content.split('\n')
-  const headingLines = findHeadingLines(lines)
-  if (headingLines.size === 0) return content
+  const headingDepths = findHeadingDepths(lines)
+  if (headingDepths.size === 0) return content
 
-  const depths = [...headingLines].map(
-    (i) => lines[i]?.match(/^#+/)?.[0].length ?? level,
-  )
-  const shift = level - Math.min(...depths)
+  const shift = level - Math.min(...headingDepths.values())
   if (shift <= 0) return content
 
   return lines
-    .map((line, i) =>
-      headingLines.has(i) ? `${'#'.repeat(shift)}${line}` : line,
-    )
+    .map((line, i) => {
+      const depth = headingDepths.get(i)
+      if (depth === undefined) return line
+      const nestedDepth = Math.min(depth + shift, MAX_HEADING_DEPTH)
+      return `${'#'.repeat(nestedDepth)}${line.slice(depth)}`
+    })
     .join('\n')
 }
 
-/** Indexes of ATX heading lines, skipping fenced code blocks where `#` is literal. */
-function findHeadingLines(lines: string[]) {
-  const headingLines = new Set<number>()
+const MAX_HEADING_DEPTH = 6
+
+/** Line index to depth of each ATX heading, skipping fenced code where `#` is literal. */
+function findHeadingDepths(lines: string[]) {
+  const depths = new Map<number, number>()
   let inCodeFence = false
   for (const [i, line] of lines.entries()) {
     if (line.trimStart().startsWith('```')) {
       inCodeFence = !inCodeFence
-    } else if (!inCodeFence && /^#{1,6} /.test(line)) {
-      headingLines.add(i)
+      continue
+    }
+    const hashes = line.match(/^(#{1,6}) /)?.[1]
+    if (!inCodeFence && hashes) {
+      depths.set(i, hashes.length)
     }
   }
-  return headingLines
-}
-
-/** Same marker placement as the HTML risk lists: before the closing punctuation. */
-export function markCritical(text: string, isCritical: boolean | undefined) {
-  return isCritical ? `${text.slice(0, -1)} (CRITICAL)${text.slice(-1)}` : text
+  return depths
 }
