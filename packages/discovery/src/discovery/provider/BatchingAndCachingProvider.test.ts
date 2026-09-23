@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
@@ -144,6 +144,53 @@ describe(BatchingAndCachingProvider.name, () => {
         1,
         1,
       )
+    })
+  })
+
+  describe('batch flush failure', () => {
+    function setup() {
+      const cache = mockObject<ReorgAwareCache>({
+        entry: mockFn().rejectsWith(new Error('cache unavailable')),
+      })
+      return new BatchingAndCachingProvider(
+        cache,
+        mockObject<LowLevelProvider>(),
+        mockObject<MulticallClient>(),
+        logger,
+      )
+    }
+
+    it('rejects every batched call', async () => {
+      const batchingProvider = setup()
+      const address = EthereumAddress.random()
+
+      const first = batchingProvider.call(address, Bytes.fromHex('0x01'), 1)
+      const second = batchingProvider.call(address, Bytes.fromHex('0x02'), 1)
+
+      await expect(first).toBeRejectedWith('cache unavailable')
+      await expect(second).toBeRejectedWith('cache unavailable')
+    })
+
+    it('rejects every batched storage read', async () => {
+      const batchingProvider = setup()
+      const address = EthereumAddress.random()
+
+      const first = batchingProvider.getStorage(address, 0, 1)
+      const second = batchingProvider.getStorage(address, 1, 1)
+
+      await expect(first).toBeRejectedWith('cache unavailable')
+      await expect(second).toBeRejectedWith('cache unavailable')
+    })
+
+    it('rejects every batched log request', async () => {
+      const batchingProvider = setup()
+      const address = EthereumAddress.random()
+
+      const first = batchingProvider.getLogs(address, ['aaaa'], 0, 1)
+      const second = batchingProvider.getLogs(address, ['bbbb'], 0, 1)
+
+      await expect(first).toBeRejectedWith('cache unavailable')
+      await expect(second).toBeRejectedWith('cache unavailable')
     })
   })
 })

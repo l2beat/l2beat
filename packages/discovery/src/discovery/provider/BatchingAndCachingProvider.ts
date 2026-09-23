@@ -110,7 +110,9 @@ export class BatchingAndCachingProvider {
       if (!this.callsTimeout) {
         this.callsTimeout = setTimeout(() => {
           this.callsTimeout = undefined
-          this.flushCalls()
+          const calls = this.calls
+          this.calls = []
+          this.flushCalls(calls).catch((e: unknown) => rejectAll(calls, e))
         }, 0) // TODO: 1?
       }
     })
@@ -149,10 +151,8 @@ export class BatchingAndCachingProvider {
     }
   }
 
-  private async flushCalls() {
+  private async flushCalls(calls: ScheduledCall[]) {
     const start = performance.now()
-    const calls = [...this.calls]
-    this.calls = []
 
     const checkedInCache = await Promise.all(
       calls.map(async (call) => ({
@@ -233,16 +233,18 @@ export class BatchingAndCachingProvider {
       if (!this.storageReadsTimeout) {
         this.storageReadsTimeout = setTimeout(() => {
           this.storageReadsTimeout = undefined
-          this.flushStorageReads()
+          const reads = this.storageReads
+          this.storageReads = []
+          this.flushStorageReads(reads).catch((e: unknown) =>
+            rejectAll(reads, e),
+          )
         }, 0)
       }
     })
   }
 
-  private async flushStorageReads() {
+  private async flushStorageReads(reads: ScheduledStorageRead[]) {
     const start = performance.now()
-    const reads = [...this.storageReads]
-    this.storageReads = []
 
     const checkedInCache = await Promise.all(
       reads.map(async (read) => ({
@@ -381,16 +383,18 @@ export class BatchingAndCachingProvider {
       if (!this.logRequestsTimeout) {
         this.logRequestsTimeout = setTimeout(() => {
           this.logRequestsTimeout = undefined
-          this.flushLogRequests()
+          const logRequests = this.logRequests
+          this.logRequests = []
+          this.flushLogRequests(logRequests).catch((e: unknown) =>
+            rejectAll(logRequests, e),
+          )
         }, 0) // TODO: 1?
       }
     })
   }
 
-  private async flushLogRequests() {
+  private async flushLogRequests(logRequests: ScheduledLogRequest[]) {
     const start = performance.now()
-    const logRequests = [...this.logRequests]
-    this.logRequests = []
 
     const checkedInCache = await Promise.all(
       logRequests.map(async (logRequest) => ({
@@ -756,6 +760,15 @@ export function orderLogs(a: providers.Log, b: providers.Log) {
     return blocks
   }
   return a.logIndex - b.logIndex
+}
+
+function rejectAll(
+  requests: { reject: (reason: unknown) => void }[],
+  error: unknown,
+) {
+  for (const request of requests) {
+    request.reject(error)
+  }
 }
 
 function parseCacheEntry(entry: string) {

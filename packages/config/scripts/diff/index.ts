@@ -4,7 +4,10 @@ import { diffAll } from './diff'
 import { diffsToHtml } from './html'
 import type { Project } from './types'
 
-main()
+main().catch((error: unknown) => {
+  console.error(error)
+  process.exitCode = 1
+})
 
 async function main() {
   const args = process.argv.slice(2)

@@ -27,7 +27,7 @@ export function BlockForm({
     if (chainParam && blockParam) {
       setChain(chainParam)
       setBlockNumber(blockParam)
-      getBlock(chainParam, blockParam)
+      void getBlock(chainParam, blockParam)
     }
   }, [])
 
@@ -44,7 +44,7 @@ export function BlockForm({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    getBlock(chainId, blockNumber)
+    void getBlock(chainId, blockNumber)
 
     const params = new URLSearchParams(window.location.search)
     params.set('chain', chainId)
