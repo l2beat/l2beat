@@ -1,14 +1,14 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import { getEthereumActivityChart } from '~/server/features/layer2s/activity/getEthereumActivityChart'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getLiveness } from '~/server/features/layer2s/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
-import { getActivityChartCaption } from '~/utils/project/chart-figures/chartCaptions'
+import { getEthereumActivityChartCaption } from '~/utils/project/chart-figures/chartCaptions'
 import { getActivityJsonUrl } from '~/utils/project/chart-figures/chartJsonLinks'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -38,6 +38,7 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
+  helpers: SsrHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -47,6 +48,7 @@ export async function getRegularDaProjectSections({
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
+  helpers,
 }: RegularDetailsParams) {
   const [
     contractUtils,
@@ -138,6 +140,7 @@ export async function getRegularDaProjectSections({
         bridge,
         projectLiveness,
         projectsChangeReport.projects[bridge.id],
+        helpers,
       )
     : undefined
 
@@ -297,6 +300,7 @@ type EthereumDetailsParams = {
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
   interopData: ProjectInteropData | undefined
+  helpers: SsrHelpers
 }
 
 export async function getEthereumDaProjectSections({
@@ -306,6 +310,7 @@ export async function getEthereumDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
   interopData,
+  helpers,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     layer,
@@ -318,7 +323,11 @@ export async function getEthereumDaProjectSections({
   const activityRange = optionToRange('1y')
   const [throughputSection, activityChart] = await Promise.all([
     getDaThroughputSection(layer),
-    getEthereumActivityChart({ range: activityRange }),
+    helpers.queryClient.fetchQuery(
+      helpers.trpc.activity.ethereumChart.queryOptions({
+        range: activityRange,
+      }),
+    ),
   ])
 
   if (interopData) {
@@ -355,8 +364,13 @@ export async function getEthereumDaProjectSections({
       defaultRange: activityRange,
       project: toChartProject(layer),
       milestones: layer.milestones ?? [],
-      caption: getActivityChartCaption(layer.name, activityChart.data),
-      jsonUrl: getActivityJsonUrl(layer.slug, '1y'),
+      chartDescription: {
+        caption: getEthereumActivityChartCaption(
+          layer.name,
+          activityChart.data,
+        ),
+        jsonUrl: getActivityJsonUrl(layer.slug, '1y'),
+      },
     },
   })
 

@@ -1,15 +1,16 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
-import { getL2ProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getL2ProjectDaThroughtputChart'
 import { checkIfDataPostedExists } from '~/server/features/data-availability/throughput/utils/checkIfDataPostedExists'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getDataPostedChartCaption } from '../chart-figures/chartCaptions'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
+  helpers: SsrHelpers,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
@@ -17,21 +18,27 @@ export async function getDataPostedSection(
       | 'currentDaLayers'
       | 'pastDaLayers'
       | 'daTrackingConfig'
-      | 'caption'
+      | 'chartDescription'
     >
   | undefined
 > {
   if (!project.daTrackingConfig) return undefined
 
   const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
-  const [hasData, daLayers, chart] = await Promise.all([
+  const [hasData, daLayers] = await Promise.all([
     checkIfDataPostedExists(project.id, range[0] ?? undefined),
     ps.getProjects({
       select: ['daLayer'],
     }),
-    getL2ProjectDaThroughputChart({ range, projectId: project.id }),
   ])
   if (!hasData) return undefined
+
+  const chart = await helpers.queryClient.fetchQuery(
+    helpers.trpc.da.l2ProjectChart.queryOptions({
+      range,
+      projectId: project.id,
+    }),
+  )
 
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
     project.daTrackingConfig,
@@ -52,6 +59,8 @@ export async function getDataPostedSection(
     currentDaLayers,
     pastDaLayers,
     daTrackingConfig,
-    caption: getDataPostedChartCaption(project.name, chart),
+    chartDescription: {
+      caption: getDataPostedChartCaption(project.name, chart),
+    },
   }
 }

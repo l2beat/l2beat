@@ -1,5 +1,8 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { ChartFigure } from '~/components/chart/ChartFigure'
+import {
+  type ChartDescription,
+  ChartFigure,
+} from '~/components/chart/ChartFigure'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
@@ -24,8 +27,7 @@ export interface L2TvsSectionProps extends ProjectSectionProps {
   tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
   defaultRange: ChartRange
-  caption: string
-  jsonUrl?: string
+  chartDescription: ChartDescription
 }
 
 export function L2TvsSection({
@@ -35,8 +37,7 @@ export function L2TvsSection({
   tvsInfo,
   tvsBreakdownUrl,
   defaultRange,
-  caption,
-  jsonUrl,
+  chartDescription,
   ...sectionProps
 }: L2TvsSectionProps) {
   return (
@@ -55,7 +56,7 @@ export function L2TvsSection({
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <SelectedTokenContextProvider>
             <ChartControls projectId={project.id} />
-            <ChartFigure caption={caption} jsonUrl={jsonUrl}>
+            <ChartFigure {...chartDescription}>
               <ProjectBridgeTypeTvsChart
                 project={project}
                 milestones={milestones}

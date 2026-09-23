@@ -8,7 +8,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
+import { getSsrHelpers, type SsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { getChartJsonAlternates } from '~/utils/project/chart-figures/chartJsonLinks'
 
@@ -23,7 +23,7 @@ export async function getDataAvailabilityProjectData(
   const helpers = getSsrHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getProjectEntry(params),
+    getProjectEntry(params, helpers),
   ])
   if (!projectEntry) return undefined
 
@@ -59,7 +59,10 @@ export async function getDataAvailabilityProjectData(
   }
 }
 
-async function getProjectEntry(params: { layer: string; bridge: string }) {
+async function getProjectEntry(
+  params: { layer: string; bridge: string },
+  helpers: SsrHelpers,
+) {
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
@@ -84,12 +87,12 @@ async function getProjectEntry(params: { layer: string; bridge: string }) {
       return
     }
 
-    const entry = await getEthereumDaProjectEntry(layer, bridge)
+    const entry = await getEthereumDaProjectEntry(layer, bridge, helpers)
 
     return entry
   }
 
-  const entry = await getDaProjectEntry(layer, params.bridge)
+  const entry = await getDaProjectEntry(layer, params.bridge, helpers)
   if (!entry) return
 
   return entry

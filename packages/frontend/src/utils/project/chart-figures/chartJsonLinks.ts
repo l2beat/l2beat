@@ -1,3 +1,4 @@
+import type { ChartDescription } from '~/components/chart/ChartFigure'
 import type {
   ActivityApiRange,
   TvsApiRange,
@@ -12,8 +13,8 @@ export function getActivityJsonUrl(slug: string, range: ActivityApiRange) {
   return `/api/scaling/activity/${slug}?range=${range}`
 }
 
-interface SectionWithJsonUrl {
-  props: { title: string; jsonUrl?: string }
+interface SectionWithChart {
+  props: { title: string; chartDescription?: ChartDescription }
 }
 
 /**
@@ -22,16 +23,16 @@ interface SectionWithJsonUrl {
  */
 export function getChartJsonAlternates(
   projectName: string,
-  sections: SectionWithJsonUrl[],
+  sections: SectionWithChart[],
 ): JsonAlternate[] {
-  return sections.flatMap(({ props }) =>
-    props.jsonUrl
-      ? [
-          {
-            title: `${projectName} ${props.title.toLowerCase()} (JSON)`,
-            href: props.jsonUrl,
-          },
-        ]
-      : [],
-  )
+  return sections.flatMap(({ props }) => {
+    const jsonUrl = props.chartDescription?.jsonUrl
+    if (!jsonUrl) return []
+    return [
+      {
+        title: `${projectName} ${props.title.toLowerCase()} (JSON)`,
+        href: jsonUrl,
+      },
+    ]
+  })
 }

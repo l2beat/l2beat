@@ -200,10 +200,10 @@ export async function getL2ProjectEntry(
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
-    getL2TvsSection(project),
-    getActivitySection(project),
-    getCostsSection(project),
-    getDataPostedSection(project),
+    getL2TvsSection(project, helpers),
+    getActivitySection(project, helpers),
+    getCostsSection(project, helpers),
+    getDataPostedSection(project, helpers),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
@@ -478,6 +478,7 @@ export async function getL2ProjectEntry(
     project,
     projectLiveness,
     projectsChangeReport.projects[project.id],
+    helpers,
   )
   if (livenessSection) {
     sections.push({

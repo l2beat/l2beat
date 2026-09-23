@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { getProjectTvsChartQuery } from '~/components/chart/tvs/projectTvsChartQuery'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -11,12 +12,9 @@ export function ChartControls({ projectId }: { projectId: string }) {
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { data } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
-      filter: { type: 'projects', projectIds: [projectId] },
-      range,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens,
-    }),
+    trpc.tvs.detailedChart.queryOptions(
+      getProjectTvsChartQuery(projectId, range, excludeRwaRestrictedTokens),
+    ),
   )
 
   const timeRange = useMemo(

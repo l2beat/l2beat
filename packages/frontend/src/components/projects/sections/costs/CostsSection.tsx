@@ -1,5 +1,8 @@
 import type { Milestone } from '@l2beat/config'
-import { ChartFigure } from '~/components/chart/ChartFigure'
+import {
+  type ChartDescription,
+  ChartFigure,
+} from '~/components/chart/ChartFigure'
 import { ProjectCostsChart } from '~/components/chart/costs/ProjectCostsChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -16,7 +19,7 @@ export interface CostsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   trackedTransactions: TrackedTransactionsByType
   defaultRange: ChartRange
-  caption: string
+  chartDescription: ChartDescription
 }
 
 export function CostsSection({
@@ -24,7 +27,7 @@ export function CostsSection({
   milestones,
   trackedTransactions,
   defaultRange,
-  caption,
+  chartDescription,
   ...sectionProps
 }: CostsSectionProps) {
   return (
@@ -36,7 +39,7 @@ export function CostsSection({
         <TrackedTxsOutageNotice type="section" className="mb-0" />
       )}
       <HorizontalSeparator className="my-4" />
-      <ChartFigure caption={caption}>
+      <ChartFigure {...chartDescription}>
         <ProjectCostsChart
           milestones={milestones}
           project={project}

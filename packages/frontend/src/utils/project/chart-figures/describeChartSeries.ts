@@ -43,7 +43,9 @@ export function describeChartSeries({
 function describeChange(from: number, to: number): string | undefined {
   // A change relative to zero is infinite, so there is nothing honest to say.
   if (from === 0) return undefined
-  const change = to / from - 1
+  // Not `to / from - 1`: the ratio loses precision and formatPercent floors,
+  // turning an exact 20% into 19.9%.
+  const change = (to - from) / from
   if (change === 0) return 'unchanged over this range'
   const direction = change > 0 ? 'up' : 'down'
   return `${direction} ${formatPercent(Math.abs(change))} over this range`

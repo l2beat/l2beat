@@ -29,14 +29,26 @@ describe(getChartJsonAlternates.name, () => {
       {
         props: {
           title: 'Value Secured',
-          jsonUrl: '/api/scaling/tvs/arbitrum?range=1y',
+          chartDescription: {
+            caption: 'TVS caption',
+            jsonUrl: '/api/scaling/tvs/arbitrum?range=1y',
+          },
         },
       },
-      { props: { title: 'Onchain costs' } },
+      {
+        props: {
+          title: 'Onchain costs',
+          chartDescription: { caption: 'Costs caption' },
+        },
+      },
+      { props: { title: 'Milestones & Incidents' } },
       {
         props: {
           title: 'Activity',
-          jsonUrl: '/api/scaling/activity/arbitrum?range=1y',
+          chartDescription: {
+            caption: 'Activity caption',
+            jsonUrl: '/api/scaling/activity/arbitrum?range=1y',
+          },
         },
       },
     ])

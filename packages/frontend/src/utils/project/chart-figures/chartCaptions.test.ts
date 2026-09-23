@@ -5,6 +5,7 @@ import {
   getActivityChartCaption,
   getCostsChartCaption,
   getDataPostedChartCaption,
+  getEthereumActivityChartCaption,
   getLivenessChartCaption,
   getTvsChartCaption,
 } from './chartCaptions'
@@ -31,10 +32,11 @@ describe(getTvsChartCaption.name, () => {
 })
 
 describe(getActivityChartCaption.name, () => {
-  it('describes daily user operations as UOPS', () => {
+  // Rows carry Ethereum counts too (columns 2 and 4); they must be ignored.
+  it('describes the project daily user operations as UOPS', () => {
     const caption = getActivityChartCaption('Foo', [
-      [START, 86_400, 86_400 * 2],
-      [END, 86_400, 86_400 * 3],
+      [START, 86_400, 999_999, 86_400 * 2, 999_999],
+      [END, 86_400, 999_999, 86_400 * 3, 999_999],
     ])
 
     expect(caption).toEqual(
@@ -44,8 +46,8 @@ describe(getActivityChartCaption.name, () => {
 
   it('falls back to transactions for days without a user operation count', () => {
     const caption = getActivityChartCaption('Foo', [
-      [START, 86_400, null],
-      [END, 86_400 * 2, null],
+      [START, 86_400, 999_999, null, 999_999],
+      [END, 86_400 * 2, 999_999, null, 999_999],
     ])
 
     expect(caption).toInclude(
@@ -54,8 +56,21 @@ describe(getActivityChartCaption.name, () => {
   })
 })
 
+describe(getEthereumActivityChartCaption.name, () => {
+  it('describes Ethereum daily user operations as UOPS', () => {
+    const caption = getEthereumActivityChartCaption('Ethereum', [
+      [START, 86_400, 86_400 * 2],
+      [END, 86_400, 86_400 * 3],
+    ])
+
+    expect(caption).toEqual(
+      `Daily average user operations per second (UOPS) on Ethereum ${RANGE}. Latest value: 3.00 UOPS, up 50.0% over this range.`,
+    )
+  })
+})
+
 describe(getCostsChartCaption.name, () => {
-  it('sums the USD cost components and states the total', () => {
+  it('sums the USD cost components and states the stats panel aggregates', () => {
     const caption = getCostsChartCaption('Foo', {
       chart: [
         costsPoint(START, {
@@ -75,43 +90,46 @@ describe(getCostsChartCaption.name, () => {
       stats: {
         total: { gas: 0, eth: 0, usd: 12_345 },
         perL2Uop: undefined,
-        perDay: { gas: 0, eth: 0, usd: 0 },
+        perDay: { gas: 0, eth: 0, usd: 34 },
       },
       syncedUntil: END,
     })
 
     expect(caption).toEqual(
-      `Daily onchain costs paid by Foo to Ethereum in USD ${RANGE}. Latest value: $300.00, up 50.0% over this range. Total over this range: $12.34\u200aK.`,
+      `Daily onchain costs paid by Foo to Ethereum in USD ${RANGE}. Latest value: $300.00, up 50.0% over this range. Total over this range: $12.34\u200aK. Average per day: $34.00.`,
     )
   })
 })
 
 describe(getLivenessChartCaption.name, () => {
   it('describes the average interval of the given subtype', () => {
-    const caption = getLivenessChartCaption('Foo', 'batchSubmissions', [
-      [START, 60, 3600, 7200],
-      [END, 60, 1800, 7200],
-    ])
+    const caption = getLivenessChartCaption('Foo', 'batchSubmissions', {
+      data: [
+        [START, 60, 3600, 7200],
+        [END, 60, 1800, 7200],
+      ],
+      stats: { batchSubmissions: 2700, stateUpdates: 86_400 },
+    })
 
     expect(caption).toEqual(
-      `Average interval between tx data submissions of Foo ${RANGE}. Latest value: 30 minutes, down 50.0% over this range.`,
+      `Average interval between tx data submissions of Foo ${RANGE}. Latest value: 30 minutes, down 50.0% over this range. Average over this range: 45 minutes.`,
     )
   })
 })
 
 describe(getDataPostedChartCaption.name, () => {
-  it('sums data posted to every DA layer and states the total', () => {
+  it('sums data posted to every DA layer and states the stats panel aggregates', () => {
     const caption = getDataPostedChartCaption('Foo', {
       chart: [
         [START, 1024, null, null, null],
         [END, 1024, 1024, null, null],
       ],
       syncedUntil: END,
-      stats: { total: 1024 * 1024, avgPerDay: 0, postedPerUop: 0 },
+      stats: { total: 1024 * 1024, avgPerDay: 1024, postedPerUop: 0 },
     })
 
     expect(caption).toEqual(
-      `Daily data posted by Foo to its DA layers ${RANGE}. Latest value: 2.00 KiB, up 100% over this range. Total over this range: 1.00 MiB.`,
+      `Daily data posted by Foo to its DA layers ${RANGE}. Latest value: 2.00 KiB, up 100% over this range. Total over this range: 1.00 MiB. Average per day: 1.00 KiB.`,
     )
   })
 

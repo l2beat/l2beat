@@ -2,7 +2,10 @@ import type { Milestone } from '@l2beat/config'
 import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
 import { Callout } from '~/components/Callout'
-import { ChartFigure } from '~/components/chart/ChartFigure'
+import {
+  type ChartDescription,
+  ChartFigure,
+} from '~/components/chart/ChartFigure'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -36,7 +39,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   isArchived: boolean
   hideSubtypeSwitch?: boolean
   isForDaBridge?: boolean
-  caption: string
+  chartDescription: ChartDescription
 }
 
 export function LivenessSection({
@@ -51,7 +54,7 @@ export function LivenessSection({
   isArchived,
   hideSubtypeSwitch,
   isForDaBridge,
-  caption,
+  chartDescription,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
@@ -73,7 +76,7 @@ export function LivenessSection({
       )}
 
       <HorizontalSeparator className="my-4" />
-      <ChartFigure caption={caption}>
+      <ChartFigure {...chartDescription}>
         <ProjectLivenessChart
           project={project}
           configuredSubtypes={configuredSubtypes}

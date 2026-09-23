@@ -7,11 +7,16 @@ import {
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import type { L2ProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getL2ProjectDaThroughtputChart'
+import type { ActivityChartData } from '~/server/features/layer2s/activity/getActivityChart'
+import type { EthereumActivityChartData } from '~/server/features/layer2s/activity/getEthereumActivityChart'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import type { ProjectCostsChartResponse } from '~/server/features/layer2s/costs/getProjectCostsChart'
 import type { ProjectLivenessChartData } from '~/server/features/layer2s/liveness/getProjectLivenessChart'
 import type { DetailedTvsChartData } from '~/server/features/layer2s/tvs/getDetailedTvsChart'
-import { describeChartSeries } from './describeChartSeries'
+import {
+  type ChartSeriesPoint,
+  describeChartSeries,
+} from './describeChartSeries'
 
 /*
  * One builder per project chart. Each takes the response of the endpoint the
@@ -29,41 +34,39 @@ export function getTvsChartCaption(
       timestamp,
       value: sumIfAnyValue([native, canonical, external]),
     })),
-    formatValue: (value) => formatCurrency(value, 'usd'),
+    formatValue: formatUsd,
   })
 }
 
-/** Activity points normalised to what both the project and Ethereum charts return */
-export type ActivityCaptionPoint = [
-  timestamp: number,
-  txCount: number | null,
-  uopsCount: number | null,
-]
-
 export function getActivityChartCaption(
   projectName: string,
-  data: ActivityCaptionPoint[],
+  data: ActivityChartData['data'],
 ): string {
-  return describeChartSeries({
-    subject: `Daily average user operations per second (UOPS) on ${projectName}`,
-    points: data.map(([timestamp, txCount, uopsCount]) => {
-      // Mirrors the stats panel: projects without UOPS tracking report txs.
-      const count = uopsCount ?? txCount
-      return {
-        timestamp,
-        value: count === null ? null : countPerSecond(count),
-      }
-    }),
-    formatValue: (value) => `${formatActivityCount(value)} UOPS`,
-  })
+  return describeActivity(
+    projectName,
+    data.map(([timestamp, txCount, , uopsCount]) =>
+      toUopsPoint(timestamp, txCount, uopsCount),
+    ),
+  )
+}
+
+export function getEthereumActivityChartCaption(
+  projectName: string,
+  data: EthereumActivityChartData['data'],
+): string {
+  return describeActivity(
+    projectName,
+    data.map(([timestamp, txCount, uopsCount]) =>
+      toUopsPoint(timestamp, txCount, uopsCount),
+    ),
+  )
 }
 
 export function getCostsChartCaption(
   projectName: string,
   response: ProjectCostsChartResponse,
 ): string {
-  const formatValue = (value: number) => formatCurrency(value, 'usd')
-  const total = response.stats?.total.usd
+  const stats = response.stats
   return describeChartSeries({
     subject: `Daily onchain costs paid by ${projectName} to Ethereum in USD`,
     points: response.chart.map(
@@ -72,23 +75,31 @@ export function getCostsChartCaption(
         value: sumIfAnyValue([overhead, calldata, compute, blobs]),
       }),
     ),
-    formatValue,
-    extraFacts:
-      total !== undefined
-        ? [`Total over this range: ${formatValue(total)}.`]
-        : [],
+    formatValue: formatUsd,
+    extraFacts: [
+      ...describeStat('Total over this range', stats?.total.usd, formatUsd),
+      ...describeStat('Average per day', stats?.perDay.usd, formatUsd),
+    ],
   })
 }
 
 export function getLivenessChartCaption(
   projectName: string,
   subtype: TrackedTxsConfigSubtype,
-  data: ProjectLivenessChartData['data'],
+  response: ProjectLivenessChartData,
 ): string {
   return describeChartSeries({
     subject: `Average interval between ${getSubtypeName(subtype)} of ${projectName}`,
-    points: data.map(([timestamp, , avg]) => ({ timestamp, value: avg })),
-    formatValue: (value) => formatSeconds(value, { fullUnit: true }),
+    points: response.data.map(([timestamp, , avg]) => ({
+      timestamp,
+      value: avg,
+    })),
+    formatValue: formatDuration,
+    extraFacts: describeStat(
+      'Average over this range',
+      response.stats?.[subtype],
+      formatDuration,
+    ),
   })
 }
 
@@ -96,19 +107,46 @@ export function getDataPostedChartCaption(
   projectName: string,
   response: L2ProjectDaThroughputChart | null,
 ): string {
-  const total = response?.stats.total
+  const stats = response?.stats
   return describeChartSeries({
     subject: `Daily data posted by ${projectName} to its DA layers`,
     points: (response?.chart ?? []).map(([timestamp, ...perDaLayer]) => ({
       timestamp,
       value: sumIfAnyValue(perDaLayer),
     })),
-    formatValue: (value) => formatBytes(value),
-    extraFacts:
-      total !== undefined
-        ? [`Total over this range: ${formatBytes(total)}.`]
-        : [],
+    formatValue: formatBytes,
+    extraFacts: [
+      ...describeStat('Total over this range', stats?.total, formatBytes),
+      ...describeStat('Average per day', stats?.avgPerDay, formatBytes),
+    ],
   })
+}
+
+function describeActivity(projectName: string, points: ChartSeriesPoint[]) {
+  return describeChartSeries({
+    subject: `Daily average user operations per second (UOPS) on ${projectName}`,
+    points,
+    formatValue: (value) => `${formatActivityCount(value)} UOPS`,
+  })
+}
+
+// Mirrors the stats panel: projects without UOPS tracking report txs.
+function toUopsPoint(
+  timestamp: number,
+  txCount: number | null,
+  uopsCount: number | null,
+): ChartSeriesPoint {
+  const count = uopsCount ?? txCount
+  return { timestamp, value: count === null ? null : countPerSecond(count) }
+}
+
+// The same aggregates the chart's stats panel shows.
+function describeStat(
+  label: string,
+  value: number | undefined,
+  formatValue: (value: number) => string,
+): string[] {
+  return value !== undefined ? [`${label}: ${formatValue(value)}.`] : []
 }
 
 // Stacked charts leave a component null when it has no data; the stack
@@ -117,6 +155,14 @@ function sumIfAnyValue(values: (number | null)[]): number | null {
   const present = values.filter((value) => value !== null)
   if (present.length === 0) return null
   return present.reduce((sum, value) => sum + value, 0)
+}
+
+function formatUsd(value: number) {
+  return formatCurrency(value, 'usd')
+}
+
+function formatDuration(seconds: number) {
+  return formatSeconds(seconds, { fullUnit: true })
 }
 
 function getSubtypeName(subtype: TrackedTxsConfigSubtype) {

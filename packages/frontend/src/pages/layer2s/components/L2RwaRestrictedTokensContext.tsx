@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react'
+import { DEFAULT_EXCLUDE_RWA_RESTRICTED_TOKENS } from '~/components/chart/tvs/projectTvsChartQuery'
 
 type L2RwaRestrictedTokensContextValue = {
   excludeRwaRestrictedTokens: boolean
@@ -25,7 +26,9 @@ export function L2RwaRestrictedTokensContextProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [value, setValue] = useState<boolean>(true)
+  const [value, setValue] = useState<boolean>(
+    DEFAULT_EXCLUDE_RWA_RESTRICTED_TOKENS,
+  )
 
   return (
     <L2RwaRestrictedTokensContext.Provider

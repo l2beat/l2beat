@@ -26,6 +26,19 @@ describe(describeChartSeries.name, () => {
     )
   })
 
+  it('reports a change exactly despite floating point ratios', () => {
+    const caption = describeChartSeries({
+      subject: 'Widgets produced by Foo',
+      points: [
+        { timestamp: START, value: 10e9 },
+        { timestamp: END, value: 12e9 },
+      ],
+      formatValue,
+    })
+
+    expect(caption).toInclude('up 20.0% over this range.')
+  })
+
   it('reports a decrease as down', () => {
     const caption = describeChartSeries({
       subject: 'Widgets produced by Foo',
