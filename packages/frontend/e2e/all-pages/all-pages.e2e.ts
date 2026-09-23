@@ -1,5 +1,5 @@
 import { expect, test } from 'playwright/test'
-import { getPagePaths } from '~/server/pagePaths'
+import { getPages } from '~/server/pagePaths'
 
 const PAGE_SHARD_COUNT = getPageShardCount()
 
@@ -10,7 +10,7 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
   test(`all configured pages return non-empty successful responses (${shardIndex + 1}/${PAGE_SHARD_COUNT})`, async ({
     request,
   }) => {
-    const pages = await getPagePaths()
+    const pages = (await getPages()).map((page) => page.path)
     const shardPages = pages
       .map((page, index) => ({ page, index }))
       .filter(({ index }) => index % PAGE_SHARD_COUNT === shardIndex)
