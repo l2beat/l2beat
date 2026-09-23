@@ -152,9 +152,16 @@ function stripCarriageReturn(row: string): string {
   return row
 }
 
+// A row that ends exactly at the right edge leaves the cursor on its last
+// cell with the wrap pending, and erasing from there would eat that cell.
+// Such a row has overwritten everything anyway, so nothing is left to clear.
 function writeRow(screen: LiveScreen, text: string): void {
   screen.write(text)
-  screen.clearLine(1)
+  const width = stripVTControlCharacters(text).length
+  const fillsRows = width > 0 && width % screen.columns === 0
+  if (!fillsRows) {
+    screen.clearLine(1)
+  }
   screen.write('\n')
 }
 

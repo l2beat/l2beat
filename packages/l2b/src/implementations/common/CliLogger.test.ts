@@ -216,6 +216,33 @@ describe(CliLogger.name, () => {
       expect(await screenRows()).toEqual(['one', 'two', 'status'])
     })
 
+    it('does not clear after a row that exactly fills the width', async () => {
+      const { logger, captured, screenRows } = terminalLogger(10)
+      const status = logger.status()
+      status.update('status')
+      logger.log('x'.repeat(10))
+      logger.log('y'.repeat(20))
+      expect(await screenRows()).toEqual([
+        'x'.repeat(10),
+        'y'.repeat(10),
+        'y'.repeat(10),
+        'status',
+      ])
+      const bytes = captured.join('')
+      expect(bytes).toInclude(`${'x'.repeat(10)}\n`)
+      expect(bytes).toInclude(`${'y'.repeat(20)}\n`)
+      expect(bytes).toInclude('status\x1b[0K\n')
+    })
+
+    it('replaces a longer status with a row that fills the width', async () => {
+      const { logger, screenRows } = terminalLogger(10)
+      const status = logger.status()
+      status.update('long text')
+      logger.log('z'.repeat(10))
+      status.done()
+      expect(await screenRows()).toEqual(['z'.repeat(10)])
+    })
+
     it('survives scrolling at the bottom of a short terminal', async () => {
       const { logger, clock, screenRows } = terminalLogger(80, 5)
       const status = logger.status()
