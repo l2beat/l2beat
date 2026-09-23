@@ -16,7 +16,7 @@ interface Props {
 export function CombinedGrissiniCell({ daLayerRisks, daBridgeRisks }: Props) {
   const hasNoBridge = daBridgeRisks.length === 0
   return (
-    <Tooltip>
+    <Tooltip hiddenDescription>
       <TooltipTrigger className="flex size-full items-center justify-center gap-2">
         <GrissiniIcon values={daLayerRisks} />
         <GrissiniIcon values={daBridgeRisks} />
