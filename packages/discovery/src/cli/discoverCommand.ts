@@ -91,12 +91,12 @@ export const DiscoverCommandArgs = {
 export const DiscoverCommand = command({
   name: 'discover',
   args: DiscoverCommandArgs,
-  handler: (args) => {
+  handler: async (args) => {
     const chainConfigs = getChainConfigs()
 
     const config: DiscoveryModuleConfig = { ...args }
 
-    discover(config, chainConfigs)
+    await discover(config, chainConfigs)
   },
 })
 

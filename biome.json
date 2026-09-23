@@ -112,6 +112,7 @@
         "noDelete": "error"
       },
       "nursery": {
+        "noFloatingPromises": "error",
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
