@@ -246,6 +246,18 @@ describe(CliLogger.name, () => {
     })
   })
 
+  describe('toLogger', () => {
+    it('prints logger lines above the status rows', async () => {
+      const { logger, screenRows } = terminalLogger()
+      const status = logger.status()
+      status.update('working')
+      const backendLogger = logger.toLogger('INFO')
+      backendLogger.info('from logger')
+      backendLogger.debug('hidden')
+      expect(await screenRows()).toEqual(['from logger', 'working'])
+    })
+  })
+
   describe('plain', () => {
     it('prints log lines and final texts only', () => {
       const { written, logger } = plainLogger()

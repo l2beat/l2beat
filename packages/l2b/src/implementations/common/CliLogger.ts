@@ -1,3 +1,4 @@
+import { Logger, type LogLevel } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import { stripVTControlCharacters } from 'util'
 
@@ -58,6 +59,15 @@ export class CliLogger {
   log(line: string): void {
     this.pendingLogs.push(line)
     this.flush()
+  }
+
+  toLogger(level: LogLevel): Logger {
+    return Logger.INFO.configure({
+      level,
+      transports: [
+        { log: (entry) => this.log(entry.message), flush: () => {} },
+      ],
+    })
   }
 
   status(): StatusLine {
