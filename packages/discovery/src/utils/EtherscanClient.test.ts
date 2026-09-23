@@ -80,7 +80,7 @@ describe(EtherscanClient.name, () => {
     expect(await result).toEqual(Hash256.ZERO)
   })
 
-  it('post-genesis precompile creation date', async () => {
+  it('no creation record without retrying', async () => {
     const ADDRESS = EthereumAddress.random()
     const response = { status: '0', message: 'No data found', result: null }
     const httpClient = mockObject<HttpClient>({
@@ -97,8 +97,33 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
-    expect(await result).toEqual(Hash256.ZERO)
+    expect(await result).toEqual(undefined)
     expect(httpClient.fetch).toHaveBeenCalledTimes(1)
+  })
+
+  it('retries no data response outside of contract creation', async () => {
+    const noDataResponse = {
+      status: '0',
+      message: 'No data found',
+      result: null,
+    }
+    const response = { message: 'OK', result: '1234' }
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn().resolvesToOnce(noDataResponse).resolvesToOnce(response),
+    })
+
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const result = client.getBlockNumberAtOrBefore(UnixTime(1000))
+    await time.runAllAsync()
+    expect(await result).toEqual(1234)
+    expect(httpClient.fetch).toHaveBeenCalledTimes(2)
   })
 
   it('retries when etherscan response is unparseable', async () => {

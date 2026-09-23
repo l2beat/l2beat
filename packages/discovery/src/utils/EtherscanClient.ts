@@ -183,7 +183,8 @@ export class EtherscanClient implements IEtherscanClient {
     }
   }
 
-  // Returns undefined if the method is not supported by API.
+  // Returns undefined if the method is not supported by API or the explorer
+  // has no creation record (EOAs, precompiles added after genesis).
   async getContractDeploymentTx(
     address: EthereumAddress,
   ): Promise<Hash256 | undefined> {
@@ -199,7 +200,7 @@ export class EtherscanClient implements IEtherscanClient {
       },
     )
     if (response === null) {
-      return Hash256.ZERO
+      return undefined
     }
 
     const tx = ContractCreatorAndCreationTxHashResult.parse(response)[0]
@@ -295,8 +296,10 @@ export class EtherscanClient implements IEtherscanClient {
       timeout: this.timeoutMs,
     })
 
-    if (EtherscanNoDataResponse.safeParse(response).success) {
-      return null
+    if (action === 'getcontractcreation') {
+      if (EtherscanNoDataResponse.safeParse(response).success) {
+        return null
+      }
     }
 
     const etherscanResponse = tryParseEtherscanResponse(response)
