@@ -1,5 +1,5 @@
 import { CropFindings, CropNote } from '~/components/garden/CropFindings'
-import { CropPlant } from '~/components/garden/CropPlant'
+import { CropPlant, EASE_OUT_BACK } from '~/components/garden/CropPlant'
 import {
   CROP_BORDER,
   CROP_INK,
@@ -20,6 +20,9 @@ import { cn } from '~/utils/cn'
 // laptop. Measured inner widths: 680-760px on 1280px laptops and portrait
 // tablets, 930-1110px on landscape tablets, 360-400px on phones. Four rooted
 // columns from 720px, two with inline chips from 520px, one below.
+
+/** Seconds between neighbouring plants; longer and the last one feels late. */
+const STAGGER = 0.05
 
 /**
  * The four plants stand full-size in one garden bed, and each roots straight
@@ -81,13 +84,13 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
       <CropPlant
         status={evaluation.status}
         sentiment={evaluation.sentiment}
-        delay={index * 0.12}
+        delay={index * STAGGER}
         width={80}
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
       />
       <LetterChip
         entry={entry}
-        delay={index * 0.12}
+        delay={index * STAGGER}
         className="size-7 text-[11px]"
       />
     </div>
@@ -116,7 +119,7 @@ function LetterChip({
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{ animation: `garden-pop .5s ease-out ${delay}s both` }}
+      style={{ animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s both` }}
     >
       <span
         aria-hidden
@@ -139,7 +142,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
       <h3 className="flex items-center gap-2 font-bold text-paragraph-15 leading-tight">
         <LetterChip
           entry={entry}
-          delay={index * 0.12}
+          delay={index * STAGGER}
           className={'@max-[719.9px]:grid hidden size-[22px] text-[10px]'}
         />
         {definition.label}
