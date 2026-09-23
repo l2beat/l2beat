@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AvailVectorXDataAvailabilityVerifier",
+  "category": "core",
+  "description": "Immutable verifier of Avail blob inclusion used by the CRISP program to attest that encrypted ballot inputs were published. It checks inclusion proofs against the Avail bridge and VectorX light-client contracts fixed at deployment.",
+  "ignoreRelatives": ["bridge", "vectorx"],
+  "fields": {
+    "bridge": {
+      "description": "Avail bridge contract used for blob attestation lookups. The external Avail deployment is outside this discovery perimeter."
+    },
+    "vectorx": {
+      "description": "Avail VectorX light-client contract whose data roots anchor the inclusion proofs. The external Avail deployment is outside this discovery perimeter."
+    }
+  }
+}

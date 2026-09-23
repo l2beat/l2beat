@@ -1,14 +1,129 @@
-Generated with discovered.json: 0xc22df309c19746ab78b878d31a80414bd0cb8d5b
+Generated with discovered.json: 0x6021d4126654bd6ea075ba285b4871cea4b2dc68
 
-# Diff at Wed, 23 Sep 2026 05:58:31 GMT:
+# Diff at Tue, 22 Sep 2026 13:48:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1786719775
-- current timestamp: 1786719775
+- current timestamp: 1790080873
 
 ## Description
 
-Keep ossification discovery scoped to the main-branch block.
+Rollup upgrade https://disco.l2beat.com/diff/eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB/eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d: batch commitment, state proposal and slashing are now authorized through a new staked Submitter contract (owned by Morph Multisig) instead of L1Staking. The never-verified BLS signature input was removed.
+
+A new SP1 verifier was registered with a new program vkey (Morph v0.6.3 guest program, reproduced from source).
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.1.verifier:
+-        "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
++        "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9"
+      values.latestVerifier.1.startBatchIndex:
+-        54332
++        60478
+    }
+```
+
+```diff
+    EOA (eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      sourceHashes.1:
+-        "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b"
++        "0xf24c39e5b0d3851769ddbafcad7ce6770f9aac6e89c6b220c902ab07d97ab225"
+      values.$implementation:
+-        "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"
++        "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d"
+      values.$pastUpgrades.11:
++        ["2026-09-22T07:54:35.000Z","0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e",["eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.l1StakingContract:
+-        "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"
++++ description: Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account.
+      values.legacyCutoverBatchIndex:
++        60477
++++ severity: HIGH
+      values.submitterContract:
++        "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6"
+      implementationNames.eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB:
+-        "Rollup"
+      implementationNames.eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d:
++        "Rollup"
+    }
+```
+
+```diff
+    EOA (eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"Actors allowed to commit transaction batches and propose and prove state roots while staked at or above the minimum.","role":".submitters"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","description":"add and remove submitters (batch committers/proposers), set the minimum stake, the challenge deposit and the slashing reward share, and withdraw the non-rewarded remainder of slashed stakes.","role":".owner"}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6","role":"admin","via":[{"address":"eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"},{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x651cA600813fC0126225b727EDbA617949b1d1c9) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
++   Status: CREATED
+    contract Submitter (eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6) [morph/Submitter]
+    +++ description: Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1786719775 => .flat}/Rollup/Rollup.sol  | 307 ++------
+ .../projects/morph/.flat/Submitter/Submitter.sol   | 802 +++++++++++++++++++
+ .../Submitter/TransparentUpgradeableProxy.p.sol    | 864 +++++++++++++++++++++
+ ...0x651cA600813fC0126225b727EDbA617949b1d1c9.sol} |   0
+ 4 files changed, 1747 insertions(+), 226 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -18,213 +133,70 @@ discovery. Values are for block 1786719775 (main branch discovery), not current.
 
 ```diff
     contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
-    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
-      fieldMeta.messenger:
--        {"severity":"HIGH"}
-      fieldMeta.OTHER_STAKING:
--        {"severity":"HIGH"}
-      fieldMeta.MESSENGER:
--        {"severity":"HIGH"}
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.rollupContract:
--        {"severity":"HIGH"}
-      fieldMeta.withdrawalLockBlocks:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
+    +++ description: Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.
+      description:
+-        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented)."
++        "Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup."
     }
 ```
 
 ```diff
-    contract L1ETHGateway (eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) [morph/L1ETHGateway] {
-    +++ description: Contract used to bridge ETH from L1 to L2.
-      fieldMeta:
--        {"router":{"severity":"HIGH"},"messenger":{"severity":"HIGH"},"counterpart":{"severity":"HIGH"},"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    contract L1USDCGateway (eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289) [morph/L1USDCGateway] {
-    +++ description: Contract used to bridge USDC tokens from L1 to L2.
-      fieldMeta.l2USDC:
--        {"severity":"HIGH"}
-      fieldMeta.router:
--        {"severity":"HIGH"}
-      fieldMeta.messenger:
--        {"severity":"HIGH"}
-      fieldMeta.counterpart:
--        {"severity":"HIGH"}
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-    }
-```
-
-```diff
-    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) [global/ProxyAdmin] {
+    EOA (eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
     +++ description: None
-      fieldMeta:
--        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
     }
 ```
 
 ```diff
-    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) [morph/L1MessageQueueWithGasPriceOracle] {
-    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
-      fieldMeta.ENFORCED_TX_GATEWAAY:
--        {"severity":"HIGH"}
-      fieldMeta.ROLLUP_CONTRACT:
--        {"severity":"HIGH"}
-      fieldMeta.MESSENGER:
--        {"severity":"HIGH"}
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-      fieldMeta.l2BaseFee:
--        {"severity":"MEDIUM"}
-    }
-```
-
-```diff
-    contract L1StandardERC20Gateway (eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) [morph/L1StandardERC20Gateway] {
-    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
-      fieldMeta:
--        {"l2TokenImplementation":{"severity":"HIGH"},"l2TokenFactory":{"severity":"HIGH"},"router":{"severity":"HIGH"},"messenger":{"severity":"HIGH"},"counterpart":{"severity":"HIGH"},"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530) [global/TimelockController] {
-    +++ description: A timelock with access control. The current minimum delay is 0s.
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.accessControl:
--        {"severity":"HIGH"}
-      fieldMeta.Proposer:
--        {"severity":"HIGH"}
-      fieldMeta.Canceller:
--        {"severity":"HIGH"}
-      fieldMeta.Executor:
--        {"severity":"HIGH"}
-    }
-```
-
-```diff
-    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
-    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
-      fieldMeta.rollup:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-    }
-```
-
-```diff
-    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) [morph/L1GatewayRouter] {
-    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.gateways:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
+    EOA (eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
     }
 ```
 
 ```diff
     contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
-    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`."
       fieldMeta.l1StakingContract:
 -        {"severity":"HIGH"}
-      fieldMeta.messageQueue:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
+      fieldMeta.submitterContract:
++        {"severity":"HIGH"}
+      fieldMeta.legacyCutoverBatchIndex:
++        {"description":"Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account."}
     }
 ```
 
 ```diff
-    contract ProxyAdmin (eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17) [global/ProxyAdmin] {
+    EOA (eth:0x76F91869161dC4348230D5F60883Dd17462035f4) {
     +++ description: None
-      fieldMeta:
--        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    contract ZkEvmVerifierV1 (eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624) [morph/ZkEvmVerifierV1] {
-    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
-      fieldMeta:
--        {"programVkey":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    contract L1CustomERC20Gateway (eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1) [morph/L1CustomERC20Gateway] {
-    +++ description: Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.
-+++ description: L1-to-L2 token mapping used to validate custom-token deposits and withdrawals.
-+++ severity: HIGH
-      values.tokenMapping:
-+        {"eth:0x72AC573d601FD21959c700d70c63A7b627ff03A5":"eth:0x72AC573d601FD21959c700d70c63A7b627ff03A5","eth:0xC7c542d4c390ed29e976e5BaDAE27b9FfaC82504":"eth:0xf57433187228892506a93f73C014f967F5C085A7","eth:0x6B175474E89094C44Da98b954EedeAC495271d0F":"eth:0xef8A24599229D002B28bA2F5C0eBdD3c0EFFbed4"}
-      fieldMeta.router:
--        {"severity":"HIGH"}
-      fieldMeta.messenger:
--        {"severity":"HIGH"}
-      fieldMeta.counterpart:
--        {"severity":"HIGH"}
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-      fieldMeta.tokenMapping:
-+        {"severity":"HIGH","description":"L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."}
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
     }
 ```
 
 ```diff
     contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) [GnosisSafe] {
     +++ description: None
-      critical:
-+        {"sinceTimestamp":1729764539}
-      fieldMeta:
-+        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+      receivedPermissions.0.description:
+-        "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config."
++        "whitelist and remove stakers (the L2 sequencer set relayed to L2) and manage the staking, slashing and reward config of this contract."
     }
 ```
 
 ```diff
-    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) [morph/EnforcedTxGateway] {
-    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-      fieldMeta.messageQueue:
--        {"severity":"HIGH"}
-      fieldMeta.feeVault:
-+        {"severity":"HIGH","description":"Recipient of fees charged for forced transactions."}
-    }
-```
-
-```diff
-    contract L1USDCGatewayLegacy (eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535) [morph/L1USDCGateway] {
-    +++ description: Contract used to bridge USDC tokens from L1 to L2.
-      fieldMeta.l2USDC:
--        {"severity":"HIGH"}
-      fieldMeta.router:
--        {"severity":"HIGH"}
-      fieldMeta.messenger:
--        {"severity":"HIGH"}
-      fieldMeta.counterpart:
--        {"severity":"HIGH"}
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
+    EOA (eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
     }
 ```
 
@@ -233,43 +205,15 @@ discovery. Values are for block 1786719775 (main branch discovery), not current.
     +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
       critical:
 -        true
-+        {"sinceTimestamp":1780559831,"untilTimestamp":1790063627}
-      fieldMeta:
--        {"programVkey":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
-    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) [morph/L1CrossDomainMessenger] {
-    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
-      fieldMeta.$admin:
--        {"severity":"HIGH"}
-      fieldMeta.owner:
--        {"severity":"HIGH"}
-      fieldMeta.messageQueue:
--        {"severity":"HIGH"}
-      fieldMeta.counterpart:
--        {"severity":"HIGH"}
-      fieldMeta.feeVault:
-+        {"severity":"HIGH","description":"Recipient of L1-to-L2 message fees."}
-    }
-```
-
-```diff
-    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    EOA (eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4) {
     +++ description: None
-      critical:
-+        {"sinceTimestamp":1737455087}
-      fieldMeta:
-+        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) [morph/Whitelist] {
-    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
-      fieldMeta:
--        {"owner":{"severity":"HIGH"}}
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose and prove state roots"
++        "Stakers relayed to the L2 Staking contract as the L2 sequencer set. This does not authorize committing batches or proposing state roots on L1, which the Submitter contract controls."
     }
 ```
 
@@ -1361,6 +1305,7 @@ Also, upgraded the verifier program, which is reproducible from the sources, and
     contract ZkEvmVerifierV1 (eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692) [N/A]
     +++ description: None
 ```
+
 ## Source code changes
 
 ```diff
@@ -6693,3 +6638,4 @@ Provide description of changes. This section will be preserved.
     contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984)
     +++ description: None
 ```
+

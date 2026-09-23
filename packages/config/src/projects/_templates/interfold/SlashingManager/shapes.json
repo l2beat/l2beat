@@ -4,5 +4,11 @@
     "address": "eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "SlashingManagerV2": {
+    "hash": "0xfda124aac8e1ba6b8dd3120a86020fcd3b8b0705b9515051b12f0cc38ba76a0e",
+    "address": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
+    "chain": "ethereum",
+    "blockNumber": 25998899
   }
 }

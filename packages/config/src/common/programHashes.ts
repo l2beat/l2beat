@@ -2151,14 +2151,6 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67.md',
     ),
   },
-  '0x006770fb0f71f20718b614c8c5d3fb39482f0527806e67b0ea00ab5508245655': {
-    ...SCROLL_BUNDLE_EXE('September 2026 release'),
-    verificationStatus: 'notVerified',
-  },
-  '0x00488b196ca5b2ea1fda4c960fe2e1b0b9715c0428a8ec6fb01a64684f8533f7': {
-    ...SCROLL_BUNDLE_CONFIG('September 2026 release'),
-    verificationStatus: 'notVerified',
-  },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     ...SCROLL_BUNDLE_CONFIG('v0.5.2'),
     programUrl:
@@ -2258,13 +2250,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ),
   },
   '0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63': {
-    title: 'Morph Guest program (b1cbdd3 revision)',
+    title: 'Morph Guest program (v0.6.3 release)',
     description:
-      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM. The sequencer-set public input field is zero.',
     programUrl:
-      'https://github.com/morph-l2/morph/tree/b1cbdd3206787cb5f7e2038332736a134bda4c67/prover/bin/client',
+      'https://github.com/morph-l2/morph/tree/v0.6.3/prover/bin/client',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63.md',
+    ),
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
