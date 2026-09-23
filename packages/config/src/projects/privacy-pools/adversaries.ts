@@ -44,7 +44,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposure:
-        "The app takes your own RPC endpoint per network, scans every pool whole from its deployment block and matches notes locally, so a node learns only which pools you looked at. 0xbow's servers still see that a session happened, through bulk feeds that carry nothing about the notes. A relayer receives amount and asset for a quote and the recipient once you confirm.",
+        "The official frontend allows you to set your own RPC endpoint per network, scans every pool whole and matches notes locally, so a node learns only which pools you looked at. 0xbow's servers still see that a session happened, through bulk feeds that carry nothing about the notes. A relayer receives amount and asset for a quote and the recipient once you confirm.",
       advice: `Set an endpoint for every network before signing in, and sign in with a recovery phrase so no wallet address is queried. Without an endpoint, every read goes through 0xbow's proxy and Alchemy under 0xbow's key. ${S.ownNodeAndTor('relayer')}`,
       sources: [
         {
