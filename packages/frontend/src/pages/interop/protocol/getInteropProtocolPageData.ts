@@ -6,6 +6,7 @@ import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/proto
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getInteropMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -93,7 +94,13 @@ async function getCachedData(slug: string, manifest: Manifest) {
     project: {
       name: project.name,
       slug: project.slug,
-      description: project.interopConfig.description,
+      description: getInteropMetadataDescription({
+        name: project.name,
+        type: project.interopConfig.type,
+        bridgeTypes: protocolData.entry?.bridgeTypes ?? [],
+        last24hVolume: protocolData.entry?.volume,
+        description: project.interopConfig.description,
+      }),
     },
     projectEntry,
     protocolData,

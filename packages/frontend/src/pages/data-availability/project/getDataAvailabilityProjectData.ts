@@ -6,7 +6,7 @@ import {
 } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getDaMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -31,11 +31,12 @@ export async function getDataAvailabilityProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${projectEntry.name} - L2BEAT`,
-        description: getProjectMetadataDescription({
+        description: getDaMetadataDescription({
           name: projectEntry.name,
-          display: {
-            description: projectEntry.description,
-          },
+          type: projectEntry.type,
+          tvs: projectEntry.header.tvs,
+          economicSecurity: projectEntry.header.economicSecurity,
+          description: projectEntry.description,
         }),
         url,
         openGraph: {

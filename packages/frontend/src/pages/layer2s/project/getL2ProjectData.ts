@@ -4,7 +4,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getScalingMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -82,7 +82,14 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
-        description: getProjectMetadataDescription(project),
+        description: getScalingMetadataDescription({
+          name: project.name,
+          category: project.scalingInfo.type,
+          stage: projectEntry.stageConfig.stage,
+          hostChain: projectEntry.header.hostChain,
+          tvs: projectEntry.header.tvs?.breakdown?.total,
+          description: project.display.description,
+        }),
         url,
         openGraph: {
           image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
