@@ -103,6 +103,8 @@ interface ProjectDetailsSectionHeaderProps {
 }
 
 function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
+  // The project title is the page's h1; grouped sections sit under their group.
+  const Heading = props.nested ? 'h3' : 'h2'
   return (
     <div
       className={cn(
@@ -124,14 +126,14 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
             {props.sectionOrder}
           </div>
         )}
-        <span
+        <Heading
           className={cn(
             'text-heading-28',
             props.nested && 'text-heading-24 leading-none!',
           )}
         >
           {props.title}
-        </span>
+        </Heading>
       </a>
       {props.headerAccessory}
     </div>
