@@ -4,38 +4,33 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 /**
  * Alternative layouts of the summary, picked with the switch at the top of the
  * page and kept in `?view=` so a layout can be linked to while they are being
- * compared.
+ * compared. The comments say what each one does; the switch shows labels only.
  */
 export const PRIVACY_SUMMARY_VIEWS = [
   {
     id: 'split',
     label: 'V1 · Split',
-    description:
-      'A tab per kind of privacy, the L2 risk rosette for the adversaries alone, and the protocol risks in columns of their own.',
+    // A tab per kind of privacy, the L2 risk rosette for the adversaries alone, and the protocol risks in columns of their own.
   },
   {
     id: 'gridSplit',
     label: 'V2 · Split grid',
-    description:
-      'Every kind of privacy side by side, each table with the L2 risk rosette for the adversaries and the protocol risks grouped beside it.',
+    // Every kind of privacy side by side, each table with the L2 risk rosette for the adversaries and the protocol risks grouped beside it.
   },
   {
     id: 'grid',
     label: 'V3 · Grid',
-    description:
-      'One compact table per kind of privacy, side by side, each with a single rosette over the privacy and protocol risks.',
+    // One compact table per kind of privacy, side by side, each with a single rosette over the privacy and protocol risks.
   },
   {
     id: 'rosette',
     label: 'V4 · Rosette',
-    description:
-      'A tab per kind of privacy and a single rosette: adversaries on the left half, protocol risks on the right.',
+    // A tab per kind of privacy and a single rosette: adversaries on the left half, protocol risks on the right.
   },
   {
     id: 'cards',
     label: 'V5 · Cards',
-    description:
-      'A card per protocol with its rosette, the verdict in words, key numbers and attributes.',
+    // A card per protocol with its rosette, the verdict in words, key numbers and attributes.
   },
 ] as const
 

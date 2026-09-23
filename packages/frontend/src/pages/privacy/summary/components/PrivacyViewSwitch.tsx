@@ -12,25 +12,18 @@ export function PrivacyViewSwitch({
   view: PrivacySummaryView
   onChange: (view: PrivacySummaryView) => void
 }) {
-  const current = PRIVACY_SUMMARY_VIEWS.find((v) => v.id === view)
-
   return (
-    <div className="flex flex-col gap-1.5 max-md:px-4 md:flex-row md:items-center md:gap-3">
-      <RadioGroup
-        name="privacySummaryView"
-        value={view}
-        onValueChange={(value) => onChange(toPrivacySummaryView(value))}
-        className="max-w-full overflow-x-auto"
-      >
-        {PRIVACY_SUMMARY_VIEWS.map((v) => (
-          <RadioGroupItem key={v.id} value={v.id} className="shrink-0">
-            {v.label}
-          </RadioGroupItem>
-        ))}
-      </RadioGroup>
-      {current && (
-        <p className="text-secondary text-xs">{current.description}</p>
-      )}
-    </div>
+    <RadioGroup
+      name="privacySummaryView"
+      value={view}
+      onValueChange={(value) => onChange(toPrivacySummaryView(value))}
+      className="flex w-full max-md:mx-4 max-md:w-auto"
+    >
+      {PRIVACY_SUMMARY_VIEWS.map((v) => (
+        <RadioGroupItem key={v.id} value={v.id} className="flex-1">
+          {v.label}
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
   )
 }
