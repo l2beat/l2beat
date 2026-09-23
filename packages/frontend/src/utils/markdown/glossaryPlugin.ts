@@ -1,5 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
+import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 
 export function linkGlossaryTerms(
@@ -82,27 +84,103 @@ export function linkGlossaryTerms(
   }
 }
 
+/**
+ * Pass as the markdown-it render env to also render each glossary term's
+ * description as a hidden element the links point to via aria-describedby.
+ * The tooltip is mounted only on the client, so without it the explanation is
+ * missing from the server-rendered HTML. The prefix keeps ids unique when a
+ * page renders several markdown blocks.
+ */
+export interface GlossaryRenderEnv {
+  glossaryDescriptionIdPrefix?: string
+  /** Filled by the plugin while rendering; callers leave it empty. */
+  glossaryDescriptions?: GlossaryDescriptionsState
+}
+
+interface GlossaryDescriptionsState {
+  describedTermIds: Set<string>
+  pendingAfterLink: { id: string; description: string } | undefined
+}
+
 export function glossaryPlugin(md: MarkdownIt) {
-  const defaultRender =
+  const defaultRender: RenderRule =
     md.renderer.rules.link_open ??
     function (tokens, idx, options, _env, self) {
       return self.renderToken(tokens, idx, options)
     }
+  const defaultCloseRender: RenderRule =
+    md.renderer.rules.link_close ??
+    function (tokens, idx, options, _env, self) {
+      return self.renderToken(tokens, idx, options)
+    }
 
-  md.renderer.rules.link_open = (tokens, index, options, env, self) => {
+  md.renderer.rules.link_open = (
+    tokens,
+    index,
+    options,
+    env: GlossaryRenderEnv,
+    self,
+  ) => {
     const token = tokens[index]
     assert(token, 'Token is not defined')
     const href = token.attrGet('href')
     if (isGlossaryLink(href)) {
-      const [cleanHref, description] = href?.split('?description=') || []
-      assert(cleanHref && description, 'Href or description is not defined')
+      const [cleanHref, encodedDescription] = href?.split('?description=') || []
+      assert(
+        cleanHref && encodedDescription,
+        'Href or description is not defined',
+      )
+      const description = decodeURIComponent(encodedDescription)
 
       token.attrSet('data-link-role', 'glossary')
-      token.attrSet('data-description', decodeURIComponent(description))
+      token.attrSet('data-description', description)
       token.attrSet('href', cleanHref)
+      describeGlossaryLink(token, cleanHref, description, env)
     }
     return defaultRender(tokens, index, options, env, self)
   }
+
+  md.renderer.rules.link_close = (
+    tokens,
+    index,
+    options,
+    env: GlossaryRenderEnv,
+    self,
+  ) => {
+    const rendered = defaultCloseRender(tokens, index, options, env, self)
+    const pending = env?.glossaryDescriptions?.pendingAfterLink
+    if (!pending) return rendered
+
+    env.glossaryDescriptions = {
+      describedTermIds: env.glossaryDescriptions?.describedTermIds ?? new Set(),
+      pendingAfterLink: undefined,
+    }
+    return `${rendered}<span id="${md.utils.escapeHtml(pending.id)}" class="sr-only">${md.utils.escapeHtml(pending.description)}</span>`
+  }
+}
+
+// Every link to a term points at one hidden description, rendered after the
+// term's first link, so repeated terms do not repeat the explanation.
+function describeGlossaryLink(
+  token: Token,
+  cleanHref: string,
+  description: string,
+  env: GlossaryRenderEnv | undefined,
+) {
+  if (!env?.glossaryDescriptionIdPrefix) return
+  const termId = cleanHref.split('#')[1]
+  if (!termId) return
+
+  const id = `${env.glossaryDescriptionIdPrefix}-glossary-${termId}`
+  token.attrSet('aria-describedby', id)
+
+  env.glossaryDescriptions ??= {
+    describedTermIds: new Set(),
+    pendingAfterLink: undefined,
+  }
+  if (env.glossaryDescriptions.describedTermIds.has(termId)) return
+  env.glossaryDescriptions.describedTermIds.add(termId)
+  env.glossaryDescriptions.pendingAfterLink = { id, description }
 }
 
 function createGlossaryLink(id: string, term: string, description: string) {
