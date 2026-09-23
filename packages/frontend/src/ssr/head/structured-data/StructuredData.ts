@@ -12,8 +12,8 @@ export function withSchemaOrgContext<T extends { '@type': string }>(data: T) {
 }
 
 /**
- * Structured data names the canonical page, so it links to production even
- * when staging or a preview rendered it.
+ * Canonical and structured data links name the production page, even when
+ * staging or a preview rendered it.
  */
 export function toProductionUrl(path: string) {
   return PRODUCTION_ORIGIN + path

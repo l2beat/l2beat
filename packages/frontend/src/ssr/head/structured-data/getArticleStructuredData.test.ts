@@ -15,7 +15,7 @@ describe('Article structured data', () => {
     getImage: (url) => ({ src: url, width: 1, height: 1 }),
   }
   const l2beat = {
-    '@type': 'Organization',
+    '@type': 'Organization' as const,
     '@id': 'https://l2beat.com/#organization',
     name: 'L2BEAT',
     url: 'https://l2beat.com',

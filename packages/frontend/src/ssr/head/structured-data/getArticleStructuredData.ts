@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getCollectionEntry } from '~/content/getCollection'
 import type { Manifest } from '~/utils/Manifest'
@@ -37,7 +38,13 @@ interface ArticleFields {
   headline: string
   description: string | undefined
   publishedOn: Date
-  author: object
+  author: Person | typeof L2BEAT_ORGANIZATION
+}
+
+interface Person {
+  '@type': 'Person'
+  name: string
+  jobTitle?: string
 }
 
 function getArticle(manifest: Manifest, article: ArticleFields) {
@@ -52,14 +59,13 @@ function getArticle(manifest: Manifest, article: ArticleFields) {
     image: toProductionUrl(
       manifest.getUrl(`/meta-images/publications/${article.id}.png`),
     ),
-    // Content dates are calendar days, so the time of day would be invented.
-    datePublished: article.publishedOn.toISOString().slice(0, 10),
+    datePublished: toCalendarDate(article.publishedOn),
     author: article.author,
     publisher: L2BEAT_ORGANIZATION,
   })
 }
 
-function getAuthor(authorId: string) {
+function getAuthor(authorId: string): Person {
   const author = getCollectionEntry('authors', authorId)
   if (!author) {
     throw new Error(`Author not found: ${authorId}`)
@@ -69,4 +75,8 @@ function getAuthor(authorId: string) {
     name: `${author.data.firstName} ${author.data.lastName}`,
     ...(author.data.role && { jobTitle: author.data.role }),
   }
+}
+
+function toCalendarDate(date: Date) {
+  return UnixTime.toYYYYMMDD(UnixTime.fromDate(date))
 }

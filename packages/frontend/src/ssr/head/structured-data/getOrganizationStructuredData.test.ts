@@ -1,6 +1,8 @@
 import { expect } from 'earl'
 import { getOrganizationStructuredData } from './getOrganizationStructuredData'
 
+// Compares against the literal block so a changed link or logo shows up as
+// a diff of what crawlers will read.
 describe(getOrganizationStructuredData.name, () => {
   it('identifies L2BEAT with its logo and social profiles', () => {
     expect(getOrganizationStructuredData()).toEqual({

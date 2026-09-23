@@ -1,8 +1,28 @@
+import compact from 'lodash/compact'
 import {
   type StructuredData,
   toProductionUrl,
   withSchemaOrgContext,
 } from './StructuredData'
+
+export function getBreadcrumbList(
+  path: string,
+  title: string | undefined,
+  page: PageBreadcrumb = {},
+): StructuredData | undefined {
+  const trail = getTrail(path, page.name ?? getNameFromTitle(title), page)
+  if (!trail) return undefined
+
+  return withSchemaOrgContext({
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: toProductionUrl(crumb.path),
+    })),
+  })
+}
 
 export interface Breadcrumb {
   name: string
@@ -34,44 +54,19 @@ const SECTIONS: Record<string, Breadcrumb> = {
   governance: { name: 'Governance', path: '/governance' },
 }
 
-export function getBreadcrumbList(
-  path: string,
-  title: string | undefined,
-  page: PageBreadcrumb = {},
-): StructuredData | undefined {
-  const trail = getTrail(path, page.name ?? getNameFromTitle(title), page)
-  // A single crumb is just the home page, which has nothing above it.
-  if (!trail || trail.length < 2) return undefined
-
-  return withSchemaOrgContext({
-    '@type': 'BreadcrumbList',
-    itemListElement: trail.map((crumb, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: crumb.name,
-      item: toProductionUrl(crumb.path),
-    })),
-  })
-}
-
 function getTrail(
   path: string,
   name: string | undefined,
   page: PageBreadcrumb,
 ): Breadcrumb[] | undefined {
-  if (path === HOME.path) return [HOME]
+  if (path === HOME.path) return undefined
 
   const section = SECTIONS[path.split('/')[1] ?? '']
   if (section?.path === path) return [HOME, section]
   // Without a name the last crumb could not say which page it is.
   if (!name) return undefined
 
-  return [
-    HOME,
-    ...(section ? [section] : []),
-    ...(page.parents ?? []),
-    { name, path },
-  ]
+  return compact([HOME, section, ...(page.parents ?? []), { name, path }])
 }
 
 function getNameFromTitle(title: string | undefined) {

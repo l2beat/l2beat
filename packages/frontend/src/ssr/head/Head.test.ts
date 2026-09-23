@@ -1,18 +1,13 @@
 import { expect } from 'earl'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import type { Manifest } from '~/utils/Manifest'
+import { identityManifest as manifest } from '~/test/identityManifest'
 import { getMetadata } from './getMetadata'
 import { Head } from './Head'
 
 // Renders the head the way ServerEntry does and reads the JSON-LD back out
 // of the markup, as a crawler would.
 describe(Head.name, () => {
-  const manifest: Manifest = {
-    getUrl: (url) => url,
-    getImage: (url) => ({ src: url, width: 1, height: 1 }),
-  }
-
   it('renders every structured data block as a JSON-LD script', () => {
     const metadata = getMetadata(manifest, {
       title: 'FAQ - L2BEAT',

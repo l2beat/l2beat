@@ -60,6 +60,7 @@ export async function getInteropNonMintingData(
         openGraph: {
           image: '/meta-images/interop/non-minting/opengraph-image.png',
         },
+        breadcrumb: { name: 'Non-minting' },
       }),
     },
     ssr: {

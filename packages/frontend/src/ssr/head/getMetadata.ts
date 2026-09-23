@@ -7,7 +7,10 @@ import {
   getBreadcrumbList,
   type PageBreadcrumb,
 } from './structured-data/getBreadcrumbList'
-import type { StructuredData } from './structured-data/StructuredData'
+import {
+  type StructuredData,
+  toProductionUrl,
+} from './structured-data/StructuredData'
 
 type OpenGraph = {
   type: 'article' | 'website'
@@ -62,8 +65,7 @@ export function getMetadata(
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     url: baseUrl + strippedPath,
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
-    // We want canonical to always point to the production URL
-    canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
+    canonicalUrl: toProductionUrl(strippedPath),
     // Crawlers skip noindex pages, so their structured data would go unread.
     structuredData: rest.excludeFromSearchEngines
       ? []

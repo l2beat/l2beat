@@ -3,7 +3,7 @@ import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
 
 /** L2BEAT as the author or publisher embedded in other blocks. */
 export const L2BEAT_ORGANIZATION = {
-  '@type': 'Organization',
+  '@type': 'Organization' as const,
   '@id': toProductionUrl('/#organization'),
   name: 'L2BEAT',
   url: toProductionUrl(''),

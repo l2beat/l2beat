@@ -15,7 +15,6 @@ export function getGlossaryStructuredData(
       name: entry.data.term,
       ...(entry.data.match && { alternateName: entry.data.match }),
       description: entry.data.definition,
-      // Each entry is an anchor on the glossary page.
       url: `${glossaryUrl}#${entry.id}`,
       inDefinedTermSet: glossaryUrl,
     })),

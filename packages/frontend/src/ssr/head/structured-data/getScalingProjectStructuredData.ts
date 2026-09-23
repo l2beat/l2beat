@@ -1,17 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import { getProjectMetadataDescription } from '../getProjectMetadataDescription'
 import { L2BEAT_ORGANIZATION } from './getOrganizationStructuredData'
 import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
-
-interface ScalingProject {
-  name: string
-  slug: string
-  display: { description: string }
-  discoveryInfo?: { baseTimestamp: number | undefined }
-  // Only their presence matters: each one means a public API serves it.
-  tvsConfig?: unknown
-  activityConfig?: unknown
-}
 
 /**
  * A Dataset rather than a plain WebPage because the page's metrics are
@@ -33,15 +24,22 @@ export function getScalingProjectStructuredData(project: ScalingProject) {
     }),
     isAccessibleForFree: true,
     creator: L2BEAT_ORGANIZATION,
-    distribution: [
-      ...(project.tvsConfig
-        ? [jsonApi(`${project.name} Total Value Secured`, 'tvs', project.slug)]
-        : []),
-      ...(project.activityConfig
-        ? [jsonApi(`${project.name} Activity`, 'activity', project.slug)]
-        : []),
-    ],
+    distribution: compact([
+      project.hasTvsApi &&
+        jsonApi(`${project.name} Total Value Secured`, 'tvs', project.slug),
+      project.hasActivityApi &&
+        jsonApi(`${project.name} Activity`, 'activity', project.slug),
+    ]),
   })
+}
+
+interface ScalingProject {
+  name: string
+  slug: string
+  display: { description: string }
+  discoveryInfo?: { baseTimestamp: number | undefined }
+  hasTvsApi: boolean
+  hasActivityApi: boolean
 }
 
 function jsonApi(name: string, metric: 'tvs' | 'activity', slug: string) {

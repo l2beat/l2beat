@@ -35,6 +35,7 @@ export async function getL2RiskStateValidationData(
           image:
             '/meta-images/layer2s/risks/state-validation/opengraph-image.png',
         },
+        breadcrumb: { name: 'State Validation' },
       }),
     },
     ssr: {

@@ -1,14 +1,12 @@
 import { expect } from 'earl'
-import type { Manifest } from '~/utils/Manifest'
+import { identityManifest as manifest } from '~/test/identityManifest'
 import { getMetadata } from './getMetadata'
 
 // Breadcrumb URLs are absolute production URLs so they agree with the
-// canonical link whatever host rendered the page.
+// canonical link whatever host rendered the page. Each case feeds getMetadata
+// the inputs a page loader would and reads the trail back out of its
+// structured data.
 describe(getMetadata.name, () => {
-  const manifest: Manifest = {
-    getUrl: (url) => url,
-    getImage: (url) => ({ src: url, width: 1, height: 1 }),
-  }
   const openGraph = { image: '/meta-images/og.png' }
 
   describe('BreadcrumbList', () => {

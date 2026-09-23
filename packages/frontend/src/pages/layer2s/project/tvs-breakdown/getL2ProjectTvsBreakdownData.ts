@@ -4,6 +4,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
+import { getTvsBreakdownBreadcrumbs } from './getTvsBreakdownBreadcrumbs'
 
 export async function getL2ProjectTvsBreakdownData(
   manifest: Manifest,
@@ -18,6 +19,7 @@ export async function getL2ProjectTvsBreakdownData(
   if (!tvsBreakdownData) {
     return undefined
   }
+  const crumbs = getTvsBreakdownBreadcrumbs(tvsBreakdownData.project)
 
   const range = tvsBreakdownData.project.archivedAt
     ? optionToRange('max')
@@ -33,16 +35,7 @@ export async function getL2ProjectTvsBreakdownData(
         openGraph: {
           image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
-        // Mirrors the Breadcrumbs shown in TvsBreakdownPageHeader.
-        breadcrumb: {
-          name: 'TVS Breakdown',
-          parents: [
-            {
-              name: tvsBreakdownData.project.name,
-              path: `/layer2s/projects/${tvsBreakdownData.project.slug}`,
-            },
-          ],
-        },
+        breadcrumb: { name: crumbs.pageName, parents: [crumbs.project] },
       }),
     },
     ssr: {
