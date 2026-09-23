@@ -35,15 +35,25 @@ export async function computeStackSimilarity(
     .readAllDiscoveredProjects()
     .flatMap((project) => configReader.readConfig(project))
 
+  const reading = cli.status()
+  let readCount = 0
   const stackProject = await Promise.all(
-    configs.flatMap((config) => readProject(cli, config.name, paths)),
+    configs.map(async (config) => {
+      const project = await readProject(cli, config.name, paths)
+      readCount += 1
+      reading.update(`Reading ${readCount}/${configs.length} ${config.name}`)
+      return project
+    }),
   )
+  reading.done()
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
 
+  const comparing = cli.status()
   const matrix: Record<string, Record<string, number>> = {}
   for (let row = 0; row < projects.length; row++) {
     const p1 = projects[row]
     const path1 = p1.name
+    comparing.update(`Comparing ${row + 1}/${projects.length} ${path1}`)
 
     matrix[path1] ??= {}
     matrix[path1][path1] = 1
@@ -61,6 +71,7 @@ export async function computeStackSimilarity(
       matrix[path2][path1] = similarity
     }
   }
+  comparing.done()
 
   return { matrix, projects }
 }
