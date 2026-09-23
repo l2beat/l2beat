@@ -53,9 +53,9 @@ export function DataPostedTrackedTransactions({
           </Checkbox>
         )}
         <div className="mb-6">
-          <h2 className="font-medium text-base text-secondary">
+          <h3 className="font-medium text-base text-secondary">
             Blob submissions
-          </h2>
+          </h3>
           {transactions.map((transaction, index) => (
             <TransactionDetails
               key={index}

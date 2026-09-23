@@ -125,7 +125,7 @@ function TransactionGroup({
 }) {
   return (
     <div className="mb-6">
-      <h2 className="mb-3 font-medium text-base text-secondary">{title}</h2>
+      <h3 className="mb-3 font-medium text-base text-secondary">{title}</h3>
       {transactions.map((transaction, index) => (
         <TransactionDetails
           key={index}
