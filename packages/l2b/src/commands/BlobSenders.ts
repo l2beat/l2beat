@@ -10,6 +10,7 @@ import {
   getSequencerMapping,
   initMappings,
 } from '../implementations/blob-senders/loadDiscoveryMappings'
+import { createCliLogger } from '../implementations/common/CliLogger'
 import { HttpUrl } from './types'
 
 export const BlobSenders = command({
@@ -57,6 +58,8 @@ export const BlobSenders = command({
 
     const sequencerMapping = getSequencerMapping()
 
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
+    const scan = cli.status()
     const senders = await getBlobSenders(
       args.rpcUrl,
       args.blockCount,
@@ -65,13 +68,14 @@ export const BlobSenders = command({
         const width = 30
         const filled = Math.round(pct * width)
         const bar = '█'.repeat(filled) + '░'.repeat(width - filled)
-        process.stdout.write(
-          `\r[${bar}] ${(pct * 100).toFixed(0).padStart(3)}% | Senders: ${count}`,
+        scan.update(
+          `[${bar}] ${(pct * 100).toFixed(0).padStart(3)}% | Senders: ${count}`,
         )
       },
     )
-
-    console.log('\n')
+    scan.done(
+      `Scanned ${args.blockCount} blocks, found ${senders.length} senders\n`,
+    )
 
     if (senders.length === 0) {
       console.log('No blob transactions found in the specified range.')
