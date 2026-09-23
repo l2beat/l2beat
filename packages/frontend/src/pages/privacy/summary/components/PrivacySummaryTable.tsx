@@ -27,7 +27,7 @@ import { useTable } from '~/hooks/useTable'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversariesScore } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { DotWithLabel } from './DotWithLabel'
@@ -86,6 +86,27 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversariesScore(entry.adversaries),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => {
+        const { adversaries, href } = ctx.row.original
+        return (
+          <DotWithLabel
+            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
+            label={adversaries.promiseLabel}
+          />
+        )
+      },
+      sortDescFirst: true,
+      meta: {
+        align: 'center',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
+    },
+  ),
   ...withChangeSort(
     columnHelper,
     columnHelper.accessor('totalValueLockedUsd', {
@@ -178,32 +199,6 @@ const columns = [
       meta: {
         align: 'right',
         tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
-      },
-    },
-  ),
-  columnHelper.accessor(
-    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
-    {
-      id: 'adversaries',
-      header: PRIVACY_ASSESSMENT.title,
-      cell: (ctx) => {
-        const { adversaries, href } = ctx.row.original
-        return (
-          <DotWithLabel
-            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={adversaries.promiseLabel}
-          />
-        )
-      },
-      sortDescFirst: true,
-      sortingFn: (a, b) =>
-        sortTableValues(
-          getPrivacyAdversariesTableValue(a.original.adversaries),
-          getPrivacyAdversariesTableValue(b.original.adversaries),
-        ),
-      meta: {
-        align: 'center',
-        tooltip: PRIVACY_ASSESSMENT.tooltip,
       },
     },
   ),
