@@ -23,6 +23,7 @@ import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { loadPagePreloads } from './PagePreloads'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
+import { createLlmsTxtRouter } from './routers/LlmsTxtRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
@@ -54,6 +55,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
+  app.use('/', createLlmsTxtRouter())
 
   if (options.dev) {
     app.use('/', express.static('./static'))
