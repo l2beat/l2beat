@@ -80,6 +80,27 @@ describe(EtherscanClient.name, () => {
     expect(await result).toEqual(Hash256.ZERO)
   })
 
+  it('post-genesis precompile creation date', async () => {
+    const ADDRESS = EthereumAddress.random()
+    const response = { status: '0', message: 'No data found', result: null }
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn().resolvesToOnce(response),
+    })
+
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const result = client.getContractDeploymentTx(ADDRESS)
+    await time.runAllAsync()
+    expect(await result).toEqual(Hash256.ZERO)
+    expect(httpClient.fetch).toHaveBeenCalledTimes(1)
+  })
+
   it('retries when etherscan response is unparseable', async () => {
     const ADDRESS = EthereumAddress.random()
     const TX_HASH = Hash256.random()

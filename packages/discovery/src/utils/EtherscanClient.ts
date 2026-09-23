@@ -11,6 +11,7 @@ import { v } from '@l2beat/validate'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
+  EtherscanNoDataResponse,
   OneTransactionListResult,
   TransactionListResult,
   tryParseEtherscanResponse,
@@ -197,6 +198,9 @@ export class EtherscanClient implements IEtherscanClient {
         contractaddresses: address.toString(),
       },
     )
+    if (response === null) {
+      return Hash256.ZERO
+    }
 
     const tx = ContractCreatorAndCreationTxHashResult.parse(response)[0]
 
@@ -290,6 +294,10 @@ export class EtherscanClient implements IEtherscanClient {
     const response = await this.httpClient.fetch(url, {
       timeout: this.timeoutMs,
     })
+
+    if (EtherscanNoDataResponse.safeParse(response).success) {
+      return null
+    }
 
     const etherscanResponse = tryParseEtherscanResponse(response)
 
