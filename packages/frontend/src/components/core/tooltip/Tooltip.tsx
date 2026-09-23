@@ -22,7 +22,8 @@ const Tooltip = ({
    * tooltip are invisible to crawlers and LLMs reading the server-rendered
    * HTML. This also renders the content as a visually hidden description of
    * the trigger. Use it only when the tooltip carries meaning not shown
-   * elsewhere on the page.
+   * elsewhere on the page. The copy renders where TooltipContent does, so it
+   * does not work with TooltipPortal, which renders nothing while closed.
    */
   hiddenDescription?: boolean
 }) => {
@@ -53,6 +54,11 @@ const TooltipTrigger = ({
   const localRef = useRef(null)
   const { isDesktop } = useDevice()
   const { setOpen, hiddenDescriptionId } = useTooltipTriggerContext()
+  // Omitted rather than undefined: an explicit undefined would override the
+  // id Radix sets while the tooltip is open.
+  const describedBy = hiddenDescriptionId
+    ? { 'aria-describedby': hiddenDescriptionId }
+    : {}
 
   if (props.disabled) {
     return props.children
@@ -60,13 +66,7 @@ const TooltipTrigger = ({
 
   // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
-    return (
-      <TooltipPrimitive.Trigger
-        ref={ref}
-        aria-describedby={hiddenDescriptionId}
-        {...props}
-      />
-    )
+    return <TooltipPrimitive.Trigger ref={ref} {...describedBy} {...props} />
   }
 
   const onClick = !isDesktop
@@ -81,7 +81,7 @@ const TooltipTrigger = ({
       ref={mergeRefs(ref, localRef)}
       onClick={onClick}
       data-role="tooltip-trigger"
-      aria-describedby={hiddenDescriptionId}
+      {...describedBy}
       {...props}
     />
   )
@@ -101,6 +101,8 @@ const tooltipContentVariants = cva(
     },
   },
 )
+
+const InsideHiddenDescriptionContext = createContext(false)
 
 const TooltipContent = ({
   ref,
@@ -133,8 +135,6 @@ const TooltipContent = ({
   )
 }
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
-
-const InsideHiddenDescriptionContext = createContext(false)
 
 /**
  * Shown in the tooltip popup but left out of its hidden description, for
