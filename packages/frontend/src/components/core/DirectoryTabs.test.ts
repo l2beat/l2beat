@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { createElement, type ReactNode } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { getTabPanelHtml, renderServerHtml } from '~/test/serverHtml'
 import {
   DirectoryTabs,
   DirectoryTabsActiveOnly,
@@ -9,36 +9,36 @@ import {
   DirectoryTabsTrigger,
 } from './DirectoryTabs'
 
-// Renders the tabs the way the server does (no window), so the output is the
-// HTML a crawler receives. The selected tab comes from the SSR URL.
-describe('DirectoryTabs', () => {
+// Renders the tabs the way the server does and inspects the HTML a crawler
+// receives. The selected tab comes from the `tab` query param of the URL.
+describe(DirectoryTabs.name, () => {
   it('renders the inactive panel content hidden', () => {
     const html = renderTabs('/layer2s/summary')
 
-    expect(panel(html, 'first')).toInclude('First content')
-    expect(panel(html, 'first')).not.toInclude('hidden=""')
-    expect(panel(html, 'second')).toInclude('Second content')
-    expect(panel(html, 'second')).toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'first')).toInclude('First content')
+    expect(getTabPanelHtml(html, 'first')).not.toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'second')).toInclude('Second content')
+    expect(getTabPanelHtml(html, 'second')).toInclude('hidden=""')
   })
 
   it('shows the panel selected by the tab query param', () => {
     const html = renderTabs('/layer2s/summary?tab=second')
 
-    expect(panel(html, 'first')).toInclude('hidden=""')
-    expect(panel(html, 'second')).not.toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'first')).toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'second')).not.toInclude('hidden=""')
   })
 
   it('renders active-only content in the active panel alone', () => {
     const html = renderTabs('/layer2s/summary')
 
-    expect(panel(html, 'first')).toInclude('First chart')
+    expect(getTabPanelHtml(html, 'first')).toInclude('First chart')
     expect(html).not.toInclude('Second chart')
   })
 })
 
 function renderTabs(url: string): string {
-  globalThis.__FIX_SSR_URL__ = url
-  return renderToStaticMarkup(
+  return renderServerHtml(
+    url,
     createElement(
       DirectoryTabs,
       { defaultValue: 'first' },
@@ -58,17 +58,7 @@ function tabPanel(value: string, content: ReactNode, activeOnly: ReactNode) {
   return createElement(
     DirectoryTabsContent,
     { value },
-    content,
+    createElement('p', undefined, content),
     createElement(DirectoryTabsActiveOnly, undefined, activeOnly),
   )
-}
-
-function panel(html: string, value: string): string {
-  const match = html.match(
-    new RegExp(`<div[^>]*id="[^"]*-content-${value}"[^>]*>.*?</div>`),
-  )
-  if (!match) {
-    throw new Error(`No panel "${value}" in: ${html}`)
-  }
-  return match[0]
 }

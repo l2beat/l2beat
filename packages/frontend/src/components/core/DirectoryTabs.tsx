@@ -119,14 +119,15 @@ const DirectoryTabsContent = ({
 DirectoryTabsContent.displayName = TabsPrimitive.Content.displayName
 
 /**
- * Renders its children only while the enclosing panel is active, the way
- * Radix mounts panels by default. For panel parts that shouldn't be
- * force-mounted: client-fetched charts carry no crawlable data, would fire
- * their queries for every tab at once and repeat the same heading per panel.
+ * Mounts its children only while the enclosing panel is active. For panel
+ * parts that add nothing crawlable but cost work per mounted panel, like
+ * client-fetched charts.
  */
-function DirectoryTabsActiveOnly({ children }: { children: React.ReactNode }) {
-  return useContext(IsDirectoryTabActiveContext) ? children : null
-}
+const DirectoryTabsActiveOnly = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => (useContext(IsDirectoryTabActiveContext) ? children : null)
 
 export {
   DirectoryTabs,

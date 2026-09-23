@@ -1,30 +1,38 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createElement } from 'react'
-import { renderToString } from 'react-dom/server'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { L2RiskEntry } from '~/server/features/layer2s/risks/getL2RiskEntries'
+import { getTabPanelHtml, renderServerHtml } from '~/test/serverHtml'
 import { L2RiskTables } from './L2RiskTables'
 
 // Renders the risk listing the way the server does and inspects the HTML a
 // crawler receives: every tab's projects must be in it, not just the active
-// tab's, with inactive panels hidden.
+// tab's, with inactive panels hidden. Every mock project carries all row
+// warnings, so icons that repeat per row appear in every panel.
 describe(L2RiskTables.name, () => {
   it('renders projects of inactive tabs into hidden panels', () => {
     const html = renderRiskTables('/layer2s/risk')
 
-    expect(panel(html, 'rollups')).not.toInclude('hidden=""')
-    expect(panel(html, 'rollups')).toInclude('Rollup One')
-    expect(panel(html, 'validiumsAndOptimiums')).toInclude('hidden=""')
-    expect(panel(html, 'validiumsAndOptimiums')).toInclude('Validium Two')
-    expect(panel(html, 'others')).toInclude('hidden=""')
-    expect(panel(html, 'others')).toInclude('Other Three')
+    expect(getTabPanelHtml(html, 'rollups')).not.toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'rollups')).toInclude('Rollup One')
+    const validiums = getTabPanelHtml(html, 'validiumsAndOptimiums')
+    expect(validiums).toInclude('hidden=""')
+    expect(validiums).toInclude('Validium Two')
+    expect(getTabPanelHtml(html, 'others')).toInclude('hidden=""')
+    expect(getTabPanelHtml(html, 'others')).toInclude('Other Three')
   })
 
   it('renders an inactive panel with the same content as an active one', () => {
-    const inactive = panel(renderRiskTables('/layer2s/risk'), 'others')
-    const active = panel(renderRiskTables('/layer2s/risk?tab=others'), 'others')
+    const inactive = getTabPanelHtml(
+      renderRiskTables('/layer2s/risk'),
+      'others',
+    )
+    const active = getTabPanelHtml(
+      renderRiskTables('/layer2s/risk?tab=others'),
+      'others',
+    )
 
     expect(inactive).toInclude('hidden=""')
     expect(active).not.toInclude('hidden=""')
@@ -39,8 +47,8 @@ describe(L2RiskTables.name, () => {
 })
 
 function renderRiskTables(url: string): string {
-  globalThis.__FIX_SSR_URL__ = url
-  return renderToString(
+  return renderServerHtml(
+    url,
     createElement(
       TooltipProvider,
       undefined,
@@ -71,7 +79,19 @@ function mockEntry(
     name,
     icon: `/icons/${slug}.png`,
     backgroundColor: undefined,
-    statuses: undefined,
+    statuses: {
+      yellowWarning: 'Yellow warning',
+      redWarning: { text: 'Red warning' },
+      verificationWarnings: {
+        contracts: 'Unverified contracts',
+        programHashes: 'Unverified program hashes',
+        programHashesDescription: undefined,
+      },
+      underReview: 'config',
+      syncWarning: 'Out of sync',
+      emergencyWarning: 'Emergency',
+      ongoingAnomaly: true,
+    },
     tab,
     isLayer3: false,
     filterable: [],
@@ -88,15 +108,6 @@ function mockEntry(
     hasWithdrawalsSection: false,
     hasOperatorsSection: false,
   }
-}
-
-function panel(html: string, value: string): string {
-  const start = html.search(new RegExp(`<div[^>]*id="[^"]*-content-${value}"`))
-  if (start === -1) {
-    throw new Error(`No panel "${value}" rendered`)
-  }
-  const next = html.slice(start + 1).search(/<div[^>]*role="tabpanel"/)
-  return next === -1 ? html.slice(start) : html.slice(start, start + 1 + next)
 }
 
 function panelContent(panelHtml: string): string {
