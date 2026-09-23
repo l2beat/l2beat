@@ -48,6 +48,18 @@ describe(RiskBanner.name, () => {
     expect(html).toMatchRegex(/Few challengers.*<span class="sr-only">, bad/)
   })
 
+  it('labels the compact warning icon with the warning and its sentiment', () => {
+    const html = renderBanner({
+      name: 'State validation',
+      value: 'Fraud proofs',
+      sentiment: 'good',
+      warning: { value: 'Few challengers', sentiment: 'bad' },
+      info: 'compact',
+    })
+
+    expect(html).toInclude('aria-label="Few challengers, bad"')
+  })
+
   it('states under review for a risk still being assessed', () => {
     const html = renderBanner({
       name: 'Data availability',

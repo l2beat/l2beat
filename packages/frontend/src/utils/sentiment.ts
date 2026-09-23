@@ -60,16 +60,5 @@ export function sentimentToTextColor(
 }
 
 export function sentimentToText(sentiment: Sentiment): string {
-  switch (sentiment) {
-    case 'bad':
-      return 'bad'
-    case 'warning':
-      return 'warning'
-    case 'good':
-      return 'good'
-    case 'neutral':
-      return 'neutral'
-    case 'UnderReview':
-      return 'under review'
-  }
+  return sentiment === 'UnderReview' ? 'under review' : sentiment
 }

@@ -6,6 +6,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EllipsisText } from '~/components/EllipsisText'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { describeWarnings } from '~/utils/describeWarnings'
 
 interface Props {
   bridgedUsing?: TvsToken['bridgedUsing']
@@ -28,7 +29,13 @@ export function BridgedUsingCell(props: Props) {
       {props.bridgedUsing?.warning && (
         <Tooltip>
           <TooltipTrigger>
-            <RoundedWarningIcon className="size-4" sentiment="bad" />
+            <RoundedWarningIcon
+              className="size-4"
+              sentiment="bad"
+              aria-label={describeWarnings([
+                { value: props.bridgedUsing.warning, sentiment: 'bad' },
+              ])}
+            />
           </TooltipTrigger>
           <TooltipContent>
             <div className="space-y-2">{props.bridgedUsing.warning}</div>

@@ -1,5 +1,6 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
+import { describeWarnings } from '~/utils/describeWarnings'
 import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
@@ -83,7 +84,7 @@ export function RiskBanner({
                   'ml-1 inline-block fill-current',
                   sentimentToTextColor(warning.sentiment),
                 )}
-                aria-label={warning.value}
+                aria-label={describeWarnings([warning])}
               />
             )}
           </div>

@@ -10,7 +10,7 @@ export function NoDataIcon({ content, className }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className={className}>
-        <ClockIcon role="img" aria-label={content} />
+        <ClockIcon aria-label={content} />
       </TooltipTrigger>
       <TooltipContent>{content}</TooltipContent>
     </Tooltip>

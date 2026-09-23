@@ -13,6 +13,7 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { DurationCell } from '~/pages/layer2s/liveness/components/table/DurationCell'
 import type { LivenessDataPoint } from '~/server/features/layer2s/liveness/types'
+import { describeWarnings } from '~/utils/describeWarnings'
 import { LivenessDurationCell } from '../LivenessDurationCell'
 import { IntervalsHeader } from './IntervalsHeader'
 import type { L2LivenessTableEntry } from './toTableEntry'
@@ -62,7 +63,9 @@ export function LivenessIntervalCell(props: {
           <RoundedWarningIcon
             className="size-5"
             sentiment="warning"
-            aria-label={data.warning}
+            aria-label={describeWarnings([
+              { value: data.warning, sentiment: 'warning' },
+            ])}
           />
         )}
       </TooltipTrigger>

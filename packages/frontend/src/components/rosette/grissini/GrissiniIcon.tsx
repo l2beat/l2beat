@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import { describeRisks } from '../describeRisk'
+import { describeRisks } from '../describeRisks'
 import type { RosetteValue } from '../types'
 import { GrissiniStick } from './GrissiniStick'
 

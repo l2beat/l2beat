@@ -4,10 +4,10 @@ import { useEventListener } from '~/hooks/useEventListener'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { describeRisks } from '../describeRisk'
+import { describeRisks } from '../describeRisks'
 import { useRosetteTooltipContext } from '../RosetteTooltipContext'
 import type { RosetteValue } from '../types'
-import { useRosetteSvgLabel } from '../useRosetteSvgLabel'
+import { useRosetteDescription } from '../useRosetteDescription'
 import { PizzaElementLink } from './PizzaElementLink'
 
 interface Props {
@@ -27,7 +27,9 @@ export function PizzaRosetteIcon({
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
-  const svgLabel = useRosetteSvgLabel(describeRisks(values, isUnderReview))
+  const rosetteDescription = useRosetteDescription(
+    describeRisks(values, isUnderReview),
+  )
 
   const [first, second, third, fourth, fifth] = values
   const setSelectedRisk = context?.setSelectedRisk
@@ -47,12 +49,12 @@ export function PizzaRosetteIcon({
       width="180"
       height="180"
       viewBox="0 0 180 180"
-      {...svgLabel.svgProps}
+      {...rosetteDescription.svgProps}
       ref={svgRef}
       onMouseLeave={() => setSelectedRisk?.(undefined)}
       className={className}
     >
-      {svgLabel.label}
+      {rosetteDescription.accessibleDefs}
       <defs>
         <clipPath id="outer-clip">
           <rect width="180" height="180" rx="90" />

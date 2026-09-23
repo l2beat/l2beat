@@ -13,6 +13,7 @@ import { LivenessDurationCell } from '~/pages/layer2s/liveness/components/Livene
 import { DurationCell } from '~/pages/layer2s/liveness/components/table/DurationCell'
 import { IntervalsHeader } from '~/pages/layer2s/liveness/components/table/IntervalsHeader'
 import type { LivenessDataPoint } from '~/server/features/layer2s/liveness/types'
+import { describeWarnings } from '~/utils/describeWarnings'
 import type { DaLivenessBridgeTableEntry } from './toDaLivenessTableEntry'
 
 export function DaLivenessIntervalCell({
@@ -44,7 +45,9 @@ export function DaLivenessIntervalCell({
           <RoundedWarningIcon
             className="size-5"
             sentiment="warning"
-            aria-label={data.warning}
+            aria-label={describeWarnings([
+              { value: data.warning, sentiment: 'warning' },
+            ])}
           />
         )}
       </TooltipTrigger>

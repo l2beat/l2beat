@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-export function useRosetteSvgLabel(description: string) {
+export function useRosetteDescription(description: string) {
   const titleId = useId()
   const descriptionId = useId()
 
@@ -11,7 +11,7 @@ export function useRosetteSvgLabel(description: string) {
     },
     // Inside <defs> rather than directly under <svg>: browsers show a direct
     // <title> child as a native hover tooltip on top of the rosette's own one.
-    label: (
+    accessibleDefs: (
       <defs>
         <title id={titleId}>Risk rosette</title>
         <desc id={descriptionId}>{description}</desc>
