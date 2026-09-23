@@ -13,6 +13,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2RiskEntry } from '~/server/features/layer2s/risks/getL2RiskEntries'
 import { L2RiskTable } from './table/L2RiskTable'
@@ -62,7 +63,10 @@ export function L2RiskTables(props: Props) {
             <RollupsInfo />
             <L2RiskTable
               entries={entries.rollups}
-              caption="Risk analysis of scaling projects, Rollups tab"
+              caption={getL2TabTableCaption(
+                'Risk analysis of scaling projects',
+                'rollups',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -71,7 +75,10 @@ export function L2RiskTables(props: Props) {
             <ValidiumsAndOptimiumsInfo />
             <L2RiskTable
               entries={entries.validiumsAndOptimiums}
-              caption="Risk analysis of scaling projects, Validiums & Optimiums tab"
+              caption={getL2TabTableCaption(
+                'Risk analysis of scaling projects',
+                'validiumsAndOptimiums',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -80,7 +87,10 @@ export function L2RiskTables(props: Props) {
             <OthersInfo />
             <L2RiskTable
               entries={entries.others}
-              caption="Risk analysis of scaling projects, Others tab"
+              caption={getL2TabTableCaption(
+                'Risk analysis of scaling projects',
+                'others',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>

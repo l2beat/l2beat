@@ -2,6 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { getTabTableCaption } from '~/components/table/getTabTableCaption'
 import { useTable } from '~/hooks/useTable'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { useIncludeL2Only } from '../DaThroughputContext'
@@ -37,7 +38,10 @@ export function DaThroughputPublicTable({ items }: Props) {
     <>
       <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable
-        caption="Throughput of data availability layers, Public tab"
+        caption={getTabTableCaption(
+          'Throughput of data availability layers',
+          'Public',
+        )}
         table={table}
       />
     </>

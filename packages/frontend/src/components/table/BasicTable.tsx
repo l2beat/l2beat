@@ -49,6 +49,7 @@ import {
   getRenderedHeaders,
   getShownEdgeAttributes,
   getShownHeaders,
+  isShownColumn,
   isShownHeader,
 } from './utils/renderedTableColumns'
 import {
@@ -93,8 +94,6 @@ type BasicTableCellData = {
 }
 
 type BasicTableRenderedCellData<T extends BasicTableRow> = {
-  /** Position among the shown cells, undefined for hidden columns. */
-  index: number | undefined
   cell: Cell<T, unknown>
   additionalRows: React.ReactNode[] | undefined
   /** A neighbour's colSpan covers this cell, so it is not rendered at all. */
@@ -102,7 +101,7 @@ type BasicTableRenderedCellData<T extends BasicTableRow> = {
   colSpan: number | undefined
   meta: Cell<T, unknown>['column']['columnDef']['meta']
   rowSpan: number
-}
+} & ({ isShown: true; shownIndex: number } | { isShown: false })
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   if (props.table.getRowCount() === 0 && !props.isLoading) {
@@ -186,8 +185,8 @@ function BasicTableGroupedHeaderRow<T>({
     <TableHeaderRow>
       {headers.map((header, index) => {
         const isShown = isShownHeader(header)
-        const hasTitle =
-          !header.isPlaceholder && !!header.column.columnDef.header
+        const hasHeader = !!header.column.columnDef.header
+        const hasTitle = !header.isPlaceholder && hasHeader
         return (
           <React.Fragment key={header.id}>
             <th
@@ -196,7 +195,7 @@ function BasicTableGroupedHeaderRow<T>({
               scope={hasTitle ? 'colgroup' : undefined}
               className={getBasicTableGroupedHeaderCellClassName({
                 isPlaceholder: header.isPlaceholder,
-                hasHeader: !!header.column.columnDef.header,
+                hasHeader,
                 isPinned: header.column.getIsPinned() !== false,
               })}
               style={getCommonPinningStyles(header.column)}
@@ -295,7 +294,7 @@ export function BasicTableRow<T extends BasicTableRow>({
     : undefined
 
   for (const cellData of cells) {
-    if (cellData.isSpannedOver || cellData.index === undefined) {
+    if (cellData.isSpannedOver || !cellData.isShown) {
       continue
     }
 
@@ -317,25 +316,23 @@ export function BasicTableRow<T extends BasicTableRow>({
       ...getPersistedColumnAttributes(cellData.cell.column),
     }
 
-    cellDataMap.set(cellData.index, {
+    cellDataMap.set(cellData.shownIndex, {
       isLastInGroup: groupParams?.isLastInGroup ?? false,
       props: cellProps,
     })
   }
 
   const getCellProps = (cellData: BasicTableRenderedCellData<T>) =>
-    cellData.index === undefined
-      ? getHiddenColumnCellProps(cellData.cell.column)
-      : cellDataMap.get(cellData.index)?.props
+    cellData.isShown
+      ? cellDataMap.get(cellData.shownIndex)?.props
+      : getHiddenColumnCellProps(cellData.cell.column)
 
   const getPrevCell = (cellData: BasicTableRenderedCellData<T>) =>
-    cellData.index === undefined
-      ? undefined
-      : cellDataMap.get(cellData.index - 1)
+    cellData.isShown ? cellDataMap.get(cellData.shownIndex - 1) : undefined
 
   const mainRowCells = cells.filter((cellData) => !cellData.isSpannedOver)
   const mainRowEdgeAttributes = getShownEdgeAttributes(
-    mainRowCells.map((cellData) => cellData.index !== undefined),
+    mainRowCells.map((cellData) => cellData.isShown),
   )
 
   return (
@@ -446,17 +443,19 @@ function prepareBasicTableRenderedCells<T extends BasicTableRow>(
 ): { cells: BasicTableRenderedCellData<T>[]; denominator: number } {
   let shownCount = 0
   const preparedCells = getRenderedCellsWithHiddenColumns(row, table).map(
-    (cell) => {
+    (cell): BasicTableRenderedCellData<T> => {
       const { meta } = cell.column.columnDef
       const context = cell.getContext()
-      const isShown = cell.column.getIsVisible()
+      const isShown = isShownColumn(cell.column)
       const additionalRows = isShown
         ? meta?.additionalRows?.(context)
         : undefined
       const rowCount = (additionalRows?.length ?? 0) + 1
 
       return {
-        index: isShown ? shownCount++ : undefined,
+        ...(isShown
+          ? { isShown: true, shownIndex: shownCount++ }
+          : { isShown: false }),
         cell,
         additionalRows,
         isSpannedOver: !!(meta?.hideIfNull && cell.renderValue() === null),
@@ -468,9 +467,7 @@ function prepareBasicTableRenderedCells<T extends BasicTableRow>(
   )
 
   const uniqueRowsCount = unique(
-    preparedCells
-      .filter((cell) => cell.index !== undefined)
-      .map((cell) => cell.rowSpan),
+    preparedCells.filter((cell) => cell.isShown).map((cell) => cell.rowSpan),
   )
   const denominator = getBasicTableRowSpanDenominator(uniqueRowsCount)
 
@@ -478,7 +475,7 @@ function prepareBasicTableRenderedCells<T extends BasicTableRow>(
     denominator,
     cells: preparedCells.map((cell) => ({
       ...cell,
-      rowSpan: cell.index === undefined ? 1 : denominator / cell.rowSpan,
+      rowSpan: cell.isShown ? denominator / cell.rowSpan : 1,
     })),
   }
 }

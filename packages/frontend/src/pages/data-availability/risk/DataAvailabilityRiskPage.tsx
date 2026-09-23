@@ -6,6 +6,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { getTabTableCaption } from '~/components/table/getTabTableCaption'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -50,14 +51,20 @@ export function DataAvailabilityRiskPage({
                 <PublicSystemInfo />
                 <DaRiskTable
                   items={publicSystems}
-                  caption="Risk analysis of data availability layers, Public tab"
+                  caption={getTabTableCaption(
+                    'Risk analysis of data availability layers',
+                    'Public',
+                  )}
                 />
               </DirectoryTabsContent>
               <DirectoryTabsContent value="custom">
                 <CustomSystemInfo />
                 <DaRiskTable
                   items={customSystems}
-                  caption="Risk analysis of data availability layers, Custom tab"
+                  caption={getTabTableCaption(
+                    'Risk analysis of data availability layers',
+                    'Custom',
+                  )}
                   excludeBridge
                 />
               </DirectoryTabsContent>

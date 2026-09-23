@@ -6,6 +6,7 @@ import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
@@ -63,7 +64,7 @@ export function L2SummaryRollupsTable({ entries }: Props) {
     <>
       <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable
-        caption="Scaling projects summary, Rollups tab"
+        caption={getL2TabTableCaption('Scaling projects summary', 'rollups')}
         table={table}
       />
     </>

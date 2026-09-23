@@ -10,9 +10,8 @@ import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { useDevice } from '~/hooks/useDevice'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
-import { getFilterOperatorLabel } from './describeActiveFilters'
 import type { FilterableValueId } from './filterableValue'
-import { filterIdToLabel } from './filterableValue'
+import { filterIdToLabel, getFilterOperatorLabel } from './filterableValue'
 import { useTableFilterContext } from './TableFilterContext'
 import {
   TableFilterInternalContextProvider,

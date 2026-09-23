@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { getTabTableCaption } from '~/components/table/getTabTableCaption'
 import { useTable } from '~/hooks/useTable'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { customColumns } from './columns'
@@ -22,7 +23,7 @@ export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
     <>
       <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable
-        caption="Data availability summary, Custom tab"
+        caption={getTabTableCaption('Data availability summary', 'Custom')}
         table={table}
       />
     </>

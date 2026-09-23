@@ -16,6 +16,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2CostsEntry } from '~/server/features/layer2s/costs/getL2CostsEntries'
 import { L2CostsTable } from './table/L2CostsTable'
@@ -72,7 +73,10 @@ export function L2CostsTabs(props: Props) {
             <HorizontalSeparator className="my-5" />
             <L2CostsTable
               entries={entries.rollups}
-              caption="Onchain costs of scaling projects, Rollups tab"
+              caption={getL2TabTableCaption(
+                'Onchain costs of scaling projects',
+                'rollups',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -90,7 +94,10 @@ export function L2CostsTabs(props: Props) {
             <HorizontalSeparator className="my-5" />
             <L2CostsTable
               entries={entries.validiumsAndOptimiums}
-              caption="Onchain costs of scaling projects, Validiums & Optimiums tab"
+              caption={getL2TabTableCaption(
+                'Onchain costs of scaling projects',
+                'validiumsAndOptimiums',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -105,7 +112,10 @@ export function L2CostsTabs(props: Props) {
             <HorizontalSeparator className="my-5" />
             <L2CostsTable
               entries={entries.others}
-              caption="Onchain costs of scaling projects, Others tab"
+              caption={getL2TabTableCaption(
+                'Onchain costs of scaling projects',
+                'others',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>

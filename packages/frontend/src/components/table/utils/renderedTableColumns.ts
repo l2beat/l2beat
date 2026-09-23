@@ -48,28 +48,26 @@ export function getRenderedCellsWithHiddenColumns<TData>(
   return getRenderedCells(cells)
 }
 
+/** Hidden columns are rendered too; this says whether a column takes space. */
+export function isShownColumn<TData>(column: Column<TData, unknown>) {
+  return column.getIsVisible()
+}
+
 /** Only shown columns count, since hidden cells take no space in the layout. */
 export function getRenderedColSpan<TData, TValue>(
   header: Header<TData, TValue>,
 ): number {
-  return header.column
-    .getLeafColumns()
-    .filter((column) => column.getIsVisible() && !isChangeSortColumn(column))
-    .length
+  return getRenderedLeafColumns(header).filter(isShownColumn).length
 }
 
 export function isShownHeader<TData, TValue>(header: Header<TData, TValue>) {
-  return getRenderedColSpan(header) > 0
+  return getRenderedLeafColumns(header).some(isShownColumn)
 }
 
 export function getRenderedHeaders<TData, TValue>(
   headers: Header<TData, TValue>[],
 ) {
-  return headers.filter((header) =>
-    header.column
-      .getLeafColumns()
-      .some((column) => !isChangeSortColumn(column)),
-  )
+  return headers.filter((header) => getRenderedLeafColumns(header).length > 0)
 }
 
 export function getShownHeaders<TData, TValue>(
@@ -103,6 +101,12 @@ export function getShownEdgeAttributes(
     'data-last-shown':
       index === lastShown && index < isShown.length - 1 ? '' : undefined,
   }))
+}
+
+function getRenderedLeafColumns<TData, TValue>(header: Header<TData, TValue>) {
+  return header.column
+    .getLeafColumns()
+    .filter((column) => !isChangeSortColumn(column))
 }
 
 function getLeafColumnsInPinnedOrder<TData>(

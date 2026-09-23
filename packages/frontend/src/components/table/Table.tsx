@@ -7,6 +7,8 @@ import { cn } from '~/utils/cn'
 import { useActiveFiltersDescription } from './filters/describeActiveFilters'
 import { TableTooltip } from './TableTooltip'
 import {
+  getFirstShownCellPadding,
+  getLastShownCellPadding,
   getTableElementClassName,
   getTableOuterWrapperClassName,
   getTableScrollWrapperClassName,
@@ -131,8 +133,9 @@ const TableHead = ({
     scope="col"
     className={cn(
       'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
-      'pr-3 first:pl-2 last:pr-2 md:pr-4',
-      'data-last-shown:pr-2 data-first-shown:pl-2',
+      'pr-3 md:pr-4',
+      getFirstShownCellPadding('pl-2'),
+      getLastShownCellPadding('pr-2'),
       className,
     )}
     {...props}
@@ -162,8 +165,9 @@ const TableCell = ({
   <td
     className={cn(
       'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-14 md:text-sm',
-      'pr-3 first:pl-3 last:pr-3 md:pr-4',
-      'data-last-shown:pr-3 data-first-shown:pl-3',
+      'pr-3 md:pr-4',
+      getFirstShownCellPadding('pl-3'),
+      getLastShownCellPadding('pr-3'),
       align === 'center' && 'text-center',
       align === 'right' && 'text-right',
       className,

@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import type { FilterValue } from './UseFilterState'
 
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
@@ -102,6 +103,14 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   project: 'projects',
   contentCategory: 'content categories',
   ProofSystem: 'proof systems',
+}
+
+export function getFilterOperatorLabel(filter: FilterValue) {
+  if (filter.inversed) {
+    return 'is not'
+  }
+
+  return filter.values.length > 1 ? 'is any of' : 'is'
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

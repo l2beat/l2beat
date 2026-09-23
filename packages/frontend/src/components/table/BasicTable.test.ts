@@ -1,12 +1,11 @@
-import {
-  createColumnHelper,
-  createTable,
-  getCoreRowModel,
-  type VisibilityState,
-} from '@tanstack/react-table'
+import { createColumnHelper, type VisibilityState } from '@tanstack/react-table'
 import { expect } from 'earl'
 import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import {
+  createTestTable,
+  getColumnCellTags,
+  renderOnServer,
+} from '~/test/table'
 import { BasicTable } from './BasicTable'
 import { TableFilterContext } from './filters/TableFilterContext'
 
@@ -54,11 +53,6 @@ const LAST_SHOWN_ATTRIBUTE = ' data-last-shown=""'
 const LEAF_COLUMN_IDS = ['name', 'tvs', 'activity', 'stage']
 
 describe(BasicTable.name, () => {
-  // Server rendering reads query params from the request URL, set per request.
-  before(() => {
-    globalThis.__FIX_SSR_URL__ = '/scaling/summary'
-  })
-
   it('names the table in a visually hidden caption', () => {
     const html = render({ caption: 'Rollups' })
 
@@ -66,7 +60,7 @@ describe(BasicTable.name, () => {
   })
 
   it('names active filters in the caption', () => {
-    const html = renderToStaticMarkup(
+    const html = renderOnServer(
       createElement(
         TableFilterContext.Provider,
         {
@@ -76,7 +70,7 @@ describe(BasicTable.name, () => {
           },
         },
         createElement(BasicTable<Row>, {
-          table: createRowTable({}),
+          table: createTestTable({ data: ROWS, columns: COLUMNS }),
           caption: 'Rollups',
         }),
       ),
@@ -156,48 +150,24 @@ function render(params: {
   columns?: typeof COLUMNS
   columnVisibility?: VisibilityState
 }) {
-  return renderToStaticMarkup(
+  return renderOnServer(
     createElement(BasicTable<Row>, {
-      table: createRowTable(params),
+      table: createTestTable({
+        data: ROWS,
+        columns: params.columns ?? COLUMNS,
+        columnVisibility: params.columnVisibility,
+      }),
       caption: params.caption ?? 'Projects',
     }),
   )
-}
-
-function createRowTable(params: {
-  columns?: typeof COLUMNS
-  columnVisibility?: VisibilityState
-}) {
-  const table = createTable<Row>({
-    data: ROWS,
-    columns: params.columns ?? COLUMNS,
-    getCoreRowModel: getCoreRowModel(),
-    renderFallbackValue: null,
-    state: {},
-    onStateChange: () => {},
-  })
-  table.setOptions((prev) => ({
-    ...prev,
-    state: {
-      ...table.initialState,
-      columnVisibility: params.columnVisibility ?? {},
-    },
-  }))
-  return table
 }
 
 function withoutHiddenCells(html: string) {
   return html.replace(/<(th|td)\b[^>]* hidden=""[^>]*>.*?<\/\1>/g, '')
 }
 
-function getTags(html: string, tagName: 'th' | 'td') {
-  return html.match(new RegExp(`<${tagName}\\b[^>]*>`, 'g')) ?? []
-}
-
 function getTag(html: string, tagName: 'th' | 'td', columnId: string) {
-  const tag = getTags(html, tagName).find((tag) =>
-    tag.includes(`data-column-id="${columnId}"`),
-  )
+  const [tag] = getColumnCellTags(html, tagName, columnId)
   if (!tag) {
     throw new Error(`No <${tagName}> for column ${columnId}`)
   }

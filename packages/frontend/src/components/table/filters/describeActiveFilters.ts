@@ -1,7 +1,11 @@
 import { useContext } from 'react'
-import { type FilterableValueId, filterIdToLabel } from './filterableValue'
+import {
+  type FilterableValueId,
+  filterIdToLabel,
+  getFilterOperatorLabel,
+} from './filterableValue'
 import { TableFilterContext } from './TableFilterContext'
-import type { FilterState, FilterValue } from './UseFilterState'
+import type { FilterState } from './UseFilterState'
 
 /**
  * Tables outside a filter provider are never filtered, so they get no
@@ -24,12 +28,4 @@ export function describeActiveFilters(state: FilterState): string | undefined {
   return descriptions.length > 0
     ? `Filtered by ${descriptions.join('; ')}`
     : undefined
-}
-
-export function getFilterOperatorLabel(filter: FilterValue) {
-  if (filter.inversed) {
-    return 'is not'
-  }
-
-  return filter.values.length > 1 ? 'is any of' : 'is'
 }

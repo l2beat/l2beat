@@ -6,6 +6,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { getTabTableCaption } from '~/components/table/getTabTableCaption'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
@@ -49,14 +50,20 @@ export function DataAvailabilityArchivedPage({
                 <PublicSystemInfo />
                 <DaArchivedTable
                   items={publicSystems}
-                  caption="Archived data availability layers, Public tab"
+                  caption={getTabTableCaption(
+                    'Archived data availability layers',
+                    'Public',
+                  )}
                 />
               </DirectoryTabsContent>
               <DirectoryTabsContent value="custom">
                 <CustomSystemInfo />
                 <DaArchivedTable
                   items={customSystems}
-                  caption="Archived data availability layers, Custom tab"
+                  caption={getTabTableCaption(
+                    'Archived data availability layers',
+                    'Custom',
+                  )}
                   excludeBridge
                 />
               </DirectoryTabsContent>

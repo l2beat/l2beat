@@ -13,6 +13,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2LivenessEntry } from '~/server/features/layer2s/liveness/getL2LivenessEntries'
 import { useLivenessTimeRangeContext } from './LivenessTimeRangeContext'
@@ -62,7 +63,10 @@ export function L2LivenessTables(props: Props) {
             <RollupsInfo />
             <L2LivenessTable
               entries={entries.rollups}
-              caption="Liveness of scaling projects, Rollups tab"
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'rollups',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -71,7 +75,10 @@ export function L2LivenessTables(props: Props) {
             <ValidiumsAndOptimiumsInfo />
             <L2LivenessTable
               entries={entries.validiumsAndOptimiums}
-              caption="Liveness of scaling projects, Validiums & Optimiums tab"
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'validiumsAndOptimiums',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -80,7 +87,10 @@ export function L2LivenessTables(props: Props) {
             <OthersInfo />
             <L2LivenessTable
               entries={entries.others}
-              caption="Liveness of scaling projects, Others tab"
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'others',
+              )}
               hideType
             />
           </DirectoryTabsContent>

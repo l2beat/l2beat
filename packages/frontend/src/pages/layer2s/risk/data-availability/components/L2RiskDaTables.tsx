@@ -13,6 +13,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2RiskDaEntry } from '~/server/features/layer2s/risks/data-availability/getL2RiskDaEntries'
 import { L2RiskDaTable } from './table/L2RiskDaTable'
@@ -60,7 +61,10 @@ export function L2RiskDaTables(props: Props) {
             <RollupsInfo />
             <L2RiskDaTable
               entries={entries.rollups}
-              caption="Data availability risks of scaling projects, Rollups tab"
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'rollups',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -69,7 +73,10 @@ export function L2RiskDaTables(props: Props) {
             <ValidiumsAndOptimiumsInfo />
             <L2RiskDaTable
               entries={entries.validiumsAndOptimiums}
-              caption="Data availability risks of scaling projects, Validiums & Optimiums tab"
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'validiumsAndOptimiums',
+              )}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -78,7 +85,10 @@ export function L2RiskDaTables(props: Props) {
             <OthersInfo />
             <L2RiskDaTable
               entries={entries.others}
-              caption="Data availability risks of scaling projects, Others tab"
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'others',
+              )}
               hideType
             />
           </DirectoryTabsContent>

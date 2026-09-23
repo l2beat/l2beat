@@ -10,6 +10,34 @@ export type BasicTableGroupParams = {
   isLastInGroup: boolean
 }
 
+/*
+ * Hidden columns stay in the row, so `first:` and `last:` alone would pad a
+ * hidden cell. Each edge padding is paired with its `data-*-shown:` twin, which
+ * matches the shown edge cell (see getShownEdgeAttributes). Tailwind only
+ * generates classes it finds written out, hence the literal maps.
+ */
+const FIRST_SHOWN_CELL_PADDING = {
+  'pl-2': 'first:pl-2 data-first-shown:pl-2',
+  'pl-3': 'first:pl-3 data-first-shown:pl-3',
+} as const
+
+const LAST_SHOWN_CELL_PADDING = {
+  'pr-2': 'last:pr-2 data-last-shown:pr-2',
+  'pr-3': 'last:pr-3 data-last-shown:pr-3',
+} as const
+
+export function getFirstShownCellPadding(
+  padding: keyof typeof FIRST_SHOWN_CELL_PADDING,
+) {
+  return FIRST_SHOWN_CELL_PADDING[padding]
+}
+
+export function getLastShownCellPadding(
+  padding: keyof typeof LAST_SHOWN_CELL_PADDING,
+) {
+  return LAST_SHOWN_CELL_PADDING[padding]
+}
+
 export function getTableOuterWrapperClassName() {
   return 'max-md:-mr-4'
 }
