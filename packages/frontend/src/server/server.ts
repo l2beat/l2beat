@@ -7,7 +7,7 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
-import { CLIENT_ENV_KEYS, rawEnv } from '~/env'
+import { CLIENT_ENV_KEYS, env, rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
@@ -52,7 +52,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const pagePreloads = loadPagePreloads(!options.dev)
 
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
-  app.use('/', createRobotsRouter())
+  app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
 
   if (options.dev) {
