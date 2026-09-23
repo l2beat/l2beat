@@ -126,9 +126,6 @@
       "description": "l1da, l2da",
       "severity": "HIGH"
     },
-    "getPendingAdmin": {
-      "severity": "HIGH"
-    },
     "getPubdataPricingMode": {
       "description": "0 - Rollup, 1 - Validium",
       "severity": "HIGH"

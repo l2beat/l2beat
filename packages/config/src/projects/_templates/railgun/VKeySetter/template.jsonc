@@ -7,7 +7,6 @@
   "canActIndependently": false,
   "fields": {
     "owner": {
-      "severity": "HIGH",
       "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
       "type": "PERMISSION",
       "permissions": [
@@ -19,7 +18,6 @@
     },
     "delegator": {
       "description": "Railgun Delegator contract that can switch this helper into COMMITTING and is the contract used to forward verifier-key updates onward.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
         {
@@ -29,8 +27,7 @@
       ]
     },
     "verifier": {
-      "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator.",
-      "severity": "HIGH"
+      "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
     },
     "state": {
       "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."

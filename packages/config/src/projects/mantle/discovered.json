@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1789917555,
-  "configHash": "0x06f40902111ca63c12022ada8e771d1d2cdd509cd18e316b5ae75e763fe772da",
+  "configHash": "0x61a588ca8f19e945963dbe3c0617c3a1164871197aca3b1ca36b54a31cff4cd3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -24,10 +24,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
@@ -53,6 +49,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1710490775 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE",
       "sinceTimestamp": 1686902471,
@@ -76,6 +73,10 @@
         "multisigThreshold": "3 of 7 (43%)",
         "nonce": 154,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "GnosisSafeProxy",
@@ -158,9 +159,6 @@
         "FINALIZATION_PERIOD_SECONDS": { "severity": "HIGH" },
         "submissionInterval": { "severity": "HIGH" },
         "SUBMISSION_INTERVAL": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "challenger": { "severity": "HIGH" },
         "aggregationVkey": {
           "severity": "HIGH",
           "description": "Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots."
@@ -238,10 +236,6 @@
         "totalSupply": "6219316794889999291248757829"
       },
       "fieldMeta": {
-        "MIN_MINT_INTERVAL": { "severity": "HIGH" },
-        "MINT_CAP_MAX_NUMERATOR": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
         "mintCapNumerator": {
           "severity": "HIGH",
           "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
@@ -331,7 +325,6 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
-        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -362,6 +355,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1687241795 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
       "sinceTimestamp": 1683509999,
@@ -392,6 +386,10 @@
         "multisigThreshold": "6 of 14 (43%)",
         "nonce": 91,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "GnosisSafeProxy",
@@ -466,12 +464,7 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" },
-        "Proposer": { "severity": "HIGH" },
-        "Canceller": { "severity": "HIGH" },
-        "Executor": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
@@ -538,17 +531,7 @@
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
       },
-      "fieldMeta": {
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
@@ -573,7 +556,6 @@
         "$immutable": true,
         "owner": "eth:0xca35F8338054739D138884685e08b39EE2217794"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "Lib_AddressManager"
       },
@@ -611,17 +593,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
@@ -698,15 +670,7 @@
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
-      "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "L1_MNT_ADDRESS": { "severity": "HIGH" },
-        "SYSTEM_CONFIG": { "severity": "HIGH" },
-        "L2_ORACLE": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "guardian": { "severity": "MEDIUM" },
-        "GUARDIAN": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "Proxy",
         "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7": "OptimismPortal"
@@ -735,11 +699,28 @@
         "$immutable": true,
         "addressManager": "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "isUpgrading": false,
+        "l1CrossDomainMessengerImplementationName": "BVM_L1CrossDomainMessenger",
+        "l1CrossDomainMessengerProxyType": 2,
+        "l1StandardBridgeProxyType": 1,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
       "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "addressManager": {
+          "severity": "HIGH",
+          "description": "AddressManager whose mappings this ProxyAdmin can update, including the L1CrossDomainMessenger implementation."
+        },
+        "l1CrossDomainMessengerProxyType": {
+          "severity": "HIGH",
+          "description": "Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy)."
+        },
+        "l1CrossDomainMessengerImplementationName": {
+          "severity": "HIGH",
+          "description": "AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger."
+        },
+        "l1StandardBridgeProxyType": {
+          "severity": "HIGH",
+          "description": "Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy)."
+        }
       },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
@@ -1226,18 +1207,18 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
-    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
-    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
-    "opstack/OptimismPortal": "0x57d64ca52a31a02a55a1ea25b0466ff641c462503c6705b5c8d6c071d4636a47",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
+    "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x8c81eaa5a4485b4fb883f2f467d34febac2cf0fe9c803f30486eb4cc15868c99"
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
   "usedBlockNumbers": { "ethereum": 26019578 },
-  "permissionsConfigHash": "0xbc9459dd60686fdcfde40be25193f3ac9ca326d66fc728a45316a8bda171e063",
+  "permissionsConfigHash": "0x6faa02ad7b341cb5a74eb197023c879e678edf1c99116cd511fabc30f5f0a21d",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
   },
@@ -1381,8 +1362,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xca35F8338054739D138884685e08b39EE2217794" }
           ]
@@ -1477,8 +1457,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",

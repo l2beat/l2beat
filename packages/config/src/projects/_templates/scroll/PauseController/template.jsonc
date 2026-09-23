@@ -2,10 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "critical": true,
   "fields": {
-    "$admin": {
-      "severity": "HIGH"
-    },
-    "owner": { "severity": "HIGH" },
     "pauseCooldownPeriod": { "severity": "HIGH" }
   }
 }

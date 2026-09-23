@@ -846,10 +846,6 @@
         "$immutable": true,
         "owner": "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238": "ProxyAdmin"
       }
@@ -1205,10 +1201,6 @@
         "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
@@ -2388,7 +2380,7 @@
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
     "espresso/Sequencing/NitroEnclaveVerifier": "0xeec57567f567c5ffa38c4f80ac540496aa560068877ce088f6f5d9e48c216bca",
     "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
@@ -2406,7 +2398,7 @@
     "orbitstack/SequencerInbox_Celestia_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d"
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 478619686 },
   "permissionsConfigHash": "0xe04a7cc05b7078943192a6c06597ce17875c99921258acd9ac8821a40b00fcf0",

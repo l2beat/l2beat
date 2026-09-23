@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x67e372e4d4f2152a8ed6c5912d79534056688c17
+
+# Diff at Wed, 23 Sep 2026 05:50:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1787836675
+- current timestamp: 1787836675
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787836675 (main branch discovery), not current.
+
+```diff
+    contract UNIToken (eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) [uniswapv3/Uni] {
+    +++ description: ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.
+      fieldMeta.minimumTimeBetweenMints:
+-        {"severity":"HIGH"}
+      fieldMeta.mintCap:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegate] {
+    +++ description: Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.
+      fieldMeta.uni:
+-        {"severity":"HIGH"}
+      fieldMeta.timelock:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x7d6821a4b8e6f30406fb5f13f3760825d1577773
 
 # Diff at Mon, 21 Sep 2026 11:24:08 GMT:

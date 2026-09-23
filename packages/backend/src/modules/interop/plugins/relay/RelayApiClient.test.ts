@@ -221,13 +221,17 @@ describe(RelayApiClient.name, () => {
     })
 
     it('retries a rate-limited page at the same cursor', async () => {
+      const warn = mockFn().returns(undefined)
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(mockObject<Logger>({ warn })),
+      })
       const httpClient = mockObject<HttpClient>({
         fetchRaw: mockFn()
           .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
           .resolvesToOnce(httpError(429, 'Too Many Requests'))
           .resolvesToOnce(ok(page([request('b')], undefined))),
       })
-      const client = createClient(httpClient)
+      const client = createClient(httpClient, logger)
 
       const result = await client.getAllRequests({ limit: 500 })
 
@@ -237,6 +241,12 @@ describe(RelayApiClient.name, () => {
       const retriedUrl = httpClient.fetchRaw.calls[2]?.args[0] as string
       expect(failedUrl).toEqual(retriedUrl)
       expect(retriedUrl).toInclude('continuation=cursor-1')
+      expect(warn).toHaveBeenOnlyCalledWith('Retrying Relay API page', {
+        attempt: 1,
+        delay: 0,
+        status: 429,
+        error: 'Relay API error: 429 Too Many Requests {"statusCode":429}',
+      })
     })
 
     it('throws a permanent later-page failure instead of returning a partial window', async () => {

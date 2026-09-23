@@ -26,13 +26,7 @@
     "disputeGameFactory": {
       "severity": "HIGH"
     },
-    "superchainConfig": {
-      "severity": "HIGH"
-    },
     "systemConfig": {
-      "severity": "HIGH"
-    },
-    "disputeGameFinalityDelaySeconds": {
       "severity": "HIGH"
     },
     "paused": {
@@ -52,7 +46,6 @@
       "edit": ["format", "DisputeGameMap"]
     },
     "disputeGameFinalityDelaySeconds_fmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "disputeGameFinalityDelaySeconds",

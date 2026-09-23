@@ -5,7 +5,12 @@ import {
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './core/tooltip/Tooltip'
 
 const COMPARISON_PERIOD_LABELS: Record<PercentageChangePeriod, string> = {
   '1D': 'one day ago',
@@ -77,9 +82,11 @@ export function PercentChange({
       <TooltipTrigger asChild disabledOnMobile={disabledOnMobile}>
         {content}
       </TooltipTrigger>
-      <TooltipContent>
-        <PercentageChangeTooltipContent period={period} />
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent>
+          <PercentageChangeTooltipContent period={period} />
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

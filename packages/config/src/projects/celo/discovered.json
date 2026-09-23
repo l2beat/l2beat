@@ -1,8 +1,108 @@
 {
   "name": "celo",
   "timestamp": 1789044398,
-  "configHash": "0xbc620cf340d650fce6489d01a19ff7d49a08a1fab6629be986c0ae00bf36a574",
+  "configHash": "0x6c5cb3d109ff6f2adbb6b318f3b4e0be0389e5b3a4a5aac6f595aaf0a96e5739",
   "entries": [
+    {
+      "name": "L2CrossDomainMessenger",
+      "address": "celo:0x4200000000000000000000000000000000000007",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "celo:0x4200000000000000000000000000000000000018",
+        "$implementation": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0
+      },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "implementationNames": {
+        "celo:0x4200000000000000000000000000000000000007": "Proxy",
+        "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": ""
+      }
+    },
+    {
+      "name": "L2StandardBridge",
+      "address": "celo:0x4200000000000000000000000000000000000010",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "celo:0x4200000000000000000000000000000000000018",
+        "$implementation": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0
+      },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "implementationNames": {
+        "celo:0x4200000000000000000000000000000000000010": "Proxy",
+        "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": ""
+      }
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "celo:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "celo:0x4200000000000000000000000000000000000018",
+        "$implementation": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0
+      },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "implementationNames": {
+        "celo:0x4200000000000000000000000000000000000016": "Proxy",
+        "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": ""
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "celo:0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "celo:0x4200000000000000000000000000000000000018",
+        "$implementation": "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "owner": "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "L2 alias of the CeloProxyAdminOwner. It can upgrade the security-critical L2 predeploys."
+        }
+      },
+      "implementationNames": {
+        "celo:0x4200000000000000000000000000000000000018": "Proxy",
+        "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": ""
+      }
+    },
+    {
+      "name": "CeloProxyAdminOwner - L2 Alias",
+      "address": "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
@@ -33,14 +133,7 @@
         "thresholdPercentage": 75,
         "version": "1.2.0"
       },
-      "fieldMeta": {
-        "minOwners": { "severity": "HIGH" },
-        "thresholdPercentage": { "severity": "HIGH" },
-        "ownershipTransferredToFallback": { "severity": "HIGH" },
-        "livenessInterval": { "severity": "HIGH" },
-        "fallbackOwner": { "severity": "HIGH" },
-        "livenessGuard": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "ownershipTransferredToFallback": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
@@ -223,17 +316,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.0"
       },
-      "fieldMeta": {
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95": "ResolvedDelegateProxy",
         "eth:0xE45D2d835d0b2D3C7f4fEe1eaa19A068d0ba8A88": "L1CrossDomainMessenger"
@@ -336,10 +419,6 @@
         "guardian": {
           "severity": "MEDIUM",
           "description": "Address that can pause Celo withdrawals on its own, without any other party consenting."
-        },
-        "superchainConfig": {
-          "severity": "HIGH",
-          "description": "The shared Superchain-wide SuperchainConfig whose pause state is forwarded to Celo. Changing this pointer changes who can pause Celo from outside."
         },
         "paused": { "severity": "MEDIUM" },
         "celoPaused": { "severity": "MEDIUM" }
@@ -618,10 +697,6 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -644,7 +719,6 @@
         "$immutable": true,
         "owner": "eth:0x783A434532Ee94667979213af1711505E8bFE374"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753": "AddressManager"
       },
@@ -835,12 +909,7 @@
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "foundationSafe": { "severity": "MEDIUM" },
-        "guardianSafe": { "severity": "MEDIUM" },
-        "deputy": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "deputy": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
       }
@@ -868,10 +937,6 @@
         "addressManager": "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753",
         "isUpgrading": false,
         "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x783A434532Ee94667979213af1711505E8bFE374": "ProxyAdmin"
@@ -1057,22 +1122,11 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
@@ -1139,16 +1193,10 @@
         "$admin": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" },
         "disputeGameFactory": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": {
-          "severity": "HIGH",
-          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
-        },
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds_fmt": {
-          "severity": "HIGH",
           "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
         }
       },
@@ -1206,13 +1254,6 @@
         "systemConfig": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
         "totalSupply": 0,
         "version": "1.5.0"
-      },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "delay": { "severity": "HIGH" },
-        "config": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4": "Proxy",
@@ -1290,10 +1331,7 @@
         "version": "2.4.2"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "pauseExpiry": { "severity": "HIGH" },
-        "pauseExpiryFmt": { "severity": "HIGH" },
         "guardian": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1335,17 +1373,7 @@
         "systemConfig": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
         "version": "2.8.0"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe": "L1ChugSplashProxy",
         "eth:0xfA707F45A23370d9154AF4457401274E38FA2d8A": "L1StandardBridge"
@@ -1708,15 +1736,8 @@
         "version": "5.1.1"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "anchorStateRegistry": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
         "ethLockbox": { "severity": "HIGH" },
-        "proofMaturityDelaySeconds": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
-        "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -1783,13 +1804,6 @@
         "systemConfig": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
         "totalSupply": 0,
         "version": "1.5.0"
-      },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "delay": { "severity": "HIGH" },
-        "config": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552": "Proxy",
@@ -1884,7 +1898,6 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -1953,11 +1966,7 @@
         ]
       },
       "fieldMeta": {
-        "DISPUTE_GAME_FACTORY": { "severity": "HIGH" },
-        "isProposalPermissionlessMode": { "severity": "HIGH" },
-        "FALLBACK_TIMEOUT": { "severity": "HIGH" },
         "FALLBACK_TIMEOUT_fmt": {
-          "severity": "HIGH",
           "description": "Formatted fallback timeout after which proposing becomes permissionless."
         },
         "owner": {
@@ -2056,7 +2065,6 @@
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
-        "permissionedGameArgs": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -2156,6 +2164,46 @@
     }
   ],
   "abis": {
+    "celo:0x4200000000000000000000000000000000000007": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "celo:0x4200000000000000000000000000000000000010": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "celo:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "celo:0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
       "constructor(address _safe, address _livenessGuard, uint256 _livenessInterval, uint256 _minOwners, uint256 _thresholdPercentage, address _fallbackOwner)",
       "error OwnerRemovalFailed(string)",
@@ -3399,37 +3447,61 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosisSafeModules/LivenessModule": "0x24a4d0f4074d77a187583dd74c1f45190ab6764dc63efb074a632e409520a7c9",
+    "gnosisSafeModules/LivenessModule": "0x8b71e37cf372147df718b6b3f85ee721b20cf6d68c86a79ef273d781b300c97c",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13_opsuccinct": "0xbbcfb80f3eeb5895e4c417f0c62e1c851217f90d4f2b0e6d9080bdbdeea3c597",
-    "opstack/DelayedWETH": "0xb414c00260c9bbb0d57843aacfd5aef6f26fc6d94ccb910ef20dd3b4c29c063b",
-    "opstack/DeputyPauseModule": "0xa55a63486d540ccca73d7e3a204febdd2f4b6e8e4a872bf5806a4359af8517b9",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x7ede4f356067e3962c25b87e11bc09ef78540a166464a937aca7e13429186a6f",
+    "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
+    "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0xeba6cb42b7d4fd68db8a8faeae5717eb1943fee08d7674dcc02dfd12d7256d71",
+    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfig_expiry": "0x1fc8cd90b89237398882797e866e59d613d21f6a8c9ccbb2b72d507f3f7b620f",
-    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b",
-    "succinct/OPSuccinct/AccessManager": "0x54c0156f12fe8201eaf0d6a8ebffc0bd8f672a6572bf996361aea938fd4d1fba",
+    "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "ethereum": 25947079 },
-  "permissionsConfigHash": "0x76f897627da2ab524183c2b8a0e0d85cda38d2179f5e4d8dadc8c1d60ecf9d7d",
+  "usedBlockNumbers": { "celo": 77143640, "ethereum": 25947079 },
+  "permissionsConfigHash": "0xc86bfaa288081a73c885b3c8c5aa66d55e423fb94679da2088af1bf2429adcd2",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
   },
   "permissions": {
+    "celo:0x4200000000000000000000000000000000000018": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000007",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000010",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
         {
@@ -3582,8 +3654,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0x783A434532Ee94667979213af1711505E8bFE374" }
           ]
@@ -3764,8 +3835,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",

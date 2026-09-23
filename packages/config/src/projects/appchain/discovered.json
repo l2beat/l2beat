@@ -485,10 +485,6 @@
         "owner": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f": "ProxyAdmin"
       }
@@ -886,10 +882,6 @@
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
       },
-      "fieldMeta": {
-        "VERIFIER_HASH": { "severity": "HIGH" },
-        "VK_ROOT": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
       }
@@ -929,10 +921,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x7c4e8195FB560D1557C52f051dCdA4724a2894b3"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF025D25aE360D0D33a275dF74863CCc6600E6f8E": "ProxyAdmin"
@@ -1840,7 +1828,7 @@
     "espresso/Sequencing/EspressoNitroTEEVerifier_WithServices": "0x2a48dad44007597042c770d7809f685adf01c97b27ab3c748c16fec8a4e4708a",
     "espresso/Sequencing/EspressoTEEVerifier_onlyNitro": "0xa7462bba7d44a2b825082be8ddd162e2da5883f3e2690823bb53932d0773fffb",
     "espresso/Sequencing/NitroEnclaveVerifier": "0xeec57567f567c5ffa38c4f80ac540496aa560068877ce088f6f5d9e48c216bca",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
@@ -1856,7 +1844,7 @@
     "orbitstack/SequencerInbox_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d"
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25832879 },
   "permissionsConfigHash": "0x1f72925e2f6b8376c2c613ade63e59b9c2a22235c80516f047debe3cf0157dd8",

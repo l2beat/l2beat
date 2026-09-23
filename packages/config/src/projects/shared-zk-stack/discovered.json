@@ -105,10 +105,6 @@
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": "ProxyAdmin"
       }
@@ -143,10 +139,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
@@ -1511,10 +1503,6 @@
         "$immutable": true,
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": "ProxyAdmin"
       }
@@ -2513,10 +2501,6 @@
       "values": {
         "$immutable": true,
         "owner": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
@@ -4037,7 +4021,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",

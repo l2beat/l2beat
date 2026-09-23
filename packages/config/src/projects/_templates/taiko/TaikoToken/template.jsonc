@@ -6,7 +6,6 @@
   "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
   "ignoreInWatchMode": ["clock"],
   "fields": {
-    "owner": { "severity": "HIGH" },
     "paused": { "severity": "MEDIUM" }
   }
 }

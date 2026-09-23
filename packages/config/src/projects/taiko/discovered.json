@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "timestamp": 1790078329,
-  "configHash": "0x5313ce8378960d6e49ca5a9d960df5a1269fa264000da20a380fbb3adba98516",
+  "configHash": "0xb1741232f1c84386b3e934df28b605dc74c1852640cb673be0fcb7a4509e1376",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -49,7 +49,6 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
         "trustedImages": {
           "severity": "HIGH",
           "description": "Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."
@@ -112,12 +111,7 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" },
-        "Proposer": { "severity": "HIGH" },
-        "Canceller": { "severity": "HIGH" },
-        "Executor": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -160,7 +154,7 @@
             ["eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070"]
           ]
         ],
-        "$threshold": 7,
+        "$threshold": 4,
         "$upgradeCount": 1,
         "addresslistLength": 5,
         "dao": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
@@ -178,7 +172,7 @@
       },
       "fieldMeta": {
         "$threshold": {
-          "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract."
+          "description": "Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract."
         },
         "settings": { "severity": "HIGH" }
       },
@@ -247,8 +241,7 @@
         "mrSigners": {
           "severity": "HIGH",
           "description": "Trusted SGX signer measurements accepted by attestation verification."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261": "ERC1967Proxy",
@@ -349,10 +342,7 @@
         "TAIKO_FOUNDATION_TREASURY": "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
         "totalSupply": "1000000000000000000000000000"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "ERC1967Proxy",
         "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106": "TaikoToken"
@@ -380,11 +370,9 @@
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -624,7 +612,6 @@
         "taikoChainId": 167000
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
         "automataDcapAttestation": {
           "description": "Attestation contract used to verify DCAP quotes before registrar-submitted SGX instances are accepted."
         }
@@ -654,11 +641,9 @@
         "verifier": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -719,10 +704,6 @@
         "SELECTOR": "0x242f9d5b",
         "VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
         "VERSION": "0.9.0"
-      },
-      "fieldMeta": {
-        "imageInfo": { "severity": "HIGH" },
-        "VERIFIER": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": "RiscZeroSetVerifier"
@@ -785,11 +766,9 @@
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -876,11 +855,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": {
-        "getCurrentForcedInclusionFee": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f": "ERC1967Proxy",
         "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9": "MainnetInbox"
@@ -917,27 +892,21 @@
       },
       "fieldMeta": {
         "sgxGethVerifier": {
-          "severity": "HIGH",
           "description": "SGX verifier for Geth-based proofs. It can only be paired with a ZK verifier."
         },
         "sgxRethVerifier": {
-          "severity": "HIGH",
           "description": "SGX verifier for Reth-based proofs. It can only be paired with a ZK verifier."
         },
         "risc0RethVerifier": {
-          "severity": "HIGH",
           "description": "RISC Zero verifier for Reth-based validity proofs."
         },
         "sp1RethVerifier": {
-          "severity": "HIGH",
           "description": "SP1 verifier for Reth-based validity proofs."
         },
         "opVerifier": {
-          "severity": "HIGH",
           "description": "Optional optimistic verifier slot. It is zero and cannot satisfy the mainnet policy."
         },
         "tdxGethVerifier": {
-          "severity": "HIGH",
           "description": "Optional TDX verifier slot. It is zero and cannot satisfy the mainnet policy."
         }
       },
@@ -980,7 +949,6 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
         "trustedPrograms": {
           "severity": "HIGH",
           "description": "Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified."
@@ -1030,10 +998,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": "ERC1967Proxy",
         "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06": "TaikoDAOController"
@@ -1073,11 +1038,9 @@
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -1163,8 +1126,7 @@
         "mrSigners": {
           "severity": "HIGH",
           "description": "Trusted SGX signer measurements accepted by attestation verification."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "ERC1967Proxy",
@@ -1198,18 +1160,15 @@
         "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": {
-          "severity": "HIGH",
-          "description": "Currently used Risc0 verifier contract, selector determined manually from calldata"
-        },
-        "owner": { "severity": "HIGH" },
         "verifier_310fe598": { "severity": "HIGH" },
         "verifier_9f39696c": { "severity": "HIGH" },
         "verifier_f536085a": { "severity": "HIGH" },
         "verifier_bb001d44": { "severity": "HIGH" },
         "verifier_73c457ba": { "severity": "HIGH" },
-        "verifier_242f9d5b": { "severity": "HIGH" }
+        "verifier_242f9d5b": { "severity": "HIGH" },
+        "verifier": {
+          "description": "Currently used Risc0 verifier contract, selector determined manually from calldata"
+        }
       },
       "implementationNames": {
         "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
@@ -1298,8 +1257,6 @@
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "resolver": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
         "namedAddresses": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1516,9 +1473,7 @@
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
         "quotaManager": {
-          "severity": "HIGH",
           "description": "Quota manager that rate-limits ERC20 tokens released or minted by this vault."
         },
         "btokenDenylist": {
@@ -1843,7 +1798,6 @@
         "taikoChainId": 167000
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
         "automataDcapAttestation": {
           "description": "Attestation contract used to verify DCAP quotes before registrar-submitted SGX instances are accepted."
         }
@@ -1940,9 +1894,7 @@
       "fieldMeta": {
         "pendingOwner": { "severity": "MEDIUM" },
         "resolver": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
         "pauser": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1972,11 +1924,9 @@
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -2126,7 +2076,6 @@
         "UNLIMITED_QUOTA": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
         "bridge": {
           "description": "Bridge contract allowed to consume ETH withdrawal quota."
         },
@@ -2280,14 +2229,11 @@
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
         "pauser": { "severity": "MEDIUM" },
         "quotaManager": {
-          "severity": "HIGH",
           "description": "Quota manager that rate-limits ETH released by processed or recalled bridge messages."
         },
         "signalService": {
-          "severity": "HIGH",
           "description": "Signal service used to prove cross-chain message delivery and failure signals."
         }
       },
@@ -2375,11 +2321,9 @@
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
-        "pendingOwner": { "severity": "MEDIUM" },
-        "verifier": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
         }
       },
@@ -2441,10 +2385,7 @@
       "fieldMeta": {
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
-        "resolver": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "proverManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "resolver": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae": "ERC1967Proxy",
@@ -2591,10 +2532,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": "ERC1967Proxy",
         "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
@@ -2667,10 +2605,7 @@
         "RANDOMNESS_DELAY": 2,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
         "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149": "PreconfWhitelist"
@@ -2766,8 +2701,6 @@
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
         "signalService": { "severity": "HIGH" },
         "quotaManager": {
           "severity": "HIGH",
@@ -2841,10 +2774,7 @@
       "fieldMeta": {
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
-        "MIN_MIGRATION_DELAY": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000000002": "ERC1967Proxy",
@@ -2897,9 +2827,7 @@
       "fieldMeta": {
         "pendingOwner": { "severity": "MEDIUM" },
         "resolver": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
         "pauser": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -2970,8 +2898,6 @@
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "addressManager": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
         "namedAddresses": {
           "severity": "HIGH",
           "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service. Review bridging if quota-manager, or watchdog gets added here."
@@ -3077,9 +3003,9 @@
         "pendingOwner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "resolver": { "severity": "HIGH" },
-        "checkpointStore": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "checkpointStore": {
+          "description": "Immutable checkpoint store; replacement requires a code change."
+        }
       },
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
@@ -3124,11 +3050,7 @@
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
         "resolver": "taiko:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "daoController": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "daoController": { "severity": "HIGH" } },
       "implementationNames": {
         "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C": "ERC1967Proxy",
         "taiko:0x6900f893Fb1dcf2868c7799Ac9a2dAf1c046c6bF": "DelegateController"
@@ -5059,39 +4981,39 @@
     ]
   },
   "usedTemplates": {
-    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "risc0/RiscZeroSetVerifier": "0xc97e795145b9047acc8c6b65617edecc2b77a0e610c10b83ca7386ca63114ae1",
-    "risc0/RiscZeroVerifierEmergencyStop": "0xef0987a7d8a5d4cdb385d76339b97fb7e014e0ef73ce197a6311cc29d6aa7437",
-    "risc0/RiscZeroVerifierRouter": "0x736f3bb5bd191bd32f6b9b196ccea9c1aa8dac40fcb3cea29151a2ecb4078c6e",
-    "taiko/Anchor": "0x253bf4abf75c82a9325756b6fd335d5a81a73ce284481cd0d03e42a3095b868f",
+    "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
+    "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
+    "taiko/Anchor": "0xd5909fa4ab96d08be3799261004f1100d9dbe7d077fab8e18d5454489ca1be90",
     "taiko/AutomataDcapV3Attestation": "0xc00adc87e12abaf9fde2f950e1bcd50613af2dced58818a9cd355e2824f5107b",
     "taiko/DAO": "0x6844d4d70a1ee3095eca887823d6910d52637f7c9c7a9b5b46c45c4ef7f44979",
-    "taiko/DefaultResolver": "0x587892076d22f019649ce6b1d78e68aac49d2fa40cd22b381f8195704ffcf29d",
-    "taiko/DelegateController": "0x1fdc522606a2c48adc59defbee2c46c9c9e3a182ff405dc67be80a7be0b62d4a",
+    "taiko/DefaultResolver": "0x9e4a768e6467226c134712b39afda80c8ada4dc5473f24d9674e582fd611f475",
+    "taiko/DelegateController": "0x02338d1510afec74a9970e0388f5710050622118bf82e68044c42ee236d52dea",
     "taiko/EmergencyMultisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
-    "taiko/L2AddressManager": "0x7c1f0d9b71ef68a692c17ac6671528bf799dbe193656e4eb7c52c2a265ef0f8b",
-    "taiko/L2Bridge": "0xeea85c71597e1a4b990b73b2623f7465b2c843e19b0170b0f9da8a4af4129537",
-    "taiko/L2ERC20Vault": "0xc452d34a21624cd1c0b7e9d5456ef8e4a2a04a44ccd1c24d1289db469b400353",
-    "taiko/MainnetInbox": "0x6a4d893b48c0d55e9095068167987cc4ddb72fa261c5606105bd2f128e19179e",
+    "taiko/L2AddressManager": "0x3f64ac41a1951b3cbdf935fd4aa617b0e462875e63970badbd528da33856c1ea",
+    "taiko/L2Bridge": "0xde70ed239e18240cac51358b8731de7261d89f39884462df6840983aad9552ff",
+    "taiko/L2ERC20Vault": "0x1b48752812cde3d494b029a24ee510e5223ae3b8829b3d99ff8cf9ee784b5597",
+    "taiko/MainnetInbox": "0xc206c4c754481eee92f2a6445d61887849e580eca93e19067da6ae81bd371cbd",
     "taiko/Multisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
     "taiko/OptimisticTokenVotingPlugin": "0x43e2ff8d543873d60fb20183b097ca645ae67edc2fd29c5ad5e15fbcc194c3b8",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/PreconfWhitelist": "0x731d71f8942d958399e1df72893ab44594fcde016b4a1c5f34d1fbd72f77f175",
-    "taiko/ProverWhitelist": "0x6c1f85c43ea30072647f863483914b8ea429db05d8a51eae3da8755281eef5ab",
+    "taiko/ProverWhitelist": "0xacd761fffdbfae0d7513b92d227d6b210a651875c557f0352aa1a384cb8da012",
     "taiko/QuotaManager": "0xb310018ae4ae441b020d0e4a3fd7a26eebbb14b5e40d36c7fa80ba57289be103",
     "taiko/Risc0Verifier": "0x3fa557cec14d97be6232113d04d63fded6df9ff5a9d22702c21906fd451fcf07",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/SgxVerifier": "0x7d1dc353f2992a42f641bbf4732e805b105760caab53baa6915e9bc37e00e04c",
     "taiko/SharedERC20Vault": "0x079d62de1efb89dabb3895722ca0df36226e97f3b45e6b4383c7e40d0d70fa22",
-    "taiko/SignalService": "0x190d65f2c8b9dd3aacb5aa89ab4e89cde27879a550c3388c619c221bd497775f",
-    "taiko/SignerList": "0x86844c0fc64adb2f325a0ef1a17e8f78c9be67582e90c6321d4f39b47a4e407a",
+    "taiko/SignalService": "0x1940b3e65db27e77800c48ca526e8fd7b1cbe5439ecc83b092603822990b06f5",
+    "taiko/SignerList": "0x089d41c0ec9b4fcd4570408dd79ea3348319730d2c8492eac3a4ab044418ae60",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
     "taiko/TaikoBridge": "0x8259bc64b5e1811b50ae0c34ba9239e281099e6192827c12571f01491926fcac",
     "taiko/TaikoDAOController": "0xb300a71e27dca1e2393f452651ac4f0c03e73922f562e181b4ea26a9b08e3ec0",
-    "taiko/TaikoToken": "0x6f6120e97dbad882541b7df16a6aeb6072a0e44a1578b94a462e24d736083d26",
+    "taiko/TaikoToken": "0x52aec439734375bb11faae757d7e4f01e6de793894f59ec542bf6350be8593aa",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
   "usedBlockNumbers": { "ethereum": 26032880, "taiko": 11724281 },

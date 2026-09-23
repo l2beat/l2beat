@@ -44,10 +44,6 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": "ProxyAdmin"
       }
@@ -891,10 +887,6 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "oeth:0x96f3E5551E1330f31974597217019812667544c8": "ProxyAdmin"
       }
@@ -916,10 +908,6 @@
         "$immutable": true,
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "ProxyAdmin"
@@ -1703,10 +1691,6 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": "ProxyAdmin"
       }
@@ -2430,7 +2414,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "privacy-boost/AuditGateway": "0x736b1fea161ec2e3bb2e403a7cb80e050608e462210cabe62839948466f1755f",
     "privacy-boost/AuthPoseidon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

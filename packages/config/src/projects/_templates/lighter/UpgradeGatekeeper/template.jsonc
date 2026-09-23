@@ -14,8 +14,11 @@
     "getMaster": {
       "permissions": [
         { "type": "act", "delay": "{{approvedUpgradeNoticePeriod}}" }
-      ],
-      "severity": "HIGH"
+      ]
+    },
+    "approvedUpgradeNoticePeriod": {
+      "severity": "HIGH",
+      "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
     },
     "approvedUpgradeNoticePeriodFmt": {
       "severity": "HIGH",

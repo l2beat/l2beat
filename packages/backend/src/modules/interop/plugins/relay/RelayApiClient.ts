@@ -118,7 +118,9 @@ interface RelayApiClientOptions {
 }
 
 const DEFAULT_OPTIONS: RelayApiClientOptions = {
-  callsPerMinute: 300,
+  // Relay's default /requests quota is 200 calls/minute per API key. Leave
+  // headroom for rolling-window accounting and other consumers of the key.
+  callsPerMinute: 190,
   maxAttempts: 4,
   initialRetryDelayMs: 1_000,
   maxRetryDelayMs: 4_000,
@@ -272,6 +274,7 @@ export class RelayApiClient {
         this.logger.warn('Retrying Relay API page', {
           attempt,
           delay,
+          status: error instanceof RelayHttpError ? error.status : undefined,
           error: error instanceof Error ? error.message : error,
         })
         if (delay > 0) {

@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xb9af5c546d75b043689729ae7f53fcddf1770aee
+
+# Diff at Wed, 23 Sep 2026 05:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789464689
+- current timestamp: 1789464689
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789464689 (main branch discovery), not current.
+
+```diff
+    contract TokenRegistryProxyAdmin (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin] {
+    +++ description: Admin contract of the TokenRegistry proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuditGateway proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin] {
+    +++ description: Admin contract of the PrivacyBoost proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuthRegistryProxyAdmin (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuthRegistry proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xe5042ac536bd15f08966b8dde38ce2896df12977
 
 # Diff at Mon, 21 Sep 2026 11:24:05 GMT:

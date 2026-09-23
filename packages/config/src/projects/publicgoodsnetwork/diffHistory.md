@@ -1,3 +1,167 @@
+Generated with discovered.json: 0x761dcf4860cbf5c76cee5fc64c8a30862987b1cc
+
+# Diff at Wed, 23 Sep 2026 05:48:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1768984467
+- current timestamp: 1768984467
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984467 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (eth:0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract BalanceClaimer (eth:0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21) [opstack/BalanceClaimer] {
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+      sourceHashes.1:
+-        "0x162e189e2a50fea3f598cf9b4d21593d1e1fe9ec0d11aa9fa653dc980399677d"
++        "0x6e64bc01e67efac8faf65497a432933319eebc353aedf9a513b44900e11b1cac"
+      deployerAddress:
++        "eth:0x92Ff8f979bd1d69cb3E59A11A1646591bFBAF03f"
+    }
+```
+
+```diff
+    contract PgnMultisig (eth:0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
++        "0x49e02cd90b424c2058925071a8f3b775aeb9b341a032ce3791e363b78dde9d8b"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x97BAf688E5d0465E149d1d5B497Ca99392a6760e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
++        "0xa338e47de7913022d970f6e0b88b4d9ab4c8da92f7b3af6eb3b0b503e5caca6b"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xA38d0c4E6319F9045F20318BA5f04CDe94208608) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0xcca8986d0789aa489ba57cd234e886bd92cb5a0d477e1f5ae5e6e030e15fb183"
++        "0xd68a2d13b89a813f34ab1ed96d07dff11647d72b06701e1e525a3bc4340b1a21"
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) [opstack/OptimismPortal_PGN_withdraw] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x18ba9f08d5c62bddd4131c2df38d760af4011869233e575569a52379ec8eee6a"
++        "0xc7a8b91b78f8154a40d9386eb10f91718ef0d7b849555bc23295b8fa073da36f"
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) [opstack/L1StandardBridge_PGN_withdraw] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x6e17f8c044cb5416af604d756bb7ab831395f1ea7638248701de78a55271e561"
++        "0x14da453e3e9d187a1bcf8ee637d57a99e90ccf984b1b4539a17ae7fef630fa50"
+      deployerAddress:
++        "eth:0xf42a387083faa995566DbA0F09549EEa4B43dE84"
+    }
+```
+
 Generated with discovered.json: 0xe1e5052adc9068f28003cbd0e4d4214ff2034726
 
 # Diff at Mon, 21 Sep 2026 11:24:05 GMT:

@@ -1,11 +1,60 @@
 {
   "events": [
     {
+      "timestamp": 1737139751,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x29873feeba961ea51e9e7eaf14910aa297f75d0b40582d8784379b052e0a670e",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1737139979,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xc80653f3b2c829922b19246cf7e60a8cb107930721fc9a5b3cd87885a8d9f5e5",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 1, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737139979,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xc80653f3b2c829922b19246cf7e60a8cb107930721fc9a5b3cd87885a8d9f5e5",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1737264431,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x12c30531e1453655a7e66215aaf15dc6e41257a0989596f0c86b220d6eb8d1c0",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
+      "timestamp": 1737266423,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x54a631ecbd675a5259ecfa1e83e888c8047c3856d693f08122e8428e313172f5",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1737266999,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x48361796884bc634d80f6145dcdf90edd8def54becc54ff3e6f7ea6bc79f8a0e",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
+      "timestamp": 1737272975,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2ce0964c49a78e36a7d7afc07c0e6f0c656f1cf8edb89d9e2892887a46f3d560",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1737273227,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x3c61c92ad2430479b26078dfa6c4a7a6ce27ec28e18117cb8482d32cbd973fbe",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1737273383,
@@ -22,11 +71,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 2, before discovery coverage)."
     },
     {
+      "timestamp": 1737273383,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xa52f3641ad982d5b0e09c7ac1e79cb581a48079ba93b13363754ddb41a94858e",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1737274235,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd88a78f8f83525de87403bb4f468216a6bf4616a0d9432ab154bc076b868c5b7",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1737274307,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "transaction": "0x6c8d7629d060da8f8d1f7a9820217af1a9154dbefaea7187fc8ba562726196a4",
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 3, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737274307,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x6c8d7629d060da8f8d1f7a9820217af1a9154dbefaea7187fc8ba562726196a4",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1737623303,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x782c3de9b1847986d055c45f791c147f54c07250a2ed1cbda82df49f68141fd9",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1737623471,
@@ -36,11 +113,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 4, before discovery coverage)."
     },
     {
+      "timestamp": 1737623471,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe19967ba9f4ce12ae96045591b4b02f9b6eed92235b7ec2232995f920fe68652",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1738733903,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x5a04ce670dde01866be8595394933decedcd2d16298d210fa2ed221998556c79",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1738734107,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x18780be243d7fcc3c504858b5fe099db9bbffb22ca12d2de82d72d4a0d5b5ef4",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 5, before discovery coverage)."
+    },
+    {
+      "timestamp": 1738734107,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x18780be243d7fcc3c504858b5fe099db9bbffb22ca12d2de82d72d4a0d5b5ef4",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1738978151,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xc286caf82377fc5a1125a4658154fe41a5ce5796792ac67ada5d6592b9b4e541",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1738978247,
@@ -50,11 +155,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 6, before discovery coverage)."
     },
     {
+      "timestamp": 1738978247,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd83aa9e44f299fddb8764ad1d8274589acf094581286c45ea4c4544e2f1c129c",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1739428151,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x82c5b239cce921addad2e8918dd8b2bf1dfc3d328e545f11e12f71b963a3474a",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1739428271,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xea950a8fd87d104c1c1b22fac0c4a277aa36598b0f7e071d8c466116337d2632",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 7, before discovery coverage)."
+    },
+    {
+      "timestamp": 1739428271,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xea950a8fd87d104c1c1b22fac0c4a277aa36598b0f7e071d8c466116337d2632",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1741186163,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2b674d4272701fd5712954ac3e6a7b1c89c9d26222dea390e5613d5566a995c9",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1741186235,
@@ -64,11 +197,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 8, before discovery coverage)."
     },
     {
+      "timestamp": 1741186235,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd8586f11ba976b871d537161df62cd5fc5b61d619a088187d1130b699642ee5f",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1741647875,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x0816c7a8a16fa9d7a662fc2a739184696df1ba09a4b037a68771e1c7aa26ecd4",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1741647971,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x25725c327e42148cd5e2ffb9f74ea51e30861909cf547f8df5ff69f97068aca4",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 9, before discovery coverage)."
+    },
+    {
+      "timestamp": 1741647971,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x25725c327e42148cd5e2ffb9f74ea51e30861909cf547f8df5ff69f97068aca4",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1742943923,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x50a2f9b1b97ecea8e9d89c5a32e5986cce2999935b65a19d6d87aa443253d8d1",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1742944463,
@@ -85,11 +246,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 10, before discovery coverage)."
     },
     {
+      "timestamp": 1742944463,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xfc21149bf7617045c6d712a98f8f295bbbd11711b3735bd8b5eb820a13fc9d2f",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1742961263,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x0ac62750558a37cb1662c7d94c6e3b9b4e6698100f61e3ad0a4c1d29191fc0be",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1742961371,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x58a0982c3ece1185b2c2fa85177c16a528e8e002a8fb39a29a6e92a53cd543b3",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 11, before discovery coverage)."
+    },
+    {
+      "timestamp": 1742961371,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x58a0982c3ece1185b2c2fa85177c16a528e8e002a8fb39a29a6e92a53cd543b3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1743007631,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe5f3634f8d68807670a60ef5fb7f9676178580215c7a73aec3211f3285dfc08f",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1743007751,
@@ -99,11 +288,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 12, before discovery coverage)."
     },
     {
+      "timestamp": 1743007751,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x49fb99191c71c9e8cdf81fc1f39c6ebb4cd012002e3537f78219fce7c95481b3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1743039563,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x7014ca386e739cf200e294069bbd4ae14b2fb9bdef5941660a1262bc529f168f",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1743039731,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x1be04f1a8d9fb527e6950565216e2c9bb3b68f5cf92b5cdb5616358b4e2024ee",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 13, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743039731,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1be04f1a8d9fb527e6950565216e2c9bb3b68f5cf92b5cdb5616358b4e2024ee",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1743105683,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x191be324162365cf6baae3151c2afaee0c853e2bfe42f5f73f1700778390990a",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1743105779,
@@ -113,11 +330,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 14, before discovery coverage)."
     },
     {
+      "timestamp": 1743105779,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x192616679ecfef3d096b82630517e5494932344b92ea66301c2d6adf01428eb3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1743280079,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1e14b5b3998e7bb807e6da19313f0dc0ae32323ab634bc275f3085377c604e93",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1743280139,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x295b2538276bbf46b967c964d1723e278a171c83f46d63323c4dc104328155aa",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 15, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743280139,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x295b2538276bbf46b967c964d1723e278a171c83f46d63323c4dc104328155aa",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1744136675,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe893ef151c36a2fc34539d88502dd702a49d19cc1a829997fb89d637f5190d44",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1744136747,
@@ -127,11 +372,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 16, before discovery coverage)."
     },
     {
+      "timestamp": 1744136747,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xbe31d7f434b7f0c46bed3783f1d1c8720980f73e0d0c6d11e30f5aeb40d94e74",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1744136927,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x31fbb46b3a57d855d03b7f87b549cca61496bf3b662f2cabd3068a1ecb35c9e5",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1744137119,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x296fed36fd00f8794a7f1185f12dae23230a6a895a3043c7311b2a0a0ace3182",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 17, before discovery coverage)."
+    },
+    {
+      "timestamp": 1744137119,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x296fed36fd00f8794a7f1185f12dae23230a6a895a3043c7311b2a0a0ace3182",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1744214723,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xae268922a8e68dd5d79ad5dc9dd37b680e93ec194e1cf7b3a59a1e2aec46b36a",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1744214807,
@@ -141,11 +414,25 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 18, before discovery coverage)."
     },
     {
+      "timestamp": 1744214807,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x0c2030d4ae004157d7da714d008d61835572a9175b0873385bbf60065d3b1216",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
       "timestamp": 1744553687,
       "type": "state",
       "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
       "transaction": "0xa76a0c87d0b50a28b2d8a8d182aab05c8ea574b041a6c44a820ad61079fdea1f",
       "reason": "Raised the threshold of the Lighter Multisig (security council of the UpgradeGatekeeper, can zero the upgrade delay) from 1/1 to 2/2; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1746131831,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xcaf35fd15861900181e5825f126c088fe765a490c5544c9bb590a546290c02c9",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1746132095,
@@ -155,11 +442,25 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 19, before discovery coverage)."
     },
     {
+      "timestamp": 1746132095,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd93d24e203a43d9862fad372387bf7d0bd20acd9c74a715f67a520c557f27a9d",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
       "timestamp": 1746235007,
       "type": "state",
       "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
       "transaction": "0x80cc5eaeee5c03d6fbd26a0f1b64784f82aff94c8e2ac138e8630c56b6f25beb",
       "reason": "Raised the threshold of the Lighter Multisig (security council of the UpgradeGatekeeper) from 2/4 to 3/4; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1746578543,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x68245dc53924c93b613baef395a8c1a65fe9b1f24953f9cbe6545d7e6d744583",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1746578783,
@@ -169,11 +470,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 20, before discovery coverage)."
     },
     {
+      "timestamp": 1746578783,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd0ebdde6dc3bd12f1ada1ebe002b7805f43067d789bbc89c54b34658c6203073",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1749280139,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x87e4e206901e555268a34c0349f828ce306e24ece619da2d5f4a5fd5f8a64ace",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1749280235,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xadce4652999d2a125b9fd0f731d9547c1384a63803883e76fb2ccc7dd9eac847",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 21, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749280235,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xadce4652999d2a125b9fd0f731d9547c1384a63803883e76fb2ccc7dd9eac847",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1749291287,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xf3f6bd260cd6f80c834c8cbef5bb3c3993f1fda61f3519aa1e6fc8e50711a140",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1749291395,
@@ -183,11 +512,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 22, before discovery coverage)."
     },
     {
+      "timestamp": 1749291395,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1407c2b02575b8ae48f646dc8131055c2b579b03af5392dfbf0eba256703db64",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1749311843,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x518de9471c45eaa8791503f7795da21eda002dade3433593b8500ee7d76e43b3",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1749312011,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x2a7ddd9795b8621074d545d4ff9bedb9b61c0eb8178bce6ef59981ddfdb13fc1",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 23, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749312011,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2a7ddd9795b8621074d545d4ff9bedb9b61c0eb8178bce6ef59981ddfdb13fc1",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1749325595,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xfa7d1683b76ab67ee1db37d2a5b1074506926611e181946d54d993d5ddcfd32e",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1749325667,
@@ -197,11 +554,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 24, before discovery coverage)."
     },
     {
+      "timestamp": 1749325667,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x689cea75d744b55555bd05ba092d468e1dd7da8e0f4fa848e8b857727d44ce5b",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1750721651,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x930c5a25b61e765a0882cb3152986579f6e46f8b5dc178b959de841be039b5df",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1750721747,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x655490635753f123dbaecee43de8fa35e4ae371846f3513be55d3b1f05ef8500",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 25, before discovery coverage)."
+    },
+    {
+      "timestamp": 1750721747,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x655490635753f123dbaecee43de8fa35e4ae371846f3513be55d3b1f05ef8500",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1750803887,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x9782b017fff9827ac2fdac78dfdfc43d4d4e5bbb3fe743cdebf85efbd8dec7a2",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1750803935,
@@ -211,11 +596,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 26, before discovery coverage)."
     },
     {
+      "timestamp": 1750803935,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2b7865579b7e0fcb3df93cbb74602838ec7313e7bc1f3d393044f6f6034d68d1",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1751596475,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x44b34d15772f2607bf47115ce403045cfd39226170ee8f75f763a08ed6e1493c",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1751596559,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x494008324ee2bb06c0dd3f6aaba333673d76bac77d96fb146d4769fd8c6465a3",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 27, before discovery coverage)."
+    },
+    {
+      "timestamp": 1751596559,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x494008324ee2bb06c0dd3f6aaba333673d76bac77d96fb146d4769fd8c6465a3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1751597003,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x541fa0ada79fd42b7c50be1f37c9c4f52f788be242dc120aaaeacae5cb84ae36",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1751597051,
@@ -225,11 +638,39 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 28, before discovery coverage)."
     },
     {
+      "timestamp": 1751597051,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x9b0131952945bb0a0568aaf9e96983d5b1e34c24973688fd3f9870fa6755d22a",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1753750103,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x4d7720d7a41d78f4ca46339021bc6a74a83bb457043393c311e84c7031238ce1",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1753750139,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x4f40afbb6048ab0747305427c025439422d4faf28b972552e3d1792f8c21d2f2",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 29, before discovery coverage)."
+    },
+    {
+      "timestamp": 1753750139,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x4f40afbb6048ab0747305427c025439422d4faf28b972552e3d1792f8c21d2f2",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1755635711,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xac10e65dd64770a00bdb7254e6e54a24ff54bf0a1464914777e956a22c6cc4c3",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1755635903,
@@ -239,11 +680,39 @@
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 30, before discovery coverage)."
     },
     {
+      "timestamp": 1755635903,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xf2e42f9cfc2bed3790856bbf59b356b50c41c484918019f458576582d2a137b3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1759348199,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x4606b02107b833fbdfd4e560c479ba71e46d5edd8da2bac8668842b96106c288",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1759348271,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "transaction": "0xe14eed4202c18ee491ad3f6f382893c9fd751830675263589550b0c30c23a704",
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 31, before discovery coverage)."
+    },
+    {
+      "timestamp": 1759348271,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe14eed4202c18ee491ad3f6f382893c9fd751830675263589550b0c30c23a704",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1761490571,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xcd7d15cb5002a24b929e195bc7b7ac3f4aeb0210aa922c7e674a1eb3e751967c",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1761490859,
@@ -254,12 +723,40 @@
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 32)."
     },
     {
+      "timestamp": 1761490859,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x22ab76561381e19943cbe1295afed904b7365e5d4563c0a5b056ae9e3c3901ea",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1762084091,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xda10a71adc0ba692ffe0fdd8ee27e241288eeadb4a6191b7ad9900cf4afb8650",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1762084271,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "transaction": "0x19c5561bbb435fc86359f88ecab343437083f7950a22ee2719558ce2155fcba5",
       "updateId": "42d84a81",
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 33)."
+    },
+    {
+      "timestamp": 1762084271,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x19c5561bbb435fc86359f88ecab343437083f7950a22ee2719558ce2155fcba5",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1764849563,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x03d7cd5c92d1147d74155a0809efd5462656cb94dc2dc14dbb4a32656ac29364",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1764849611,
@@ -270,12 +767,40 @@
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 34)."
     },
     {
+      "timestamp": 1764849611,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x296d8eab328a0c8ab492d806082c40965da2433e95e22d02d5db028b56107aa1",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1764886103,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x692f76031333b8650b3337c77e51d968f48a1b0379b3e4b83e64e990653bf675",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1764886259,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xefd233b6841dd9b3db5bf5b66f86c85b8517498c55b5ed1601330ffc244307fc",
       "updateId": "196b1d79",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 35)."
+    },
+    {
+      "timestamp": 1764886259,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xefd233b6841dd9b3db5bf5b66f86c85b8517498c55b5ed1601330ffc244307fc",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1766621339,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x29da21d31b0a081880b0adb5ce729c8b94183322af1489d0c1fa88c4a7e67826",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1766622023,
@@ -286,6 +811,20 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 36)."
     },
     {
+      "timestamp": 1766622023,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1b6e33d17fccb83abe67c7d51a526d86bff25ea6a22d406319f40c230795b43c",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1767568979,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x6c3d52a2273d376c3aa57e4865609506f2cc97ee218fee8d13a63f7b140c72c3",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1767569855,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
@@ -294,11 +833,25 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 37)."
     },
     {
+      "timestamp": 1767569855,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xbe4b9fb433ac2a73f745bc4f9685b4bf0a495bccdd2f59457441e3d80301016c",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
       "timestamp": 1767804407,
       "type": "state",
       "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
       "transaction": "0x66eeeda6e1543c02dfa224c19090b1c02e9a16205ea0ae894368be570a332f09",
       "reason": "Raised the threshold of Lighter Multisig 2 (master of the UpgradeGatekeeper and network governor) from 2/4 to 3/4; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1768172423,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x6da94b0e325056fc525b840c5e13c8ff4b0305d8cf9c0fe11ce9958355938d3b",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1768173383,
@@ -309,12 +862,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 38)."
     },
     {
+      "timestamp": 1768173383,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x8a0b4647e7f91c2c49c17a1160667af3eee597f87e17b6c0112917a152e5bf68",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1768911059,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xa2706a4d426d9b8ad53372840dbc1302a0cd76ed69825e97787f7bcc83ec9495",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1768911743,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x28825bb17b92d82bfbf027ee8662cac2f3c6165cb989b2bb415f099c16e96970",
       "updateId": "13a4c4d4",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 39)."
+    },
+    {
+      "timestamp": 1768911743,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x28825bb17b92d82bfbf027ee8662cac2f3c6165cb989b2bb415f099c16e96970",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1769658551,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xc75747d391408575d9d2f76b8187df5594a84a5da6bddade1e9b3697f8132ebf",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1769659235,
@@ -333,6 +914,20 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 40)."
     },
     {
+      "timestamp": 1769659235,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x12d0b1ab84807853ddeb2b448d3c6c675e8de09f69635de335efc67485a768eb",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1770944819,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xcbb24830ffe795b32f48d0ec1cc4415e1d5ebe34cc440883545cef5fb9615b5a",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1770945767,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
@@ -347,6 +942,20 @@
       "transaction": "0x90e72d6dafdd25dfd773319e940fef87f2ebd100975f6cbd990acca5d8a66146",
       "updateId": "ed521fe8",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 41)."
+    },
+    {
+      "timestamp": 1770945767,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x90e72d6dafdd25dfd773319e940fef87f2ebd100975f6cbd990acca5d8a66146",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1771294043,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x355aadde8c490e8c5c239a61b0a03c5f22256021201e8407fc9dc5d65bcbf7b5",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1771294775,
@@ -365,12 +974,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 42)."
     },
     {
+      "timestamp": 1771294775,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xdd1e3f155eee3a835a461e5cbf13737a695dbc80d643bd5abe33db89f05ba9a7",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1771624919,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x4b756100919937cc4e2609654a234948896c8810edf0b3df3a9cb685d4962ae7",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1771626155,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xedd322206cdf1b7e3a30f3fe5b35b1b306d18007cb0f61562ad368e0912c2788",
       "updateId": "42874125",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 43)."
+    },
+    {
+      "timestamp": 1771626155,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xedd322206cdf1b7e3a30f3fe5b35b1b306d18007cb0f61562ad368e0912c2788",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1772980763,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x0ccf7c6188ea437e280bfb77ad72fd87de111c239f1281b19481a4c51a2099d0",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1772981399,
@@ -389,12 +1026,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 44)."
     },
     {
+      "timestamp": 1772981399,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd482ace4957446a98530bec155c60609eb387142f1a5e122b1d0ef610232574e",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1773229307,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe7b17cd633a6c56dfe39ff89cfdb897e72d91f1e50387785f463cdf345792aef",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1773229883,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x5e01f97ffe6c33c5d1a3f6f3b44d4b7b47d11374d6deef2a4b78701a87dabef8",
       "updateId": "0aafdc95",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 45)."
+    },
+    {
+      "timestamp": 1773229883,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x5e01f97ffe6c33c5d1a3f6f3b44d4b7b47d11374d6deef2a4b78701a87dabef8",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1774601231,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x0760324b8d5dd18a2df3f1e21b30c6b0f4c710b0cf5f480b5bcd5faaf5420b2d",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1774601903,
@@ -405,12 +1070,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 46)."
     },
     {
+      "timestamp": 1774601903,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd0899abdc6ecb0def0594d2b8390b7c2d45c6979d731beb3ec3a75b33d63ff52",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1774792151,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x98fcdc78157507e1377e740f84e976fc5bcb49dba8d9a603d9ab457e4cd42869",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1774792667,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xe5a720f80c9b7655b07b653f70cf2b0d4b238027f116ff950e09940070207aa9",
       "updateId": "83b66f4d",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 47)."
+    },
+    {
+      "timestamp": 1774792667,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xe5a720f80c9b7655b07b653f70cf2b0d4b238027f116ff950e09940070207aa9",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1776007127,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xb8bd4526e9e4d576e6bd866c603bc415823764ae07bc6d435fbde476913abaa8",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1776008951,
@@ -421,12 +1114,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 48)."
     },
     {
+      "timestamp": 1776008951,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2f4d630c9c7e21c1d1deea3e453aa59f2e440845b3d694fde538f382d4874bb2",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1776661907,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x7fd673fd8cc2df4037bd34826037afce0d8229412ec9899f8f62297418518f55",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1776662627,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xf109116d6bd084e7830fe941a60f197a63f9a4000e0ff0d9caad938271f6bfda",
       "updateId": "5b795ab3",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 49)."
+    },
+    {
+      "timestamp": 1776662627,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xf109116d6bd084e7830fe941a60f197a63f9a4000e0ff0d9caad938271f6bfda",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777044599,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x38d045a19cc55ed3a958c98bcacabb6d618c87670ae52e02620a52a54b6377ec",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1777045607,
@@ -445,12 +1166,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 50)."
     },
     {
+      "timestamp": 1777045607,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x8923691c2360182d281ac96d37d319d862e2def3591cbec06335fe99a2454932",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777056563,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xf5150049ca9aa2dd48e034f22f4f00758e8cb2dfa3457980fec6fbb034158247",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1777058879,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xd0606f27af9af02c2867665aebec784e3a637f486b4c0c2fde5694e25bb02ca3",
       "updateId": "f0ac0634",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 51)."
+    },
+    {
+      "timestamp": 1777058879,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd0606f27af9af02c2867665aebec784e3a637f486b4c0c2fde5694e25bb02ca3",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777079711,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xf291138d9e70a25fadc0636c130f2e903640b106f9a66c996e7a9f19001760c1",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1777080527,
@@ -461,12 +1210,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 52)."
     },
     {
+      "timestamp": 1777080527,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x34edd12a3b32dbdddc9e094376d7595ae7c8f89862e8e4fe7a353f36e229a8c7",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777120415,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x8a23b583efe6fa1f4c137e960d009f37a5f997f33280bcdc4ed41530b65eaa31",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1777122791,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x047ed39a151c70d9b9ebf41c20e425b0e308cf7449539b82c8a7815603fb7ade",
       "updateId": "f0ac0634",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 53)."
+    },
+    {
+      "timestamp": 1777122791,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x047ed39a151c70d9b9ebf41c20e425b0e308cf7449539b82c8a7815603fb7ade",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777828259,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xb8ef560e36e7446b093df08329889c5a73a762a6ed85746740c962b00f375e14",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1777828787,
@@ -477,12 +1254,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 54)."
     },
     {
+      "timestamp": 1777828787,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x95be744efcfa341cefc4320e389856b7bcd12d857c52822c02a8e4c53fa1969a",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1777990103,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x034100d26051a04991ac30b07ff16e2da4656ab9d97c887fa21740f1cb90c548",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1777991843,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xbffc26955516ff0bbd0fa25f5edcc5a0472a898ff7d34299b27afa83cd69c844",
       "updateId": "4e9b56bc",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 55)."
+    },
+    {
+      "timestamp": 1777991843,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xbffc26955516ff0bbd0fa25f5edcc5a0472a898ff7d34299b27afa83cd69c844",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1778504015,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xd40442dd6949b9501233f587d81ab1711c9290af93c82fc2406ab8d42a19da1d",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1778504939,
@@ -493,6 +1298,20 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 56)."
     },
     {
+      "timestamp": 1778504939,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x000a90d3d1a1c98121033d69994368a424483a8a2da405d33d464a2f62e28cc2",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1778794283,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x5e3fb8cfcd0cd097818c95d6fa2583e17ab7692b888e312b50d8507bebeac7f5",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1778795639,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
@@ -501,11 +1320,25 @@
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 57)."
     },
     {
+      "timestamp": 1778795639,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x41e2eb68d35adedb5bff64d45d6d1096845888d0f5c437d1b4722acd51619ef9",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
       "timestamp": 1778870699,
       "type": "state",
       "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
       "transaction": "0xdc604af05485bffd195ec19b51556661a4c73514eee505d79abda7cbd8195eec",
       "reason": "Raised the threshold of the Lighter Multisig (security council of the UpgradeGatekeeper) from 3/5 to 4/7; the Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1779033143,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x57ede9d02cd442f70b7d00862b8f319bc67fda18ac1a07ffc3ed1c46b21c06e8",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1779033803,
@@ -516,12 +1349,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 58)."
     },
     {
+      "timestamp": 1779033803,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xbfab05b3c43baf060e0d93e5b6f3721d23587ddfd7db3a5171b131c2ce4d5d33",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1779895415,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x073efde317c03e5ca6cad7d9bc0f94174328ca91aced687040c3c045cbd71d66",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1779896135,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x2637713f76625917f08dea6a226a4f521ef17fd41967916711fe7d2001d248d1",
       "updateId": "a5c2bdc7",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 59)."
+    },
+    {
+      "timestamp": 1779896135,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2637713f76625917f08dea6a226a4f521ef17fd41967916711fe7d2001d248d1",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1780154471,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x66b0a74d437513ed3426ac140fcf4f4f8155315e22345dca00d5e9b042ae44ac",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1780155143,
@@ -540,12 +1401,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 60)."
     },
     {
+      "timestamp": 1780155143,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x18ad0e043ddb0030244021674c1fc377902627a2451e75b73ac33d009e97ab59",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1783873907,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x67150e6e33d4e459051f358d497253f48fb2e0d8271479ad96ff76745dbb97e6",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1783874483,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xb7dafec9c0697fc24b7ca92a04672a99c7715e957205414c9e49e0d519dc6f35",
       "updateId": "22833684",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 61)."
+    },
+    {
+      "timestamp": 1783874483,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xb7dafec9c0697fc24b7ca92a04672a99c7715e957205414c9e49e0d519dc6f35",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1784382047,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x6f261b2a638b15056725d3c192b044643260e2364f942beb565dfe4c7033ac1e",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1784382923,
@@ -564,6 +1453,20 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 62)."
     },
     {
+      "timestamp": 1784382923,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2c35ea5f0c22fd84de28ab6a5b35b22ad84cdf1eed003989135e32934c3e271f",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1784807819,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x7c9c9ad126f7922587737466b5959bddf5eaa170b1ce87dafb0b2fc843a6720f",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1784808767,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
@@ -578,6 +1481,20 @@
       "transaction": "0x2ca4f16340bb2e315188773587abc5f4303473ea650a94934de0a12606b235ff",
       "updateId": "3fce832b",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 63)."
+    },
+    {
+      "timestamp": 1784808767,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x2ca4f16340bb2e315188773587abc5f4303473ea650a94934de0a12606b235ff",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1786291487,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x466a22cdd0a12c2500470196b9088ca9887a3b10e182ae9a9bca1b27dae791a2",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1786292867,
@@ -596,12 +1513,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 64)."
     },
     {
+      "timestamp": 1786292867,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xfd927dd04081b15043890d0cb7acf06b781562b854d085b6a0b193e01ed60b67",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1787364167,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1f138f43d48d2fadb17f259b60f99eba5184ac05c5c2a5f23bda9f3dde46d09f",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1787365775,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0xce02a6657e070ecf4e1e1a71fa3938c049b2a29aa0575adfc6cd1e30239080ff",
       "updateId": "2a4ae025",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 65)."
+    },
+    {
+      "timestamp": 1787365775,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xce02a6657e070ecf4e1e1a71fa3938c049b2a29aa0575adfc6cd1e30239080ff",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1787489699,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x8d89fe357f7bdc1891604e6111d391d9bbfae2c2162dcdb6d1f0842510f44608",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1787490851,
@@ -612,12 +1557,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 66)."
     },
     {
+      "timestamp": 1787490851,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x3a2f706b954d205be00b2584a63571b08e931fbcb2604b5d0b679fa369ff86e9",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1787661323,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x14d8dceb5d81369377707e3486dc0178fc8cecd9c86f896e9c9ba2c18665b28e",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1787662175,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x6a42d03a7547e1335cea9db28dcf796131a957ab2520e888e8f01b47ac06f3ea",
       "updateId": "eb7b4d0f",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 67)."
+    },
+    {
+      "timestamp": 1787662175,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x6a42d03a7547e1335cea9db28dcf796131a957ab2520e888e8f01b47ac06f3ea",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1788204263,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xc0282d63e7d78cdb0d7dbef90b11909415dddd0b17452b2bb252127e85216449",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1788205163,
@@ -628,6 +1601,20 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 68)."
     },
     {
+      "timestamp": 1788205163,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x923ce4c50fc5b576b228c4f56d1e850d668f714198a06a61fc65fbc1cc054f40",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1788899147,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x781d8bb221f85e63ac3ac92834c12d2782bd0d53427de4d0a398f4249af55b10",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1788900371,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
@@ -636,12 +1623,40 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 69)."
     },
     {
+      "timestamp": 1788900371,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1015146b573e50f8a18bcbc6314742c427e856930560d6a3353e589915fd0d05",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1789296359,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xb9988266365b4da101c4c3d8ba641d01fda671b7f35483e55e04875145b92eba",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
       "timestamp": 1789297031,
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "transaction": "0xdc0622bd85573a485e6c1341bbd0c06595d4e486442c2612a1936a0f8c799666",
       "updateId": "f3073dbb",
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 70)."
+    },
+    {
+      "timestamp": 1789297031,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xdc0622bd85573a485e6c1341bbd0c06595d4e486442c2612a1936a0f8c799666",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1789303931,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x4e9fcd9885a35d45f1e1943a95645de34eae20e60e2b8b5b473c3a30f89830ce",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
     },
     {
       "timestamp": 1789304459,
@@ -658,6 +1673,41 @@
       "transaction": "0x9b8150e97075beb78f1fa7aae7e635af7d92238766c09f7b34b2c3f0806b451f",
       "updateId": "f3073dbb",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 71)."
+    },
+    {
+      "timestamp": 1789304459,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x9b8150e97075beb78f1fa7aae7e635af7d92238766c09f7b34b2c3f0806b451f",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1789909139,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x1b10d9c3a10fb701797cf16b71f50597eb0885c1c73d8d9baf9df746d44e24a3",
+      "reason": "Security council reduced the UpgradeGatekeeper notice period from 21 days to zero, allowing the pending upgrade to be executed immediately."
+    },
+    {
+      "timestamp": 1789910219,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "transaction": "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
+      "reason": "Replaced the Lighter rollup implementation that holds all user funds (UpgradeGatekeeper version 72)."
+    },
+    {
+      "timestamp": 1789910219,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
+      "reason": "Restored the UpgradeGatekeeper notice period from zero to 21 days after the upgrade completed or was canceled."
+    },
+    {
+      "timestamp": 1789910219,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "transaction": "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
+      "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 72)."
     }
   ]
 }

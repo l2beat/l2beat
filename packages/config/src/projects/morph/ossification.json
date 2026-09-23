@@ -36,11 +36,32 @@
       "reason": "Lowered the deposit required to challenge a state root from 1 ETH to 1 wei (before discovery coverage)."
     },
     {
+      "timestamp": 1729607387,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0x5165de3cedc00eea6753eb8be4c09f97e394d180023e251462a03db2ea916a7b",
+      "reason": "Mapped token 0x72AC...03A5 to its same-address L2 representation in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729607471,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0xdc4621e7579579856ce482ac9d7101f44060a8825b0fc783d6563f939746b30e",
+      "reason": "Mapped token 0xC7c5...2504 to L2 token 0xf574...85A7 in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
+    },
+    {
       "timestamp": 1729656527,
       "type": "state",
       "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
       "transaction": "0x6c824b746dbc5de52cee5cfc848deaf4db8394ef15e7b49f9b642fe60e2d95e3",
       "reason": "Mapped a token (SERC20 0xC7c5...2504) to the custom ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764527,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "transaction": "0x2a5dbc35738ba4b405affc9ac553c8f721e16a2df8cccabdbc72018b5f7cdfeb",
+      "reason": "Changed the L1CrossDomainMessenger fee recipient from the deployer to Morph Multisig 2 (before discovery coverage)."
     },
     {
       "timestamp": 1729764539,
@@ -99,6 +120,13 @@
       "reason": "Handed control of the live custom ERC20 escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
     },
     {
+      "timestamp": 1729765127,
+      "type": "state",
+      "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+      "transaction": "0x9b5289bff65ecfe269cc94154bba0746cb44c7be4225271e06938a8d9dc0fb40",
+      "reason": "Changed the EnforcedTxGateway fee recipient from the deployer to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
       "timestamp": 1729765139,
       "type": "state",
       "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
@@ -111,6 +139,13 @@
       "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
       "transaction": "0xf0582f6aa3645048d5d14f70b548e4c5ddc57d76ab2cdf0e7cf2046b82590627",
       "reason": "Mapped DAI to the custom ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730260763,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0xf0582f6aa3645048d5d14f70b548e4c5ddc57d76ab2cdf0e7cf2046b82590627",
+      "reason": "Mapped L1 DAI to L2 token 0xef8A...bed4 in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
     },
     {
       "timestamp": 1730270651,
@@ -212,6 +247,30 @@
       "transaction": "0x13809b5a9765bfd402754ada4a56817a3913ee592438809c0c7442284ce66d69",
       "updateId": "e4a70468",
       "reason": "Registered a new zk verifier (0x4006...f953, version 2) in the MultipleVersionRollupVerifier from batch 20230, changing which proofs are accepted (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1756352015,
+      "type": "state",
+      "contract": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+      "transaction": "0xc95a2eba8a8977d9671f0421d49ce3d54da88f238cb561c759fae68a7fb8e8a4",
+      "updateId": "4a92d411",
+      "reason": "Reduced Morph Multisig 1's threshold from five to three approvals while rotating its signers."
+    },
+    {
+      "timestamp": 1758532307,
+      "type": "state",
+      "contract": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+      "transaction": "0xb19b27429faee9e10dc19ec5f1214813cd0050501e5ee4c90d3fa6785bdaaf77",
+      "updateId": "83f3649a",
+      "reason": "Raised Morph Multisig 1's threshold from three to four approvals."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Reduced Morph Multisig 2's threshold from five to three approvals while rotating its signers."
     },
     {
       "timestamp": 1763737343,

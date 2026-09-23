@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x1e7e6c8ba35d1961dacda2e7c16faaca5bb49958
+
+# Diff at Wed, 23 Sep 2026 05:45:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1729849619
+- current timestamp: 1729849619
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1729849619 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x01278507559e13896df8442bcf39edd2998ae3788e582fa0e8d80e83143e4687"
++        "0xa4cda123bfa99971ac9453d9738d006e44908e37b760efdceb6c12634813bc86"
+      deployerAddress:
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    }
+```
+
+```diff
+    contract DefiBridgeProxy (eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x9c330dea69f01bdf65cfce5dd18bc7b9d78e257db070df45fe39ad14cf396a9a"
++        "0x1b2d8d69711a1a76c0b5dace121a9a512d6087f96f3870604af59947c634e421"
+      deployerAddress:
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    }
+```
+
+```diff
+    contract Verifier28x32 (eth:0xb7baA1420f88b7758E341c93463426A2b7651CFB) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x55fc1304c184842e528edeff31d00322f57295e9f369b6e457f0c9944bc77de9"
++        "0x7ff271a8614c22730e3401ec4ca49373466b998103ece8a99f2b364c8f24c6e9"
+      deployerAddress:
++        "eth:0x36bB84D28Bb2d9772158cc9A09feaa5472Ebfd32"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    }
+```
+
+```diff
+    contract Aztec Multisig (eth:0xE298a76986336686CC3566469e3520d23D1a8aaD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xD4CD0b1EF54E8E4D73f68b01b5ccc125b13E3d1e"
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf5d46f176c2c0d256ee7bea1f340a7625b48c0c8a4e52d0cf068fd7c0bfbfefe"
++        "0xcdbe9e79f3ce7d4d43d85195e403573473ad3188ade9b5c7b451aab84d05c528"
+      deployerAddress:
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    }
+```
+
 Generated with discovered.json: 0x8507d3c6c48e8951411200a40cbc7345b1b13b04
 
 # Diff at Mon, 21 Sep 2026 11:23:57 GMT:

@@ -8,12 +8,6 @@
     "executionDelay": {
       "severity": "HIGH"
     },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     // the DEFAULT_ADMIN_ROLE is always the chainAdmin (defined by the bridgehub) and is not controlled by accesscontrol
     // not fetching accessControl here but in the respective projects instead
     // "accessControl": {

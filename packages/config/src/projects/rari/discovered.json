@@ -19,10 +19,6 @@
         "$immutable": true,
         "owner": "arb1:0x139C5A235632EDdad741ff380112B3161d31a21C"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0x003e70B041abb993006C03E56c8515622a02928C": "ProxyAdmin"
       }
@@ -1994,7 +1990,7 @@
   "usedTemplates": {
     "espresso/Sequencing/EspressoTEEVerifier": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
     "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",

@@ -1,7 +1,7 @@
 {
   "name": "witness",
   "timestamp": 1762264414,
-  "configHash": "0x0f7e1589c5f89e4a22e0866d64a90be1f101ff2aa509987c6027107c330e5289",
+  "configHash": "0xd12e4cd5b97cea19b59d8f406f81580e47c6fab38fbd23b2c3601d2baa4aaa35",
   "entries": [
     {
       "name": "Verifier",
@@ -134,10 +134,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": "ProxyAdmin"

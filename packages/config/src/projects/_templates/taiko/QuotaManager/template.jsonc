@@ -17,7 +17,6 @@
   },
   "fields": {
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
