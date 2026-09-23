@@ -17,14 +17,10 @@ import {
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
-import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import {
-  PrivacyWalkawayTestIcon,
-  PrivacyWalkawayTestTooltipContent,
-} from '../../PrivacyWalkawayTestIcon'
+import { PrivacyAdversariesCell } from '../../adversaries/PrivacyAdversariesCell'
+import { PrivacyWalkawayTestTooltipContent } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
-import { DotWithLabel } from '../../summary/components/DotWithLabel'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
@@ -65,19 +61,7 @@ export function PrivacyProjectRiskProfile({
       <ProjectSummaryStat
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
-        value={
-          <DotWithLabel
-            dot={
-              <PrivacyAdversaryDots
-                adversaries={adversaries}
-                size="md"
-                href={href}
-              />
-            }
-            label={adversaries.promiseLabel}
-            className="items-end md:items-start"
-          />
-        }
+        value={<PrivacyAdversariesCell adversaries={adversaries} href={href} />}
       />
       <ProjectSummaryStat
         title="Reproducibility"
@@ -105,13 +89,22 @@ function RiskValue({
   return (
     <Tooltip>
       <TooltipTrigger
-        className="flex items-center gap-2 text-left"
+        className="flex flex-col items-start gap-0.5 text-left"
         aria-label={value.value}
       >
-        <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
-        <span>{value.value}</span>
+        <span className="flex items-center gap-2">
+          <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
+          <span>{value.value}</span>
+        </span>
         {walkawayTest && (
-          <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
+          <span
+            className={cn(
+              'pl-7 font-medium text-paragraph-12',
+              walkawayTest.passed ? 'text-secondary' : 'text-negative',
+            )}
+          >
+            {walkawayTest.passed ? 'Walkaway passed' : 'Walkaway failed'}
+          </span>
         )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">

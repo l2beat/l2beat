@@ -5,6 +5,8 @@ import type {
 import { expect } from 'earl'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
+  getPrivacyAdversariesScore,
+  getPrivacyAdversariesSentence,
   getPrivacyAdversariesTableValue,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
@@ -23,6 +25,7 @@ function summary(
   return {
     promise: { protects: 'linkage', text: '' },
     promiseLabel: 'Link privacy',
+    promiseSubject: 'Link',
     cells: sentiments.map((sentiment, i) => ({
       id: IDS[i] ?? 'publicObserver',
       label: IDS[i] ?? 'publicObserver',
@@ -78,5 +81,48 @@ describe(getPrivacyAdversaryTitle.name, () => {
     expect(getPrivacyAdversaryTitle('Public observer')).toEqual(
       'Against public observer',
     )
+  })
+})
+
+describe(getPrivacyAdversariesScore.name, () => {
+  const score = (...s: PrivacyAdversarySentiment[]) =>
+    getPrivacyAdversariesScore(summary(...s))
+
+  it('gives green two points and yellow one', () => {
+    expect(score('good', 'good', 'good', 'good', 'good')).toEqual(10)
+    expect(
+      score('warning', 'warning', 'warning', 'warning', 'warning'),
+    ).toEqual(5)
+    expect(score('bad', 'bad', 'bad', 'bad', 'bad')).toEqual(0)
+  })
+
+  it('counts the future adversary, unlike the folded value', () => {
+    expect(score('good', 'good', 'good', 'good', 'bad')).toEqual(8)
+    expect(score('good', 'good', 'good', 'good', 'good')).toEqual(10)
+  })
+
+  it('ranks a protocol with more green above one with more yellow', () => {
+    expect(score('good', 'good', 'bad', 'bad', 'bad')).toBeGreaterThan(
+      score('warning', 'warning', 'warning', 'bad', 'bad'),
+    )
+  })
+})
+
+describe(getPrivacyAdversariesSentence.name, () => {
+  const sentence = (...s: PrivacyAdversarySentiment[]) =>
+    getPrivacyAdversariesSentence(summary(...s))
+
+  it('counts only the green cells', () => {
+    expect(sentence('good', 'good', 'good', 'good', 'warning')).toEqual({
+      subject: 'Link',
+      held: 4,
+      total: 5,
+    })
+  })
+
+  it('reports zero for a protocol that holds against nobody', () => {
+    expect(
+      sentence('warning', 'warning', 'warning', 'bad', 'bad').held,
+    ).toEqual(0)
   })
 })

@@ -11,6 +11,9 @@ export function toPrivacyAdversariesSummary(
     promiseLabel:
       field(adversaries.promise.protects)?.promiseLabel ??
       adversaries.promise.protects,
+    promiseSubject:
+      field(adversaries.promise.protects)?.subject ??
+      adversaries.promise.protects,
     cells: adversaries.adversaries.map((adversary) => {
       const cell = adversaries.cells[adversary.id]
       return {

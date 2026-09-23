@@ -10,6 +10,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { UserIcon } from '~/icons/User'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
+import { cn } from '~/utils/cn'
 import {
   getAnonymitySetDescription,
   getAnonymitySetSteps,
@@ -19,9 +20,15 @@ import {
 interface Props {
   anonymitySet: PrivacyAnonymitySetSummary
   projectName: string
+  /** Right in table columns, left where it heads a block of its own. */
+  align?: 'left' | 'right'
 }
 
-export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
+export function AnonymitySetCell({
+  anonymitySet,
+  projectName,
+  align = 'right',
+}: Props) {
   if (anonymitySet.status === 'syncing') {
     return (
       <Badge type="gray" size="small">
@@ -54,7 +61,12 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
       <TooltipTrigger asChild>
         <button
           type="button"
-          className="inline-flex flex-col items-end justify-center text-right"
+          className={cn(
+            'inline-flex flex-col justify-center',
+            align === 'right'
+              ? 'items-end text-right'
+              : 'items-start text-left',
+          )}
           aria-label={`${displayValue}, ${anonymitySet.label}`}
         >
           <span className="font-medium text-xs leading-[15px] md:text-sm md:leading-[1.2]">
