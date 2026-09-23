@@ -9,7 +9,7 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
-import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import { createCliLogger } from '../implementations/common/CliLogger'
 import { executeCompareAll } from '../implementations/compare-flat-sources/executeCompareAll'
 import { executeCompareProjects } from '../implementations/compare-flat-sources/executeCompareProjects'
 import { executeCompareSourceOnSource } from '../implementations/compare-flat-sources/executeCompareSourceOnSource'
@@ -46,7 +46,7 @@ const CompareProjectSources = command({
       firstProjectPath: args.firstProject,
       secondProjectPath: args.secondProject,
       paths,
-      logger: getPlainLogger(),
+      cli: createCliLogger({ output: process.stdout, quiet: false }),
     })
   },
 })
@@ -70,7 +70,7 @@ const CompareProjectSourceOnSource = command({
       forceTable: args.forceTableFlag,
       projectPath: args.projectPath,
       paths,
-      logger: getPlainLogger(),
+      cli: createCliLogger({ output: process.stdout, quiet: false }),
     })
   },
 })
@@ -94,7 +94,7 @@ const MostSimilarFlatSources = command({
       projectPath: args.project,
       forceTable: args.forceTableFlag,
       paths,
-      logger: getPlainLogger(),
+      cli: createCliLogger({ output: process.stdout, quiet: false }),
     })
   },
 })
@@ -128,7 +128,7 @@ const CompareAllFlatSources = command({
       minClusterSimilarity: args.minClusterSimilarity,
       minProjectSimilarity: args.minProjectSimilarity,
       paths,
-      logger: getPlainLogger(),
+      cli: createCliLogger({ output: process.stdout, quiet: false }),
     })
   },
 })

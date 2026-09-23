@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import {
   buildSimilarityHashmap,
   ConfigReader,
@@ -11,6 +10,7 @@ import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
 import { join } from 'path'
+import type { CliLogger } from '../common/CliLogger'
 
 export interface Project {
   name: string
@@ -24,7 +24,7 @@ interface FileId {
 }
 
 export async function computeStackSimilarity(
-  logger: Logger,
+  cli: CliLogger,
   paths: DiscoveryPaths,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
@@ -36,7 +36,7 @@ export async function computeStackSimilarity(
     .flatMap((project) => configReader.readConfig(project))
 
   const stackProject = await Promise.all(
-    configs.flatMap((config) => readProject(logger, config.name, paths)),
+    configs.flatMap((config) => readProject(cli, config.name, paths)),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
 
@@ -95,7 +95,7 @@ export function getMostSimilar(
 }
 
 export async function computeComparisonBetweenProjects(
-  logger: Logger,
+  cli: CliLogger,
   firstProjectPath: string,
   secondProjectPath: string,
   paths: DiscoveryPaths,
@@ -104,8 +104,8 @@ export async function computeComparisonBetweenProjects(
   firstProject: Project
   secondProject: Project
 }> {
-  const firstProject = await readProject(logger, firstProjectPath, paths)
-  const secondProject = await readProject(logger, secondProjectPath, paths)
+  const firstProject = await readProject(cli, firstProjectPath, paths)
+  const secondProject = await readProject(cli, secondProjectPath, paths)
   assert(firstProject, `Project ${firstProjectPath} not found`)
   assert(secondProject, `Project ${secondProjectPath} not found`)
 
@@ -154,7 +154,7 @@ export function removeCommonPath(fileIds: FileId[]): FileId[] {
 }
 
 async function readProject(
-  logger: Logger,
+  cli: CliLogger,
   projectName: string,
   paths: DiscoveryPaths,
 ): Promise<Project | undefined> {
@@ -173,7 +173,7 @@ async function readProject(
       sources,
     }
   } catch {
-    logger.info(
+    cli.log(
       `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
         'run discovery to generate flat files',
       )}`,

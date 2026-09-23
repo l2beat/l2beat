@@ -1,5 +1,5 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
+import type { CliLogger } from '../common/CliLogger'
 import {
   computeComparisonBetweenProjects,
   computeStackSimilarity,
@@ -15,7 +15,7 @@ export interface FindSimilarCommand {
   projectPath: string
   forceTable: boolean
   paths: DiscoveryPaths
-  logger: Logger
+  cli: CliLogger
 }
 
 export async function executeFindSimilar(
@@ -24,7 +24,7 @@ export async function executeFindSimilar(
   const name = command.projectPath
 
   const { matrix: perProjectMatrix } = await computeStackSimilarity(
-    command.logger,
+    command.cli,
     command.paths,
   )
   const mostSimilar = getMostSimilar(perProjectMatrix)
@@ -32,19 +32,19 @@ export async function executeFindSimilar(
   const { name: otherName, similarity } = mostSimilar[name]
   const { matrix, firstProject, secondProject } =
     await computeComparisonBetweenProjects(
-      command.logger,
+      command.cli,
       command.projectPath,
       otherName,
       command.paths,
     )
 
   printComparisonBetweenProjects(
-    command.logger,
+    command.cli,
     matrix,
     firstProject,
     secondProject,
     command,
   )
-  command.logger.info(formatHeader('Most similar to:'))
-  command.logger.info(`${otherName} => ${name} @ ${colorMap(similarity)}`)
+  command.cli.log(formatHeader('Most similar to:'))
+  command.cli.log(`${otherName} => ${name} @ ${colorMap(similarity)}`)
 }
