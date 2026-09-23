@@ -82,6 +82,7 @@ export class CliLogger {
   private updateStatus(entry: StatusEntry, text: string): void {
     assert(entry.active, 'status line is already done')
     assert(!text.includes('\n'), 'status text must be a single line')
+    assert(!text.includes('\r'), 'status text must be a single line')
     entry.text = text
     if (this.live === undefined) {
       return
@@ -123,7 +124,7 @@ export class CliLogger {
     screen.moveCursor(0, -this.drawnRows)
     screen.cursorTo(0)
     for (const line of this.pendingLogs) {
-      for (const row of line.split('\n')) {
+      for (const row of splitRows(line)) {
         writeRow(screen, row)
       }
     }
@@ -138,6 +139,17 @@ export class CliLogger {
     this.drawnRows = this.statuses.length
     this.lastDrawAt = live.now()
   }
+}
+
+function splitRows(line: string): string[] {
+  return line.split('\n').map(stripCarriageReturn)
+}
+
+function stripCarriageReturn(row: string): string {
+  if (row.endsWith('\r')) {
+    return row.slice(0, -1)
+  }
+  return row
 }
 
 function writeRow(screen: LiveScreen, text: string): void {

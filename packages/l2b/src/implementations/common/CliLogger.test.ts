@@ -208,6 +208,14 @@ describe(CliLogger.name, () => {
       ])
     })
 
+    it('strips carriage returns from multi-line logs', async () => {
+      const { logger, screenRows } = terminalLogger()
+      const status = logger.status()
+      status.update('status')
+      logger.log('one\r\ntwo\r')
+      expect(await screenRows()).toEqual(['one', 'two', 'status'])
+    })
+
     it('survives scrolling at the bottom of a short terminal', async () => {
       const { logger, clock, screenRows } = terminalLogger(80, 5)
       const status = logger.status()
@@ -291,6 +299,12 @@ describe(CliLogger.name, () => {
       const status = logger.status()
       status.done()
       expect(() => status.done()).toThrow()
+    })
+
+    it('rejects carriage returns in status text', () => {
+      const { logger } = plainLogger()
+      const status = logger.status()
+      expect(() => status.update('a\rb')).toThrow()
     })
 
     it('rejects multi-line status text', () => {
