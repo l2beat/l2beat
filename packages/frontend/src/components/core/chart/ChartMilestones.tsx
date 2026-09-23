@@ -20,17 +20,20 @@ import {
   DrawerTrigger,
 } from '../Drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { useChart } from './Chart'
+import { outsideLegendOverlayClassName, useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
   milestones: Milestone[]
+  /** Space left of the plot area, e.g. taken by y-axis labels. */
+  insetLeft?: number
 }
 
 export function ChartMilestones<T extends { timestamp: number }>({
   data,
   milestones,
+  insetLeft = 0,
 }: Props<T>) {
   const ref = useRef<HTMLDivElement>(null)
   // A ResizeObserver reports after layout. Reading the width in an effect
@@ -52,7 +55,7 @@ export function ChartMilestones<T extends { timestamp: number }>({
         return (
           <ChartMilestone
             key={data.timestamp}
-            left={x * width - 10}
+            left={insetLeft + x * (width - insetLeft) - 10}
             milestonesAtPoint={data.milestones}
             allMilestones={milestones}
           />
@@ -76,7 +79,7 @@ function ChartMilestone({
   assert(triggerMilestone)
   const milestoneIndex = allMilestones.indexOf(triggerMilestone)
   assert(milestoneIndex !== -1)
-  const { interactiveLegend } = useChart()
+  const { interactiveLegend, axisPlacement } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
   const common = cn(
@@ -85,6 +88,7 @@ function ChartMilestone({
       interactiveLegend &&
       !interactiveLegend.disableOnboarding &&
       'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
+    axisPlacement === 'outside' && outsideLegendOverlayClassName,
   )
   if (isDesktop) {
     return (

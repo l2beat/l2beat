@@ -7,8 +7,11 @@ import {
   YAxis,
   type YAxisProps,
 } from 'recharts'
+import { OUTSIDE_Y_AXIS_WIDTH, useChart } from './Chart'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
+import { getNiceAxisDomain } from './utils/getNiceAxisDomain'
 import { getXAxisProps } from './utils/getXAxisProps'
+import { trimTrailingZeros } from './utils/trimTrailingZeros'
 
 export interface ChartCommonComponentsProps<
   T extends {
@@ -31,7 +34,8 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
   chartType = 'line',
   syncedUntil,
 }: ChartCommonComponentsProps<T>) {
-  const { tickCount, yAxisId, ...rest } = yAxis ?? {}
+  const { axisPlacement } = useChart()
+  const { tickCount = 3, yAxisId, ...rest } = yAxis ?? {}
   const lastSyncedTimestamp =
     syncedUntil &&
     (chartType === 'line'
@@ -46,20 +50,39 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         vertical={false}
         syncWithTicks={!isLoading}
         yAxisId={yAxisId}
-        zIndex={DefaultZIndexes.line + 1}
+        // Labels inside the plot need the grid on top to stay readable over
+        // filled series. With labels outside, the grid goes behind the data.
+        zIndex={
+          axisPlacement === 'inside' ? DefaultZIndexes.line + 1 : undefined
+        }
       />
       <YAxis
         key="y-axis"
         tickLine={false}
         axisLine={false}
-        mirror
-        tickCount={tickCount ?? 3}
-        dy={-10}
+        tickCount={tickCount}
         tick={{ width: 350 }}
         yAxisId={yAxisId}
+        {...(axisPlacement === 'inside'
+          ? { mirror: true, dy: -10 }
+          : { width: OUTSIDE_Y_AXIS_WIDTH })}
         {...rest}
+        {...(axisPlacement === 'outside' && {
+          ...getNiceDomainProps(rest.domain, tickCount),
+          tickFormatter: (value, index) => {
+            const label = rest.tickFormatter
+              ? rest.tickFormatter(value, index)
+              : String(value)
+            return trimTrailingZeros(label)
+          },
+        })}
       />
-      <XAxis key="x-axis" {...getXAxisProps(data)} {...xAxis} />
+      <XAxis
+        key="x-axis"
+        {...getXAxisProps(data)}
+        {...(axisPlacement === 'outside' && { axisLine: true, tickMargin: 6 })}
+        {...xAxis}
+      />
       {lastSyncedTimestamp && (
         <ReferenceArea
           yAxisId={yAxis?.yAxisId}
@@ -75,4 +98,22 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
       )}
     </>
   )
+}
+
+/**
+ * Rounds Recharts' default [0, 'auto'] and fully automatic ['auto', 'auto']
+ * domains so every tick is a round value. Custom domains are left as is.
+ */
+function getNiceDomainProps(
+  domain: YAxisProps['domain'],
+  tickCount: number,
+): Pick<YAxisProps, 'domain'> | undefined {
+  const [min, max] = Array.isArray(domain) ? domain : [0, 'auto']
+  if (typeof domain === 'function' || max !== 'auto') return
+  if (min !== 0 && min !== 'auto') return
+
+  return {
+    domain: (dataDomain) =>
+      getNiceAxisDomain(dataDomain, tickCount, { startAtZero: min === 0 }),
+  }
 }

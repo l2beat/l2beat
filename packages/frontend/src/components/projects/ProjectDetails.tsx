@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { ChartScreenshotProvider } from '~/components/core/chart/ChartScreenshot'
 import { LazyHydrate } from '~/components/LazyHydrate'
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
@@ -64,7 +65,13 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
           }
         >
-          {renderSection(props, item, index)}
+          {item.type.startsWith('Interop') ? (
+            renderSection(props, item, index)
+          ) : (
+            <ChartScreenshotProvider title={item.props.title}>
+              {renderSection(props, item, index)}
+            </ChartScreenshotProvider>
+          )}
         </LazyHydrate>
       ))}
     </div>

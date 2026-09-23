@@ -2,6 +2,7 @@ import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/Pro
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { TvsChartControlsContextProvider } from '~/components/chart/tvs/TvsChartControlsContext'
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
+import { ChartScreenshotProvider } from '~/components/core/chart/ChartScreenshot'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartControls } from '~/components/projects/sections/tvs/ChartControls'
 import { TokenChart } from '~/components/projects/sections/tvs/TokenChart'
@@ -48,25 +49,27 @@ export function L2ProjectTvsBreakdownPage({
             <TvsChartControlsContextProvider defaultRange={defaultRange}>
               <L2RwaRestrictedTokensContextProvider>
                 <PrimaryCard>
-                  <ChartControls projectId={project.id} />
-                  <ProjectBridgeTypeTvsChart
-                    project={project}
-                    milestones={milestones}
-                  />
-                  <ProjectAssetCategoryTvsChart
-                    project={project}
-                    milestones={milestones}
-                  />
-                  <div>
-                    <section id="token-chart" className="scroll-mt-2">
-                      <TokensControls tokens={entries} />
-                      <TokenChart project={project} milestones={milestones} />
-                    </section>
-                  </div>
-                  <TvsProjectStats
-                    projectId={project.id}
-                    tvsInfo={project.tvsInfo}
-                  />
+                  <ChartScreenshotProvider title="Value Secured">
+                    <ChartControls projectId={project.id} />
+                    <ProjectBridgeTypeTvsChart
+                      project={project}
+                      milestones={milestones}
+                    />
+                    <ProjectAssetCategoryTvsChart
+                      project={project}
+                      milestones={milestones}
+                    />
+                    <div>
+                      <section id="token-chart" className="scroll-mt-2">
+                        <TokensControls tokens={entries} />
+                        <TokenChart project={project} milestones={milestones} />
+                      </section>
+                    </div>
+                    <TvsProjectStats
+                      projectId={project.id}
+                      tvsInfo={project.tvsInfo}
+                    />
+                  </ChartScreenshotProvider>
                 </PrimaryCard>
                 <TableFilterContextProvider>
                   <ProjectTvsBreakdownTokenTable entries={entries} />

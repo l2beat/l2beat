@@ -23,6 +23,7 @@ import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
 import { ChartProjectLogo } from './ChartProjectLogo'
+import { ChartScreenshotDialog, useChartScreenshot } from './ChartScreenshot'
 import { sortLegend } from './utils/sortLegend'
 
 export type ChartMeta = Record<
@@ -36,6 +37,25 @@ export type ChartMeta = Record<
   | undefined
 >
 
+/**
+ * - `inside`: y-axis labels sit inside the plot above their grid lines, and
+ *   the grid is drawn over the data. Compact, for pages.
+ * - `outside`: y-axis labels get their own gutter left of the plot, centered
+ *   on their grid lines, both axes share one light label style, the grid sits
+ *   behind the data and the legend has room to breathe. A taller chart that
+ *   reads on its own, for screenshots.
+ */
+export type ChartAxisPlacement = 'inside' | 'outside'
+
+/** Width of the y-axis label gutter when `axisPlacement` is `outside`. */
+export const OUTSIDE_Y_AXIS_WIDTH = 56
+
+// With `outside` placement the legend sits further below the x-axis, so the
+// overlays pinned above it (logos, milestones) move up by the same amount.
+const outsideLegendGapClassName = 'pt-4'
+export const outsideLegendOverlayClassName =
+  'group-has-[.recharts-legend-wrapper]:-translate-y-4'
+
 type ChartContextProps = {
   meta: ChartMeta
   interactiveLegend?: {
@@ -43,6 +63,7 @@ type ChartContextProps = {
     onItemClick: (dataKey: string) => void
     disableOnboarding?: boolean
   }
+  axisPlacement: ChartAxisPlacement
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -72,17 +93,30 @@ const chartContainerClassNames = cn(
   '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:transition-none!',
   // Active dots
   "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none",
-  // Cartesian grid line
-  "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
-  // Cartesian X axis tick text
-  '[&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-medium [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-3xs [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:leading-none',
-  // Cartesian Y axis tick text
-  '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:z-100 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/50 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-sm dark:[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/70',
   // Polar grid
   "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
   // Reference line
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
+
+const axisClassNames: Record<ChartAxisPlacement, string> = {
+  inside: cn(
+    // Cartesian grid line
+    "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
+    // Cartesian X axis tick text
+    '[&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-medium [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-3xs [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:leading-none',
+    // Cartesian Y axis tick text
+    '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:z-100 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/50 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-sm dark:[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/70',
+  ),
+  outside: cn(
+    // Cartesian grid line. Only a reference behind the data, so kept faint.
+    "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/10 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/15",
+    // Cartesian X axis baseline
+    '[&_.recharts-xAxis_.recharts-cartesian-axis-line]:stroke-primary/25 dark:[&_.recharts-xAxis_.recharts-cartesian-axis-line]:stroke-primary/30',
+    // Cartesian X and Y axis tick text
+    '[&_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-cartesian-axis-tick-label_text]:font-normal [&_.recharts-cartesian-axis-tick-label_text]:text-2xs md:[&_.recharts-cartesian-axis-tick-label_text]:text-label-value-13',
+  ),
+}
 
 export interface ChartProject {
   id: ProjectId
@@ -91,19 +125,7 @@ export interface ChartProject {
   iconUrl: string
 }
 
-function ChartContainer<T extends { timestamp: number }>({
-  children,
-  meta,
-  data,
-  isLoading,
-  milestones,
-  loaderClassName,
-  logoClassName,
-  size = 'regular',
-  interactiveLegend,
-  project,
-  noDataSourceMessage,
-}: {
+interface ChartContainerProps<T extends { timestamp: number }> {
   meta: ChartMeta
   children: React.ReactNode
   data: T[] | undefined
@@ -119,7 +141,32 @@ function ChartContainer<T extends { timestamp: number }>({
   project?: ChartProject
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
-}) {
+  axisPlacement?: ChartAxisPlacement
+}
+
+function ChartContainer<T extends { timestamp: number }>(
+  props: ChartContainerProps<T>,
+) {
+  const {
+    children,
+    meta,
+    data,
+    isLoading,
+    milestones,
+    loaderClassName,
+    logoClassName,
+    size = 'regular',
+    project,
+    noDataSourceMessage,
+    axisPlacement = 'inside',
+  } = props
+  // The screenshot chart is not the place to teach the legend
+  const interactiveLegend =
+    props.interactiveLegend && axisPlacement === 'outside'
+      ? { ...props.interactiveLegend, disableOnboarding: true }
+      : props.interactiveLegend
+  const screenshot = useChartScreenshot()
+
   // Recharts renders nothing until it has measured its container, and every
   // chart measuring and re-rendering right after hydration was the longest
   // main-thread task on project pages. Mount each chart only when it is
@@ -133,16 +180,21 @@ function ChartContainer<T extends { timestamp: number }>({
   )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
-    <ChartContext.Provider value={{ meta, interactiveLegend }}>
+    <ChartContext.Provider value={{ meta, interactiveLegend, axisPlacement }}>
       <div ref={ref} className="group relative">
         <Slot
           className={cn(
             chartContainerClassNames,
+            axisClassNames[axisPlacement],
             // Chrome dispatches mouse moves as content scrolls under the
             // pointer; each one re-renders the tooltip with forced layouts.
             ignorePointerWhileScrollingClassName,
             size === 'regular' &&
+              axisPlacement === 'inside' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            size === 'regular' &&
+              axisPlacement === 'outside' &&
+              'h-[320px] min-h-[320px] w-full md:h-[480px] md:min-h-[480px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
             noDataSourcesSelected && [
               '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
@@ -180,6 +232,7 @@ function ChartContainer<T extends { timestamp: number }>({
                 !hasFinishedOnboardingInitial
                 ? 'bottom-[60px] group-has-[.recharts-legend-wrapper]:bottom-[68px]'
                 : 'bottom-12 group-has-[.recharts-legend-wrapper]:bottom-14',
+              axisPlacement === 'outside' && outsideLegendOverlayClassName,
               logoClassName,
             )}
           />
@@ -187,6 +240,11 @@ function ChartContainer<T extends { timestamp: number }>({
         {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
+            style={
+              axisPlacement === 'outside'
+                ? { left: OUTSIDE_Y_AXIS_WIDTH + 12 }
+                : undefined
+            }
             className={cn(
               'pointer-events-none absolute left-3 opacity-50',
               !!interactiveLegend &&
@@ -194,12 +252,31 @@ function ChartContainer<T extends { timestamp: number }>({
                 !hasFinishedOnboardingInitial
                 ? 'bottom-[68px] group-has-[.recharts-legend-wrapper]:bottom-[76px]'
                 : 'bottom-14 group-has-[.recharts-legend-wrapper]:bottom-16',
+              axisPlacement === 'outside' && outsideLegendOverlayClassName,
             )}
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} />
+          <ChartMilestones
+            data={data}
+            milestones={milestones}
+            insetLeft={axisPlacement === 'outside' ? OUTSIDE_Y_AXIS_WIDTH : 0}
+          />
         )}
+        {screenshot &&
+          axisPlacement === 'inside' &&
+          size === 'regular' &&
+          shouldMountChart &&
+          hasData && (
+            // Sits in the chart's top margin, above the top grid line, which
+            // the data never crosses
+            <ChartScreenshotDialog
+              title={screenshot.title}
+              className="-top-1 absolute right-0"
+            >
+              <ChartContainer {...props} axisPlacement="outside" />
+            </ChartScreenshotDialog>
+          )}
       </div>
     </ChartContext.Provider>
   )
@@ -214,8 +291,10 @@ function SimpleChartContainer({
   children: React.ReactNode
 }) {
   return (
-    <ChartContext.Provider value={{ meta }}>
-      <Slot className={chartContainerClassNames}>{children}</Slot>
+    <ChartContext.Provider value={{ meta, axisPlacement: 'inside' }}>
+      <Slot className={cn(chartContainerClassNames, axisClassNames.inside)}>
+        {children}
+      </Slot>
     </ChartContext.Provider>
   )
 }
@@ -264,7 +343,7 @@ function ChartLegendContent({
     nameKey?: string
   }) {
   const contentRef = React.useRef<HTMLDivElement>(null)
-  const { meta, interactiveLegend } = useChart()
+  const { meta, interactiveLegend, axisPlacement } = useChart()
 
   const {
     hasFinishedOnboarding,
@@ -286,6 +365,7 @@ function ChartLegendContent({
           !interactiveLegend.disableOnboarding &&
           'mb-3',
         verticalAlign === 'top' && 'pb-4 md:pb-8',
+        axisPlacement === 'outside' && outsideLegendGapClassName,
       )}
     >
       <div
