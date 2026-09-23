@@ -41,10 +41,15 @@ export const DownloadShapes = command({
 
     const downloadShape = createShapeDownloader(templateService, cli)
     const download = cli.status()
-    const shapeCount = await downloadShape(args.template, (shapeName) =>
+    const result = await downloadShape(args.template, (shapeName) =>
       download.update(`Downloading ${args.template}: ${shapeName}`),
     )
-    download.done(`Downloaded ${shapeCount} shapes for ${args.template}`)
+    download.done(
+      `Downloaded ${result.written} shapes for ${args.template}${formatMismatches(result.mismatched)}`,
+    )
+    if (result.mismatched > 0) {
+      process.exitCode = 1
+    }
   },
 })
 
@@ -67,18 +72,38 @@ export const DownloadAllShapes = command({
     const downloadShape = createShapeDownloader(templateService, cli)
     const total = templatesWithShapes.length
     const download = cli.status()
-    let shapeCount = 0
+    let written = 0
+    let mismatched = 0
 
     for (const [i, templateId] of templatesWithShapes.entries()) {
-      shapeCount += await downloadShape(templateId, (shapeName) =>
+      const result = await downloadShape(templateId, (shapeName) =>
         download.update(
           `Downloading [${i + 1}/${total}] ${templateId}: ${shapeName}`,
         ),
       )
+      written += result.written
+      mismatched += result.mismatched
     }
-    download.done(`Downloaded ${shapeCount} shapes for ${total} templates`)
+    download.done(
+      `Downloaded ${written} shapes for ${total} templates${formatMismatches(mismatched)}`,
+    )
+    if (mismatched > 0) {
+      process.exitCode = 1
+    }
   },
 })
+
+interface DownloadResult {
+  written: number
+  mismatched: number
+}
+
+function formatMismatches(mismatched: number): string {
+  if (mismatched === 0) {
+    return ''
+  }
+  return chalk.red(`, ${mismatched} hash mismatch`)
+}
 
 function createShapeDownloader(
   templateService: TemplateService,
@@ -87,7 +112,7 @@ function createShapeDownloader(
   return async (
     templateId: string,
     onShape: (shapeName: string) => void,
-  ): Promise<number> => {
+  ): Promise<DownloadResult> => {
     const templatePath = templateService.getTemplatePath(templateId)
     const shapeSchema = templateService.readShapeSchema(
       join(templatePath, 'shapes.json'),
@@ -98,7 +123,7 @@ function createShapeDownloader(
     const shapesFolder = join(templatePath, 'shapes')
     rimraf.sync(shapesFolder)
     mkdirSync(shapesFolder, { recursive: true })
-    let shapeCount = 0
+    let written = 0
     for (const fileName in shapeSchema) {
       const outputFiles: Record<string, string> = {}
 
@@ -140,7 +165,7 @@ function createShapeDownloader(
       // Make sure the hash matches shape.hash
       if (matchingHash !== shape.hash) {
         cli.log(chalk.red(`${templateId}/${fileName}: hash mismatch`))
-        return shapeCount
+        return { written, mismatched: 1 }
       }
 
       // 3. Create the directory for the shape under shape key
@@ -150,9 +175,9 @@ function createShapeDownloader(
       for (const [filePath, content] of Object.entries(outputFiles)) {
         writeFileSync(filePath, content)
       }
-      shapeCount += 1
+      written += 1
     }
-    return shapeCount
+    return { written, mismatched: 0 }
   }
 }
 
