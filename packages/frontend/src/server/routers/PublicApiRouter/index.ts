@@ -12,7 +12,9 @@ import { getL2TvsProjectApiData } from './getL2TvsProjectApiData'
 import { getL2TvsProjectBreakdownApiData } from './getL2TvsProjectBreakdownApiData'
 
 const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
+export type TvsApiRange = v.infer<typeof TvsRangeSchema>
 const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
+export type ActivityApiRange = v.infer<typeof ActivityRangeSchema>
 
 export function createPublicApiRouter() {
   const router = express.Router()

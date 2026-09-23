@@ -5,11 +5,13 @@ import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
+import { getProjectLivenessChart } from '~/server/features/layer2s/liveness/getProjectLivenessChart'
 import type { LivenessProject } from '~/server/features/layer2s/liveness/types'
 import { checkIfLivenessExists } from '~/server/features/layer2s/liveness/utils/checkIfLivenessExists'
 import { getHasTrackedContractChanged } from '~/server/features/layer2s/liveness/utils/getHasTrackedContractChanged'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { optionToRange } from '~/utils/range/range'
+import { getLivenessChartCaption } from '../chart-figures/chartCaptions'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
@@ -65,6 +67,12 @@ export async function getLivenessSection(
   )
   if (!hasData) return undefined
 
+  const chart = await getProjectLivenessChart({
+    projectId: project.id,
+    range: defaultRange,
+    subtype,
+  })
+
   const hasTrackedContractsChanged = project.trackedTxsConfig
     ? getHasTrackedContractChanged(
         project as Project<'trackedTxsConfig'>,
@@ -80,6 +88,7 @@ export async function getLivenessSection(
     duplicateData: project.livenessConfig?.duplicateData,
     defaultRange,
     isArchived: project.archivedAt !== undefined,
+    caption: getLivenessChartCaption(project.name, subtype, chart.data),
   }
 }
 

@@ -1,9 +1,11 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
+import { getL2ProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getL2ProjectDaThroughtputChart'
 import { checkIfDataPostedExists } from '~/server/features/data-availability/throughput/utils/checkIfDataPostedExists'
 import { ps } from '~/server/projects'
 import { optionToRange } from '~/utils/range/range'
+import { getDataPostedChartCaption } from '../chart-figures/chartCaptions'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
@@ -11,18 +13,23 @@ export async function getDataPostedSection(
 ): Promise<
   | Pick<
       DataPostedSectionProps,
-      'defaultRange' | 'currentDaLayers' | 'pastDaLayers' | 'daTrackingConfig'
+      | 'defaultRange'
+      | 'currentDaLayers'
+      | 'pastDaLayers'
+      | 'daTrackingConfig'
+      | 'caption'
     >
   | undefined
 > {
   if (!project.daTrackingConfig) return undefined
 
   const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
-  const [hasData, daLayers] = await Promise.all([
+  const [hasData, daLayers, chart] = await Promise.all([
     checkIfDataPostedExists(project.id, range[0] ?? undefined),
     ps.getProjects({
       select: ['daLayer'],
     }),
+    getL2ProjectDaThroughputChart({ range, projectId: project.id }),
   ])
   if (!hasData) return undefined
 
@@ -45,5 +52,6 @@ export async function getDataPostedSection(
     currentDaLayers,
     pastDaLayers,
     daTrackingConfig,
+    caption: getDataPostedChartCaption(project.name, chart),
   }
 }

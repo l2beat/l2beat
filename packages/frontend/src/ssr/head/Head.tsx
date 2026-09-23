@@ -48,6 +48,15 @@ export function Head({ manifest, metadata }: HeadProps) {
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
       <link rel="canonical" href={metadata.canonicalUrl} />
+      {metadata.jsonAlternates?.map((alternate) => (
+        <link
+          key={alternate.href}
+          rel="alternate"
+          type="application/json"
+          href={alternate.href}
+          title={alternate.title}
+        />
+      ))}
       {(metadata.excludeFromSearchEngines ||
         env.DEPLOYMENT_ENV !== 'production') && (
         <meta name="robots" content="noindex" />

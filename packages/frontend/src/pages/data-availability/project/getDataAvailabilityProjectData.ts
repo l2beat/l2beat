@@ -10,6 +10,7 @@ import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDesc
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getChartJsonAlternates } from '~/utils/project/chart-figures/chartJsonLinks'
 
 export async function getDataAvailabilityProjectData(
   manifest: Manifest,
@@ -41,6 +42,10 @@ export async function getDataAvailabilityProjectData(
         openGraph: {
           image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
         },
+        jsonAlternates: getChartJsonAlternates(
+          projectEntry.name,
+          projectEntry.sections,
+        ),
       }),
     },
     ssr: {
