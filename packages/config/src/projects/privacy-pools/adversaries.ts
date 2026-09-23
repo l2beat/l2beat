@@ -95,8 +95,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposure:
         'The ASP postman sets a new approved list at any time with no delay, and the pool accepts only the latest one. It can deny you a private exit or publish a list with only your deposit, which is then your whole anonymity set. The website shows the anonymity set but does not block a tiny one.',
-      advice:
-        'Check the displayed anonymity set shown before withdrawing.',
+      advice: 'Check the displayed anonymity set shown before withdrawing.',
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',
