@@ -27,7 +27,7 @@ import { useTable } from '~/hooks/useTable'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import { getPrivacyAdversariesScore } from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { DotWithLabel } from './DotWithLabel'
@@ -87,7 +87,7 @@ const columns = [
     },
   }),
   columnHelper.accessor(
-    (entry) => getPrivacyAdversariesScore(entry.adversaries),
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
     {
       id: 'adversaries',
       header: PRIVACY_ASSESSMENT.title,
@@ -101,6 +101,11 @@ const columns = [
         )
       },
       sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
       meta: {
         align: 'center',
         tooltip: PRIVACY_ASSESSMENT.tooltip,

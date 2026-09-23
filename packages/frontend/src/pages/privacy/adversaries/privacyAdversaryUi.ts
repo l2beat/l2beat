@@ -1,14 +1,10 @@
 import type {
   PrivacyAdversaryId,
-  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
   TableReadyValue,
 } from '@l2beat/config'
-import type {
-  PrivacyAdversariesSummary,
-  PrivacyAdversarySummaryCell,
-} from '~/server/features/privacy/types'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
   'On public blockchains like Ethereum, all actions transparent by default. A privacy protocol can at best cut the link between addresses or offer privacy while deposited. The colour says whether a careful user can keep the link, amount or recipient private against that adversary: green yes, yellow only outside supported options or by accepting another leak, red no.'
@@ -56,43 +52,12 @@ export function getPrivacyAdversaryTitle(label: string): string {
   return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
 }
 
-/** Points a cell contributes to the score; green is worth the most. */
-const PRIVACY_SENTIMENT_POINTS: Record<PrivacyAdversarySentiment, number> = {
-  good: 2,
-  warning: 1,
-  bad: 0,
-}
-
-function sumSentimentPoints(cells: PrivacyAdversarySummaryCell[]): number {
-  return cells.reduce(
-    (score, cell) => score + PRIVACY_SENTIMENT_POINTS[cell.sentiment],
-    0,
-  )
-}
-
 /**
- * Every adversary summed, two points for green and one for yellow, so a higher
- * score is a better protocol. Orders the summary table. The future adversary
- * grades a potential post-quantum world rather than today's protocol, so it
- * stays out of the leading term and only separates protocols that score the
- * same against the adversaries that exist now.
- */
-export function getPrivacyAdversariesScore(
-  adversaries: PrivacyAdversariesSummary,
-): number {
-  const graded = adversaries.cells.filter((c) => c.id !== 'futureAdversary')
-  const future = adversaries.cells.filter((c) => c.id === 'futureAdversary')
-  // The graded term is scaled past the highest future score so no number of
-  // future points can overtake a single point against a present adversary.
-  return sumSentimentPoints(graded) * 10 + sumSentimentPoints(future)
-}
-
-/**
- * All adversaries folded into one value: the homepage dot colour. The future
- * adversary is left out: it grades a potential post-quantum world, not
- * today's protocol. Any red cell makes it red, otherwise the majority colour
- * wins and a tie is green. Within a colour, fewer red and yellow cells sort
- * first.
+ * All adversaries folded into one value: the homepage dot colour and the
+ * summary table sort key. The future adversary is left out: it grades a
+ * potential post-quantum world, not today's protocol. Any red cell makes it
+ * red, otherwise the majority colour wins and a tie is green. Within a colour,
+ * fewer red and yellow cells sort first.
  */
 export function getPrivacyAdversariesTableValue(
   adversaries: PrivacyAdversariesSummary,
