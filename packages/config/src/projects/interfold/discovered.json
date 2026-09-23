@@ -1043,7 +1043,6 @@
           "type": "CODE_CHANGE"
         },
         "MAX_COMMITTEE_SIZE": {
-          "severity": "HIGH",
           "description": "Committee size of the compiled-in active BFV configuration; the matching decryption threshold and assumed-honest count are constants of the ActiveCryptoConfig library in the verified source and are not readable onchain.",
           "type": "RISK_PARAMETER"
         },
@@ -2362,7 +2361,6 @@
       },
       "fieldMeta": {
         "routes": {
-          "severity": "HIGH",
           "description": "Per-committee-size verifiers with the public-input length and verification-key hashes each one enforces.",
           "type": "CODE_CHANGE"
         },
@@ -3296,7 +3294,6 @@
       },
       "fieldMeta": {
         "routes": {
-          "severity": "HIGH",
           "description": "Per-committee-size verifiers with the public-input length and verification-key hashes each one enforces.",
           "type": "CODE_CHANGE"
         },

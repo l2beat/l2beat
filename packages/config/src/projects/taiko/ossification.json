@@ -845,14 +845,6 @@
       "updateId": "1c35c2f8",
       "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
       "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract backing the SGX Reth verifier (Raiko2 v0.8.0-rc1)."
-    },
-    {
-      "timestamp": 1789975667,
-      "type": "state",
-      "contract": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
-      "updateId": "1c35c2f8",
-      "transaction": "0x0e536d7f0e32a93e9c5d7153d55506d5a5aaa5e4cc1338896d31e97796291764",
-      "reason": "A new standard proposal was forwarded from the Multisig plugin to the OptimisticTokenVotingPlugin (proposalCount 39 -> 40) and entered its veto period; no governance settings changed."
     }
   ]
 }

@@ -86,8 +86,7 @@
     },
     "MAX_COMMITTEE_SIZE": {
       "description": "Committee size of the compiled-in active BFV configuration; the matching decryption threshold and assumed-honest count are constants of the ActiveCryptoConfig library in the verified source and are not readable onchain.",
-      "type": "RISK_PARAMETER",
-      "severity": "HIGH"
+      "type": "RISK_PARAMETER"
     },
     "getTimeoutConfig": {
       "description": "Protocol-wide DKG, encrypted-computation and decryption timeout windows applied to new E3s.",

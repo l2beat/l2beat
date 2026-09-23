@@ -7,7 +7,6 @@
     "routes": {
       "description": "Per-committee-size verifiers with the public-input length and verification-key hashes each one enforces.",
       "type": "CODE_CHANGE",
-      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "function routeAt(uint256 index) view returns (address verifier, uint256 expectedPublicInputsLen, bytes32 expectedNodesFoldKeyHash, bytes32 expectedC5KeyHash)",
