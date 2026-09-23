@@ -3,8 +3,9 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
+// v2.16.0, the release that added the custom RPC setting (PR #246).
 const WEBSITE =
-  'https://github.com/0xbow-io/privacy-pools-website/blob/62a962f68def3cbeb801c4259e743fd3d4762928/src/'
+  'https://github.com/0xbow-io/privacy-pools-website/blob/f34be7cb666b0607130c8a134973b3b30c33feb1/src/'
 
 export const privacyPoolsAdversaries = definePrivacyAdversaries({
   promise: {
@@ -41,39 +42,52 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
+      sentiment: 'good',
       exposure:
-        "Event sync is forced through 0xbow's own proxy with no option for a public node. On login the app looks up the block of each of your deposits, then polls your wallet balance and the withdrawal receipt from the same session. Relayers receive amount and recipient for a quote.",
-      advice:
-        'Use a client with an RPC setting, such as the raw SDK, pointed at your own node. The official frontend cannot avoid the lookups.',
+        "The app takes your own RPC endpoint per network, scans every pool whole from its deployment block and matches notes locally, so a node learns only which pools you looked at. 0xbow's servers still see that a session happened, through bulk feeds that carry nothing about the notes. A relayer receives amount and asset for a quote and the recipient once you confirm.",
+      advice: `Set an endpoint for every network before signing in, and sign in with a recovery phrase so no wallet address is queried. Without an endpoint, every read goes through 0xbow's proxy and Alchemy under 0xbow's key. ${S.ownNodeAndTor('relayer')}`,
       sources: [
         {
-          title: "Reads go to Alchemy under 0xbow's key, no RPC setting",
-          url: WEBSITE + 'config/wagmiConfig.ts#L46-L58',
+          title:
+            'RPC setting, one endpoint per network, offered before sign-in',
+          url: WEBSITE + 'containers/Header.tsx#L39',
         },
         {
-          title: "Event sync through 0xbow's Hypersync proxy",
-          url: WEBSITE + 'config/chainData.ts#L135-L140',
+          title: 'Event sync and reads both move to the custom endpoint',
+          url: WEBSITE + 'config/chainData.ts#L667-L682',
         },
         {
-          title: 'Block lookup for every deposit on login',
-          url: WEBSITE + 'utils/sdk.ts#L439-L442',
+          title: 'Networks without an endpoint are skipped, not proxied',
+          url: WEBSITE + 'config/customRpc.ts#L638-L642',
         },
         {
-          title: 'Wallet balance polled every 10 seconds',
-          url: WEBSITE + 'providers/ChainProvider.tsx#L126-L133',
+          title:
+            "Default reads through 0xbow's Hypersync proxy and Alchemy key",
+          url: WEBSITE + 'config/chainData.ts#L140-L141',
         },
         {
-          title: 'Withdrawal receipt polled after relay',
-          url: WEBSITE + 'hooks/useWithdraw.ts#L414-L416',
+          title: 'Pools scanned whole from deployment, dates from bulk logs',
+          url: WEBSITE + 'utils/dataService.ts#L11-L25',
         },
         {
-          title: 'Login requires a connected wallet',
-          url: WEBSITE + 'providers/AuthProvider.tsx#L33-L36',
+          title: 'No block lookup per deposit',
+          url: WEBSITE + 'utils/sdk.ts#L510-L516',
         },
         {
-          title: 'Relayer quote carries amount and recipient',
-          url: WEBSITE + 'utils/relayerClient.ts#L45-L58',
+          title: 'Relayed receipt read from bulk logs, hash never sent',
+          url: WEBSITE + 'utils/relayedReceipt.ts#L3-L44',
+        },
+        {
+          title: 'Wallet balance read on a fixed cadence',
+          url: WEBSITE + 'providers/ChainProvider.tsx#L125-L147',
+        },
+        {
+          title: 'Recipient sent to the relayer on confirm only',
+          url: WEBSITE + 'utils/quotePhases.ts#L4-L10',
+        },
+        {
+          title: 'Sign-in with a recovery phrase needs no wallet',
+          url: WEBSITE + 'providers/AuthProvider.tsx#L39-L47',
         },
       ],
     },
@@ -82,7 +96,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposure:
         'The ASP postman sets a new approved list at any time with no delay, and the pool accepts only the latest one. It can deny you a private exit or publish a list with only your deposit, which is then your whole anonymity set. The website shows the anonymity set but does not block a tiny one.',
       advice:
-        'Check the anonymity set shown before withdrawing, or count the approved list yourself with a client that fetches it whole, such as the raw SDK.',
+        'Check the displayed anonymity set shown before withdrawing.',
       sources: [
         {
           contract: 'PrivacyPoolsEntrypoint',
@@ -97,13 +111,15 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
           title: 'Privacy Pools Multisig and ASP postman',
         },
         {
-          title: 'Anonymity set shown, not enforced',
+          title: 'Anonymity set counted locally from the published list',
           url:
-            WEBSITE + 'containers/Modals/Withdraw/WithdrawForm.tsx#L204-L213',
+            WEBSITE + 'containers/Modals/Withdraw/WithdrawForm.tsx#L175-L180',
         },
         {
-          title: 'Kohaku fetches the approved list whole',
-          url: 'https://github.com/ethereum/kohaku/blob/master/packages/privacy-pools/src/data/0xbowAsp.service.ts',
+          title: 'Anonymity set shown, not enforced',
+          url:
+            WEBSITE +
+            'containers/Modals/Withdraw/AmountInputSection.tsx#L94-L95',
         },
       ],
     },
@@ -118,7 +134,11 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Wallet-signature seed derivation',
-          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/walletSeed.ts',
+          url: WEBSITE + 'utils/walletSeed.ts#L40-L73',
+        },
+        {
+          title: 'Random seed phrase option',
+          url: WEBSITE + 'utils/seedPhrase.ts#L3-L7',
         },
         { section: 'trusted-setups' },
       ],
