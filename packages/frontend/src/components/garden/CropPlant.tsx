@@ -81,18 +81,18 @@ function timings(delay: number) {
   return {
     grow: at(
       '50% 100%',
-      `garden-grow .8s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
+      `garden-grow .5s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
     ),
-    leafL: at('100% 100%', `garden-leaf .5s ease-out ${delay + 0.3}s both`),
-    leafR: at('0% 100%', `garden-leaf .5s ease-out ${delay + 0.36}s both`),
+    leafL: at('100% 100%', `garden-leaf .3s ease-out ${delay + 0.15}s both`),
+    leafR: at('0% 100%', `garden-leaf .3s ease-out ${delay + 0.19}s both`),
     bloom: at(
       '50% 100%',
-      `garden-bloom .55s ${EASE_OUT_BACK} ${delay + 0.52}s both`,
+      `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s both`,
     ),
     idle: (name: string, duration: string) =>
       at(
         '50% 100%',
-        `${name} ${duration} ease-in-out ${delay + 0.8}s infinite`,
+        `${name} ${duration} ease-in-out ${delay + 0.5}s infinite`,
       ),
   }
 }

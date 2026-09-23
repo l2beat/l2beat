@@ -22,7 +22,7 @@ import { cn } from '~/utils/cn'
 // columns from 720px, two with inline chips from 520px, one below.
 
 /** Seconds between neighbouring plants; longer and the last one feels late. */
-const STAGGER = 0.08
+const STAGGER = 0.05
 
 /**
  * The four plants stand full-size in one garden bed, and each roots straight
@@ -119,7 +119,7 @@ function LetterChip({
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{ animation: `garden-pop .5s ${EASE_OUT_BACK} ${delay}s both` }}
+      style={{ animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s both` }}
     >
       <span
         aria-hidden
