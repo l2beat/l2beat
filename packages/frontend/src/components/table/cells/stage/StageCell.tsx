@@ -38,13 +38,29 @@ export function StageCell({
       {stageConfig.stage !== 'NotApplicable' &&
         stageConfig.stage !== 'UnderReview' &&
         stageConfig.downgradePending &&
-        !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
-      {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
+        !emergencyWarning && (
+          <StopwatchIcon
+            className="mt-px md:mt-[3px]"
+            aria-label={`Downgrade to ${stageConfig.downgradePending.toStage} pending`}
+          />
+        )}
+      {emergencyWarning && (
+        <EmergencyIcon
+          className="mt-px md:mt-[3px]"
+          aria-label={`Emergency warning: ${emergencyWarning}`}
+        />
+      )}
       {walkAway === 'passed' && (
-        <WalkAwayPassedIcon className="-mt-px size-5 fill-positive md:size-6" />
+        <WalkAwayPassedIcon
+          className="-mt-px size-5 fill-positive md:size-6"
+          aria-label="Passes the walkaway test"
+        />
       )}
       {walkAway === 'not-passed' && (
-        <WalkAwayNotPassedIcon className="-mt-px size-5 fill-negative md:size-6" />
+        <WalkAwayNotPassedIcon
+          className="-mt-px size-5 fill-negative md:size-6"
+          aria-label="Does not pass the walkaway test"
+        />
       )}
     </div>
   )
