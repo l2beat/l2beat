@@ -6,7 +6,7 @@ import {
 
 export function NoInfoCell() {
   return (
-    <Tooltip>
+    <Tooltip hiddenDescription>
       <TooltipTrigger className="text-gray-550 dark:text-gray-500">
         No info
       </TooltipTrigger>

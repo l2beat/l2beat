@@ -5,6 +5,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipVisualOnly,
 } from '~/components/core/tooltip/Tooltip'
 import { TableLink } from '~/components/table/TableLink'
 import { EmergencyIcon } from '~/icons/Emergency'
@@ -54,7 +55,7 @@ export function StageCell({
   }
 
   return (
-    <Tooltip>
+    <Tooltip hiddenDescription>
       <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={href}>{content}</TableLink>
       </TooltipTrigger>
@@ -65,9 +66,11 @@ export function StageCell({
           emergencyWarning={emergencyWarning}
           walkAway={walkAway}
         />
-        <p className="mt-3 text-label-value-13 text-secondary">
-          Click to view details
-        </p>
+        <TooltipVisualOnly>
+          <p className="mt-3 text-label-value-13 text-secondary">
+            Click to view details
+          </p>
+        </TooltipVisualOnly>
       </TooltipContent>
     </Tooltip>
   )

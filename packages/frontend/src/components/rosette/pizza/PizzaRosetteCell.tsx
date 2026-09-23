@@ -20,7 +20,7 @@ export function PizzaRosetteCell(props: Props) {
     props.values.some((value) => value.sentiment === 'UnderReview')
 
   return (
-    <Tooltip>
+    <Tooltip hiddenDescription>
       <TooltipTrigger
         className="flex size-full items-center justify-center"
         disabledOnMobile

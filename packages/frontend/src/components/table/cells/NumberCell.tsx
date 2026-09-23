@@ -21,7 +21,7 @@ export function NumberCell(props: NumberCellProps) {
 
   if (props.tooltip)
     return (
-      <Tooltip>
+      <Tooltip hiddenDescription>
         <TooltipTrigger className={props.className}>
           {props.children}
         </TooltipTrigger>
