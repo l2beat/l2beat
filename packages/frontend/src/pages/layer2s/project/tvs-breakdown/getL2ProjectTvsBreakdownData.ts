@@ -33,6 +33,16 @@ export async function getL2ProjectTvsBreakdownData(
         openGraph: {
           image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
+        // Mirrors the Breadcrumbs shown in TvsBreakdownPageHeader.
+        breadcrumb: {
+          name: 'TVS Breakdown',
+          parents: [
+            {
+              name: tvsBreakdownData.project.name,
+              path: `/layer2s/projects/${tvsBreakdownData.project.slug}`,
+            },
+          ],
+        },
       }),
     },
     ssr: {

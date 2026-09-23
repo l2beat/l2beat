@@ -31,6 +31,7 @@ export async function getL2ArchivedData(
         openGraph: {
           image: '/meta-images/layer2s/archived/opengraph-image.png',
         },
+        breadcrumb: { name: 'Archived' },
       }),
     },
     ssr: {

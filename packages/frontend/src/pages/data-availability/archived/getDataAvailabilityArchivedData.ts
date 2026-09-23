@@ -21,6 +21,7 @@ export async function getDataAvailabilityArchivedData(
         openGraph: {
           image: '/meta-images/data-availability/archived/opengraph-image.png',
         },
+        breadcrumb: { name: 'Archived' },
       }),
     },
     ssr: {

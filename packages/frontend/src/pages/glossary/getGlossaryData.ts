@@ -1,6 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getGlossaryStructuredData } from '~/ssr/head/structured-data/getGlossaryStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -22,6 +23,7 @@ export async function getGlossaryData(
         openGraph: {
           image: '/meta-images/glossary/opengraph-image.png',
         },
+        structuredData: [getGlossaryStructuredData(glossaryEntries)],
       }),
     },
     ssr: {

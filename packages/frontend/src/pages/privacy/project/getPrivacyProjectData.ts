@@ -60,6 +60,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
+        breadcrumb: { name: details.name },
       }),
     },
     props: {
