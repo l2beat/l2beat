@@ -251,6 +251,12 @@ export const sp1hypercube: BaseProject = {
               '0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x651cA600813fC0126225b727EDbA617949b1d1c9',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

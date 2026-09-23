@@ -76,7 +76,6 @@
       }
     },
     "permissionedGameArgs": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

@@ -29,6 +29,20 @@
       "reason": "Changed the L1-to-L2 ETH withdrawal rate limit (limitInWei) of L2MessageService."
     },
     {
+      "timestamp": 1690563167,
+      "type": "state",
+      "contract": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+      "transaction": "0x9026a1ca1ed939c3d54067ba1df0ce31e4666606ed0638d63cf077b94007efee",
+      "reason": "Changed the threshold of the Linea Security Council Safe that controls the L1 upgrade Timelock to 4 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1690563245,
+      "type": "state",
+      "contract": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+      "transaction": "0xf6f39da142eefaa9a2550d0bd6bcd0bce80df3d244370d8608d2f15c6fab327c",
+      "reason": "Changed the threshold of the L2 governance Safe that controls the L2 upgrade Timelock to 4 (ChangedThreshold)."
+    },
+    {
       "timestamp": 1690564149,
       "type": "state",
       "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
@@ -87,12 +101,28 @@
       "reason": "Changed the L1-to-L2 ETH withdrawal rate limit (limitInWei) of L2MessageService."
     },
     {
+      "timestamp": 1707813599,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "d37a911c",
+      "transaction": "0xb4ed5b2646e45744945a4fc51da0e5e687ffe26f570b7aa3abb7b1fd4a460ea4",
+      "reason": "Replaced the proof-type-0 verifier during the LineaRollup upgrade (VerifierAddressChanged)."
+    },
+    {
       "timestamp": 1708467875,
       "type": "state",
       "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
       "updateId": "75facd10",
       "transaction": "0xa9c564fe8b8a8bbe96ca023b135ab99cc239d51468fadd87e841c72d93bd0782",
       "reason": "Unset the proof verifiers for proof types 6 and 7 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
+    },
+    {
+      "timestamp": 1711448987,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "0546d3e6",
+      "transaction": "0x565c77e109aac4df41d81457bdfbdd17782d8bca9a1330c68a271c64f35d05e5",
+      "reason": "Replaced the proof-type-1 verifier during the LineaRollup upgrade (VerifierAddressChanged)."
     },
     {
       "timestamp": 1711463651,
@@ -119,6 +149,34 @@
       "reason": "Unset the proof verifier for proof type 1 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
     },
     {
+      "timestamp": 1734357131,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "transaction": "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
+      "reason": "Established pause and unpause role routing for the LineaRollup during the alpha v4 upgrade (PauseTypeRoleSet and UnPauseTypeRoleSet)."
+    },
+    {
+      "timestamp": 1734357131,
+      "type": "state",
+      "contract": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "transaction": "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
+      "reason": "Established pause and unpause role routing for the L1 TokenBridge during the alpha v4 upgrade (PauseTypeRoleSet and UnPauseTypeRoleSet)."
+    },
+    {
+      "timestamp": 1734357983,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "transaction": "0xbb31a92afc2c725d0b10aaf96829db7a553041d0be10ca840d2fb82ef77119e7",
+      "reason": "Established pause and unpause role routing for L2MessageService during the alpha v4 upgrade (PauseTypeRoleSet and UnPauseTypeRoleSet)."
+    },
+    {
+      "timestamp": 1734357983,
+      "type": "state",
+      "contract": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+      "transaction": "0xbb31a92afc2c725d0b10aaf96829db7a553041d0be10ca840d2fb82ef77119e7",
+      "reason": "Established pause and unpause role routing for the L2 TokenBridge during the alpha v4 upgrade (PauseTypeRoleSet and UnPauseTypeRoleSet)."
+    },
+    {
       "timestamp": 1745842943,
       "type": "state",
       "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -133,21 +191,6 @@
       "updateId": "6b70b41a",
       "transaction": "0x4e8b33eee6600b8cea3597a828c4462529d8ff7fe17c66be4cc986fc75d72aec",
       "reason": "Unset the proof verifiers for proof types 3, 6 and 7 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
-    },
-    {
-      "timestamp": 1748942951,
-      "type": "state",
-      "contract": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-      "updateId": "6b70b41a",
-      "transaction": "0x4e8b33eee6600b8cea3597a828c4462529d8ff7fe17c66be4cc986fc75d72aec",
-      "reason": "Granted PROPOSER_ROLE on the L1 Timelock to a second Safe (Linea Multisig 2), adding an independent proposer to the L1 upgrade authority (accessControl)."
-    },
-    {
-      "timestamp": 1748943073,
-      "type": "state",
-      "contract": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-      "transaction": "0x3ebef84842e47c8bbb4e98784489b60f6d65fd8091b4368295662f5550e2dbbc",
-      "reason": "Granted PROPOSER_ROLE on the L2Timelock to a second Safe (Linea Multisig 4), adding an independent proposer to the L2 upgrade authority (RoleGranted)."
     },
     {
       "timestamp": 1749460535,
@@ -233,6 +276,22 @@
       "reason": "Set a new proof verifier for proof type 4 and unset type 0 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
     },
     {
+      "timestamp": 1772375135,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "a0fe459a",
+      "transaction": "0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",
+      "reason": "Set the YieldManager that can receive ETH from the LineaRollup and added native-yield pause and unpause role routing (YieldManagerChanged, PauseTypeRoleSet and UnPauseTypeRoleSet)."
+    },
+    {
+      "timestamp": 1772375135,
+      "type": "state",
+      "contract": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+      "updateId": "a0fe459a",
+      "transaction": "0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",
+      "reason": "The Linea Security Council Safe disabled its Zodiac Roles module, removing an authority path into the L1 upgrade Timelock."
+    },
+    {
       "timestamp": 1774211675,
       "type": "state",
       "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -247,6 +306,14 @@
       "updateId": "440c8e93",
       "transaction": "0x6f8686053f3f73c30b334b488d2a6d042a4163f4c0c845ccfecec1ed48a300b7",
       "reason": "Set a new proof verifier for proof type 1 and unset type 4 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
+    },
+    {
+      "timestamp": 1774970807,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "4f07d08b",
+      "transaction": "0x2956910285297bc330ad8b1e31f6dd7866e58c26164fe126f09a44df6a65ce9b",
+      "reason": "Replaced the proof-type-1 verifier and added state-data-submission pause and unpause role routing during the LineaRollup upgrade (VerifierAddressChanged, PauseTypeRoleSet and UnPauseTypeRoleSet)."
     },
     {
       "timestamp": 1775081291,
@@ -316,6 +383,14 @@
       "contract": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
       "transaction": "0xf5f875b8e6d229e777344d11e20e4d23443e91ced315501cfd7a83950f663609",
       "reason": "The L2 governance Safe (proposer, executor and canceller of the L2Timelock, verified with hasRole at the block) disabled the Zodiac Roles module, removing an authority path into the L2 upgrade Timelock."
+    },
+    {
+      "timestamp": 1784201579,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "05cf3683",
+      "transaction": "0x4bcfe7ea1724555288f7cf4d7a0de608182483a41d670e3027b89c3e989240c9",
+      "reason": "Replaced the proof-type-1 verifier, set the forced-transaction fee and set the AddressFilter during the LineaRollup upgrade (VerifierAddressChanged, ForcedTransactionFeeSet and AddressFilterChanged)."
     },
     {
       "timestamp": 1784201579,

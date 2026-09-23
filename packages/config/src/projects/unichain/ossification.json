@@ -3,16 +3,16 @@
     {
       "timestamp": 1734645071,
       "type": "state",
-      "contract": "eth:0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2",
+      "contract": "eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
       "transaction": "0x4f14b1991d4873d9b622257ea90a34acc14bb9979283309617ae4df2afc81256",
-      "reason": "Changed the Unichain Multisig 1 threshold while it participated in Unichain's upgrade authority (Safe is the safe of LivenessModule; the Safe itself is outside the perimeter)."
+      "reason": "Changed the then-governing Unichain Multisig 1 threshold on the Safe itself."
     },
     {
       "timestamp": 1734645095,
       "type": "state",
-      "contract": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+      "contract": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
       "transaction": "0x99fbaee89a08c16eac5596353f67516a16e0a2086b0023bd0279e3178df02463",
-      "reason": "Changed the Unichain Multisig 2 threshold while it controlled the SystemConfig (Safe is the owner of SystemConfig; the Safe itself is outside the perimeter)."
+      "reason": "Changed the Unichain Multisig 2 threshold while it controlled SystemConfig."
     },
     {
       "timestamp": 1737130811,
@@ -31,37 +31,69 @@
     {
       "timestamp": 1738943723,
       "type": "state",
-      "contract": "eth:0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2",
+      "contract": "eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
       "transaction": "0xdfafffe5bd2719576b97c3bb44327bae72be6880d3080dfe3623674194645d75",
-      "reason": "Changed the Unichain Multisig 1 threshold while it participated in Unichain's upgrade authority (Safe is the safe of LivenessModule; the Safe itself is outside the perimeter)."
+      "reason": "Changed the then-governing Unichain Multisig 1 threshold on the Safe itself."
     },
     {
       "timestamp": 1738953155,
       "type": "state",
-      "contract": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+      "contract": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
       "transaction": "0x8947040ba4b100235363384a2a8af5913f7dea93b337b748929b21e37af0d691",
-      "reason": "Changed the Unichain Multisig 2 threshold while it controlled the SystemConfig (Safe is the owner of SystemConfig; the Safe itself is outside the perimeter)."
+      "reason": "Changed the Unichain Multisig 2 threshold while it controlled SystemConfig."
     },
     {
       "timestamp": 1753378247,
       "type": "state",
-      "contract": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
-      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Unichain (Safe is the guardian of OptimismPortal2; the Safe itself is outside the perimeter)."
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Unichain."
     },
     {
       "timestamp": 1753380539,
       "type": "state",
-      "contract": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
-      "reason": "Disabled the former Unichain pause deputy on the Guardian Safe (Safe is the guardian of OptimismPortal2; the Safe itself is outside the perimeter)."
+      "reason": "Disabled the former Unichain pause deputy on the Guardian Safe."
+    },
+    {
+      "timestamp": 1759437959,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "updateId": "cbee75ee",
+      "transaction": "0xc98240172fa3950ec9c62f32cc09d0eb0ed21684b02f1b2677357674cda64ca5",
+      "reason": "Upgrade 16a replaced the canonical L1StandardBridge implementation; its EIP-1967 implementation slot changed in this block despite the proxy not recording a past-upgrades entry."
+    },
+    {
+      "timestamp": 1764106535,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "updateId": "7ac95a79",
+      "transaction": "0x7c9e6b65258838fb38bc0bf584cb0c0802bc0dfbbe877a8639880e2ed88b3aa6",
+      "reason": "Jovian upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 implementation slot changed in this block."
+    },
+    {
+      "timestamp": 1765898063,
+      "type": "code",
+      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "updateId": "86db7e3e",
+      "transaction": "0x50705cdd13e7f50da7227683b06acbd13c53eb636e0f7a16dffe6b109aa5f829",
+      "reason": "The Upgrade Safe changed its singleton implementation from Gnosis Safe 1.3.0 to Safe 1.4.1, changing the code behind an active governance path."
     },
     {
       "timestamp": 1769109083,
       "type": "state",
-      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "updateId": "58eb42e4",
       "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
-      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it governed Unichain (Safe is the fallbackOwner of LivenessModule; the Safe itself is outside the perimeter)."
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe, allowing the configured fallback owner to take over after a liveness challenge."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "contract": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Configured a 30-day response period and Security Council fallback owner for the Upgrade Safe's SaferSafes module."
     },
     {
       "timestamp": 1783362755,
@@ -69,6 +101,14 @@
       "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
       "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
       "reason": "Replaced the dispute games with interop-ready implementations: registered SuperPermissionedDisputeGame (type 1) and SuperCannon (type 8) games, retired the legacy fault games, and switched the respected game type used to validate withdrawals."
+    },
+    {
+      "timestamp": 1783362755,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "updateId": "84831770",
+      "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
+      "reason": "The July 2026 upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 slot changed in this block without a past-upgrades entry."
     }
   ]
 }

@@ -7,15 +7,6 @@
     "getExpectedImageHash": {
       "severity": "HIGH"
     },
-    "DISPUTE_GAME_FACTORY": {
-      "severity": "HIGH"
-    },
-    "NITRO_VERIFIER": {
-      "severity": "HIGH"
-    },
-    "MAX_AGE": {
-      "severity": "HIGH"
-    },
     "manager": {
       "severity": "HIGH"
     },

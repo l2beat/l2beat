@@ -1,3 +1,621 @@
+Generated with discovered.json: 0x32b40a76148e8aaa916cb19b966d4e1d5368d60f
+
+# Diff at Tue, 22 Sep 2026 23:40:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789471567
+- current timestamp: 1790120336
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.0:
+-        "0x5a818b4c7dc80e9ba85d55492c20c263c67238724e3982f76d15a158e501210b"
++        "0xd6ab71c22201c23ef512b706f2e2d720f6da1b559fb76834aa9d4e35276f6e10"
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.1:
+-        "0x9cfcc1b34a98853c3c5873a4d456726e528246f7f03a4ea35f27c2543aa6e7f0"
++        "0xdd9b8abff96c409ae2418edfb51d893ea2bd10f4873a0226f17a6998c1afc1b7"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Halborn (eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      values.$members.0:
+-        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+      values.$members.1:
+-        "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
+      values.$members.2:
+-        "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
+      values.$members.3:
+-        "eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4"
+      values.$members.4:
+-        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
++        "eth:0x736d9e59cDd406aEee09253fF18BA6cb7be67CBD"
+      values.$members.6:
+-        "eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656"
++        "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
+      values.$members.7:
+-        "eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "eth:0xF74F2bBaEd41e3e4AbAcbA24563a5Ce5aB071C8A"
+      values.$members.8:
+-        "eth:0xc4414B079bC4A013916B3dc241555F6f505c1619"
++        "eth:0xe63E61BbB3aa1b82d44471AbcAb490102C17c986"
+      values.addresslistLength:
+-        9
++        5
+      values.multisigSigners.0:
+-        "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
+      values.multisigSigners.3:
+-        "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
+      values.multisigSigners.4:
+-        "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
+      values.multisigSigners.5:
+-        "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
+      values.multisigSigners.6:
+-        "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
+      values.multisigSigners.3:
++        "eth:0xe63E61BbB3aa1b82d44471AbcAb490102C17c986"
+      values.multisigSigners.8:
+-        "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
++        "eth:0xF74F2bBaEd41e3e4AbAcbA24563a5Ce5aB071C8A"
+      values.settings.minSignerListLength:
+-        8
++        4
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0x2d2216efbe9d8e80ba24b86606ccd5ce9faf11033d31ad9e5d3c5c89965c8a57"
++        "0x5f7da556f3b75dcc71465030e1b7274e82df9e9120c0b3eaf5bb76246a514005"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Drew Van der Werff (eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      values.lastMultisigSettingsChange:
+-        24269141
++        25997731
++++ severity: HIGH
+      values.minApprovals:
+-        7
++        4
+      values.multisigSettings.minApprovals:
+-        7
++        4
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Chainbound (eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Nethermind (eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Gattaca (eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.0:
+-        "0x00ad090221a8fa0f09e1be7a53feb67be010f01310d4b2314a69d10152ee1ce0"
++        "0x0025425c22e827507428a3d9c7b0f89635be5462f34bb6780563e3d6086be7c7"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.1:
+-        "0x568481106a3e83c23c37cf4a3feb67be008780984352c8c514d3a20252ee1ce0"
++        "0x12a12e113a09d41d05147b387b0f89632df2a3174d2ed9e00ac7c7ac086be7c7"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.2:
+-        "0x000b11691352e55fcf64f62620cefaa700161600093f2751032fe71ea912264d"
++        "0x0051ac1d9e8cfd4196e37f9cfefd08e9b0f7ce653bad4634cd1ee84b71ca3be6"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.3:
+-        "0x0588b48954b957f36c9ec4c40cefaa7000b0b00024fc9d44065fce3d2912264d"
++        "0x28d60ecf233f50655c6ff39f6fd08e9b07be73296eb518d31a3dd09671ca3be6"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0x90c79e65d6d0f83d658ff96cd0ef1204438f20b406c93cf1d4fafa0cff29842e"
++        "0x3564b6a30089fcb3e2f69c19b22d23f84ce148387cd7a15f5c1df165b2ae5847"
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.1:
+-        "0x041cadb0541bf8249c368482172d218608f3693975b65f74beb2ed6f0044f951"
++        "0xae2c7b92b2a71238226cb624ecd1171b66bf943cc372314affca0e6748ccecdf"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        39
++        40
+      values.proposalIds.39:
++        "609097156697645562436844254022738698161067393063"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Toni Wahrstätter (eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.lastMultisigSettingsChange:
+-        24588180
++        25997731
++++ severity: HIGH
+      values.minApprovals:
+-        5
++        3
+      values.multisigSettings.minApprovals:
+-        5
++        3
++++ description: total standard proposal count.
+      values.proposalCount:
+-        24
++        25
+    }
+```
+
+## Source code changes
+
+```diff
+.../Chainbound/Safe.sol => /dev/null               | 1216 --------------------
+ .../Chainbound/SafeProxy.p.sol => /dev/null        |   42 -
+ .../Drew Van der Werff/Safe.sol => /dev/null       | 1216 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../.flat@1789471567/Gattaca/Safe.sol => /dev/null | 1216 --------------------
+ .../Gattaca/SafeProxy.p.sol => /dev/null           |   42 -
+ .../.flat@1789471567/Halborn/Safe.sol => /dev/null | 1216 --------------------
+ .../Halborn/SafeProxy.p.sol => /dev/null           |   42 -
+ .../Nethermind/Safe.sol => /dev/null               | 1216 --------------------
+ .../Nethermind/SafeProxy.p.sol => /dev/null        |   42 -
+ .../Toni Wahrst\303\244tter/Safe.sol" => /dev/null | 1216 --------------------
+ .../SafeProxy.p.sol" => /dev/null                  |   42 -
+ 12 files changed, 7548 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471567 (main branch discovery), not current.
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
++++ description: Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract.
+      values.$threshold:
+-        7
++        4
+      fieldMeta.$threshold.description:
+-        "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract."
++        "Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract."
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Taiko Token (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) [taiko/TaikoToken] {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x41e79EB4F03aBB5DF8716B759528dc5d8f6a84Ee) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      fieldMeta:
+-        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      fieldMeta.getCurrentForcedInclusionFee:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkRequiredVerifier (eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec) [taiko/ZkRequiredVerifier] {
+    +++ description: Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.
+      fieldMeta.sgxGethVerifier.severity:
+-        "HIGH"
+      fieldMeta.sgxRethVerifier.severity:
+-        "HIGH"
+      fieldMeta.risc0RethVerifier.severity:
+-        "HIGH"
+      fieldMeta.sp1RethVerifier.severity:
+-        "HIGH"
+      fieldMeta.opVerifier.severity:
+-        "HIGH"
+      fieldMeta.tdxGethVerifier.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.quotaManager.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x9D3C595BFf6Ff7D2b2CbdEcF94aD917eB2fCFFd8) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.quotaManager.severity:
+-        "HIGH"
+      fieldMeta.signalService.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.proverManager:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/L2ERC20Vault] {
+    +++ description: Escrow for L2-native tokens sent to L1 via the canonical bridge.
+      fieldMeta.MIN_MIGRATION_DELAY:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager] {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor] {
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+      fieldMeta.checkpointStore.severity:
+-        "HIGH"
+      fieldMeta.checkpointStore.description:
++        "Immutable checkpoint store; replacement requires a code change."
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x0c3b735b2b7c184a7a13bdf0c842b417f5ce63bb
 
 # Diff at Mon, 21 Sep 2026 10:22:08 GMT:

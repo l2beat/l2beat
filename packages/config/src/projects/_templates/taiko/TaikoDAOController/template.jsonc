@@ -6,7 +6,6 @@
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "owner": {
-      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     },
     "paused": { "severity": "MEDIUM" }

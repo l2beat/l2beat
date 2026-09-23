@@ -9,12 +9,7 @@
       // a second upgrade path: proxies that resolve through the manager follow it
       "severity": "HIGH"
     },
-
-    "$admin": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     }
   }

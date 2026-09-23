@@ -24,29 +24,16 @@
     "getRequiredForcedTransactionFields"
   ],
   "fields": {
-    "isWithdrawLSTAllowed": {
-      "severity": "HIGH"
-    },
-    "PAUSE_DURATION": {
-      "severity": "HIGH"
-    },
-    "COOLDOWN_DURATION": {
-      "severity": "HIGH"
-    },
     "forcedTransactionFeeInWei": {
       "severity": "HIGH"
     },
     "addressFilter": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "yieldManager": {
       "severity": "HIGH"
     },
     "livenessRecoveryOperator": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -63,7 +50,6 @@
       }
     },
     "accessControl": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -72,7 +58,6 @@
       }
     },
     "defaultAdminAC": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -85,7 +70,6 @@
       ]
     },
     "ethStakerAC": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "YIELD_PROVIDER_STAKING_ROLE"
@@ -98,7 +82,7 @@
       ]
     },
     "securityCouncilAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "SECURITY_COUNCIL_ROLE"
@@ -111,6 +95,7 @@
       ]
     },
     "pauseAllAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PAUSE_ALL_ROLE"
@@ -123,7 +108,6 @@
       ]
     },
     "yieldManagerSetterAC": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "SET_YIELD_MANAGER_ROLE"
@@ -146,6 +130,26 @@
           "description": "Allowed to prove blocks and post the corresponding transaction data."
         }
       ]
+    },
+    "pauseTypeToRole": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": ["PauseTypeRoleSet", "PauseTypeRoleUpdated"] },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": ["UnPauseTypeRoleSet", "UnPauseTypeRoleUpdated"]
+        },
+        "groupBy": "unPauseType"
+      }
     },
     // Uncomment two permissions below when these roles are added
     // "forcedTransactionSenders": {
@@ -296,11 +300,7 @@
       "severity": "HIGH",
       "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
     },
-    "periodInSeconds": {
-      "severity": "HIGH"
-    },
     "pauseDuration_fmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "PAUSE_DURATION",
@@ -310,7 +310,6 @@
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     },
     "COOLDOWN_DURATION_fmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "COOLDOWN_DURATION",
@@ -320,7 +319,6 @@
       "description": "The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."
     },
     "shnarfProvider": {
-      "severity": "HIGH",
       "description": "Smart contract that attests existence of blob commitments (shnarfs)."
     },
     "nonSecurityCouncilCooldownEnd": {

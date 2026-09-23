@@ -13,6 +13,8 @@
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+    "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+    "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE",
 
     "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
     "scr:0x5300000000000000000000000000000000000000",
@@ -21,7 +23,9 @@
     "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
     "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
     "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-    "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE"
+    "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE",
+    "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+    "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"
   ],
   "names": {
     "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
@@ -91,6 +95,11 @@
     "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
       // proposer on TimelockSCEmergency/TimelockSCSlow: no-delay core upgrades, verifier updates, ScrollOwner role admin
       "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
+      "critical": { "sinceTimestamp": 1780317383 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      },
       "references": [
         {
           "text": "Governance Update: Security Council Transition, Contributor Roles & Operational Adjustments (Scroll forum, 2026-04-13)",
@@ -105,6 +114,11 @@
     "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
       // proposer on L2 TimelockSCEmergencyScroll/TimelockSCSlow: no-delay upgrades of all L2 core contracts
       "description": "L2 counterpart of ScrollAdminMultisig.",
+      "critical": { "sinceTimestamp": 1780317750 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      },
       "references": [
         {
           "text": "L2 execution tx",
@@ -119,27 +133,12 @@
       "category": "bridge-external"
     },
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
-      // Scroll's own L1 DAI gateway: same ProxyAdmin, same ScrollOwner and the
-      // same L1GatewayRouter as the sibling gateways that are already critical.
-      // Governed by the project, with no third party controlling the L2 side.
+      // Scroll's own L1 DAI gateway: same ProxyAdmin, ScrollOwner and
+      // L1GatewayRouter as the sibling canonical gateways.
       "critical": true,
-      // DaiEscrow: holds DAI counted in TVS. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": ["counterpart"],
       "fields": {
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        },
         "counterpart": {
-          "severity": "HIGH",
           "edit": ["format", "ScrollAddress"]
         }
       },
@@ -210,23 +209,23 @@
     },
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
       // plonk verifier used by the active v7/v8 ZkEvmVerifiers (proof verification path)
-      "critical": true,
+      "critical": { "sinceTimestamp": 1754761103 },
       "manualSourcePaths": {
         "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
       }
     },
     "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": {
       // plonk verifier used by the active v9 ZkEvmVerifierPostFeynman (proof verification path)
-      "critical": true,
+      "critical": { "sinceTimestamp": 1765784711 },
       "manualSourcePaths": {
         "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/v0.7.1/verifier/verifier.bin"
       }
     },
-    "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": {
+    "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": {
       // plonk verifier used by the active v10 ZkEvmVerifierPostFeynman (proof verification path)
-      "critical": true,
+      "critical": { "sinceTimestamp": 1790041547 },
       "manualSourcePaths": {
-        "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
+        "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
       }
     },
 
@@ -241,14 +240,6 @@
       "ignoreDiscovery": true
     },
     "scr:0x5300000000000000000000000000000000000000": {
-      "fields": {
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        }
-      },
       // L2MessageQueue: builds the withdrawal merkle tree whose root (withdrawRoot) is used on L1 to validate all withdrawals
       "critical": true,
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
@@ -269,20 +260,27 @@
         "blacklister": {
           "severity": "MEDIUM"
         },
-        "owner": {
-          "severity": "HIGH"
-        },
         "masterMinter": {
           "severity": "HIGH"
         },
-        "implementation": {
-          "severity": "HIGH"
+        "minterAllowances": {
+          "severity": "HIGH",
+          "description": "Current USDC minters and their maximum mint allowances.",
+          "handler": {
+            "type": "event",
+            "select": ["minter", "minterAllowedAmount"],
+            "groupBy": "minter",
+            "set": { "event": "MinterConfigured" }
+          }
         },
-        "admin": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
+        "removedMinters": {
+          "severity": "HIGH",
+          "description": "USDC minter removals.",
+          "handler": {
+            "type": "event",
+            "select": "oldMinter",
+            "add": { "event": "MinterRemoved" }
+          }
         }
       },
       // bridged USDC token: unauthorized L2 minting is redeemable against the L1USDCGateway escrow
@@ -297,9 +295,6 @@
       "description": "Used to propose and manage onchain governance proposals.",
       "category": "gov",
       "fields": {
-        "PROPOSAL_TYPES_CONFIGURATOR": {
-          "severity": "HIGH"
-        },
         "votingPeriod": {
           "severity": "HIGH"
         },
@@ -309,14 +304,13 @@
         "proposalThreshold": {
           "severity": "HIGH"
         },
-        "token": {
-          "severity": "HIGH"
-        },
         "admin": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can configure contract settings such as voting delay, quorum, contract manager."
+            }
+          ]
         },
         "timelock": {
           "severity": "HIGH",
@@ -328,7 +322,6 @@
           ]
         },
         "manager": {
-          "severity": "HIGH",
           "permissions": [
             {
               "type": "interact",
@@ -352,14 +345,6 @@
       "ignoreMethods": ["getPastTotalSupply", "clock"]
     },
     "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": {
-      "fields": {
-        "implementation": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        }
-      },
       // beacon/factory for all bridged standard ERC20s on L2: its implementation pointer defines the code of tokens redeemable against L1 escrow
       "critical": true,
       "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway."
@@ -369,47 +354,24 @@
       "critical": true,
       "category": "core",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
-      "fields": {
-        "tokenFactory": {
-          "severity": "HIGH"
-        },
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        },
-        "counterpart": {
-          "severity": "HIGH",
-          "edit": ["format", "EthereumAddress"]
-        }
-      }
+      "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": {
       // trusted counterpart of L1CustomERC20Gateway (pufETH etc.), can send withdrawal messages releasing L1 escrow
       "critical": true,
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
       "fields": {
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
+        "tokenMapping": {
+          "severity": "HIGH",
+          "description": "L2-to-L1 token mapping used to validate custom-token deposits and withdrawals.",
+          "handler": {
+            "type": "event",
+            "select": "newL1Token",
+            "groupBy": "l2Token",
+            "set": { "event": "UpdateTokenMapping" }
+          }
         },
         "counterpart": {
-          "severity": "HIGH",
           "edit": ["format", "EthereumAddress"]
         }
       }
@@ -435,17 +397,7 @@
         "paused": {
           "severity": "MEDIUM"
         },
-        "messageQueue": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        },
         "counterpart": {
-          "severity": "HIGH",
           "edit": ["format", "EthereumAddress"]
         }
       }
@@ -455,33 +407,12 @@
       "critical": true,
       "description": "Contract of the L2ScrollMessenger contract.",
       "fields": {
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        },
         "counterpart": {
-          "severity": "HIGH",
           "edit": ["format", "EthereumAddress"]
         }
       }
     },
     "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": {
-      "fields": {
-        "counterpart": {
-          "severity": "HIGH"
-        },
-        "gateway": {
-          "severity": "HIGH"
-        }
-      },
       // ScrollStandardERC20: beacon implementation of every bridged standard ERC20 on L2; its code defines balances redeemable against L1 escrow
       "critical": true,
       "description": "Contract of the ERC20 standard token used by the ERC20 factory."
@@ -493,12 +424,6 @@
         },
         "defaultERC20Gateway": {
           "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
         }
       },
       // L2GatewayRouter: entry point pulling user tokens via approvals and routing withdrawals to gateways; malicious code steals TVS-backed L2 tokens
@@ -509,29 +434,8 @@
       // L2WETHGateway: trusted counterpart of L1WETHGateway, can send withdrawal messages releasing L1 WETH escrow
       "critical": true,
       "fields": {
-        "WETH": {
-          "severity": "HIGH"
-        },
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        },
-        "counterpart": {
-          "severity": "HIGH",
-          "edit": ["format", "EthereumAddress"]
-        },
-        "l1WETH": {
-          "severity": "HIGH",
-          "edit": ["format", "EthereumAddress"]
-        }
+        "counterpart": { "edit": ["format", "EthereumAddress"] },
+        "l1WETH": { "edit": ["format", "EthereumAddress"] }
       }
     },
     "scr:0x5300000000000000000000000000000000000004": {
@@ -557,9 +461,6 @@
       "critical": true,
       "category": "gov",
       "fields": {
-        "governor": {
-          "severity": "HIGH"
-        },
         "proposalTypes": {
           "severity": "HIGH",
           "handler": {
@@ -615,90 +516,90 @@
         "circleCaller": {
           "severity": "HIGH"
         },
-        "l2USDC": {
-          "severity": "HIGH"
-        },
-        "l1USDC": {
-          "severity": "HIGH"
-        },
-        "router": {
-          "severity": "HIGH"
-        },
-        "messenger": {
-          "severity": "HIGH"
-        },
-        "counterpart": {
-          "severity": "HIGH"
-        },
-        "owner": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        }
+        "counterpart": { "edit": ["format", "EthereumAddress"] }
       },
       // L2USDCGateway: trusted counterpart of L1USDCGateway, burns/mints L2 USDC and can send withdrawal messages releasing the L1 USDC escrow
       "critical": true
     },
     "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": {
-      "fields": {
-        "verifierDigest2": {
-          "severity": "HIGH"
-        },
-        "verifierDigest1": {
-          "severity": "HIGH"
-        },
-        "plonkVerifier": {
-          "severity": "HIGH"
-        }
-      },
       // ZkEvmVerifierPostEuclid-2: registered verifier version 7 (>= 7 usable to verify Scroll STF)
-      "critical": true
+      "critical": { "sinceTimestamp": 1754761103 }
     },
     "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485": {
-      "fields": {
-        "verifierDigest2": {
-          "severity": "HIGH"
-        },
-        "verifierDigest1": {
-          "severity": "HIGH"
-        },
-        "plonkVerifier": {
-          "severity": "HIGH"
-        }
-      },
       // ZkEvmVerifierPostFeynman: registered verifier version 8
-      "critical": true
+      "critical": { "sinceTimestamp": 1755485183 }
     },
     "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5": {
-      "fields": {
-        "verifierDigest2": {
-          "severity": "HIGH"
-        },
-        "verifierDigest1": {
-          "severity": "HIGH"
-        },
-        "plonkVerifier": {
-          "severity": "HIGH"
-        }
-      },
       // ZkEvmVerifierPostFeynman: registered verifier version 9
-      "critical": true
+      "critical": { "sinceTimestamp": 1765784711 }
     },
-    "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": {
-      "fields": {
-        "verifierDigest2": {
-          "severity": "HIGH"
-        },
-        "verifierDigest1": {
-          "severity": "HIGH"
-        },
-        "plonkVerifier": {
-          "severity": "HIGH"
-        }
-      },
+    "eth:0x7966FE0De13e3B81533470640Ac489223476B254": {
       // ZkEvmVerifierPostFeynman: registered verifier version 10 (latest)
-      "critical": true
+      "critical": { "sinceTimestamp": 1790041547 }
+    },
+    "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
+      // proposer, canceller and admin of the L1 no-delay emergency timelock
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
+      // proposer, canceller and admin of the L2 no-delay emergency timelock
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
+      // proposer, canceller and admin of the L1 fast operations timelock
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
+      // proposer, canceller and admin of the L2 fast operations timelock
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
+      // independent Security Council until its L1 timelock roles were transferred
+      "critical": { "untilTimestamp": 1780317383 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
+      // independent Security Council until its L2 timelock roles were transferred
+      "critical": { "untilTimestamp": 1780317750 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": {
+      // Security Council minority that could unpause L1 core contracts
+      "critical": { "untilTimestamp": 1780920587 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": {
+      // Security Council minority that could unpause L2 core contracts
+      "critical": { "untilTimestamp": 1780920632 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
     }
   }
 }

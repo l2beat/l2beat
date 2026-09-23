@@ -14,5 +14,11 @@
     "address": "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB",
     "chain": "ethereum",
     "blockNumber": 25272095
+  },
+  "Rollup_batchData_v3": {
+    "hash": "0xf24c39e5b0d3851769ddbafcad7ce6770f9aac6e89c6b220c902ab07d97ab225",
+    "address": "eth:0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d",
+    "chain": "ethereum",
+    "blockNumber": 26031669
   }
 }

@@ -27,9 +27,6 @@
     "rollupDelayPeriod": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     // The verifier route deciding which zk proofs are accepted in challenges.
     "verifier": {
       "severity": "HIGH"
@@ -40,14 +37,6 @@
     },
     // Time a challenged proposer has to submit a validity proof before the batch is deleted.
     "proofWindow": {
-      "severity": "HIGH"
-    },
-    // Defines the permissioned staker set allowed to sequence and propose.
-    "l1StakingContract": {
-      "severity": "HIGH"
-    },
-    // Queue enforcing L1 -> L2 message inclusion (forced transactions).
-    "messageQueue": {
       "severity": "HIGH"
     },
     "paused": {
@@ -73,7 +62,6 @@
     // Controller of pausing, batch reverts, the proof window, the finalization
     // period and the verifier pointer.
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

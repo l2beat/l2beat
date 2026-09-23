@@ -204,6 +204,14 @@
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 20. (pre-BoLD RollupProxy, since retired)."
     },
     {
+      "timestamp": 1710423719,
+      "type": "state",
+      "contract": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+      "transaction": "0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
+      "updateId": "5edc278c",
+      "reason": "Upgraded SequencerInbox and set its batch-poster manager as part of the ArbOS 20 / EIP-4844 governance execution."
+    },
+    {
       "timestamp": 1719023040,
       "type": "state",
       "contract": "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C",

@@ -5,7 +5,11 @@
   "maxAddresses": 150,
   "initialAddresses": [
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77", // OptimismPortalProxy — root, all other OP Stack L1 contracts are reachable from here
-    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08" // Legacy MainchainGateway — still holds all bridged user funds (ETH, USDC, AXS, WETH)
+    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08", // Legacy MainchainGateway — still holds all bridged user funds (ETH, USDC, AXS, WETH)
+    "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A", // PermissionedDisputeGame used before the September 2026 core upgrade
+    "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3", // historic PermissionedDisputeGame PreimageOracle
+    "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908", // historic PermissionedDisputeGame MIPS VM
+    "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434" // historic PermissionedDisputeGame bond escrow
   ],
   "names": {
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77": "OptimismPortal2",
@@ -22,12 +26,49 @@
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": "MainchainBridgeManager",
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": "PauseEnforcer",
     "eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": "LegacyBridgeOwner",
-    "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": "RoninConduitOwner"
+    "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": "RoninConduitOwner",
+    "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A": "PermissionedDisputeGame_preSept2026"
   },
   "overrides": {
     "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": {
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
-      "critical": true
+      "critical": true,
+      "ignoreRelatives": ["OVM_L1CrossDomainMessenger"],
+      "fields": {
+        "OVM_L1CrossDomainMessenger": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_L1CrossDomainMessenger"]
+          }
+        }
+      }
+    },
+    // Shared deployment tooling references bare OP Stack implementations. Do
+    // not follow it into contracts that are not part of Ronin's live system.
+    "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c": {
+      "ignoreDiscovery": true
+    },
+    // Replaced as the system controller by the joint Ronin/Conduit Safe.
+    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
+      "critical": {
+        "sinceTimestamp": 1771964639,
+        "untilTimestamp": 1779285407
+      },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // Effective controller of both ProxyAdmins, the DGF and SystemConfig.
+    "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
+      "description": "5-of-6 joint Ronin/Conduit Safe.",
+      "critical": { "sinceTimestamp": 1779285407 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
     },
     // Legacy MainchainGateway uses overloaded view methods that the default
     // handler can't probe (need explicit indices/length). Ignore them — the
@@ -65,9 +106,6 @@
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
-      "description": "5-of-6 joint Ronin/Conduit Safe."
-    },
     // PermissionedDisputeGame (type 1) is the respected game since 2026-09-07.
     // The DGF template resolves its proposer/challenger from gameArgs(1) but
     // emits permissions only where a project opts in.
@@ -93,31 +131,17 @@
     },
     "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336": {
       "description": "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.",
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": {
-      "fields": {
-        "PERMIT_DURATION": {
-          "severity": "HIGH"
-        },
-        "PERMIT_DELAY": {
-          "severity": "HIGH"
-        },
-        "ROLLUP_CONFIG_HASH": {
-          "severity": "HIGH"
-        },
-        "RISC_ZERO_VERIFIER": {
-          "severity": "HIGH"
-        },
-        "FPVM_IMAGE_ID": {
-          "severity": "HIGH"
-        },
-        "$admin": {
-          "severity": "HIGH"
-        }
-      },
       "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.",
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     // Active Kailua proof path (bob precedent): KailuaGame/KailuaTreasury (game
     // type 1337, the respected game type) verify state roots through the
@@ -125,37 +149,64 @@
     // RiscZeroVerifierRouter. Permanently paused verifier routes are
     // intentionally not flagged (base precedent).
     "eth:0x296e7aD6D441b0627768bC0650179a4206479444": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     // Active RISC Zero verification path: unpaused emergency stops and the
     // verifiers they wrap (groth16 verifiers plus the set verifier).
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
       // RiscZeroVerifierRouter: routes proof verification by selector; the owner
       // (RISC Zero governance timelock) can add or remove verifier routes.
-      "critical": true
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      }
     },
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used by
       // the KailuaVerifier (add/remove verifier routes).
-      "critical": true,
+      "critical": {
+        "sinceTimestamp": 1782901175,
+        "untilTimestamp": 1788777107
+      },
       "fields": {
         "callsScheduled": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",
@@ -168,7 +219,6 @@
         },
         "callsExecuted": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",
-          "severity": "HIGH",
           "handler": {
             "type": "event",
             "add": {
@@ -186,24 +236,43 @@
     "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": {
       "critical": true
     },
+    "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": {
+      "critical": true
+    },
+    // Permissioned game and its proof dependencies before the September 2026
+    // upgrade. Kept as an explicit historical root after leaving discovery.
+    "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A": {
+      "critical": { "untilTimestamp": 1789973519 }
+    },
+    "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": {
+      "critical": { "untilTimestamp": 1789973519 }
+    },
+    "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": {
+      "critical": { "untilTimestamp": 1789973519 }
+    },
+    "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434": {
+      "critical": { "untilTimestamp": 1789973519 }
+    },
+    // Current PermissionedDisputeGame proof path joined Ronin in the September
+    // 2026 core upgrade; these shared implementations predate that use.
+    "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e": {
+      "critical": { "sinceTimestamp": 1789973519 }
+    },
+    "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": {
+      "critical": { "sinceTimestamp": 1789973519 }
+    },
+    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": {
+      "critical": { "sinceTimestamp": 1789973519 }
+    },
+    "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d": {
+      "critical": { "sinceTimestamp": 1789973519 }
+    },
     // SuperchainConfig fork: guardian can pause deposits/withdrawals for Ronin.
     "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c": {
       "fields": {
         "guardian": {
           "severity": "MEDIUM",
           "description": "Address that can pause Ronin withdrawals and blacklist dispute games."
-        }
-      }
-    },
-    // The air gap: how long a resolved dispute game must wait before its root
-    // can finalize withdrawals. Changing it alters the guardian's window to
-    // blacklist a faulty game, i.e. the conditions under which user
-    // withdrawals are validated.
-    "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": {
-      "fields": {
-        "disputeGameFinalityDelaySeconds": {
-          "severity": "HIGH",
-          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
         }
       }
     }

@@ -34,10 +34,10 @@
       }
     },
     "$threshold": {
-      "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.",
+      "description": "Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract.",
       "handler": {
         "type": "hardcoded",
-        "value": 7
+        "value": 4
       }
     },
     "settings": {

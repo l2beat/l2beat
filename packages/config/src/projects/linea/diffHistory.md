@@ -1,3 +1,416 @@
+Generated with discovered.json: 0xf760e019d9a8e4fa621309f96fd4fe765dc21e9c
+
+# Diff at Tue, 22 Sep 2026 09:44:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789919089
+- current timestamp: 1790070195
+
+## Description
+
+Refine ossification severities to live security policy and remove identity-only, immutable, initializer-only and duplicate derived fields.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.PAUSE_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.tokenBeacon:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
+-        {"severity":"HIGH"}
+      fieldMeta.customContractSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.reserveTokenSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.reserveTokenRemovers:
+-        {"severity":"HIGH"}
+      fieldMeta.messageServiceSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.remoteSender.severity:
+-        "HIGH"
+      fieldMeta.allPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.initiateTokenBridgingPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.completeTokenBridgingPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.allUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.initiateTokenBridgingUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.completeTokenBridgingUnpausers:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A] {
+    +++ description: None
+      fieldMeta:
+-        {"getChainConfiguration":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract CallForwardingProxy (eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D) [linea/CallForwardingProxy] {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      fieldMeta:
+-        {"target":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BridgedToken (eth:0x36f274C1C197F277EA3C57859729398FCc8a3763) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      fieldMeta:
+-        {"bridge":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3) [linea/LidoStakingVaultYieldProvider] {
+    +++ description: Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof.
+      fieldMeta:
+-        {"STETH":{"severity":"HIGH"},"YIELD_MANAGER":{"severity":"HIGH"},"L1_MESSAGE_SERVICE":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) [gnosisSafeModules/ZodiacDelay] {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      fieldMeta.ZodiacModule_guard.severity:
+-        "HIGH"
+      fieldMeta.ZodiacModule_guard.description:
++        "Legacy alias of guard."
+      fieldMeta.ZodiacModule_target.severity:
+-        "HIGH"
+      fieldMeta.ZodiacModule_target.description:
++        "Legacy alias of target."
+      fieldMeta.ZodiacModule_avatar.severity:
+-        "HIGH"
+      fieldMeta.ZodiacModule_avatar.description:
++        "Legacy alias of avatar."
+      fieldMeta.getGuard.severity:
+-        "HIGH"
+      fieldMeta.getGuard.description:
++        "Alias of guard."
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F) [N/A] {
+    +++ description: None
+      fieldMeta:
+-        {"getChainConfiguration":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ severity: HIGH
+      values.pauseTypeToRole:
++        {"1":"0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77","2":"0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598","3":"0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6","4":"0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77","5":"0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77","6":"0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c","9":"0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450","13":"0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55"}
++++ severity: HIGH
+      values.unpauseTypeToRole:
++        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","2":"0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc","3":"0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770","4":"0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40","5":"0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40","6":"0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e","9":"0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858","13":"0x4df33217c89b6f12af38ba46035cb312b5e88de78d22279286830fe079b642cd"}
+      fieldMeta.isWithdrawLSTAllowed:
+-        {"severity":"HIGH"}
+      fieldMeta.PAUSE_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.livenessRecoveryOperator:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
+-        {"severity":"HIGH"}
+      fieldMeta.ethStakerAC:
+-        {"severity":"HIGH"}
+      fieldMeta.securityCouncilAC.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.yieldManagerSetterAC:
+-        {"severity":"HIGH"}
+      fieldMeta.periodInSeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseDuration_fmt.severity:
+-        "HIGH"
+      fieldMeta.COOLDOWN_DURATION_fmt.severity:
+-        "HIGH"
+      fieldMeta.shnarfProvider.severity:
+-        "HIGH"
+      fieldMeta.pauseAllAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.pauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.unpauseTypeToRole:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xd6B95c960779c72B8C6752119849318E5d550574) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ severity: MEDIUM
+      values.allPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ severity: MEDIUM
+      values.allUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ severity: MEDIUM
+      values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        false
++++ severity: MEDIUM
+      values.isPaused_NATIVE_YIELD_REPORTING:
++        false
++++ severity: MEDIUM
+      values.isPaused_NATIVE_YIELD_STAKING:
++        false
++++ severity: MEDIUM
+      values.isPaused_NATIVE_YIELD_UNSTAKING:
++        false
++++ severity: HIGH
+      values.pauseTypeToRole:
++        {"1":"0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77","9":"0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450","10":"0x06c421ad716396bcfdef0d016c4820d40cf7f6fbcb79641777bac5e94c752f3d","11":"0x393d2e95deba7a477d5535948d830f9760a4cec17bbb245b27328519bc352f86","12":"0xc7320f8b3278900bd319b3ad770ea73ce548c217978874599400e3b17e120c19"}
++++ severity: MEDIUM
+      values.securityCouncilAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ severity: MEDIUM
+      values.stakingPauseControllers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]
++++ severity: HIGH
+      values.unpauseTypeToRole:
++        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","9":"0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858","10":"0xf3b4edd31d82596b9f4e954680c4101d115ae7609dd7c1e14a6fdb7387f56e5c","11":"0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216","12":"0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.yieldStakingOperatorAC.severity:
+-        "HIGH"
+      fieldMeta.yieldStakingManagerAC.severity:
+-        "HIGH"
+      fieldMeta.pauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.unpauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.allPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.allUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.securityCouncilAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.stakingPauseControllers:
++        {"severity":"MEDIUM"}
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING:
++        {"severity":"MEDIUM"}
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING:
++        {"severity":"MEDIUM"}
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        {"severity":"MEDIUM"}
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.PAUSE_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.tokenBeacon:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
+-        {"severity":"HIGH"}
+      fieldMeta.customContractSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.reserveTokenSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.reserveTokenRemovers:
+-        {"severity":"HIGH"}
+      fieldMeta.messageServiceSetters:
+-        {"severity":"HIGH"}
+      fieldMeta.remoteSender.severity:
+-        "HIGH"
+      fieldMeta.allPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.initiateTokenBridgingPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.completeTokenBridgingPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.allUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.initiateTokenBridgingUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.completeTokenBridgingUnpausers:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
++++ severity: MEDIUM
+      values.allPausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD","linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"]
++++ severity: MEDIUM
+      values.allUnpausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
++++ severity: MEDIUM
+      values.l1l2Pausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
++++ severity: MEDIUM
+      values.l1l2Unpausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
++++ severity: MEDIUM
+      values.l2l1Pausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
++++ severity: MEDIUM
+      values.l2l1Unpausers:
++        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
++++ severity: HIGH
+      values.pauseTypeToRole:
++        {"1":"0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77","2":"0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598","3":"0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6"}
++++ severity: HIGH
+      values.unpauseTypeToRole:
++        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","2":"0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc","3":"0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770"}
+      fieldMeta.PAUSE_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.l1l2MessageSetter:
+-        {"severity":"HIGH"}
+      fieldMeta.periodInSeconds.severity:
+-        "HIGH"
+      fieldMeta.pauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.unpauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.allPausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.allUnpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.l1l2Pausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.l1l2Unpausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.l2l1Pausers:
++        {"severity":"MEDIUM"}
+      fieldMeta.l2l1Unpausers:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2Timelock (linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BridgedToken (linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      fieldMeta:
+-        {"bridge":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xbffd358db33cb093809d6eb43b1849f166d1a023
 
 # Diff at Mon, 21 Sep 2026 11:24:02 GMT:

@@ -6,7 +6,6 @@
   "ignoreMethods": ["getPastTotalSupply", "instances", "proxiableUUID"],
   "fields": {
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

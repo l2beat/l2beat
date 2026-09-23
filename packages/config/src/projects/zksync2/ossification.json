@@ -1,18 +1,28 @@
 {
   "events": [
     {
-      "timestamp": 1741764383,
+      "timestamp": 1753709927,
       "type": "state",
-      "contract": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-      "transaction": "0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
-      "reason": "Raised the Matter Labs Multisig threshold from 4/6 to 5/7; the Safe owns the EraMultisigValidator and its ProxyAdmin and is itself outside the perimeter."
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x6c54ae13afd01a30d20bc48537326fc8d920e58cdc4292d85f2fc50a4bf2d89e",
+      "updateId": "8cabc948",
+      "reason": "Moved ZKsync Era settlement from Ethereum to Gateway; the first block with the new settlement-layer pointer was identified by historical state bisection."
     },
     {
-      "timestamp": 1782830483,
+      "timestamp": 1769897051,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26",
+      "updateId": "35e6a989",
+      "reason": "Finalized ZKsync Era's migration from Gateway back to Ethereum; the Diamond emitted MigrationComplete."
+    },
+    {
+      "timestamp": 1777553063,
       "type": "state",
       "contract": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-      "transaction": "0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
-      "reason": "Reduced the Matter Labs Multisig threshold from 5/7 to 4/6; the Safe owns the EraMultisigValidator and its ProxyAdmin and is itself outside the perimeter."
+      "transaction": "0xc886eef19b7182bda72883f0d6b6536e8c07fa399a0c66f7f50d4e66d592e674",
+      "updateId": "af5012ae",
+      "reason": "Changed the EraMultisigValidator execution threshold from zero to three approvals, enabling validator multisig gating."
     }
   ]
 }

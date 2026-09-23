@@ -3,34 +3,10 @@
     {
       "timestamp": 1779285407,
       "type": "state",
-      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "contract": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
       "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
       "updateId": "3f3ba4f2",
-      "reason": "Rotated the DisputeGameFactory owner from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
-    },
-    {
-      "timestamp": 1779285407,
-      "type": "state",
-      "contract": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
-      "updateId": "3f3ba4f2",
-      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the core Ronin contracts from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
-    },
-    {
-      "timestamp": 1779285407,
-      "type": "state",
-      "contract": "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34",
-      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
-      "updateId": "3f3ba4f2",
-      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the SuperchainConfig fork holding Ronin's pause authority from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
-    },
-    {
-      "timestamp": 1779285407,
-      "type": "state",
-      "contract": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
-      "updateId": "3f3ba4f2",
-      "reason": "Rotated the SystemConfig owner (sequencer and gas configuration authority) from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
+      "reason": "Moved the effective core upgrade and configuration authority from the 4-of-11 Conduit Safe to the 5-of-6 joint Ronin/Conduit Safe."
     },
     {
       "timestamp": 1780066583,
@@ -59,10 +35,10 @@
     {
       "timestamp": 1782901175,
       "type": "state",
-      "contract": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+      "contract": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
       "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
       "updateId": "f6059a61",
-      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337); the OptimismPortal2 reads it from the AnchorStateRegistry set in this tx."
+      "reason": "Set the live Kailua proposer economics: a 0.5 ETH participation bond, a one-month vanguard advantage, and the vanguard proposer."
     },
     {
       "timestamp": 1788777107,
@@ -73,12 +49,20 @@
       "reason": "Moved the respected game type back from the Kailua ZK game (1337) to the PermissionedDisputeGame (1) in the AnchorStateRegistry (RespectedGameTypeSet via the Ronin/Conduit Safe); withdrawals again clear through the permissioned game."
     },
     {
-      "timestamp": 1788777107,
+      "timestamp": 1789973519,
       "type": "state",
-      "contract": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
-      "transaction": "0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482",
-      "updateId": "8c7d17d4",
-      "reason": "Moved the respected game type back from the Kailua ZK game (1337) to the PermissionedDisputeGame (1); the OptimismPortal2 reads it from the AnchorStateRegistry set in this tx."
+      "contract": "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C",
+      "transaction": "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
+      "updateId": "444c1d72",
+      "reason": "Repointed the legacy OVM_L1CrossDomainMessenger mapping to the new messenger implementation during the core protocol upgrade."
+    },
+    {
+      "timestamp": 1789973519,
+      "type": "code",
+      "contract": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+      "transaction": "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
+      "updateId": "444c1d72",
+      "reason": "Upgraded the L1StandardBridge implementation as part of the core protocol upgrade."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "timestamp": 1786612387,
-  "configHash": "0x5fdc559a1d8b8085fcd8b63f1752cf42db217caf7d7a4801cdf7e40596a36712",
+  "timestamp": 1790118808,
+  "configHash": "0xe8f9dbfcf6cc00f95801b1d250d049acb0adc17c8cc683877c31a76343f52e62",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -283,6 +283,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1738755371 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599599,
@@ -311,6 +312,10 @@
         "multisigThreshold": "9 of 12 (75%)",
         "nonce": 11,
         "VERSION": "1.4.1"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
@@ -649,13 +654,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -663,6 +667,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -672,20 +680,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "Proxy",
@@ -735,6 +740,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1727697611 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x030ceEE5D4CBc304287234720B11E00f47695755",
       "sinceTimestamp": 1727171111,
@@ -754,6 +760,10 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 2,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "GnosisSafeProxy",
@@ -785,6 +795,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1672589267 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672587635,
@@ -807,6 +818,10 @@
         "multisigThreshold": "2 of 6 (33%)",
         "nonce": 41,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": "GnosisSafeProxy",
@@ -1231,20 +1246,21 @@
         ],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
-          "severity": "HIGH",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -1254,20 +1270,16 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
-          "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "Proxy",
@@ -1406,13 +1418,12 @@
         "secAgentAC": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -1420,6 +1431,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -1429,20 +1444,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "Proxy",
@@ -1559,13 +1571,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -1573,6 +1584,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -1582,20 +1597,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "Proxy",
@@ -1731,7 +1743,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1696820,
+        "l1ToL2MessageNonce": 1697842,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1759,19 +1771,16 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "460416287689914351838488462183993789270396474383792784101450107858726611728",
-        "stateBlockNumber": 13216199,
-        "stateRoot": "2826411619930727617352753332712584583771552457306778130493037728711489308726",
+        "stateBlockHash": "479674090042135008275158835459198445277961724052041870883875436551842479330",
+        "stateBlockNumber": 15285696,
+        "stateRoot": "379540792881454878627996222249563827914086036392891871961608101321207440247",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
-          "severity": "HIGH",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {
@@ -1779,27 +1788,22 @@
           "description": "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin."
         },
         "programHashHistory": {
-          "severity": "HIGH",
           "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
           "type": "CODE_CHANGE"
         },
         "aggregatorProgramHashHistory": {
-          "severity": "HIGH",
           "description": "Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.",
           "type": "CODE_CHANGE"
         },
         "configHashHistory": {
-          "severity": "HIGH",
           "description": "Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.",
           "type": "CODE_CHANGE"
         },
         "verifier": {
-          "severity": "HIGH",
           "description": "SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.",
           "type": "CODE_CHANGE"
         },
         "feeCollector": {
-          "severity": "HIGH",
           "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
           "type": "RISK_PARAMETER"
         },
@@ -1819,9 +1823,11 @@
           "type": "CODE_CHANGE"
         },
         "programHashMapped": {
+          "severity": "HIGH",
           "description": "Human-readable label for the current Starknet OS program hash."
         },
         "aggregatorHashMapped": {
+          "severity": "HIGH",
           "description": "Human-readable label for the current Starknet aggregator program hash."
         }
       },
@@ -1888,12 +1894,6 @@
         "executionDelayFmt": "8d",
         "executionExpiration": 4838400,
         "owner": "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988"
-      },
-      "fieldMeta": {
-        "executionExpiration": { "severity": "HIGH" },
-        "executionDelay": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "executionDelayFmt": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c": "DelayedExecutor"
@@ -2024,20 +2024,21 @@
         ],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
-          "severity": "HIGH",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2047,20 +2048,16 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
-          "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "Proxy",
@@ -2177,13 +2174,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2191,6 +2187,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2200,20 +2200,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "Proxy",
@@ -2363,13 +2360,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2377,6 +2373,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2386,20 +2386,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": "Proxy",
@@ -2507,13 +2504,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2521,6 +2517,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2530,20 +2530,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": "Proxy",
@@ -2650,13 +2647,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2664,6 +2660,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2673,20 +2673,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "Proxy",
@@ -2969,13 +2966,12 @@
         "secAgentAC": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2983,6 +2979,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -2992,20 +2992,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "Proxy",
@@ -3050,6 +3047,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": { "sinceTimestamp": 1746449747 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599755,
@@ -3078,6 +3076,10 @@
         "multisigThreshold": "3 of 12 (25%)",
         "nonce": 9,
         "VERSION": "1.4.1"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "SafeProxy",
@@ -3167,13 +3169,12 @@
         "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitEnabled": [],
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
-        "getUpgradeActivationDelay": { "severity": "HIGH" },
-        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -3181,6 +3182,10 @@
         "withdrawalLimitStatus": {
           "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "withdrawalLimitEnabled": {
+          "severity": "MEDIUM",
+          "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
           "severity": "HIGH",
@@ -3190,20 +3195,17 @@
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
-          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
-        "manager": { "severity": "HIGH" },
-        "bridgedToken": { "severity": "HIGH" },
-        "l2TokenContract": { "severity": "HIGH" },
-        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
-        }
+        },
+        "secAdminAC": { "severity": "MEDIUM" },
+        "secAgentAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": "Proxy",
@@ -4564,18 +4566,18 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
-    "starknet/DelayedExecutor": "0xe27f0a61864a2f889f7fe4d879e3da459475aea45f338de0b6491d9356129fc2",
+    "starknet/DelayedExecutor": "0x1d70f046977cad3193f749db59913730ae9cbcda2784f2c3652a60d53ff99e23",
     "starknet/L1EscrowDAI": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0x443048c973a40defabce9a46a86f3a71d1f19010649429ae87926e53521e3bdf",
-    "starknet/StarknetERC20Bridge": "0x4b148c56412c957c9c82b2bc3d0f22d7dd0aadf4ca529b0e1c7878db449f0d85",
-    "starknet/StarknetEthBridge": "0x4b148c56412c957c9c82b2bc3d0f22d7dd0aadf4ca529b0e1c7878db449f0d85",
+    "starknet/Starknet": "0x9f41e18c29973c9b481a2ab38a8b269210c793a9ad8ee66c4fbf1a7474478550",
+    "starknet/StarknetERC20Bridge": "0x2e2541f04c46b7c8acf11507b954418d31524b2fb5f1e661281ca8efeb18f765",
+    "starknet/StarknetEthBridge": "0x2e2541f04c46b7c8acf11507b954418d31524b2fb5f1e661281ca8efeb18f765",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 25745123 },
+  "usedBlockNumbers": { "ethereum": 26036232 },
   "permissionsConfigHash": "0xecf92539241affae24423ae3f67f844ce8ccc4feb4df282dce13c42d9b70c78a",
   "modelledAgainst": {
     "shared-sharp-verifier": "0xedbb05e5ad7dcdb7f8a130d8e366de52ebbb6c9f3785ea1da95bd467a3299966"
