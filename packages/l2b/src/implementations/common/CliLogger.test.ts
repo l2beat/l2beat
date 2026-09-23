@@ -27,9 +27,10 @@ function terminalLogger(columns = 80, rows = 24) {
       callback()
     },
   })
+  const reported = { columns: undefined as number | undefined }
   const screen: LiveScreen = {
     get columns() {
-      return terminal.cols
+      return reported.columns ?? terminal.cols
     },
     write: (text) => {
       stream.write(text)
@@ -73,7 +74,15 @@ function terminalLogger(columns = 80, rows = 24) {
     return { isDefault: cell.isFgDefault(), palette: cell.getFgColor() }
   }
 
-  return { terminal, logger, clock, captured, screenRows, foregroundColor }
+  return {
+    terminal,
+    logger,
+    clock,
+    captured,
+    reported,
+    screenRows,
+    foregroundColor,
+  }
 }
 
 function plainLogger() {
@@ -266,6 +275,17 @@ describe(CliLogger.name, () => {
       clock.now += 100
       status.update('y'.repeat(60))
       expect(await screenRows()).toEqual(['y'.repeat(39)])
+    })
+
+    it('keeps drawing when the terminal reports fewer than two columns', async () => {
+      const { logger, clock, reported, screenRows } = terminalLogger(20)
+      const status = logger.status()
+      status.update('abc')
+      reported.columns = 1
+      clock.now += 100
+      status.update('defgh')
+      logger.log('line')
+      expect(await screenRows()).toEqual(['line', 'd'])
     })
 
     it('emits only cursor up, column, clear right and clear down', async () => {

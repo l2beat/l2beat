@@ -118,21 +118,23 @@ export class CliLogger {
 
   private draw(live: LiveOptions): void {
     const screen = live.screen
-    assert(Number.isInteger(screen.columns))
-    assert(screen.columns > 1)
+    const columns = screen.columns > 1 ? screen.columns : 2
 
+    // Resizing the terminal mid-run is not handled: a narrower terminal may
+    // reflow an old status row onto two rows, and this then moves up one row
+    // too few and leaves a stale fragment behind. Don't resize.
     screen.moveCursor(0, -this.drawnRows)
     screen.cursorTo(0)
     for (const line of this.pendingLogs) {
       for (const row of splitRows(line)) {
-        writeRow(screen, row)
+        writeRow(screen, row, columns)
       }
     }
     this.pendingLogs = []
 
-    const widthMax = screen.columns - 1
+    const widthMax = columns - 1
     for (const entry of this.statuses) {
-      writeRow(screen, fitWidth(entry.text, widthMax))
+      writeRow(screen, fitWidth(entry.text, widthMax), columns)
     }
     screen.clearScreenDown()
 
@@ -155,10 +157,10 @@ function stripCarriageReturn(row: string): string {
 // A row that ends exactly at the right edge leaves the cursor on its last
 // cell with the wrap pending, and erasing from there would eat that cell.
 // Such a row has overwritten everything anyway, so nothing is left to clear.
-function writeRow(screen: LiveScreen, text: string): void {
+function writeRow(screen: LiveScreen, text: string, columns: number): void {
   screen.write(text)
   const width = stripVTControlCharacters(text).length
-  const fillsRows = width > 0 && width % screen.columns === 0
+  const fillsRows = width > 0 && width % columns === 0
   if (!fillsRows) {
     screen.clearLine(1)
   }
