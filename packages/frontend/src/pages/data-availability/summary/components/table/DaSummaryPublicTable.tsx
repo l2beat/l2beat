@@ -21,7 +21,10 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Data availability summary, Public tab"
+        table={table}
+      />
     </>
   )
 }

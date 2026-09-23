@@ -8,8 +8,10 @@ import { customColumns, publicColumns } from './columns'
 export function DaArchivedTable({
   items,
   excludeBridge = false,
+  caption,
 }: {
   items: DaArchivedEntry[]
+  caption: string
   excludeBridge?: boolean
 }) {
   const table = useTable('DaArchivedTable', {
@@ -27,7 +29,7 @@ export function DaArchivedTable({
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

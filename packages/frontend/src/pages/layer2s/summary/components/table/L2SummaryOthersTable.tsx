@@ -62,7 +62,10 @@ export function L2SummaryOthersTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Scaling projects summary, Others tab"
+        table={table}
+      />
     </>
   )
 }

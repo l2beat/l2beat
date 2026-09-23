@@ -22,5 +22,5 @@ export function ProgramHashesTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return <BasicTable caption="Program hashes" table={table} />
 }

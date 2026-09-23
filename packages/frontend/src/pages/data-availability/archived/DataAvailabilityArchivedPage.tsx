@@ -47,11 +47,18 @@ export function DataAvailabilityArchivedPage({
               </DirectoryTabsList>
               <DirectoryTabsContent value="public">
                 <PublicSystemInfo />
-                <DaArchivedTable items={publicSystems} />
+                <DaArchivedTable
+                  items={publicSystems}
+                  caption="Archived data availability layers, Public tab"
+                />
               </DirectoryTabsContent>
               <DirectoryTabsContent value="custom">
                 <CustomSystemInfo />
-                <DaArchivedTable items={customSystems} excludeBridge />
+                <DaArchivedTable
+                  items={customSystems}
+                  caption="Archived data availability layers, Custom tab"
+                  excludeBridge
+                />
               </DirectoryTabsContent>
             </DirectoryTabs>
           </div>

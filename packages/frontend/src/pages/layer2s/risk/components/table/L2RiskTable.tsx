@@ -6,7 +6,13 @@ import { useTable } from '~/hooks/useTable'
 import type { L2RiskEntry } from '~/server/features/layer2s/risks/getL2RiskEntries'
 import { l2RiskColumns } from './columns'
 
-export function L2RiskTable({ entries }: { entries: L2RiskEntry[] }) {
+export function L2RiskTable({
+  entries,
+  caption,
+}: {
+  entries: L2RiskEntry[]
+  caption: string
+}) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable('L2RiskTable', {
     data: entries,
@@ -28,7 +34,7 @@ export function L2RiskTable({ entries }: { entries: L2RiskEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

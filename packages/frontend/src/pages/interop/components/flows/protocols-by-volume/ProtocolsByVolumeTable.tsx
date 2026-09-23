@@ -47,6 +47,7 @@ export function ProtocolsByVolumeTable({
 
   return (
     <BasicTable
+      caption="Interop protocols by volume"
       table={table}
       tableWrapperClassName="pb-0"
       skeletonCount={6}

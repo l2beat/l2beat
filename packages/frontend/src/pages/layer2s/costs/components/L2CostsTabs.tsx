@@ -70,7 +70,10 @@ export function L2CostsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <L2CostsTable entries={entries.rollups} />
+            <L2CostsTable
+              entries={entries.rollups}
+              caption="Onchain costs of scaling projects, Rollups tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -85,7 +88,10 @@ export function L2CostsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <L2CostsTable entries={entries.validiumsAndOptimiums} />
+            <L2CostsTable
+              entries={entries.validiumsAndOptimiums}
+              caption="Onchain costs of scaling projects, Validiums & Optimiums tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -97,7 +103,10 @@ export function L2CostsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <L2CostsTable entries={entries.others} />
+            <L2CostsTable
+              entries={entries.others}
+              caption="Onchain costs of scaling projects, Others tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

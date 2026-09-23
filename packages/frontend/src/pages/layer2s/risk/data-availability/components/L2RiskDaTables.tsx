@@ -58,19 +58,29 @@ export function L2RiskDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <L2RiskDaTable entries={entries.rollups} />
+            <L2RiskDaTable
+              entries={entries.rollups}
+              caption="Data availability risks of scaling projects, Rollups tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <L2RiskDaTable entries={entries.validiumsAndOptimiums} />
+            <L2RiskDaTable
+              entries={entries.validiumsAndOptimiums}
+              caption="Data availability risks of scaling projects, Validiums & Optimiums tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <L2RiskDaTable entries={entries.others} hideType />
+            <L2RiskDaTable
+              entries={entries.others}
+              caption="Data availability risks of scaling projects, Others tab"
+              hideType
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

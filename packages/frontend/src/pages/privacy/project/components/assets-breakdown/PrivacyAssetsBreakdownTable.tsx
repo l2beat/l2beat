@@ -46,7 +46,7 @@ export function PrivacyAssetsBreakdownTable({
   })
 
   return (
-    <Table>
+    <Table caption="Assets breakdown">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableHeaderRow key={headerGroup.id}>

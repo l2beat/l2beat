@@ -32,7 +32,10 @@ export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Liveness of data availability layers, Public tab"
+        table={table}
+      />
     </>
   )
 }

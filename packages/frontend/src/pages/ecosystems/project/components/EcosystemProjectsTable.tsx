@@ -55,7 +55,7 @@ export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption="Projects in the ecosystem" table={table} />
     </>
   )
 }

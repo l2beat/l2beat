@@ -60,19 +60,29 @@ export function L2LivenessTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <L2LivenessTable entries={entries.rollups} />
+            <L2LivenessTable
+              entries={entries.rollups}
+              caption="Liveness of scaling projects, Rollups tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <L2LivenessTable entries={entries.validiumsAndOptimiums} />
+            <L2LivenessTable
+              entries={entries.validiumsAndOptimiums}
+              caption="Liveness of scaling projects, Validiums & Optimiums tab"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <L2LivenessTable entries={entries.others} hideType />
+            <L2LivenessTable
+              entries={entries.others}
+              caption="Liveness of scaling projects, Others tab"
+              hideType
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

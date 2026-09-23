@@ -58,6 +58,8 @@ export type BasicTableRow = {
 
 export interface BasicTableProps<T extends BasicTableRow> {
   table: TanstackTable<T>
+  /** @see Table */
+  caption: string
   isLoading?: boolean
   skeletonCount?: number
   /**
@@ -120,6 +122,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         />
       )}
       <Table
+        caption={props.caption}
         tableWrapperClassName={props.tableWrapperClassName}
         {...getPersistedTableAttributes(props.table)}
       >
@@ -173,10 +176,13 @@ function BasicTableGroupedHeaderRow<T>({
       {getRenderedHeaders(groupedHeader.headers).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
+          const hasTitle =
+            !header.isPlaceholder && !!header.column.columnDef.header
           return (
             <React.Fragment key={header.id}>
               <th
                 colSpan={getRenderedColSpan(header)}
+                scope={hasTitle ? 'colgroup' : undefined}
                 className={getBasicTableGroupedHeaderCellClassName({
                   isPlaceholder: header.isPlaceholder,
                   hasHeader: !!header.column.columnDef.header,
@@ -184,8 +190,7 @@ function BasicTableGroupedHeaderRow<T>({
                 })}
                 style={getCommonPinningStyles(header.column)}
               >
-                {!header.isPlaceholder &&
-                  !!header.column.columnDef.header &&
+                {hasTitle &&
                   flexRender(
                     header.column.columnDef.header,
                     header.getContext(),

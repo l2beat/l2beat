@@ -58,6 +58,7 @@ export function TvsBreakdownTokenTable(props: Props) {
       />
       <PrimaryCard>
         <BasicTable
+          caption="Tokens making up the total value secured"
           table={table}
           renderSubComponent={renderFormulaSubComponent}
         />

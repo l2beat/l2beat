@@ -17,6 +17,17 @@ interface Props {
   breakdownType: 'bridgeType' | 'assetCategory'
 }
 
+const TAB_LABELS: Record<Props['tab'], string> = {
+  rollups: 'Rollups',
+  validiumsAndOptimiums: 'Validiums & Optimiums',
+  others: 'Others',
+}
+
+const BREAKDOWN_LABELS: Record<Props['breakdownType'], string> = {
+  bridgeType: 'by bridge type',
+  assetCategory: 'by asset category',
+}
+
 export function L2TvsTable({ tab, entries, breakdownType }: Props) {
   const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
@@ -69,7 +80,10 @@ export function L2TvsTable({ tab, entries, breakdownType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption={`Total value secured by scaling projects, ${TAB_LABELS[tab]} tab, ${BREAKDOWN_LABELS[breakdownType]}`}
+        table={table}
+      />
     </>
   )
 }

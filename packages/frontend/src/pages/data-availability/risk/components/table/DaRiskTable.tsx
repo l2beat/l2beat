@@ -8,8 +8,10 @@ import { customColumns, publicColumns } from './columns'
 export function DaRiskTable({
   items,
   excludeBridge = false,
+  caption,
 }: {
   items: DaRiskEntry[]
+  caption: string
   excludeBridge?: boolean
 }) {
   const table = useTable('DaRiskTable', {
@@ -27,7 +29,7 @@ export function DaRiskTable({
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

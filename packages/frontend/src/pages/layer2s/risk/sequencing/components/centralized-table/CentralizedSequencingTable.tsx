@@ -44,7 +44,10 @@ export function CentralizedSequencingTable({ entries }: Props) {
         </div>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Scaling projects with centralized sequencing"
+        table={table}
+      />
     </>
   )
 }

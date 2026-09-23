@@ -36,7 +36,10 @@ export function DaThroughputPublicTable({ items }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Throughput of data availability layers, Public tab"
+        table={table}
+      />
     </>
   )
 }

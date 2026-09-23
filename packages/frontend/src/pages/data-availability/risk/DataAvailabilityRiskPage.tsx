@@ -48,11 +48,18 @@ export function DataAvailabilityRiskPage({
               </DirectoryTabsList>
               <DirectoryTabsContent value="public">
                 <PublicSystemInfo />
-                <DaRiskTable items={publicSystems} />
+                <DaRiskTable
+                  items={publicSystems}
+                  caption="Risk analysis of data availability layers, Public tab"
+                />
               </DirectoryTabsContent>
               <DirectoryTabsContent value="custom">
                 <CustomSystemInfo />
-                <DaRiskTable items={customSystems} excludeBridge />
+                <DaRiskTable
+                  items={customSystems}
+                  caption="Risk analysis of data availability layers, Custom tab"
+                  excludeBridge
+                />
               </DirectoryTabsContent>
             </DirectoryTabs>
           </div>

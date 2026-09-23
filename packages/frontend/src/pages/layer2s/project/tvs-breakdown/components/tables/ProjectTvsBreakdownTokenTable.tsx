@@ -68,6 +68,7 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
       />
       <PrimaryCard>
         <BasicTable
+          caption="Tokens making up the project's total value secured"
           table={table}
           renderSubComponent={renderFormulaSubComponent}
         />

@@ -67,5 +67,11 @@ export function AllProtocolsTable({
     },
   })
 
-  return <BasicTable table={table} tableWrapperClassName="pb-0" />
+  return (
+    <BasicTable
+      caption="All interop protocols"
+      table={table}
+      tableWrapperClassName="pb-0"
+    />
+  )
 }

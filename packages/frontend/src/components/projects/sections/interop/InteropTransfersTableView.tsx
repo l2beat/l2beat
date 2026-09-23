@@ -136,6 +136,7 @@ export function InteropTransfersTableView({
   return (
     <>
       <BasicTable
+        caption="Transfers"
         skeletonCount={TRANSFERS_PER_PAGE}
         table={table}
         tableWrapperClassName="pb-0"

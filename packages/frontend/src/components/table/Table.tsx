@@ -4,6 +4,7 @@ import {
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import { useActiveFiltersDescription } from './filters/describeActiveFilters'
 import { TableTooltip } from './TableTooltip'
 import {
   getTableElementClassName,
@@ -14,9 +15,16 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  caption,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  /**
+   * Names what the table lists and which tab is active, so the table explains
+   * itself to screen readers and crawlers. Active filters are appended.
+   */
+  caption: string
 }) => {
   return (
     <div className={getTableOuterWrapperClassName()}>
@@ -27,13 +35,26 @@ const Table = ({
             cellSpacing={0}
             cellPadding={0}
             {...props}
-          />
+          >
+            <TableCaption caption={caption} />
+            {children}
+          </table>
         </HighlightedTableRowProvider>
       </div>
     </div>
   )
 }
 Table.displayName = 'Table'
+
+/** Visually hidden because every table already sits under a visible heading. */
+function TableCaption({ caption }: { caption: string }) {
+  const filters = useActiveFiltersDescription()
+  return (
+    <caption className="sr-only">
+      {filters ? `${caption}. ${filters}` : caption}
+    </caption>
+  )
+}
 
 const TableHeader = ({
   className,
@@ -107,6 +128,7 @@ const TableHead = ({
   align?: 'right' | 'center'
 }) => (
   <th
+    scope="col"
     className={cn(
       'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',

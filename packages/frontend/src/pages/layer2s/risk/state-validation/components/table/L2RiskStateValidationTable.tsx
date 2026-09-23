@@ -36,7 +36,12 @@ export function L2RiskValidityTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption="State validation of scaling projects, Validity tab"
+      table={table}
+    />
+  )
 }
 
 export function L2RiskOptimisticTable({
@@ -62,7 +67,12 @@ export function L2RiskOptimisticTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption="State validation of scaling projects, Optimistic tab"
+      table={table}
+    />
+  )
 }
 
 export function L2RiskNoProofsTable({
@@ -88,5 +98,10 @@ export function L2RiskNoProofsTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption="State validation of scaling projects, No Proofs tab"
+      table={table}
+    />
+  )
 }

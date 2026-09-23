@@ -117,6 +117,7 @@ export function TokensTable({
   return (
     <>
       <BasicTable
+        caption="Tokens"
         skeletonCount={6}
         table={table}
         tableWrapperClassName="pb-0"

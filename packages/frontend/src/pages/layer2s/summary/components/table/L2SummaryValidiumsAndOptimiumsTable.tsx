@@ -62,7 +62,10 @@ export function L2SummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Scaling projects summary, Validiums & Optimiums tab"
+        table={table}
+      />
     </>
   )
 }
