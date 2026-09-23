@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xa7e273f944a3e0d04bebf6cf05d31d1da1b4be82
+Generated with discovered.json: 0xb52499993a1acb2849054434ef3a298c4db22fd5
 
-# Diff at Tue, 22 Sep 2026 11:11:02 GMT:
+# Diff at Wed, 23 Sep 2026 05:55:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789044333
-- current timestamp: 1790075392
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789044333
+- current timestamp: 1789044333
 
 ## Description
 
-Reviewed the full ossification perimeter and historical record. The perimeter now includes the effective L1 and L2 controller Safes, OP minting authority, and current fault-proof components. HIGH state is limited to live security policy: Safe thresholds and modules, protocol pointers, legacy bridge mappings, dispute-game configuration, lockbox authorization, and liveness fallback activation. Identity, immutable initialization values, and duplicate controller fields no longer reset the clock. Added exact onchain events for historical Safe threshold, module, singleton, and OP mint-authority changes, including events predating discovery coverage.
+Review ossification configuration at the main-branch discovery block.
 
 ## Config/verification related changes
 

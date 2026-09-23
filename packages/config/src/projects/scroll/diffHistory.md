@@ -1,56 +1,14 @@
-Generated with discovered.json: 0x47cc4252c056659b1a896e6a2f4dda4c878a0a7f
+Generated with discovered.json: 0x89956a3197d0d597dc128ebac48da75bb7ec75aa
 
-# Diff at Tue, 22 Sep 2026 22:59:32 GMT:
+# Diff at Wed, 23 Sep 2026 05:54:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789723805
-- current timestamp: 1790117896
+- current timestamp: 1789723805
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
-    +++ description: Contract used to update the verifier and keep track of current and old versions.
-      values.latestVerifier.9.verifier:
--        "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955"
-+        "eth:0x7966FE0De13e3B81533470640Ac489223476B254"
-    }
-```
-
-```diff
--   Status: DELETED
-    contract ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) [N/A]
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254) [N/A]
-    +++ description: None
-```
-
-## Source code changes
-
-```diff
-...erifierPostFeynman-eth:0x7966FE0De13e3B81533470640Ac489223476B254.sol} | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
-```
+Review active Scroll v10 verifier at the main-branch block.
 
 ## Config/verification related changes
 
@@ -214,6 +172,7 @@ discovery. Values are for block 1789723805 (main branch discovery), not current.
     +++ description: None
       critical:
 -        true
++        {"sinceTimestamp":1782371087}
       fieldMeta:
 -        {"verifierDigest2":{"severity":"HIGH"},"verifierDigest1":{"severity":"HIGH"},"plonkVerifier":{"severity":"HIGH"}}
     }
@@ -246,14 +205,9 @@ discovery. Values are for block 1789723805 (main branch discovery), not current.
 ```diff
     contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A] {
     +++ description: None
-      sourceHashes:
--        ["0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"]
       critical:
 -        true
-      references:
--        [{"text":"Source Code","href":"https://l2beat.com/zk-catalog/openvmprover#verifiers"}]
-      unverified:
-+        true
++        {"sinceTimestamp":1782371087}
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "thebinaryholdings",
   "timestamp": 1734520283,
-  "configHash": "0xf99e967b20bd9369ae35f6a2e3ded369ae5a8e6da91aeb7f5b68991afbc17546",
+  "configHash": "0x9111762604cc5d2cd1252bf1fe95441c14a37ea0df14da4a5464fc8df1cd0537",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -15,7 +15,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+        "0x6de38b49bc1a04f15ed8bf666e32170c813f9e69b7c213c6e3fdb961091ec37e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
@@ -26,6 +26,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398651,
       "sinceBlock": 20175344,
       "values": {
@@ -99,10 +100,11 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x56b8df1d0d704ad119f31879a8c1446528dbdc9130c3442ae76a2991ca1df17a"
+        "0xf2bfb7ed7dcd65fbe00aa0150c0269c1a4f5fff084ed5297594e6d445f124c54"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398615,
       "sinceBlock": 20175341,
       "values": {
@@ -137,11 +139,12 @@
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "critical": true,
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398483,
       "sinceBlock": 20175330,
       "values": {
@@ -177,6 +180,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398447,
       "sinceBlock": 20175327,
       "values": {
@@ -184,10 +188,6 @@
         "addressManager": "eth:0x8173904703995c6BbA59a42B8bBf8405F978758a",
         "isUpgrading": false,
         "owner": "eth:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF": "ProxyAdmin"
@@ -200,10 +200,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398423,
       "sinceBlock": 20175325,
       "values": {
@@ -233,12 +234,13 @@
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x025eaa1cbd7fa48ee7b33fc45374ef90b0676ec3a15bd7224a4cb394cc343b7d"
+        "0x63821da57255c5305256d2f44b4caaaff1ba158eee88e0a4d2ad11abadaee449"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "critical": true,
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398555,
       "sinceBlock": 20175336,
       "values": {
@@ -265,15 +267,7 @@
         "systemConfig": "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
         "version": "2.8.1-beta.1"
       },
-      "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "L1_MNT_ADDRESS": { "severity": "HIGH" },
-        "SYSTEM_CONFIG": { "severity": "HIGH" },
-        "L2_ORACLE": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "guardian": { "severity": "MEDIUM" },
-        "GUARDIAN": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A": "Proxy",
         "eth:0x1554F55Bd54DAC8e8164C33ce156F13e9c0d1B46": "OptimismPortal"
@@ -307,12 +301,13 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10"
+        "0xf8af5fdaaf16ec345343ad2eabe18d487adc66afd28888f82f5a8535f6ea3fc2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398567,
       "sinceBlock": 20175337,
       "values": {
@@ -378,26 +373,15 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "$admin": { "severity": "HIGH" },
-        "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
+        }
       },
       "implementationNames": {
         "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c": "Proxy",
@@ -412,12 +396,13 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0x4d4c8988a076d9b4f8e7056a3223ce908cacc5888a54ae3940f1c8d7b7aae742"
+        "0x746e4ad587cc163bea72a5fcf66f2630e64e3f1eaae8d22c2e74796633632ea6"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398591,
       "sinceBlock": 20175339,
       "values": {
@@ -452,17 +437,7 @@
         "systemConfig": "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
         "version": "2.4.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x807d21e416434ae92c8E5bcA4d506781aFbBa380": "ResolvedDelegateProxy",
         "eth:0x48455CB9bB2407C3e8De538B884bBec5aCbaa137": "L1CrossDomainMessenger"
@@ -480,13 +455,13 @@
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "critical": true,
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398435,
       "sinceBlock": 20175326,
       "values": {
         "$immutable": true,
         "owner": "eth:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8173904703995c6BbA59a42B8bBf8405F978758a": "AddressManager"
       },
@@ -504,10 +479,11 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
+        "0x2d6eed673d2bab5d76faa0267fc22e2e2bc709d60036b7a47290ed08a484a8d8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398603,
       "sinceBlock": 20175340,
       "values": {
@@ -537,11 +513,12 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0xe3ebd11527e7e2cc700c4894d46405fa80fdd55e1f6074a122818a25141db5f2"
+        "0x72f28b72b609048441f064a6c6b887f31613ab7b0e1d5d3a91a10dac32a66cbe"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "critical": true,
+      "deployerAddress": "eth:0x25A6E7c6f3d0fE89A656Fcf065614B74E55099fF",
       "sinceTimestamp": 1719398579,
       "sinceBlock": 20175338,
       "values": {
@@ -559,17 +536,7 @@
         "systemConfig": "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
         "version": "2.2.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xD1B30378CBF968E5525e8835219A5726A1e71D10": "L1ChugSplashProxy",
         "eth:0x1BcF2686F42e856520f0C16de82c2cF8bb50Ae77": "L1StandardBridge"
@@ -986,17 +953,17 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
+    "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 21429035 },
-  "permissionsConfigHash": "0xc89a5cd0bc0f0e0e48f6f3d0f418cdc3cbc803fafb8d2025ed798dba403f605d",
+  "permissionsConfigHash": "0x2294f93b24f57c5f851edcb834cf538a19dfd0d312afb3bb41f869e6df601589",
   "permissions": {
     "eth:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF": {
       "directlyReceivedPermissions": [
@@ -1044,8 +1011,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xD1B30378CBF968E5525e8835219A5726A1e71D10",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         }
       ]
     },
@@ -1142,8 +1108,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xD1B30378CBF968E5525e8835219A5726A1e71D10",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF" },
             { "address": "eth:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3" }
@@ -1272,8 +1237,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xD1B30378CBF968E5525e8835219A5726A1e71D10",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF" },
             { "address": "eth:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3" }

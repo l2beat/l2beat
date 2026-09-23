@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1790121730,
+  "timestamp": 1789711666,
   "configHash": "0x9aa2e6b830ed740ecf560e280386743dca9c7dd3c0e8b74eaa9b620041630b5e",
   "entries": [
     {
@@ -940,7 +940,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,304,974.025113423274654358",
+        "RAILBalance": "2,304,906.690395929691937489",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1014,7 +1014,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "41,910,033.420207859432439578",
+        "RAILStaked": "41,613,048.173433359453394507",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1692,7 +1692,7 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 26036473 },
+  "usedBlockNumbers": { "ethereum": 26002488 },
   "permissionsConfigHash": "0x55bd3f2567e9f9384e6eab55f3da6dbc14e6dedcade3ac13ab8aed026e4f629a",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {

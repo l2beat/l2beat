@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf760e019d9a8e4fa621309f96fd4fe765dc21e9c
+Generated with discovered.json: 0x1d918d4a7d35a46315fa8bb38a0ea5cb6de9c03a
 
-# Diff at Tue, 22 Sep 2026 09:44:21 GMT:
+# Diff at Wed, 23 Sep 2026 05:55:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789919089
-- current timestamp: 1790070195
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789919089
+- current timestamp: 1789919089
 
 ## Description
 
-Refine ossification severities to live security policy and remove identity-only, immutable, initializer-only and duplicate derived fields.
+Review ossification configuration at the main-branch discovery block.
 
 ## Config/verification related changes
 

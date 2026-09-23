@@ -724,10 +724,15 @@ function getProgramHashes(
       return prestate ? [PROGRAM_HASHES(prestate)] : []
     }
     case 'Kailua': {
-      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
-        'KailuaTreasury',
-        'FPVM_IMAGE_ID',
-      )
+      const kailuaProgramHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'KailuaTreasury',
+          'FPVM_IMAGE_ID',
+        ) ??
+        templateVars.discovery.getContractValue<string>(
+          'KailuaVerifier',
+          'FPVM_IMAGE_ID',
+        )
       const setBuilderProgramHash = templateVars.discovery.getContractValue<
         string[]
       >('RiscZeroSetVerifier', 'imageInfo')[0]

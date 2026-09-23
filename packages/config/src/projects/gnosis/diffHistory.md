@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa44b245a39180228671ad0500cc864b0b93fcf3c
+
+# Diff at Wed, 23 Sep 2026 05:46:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789471900
+- current timestamp: 1789471900
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471900 (main branch discovery), not current.
+
+```diff
+    contract BridgeRouter ProxyAdmin (eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x4104f21da1538f4e2310a5a1ed5a6bbe2b6407df
 
 # Diff at Mon, 21 Sep 2026 11:24:01 GMT:

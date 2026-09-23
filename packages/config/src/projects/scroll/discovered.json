@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1790117896,
-  "configHash": "0x41102951203ca161eb3d0dade1b77d092aee1ef98a373bfb27885f3af0a42145",
+  "timestamp": 1789723805,
+  "configHash": "0xc7a6d575fe960235c5246b4e7cc022d5b74a0f081cfbba097967e2db2c3d4347",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -130,29 +130,6 @@
         "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "",
-      "address": "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
-      ],
-      "proxyType": "immutable",
-      "critical": { "sinceTimestamp": 1790041547 },
-      "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
-      "sinceTimestamp": 1789438487,
-      "sinceBlock": 25979805,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": ""
-      },
-      "references": [
-        {
-          "text": "Source Code",
-          "href": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
-        }
-      ]
     },
     {
       "name": "TimelockFast",
@@ -349,7 +326,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 41,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -712,7 +689,7 @@
           },
           {
             "startBatchIndex": 0,
-            "verifier": "eth:0x7966FE0De13e3B81533470640Ac489223476B254"
+            "verifier": "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955"
           }
         ],
         "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -776,11 +753,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1790117891,
+        "getFirstUnfinalizedMessageEnqueueTime": 1789723799,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 999005,
-        "nextUnfinalizedQueueIndex": 999005,
+        "nextCrossDomainMessageIndex": 998979,
+        "nextUnfinalizedQueueIndex": 998979,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1197,29 +1174,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkEvmVerifierPostFeynman",
-      "address": "eth:0x7966FE0De13e3B81533470640Ac489223476B254",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
-      ],
-      "proxyType": "immutable",
-      "critical": { "sinceTimestamp": 1790041547 },
-      "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
-      "sinceTimestamp": 1789438643,
-      "sinceBlock": 25979818,
-      "values": {
-        "$immutable": true,
-        "plonkVerifier": "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6",
-        "protocolVersion": 10,
-        "verifierDigest1": "0x006770fb0f71f20718b614c8c5d3fb39482f0527806e67b0ea00ab5508245655",
-        "verifierDigest2": "0x00488b196ca5b2ea1fda4c960fe2e1b0b9715c0428a8ec6fb01a64684f8533f7"
-      },
-      "implementationNames": {
-        "eth:0x7966FE0De13e3B81533470640Ac489223476B254": "ZkEvmVerifierPostFeynman"
-      }
-    },
-    {
       "name": "ScrollOwner",
       "address": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
       "type": "Contract",
@@ -1480,6 +1434,29 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "ZkEvmVerifierPostFeynman",
+      "address": "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
+      ],
+      "proxyType": "immutable",
+      "critical": { "sinceTimestamp": 1782371087 },
+      "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
+      "sinceTimestamp": 1781774015,
+      "sinceBlock": 25343479,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
+        "protocolVersion": 10,
+        "verifierDigest1": "0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269",
+        "verifierDigest2": "0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67"
+      },
+      "implementationNames": {
+        "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": "ZkEvmVerifierPostFeynman"
+      }
     },
     {
       "name": "TimelockEmergency",
@@ -1775,6 +1752,29 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "PlonkVerifierFeynmanV2",
+      "address": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
+      ],
+      "proxyType": "immutable",
+      "critical": { "sinceTimestamp": 1782371087 },
+      "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
+      "sinceTimestamp": 1781773979,
+      "sinceBlock": 25343476,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1907,14 +1907,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 519977,
+        "lastFinalizedBatchIndex": 519873,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 519977,
-          "lastFinalizedBatchIndex": 519977,
-          "lastFinalizeTimestamp": 1790116703,
+          "lastCommittedBatchIndex": 519875,
+          "lastFinalizedBatchIndex": 519873,
+          "lastFinalizeTimestamp": 1789717955,
           "flags": 1,
           "reserved": 0
         },
@@ -2558,7 +2558,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 5091176370901,
+        "totalBridgedUSDC": 4891950170301,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -3421,9 +3421,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xc2e322cd498200d54b88659d9fe3282746666be955e5e641c8154fe38ce5e232",
+        "messageRoot": "0xbf3af9abccb2b00ee3693c136b117457efca4c4d68691ca977f779ccf7aa45af",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323630,
+        "nextMessageIndex": 323579,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -5372,15 +5372,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x7966FE0De13e3B81533470640Ac489223476B254": [
-      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2, uint256 _protocolVersion)",
-      "error VerificationFailed()",
-      "function plonkVerifier() view returns (address)",
-      "function protocolVersion() view returns (uint256)",
-      "function verifierDigest1() view returns (bytes32)",
-      "function verifierDigest2() view returns (bytes32)",
-      "function verify(bytes bundleProof, bytes publicInput) view"
-    ],
     "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": [
       "constructor()",
       "event GrantAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)",
@@ -5501,6 +5492,15 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": [
+      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2, uint256 _protocolVersion)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function protocolVersion() view returns (uint256)",
+      "function verifierDigest1() view returns (bytes32)",
+      "function verifierDigest2() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
     ],
     "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -7125,8 +7125,8 @@
     "scroll/SystemConfig": "0x4445e6ed56e720f7012a666fd191c15d7509665193dbd3a87a2df9eb740cb4c9",
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
-  "usedBlockNumbers": { "ethereum": 26036157, "scroll": 35142850 },
-  "permissionsConfigHash": "0x0f2ef79eb6c6b423519a672d2499f26d3305399e0c38253b76668f5bd8ab938a",
+  "usedBlockNumbers": { "ethereum": 26003498, "scroll": 35080001 },
+  "permissionsConfigHash": "0x00701920916fecf1298614a05984ba699168eed913a77810c9e4d8829552b9ac",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
       "directlyReceivedPermissions": [

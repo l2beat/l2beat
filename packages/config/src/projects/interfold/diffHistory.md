@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x74fab6c1aedfcbf821c562874b4898c144b15b47
+
+# Diff at Wed, 23 Sep 2026 05:47:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789471922
+- current timestamp: 1789471922
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471922 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Risc0BfvCiphertextVerifier (eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c) [N/A] {
+    +++ description: Unverified wrapper that accepts a RISC Zero receipt for the immutable guest image ID and the E3-specific journal constructed by Interfold.
+      unverified:
+-        true
+      implementationNames.eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c:
+-        ""
++        "Risc0BfvCiphertextVerifier"
+      sourceHashes:
++        ["0x52029d94ccab4c67a4566736cf4e3514382d38b2024aa5380365898569c32d98"]
+    }
+```
+
+```diff
+    contract CRISPProgram (eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f) [N/A] {
+    +++ description: CRISP encrypted-ballot application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.
+      unverified:
+-        true
+      values.decodeTally:
++        []
+      values.eip712Domain:
++        {"fields":"0x0f","name":"CRISP","version":"1","chainId":1,"verifyingContract":"eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.ENCRYPTION_SCHEME_ID:
++        "0x2c2a814a0495f913a3a312fc4771e37552bc14f8a2d4075a08122d356f0849c6"
+      values.TREE_DEPTH:
++        20
+      implementationNames.eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f:
+-        ""
++        "CRISPProgram"
+      sourceHashes:
++        ["0x3649deb6f04282f42e1920d5db900615f2452d03163421de0763f9849233a388"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x1f678011c5d44b365f3b7fe6b72f06e40529e2f7
 
 # Diff at Mon, 21 Sep 2026 11:24:01 GMT:

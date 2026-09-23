@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2cd9e7f54db90fbd8c39936acb0585afccf334c5
+
+# Diff at Wed, 23 Sep 2026 05:47:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1782746641
+- current timestamp: 1782746641
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746641 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x61ec241cf9c0a7e9737549db4437d505d76d147e
 
 # Diff at Mon, 21 Sep 2026 11:10:27 GMT:

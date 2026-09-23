@@ -1693,7 +1693,6 @@
       "type": "code",
       "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "transaction": "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
-      "updateId": "4bb22197",
       "reason": "Replaced the Lighter rollup implementation that holds all user funds (UpgradeGatekeeper version 72)."
     },
     {
@@ -1708,7 +1707,6 @@
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
       "transaction": "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
-      "updateId": "4bb22197",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 72)."
     }
   ]

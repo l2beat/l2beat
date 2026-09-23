@@ -94,10 +94,7 @@
         "version": "2.4.2"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "pauseExpiry": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "pauseExpiryFmt": { "severity": "HIGH" },
         "guardian": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -105,6 +102,36 @@
         "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PreimageOracle",
+      "address": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+      "type": "Contract",
+      "template": "opstack/PreimageOracle",
+      "sourceHashes": [
+        "0xda05a58c400dcb5cf23c2575a7383b759a845956f2673724f2879e8ede57efe6"
+      ],
+      "proxyType": "immutable",
+      "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
+      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
+      "sinceTimestamp": 1778190599,
+      "sinceBlock": 25045956,
+      "values": {
+        "$immutable": true,
+        "challengePeriod": 86400,
+        "KECCAK_TREE_DEPTH": 16,
+        "MAX_LEAF_COUNT": 65535,
+        "MIN_BOND_SIZE": "250000000000000000",
+        "minProposalSize": 126000,
+        "PRECOMPILE_CALL_RESERVED_GAS": 100000,
+        "proposalCount": 0,
+        "proposals": [],
+        "version": "1.1.5"
+      },
+      "implementationNames": {
+        "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": "PreimageOracle"
+      }
     },
     {
       "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -232,10 +259,6 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7": "ProxyAdmin"
       }
@@ -306,7 +329,6 @@
         "$immutable": true,
         "owner": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": "AddressManager"
       },
@@ -486,22 +508,11 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
@@ -656,6 +667,9 @@
           ]
         ],
         "$upgradeCount": 7,
+        "absolutePrestateFromDGF": "0xdead000000000000000000000000000000000000000000000000000000000000",
+        "anchorStateRegistryFromDGF": "eth:0xEB9d917868276cee5457609dbBF470FdE41BADE8",
+        "chainIdFromDGF": 34443,
         "challengerFromDGF": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "game0": "eth:0x0000000000000000000000000000000000000000",
         "game1": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
@@ -663,8 +677,12 @@
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
+        "game8AbsolutePrestate": "UNRESOLVED",
+        "game8AnchorStateRegistry": "UNRESOLVED",
         "game8Args": "0x",
+        "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
+        "game8Weth": "UNRESOLVED",
         "gameCount": 1838,
         "initBondGame0": 0,
         "initBondGame1": 0,
@@ -679,32 +697,40 @@
         "proxyAdmin": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.6.1",
+        "vmFromDGF": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "wethFromDGF": "eth:0xE90e1bD2C7a4547f4A318017a5403cc81F73D03a"
       },
       "fieldMeta": {
-        "gameImpls": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
-        "permissionedGameArgs": { "severity": "HIGH" },
-        "game8Args": { "severity": "HIGH" },
+        "absolutePrestateFromDGF": { "severity": "HIGH" },
+        "vmFromDGF": { "severity": "HIGH" },
+        "game8AbsolutePrestate": { "severity": "HIGH" },
         "game8Vm": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" }
+        "game8AnchorStateRegistry": { "severity": "HIGH" },
+        "game8Weth": { "severity": "HIGH" },
+        "game8ChainId": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" },
+        "anchorStateRegistryFromDGF": { "severity": "HIGH" },
+        "chainIdFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E": "Proxy",
         "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b": "DisputeGameFactory"
       },
       "usedTypes": [
+        { "typeCaster": "SliceBytes32", "arg": { "offset": 0 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
+        { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -741,17 +767,7 @@
         "systemConfig": "eth:0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "version": "2.8.2"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
@@ -889,15 +905,8 @@
         "version": "5.6.1"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "anchorStateRegistry": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
         "ethLockbox": { "severity": "HIGH" },
-        "proofMaturityDelaySeconds": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
-        "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -1040,17 +1049,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.1"
       },
-      "fieldMeta": {
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f": "ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
@@ -1083,6 +1082,30 @@
       "proxyType": "EOA"
     },
     {
+      "name": "MIPS",
+      "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+      "type": "Contract",
+      "template": "opstack/MIPS",
+      "sourceHashes": [
+        "0xd50e8efb45d44082a90ec3b26d13c5f61587ced6e71b1bd0a77a26715e7ae899"
+      ],
+      "proxyType": "immutable",
+      "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
+      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
+      "sinceTimestamp": 1778190599,
+      "sinceBlock": 25045956,
+      "values": {
+        "$immutable": true,
+        "oracle": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+        "stateVersion": 8,
+        "version": "1.10.1"
+      },
+      "implementationNames": {
+        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": "MIPS64"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
       "type": "Contract",
@@ -1099,10 +1122,6 @@
         "addressManager": "eth:0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": "ProxyAdmin"
@@ -1262,13 +1281,6 @@
         "totalSupply": 0,
         "version": "1.5.1"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "delay": { "severity": "HIGH" },
-        "config": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xE90e1bD2C7a4547f4A318017a5403cc81F73D03a": "Proxy",
         "eth:0xE440CC08A71694C8229323803F59024E3144630e": "DelayedWETH"
@@ -1317,6 +1329,7 @@
         ],
         "$upgradeCount": 4,
         "anchorGame": "eth:0x50C1F49dec39654E7d840C550c1CFaE232103063",
+        "blacklistedGames": [],
         "disputeGameFactory": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
@@ -1339,14 +1352,10 @@
         "version": "3.9.0"
       },
       "fieldMeta": {
-        "disputeGameFactory": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" }
+        "retirementTimestamp": { "severity": "HIGH" },
+        "blacklistedGames": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEB9d917868276cee5457609dbBF470FdE41BADE8": "Proxy",
@@ -1386,6 +1395,56 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": [
+      "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
+      "error ActiveProposal()",
+      "error AlreadyFinalized()",
+      "error AlreadyInitialized()",
+      "error BadProposal()",
+      "error BondTransferFailed()",
+      "error InsufficientBond()",
+      "error InvalidInputSize()",
+      "error InvalidPreimage()",
+      "error InvalidProof()",
+      "error NotEOA()",
+      "error NotInitialized()",
+      "error PartOffsetOOB()",
+      "error PostStateMatches()",
+      "error StatesNotContiguous()",
+      "error TreeSizeOverflow()",
+      "error WrongStartingBlock()",
+      "function KECCAK_TREE_DEPTH() view returns (uint256)",
+      "function MAX_LEAF_COUNT() view returns (uint256)",
+      "function MIN_BOND_SIZE() view returns (uint256)",
+      "function PRECOMPILE_CALL_RESERVED_GAS() view returns (uint256)",
+      "function addLeavesLPP(uint256 _uuid, uint256 _inputStartBlock, bytes _input, bytes32[] _stateCommitments, bool _finalize)",
+      "function challengeFirstLPP(address _claimant, uint256 _uuid, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengePeriod() view returns (uint256 challengePeriod_)",
+      "function getTreeRootLPP(address _owner, uint256 _uuid) view returns (bytes32 treeRoot_)",
+      "function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) payable",
+      "function loadBlobPreimagePart(uint256 _z, uint256 _y, bytes _commitment, bytes _proof, uint256 _partOffset)",
+      "function loadKeccak256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset) returns (bytes32 key_)",
+      "function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, uint64 _requiredGas, bytes _input)",
+      "function loadSha256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function minProposalSize() view returns (uint256 minProposalSize_)",
+      "function preimageLengths(bytes32) view returns (uint256)",
+      "function preimagePartOk(bytes32, uint256) view returns (bool)",
+      "function preimageParts(bytes32, uint256) view returns (bytes32)",
+      "function proposalBlocks(address, uint256, uint256) view returns (uint64)",
+      "function proposalBlocksLen(address _claimant, uint256 _uuid) view returns (uint256 len_)",
+      "function proposalBonds(address, uint256) view returns (uint256)",
+      "function proposalBranches(address, uint256, uint256) view returns (bytes32)",
+      "function proposalCount() view returns (uint256 count_)",
+      "function proposalMetadata(address, uint256) view returns (bytes32)",
+      "function proposalParts(address, uint256) view returns (bytes32)",
+      "function proposals(uint256) view returns (address claimant, uint256 uuid)",
+      "function readPreimage(bytes32 _key, uint256 _offset) view returns (bytes32 dat_, uint256 datLen_)",
+      "function squeezeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function version() view returns (string)",
+      "function zeroHashes(uint256) view returns (bytes32)"
     ],
     "eth:0x2901dA832a4D0297FF0691100A8E496626cc626D": [
       "constructor(address _admin)",
@@ -1739,6 +1798,19 @@
       "function initialize(address _bridge)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": [
+      "constructor(address _oracle, uint256 _stateVersion)",
+      "error InvalidExitedValue()",
+      "error InvalidMemoryProof()",
+      "error InvalidPC()",
+      "error InvalidRMWInstruction()",
+      "error InvalidSecondMemoryProof()",
+      "error UnsupportedStateVersion()",
+      "function oracle() view returns (address oracle_)",
+      "function stateVersion() view returns (uint256 stateVersion_)",
+      "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32 postState_)",
       "function version() view returns (string)"
     ],
     "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": [
@@ -2129,23 +2201,25 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0xd0d625ebafed18f8b0cddb022b9698de27f66c0771011c4f833377dcb9fb522b",
-    "opstack/DelayedWETH": "0xb414c00260c9bbb0d57843aacfd5aef6f26fc6d94ccb910ef20dd3b4c29c063b",
-    "opstack/DisputeGameFactory_v2": "0x4b0418e46a757f719bd7d23d20a4faf5d8ebf4e76d30788e8e9a88c1c6258f06",
-    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
+    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
+    "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0xeba6cb42b7d4fd68db8a8faeae5717eb1943fee08d7674dcc02dfd12d7256d71",
+    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/SuperchainConfigFake_expiry": "0x1fc8cd90b89237398882797e866e59d613d21f6a8c9ccbb2b72d507f3f7b620f",
-    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b"
+    "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
+    "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25988597 },
-  "permissionsConfigHash": "0x84fe93010ca9b7904b215a795e5ae5a06eb1dc7c72448132d065031c544799cd",
+  "permissionsConfigHash": "0xc2999e48675d400ec1742c44a0dd0ee3b7c31e5d4cad31512479bbf13feff6b7",
   "permissions": {
     "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7": {
       "directlyReceivedPermissions": [
@@ -2178,8 +2252,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -2275,8 +2348,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7" }
           ]

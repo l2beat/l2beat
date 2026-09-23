@@ -1,7 +1,7 @@
 {
   "name": "arenaz",
   "timestamp": 1784282781,
-  "configHash": "0xc032cbf17eb72ac141472ad6646d9c39bf82ec31b92b3425c6e1886572c0668c",
+  "configHash": "0x007e4cae7c023797a56bc499b0bce69e226c881789577f5544b6d7bb687b17ca",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -38,14 +38,7 @@
         "thresholdPercentage": 75,
         "version": "1.2.0"
       },
-      "fieldMeta": {
-        "minOwners": { "severity": "HIGH" },
-        "thresholdPercentage": { "severity": "HIGH" },
-        "ownershipTransferredToFallback": { "severity": "HIGH" },
-        "livenessInterval": { "severity": "HIGH" },
-        "fallbackOwner": { "severity": "HIGH" },
-        "livenessGuard": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "ownershipTransferredToFallback": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
@@ -172,17 +165,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0BE364912219bC74760f1d1c25F4866b328eBfC6": "ResolvedDelegateProxy",
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
@@ -257,14 +240,12 @@
         "wethFromGame": "eth:0x1D21c2535154d5D0337eda61df9c07f306AA17f7"
       },
       "fieldMeta": {
-        "respectedGameType": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" },
         "disputeGameFactory": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
+        "paused": { "severity": "MEDIUM" },
+        "respectedGameType": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0C9fF654bCd0769142Fe70951B0634C5AE19BA3C": "Proxy",
@@ -330,7 +311,6 @@
         "$immutable": true,
         "owner": "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D": "AddressManager"
       },
@@ -374,13 +354,6 @@
         "systemConfig": "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A",
         "totalSupply": 0,
         "version": "1.5.0"
-      },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "delay": { "severity": "HIGH" },
-        "config": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1D21c2535154d5D0337eda61df9c07f306AA17f7": "Proxy",
@@ -586,26 +559,15 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "$admin": { "severity": "HIGH" },
-        "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
+        }
       },
       "implementationNames": {
         "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A": "Proxy",
@@ -651,10 +613,6 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -692,17 +650,7 @@
         "systemConfig": "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A",
         "version": "2.8.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678": "L1ChugSplashProxy",
         "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
@@ -967,14 +915,13 @@
         "wethFromDGF": "eth:0x1D21c2535154d5D0337eda61df9c07f306AA17f7"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "permissionedGameArgs": { "severity": "HIGH" }
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x658656A14AFdf9c507096aC406564497d13EC754": "Proxy",
@@ -1025,12 +972,7 @@
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "foundationSafe": { "severity": "MEDIUM" },
-        "guardianSafe": { "severity": "MEDIUM" },
-        "deputy": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "deputy": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
       }
@@ -1158,10 +1100,7 @@
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" },
-        "guardian": { "severity": "MEDIUM" },
-        "pauseExpiry": { "severity": "HIGH" },
-        "pauseExpiryFmt": { "severity": "HIGH" }
+        "guardian": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
@@ -1359,19 +1298,12 @@
         "version": "5.2.0"
       },
       "fieldMeta": {
-        "respectedGameType": { "severity": "HIGH" },
+        "anchorStateRegistry": { "severity": "HIGH" },
+        "ethLockbox": { "severity": "HIGH" },
         "paused": {
           "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
-        },
-        "$admin": { "severity": "HIGH" },
-        "anchorStateRegistry": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "ethLockbox": { "severity": "HIGH" },
-        "proofMaturityDelaySeconds": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xB20f99b598E8d888d1887715439851BC68806b22": "Proxy",
@@ -1553,7 +1485,6 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -1581,10 +1512,6 @@
         "addressManager": "eth:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D",
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0": "ProxyAdmin"
@@ -2587,26 +2514,26 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/LivenessModule": "0x8b71e37cf372147df718b6b3f85ee721b20cf6d68c86a79ef273d781b300c97c",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
+    "opstack/AnchorStateRegistry_post13": "0xbc6c120f84172c0414f15256052417774931321f36fe76c54725f11ff7bcd84e",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
+    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25551698 },
-  "permissionsConfigHash": "0x48140663f9fa3f5529d6d606355a5ae73bf9bb3dbf088de95bd13ad8810c4aa8",
+  "permissionsConfigHash": "0x25a3c1e8c47b32c5f7b38812dee22cf3abe5cb586027c8a040692482e33cdf4c",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -2752,8 +2679,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0" }
           ]
@@ -2939,8 +2865,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",

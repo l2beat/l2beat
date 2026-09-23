@@ -53,7 +53,6 @@
       "type": "state",
       "contract": "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C",
       "transaction": "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-      "updateId": "444c1d72",
       "reason": "Repointed the legacy OVM_L1CrossDomainMessenger mapping to the new messenger implementation during the core protocol upgrade."
     },
     {
@@ -61,7 +60,6 @@
       "type": "code",
       "contract": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
       "transaction": "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-      "updateId": "444c1d72",
       "reason": "Upgraded the L1StandardBridge implementation as part of the core protocol upgrade."
     }
   ]

@@ -215,7 +215,6 @@
       "type": "state",
       "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
       "transaction": "0xae4d0c6ed6631fc97cdb0c0e184da389a50385bc1fe0590b1d588c0643b2f537",
-      "updateId": "0bcfa803",
       "reason": "Replaced the version-2 SP1 verifier with 0x651c...d1c9 from batch 60478, changing which proofs are accepted for new version-2 batches (UpdateVerifier)."
     },
     {

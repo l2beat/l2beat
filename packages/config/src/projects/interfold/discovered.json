@@ -1,7 +1,7 @@
 {
   "name": "interfold",
   "timestamp": 1789471922,
-  "configHash": "0xc3d5f09d2de7bfeceebab5e9521501800176f07aa32e677bd84b0ad7a6b348e1",
+  "configHash": "0xdfb51c6903a5e8b71a1ca0de51222468bc5e20fb90904d9114aae4ba57297e49",
   "entries": [
     {
       "name": "BondedVotes",
@@ -720,10 +720,6 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7": "ProxyAdmin"
       }
@@ -737,7 +733,9 @@
       "name": "Risc0BfvCiphertextVerifier",
       "address": "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x52029d94ccab4c67a4566736cf4e3514382d38b2024aa5380365898569c32d98"
+      ],
       "proxyType": "immutable",
       "description": "Unverified wrapper that accepts a RISC Zero receipt for the immutable guest image ID and the E3-specific journal constructed by Interfold.",
       "deployerAddress": "eth:0x762D0A181d7184d5e224d3320fa7fF82D56a7dc6",
@@ -758,7 +756,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": ""
+        "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": "Risc0BfvCiphertextVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1388,7 +1386,9 @@
       "name": "CRISPProgram",
       "address": "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x3649deb6f04282f42e1920d5db900615f2452d03163421de0763f9849233a388"
+      ],
       "proxyType": "immutable",
       "description": "CRISP encrypted-ballot application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.",
       "deployerAddress": "eth:0x762D0A181d7184d5e224d3320fa7fF82D56a7dc6",
@@ -1396,10 +1396,22 @@
       "sinceBlock": 25812209,
       "values": {
         "$immutable": true,
+        "decodeTally": [],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "CRISP",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "ENCRYPTION_SCHEME_ID": "0x2c2a814a0495f913a3a312fc4771e37552bc14f8a2d4075a08122d356f0849c6",
         "imageId": "0x7ed0ddeb0cafa64228b51399dff5ea00696c2617f28636b05bd67e6c1506eac3",
         "interfold": "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715",
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-        "risc0Verifier": "eth:0x082263Bb53463Ca6c7082bDAFEd51EfA9509cde0"
+        "risc0Verifier": "eth:0x082263Bb53463Ca6c7082bDAFEd51EfA9509cde0",
+        "TREE_DEPTH": 20
       },
       "fieldMeta": {
         "owner": {
@@ -1417,7 +1429,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": ""
+        "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgram"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1544,10 +1556,6 @@
         "$immutable": true,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E": "ProxyAdmin"
@@ -2242,10 +2250,6 @@
         "$immutable": true,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580": "ProxyAdmin"
@@ -3096,10 +3100,6 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b": "ProxyAdmin"
       }
@@ -3546,6 +3546,14 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": [
+      "constructor(address verifier, bytes32 guestImageId)",
+      "error InvalidImageId()",
+      "error InvalidVerifier()",
+      "function imageId() view returns (bytes32)",
+      "function risc0Verifier() view returns (address)",
+      "function verify(uint256 e3Id, bytes32 encryptionSchemeId, bytes32 paramsHash, bytes32 committeePublicKey, bytes32 ciphertextOutputHash, bytes32 ciphertextCommitment, bytes encodedProof) view returns (bool)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -4078,6 +4086,72 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": [
+      "constructor(address _initialOwner, address _risc0Verifier, address _honkVerifier, address _onchainHonkVerifier, bytes32 _imageId)",
+      "error CallerNotAuthorized()",
+      "error CensusModeRequiresConstantCredits()",
+      "error CensusModeRequiresToken()",
+      "error E3AlreadyInitialized()",
+      "error E3NotAcceptingInputs(uint256 e3Id)",
+      "error EmptyInputData()",
+      "error InputAlreadyPublished(uint256 leaf)",
+      "error InputDeadlinePassed(uint256 e3Id, uint256 deadline)",
+      "error InterfoldAddressZero()",
+      "error InterfoldAlreadyBound()",
+      "error InterfoldNotContract()",
+      "error InvalidCensusMode()",
+      "error InvalidComputeContext()",
+      "error InvalidCredits()",
+      "error InvalidHonkVerifier()",
+      "error InvalidMerkleRoot()",
+      "error InvalidNoirProof()",
+      "error InvalidNumOptions()",
+      "error InvalidShortString()",
+      "error InvalidTallyLength()",
+      "error KeyNotPublished(uint256 e3Id)",
+      "error MerkleRootAlreadySet()",
+      "error MerkleRootNotSet()",
+      "error MinVotingPowerBelowScale()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ProgramNotRegistered()",
+      "error Risc0VerifierAddressZero()",
+      "error SlotIsEmpty()",
+      "error SlotNotEligible()",
+      "error StringTooLong(string str)",
+      "error UnknownParentInput(uint40 parentIndex)",
+      "error UnsupportedTokenDecimals(uint8 decimals)",
+      "event EIP712DomainChanged()",
+      "event InputPublished(uint256 indexed e3Id, address indexed slotAddress, bytes32 encryptedVoteCommitment, bytes encryptedVote, uint256 index, uint40 parentIndexPlusOne)",
+      "event InterfoldBound(address indexed interfold)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function ENCRYPTION_SCHEME_ID() view returns (bytes32)",
+      "function TREE_DEPTH() view returns (uint8)",
+      "function ballotDigest(uint256 e3Id, address slot, bytes32 ciphertextCommitment) view returns (bytes32)",
+      "function bindInterfold(address _interfold)",
+      "function censusModeOf(uint256 e3Id) view returns (uint8)",
+      "function decodeTally(uint256 e3Id) view returns (uint256[] votes)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getParamsHash(uint256 e3Id) view returns (bytes32)",
+      "function getRoundData(uint256 e3Id) view returns (uint256 merkleRoot, bytes32 paramsHash, uint256 numOptions, uint8 creditMode, uint256 inputRoot, uint40 numberOfVotes)",
+      "function getSlotIndex(uint256 e3Id, address slotAddress) view returns (int40)",
+      "function imageId() view returns (bytes32)",
+      "function inputCommitmentOf(uint256 e3Id, address slotAddress, uint40 index) view returns (bytes32)",
+      "function inputLeaf(bytes encryptedVote, bytes32 commitment, address slotAddress, uint40 parentIndexPlusOne) pure returns (uint256)",
+      "function interfold() view returns (address)",
+      "function owner() view returns (address)",
+      "function publishInput(uint256 e3Id, bytes data)",
+      "function renounceOwnership()",
+      "function risc0Verifier() view returns (address)",
+      "function setImageId(bytes32 _imageId)",
+      "function setMerkleRoot(uint256 _e3Id, uint256 _root)",
+      "function setRisc0Verifier(address _risc0Verifier)",
+      "function transferOwnership(address newOwner)",
+      "function validate(uint256 e3Id, uint256, bytes e3ProgramParams, bytes, bytes customParams) returns (bytes32)",
+      "function verify(uint256 e3Id, bytes32 ciphertextOutputHash, bytes32 ciphertextCommitment, bytes proof) view returns (bool)",
+      "function votingPowerDivisorOf(uint256 e3Id) view returns (uint256)",
+      "function votingPowerOf(uint256 e3Id, address slot) view returns (uint256)"
     ],
     "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": [
       "constructor(address _singleton)"
@@ -5730,7 +5804,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "interfold/AdminPlugin": "0xeb97b344f92a6893418d119daba2374375a4b8784f8f20b894a6ffd7cf50931b",
     "interfold/AragonExecutor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

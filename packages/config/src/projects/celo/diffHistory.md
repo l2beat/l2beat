@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6bdb938236f9a047bc83191bf3873fc452b7d6e3
+Generated with discovered.json: 0x9465c3eff4bad6b122386875cbf4290caa9fb2f9
 
-# Diff at Tue, 22 Sep 2026 04:43:45 GMT:
+# Diff at Wed, 23 Sep 2026 05:45:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789044398
-- current timestamp: 1790052155
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789044398
+- current timestamp: 1789044398
 
 ## Description
 
-Keep L2 ProxyAdmin owner monitoring frontend-compatible
+Refresh config-derived discovery metadata at the main-branch block.
 
 ## Config/verification related changes
 
@@ -35,11 +35,21 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 ```diff
     contract L1CrossDomainMessenger (eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95) [opstack/L1CrossDomainMessenger] {
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
 -        {"severity":"HIGH"}
       fieldMeta.PORTAL:
 -        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
       fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
 -        {"severity":"HIGH"}
     }
 ```
@@ -49,6 +59,33 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
     +++ description: None
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH","description":"The shared Superchain-wide SuperchainConfig whose pause state is forwarded to Celo. Changing this pointer changes who can pause Celo from outside."}
+    }
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.9.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.9.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -65,9 +102,42 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x783A434532Ee94667979213af1711505E8bFE374) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.9.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.9.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
     contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
       fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
 -        {"severity":"HIGH"}
     }
 ```
@@ -87,16 +157,16 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 ```diff
     contract DelayedWETH (eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      fieldMeta.delay:
--        {"severity":"HIGH"}
-      fieldMeta.config:
--        {"severity":"HIGH"}
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.pauseExpiry:
 -        {"severity":"HIGH"}
       fieldMeta.pauseExpiryFmt:
@@ -109,11 +179,19 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
       fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
 -        {"severity":"HIGH"}
       fieldMeta.OTHER_BRIDGE:
 -        {"severity":"HIGH"}
       fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
 -        {"severity":"HIGH"}
     }
 ```
@@ -121,7 +199,11 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
 -        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
@@ -137,10 +219,16 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 ```diff
     contract DelayedWETH (eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      fieldMeta.delay:
--        {"severity":"HIGH"}
-      fieldMeta.config:
--        {"severity":"HIGH"}
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
     }
 ```
 

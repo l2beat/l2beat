@@ -1,71 +1,14 @@
-Generated with discovered.json: 0xa511ca2ac247bb4f10e2d85de95ae8f15c62a993
+Generated with discovered.json: 0xd1e6ccdfbb240dd042c368f5dcd8710dccecedff
 
-# Diff at Tue, 22 Sep 2026 05:57:20 GMT:
+# Diff at Wed, 23 Sep 2026 05:55:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789748170
-- current timestamp: 1790056577
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789748170
+- current timestamp: 1789748170
 
 ## Description
 
-UpgradeGatekeeper version 72 replaced the main Lighter and ZK verifier implementations. The source changes are limited to a renamed constant in the rollup and regenerated verifier parameters.
-
-## Watched changes
-
-```diff
-    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
-    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
-      sourceHashes.1:
--        "0x2c7c54c7dbae18fe5dd08d3aa5ccf1890e97148735d1d4a7768fe8fe9a67d6a3"
-+        "0x41c035cf563a98a2dd11b60eb884c9bdc6c8db0b6edd02e2fa546f5711cfea4d"
-      values.$implementation.0:
--        "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e"
-+        "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E"
-      values.getTarget:
--        "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e"
-+        "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E"
-      implementationNames.eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e:
--        "ZkLighter"
-      implementationNames.eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E:
-+        "ZkLighter"
-    }
-```
-
-```diff
-    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
-    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
-      values.versionId:
--        71
-+        72
-    }
-```
-
-```diff
-    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
-    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
-      sourceHashes.1:
--        "0xb7e4318fc7163594c3382febfcafc104afdbd2e77905ca0c7b2d26c8ff527538"
-+        "0xead67b34c39541947e19fe58d5e31758b4495fe958df8ee8580885c8db169ed5"
-      values.$implementation:
--        "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"
-+        "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"
-      values.getTarget:
--        "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"
-+        "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"
-      implementationNames.eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE:
--        "ZkLighterVerifier"
-      implementationNames.eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046:
-+        "ZkLighterVerifier"
-    }
-```
-
-## Source code changes
-
-```diff
-.../Lighter/ZkLighter.1.sol                        |  2 +-
- .../ZkLighterVerifier/ZkLighterVerifier.sol        | 44 +++++++++++-----------
- 2 files changed, 23 insertions(+), 23 deletions(-)
-```
+Review ossification configuration at the main-branch discovery block.
 
 ## Config/verification related changes
 

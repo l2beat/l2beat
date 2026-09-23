@@ -123,10 +123,6 @@
         "$immutable": true,
         "owner": "eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e": "ProxyAdmin"
       }
@@ -165,10 +161,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2A7F4d60fE6dD63c4690Dd9f11C26D0BE53b3110": "ProxyAdmin"
@@ -1949,7 +1941,7 @@
   },
   "usedTemplates": {
     "circle/L1OrbitUSDCGateway": "0xd3f111e6f7b347598e1908a758ab3c059b1532fd993a6a4edd2aed897fece3d4",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/EdgeChallengeManager": "0xeaaa590ceeab252a14ceeb88a8d39ce03a969fdb64c2861704b072e3f885a748",

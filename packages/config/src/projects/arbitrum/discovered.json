@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1789999254,
+  "timestamp": 1789727053,
   "configHash": "0x8d2d8da2533d33205d4523db4cfaca5a03b46ab343f023aa1f511976caf33019",
   "entries": [
     {
@@ -96,7 +96,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 45776,
+        "exitNum": 45708,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "fieldMeta": {
@@ -801,7 +801,7 @@
         "l2Gateway": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "108158076579929100330160"
+        "totalSupply": "111974677061351008465623"
       },
       "fieldMeta": {
         "l1Address": { "severity": "HIGH" },
@@ -949,7 +949,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5191709263645726795905829255",
+        "getTotalDelegation": "5193335094043113981780398126",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1494,10 +1494,6 @@
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "ProxyAdmin"
       }
@@ -1523,10 +1519,6 @@
       "values": {
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": "ProxyAdmin"
@@ -1919,7 +1911,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1340739,
+        "batchCount": 1338338,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -1932,9 +1924,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 26026226,
+          "prevBlockNumber": 26003611,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 26026293
+          "prevSequencedBlockNumber": 26003682
         },
         "bufferConfig": {
           "max": 14400,
@@ -1965,7 +1957,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2571839,
+        "totalDelayedMessagesRead": 2568205,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -2325,7 +2317,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x1c82819eee3483ab2ee9e3574f11bf3244deb8eb48d2e8af6f907cccddeb3982",
+        "latestConfirmed": "0x75c7759659c6dec649e55aec873634a42c36f918cfb0c8aea83b634afbcd3ca3",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -2443,10 +2435,6 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ProxyAdmin"
       },
@@ -2468,10 +2456,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin"
@@ -2789,7 +2773,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2571851,
+        "delayedMessageCount": 2568214,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -2803,8 +2787,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1340739,
-        "sequencerReportedSubMessageCount": 485255746
+        "sequencerMessageCount": 1338338,
+        "sequencerReportedSubMessageCount": 484198013
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -2867,10 +2851,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "ProxyAdmin"
@@ -7438,49 +7418,6 @@
               "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000ef98fc7a7f08de47ed01f3f11f07319c2210644500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
               "delay": 259200
             }
-          },
-          {
-            "id": "0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178",
-            "decoded": {
-              "chain": "arbitrum",
-              "contractName": "",
-              "function": "0x481f8dbf",
-              "inputs": [
-                {
-                  "name": "calldata",
-                  "value": "0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63"
-                }
-              ],
-              "address": "arb1:0x0000000000000000000000000000000000000070",
-              "calldata": "0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63",
-              "executor": "eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-              "inboxOnEthereum": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
-            },
-            "raw": {
-              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
-              "value": 0,
-              "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a630000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-              "delay": 259200
-            }
-          },
-          {
-            "id": "0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178",
-            "decoded": {
-              "chain": "arbitrum",
-              "contractName": "TipCollectionToggler",
-              "function": "activate",
-              "inputs": [],
-              "address": "arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63",
-              "calldata": "0x0f15f4c0",
-              "executor": "eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-              "inboxOnEthereum": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
-            },
-            "raw": {
-              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
-              "value": 0,
-              "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000084bca8c7b50000000000000000000000004323dab775cc15e386fdac591a39420db6226a63000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000040f15f4c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-              "delay": 259200
-            }
           }
         ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
@@ -9877,7 +9814,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
@@ -9925,7 +9862,7 @@
     "orbitstack/Timelock": "0x81465930f787d01fa82846717353fb5b7cde94bf86218188fd4d0b6d04de1d88",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 507463867, "ethereum": 26026344 },
+  "usedBlockNumbers": { "arbitrum": 506406352, "ethereum": 26003769 },
   "permissionsConfigHash": "0xc1b4fe309c26a6ceae425ed9ffa603ec0e01b8007f911f75774cbfc1cfe86256",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {

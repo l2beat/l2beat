@@ -115,7 +115,6 @@
       "type": "state",
       "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
       "transaction": "0x9583c940852a52717f6f6d7fd3edaf8b3da2254d9f3136cbbcad07d29f9ee77e",
-      "updateId": "3d13a151",
       "reason": "Replaced proof verifier version 10 with ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254)."
     }
   ]

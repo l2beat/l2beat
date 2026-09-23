@@ -38,15 +38,6 @@
         "untilTimestamp": 1790063627
       }
     },
-    // Current SP1 verifier for version-2 batches from batch 60478 onward.
-    "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": {
-      "critical": { "sinceTimestamp": 1790063627 }
-    },
-    // Became part of the proposing and challenge-accounting path when the
-    // Rollup switched to it in the 2026-09-22 upgrade.
-    "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": {
-      "critical": { "sinceTimestamp": 1790063675 }
-    },
     // Controller of the original core contracts and current proposer/canceller,
     // staking, queue, forced-transaction and legacy-gateway authority paths.
     "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": {

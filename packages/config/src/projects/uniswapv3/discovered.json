@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1790139069,
+  "timestamp": 1786913047,
   "configHash": "0xc58739b56fc45461543260e3bd3948cc663018ac5eaef0c8d153192d922a2d6f",
   "entries": [
     {
@@ -46,7 +46,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1357,
+        "nonce": 1165,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -340,16 +340,16 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4858232121356651614869324879215356",
-        "feeGrowthGlobal1X128": "2069376033426067584160807623317763528045614",
+        "feeGrowthGlobal0X128": "4812563195332808166897045866562170",
+        "feeGrowthGlobal1X128": "2051267001107534919613865008024280826640110",
         "feeProtocol": 68,
-        "liquidity": "2899278735683894806",
+        "liquidity": "9001201275211611417",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 412178797, "token1": "127697086431800204" },
+        "protocolFees": { "token0": 156651893, "token1": "120407798350187590" },
         "slot0": {
-          "sqrtPriceX96": "1501784363842970843140102591077115",
-          "tick": 197006,
-          "observationIndex": 462,
+          "sqrtPriceX96": "1826265669666707507977370490595365",
+          "tick": 200919,
+          "observationIndex": 240,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -398,7 +398,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1228587,
+        "totalSupply": 1213762,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -435,16 +435,16 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69919161349549319238162543560812",
-        "feeGrowthGlobal1X128": "15758381286556796749014701785008107389512862",
+        "feeGrowthGlobal0X128": "69405417289652257427961674355348",
+        "feeGrowthGlobal1X128": "15612722894372763149846873124167683519753445",
         "feeProtocol": 102,
-        "liquidity": "41399147317185873",
+        "liquidity": "32897615873851277",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 12, "token1": 3060706942273067 },
+        "protocolFees": { "token0": 21, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "44322587949901980868084578812074866",
-          "tick": 264706,
-          "observationIndex": 236,
+          "sqrtPriceX96": "45841224025790317189637790043298689",
+          "tick": 265380,
+          "observationIndex": 158,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -1082,7 +1082,7 @@
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
     "uniswapv3/V3OpenFeeAdapter": "0xfacd2e561908ae18410c983606de37bd3a1f12dd9b911f25debdeedb42b3ad6b"
   },
-  "usedBlockNumbers": { "ethereum": 26037910 },
+  "usedBlockNumbers": { "ethereum": 25770096 },
   "permissionsConfigHash": "0x4d4790adca0e0f42cc18f45d357d0aa0ee988e4811e4014390383b3ec0473b8e",
   "permissions": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {

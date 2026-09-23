@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x25d354efa593d7761f97ab16e7d192cb34e49683
+Generated with discovered.json: 0xd06f0960043d83ade9fa2e1acc2c9ff9864c3536
 
-# Diff at Tue, 22 Sep 2026 05:09:37 GMT:
+# Diff at Wed, 23 Sep 2026 05:46:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789045166
-- current timestamp: 1790053711
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789045166
+- current timestamp: 1789045166
 
 ## Description
 
-Review the ossification perimeter and reconstruct exact historical security changes.
+Refresh config-derived discovery metadata at the main-branch block.
 
 ## Config/verification related changes
 
@@ -61,6 +61,10 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 +        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       fieldMeta.gameImpls:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
       fieldMeta.permissionedGameArgs:
 -        {"severity":"HIGH"}
       fieldMeta.game8Args:
@@ -102,23 +106,38 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
       fieldMeta.addressManager.severity:
 -        "HIGH"
 +        "LOW"
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
     }
 ```
 
 ```diff
     contract DelayedWETH (eth:0x57b4C29DAee99a28E6E86778b499361294c134eA) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      fieldMeta.delay:
--        {"severity":"HIGH"}
-      fieldMeta.config:
--        {"severity":"HIGH"}
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.8.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
     }
 ```
 
 ```diff
     contract OptimismPortal2 (eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
 -        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
@@ -134,7 +153,27 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
       fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
 -        {"severity":"HIGH"}
     }
 ```
@@ -142,11 +181,21 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 ```diff
     contract L1CrossDomainMessenger (eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f) [opstack/L1CrossDomainMessenger] {
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
 -        {"severity":"HIGH"}
       fieldMeta.PORTAL:
 -        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
       fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
 -        {"severity":"HIGH"}
     }
 ```
@@ -168,11 +217,19 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
       fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
 -        {"severity":"HIGH"}
       fieldMeta.OTHER_BRIDGE:
 -        {"severity":"HIGH"}
       fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
 -        {"severity":"HIGH"}
     }
 ```
@@ -180,6 +237,8 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.pauseExpiry:
 -        {"severity":"HIGH"}
       fieldMeta.pauseExpiryFmt:
@@ -188,10 +247,43 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract ETHLockbox (eth:0xbd4AbB321138e8Eddc399cE64E66451294325a14) [opstack/ETHLockbox] {
     +++ description: A simple escrow contract storing ETH for the canonical bridge.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.7.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -201,10 +293,16 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
 +++ severity: HIGH
       values.blacklistedGames:
 +        []
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
 -        {"severity":"HIGH"}
       fieldMeta.disputeGameFinalityDelaySeconds:
 -        {"severity":"HIGH","description":"Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.blacklistedGames:
 +        {"severity":"HIGH"}
     }
@@ -215,7 +313,11 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
       fieldMeta.l1CrossDomainMessenger:
 -        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
       fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
 -        {"severity":"HIGH"}
     }
 ```
@@ -225,9 +327,33 @@ discovery. Values are for block 1789045166 (main branch discovery), not current.
     +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
       fieldMeta.l1TokenBridge:
 -        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
       fieldMeta.OTHER_BRIDGE:
 -        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
       fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (ink:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (ink:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
 -        {"severity":"HIGH"}
     }
 ```
@@ -8093,7 +8219,6 @@ discovery. Values are for block 22437737 (main branch discovery), not current.
     contract AddressManager (0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153)
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
 ```
-
 ```diff
 +   Status: CREATED
     contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)

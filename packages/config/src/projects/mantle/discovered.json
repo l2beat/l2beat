@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1790071539,
+  "timestamp": 1789917555,
   "configHash": "0x61a588ca8f19e945963dbe3c0617c3a1164871197aca3b1ca36b54a31cff4cd3",
   "entries": [
     {
@@ -137,10 +137,10 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 100968146,
-        "latestOutputIndex": 22108,
-        "nextBlockNumber": 100969946,
-        "nextOutputIndex": 22109,
+        "latestBlockNumber": 100892546,
+        "latestOutputIndex": 22066,
+        "nextBlockNumber": 100894346,
+        "nextOutputIndex": 22067,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -517,7 +517,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704472",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704465",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -664,7 +664,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 591926,
-          "prevBlockNum": 26031897
+          "prevBlockNum": 26018579
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1217,7 +1217,7 @@
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
-  "usedBlockNumbers": { "ethereum": 26032316 },
+  "usedBlockNumbers": { "ethereum": 26019578 },
   "permissionsConfigHash": "0x6faa02ad7b341cb5a74eb197023c879e678edf1c99116cd511fabc30f5f0a21d",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"

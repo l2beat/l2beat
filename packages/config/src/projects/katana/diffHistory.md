@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x23771a60ad118a8cf61a7beb05ae067b326c5258
+Generated with discovered.json: 0xec7b8ce8601304acfb665eec60feda36dd855a76
 
-# Diff at Tue, 22 Sep 2026 05:46:04 GMT:
+# Diff at Wed, 23 Sep 2026 05:47:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1788793515
-- current timestamp: 1790055833
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788793515
+- current timestamp: 1788793515
 
 ## Description
 
-Review the ossification perimeter and reconstruct exact historical security changes.
+Refresh config-derived discovery metadata at the main-branch block.
 
 ## Config/verification related changes
 
@@ -49,8 +49,31 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.4.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
     contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
       fieldMeta.systemConfig:
@@ -63,16 +86,60 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.OTHER_MESSENGER:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) [opstack/SuperchainConfigFake_expiry] {
     +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.pauseExpiry:
 -        {"severity":"HIGH"}
       fieldMeta.pauseExpiryFmt:
 -        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -93,18 +160,16 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.l2TokenBridge:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
     }
 ```
 
 ```diff
     contract DelayedWETH (eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      fieldMeta.delay:
--        {"severity":"HIGH"}
-      fieldMeta.config:
--        {"severity":"HIGH"}
-      fieldMeta.systemConfig:
--        {"severity":"HIGH"}
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -122,6 +187,8 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.disputeGameFinalityDelaySeconds:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
       fieldMeta.blacklistedGames:
 +        {"severity":"HIGH"}
     }
@@ -130,6 +197,10 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
       fieldMeta.superchainConfig:
 -        {"severity":"HIGH"}
       fieldMeta.disputeGameFactory:
@@ -148,6 +219,25 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.resourceConfig:
 -        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.8.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -179,6 +269,10 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
       values.vmFromDGF:
 +        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
 -        {"severity":"HIGH"}
       fieldMeta.permissionedGameArgs:
 -        {"severity":"HIGH"}
@@ -216,6 +310,22 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
     +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
       fieldMeta.getWrappedTokenBridgeImplementation:
@@ -238,6 +348,8 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.OTHER_MESSENGER:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
     }
 ```
 
@@ -254,6 +366,16 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 -        {"severity":"HIGH"}
       fieldMeta.MESSENGER:
 -        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 

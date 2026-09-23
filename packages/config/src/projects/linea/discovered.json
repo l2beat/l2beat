@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1790070195,
+  "timestamp": 1789919089,
   "configHash": "0xbf30eafb743c614c26e1422d21f8963206900a1b019b02e841d50e62dde4fed4",
   "entries": [
     {
@@ -937,9 +937,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0x65188e24eedd392384f601fb60a6345b4448d73b25f8ad02b876136498e58046",
-        "currentFinalizedState": "0x0d5e03a3a4e928886e07fff840d55c611fe03d7428d6077d58de6ddd247df1b1",
-        "currentPeriodAmountInWei": "33048148426284319",
+        "currentFinalizedShnarf": "0xe98bf38d654fcaec67add696a189c74fbebe220ffc816701ba8d9729e3442007",
+        "currentFinalizedState": "0x9d238c2d38f6a72f3c8ca96513c395baacbe71c626c5011ac4cd1d8a101b5d70",
+        "currentPeriodAmountInWei": "18808773893957830615",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1903,8 +1903,8 @@
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "37000000000000000",
-        "currentPeriodEnd": 1790137183,
+        "currentPeriodAmountInWei": "191864081495223522",
+        "currentPeriodEnd": 1789876249,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1928,11 +1928,11 @@
         "l1l2Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Pausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
-        "lastAnchoredL1MessageNumber": 809688,
+        "lastAnchoredL1MessageNumber": 809598,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 108400,
+        "nextMessageNumber": 108385,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -3617,7 +3617,7 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x15befc37e3984bc9e0b8548c3b5266b2ad9e24ca61f02cd9ab3c9176983303ab"
   },
-  "usedBlockNumbers": { "ethereum": 26032204, "linea": 32110419 },
+  "usedBlockNumbers": { "ethereum": 26019706, "linea": 32092404 },
   "permissionsConfigHash": "0x2bcbd12d4222cc2e1f80cd5e42627f8f0aff928d7087e066fd998a5bf45eaedf",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {

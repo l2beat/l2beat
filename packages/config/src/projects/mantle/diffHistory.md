@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd955caf35c217edcaaab4d790c132c6c56509b3c
+Generated with discovered.json: 0x7cd7b6e5d6aad7fd661c6c513a314c111d06007a
 
-# Diff at Tue, 22 Sep 2026 10:06:46 GMT:
+# Diff at Wed, 23 Sep 2026 05:55:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3043b611a89f371ed3370b4da83fcd82b2f09224 block: 1789917555
-- current timestamp: 1790071539
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789917555
+- current timestamp: 1789917555
 
 ## Description
 
-Refine the ossification perimeter to live security policy: add both controller Safe thresholds/modules and explicit legacy ProxyAdmin routing, while removing identity-only, immutable, initializer-only and duplicate aggregate fields.
+Review ossification configuration at the main-branch discovery block.
 
 ## Config/verification related changes
 

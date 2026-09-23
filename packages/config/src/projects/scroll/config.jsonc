@@ -221,11 +221,11 @@
         "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/v0.7.1/verifier/verifier.bin"
       }
     },
-    "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": {
+    "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": {
       // plonk verifier used by the active v10 ZkEvmVerifierPostFeynman (proof verification path)
-      "critical": { "sinceTimestamp": 1790041547 },
+      "critical": { "sinceTimestamp": 1782371087 },
       "manualSourcePaths": {
-        "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
+        "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
       }
     },
 
@@ -533,9 +533,9 @@
       // ZkEvmVerifierPostFeynman: registered verifier version 9
       "critical": { "sinceTimestamp": 1765784711 }
     },
-    "eth:0x7966FE0De13e3B81533470640Ac489223476B254": {
+    "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": {
       // ZkEvmVerifierPostFeynman: registered verifier version 10 (latest)
-      "critical": { "sinceTimestamp": 1790041547 }
+      "critical": { "sinceTimestamp": 1782371087 }
     },
     "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
       // proposer, canceller and admin of the L1 no-delay emergency timelock

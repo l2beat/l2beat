@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x62153d2a6de9d3c85d94a83d4c5c2ab4d8a83c26
+Generated with discovered.json: 0x188938e16af7ef6f7cf40fed5d5d775444e99c02
 
-# Diff at Wed, 23 Sep 2026 00:03:14 GMT:
+# Diff at Wed, 23 Sep 2026 05:56:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789711666
-- current timestamp: 1790121730
+- current timestamp: 1789711666
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Review ossification configuration at the main-branch discovery block.
 
 ## Config/verification related changes
 

@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1790076520,
-  "configHash": "0x0e3fd80f5a1b312dc297b5eeb35d2df969341d109597a16b7d011567294dbe1e",
+  "timestamp": 1789077777,
+  "configHash": "0x0bb1af04b3603a1cdd83407d541060bcf84a1b9664fa3662198aa4054147ddc1",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -413,52 +413,52 @@
       "name": "AnchorStateRegistry",
       "address": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
       "type": "Contract",
-      "template": "opstack/AnchorStateRegistry_post20",
+      "template": "opstack/AnchorStateRegistry_post13",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x10f64124093daab87c84d97148854054f9622bf86e09e98d496f123be3368122"
+        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "critical": true,
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle",
+        "wethFromGame"
+      ],
       "deployerAddress": "eth:0x60ebFE5cc71a39D877CA1F40D1Cb3c57d6D64523",
       "sinceTimestamp": 1771964639,
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281",
+        "$implementation": "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281"]
           ]
         ],
-        "$upgradeCount": 3,
-        "anchorGame": "eth:0x03B5f7531da9b808E0Cc4CceA7d89E35da5F4aAC",
-        "blacklistedGames": [],
+        "$upgradeCount": 1,
+        "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
+        "anchorGame": "eth:0xb511c4e559D6A0d6b596360967521fBCd09c66Ed",
+        "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x25070b04341459583b7d02fad9e43a6ffeecc10dbb9391f9655ef706c2253750",
-          60999491
+          "0xd6a5036d0a186d6f290c3ca09efd734710b2258d9c55cb73f1a11b594b8823c3",
+          56268942
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
           "l2SequenceNumber": 0
         },
         "initVersion": 1,
+        "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "paused": false,
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -467,17 +467,21 @@
         "retirementTimestamp": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-        "version": "3.9.0"
+        "version": "3.7.0",
+        "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+        "wethFromGame": "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
       },
       "fieldMeta": {
-        "paused": { "severity": "MEDIUM" },
-        "respectedGameType": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "disputeGameFactory": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "respectedGameType": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": "Proxy",
-        "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281": "AnchorStateRegistry"
+        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5": "AnchorStateRegistry"
       },
       "usedTypes": [
         {
@@ -485,8 +489,6 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
-            "8": "FaultDisputeGame",
-            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -511,36 +513,6 @@
       "address": "eth:0x16272F258031f16885091F198fFe543bd4F33659",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PreimageOracle",
-      "address": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
-      "type": "Contract",
-      "template": "opstack/PreimageOracle",
-      "sourceHashes": [
-        "0xda05a58c400dcb5cf23c2575a7383b759a845956f2673724f2879e8ede57efe6"
-      ],
-      "proxyType": "immutable",
-      "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-      "critical": { "sinceTimestamp": 1789973519 },
-      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
-      "sinceTimestamp": 1778190599,
-      "sinceBlock": 25045956,
-      "values": {
-        "$immutable": true,
-        "challengePeriod": 86400,
-        "KECCAK_TREE_DEPTH": 16,
-        "MAX_LEAF_COUNT": 65535,
-        "MIN_BOND_SIZE": "250000000000000000",
-        "minProposalSize": 126000,
-        "PRECOMPILE_CALL_RESERVED_GAS": 100000,
-        "proposalCount": 0,
-        "proposals": [],
-        "version": "1.1.5"
-      },
-      "implementationNames": {
-        "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": "PreimageOracle"
-      }
     },
     {
       "name": "RiscZeroVerifierEmergencyStop",
@@ -642,55 +614,6 @@
       "address": "eth:0x236aF2FFdb611B14e3042A982d13EdA1627d9C96",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "DelayedWETH",
-      "address": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
-      "type": "Contract",
-      "template": "opstack/DelayedWETH",
-      "sourceHashes": [
-        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x4261e89f13bbc8c62ec81929edcaffd5d0ce457496741bd4cacc527722a3f5e2"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": { "sinceTimestamp": 1789973519 },
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
-      "sinceTimestamp": 1789973519,
-      "sinceBlock": 26024216,
-      "values": {
-        "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0xE440CC08A71694C8229323803F59024E3144630e",
-        "$pastUpgrades": [
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0xE440CC08A71694C8229323803F59024E3144630e"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "config": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
-        "decimals": 18,
-        "delay": 302400,
-        "initVersion": 1,
-        "name": "Wrapped Ether",
-        "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "symbol": "WETH",
-        "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-        "totalSupply": 0,
-        "version": "1.5.1"
-      },
-      "implementationNames": {
-        "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d": "Proxy",
-        "eth:0xE440CC08A71694C8229323803F59024E3144630e": "DelayedWETH"
-      }
     },
     {
       "name": "KailuaGame",
@@ -1000,7 +923,7 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xc5ed62b03fb7c1340609ace7ebb0c5bf8d43b1814b1ab4f10863bfa21d13b90b"
+        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
@@ -1010,25 +933,15 @@
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e",
+        "$implementation": "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 1,
         "initVersion": 3,
         "messenger": "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e",
         "MESSENGER": "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e",
@@ -1039,11 +952,11 @@
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-        "version": "2.9.1"
+        "version": "2.9.0"
       },
       "implementationNames": {
         "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": "Proxy",
-        "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": "L1ERC721Bridge"
+        "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -1087,103 +1000,76 @@
       "name": "DisputeGameFactory",
       "address": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
       "type": "Contract",
-      "template": "opstack/DisputeGameFactory_v2",
+      "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x8912e655e26f51d4384fc950df847ae65bccf1f5ec5458642402f385c3dadf78"
+        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
+      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "critical": true,
-      "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGameArgs",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x60ebFE5cc71a39D877CA1F40D1Cb3c57d6D64523",
       "sinceTimestamp": 1771964639,
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b",
+        "$implementation": "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"]
           ]
         ],
-        "$upgradeCount": 3,
-        "absolutePrestateFromDGF": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorStateRegistryFromDGF": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
-        "chainIdFromDGF": 2020,
+        "$upgradeCount": 1,
         "challengerFromDGF": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "game0": "eth:0x0000000000000000000000000000000000000000",
-        "game1": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
         "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "game621": "eth:0x0000000000000000000000000000000000000000",
-        "game8": "eth:0x0000000000000000000000000000000000000000",
-        "game8AbsolutePrestate": "UNRESOLVED",
-        "game8AnchorStateRegistry": "UNRESOLVED",
-        "game8Args": "0x",
-        "game8ChainId": "UNRESOLVED",
-        "game8Vm": "UNRESOLVED",
-        "game8Weth": "UNRESOLVED",
-        "gameCount": 267,
-        "initBondGame0": 0,
-        "initBondGame1": 0,
+        "gameCount": 243,
+        "gameImpls": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
         "initBondGame42": 0,
-        "initBondGame621": 0,
-        "initBondGame8": 0,
+        "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 64,
+        "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c6463dee3828677f6270d83d45408044fc5edb9080b95ff1d1b113bac3e29ac0bbf2089126c9ae81a69fcd2e75af364295eaf48dc058338f80cffb43400000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
+        "permissionedGamesTotal": 40,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "version": "1.6.1",
-        "vmFromDGF": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
-        "wethFromDGF": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d"
+        "version": "1.4.0",
+        "wethFromDGF": "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
-        "game621": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
-        "game0": { "severity": "HIGH" },
-        "game1": { "severity": "HIGH" },
-        "game8": { "severity": "HIGH" },
-        "absolutePrestateFromDGF": { "severity": "HIGH" },
-        "vmFromDGF": { "severity": "HIGH" },
-        "game8AbsolutePrestate": { "severity": "HIGH" },
-        "game8Vm": { "severity": "HIGH" },
-        "game8AnchorStateRegistry": { "severity": "HIGH" },
-        "game8Weth": { "severity": "HIGH" },
-        "game8ChainId": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" },
-        "anchorStateRegistryFromDGF": { "severity": "HIGH" },
-        "chainIdFromDGF": { "severity": "HIGH" }
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": "Proxy",
-        "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b": "DisputeGameFactory"
+        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c": "DisputeGameFactory"
       },
       "usedTypes": [
-        { "typeCaster": "SliceBytes32", "arg": { "offset": 0 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
-        { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1241,7 +1127,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 323,
+        "nonce": 311,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -1334,7 +1220,7 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x11b0ed6f15cabf613492a8d54c55304a17cf60f4fd94a655d7e720d4556906d0"
+        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
@@ -1343,34 +1229,22 @@
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12",
+        "$implementation": "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 1,
         "bridge": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
         "BRIDGE": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
-        "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "version": "1.11.0"
+        "version": "1.10.2"
       },
       "implementationNames": {
         "eth:0x51639D151456d0384285C6974e441A5D2B784B7D": "Proxy",
-        "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12": "OptimismMintableERC20Factory"
+        "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB": "OptimismMintableERC20Factory"
       }
     },
     {
@@ -1457,7 +1331,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PermissionedDisputeGame_preSept2026",
+      "name": "PermissionedDisputeGame",
       "address": "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
@@ -1683,7 +1557,7 @@
       "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xe1df4caf26d9a0735bd53eeb020546840bd2f2fd4d0d9e2519f873306b5e19b1"
+        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
@@ -1694,25 +1568,15 @@
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2",
+        "$implementation": "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 1,
         "anchorStateRegistry": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
@@ -1734,7 +1598,7 @@
         "respectedGameTypeUpdatedAt": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-        "version": "5.6.1"
+        "version": "5.2.0"
       },
       "fieldMeta": {
         "anchorStateRegistry": { "severity": "HIGH" },
@@ -1746,7 +1610,7 @@
       },
       "implementationNames": {
         "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77": "Proxy",
-        "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": "OptimismPortal2"
+        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B": "OptimismPortal2"
       },
       "usedTypes": [
         {
@@ -1908,7 +1772,7 @@
       "sinceBlock": 24529130,
       "values": {
         "$immutable": true,
-        "OVM_L1CrossDomainMessenger": "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0",
+        "OVM_L1CrossDomainMessenger": "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0",
         "owner": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"
       },
       "fieldMeta": { "OVM_L1CrossDomainMessenger": { "severity": "HIGH" } },
@@ -2012,7 +1876,7 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x6469155800e1489607c8fa062550a362dfa8978885df4714ca4653e5f3d25b0c"
+        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
@@ -2022,7 +1886,7 @@
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891",
+        "$implementation": "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "initVersion": 3,
@@ -2036,12 +1900,12 @@
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
-        "version": "2.8.2"
+        "version": "2.8.0"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1": "L1ChugSplashProxy",
-        "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
+        "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -2186,30 +2050,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "MIPS",
-      "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
-      "type": "Contract",
-      "template": "opstack/MIPS",
-      "sourceHashes": [
-        "0xd50e8efb45d44082a90ec3b26d13c5f61587ced6e71b1bd0a77a26715e7ae899"
-      ],
-      "proxyType": "immutable",
-      "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
-      "critical": { "sinceTimestamp": 1789973519 },
-      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
-      "sinceTimestamp": 1778190599,
-      "sinceBlock": 25045956,
-      "values": {
-        "$immutable": true,
-        "oracle": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
-        "stateVersion": 8,
-        "version": "1.10.1"
-      },
-      "implementationNames": {
-        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": "MIPS64"
-      }
-    },
-    {
       "address": "eth:0xAD23e87306aa3c7B95ee760e86f40F3021E5Fa18",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2271,7 +2111,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2074563058990060985010551"
+        "totalSupply": "2055298261968915885332449"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2294,7 +2134,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3d8e7cdbbdbf274bba0a11a060b01d5a50e3a478683af9ec079874d1758576d6"
+        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -2305,25 +2145,15 @@
       "sinceBlock": 24529130,
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
-        "$implementation": "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9",
+        "$implementation": "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 1,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x9aA8feACbB42659a806cDD6933ab3982586824F1",
@@ -2331,7 +2161,7 @@
         "blobbasefeeScalar": 801949,
         "daFootprintGasScalar": 0,
         "DELAYED_WETH_SLOT": "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff",
-        "delayedWETH": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
+        "delayedWETH": "eth:0x0000000000000000000000000000000000000000",
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
@@ -2342,8 +2172,7 @@
           "l1StandardBridge": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
           "optimismPortal": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
           "optimismMintableERC20Factory": "eth:0x51639D151456d0384285C6974e441A5D2B784B7D",
-          "delayedWETH": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
-          "opcm": "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c"
+          "delayedWETH": "eth:0x0000000000000000000000000000000000000000"
         },
         "guardian": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "initVersion": 3,
@@ -2355,12 +2184,9 @@
         "l1ERC721Bridge": "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959",
         "l1StandardBridge": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
         "l2ChainId": 2020,
-        "lastUsedOPCM": "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c",
-        "lastUsedOPCMVersion": "7.1.17",
         "maximumGasLimit": 500000000,
         "minBaseFee": 20000000000,
         "minimumGasLimit": 21000000,
-        "OPCM_SLOT": "0x99f45962df4bc30de8d4c3c6d1ffc0f100edce16e80c7a5768b6d55ca463ff42",
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "opStackDA": {
@@ -2392,7 +2218,7 @@
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "eth:0x16272F258031f16885091F198fFe543bd4F33659",
-        "version": "3.14.2",
+        "version": "3.13.1",
         "VERSION": 0
       },
       "fieldMeta": {
@@ -2408,7 +2234,7 @@
       },
       "implementationNames": {
         "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1": "Proxy",
-        "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9": "SystemConfig"
+        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2564,111 +2390,6 @@
       }
     },
     {
-      "name": "PermissionedDisputeGame",
-      "address": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
-      "type": "Contract",
-      "template": "opstack/PermissionedDisputeGame",
-      "sourceHashes": [
-        "0x1fe878990858cb08a23e6037667b2c5a56504ca4e7b5506522c9bf705e1691bd"
-      ],
-      "proxyType": "immutable",
-      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "critical": { "sinceTimestamp": 1789973519 },
-      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
-      "sinceTimestamp": 1778190599,
-      "sinceBlock": 25045956,
-      "values": {
-        "$immutable": true,
-        "absolutePrestate": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "absolutePrestateDecoded": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "anchorStateRegistry": "eth:0x0000000000000000000000000000000000000000",
-        "bondDistributionMode": 0,
-        "challenger": "eth:0x0000000000000000000000000000000000000000",
-        "claimData": [],
-        "claimDataLen": 0,
-        "clockExtension": 10800,
-        "createdAt": 0,
-        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
-        "gameData": {
-          "gameType_": 0,
-          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "gameType": 0,
-        "getChallengerDuration": [],
-        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "l2BlockNumber": 0,
-        "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
-        "l2ChainId": 0,
-        "l2SequenceNumber": 0,
-        "maxClockDuration": 302400,
-        "maxGameDepth": 73,
-        "proposer": "eth:0x0000000000000000000000000000000000000000",
-        "resolvedAt": 0,
-        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "rootClaimByChainId": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "splitDepth": 30,
-        "startingBlockNumber": 0,
-        "startingOutputRoot": {
-          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2SequenceNumber": 0
-        },
-        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "status": 0,
-        "version": "2.4.0",
-        "vm": "eth:0x0000000000000000000000000000000000000000",
-        "wasRespectedGameTypeWhenCreated": false,
-        "weth": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
-        }
-      },
-      "implementationNames": {
-        "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e": "PermissionedDisputeGame"
-      },
-      "usedTypes": [
-        {
-          "typeCaster": "Mapping",
-          "arg": {
-            "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
-            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
-            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
-            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
-            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
-            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
-            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
-            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
-            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
-            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
-            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
-            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
-            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
-            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
-            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
-            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
-            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
-            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
-            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
-            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
-            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
-            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
-            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
-            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
-            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
-            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
-            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
-            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
-          }
-        }
-      ]
-    },
-    {
       "address": "eth:0xe258f9996723B910712D6E67ADa4EafC15F7F101",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2720,7 +2441,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 6 (83%)",
-        "nonce": 6,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "fieldMeta": {
@@ -2759,7 +2480,7 @@
       "template": "opstack/SuperchainConfigFake_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.",
@@ -2769,7 +2490,7 @@
       "sinceBlock": 24529126,
       "values": {
         "$admin": "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34",
-        "$implementation": "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550",
+        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:11.000Z",
@@ -2785,19 +2506,9 @@
             "2026-06-09T07:02:35.000Z",
             "0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6",
             ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 3,
         "guardian": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "initVersion": 2,
         "paused": false,
@@ -2805,7 +2516,7 @@
         "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "version": "2.4.2"
+        "version": "2.4.0"
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
@@ -2816,7 +2527,7 @@
       },
       "implementationNames": {
         "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c": "Proxy",
-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
+        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -2900,7 +2611,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0x694050f95b40e6d92ee91ca0f60acb9c4a74d1b0325c33fd4bd7445fde90e806"
+        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -2912,25 +2623,15 @@
       "values": {
         "$admin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "$immutable": false,
-        "$implementation": "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0",
+        "$implementation": "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0",
         "$pastUpgrades": [
           [
             "2026-02-24T20:23:59.000Z",
             "0x476d87c0223e17c8e11c6f318b59f573760ecdabc7b2d2a67cd24f99178c7e18",
             ["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
-          ],
-          [
-            "2026-09-21T06:51:59.000Z",
-            "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
-            ["eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 1,
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
@@ -2955,12 +2656,12 @@
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
         "TX_BASE_GAS": 21000,
-        "version": "2.11.1"
+        "version": "2.11.0"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e": "ResolvedDelegateProxy",
-        "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
+        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -3117,56 +2818,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": [
-      "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
-      "error ActiveProposal()",
-      "error AlreadyFinalized()",
-      "error AlreadyInitialized()",
-      "error BadProposal()",
-      "error BondTransferFailed()",
-      "error InsufficientBond()",
-      "error InvalidInputSize()",
-      "error InvalidPreimage()",
-      "error InvalidProof()",
-      "error NotEOA()",
-      "error NotInitialized()",
-      "error PartOffsetOOB()",
-      "error PostStateMatches()",
-      "error StatesNotContiguous()",
-      "error TreeSizeOverflow()",
-      "error WrongStartingBlock()",
-      "function KECCAK_TREE_DEPTH() view returns (uint256)",
-      "function MAX_LEAF_COUNT() view returns (uint256)",
-      "function MIN_BOND_SIZE() view returns (uint256)",
-      "function PRECOMPILE_CALL_RESERVED_GAS() view returns (uint256)",
-      "function addLeavesLPP(uint256 _uuid, uint256 _inputStartBlock, bytes _input, bytes32[] _stateCommitments, bool _finalize)",
-      "function challengeFirstLPP(address _claimant, uint256 _uuid, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
-      "function challengeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
-      "function challengePeriod() view returns (uint256 challengePeriod_)",
-      "function getTreeRootLPP(address _owner, uint256 _uuid) view returns (bytes32 treeRoot_)",
-      "function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) payable",
-      "function loadBlobPreimagePart(uint256 _z, uint256 _y, bytes _commitment, bytes _proof, uint256 _partOffset)",
-      "function loadKeccak256PreimagePart(uint256 _partOffset, bytes _preimage)",
-      "function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset) returns (bytes32 key_)",
-      "function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, uint64 _requiredGas, bytes _input)",
-      "function loadSha256PreimagePart(uint256 _partOffset, bytes _preimage)",
-      "function minProposalSize() view returns (uint256 minProposalSize_)",
-      "function preimageLengths(bytes32) view returns (uint256)",
-      "function preimagePartOk(bytes32, uint256) view returns (bool)",
-      "function preimageParts(bytes32, uint256) view returns (bytes32)",
-      "function proposalBlocks(address, uint256, uint256) view returns (uint64)",
-      "function proposalBlocksLen(address _claimant, uint256 _uuid) view returns (uint256 len_)",
-      "function proposalBonds(address, uint256) view returns (uint256)",
-      "function proposalBranches(address, uint256, uint256) view returns (bytes32)",
-      "function proposalCount() view returns (uint256 count_)",
-      "function proposalMetadata(address, uint256) view returns (bytes32)",
-      "function proposalParts(address, uint256) view returns (bytes32)",
-      "function proposals(uint256) view returns (address claimant, uint256 uuid)",
-      "function readPreimage(bytes32 _key, uint256 _offset) view returns (bytes32 dat_, uint256 datLen_)",
-      "function squeezeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
-      "function version() view returns (string)",
-      "function zeroHashes(uint256) view returns (bytes32)"
-    ],
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": [
       "constructor(address _verifier, address guardian)",
       "error EnforcedPause()",
@@ -3253,16 +2904,6 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
-    ],
-    "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "eth:0x296e7aD6D441b0627768bC0650179a4206479444": [
       "constructor(address _kailuaTreasury, uint256 _genesisTimeStamp, uint256 _l2BlockTime, uint64 _maxClockDuration)",
@@ -3407,6 +3048,52 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
+    "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5": [
+      "constructor(uint256 _disputeGameFinalityDelaySeconds)",
+      "error AnchorStateRegistry_InvalidAnchorGame()",
+      "error AnchorStateRegistry_Unauthorized()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "event AnchorUpdated(address indexed game)",
+      "event DisputeGameBlacklisted(address indexed disputeGame)",
+      "event Initialized(uint8 version)",
+      "event RespectedGameTypeSet(uint32 gameType)",
+      "event RetirementTimestampSet(uint256 timestamp)",
+      "function anchorGame() view returns (address)",
+      "function anchors(uint32) view returns (bytes32, uint256)",
+      "function blacklistDisputeGame(address _disputeGame)",
+      "function disputeGameBlacklist(address) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
+      "function getAnchorRoot() view returns (bytes32, uint256)",
+      "function getStartingAnchorRoot() view returns (tuple(bytes32 root, uint256 l2SequenceNumber))",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _systemConfig, address _disputeGameFactory, tuple(bytes32 root, uint256 l2SequenceNumber) _startingAnchorRoot, uint32 _startingRespectedGameType)",
+      "function isGameBlacklisted(address _game) view returns (bool)",
+      "function isGameClaimValid(address _game) view returns (bool)",
+      "function isGameFinalized(address _game) view returns (bool)",
+      "function isGameProper(address _game) view returns (bool)",
+      "function isGameRegistered(address _game) view returns (bool)",
+      "function isGameResolved(address _game) view returns (bool)",
+      "function isGameRespected(address _game) view returns (bool)",
+      "function isGameRetired(address _game) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function respectedGameType() view returns (uint32)",
+      "function retirementTimestamp() view returns (uint64)",
+      "function setAnchorState(address _game)",
+      "function setRespectedGameType(uint32 _gameType)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function updateRetirementTimestamp()",
+      "function version() view returns (string)"
+    ],
     "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3464,85 +3151,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error SystemConfig_InvalidFeatureState()",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function DELAYED_WETH_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function OPCM_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function basefeeScalar() view returns (uint32)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobbasefeeScalar() view returns (uint32)",
-      "function daFootprintGasScalar() view returns (uint16)",
-      "function delayedWETH() view returns (address addr_)",
-      "function disputeGameFactory() view returns (address addr_)",
-      "function eip1559Denominator() view returns (uint32)",
-      "function eip1559Elasticity() view returns (uint32)",
-      "function gasLimit() view returns (uint64)",
-      "function getAddresses() view returns (tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH, address opcm))",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH, address opcm) _addresses, uint256 _l2ChainId, address _superchainConfig)",
-      "function isCustomGasToken() view returns (bool)",
-      "function isFeatureEnabled(bytes32) view returns (bool)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function l2ChainId() view returns (uint256)",
-      "function lastUsedOPCM() view returns (address addr_)",
-      "function lastUsedOPCMVersion() view returns (string version_)",
-      "function maximumGasLimit() pure returns (uint64)",
-      "function minBaseFee() view returns (uint64)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function operatorFeeConstant() view returns (uint64)",
-      "function operatorFeeScalar() view returns (uint32)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(address _batcher)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
-      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
-      "function setFeature(bytes32 _feature, bool _enabled)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setMinBaseFee(uint64 _minBaseFee)",
-      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function superchainConfig() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() pure returns (string)"
     ],
     "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": [
       "constructor(address _verifier, address guardian)",
@@ -3863,7 +3471,7 @@
       "function wasRespectedGameTypeWhenCreated() view returns (bool)",
       "function weth() pure returns (address weth_)"
     ],
-    "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": [
+    "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
@@ -3872,41 +3480,41 @@
       "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
       "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
       "error ReinitializableBase_ZeroInitVersion()",
-      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
       "event Initialized(uint8 version)",
-      "event RelayedMessage(bytes32 indexed msgHash)",
-      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
-      "event SentMessageExtension1(address indexed sender, uint256 value)",
-      "function ENCODING_OVERHEAD() view returns (uint64)",
-      "function FLOOR_CALLDATA_OVERHEAD() view returns (uint64)",
-      "function MESSAGE_VERSION() view returns (uint16)",
-      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
-      "function OTHER_MESSENGER() view returns (address)",
-      "function PORTAL() view returns (address)",
-      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
-      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
-      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
-      "function RELAY_RESERVED_GAS() view returns (uint64)",
-      "function TX_BASE_GAS() view returns (uint64)",
-      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
-      "function failedMessages(bytes32) view returns (bool)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
       "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig, address _portal)",
-      "function messageNonce() view returns (uint256)",
-      "function otherMessenger() view returns (address)",
+      "function initialize(address _messenger, address _systemConfig)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
       "function paused() view returns (bool)",
-      "function portal() view returns (address)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
-      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
-      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
-      "function successfulMessages(bytes32) view returns (bool)",
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
-      "function version() view returns (string)",
-      "function xDomainMessageSender() view returns (address)"
+      "function version() view returns (string)"
     ],
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3995,11 +3603,8 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b": [
+    "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": [
       "constructor()",
-      "error GameAlreadyExists(bytes32 uuid)",
-      "error IncorrectBondAmount()",
-      "error NoImplementation(uint32 gameType)",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
       "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
@@ -4007,31 +3612,24 @@
       "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
       "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
       "error ReinitializableBase_ZeroInitVersion()",
-      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
-      "event ImplementationArgsSet(uint32 indexed gameType, bytes args)",
-      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
-      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
       "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
-      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
-      "function gameArgs(uint32) view returns (bytes)",
-      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
-      "function gameCount() view returns (uint256 gameCount_)",
-      "function gameImpls(uint32) view returns (address)",
-      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
-      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
-      "function initBonds(uint32) view returns (uint256)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address, uint256) view returns (bool)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
       "function initVersion() view returns (uint8)",
-      "function initialize(address _owner)",
-      "function owner() view returns (address)",
+      "function initialize(address _messenger, address _systemConfig)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function setImplementation(uint32 _gameType, address _impl)",
-      "function setImplementation(uint32 _gameType, address _impl, bytes _args)",
-      "function setInitBond(uint32 _gameType, uint256 _initBond)",
-      "function transferOwnership(address newOwner)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
       "function version() view returns (string)"
     ],
     "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": [
@@ -4108,10 +3706,44 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
-    "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281": [
-      "constructor(uint256 _disputeGameFinalityDelaySeconds)",
-      "error AnchorStateRegistry_InvalidAnchorGame()",
-      "error AnchorStateRegistry_Unauthorized()",
+    "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
+      "function BRIDGE() view returns (address)",
+      "function bridge() view returns (address)",
+      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function createOptimismMintableERC20WithDecimals(address _remoteToken, string _name, string _symbol, uint8 _decimals) returns (address)",
+      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function deployments(address) view returns (address)",
+      "function initialize(address _bridge)",
+      "function version() view returns (string)"
+    ],
+    "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B": [
+      "constructor(uint256 _proofMaturityDelaySeconds)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error OptimismPortal_AlreadyFinalized()",
+      "error OptimismPortal_BadTarget()",
+      "error OptimismPortal_CallPaused()",
+      "error OptimismPortal_CalldataTooLarge()",
+      "error OptimismPortal_GasEstimation()",
+      "error OptimismPortal_GasLimitTooLow()",
+      "error OptimismPortal_ImproperDisputeGame()",
+      "error OptimismPortal_InvalidDisputeGame()",
+      "error OptimismPortal_InvalidLockboxState()",
+      "error OptimismPortal_InvalidMerkleProof()",
+      "error OptimismPortal_InvalidOutputRootProof()",
+      "error OptimismPortal_InvalidProofTimestamp()",
+      "error OptimismPortal_InvalidRootClaim()",
+      "error OptimismPortal_NoReentrancy()",
+      "error OptimismPortal_NotAllowedOnCGTMode()",
+      "error OptimismPortal_ProofNotOldEnough()",
+      "error OptimismPortal_Unproven()",
+      "error OutOfGas()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
       "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
@@ -4119,69 +3751,43 @@
       "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
       "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
       "error ReinitializableBase_ZeroInitVersion()",
-      "event AnchorUpdated(address indexed game)",
-      "event DisputeGameBlacklisted(address indexed disputeGame)",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
       "event Initialized(uint8 version)",
-      "event RespectedGameTypeSet(uint32 gameType)",
-      "event RetirementTimestampSet(uint256 timestamp)",
-      "function anchorGame() view returns (address)",
-      "function anchors(uint32) view returns (bytes32, uint256)",
-      "function blacklistDisputeGame(address _disputeGame)",
-      "function disputeGameBlacklist(address) view returns (bool)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function anchorStateRegistry() view returns (address)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
       "function disputeGameFactory() view returns (address)",
       "function disputeGameFinalityDelaySeconds() view returns (uint256)",
-      "function getAnchorRoot() view returns (bytes32, uint256)",
-      "function getStartingAnchorRoot() view returns (tuple(bytes32 root, uint256 l2SequenceNumber))",
+      "function donateETH() payable",
+      "function ethLockbox() view returns (address)",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
       "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig, address _disputeGameFactory, tuple(bytes32 root, uint256 l2SequenceNumber) _startingAnchorRoot, uint32 _startingRespectedGameType)",
-      "function isGameBlacklisted(address _game) view returns (bool)",
-      "function isGameClaimValid(address _game) view returns (bool)",
-      "function isGameFinalized(address _game) view returns (bool)",
-      "function isGameProper(address _game) view returns (bool)",
-      "function isGameRegistered(address _game) view returns (bool)",
-      "function isGameResolved(address _game) view returns (bool)",
-      "function isGameRespected(address _game) view returns (bool)",
-      "function isGameRetired(address _game) view returns (bool)",
+      "function initialize(address _systemConfig, address _anchorStateRegistry)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
       "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
       "function respectedGameType() view returns (uint32)",
-      "function retirementTimestamp() view returns (uint64)",
-      "function setAnchorState(address _game)",
-      "function setRespectedGameType(uint32 _gameType)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
-      "function updateRetirementTimestamp()",
-      "function version() view returns (string)"
-    ],
-    "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
-      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
-      "event Initialized(uint8 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function deposits(address, address, uint256) view returns (bool)",
-      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _messenger, address _systemConfig)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() view returns (string)"
+      "function version() pure returns (string)"
     ],
     "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": [
       "constructor(address _verifier, address guardian)",
@@ -4206,41 +3812,6 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
-    "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "event Initialized(uint8 version)",
-      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
-      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
-      "function BRIDGE() view returns (address)",
-      "function bridge() view returns (address)",
-      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
-      "function createOptimismMintableERC20WithDecimals(address _remoteToken, string _name, string _symbol, uint8 _decimals) returns (address)",
-      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
-      "function deployments(address) view returns (address)",
-      "function initialize(address _bridge)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function version() view returns (string)"
-    ],
-    "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": [
-      "constructor(address _oracle, uint256 _stateVersion)",
-      "error InvalidExitedValue()",
-      "error InvalidMemoryProof()",
-      "error InvalidPC()",
-      "error InvalidRMWInstruction()",
-      "error InvalidSecondMemoryProof()",
-      "error UnsupportedStateVersion()",
-      "function oracle() view returns (address oracle_)",
-      "function stateVersion() view returns (uint256 stateVersion_)",
-      "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32 postState_)",
-      "function version() view returns (string)"
-    ],
     "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": [
       "constructor(bytes32 control_root, bytes32 bn254_control_id)",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
@@ -4255,7 +3826,7 @@
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ],
-    "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": [
+    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
@@ -4264,41 +3835,73 @@
       "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
       "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
       "error ReinitializableBase_ZeroInitVersion()",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
+      "function guardian() view returns (address)",
       "function initVersion() view returns (uint8)",
-      "function initialize(address _messenger, address _systemConfig)",
-      "function l2TokenBridge() view returns (address)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
+      "function initialize(address _guardian)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
       "function paused() view returns (bool)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
+      "function unpause(address _identifier)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint8 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function ENCODING_OVERHEAD() view returns (uint64)",
+      "function FLOOR_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function PORTAL() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function TX_BASE_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _systemConfig, address _portal)",
+      "function messageNonce() view returns (uint256)",
+      "function otherMessenger() view returns (address)",
+      "function paused() view returns (bool)",
+      "function portal() view returns (address)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
-      "function version() view returns (string)"
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
     ],
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
       "function name() view returns (string)",
@@ -4316,6 +3919,45 @@
       "event Transfer(address indexed src, address indexed dst, uint256 wad)",
       "event Deposit(address indexed dst, uint256 wad)",
       "event Withdrawal(address indexed src, uint256 wad)"
+    ],
+    "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c": [
+      "constructor()",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error IncorrectBondAmount()",
+      "error NoImplementation(uint32 gameType)",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event ImplementationArgsSet(uint32 indexed gameType, bytes args)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameArgs(uint32) view returns (bytes)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _owner)",
+      "function owner() view returns (address)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setImplementation(uint32 _gameType, address _impl, bytes _args)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)"
     ],
     "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1": [
       "constructor(address _admin)",
@@ -4427,6 +4069,82 @@
       "function version() view returns (string)",
       "function wasRespectedGameTypeWhenCreated() view returns (bool)"
     ],
+    "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SystemConfig_InvalidFeatureState()",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function DELAYED_WETH_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function daFootprintGasScalar() view returns (uint16)",
+      "function delayedWETH() view returns (address addr_)",
+      "function disputeGameFactory() view returns (address addr_)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function getAddresses() view returns (tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH))",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH) _addresses, uint256 _l2ChainId, address _superchainConfig)",
+      "function isCustomGasToken() view returns (bool)",
+      "function isFeatureEnabled(bytes32) view returns (bool)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function l2ChainId() view returns (uint256)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minBaseFee() view returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(address _batcher)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setFeature(bytes32 _feature, bool _enabled)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setMinBaseFee(uint64 _minBaseFee)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function superchainConfig() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() pure returns (string)"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -4525,257 +4243,6 @@
       "function verify(address payoutRecipient, bytes32 preconditionHash, bytes32 l1Head, bytes32 agreedL2OutputRoot, bytes32 claimedL2OutputRoot, uint64 claimedL2BlockNumber, bytes encodedSeal) view",
       "function version() view returns (string)"
     ],
-    "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e": [
-      "constructor(tuple(uint256 maxGameDepth, uint256 splitDepth, uint64 clockExtension, uint64 maxClockDuration) _params)",
-      "error AlreadyInitialized()",
-      "error AnchorRootNotFound()",
-      "error BadAuth()",
-      "error BadExtraData()",
-      "error BlockNumberMatches()",
-      "error BondTransferFailed()",
-      "error CannotDefendRootClaim()",
-      "error ClaimAboveSplit()",
-      "error ClaimAlreadyExists()",
-      "error ClaimAlreadyResolved()",
-      "error ClockNotExpired()",
-      "error ClockTimeExceeded()",
-      "error ContentLengthMismatch()",
-      "error DuplicateStep()",
-      "error EmptyItem()",
-      "error GameDepthExceeded()",
-      "error GameNotFinalized()",
-      "error GameNotInProgress()",
-      "error GameNotResolved()",
-      "error GamePaused()",
-      "error IncorrectBondAmount()",
-      "error InvalidBondDistributionMode()",
-      "error InvalidChallengePeriod()",
-      "error InvalidClockExtension()",
-      "error InvalidDataRemainder()",
-      "error InvalidDisputedClaimIndex()",
-      "error InvalidHeader()",
-      "error InvalidHeaderRLP()",
-      "error InvalidLocalIdent()",
-      "error InvalidOutputRootProof()",
-      "error InvalidParent()",
-      "error InvalidPrestate()",
-      "error InvalidSplitDepth()",
-      "error L2BlockNumberChallenged()",
-      "error MaxDepthTooLarge()",
-      "error NoCreditToClaim()",
-      "error OutOfOrderResolution()",
-      "error UnexpectedList()",
-      "error UnexpectedRootClaim(bytes32 rootClaim)",
-      "error UnexpectedString()",
-      "error UnknownChainId()",
-      "error ValidStep()",
-      "event GameClosed(uint8 bondDistributionMode)",
-      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
-      "event Resolved(uint8 indexed status)",
-      "function absolutePrestate() pure returns (bytes32 absolutePrestate_)",
-      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
-      "function anchorStateRegistry() pure returns (address registry_)",
-      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
-      "function bondDistributionMode() view returns (uint8)",
-      "function challengeRootL2Block(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes _headerRLP)",
-      "function challenger() pure returns (address challenger_)",
-      "function claimCredit(address _recipient)",
-      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
-      "function claimDataLen() view returns (uint256 len_)",
-      "function claims(bytes32) view returns (bool)",
-      "function clockExtension() view returns (uint64 clockExtension_)",
-      "function closeGame()",
-      "function createdAt() view returns (uint64)",
-      "function credit(address _recipient) view returns (uint256 credit_)",
-      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
-      "function extraData() pure returns (bytes extraData_)",
-      "function gameCreator() pure returns (address creator_)",
-      "function gameData() pure returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
-      "function gameType() pure returns (uint32 gameType_)",
-      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
-      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
-      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
-      "function hasUnlockedCredit(address) view returns (bool)",
-      "function initialize() payable",
-      "function l1Head() pure returns (bytes32 l1Head_)",
-      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
-      "function l2BlockNumberChallenged() view returns (bool)",
-      "function l2BlockNumberChallenger() view returns (address)",
-      "function l2ChainId() pure returns (uint256 l2ChainId_)",
-      "function l2SequenceNumber() pure returns (uint256 l2SequenceNumber_)",
-      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
-      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
-      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack) payable",
-      "function normalModeCredit(address) view returns (uint256)",
-      "function proposer() pure returns (address proposer_)",
-      "function refundModeCredit(address) view returns (uint256)",
-      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
-      "function resolve() returns (uint8 status_)",
-      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
-      "function resolvedAt() view returns (uint64)",
-      "function resolvedSubgames(uint256) view returns (bool)",
-      "function rootClaim() pure returns (bytes32 rootClaim_)",
-      "function rootClaimByChainId(uint256 _chainId) pure returns (bytes32 rootClaim_)",
-      "function splitDepth() view returns (uint256 splitDepth_)",
-      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
-      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
-      "function startingRootHash() view returns (bytes32 startingRootHash_)",
-      "function status() view returns (uint8)",
-      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
-      "function subgames(uint256, uint256) view returns (uint256)",
-      "function version() pure returns (string)",
-      "function vm() pure returns (address vm_)",
-      "function wasRespectedGameTypeWhenCreated() view returns (bool)",
-      "function weth() pure returns (address weth_)"
-    ],
-    "eth:0xE440CC08A71694C8229323803F59024E3144630e": [
-      "constructor(uint256 _delay)",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Initialized(uint8 version)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function balanceOf(address src) view returns (uint256)",
-      "function config() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function delay() view returns (uint256)",
-      "function deposit() payable",
-      "function hold(address _guy, uint256 _wad)",
-      "function hold(address _guy)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig)",
-      "function name() view returns (string)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function recover(uint256 _wad)",
-      "function symbol() view returns (string)",
-      "function systemConfig() view returns (address)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function unlock(address _guy, uint256 _wad)",
-      "function version() view returns (string)",
-      "function withdraw(uint256 _wad)",
-      "function withdraw(address _guy, uint256 _wad)",
-      "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
-    ],
-    "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error SuperchainConfig_AlreadyPaused(address identifier)",
-      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
-      "error SuperchainConfig_OnlyGuardian()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(address identifier)",
-      "event Unpaused(address identifier)",
-      "function expiration(address _identifier) view returns (uint256)",
-      "function extend(address _identifier)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _guardian)",
-      "function pausable(address _identifier) view returns (bool)",
-      "function pause(address _identifier)",
-      "function pauseExpiry() pure returns (uint256)",
-      "function pauseTimestamps(address) view returns (uint256)",
-      "function paused(address _identifier) view returns (bool)",
-      "function paused() view returns (bool)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function unpause(address _identifier)",
-      "function version() view returns (string)"
-    ],
-    "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": [
-      "constructor(uint256 _proofMaturityDelaySeconds)",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error InvalidDataRemainder()",
-      "error InvalidHeader()",
-      "error OptimismPortal_AlreadyFinalized()",
-      "error OptimismPortal_BadTarget()",
-      "error OptimismPortal_CallPaused()",
-      "error OptimismPortal_CalldataTooLarge()",
-      "error OptimismPortal_GasEstimation()",
-      "error OptimismPortal_GasLimitTooLow()",
-      "error OptimismPortal_ImproperDisputeGame()",
-      "error OptimismPortal_InvalidDisputeGame()",
-      "error OptimismPortal_InvalidInteropState()",
-      "error OptimismPortal_InvalidLockboxState()",
-      "error OptimismPortal_InvalidMerkleProof()",
-      "error OptimismPortal_InvalidOutputRootProof()",
-      "error OptimismPortal_InvalidProofTimestamp()",
-      "error OptimismPortal_InvalidRootClaim()",
-      "error OptimismPortal_MigratingToSameRegistry()",
-      "error OptimismPortal_NoReentrancy()",
-      "error OptimismPortal_NotAllowedOnCGTMode()",
-      "error OptimismPortal_NotUsingInterop()",
-      "error OptimismPortal_ProofNotOldEnough()",
-      "error OptimismPortal_Unproven()",
-      "error OutOfGas()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "event ETHMigrated(address indexed lockbox, uint256 balance)",
-      "event Initialized(uint8 version)",
-      "event PortalMigrated(address oldLockbox, address newLockbox, address oldAnchorStateRegistry, address newAnchorStateRegistry)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
-      "function anchorStateRegistry() view returns (address)",
-      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
-      "function disputeGameFactory() view returns (address)",
-      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
-      "function donateETH() payable",
-      "function ethLockbox() view returns (address)",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig, address _anchorStateRegistry, address _ethLockbox)",
-      "function l2Sender() view returns (address)",
-      "function migrateLiquidity()",
-      "function migrateToSharedDisputeGame(address _newLockbox, address _newAnchorStateRegistry)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool)",
-      "function proofMaturityDelaySeconds() view returns (uint256)",
-      "function proofSubmitters(bytes32, uint256) view returns (address)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function respectedGameType() view returns (uint32)",
-      "function respectedGameTypeUpdatedAt() view returns (uint64)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() pure returns (string)"
-    ],
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": [
       "constructor(address _singleton)"
     ],
@@ -4841,9 +4308,9 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/AnchorStateRegistry_post13": "0xbc6c120f84172c0414f15256052417774931321f36fe76c54725f11ff7bcd84e",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -4862,8 +4329,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26032730 },
-  "permissionsConfigHash": "0xedc427e2dbc05e2032725a226a4520b939d9ba2a4717f40283f6896316fd77fe",
+  "usedBlockNumbers": { "ethereum": 25949849 },
+  "permissionsConfigHash": "0x56a393699b7626681603fdda8c7aef813bb06e4675ffc0d33870577d61d896df",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       "directlyReceivedPermissions": [
@@ -5017,11 +4484,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
           "from": "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959",
           "role": "admin"
         },
@@ -5114,14 +4576,6 @@
         {
           "permission": "upgrade",
           "from": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
           "role": "admin",
           "via": [
             { "address": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC" }

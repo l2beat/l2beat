@@ -271,7 +271,6 @@
       "type": "code",
       "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
       "transaction": "0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7",
-      "updateId": "792dfb21",
       "reason": "Upgraded L1StandardBridge during BOB's migration from Kailua back to a permissioned dispute game."
     }
   ]

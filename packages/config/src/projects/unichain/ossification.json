@@ -106,7 +106,6 @@
       "timestamp": 1783362755,
       "type": "code",
       "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-      "updateId": "84831770",
       "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
       "reason": "The July 2026 upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 slot changed in this block without a past-upgrades entry."
     }

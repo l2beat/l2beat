@@ -27,7 +27,7 @@
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": "PauseEnforcer",
     "eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": "LegacyBridgeOwner",
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": "RoninConduitOwner",
-    "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A": "PermissionedDisputeGame_preSept2026"
+    "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A": "PermissionedDisputeGame"
   },
   "overrides": {
     "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": {
@@ -252,20 +252,6 @@
     },
     "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434": {
       "critical": { "untilTimestamp": 1789973519 }
-    },
-    // Current PermissionedDisputeGame proof path joined Ronin in the September
-    // 2026 core upgrade; these shared implementations predate that use.
-    "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e": {
-      "critical": { "sinceTimestamp": 1789973519 }
-    },
-    "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": {
-      "critical": { "sinceTimestamp": 1789973519 }
-    },
-    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": {
-      "critical": { "sinceTimestamp": 1789973519 }
-    },
-    "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d": {
-      "critical": { "sinceTimestamp": 1789973519 }
     },
     // SuperchainConfig fork: guardian can pause deposits/withdrawals for Ronin.
     "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c": {
