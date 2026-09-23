@@ -1031,7 +1031,8 @@ html:has([data-backdrop="plot"]) {
 }
 
 /* The plants animate from inline styles, so reduced motion swaps the keyframes
-   themselves: entrances become fades and the idles hold still. */
+   themselves: entrances become fades, the idles hold still, the ghost holds its
+   mid-pulse opacity and the pollen (only ever visible mid-float) stays hidden. */
 @media (prefers-reduced-motion: reduce) {
   @keyframes garden-grow {
     from {
@@ -1074,8 +1075,15 @@ html:has([data-backdrop="plot"]) {
     }
   }
   @keyframes garden-float {
+    from,
     to {
-      transform: none;
+      opacity: 0;
+    }
+  }
+  @keyframes garden-ghost {
+    from,
+    to {
+      opacity: 0.66;
     }
   }
 }
