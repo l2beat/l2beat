@@ -86,6 +86,32 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => {
+        const { adversaries, href } = ctx.row.original
+        return (
+          <DotWithLabel
+            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
+            label={adversaries.promiseLabel}
+          />
+        )
+      },
+      sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
+      meta: {
+        align: 'center',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
+    },
+  ),
   ...withChangeSort(
     columnHelper,
     columnHelper.accessor('totalValueLockedUsd', {
@@ -178,32 +204,6 @@ const columns = [
       meta: {
         align: 'right',
         tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
-      },
-    },
-  ),
-  columnHelper.accessor(
-    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
-    {
-      id: 'adversaries',
-      header: PRIVACY_ASSESSMENT.title,
-      cell: (ctx) => {
-        const { adversaries, href } = ctx.row.original
-        return (
-          <DotWithLabel
-            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={adversaries.promiseLabel}
-          />
-        )
-      },
-      sortDescFirst: true,
-      sortingFn: (a, b) =>
-        sortTableValues(
-          getPrivacyAdversariesTableValue(a.original.adversaries),
-          getPrivacyAdversariesTableValue(b.original.adversaries),
-        ),
-      meta: {
-        align: 'center',
-        tooltip: PRIVACY_ASSESSMENT.tooltip,
       },
     },
   ),
@@ -304,6 +304,11 @@ export function PrivacySummaryTable({
       columnPinning: {
         left: ['#', 'logo'],
       },
+    },
+    // The server already hands the entries over in privacy order; starting the
+    // table on the same column marks its arrow so the ordering is visible.
+    initialState: {
+      sorting: [{ id: 'adversaries', desc: true }],
     },
   })
 
