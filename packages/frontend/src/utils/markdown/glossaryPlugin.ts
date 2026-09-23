@@ -93,68 +93,56 @@ export function linkGlossaryTerms(
  */
 export interface GlossaryRenderEnv {
   glossaryDescriptionIdPrefix?: string
-  /** Filled by the plugin while rendering; callers leave it empty. */
-  glossaryDescriptions?: GlossaryDescriptionsState
 }
 
-interface GlossaryDescriptionsState {
-  describedTermIds: Set<string>
-  pendingAfterLink: { id: string; description: string } | undefined
-}
+// Keyed by the env object, which markdown-it hands to every rule of one
+// render, so the state lives exactly as long as that render.
+const describedTermsByRender = new WeakMap<
+  GlossaryRenderEnv,
+  {
+    describedTermIds: Set<string>
+    pendingAfterLink: { id: string; description: string } | undefined
+  }
+>()
 
 export function glossaryPlugin(md: MarkdownIt) {
-  const defaultRender: RenderRule =
-    md.renderer.rules.link_open ??
-    function (tokens, idx, options, _env, self) {
-      return self.renderToken(tokens, idx, options)
-    }
-  const defaultCloseRender: RenderRule =
-    md.renderer.rules.link_close ??
-    function (tokens, idx, options, _env, self) {
-      return self.renderToken(tokens, idx, options)
-    }
+  const renderToken: RenderRule = (tokens, idx, options, _env, self) =>
+    self.renderToken(tokens, idx, options)
+  const defaultOpenRender = md.renderer.rules.link_open ?? renderToken
+  const defaultCloseRender = md.renderer.rules.link_close ?? renderToken
 
   md.renderer.rules.link_open = (
     tokens,
     index,
     options,
-    env: GlossaryRenderEnv,
+    env: GlossaryRenderEnv | undefined,
     self,
   ) => {
     const token = tokens[index]
     assert(token, 'Token is not defined')
-    const href = token.attrGet('href')
-    if (isGlossaryLink(href)) {
-      const [cleanHref, encodedDescription] = href?.split('?description=') || []
-      assert(
-        cleanHref && encodedDescription,
-        'Href or description is not defined',
-      )
-      const description = decodeURIComponent(encodedDescription)
-
+    const link = parseGlossaryHref(token.attrGet('href'))
+    if (link) {
       token.attrSet('data-link-role', 'glossary')
-      token.attrSet('data-description', description)
-      token.attrSet('href', cleanHref)
-      describeGlossaryLink(token, cleanHref, description, env)
+      token.attrSet('data-description', link.description)
+      token.attrSet('href', link.href)
+      describeGlossaryLink(token, link, env)
     }
-    return defaultRender(tokens, index, options, env, self)
+    return defaultOpenRender(tokens, index, options, env, self)
   }
 
   md.renderer.rules.link_close = (
     tokens,
     index,
     options,
-    env: GlossaryRenderEnv,
+    env: GlossaryRenderEnv | undefined,
     self,
   ) => {
     const rendered = defaultCloseRender(tokens, index, options, env, self)
-    const pending = env?.glossaryDescriptions?.pendingAfterLink
-    if (!pending) return rendered
+    const state = env && describedTermsByRender.get(env)
+    const pending = state?.pendingAfterLink
+    if (!state || !pending) return rendered
 
-    env.glossaryDescriptions = {
-      describedTermIds: env.glossaryDescriptions?.describedTermIds ?? new Set(),
-      pendingAfterLink: undefined,
-    }
+    state.pendingAfterLink = undefined
     return `${rendered}<span id="${md.utils.escapeHtml(pending.id)}" class="sr-only">${md.utils.escapeHtml(pending.description)}</span>`
   }
 }
@@ -163,24 +151,42 @@ export function glossaryPlugin(md: MarkdownIt) {
 // term's first link, so repeated terms do not repeat the explanation.
 function describeGlossaryLink(
   token: Token,
-  cleanHref: string,
-  description: string,
+  link: GlossaryLink,
   env: GlossaryRenderEnv | undefined,
 ) {
   if (!env?.glossaryDescriptionIdPrefix) return
-  const termId = cleanHref.split('#')[1]
-  if (!termId) return
 
-  const id = `${env.glossaryDescriptionIdPrefix}-glossary-${termId}`
+  const id = `${env.glossaryDescriptionIdPrefix}-glossary-${link.termId}`
   token.attrSet('aria-describedby', id)
 
-  env.glossaryDescriptions ??= {
-    describedTermIds: new Set(),
-    pendingAfterLink: undefined,
+  let state = describedTermsByRender.get(env)
+  if (!state) {
+    state = { describedTermIds: new Set(), pendingAfterLink: undefined }
+    describedTermsByRender.set(env, state)
   }
-  if (env.glossaryDescriptions.describedTermIds.has(termId)) return
-  env.glossaryDescriptions.describedTermIds.add(termId)
-  env.glossaryDescriptions.pendingAfterLink = { id, description }
+  if (state.describedTermIds.has(link.termId)) return
+  state.describedTermIds.add(link.termId)
+  state.pendingAfterLink = { id, description: link.description }
+}
+
+interface GlossaryLink {
+  href: string
+  termId: string
+  description: string
+}
+
+// Reads back the href that createGlossaryLink builds.
+function parseGlossaryHref(href: string | null): GlossaryLink | undefined {
+  if (!href?.includes('/glossary#')) return undefined
+  const [cleanHref, encodedDescription] = href.split('?description=')
+  assert(cleanHref && encodedDescription, 'Href or description is not defined')
+  const termId = cleanHref.split('#')[1]
+  assert(termId, 'Glossary term id is not defined')
+  return {
+    href: cleanHref,
+    termId,
+    description: decodeURIComponent(encodedDescription),
+  }
 }
 
 function createGlossaryLink(id: string, term: string, description: string) {
@@ -209,8 +215,4 @@ function getIgnoredAndLinkOffsets(text: string) {
   }))
 
   return linkOffsets.concat(backtickOffsets)
-}
-
-function isGlossaryLink(href: string | null) {
-  return href?.includes('/glossary#')
 }
