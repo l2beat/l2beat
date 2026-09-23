@@ -6,7 +6,7 @@ import {
 } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getDaMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getDaMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'

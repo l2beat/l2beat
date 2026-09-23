@@ -2,13 +2,9 @@ import type {
   InteropType,
   ProjectScalingCategory,
   ProjectScalingStage,
-  Stage,
 } from '@l2beat/config'
-import {
-  formatCurrency,
-  type KnownInteropBridgeType,
-} from '@l2beat/shared-pure'
-import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
+import { formatCurrency } from '@l2beat/shared-pure'
+import { isAssignedStage } from '~/utils/project/isAssignedStage'
 
 export function getScalingMetadataDescription(project: {
   name: string
@@ -25,8 +21,7 @@ export function getScalingMetadataDescription(project: {
   const stage = isAssignedStage(project.stage) ? project.stage : undefined
   const kind = withArticle([stage, category].filter(Boolean).join(' '))
   const host = project.hostChain ? ` on ${project.hostChain}` : ''
-  const tvs =
-    project.tvs !== undefined ? ` securing ${formatUsd(project.tvs)}` : ''
+  const tvs = optionalUsd(' securing ', project.tvs)
   return joinWithinLimit(
     `${project.name} is ${kind}${host}${tvs}.`,
     project.description,
@@ -40,12 +35,14 @@ export function getDaMetadataDescription(project: {
   economicSecurity: number | undefined
   description: string
 }) {
-  const economicSecurity =
-    project.economicSecurity !== undefined
-      ? `, with ${formatUsd(project.economicSecurity)} in economic security`
-      : ''
+  const tvs = optionalUsd(' securing ', project.tvs)
+  const economicSecurity = optionalUsd(
+    ', with ',
+    project.economicSecurity,
+    ' in economic security',
+  )
   return joinWithinLimit(
-    `${project.name} is a DA layer (${project.type}) securing ${formatUsd(project.tvs)}${economicSecurity}.`,
+    `${project.name} is a DA layer (${project.type})${tvs}${economicSecurity}.`,
     project.description,
   )
 }
@@ -57,8 +54,9 @@ export function getZkCatalogMetadataDescription(project: {
   description: string
 }) {
   const creator = project.creator ? ` by ${project.creator}` : ''
+  const tvs = optionalUsd(' securing ', project.tvs)
   return joinWithinLimit(
-    `${project.name} is a ZK proof system${creator} securing ${formatUsd(project.tvs)}.`,
+    `${project.name} is a ZK proof system${creator}${tvs}.`,
     project.description,
   )
 }
@@ -66,18 +64,19 @@ export function getZkCatalogMetadataDescription(project: {
 export function getInteropMetadataDescription(project: {
   name: string
   type: InteropType
-  bridgeTypes: KnownInteropBridgeType[]
+  bridgeTypeLabels: string[]
   last24hVolume: number | undefined
   description: string | undefined
 }) {
   const bridgeTypes =
-    project.bridgeTypes.length > 0
-      ? ` (${project.bridgeTypes.map((type) => TRANSFER_TYPE_DISPLAY[type].label).join(', ')})`
+    project.bridgeTypeLabels.length > 0
+      ? ` (${project.bridgeTypeLabels.join(', ')})`
       : ''
-  const volume =
-    project.last24hVolume !== undefined
-      ? ` with ${formatUsd(project.last24hVolume)} volume in the last 24h`
-      : ''
+  const volume = optionalUsd(
+    ' with ',
+    project.last24hVolume,
+    ' volume in the last 24h',
+  )
   return joinWithinLimit(
     `${project.name} is ${withArticle(INTEROP_TYPE_NOUN[project.type])}${bridgeTypes}${volume}.`,
     project.description,
@@ -106,7 +105,8 @@ function joinWithinLimit(facts: string, description: string | undefined) {
     return full
   }
   const fitting = full.slice(0, MAX_LENGTH - ELLIPSIS.length + 1)
-  return fitting.slice(0, fitting.lastIndexOf(' ')) + ELLIPSIS
+  const wholeWords = fitting.slice(0, fitting.lastIndexOf(' '))
+  return wholeWords.replace(/[\s,;:.]+$/, '') + ELLIPSIS
 }
 
 const INTEROP_TYPE_NOUN: Record<InteropType, string> = {
@@ -116,16 +116,18 @@ const INTEROP_TYPE_NOUN: Record<InteropType, string> = {
   other: 'interop protocol',
 }
 
-function isAssignedStage(stage: ProjectScalingStage['stage']): stage is Stage {
-  return stage !== 'NotApplicable' && stage !== 'UnderReview'
-}
-
 function withArticle(noun: string) {
   return /^[aeiou]/i.test(noun) ? `an ${noun}` : `a ${noun}`
 }
 
+// A zero amount (upcoming or archived projects) says nothing useful, so it is
+// left out like a missing one.
+function optionalUsd(prefix: string, value: number | undefined, suffix = '') {
+  return value ? `${prefix}${formatCompactUsd(value)}${suffix}` : ''
+}
+
 // The site's hair space between number and unit renders inconsistently in
-// search snippets, so meta text uses the compact "$16.20B" form.
-function formatUsd(value: number) {
+// search snippets.
+function formatCompactUsd(value: number) {
   return formatCurrency(value, 'usd').replace(/\s/g, '')
 }

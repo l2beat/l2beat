@@ -5,7 +5,7 @@ import {
   getProjectMetadataDescription,
   getScalingMetadataDescription,
   getZkCatalogMetadataDescription,
-} from './getProjectMetadataDescription'
+} from './projectMetaDescriptions'
 
 describe(getScalingMetadataDescription.name, () => {
   it('leads with the type, stage and TVS of an L2, then the description', () => {
@@ -53,7 +53,7 @@ describe(getScalingMetadataDescription.name, () => {
     )
   })
 
-  it('falls back to a generic noun when the category is not set', () => {
+  it('falls back to a generic noun and hides a zero TVS for an upcoming chain', () => {
     const description = getScalingMetadataDescription({
       name: 'Upcoming Chain',
       category: undefined,
@@ -64,7 +64,7 @@ describe(getScalingMetadataDescription.name, () => {
     })
 
     expect(description).toEqual(
-      'Upcoming Chain is a scaling project on Base securing $0.00. Upcoming Chain launches soon.',
+      'Upcoming Chain is a scaling project on Base. Upcoming Chain launches soon.',
     )
   })
 
@@ -85,6 +85,23 @@ describe(getScalingMetadataDescription.name, () => {
       `Arbitrum One is a Stage 1 Optimistic Rollup securing $16.20B. ${'lorem '.repeat(16).trim()}…`,
     )
     expect(description.length).toBeLessThanOrEqual(160)
+  })
+
+  // Same budget as above, but the 16th word ends with a comma: the cut must
+  // drop it so the text reads "ipsu…" rather than "ipsu,…".
+  it('drops trailing punctuation before the ellipsis', () => {
+    const description = getScalingMetadataDescription({
+      name: 'Arbitrum One',
+      category: 'Optimistic Rollup',
+      stage: 'Stage 1',
+      hostChain: undefined,
+      tvs: 16_203_000_000,
+      description: `${'lorem '.repeat(15)}ipsu, ${'lorem '.repeat(14).trim()}`,
+    })
+
+    expect(description).toEqual(
+      `Arbitrum One is a Stage 1 Optimistic Rollup securing $16.20B. ${'lorem '.repeat(15)}ipsu…`,
+    )
   })
 })
 
@@ -151,7 +168,7 @@ describe(getInteropMetadataDescription.name, () => {
     const description = getInteropMetadataDescription({
       name: 'Across',
       type: 'intent',
-      bridgeTypes: ['nonMinting', 'burnAndMint'],
+      bridgeTypeLabels: ['Non-minting', 'Burn & Mint'],
       last24hVolume: 42_000_000,
       description: 'Across is a crosschain intents protocol.',
     })
@@ -161,12 +178,12 @@ describe(getInteropMetadataDescription.name, () => {
     )
   })
 
-  it('states only the type when volume, bridge types and description are missing', () => {
+  it('states only the type when there is no volume, bridge type or description', () => {
     const description = getInteropMetadataDescription({
       name: 'Hop',
       type: 'multichain',
-      bridgeTypes: [],
-      last24hVolume: undefined,
+      bridgeTypeLabels: [],
+      last24hVolume: 0,
       description: undefined,
     })
 
@@ -175,13 +192,18 @@ describe(getInteropMetadataDescription.name, () => {
 })
 
 describe(getProjectMetadataDescription.name, () => {
+  // The lead is 44 chars plus a space, leaving 115 of the 160-char budget:
+  // nineteen 5-letter words (113 chars) and the ellipsis fit, a twentieth
+  // would not.
   it('caps the generic description used by pages without key facts', () => {
     const description = getProjectMetadataDescription({
       name: 'Aztec',
       display: { description: 'lorem '.repeat(40).trim() },
     })
 
+    expect(description).toEqual(
+      `Explore Aztec metrics and in-depth research. ${'lorem '.repeat(19).trim()}…`,
+    )
     expect(description.length).toBeLessThanOrEqual(160)
-    expect(description.endsWith('lorem…')).toEqual(true)
   })
 })

@@ -6,10 +6,11 @@ import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/proto
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getInteropMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
@@ -36,7 +37,7 @@ export async function getInteropProtocolPageData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${data.project.name} - L2BEAT`,
-        description: data.project.description,
+        description: data.project.metaDescription,
         url: req.originalUrl,
         openGraph: {
           image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
@@ -94,10 +95,12 @@ async function getCachedData(slug: string, manifest: Manifest) {
     project: {
       name: project.name,
       slug: project.slug,
-      description: getInteropMetadataDescription({
+      metaDescription: getInteropMetadataDescription({
         name: project.name,
         type: project.interopConfig.type,
-        bridgeTypes: protocolData.entry?.bridgeTypes ?? [],
+        bridgeTypeLabels: (protocolData.entry?.bridgeTypes ?? []).map(
+          (type) => TRANSFER_TYPE_DISPLAY[type].label,
+        ),
         last24hVolume: protocolData.entry?.volume,
         description: project.interopConfig.description,
       }),
