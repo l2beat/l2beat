@@ -321,7 +321,7 @@ export async function getPrivacyProjectEntry(
     type: 'PrivacyAdversariesSection',
     props: {
       id: 'privacy-adversaries',
-      title: 'Privacy against adversaries',
+      title: 'Privacy',
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },
   })
