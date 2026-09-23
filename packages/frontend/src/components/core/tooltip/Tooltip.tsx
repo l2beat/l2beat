@@ -2,7 +2,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
-import { useRef, useState } from 'react'
+import { createContext, useContext, useId, useRef, useState } from 'react'
 import { useDevice } from '~/hooks/useDevice'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
@@ -14,13 +14,29 @@ const TooltipProvider = TooltipPrimitive.Provider
 
 const Tooltip = ({
   children,
+  hiddenDescription,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) => {
+}: React.ComponentProps<typeof TooltipPrimitive.Root> & {
+  /**
+   * Radix renders the content only on hover, so explanations kept in a
+   * tooltip are invisible to crawlers and LLMs reading the server-rendered
+   * HTML. This also renders the content as a visually hidden description of
+   * the trigger. Use it only when the tooltip carries meaning not shown
+   * elsewhere on the page.
+   */
+  hiddenDescription?: boolean
+}) => {
   const [open, setOpen] = useState(!!props.defaultOpen)
+  const id = useId()
+  const hiddenDescriptionId = hiddenDescription
+    ? `${id}-description`
+    : undefined
 
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
-      <TooltipTriggerContextProvider value={{ open, setOpen }}>
+      <TooltipTriggerContextProvider
+        value={{ open, setOpen, hiddenDescriptionId }}
+      >
         {children}
       </TooltipTriggerContextProvider>
     </TooltipPrimitive.Root>
@@ -36,7 +52,7 @@ const TooltipTrigger = ({
 }) => {
   const localRef = useRef(null)
   const { isDesktop } = useDevice()
-  const { setOpen } = useTooltipTriggerContext()
+  const { setOpen, hiddenDescriptionId } = useTooltipTriggerContext()
 
   if (props.disabled) {
     return props.children
@@ -44,7 +60,13 @@ const TooltipTrigger = ({
 
   // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
-    return <TooltipPrimitive.Trigger ref={ref} {...props} />
+    return (
+      <TooltipPrimitive.Trigger
+        ref={ref}
+        aria-describedby={hiddenDescriptionId}
+        {...props}
+      />
+    )
   }
 
   const onClick = !isDesktop
@@ -59,6 +81,7 @@ const TooltipTrigger = ({
       ref={mergeRefs(ref, localRef)}
       onClick={onClick}
       data-role="tooltip-trigger"
+      aria-describedby={hiddenDescriptionId}
       {...props}
     />
   )
@@ -86,15 +109,41 @@ const TooltipContent = ({
   fitContent,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content> &
-  VariantProps<typeof tooltipContentVariants>) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={tooltipContentVariants({ fitContent, className })}
-    {...props}
-  />
-)
+  VariantProps<typeof tooltipContentVariants>) => {
+  const { hiddenDescriptionId } = useTooltipTriggerContext()
+
+  return (
+    <>
+      {hiddenDescriptionId && (
+        // A span, unlike a div, is not split by the HTML parser when the
+        // tooltip sits in phrasing content, so hydration stays consistent.
+        <span id={hiddenDescriptionId} className="sr-only">
+          <InsideHiddenDescriptionContext value={true}>
+            {props.children}
+          </InsideHiddenDescriptionContext>
+        </span>
+      )}
+      <TooltipPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        className={tooltipContentVariants({ fitContent, className })}
+        {...props}
+      />
+    </>
+  )
+}
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+const InsideHiddenDescriptionContext = createContext(false)
+
+/**
+ * Shown in the tooltip popup but left out of its hidden description, for
+ * parts that mean nothing as text (diagrams, "click to view details").
+ */
+const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
+  const isInsideHiddenDescription = useContext(InsideHiddenDescriptionContext)
+  return isInsideHiddenDescription ? null : children
+}
 
 const TooltipPortal = TooltipPrimitive.Portal
 TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
@@ -106,4 +155,5 @@ export {
   TooltipProvider,
   TooltipTrigger,
   TooltipPortal,
+  TooltipVisualOnly,
 }

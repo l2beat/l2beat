@@ -3,6 +3,8 @@ import { createContext, useContext } from 'react'
 type TooltipTriggerContextValue = {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  /** Present only when the tooltip opted into a hidden description. */
+  hiddenDescriptionId: string | undefined
 }
 
 const TooltipTriggerContext = createContext<TooltipTriggerContextValue | null>(
