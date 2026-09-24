@@ -1604,8 +1604,6 @@
   "static/meta-images/privacy/projects/umbra/opengraph-image.png": "103c3e0d6a28e560431d7bf99088555d",
   "static/meta-images/interop/projects/butternetwork/opengraph-image.png": "1e64ddc0355ca0572d66233a42a5a6c0",
   "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769",
-  "static/meta-images/publications/privacy-page-banner-vertical.png": "b0565a6aa9fd6db2f5953ca73df015f1",
-  "static/meta-images/publications/privacy-page-banner.png": "8711ef4e27f519d1257bc0e05fb8aca3",
   "static/meta-images/the-infinite-garden/opengraph-image.png": "2b4d0dbf27acaa72fa56f93d70511c27",
   "static/meta-images/submit-your-protocol/opengraph-image.png": "4cf07a406ee5c7ad69df249ce521166a",
   "static/meta-images/layer2s/compare/opengraph-image.png": "9c12629096055ace093ecc4556d8babb",
@@ -1658,5 +1656,6 @@
   "static/icons/zcash-near-intents.png": "c0635cdba1122fc6c6ffbd23e275038e",
   "static/meta-images/privacy/projects/zcash-near-intents/opengraph-image.png": "814cbb8355d3247aa0626b384bab186e",
   "static/icons/zcash.png": "e6a08906d09a55d85d5b5a96f8c1d7c3",
-  "static/meta-images/zk-catalog/projects/zcash/opengraph-image.png": "185a512253f4a84f3d46983eb96928d8"
+  "static/meta-images/zk-catalog/projects/zcash/opengraph-image.png": "185a512253f4a84f3d46983eb96928d8",
+  "static/meta-images/publications/privacy-adversaries-banner.png": "4ab7682964e699e8790fcb94b287ceff"
 }
