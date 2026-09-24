@@ -34,6 +34,9 @@ export const payy: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA, BADGES.Other.Privacy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
+    redWarning: {
+      text: 'The protocol was [exploited](https://x.com/PeckShieldAlert/status/2103041942405960096) on September 24, 2026. Do not deposit funds.',
+    },
     name: 'Payy',
     slug: 'payy',
     description:
