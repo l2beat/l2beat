@@ -17,7 +17,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation."
+          "description": "grant and revoke the admin and witness roles; admins can immediately pause wrapping and unwrapping through this contract, witnesses co-sign every operation."
         }
       ],
       "severity": "HIGH"

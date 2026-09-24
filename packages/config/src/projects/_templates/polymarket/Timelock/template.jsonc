@@ -20,6 +20,50 @@
       "severity": "HIGH",
       "description": "Holders of each role: 0 admin, 1 proposer, 2 executor, 3 canceller."
     },
+    "admins": {
+      "handler": {
+        "type": "call",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "args": [0]
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the admin, proposer, executor and canceller roles with no delay."
+        }
+      ]
+    },
+    "proposers": {
+      "handler": {
+        "type": "call",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "args": [1]
+      },
+      "severity": "HIGH",
+      "permissions": [
+        { "type": "interact", "description": "propose transactions." },
+        { "type": "act", "delay": "{{ minDelay }}" }
+      ]
+    },
+    "executors": {
+      "handler": {
+        "type": "call",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "args": [2]
+      },
+      "description": "Addresses that can execute a proposal once its delay has elapsed."
+    },
+    "cancellers": {
+      "handler": {
+        "type": "call",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "args": [3]
+      },
+      "permissions": [
+        { "type": "interact", "description": "cancel queued transactions." }
+      ]
+    },
     "roleHolderCount": {
       "handler": {
         "type": "array",

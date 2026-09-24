@@ -17,7 +17,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay."
+          "description": "grant and revoke the admin role, whose holders can immediately pause unwrapping of supported assets through this contract."
         }
       ],
       "severity": "HIGH"
