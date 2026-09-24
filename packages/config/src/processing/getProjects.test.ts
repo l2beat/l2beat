@@ -621,7 +621,7 @@ describe('getProjects', () => {
     it('every api url uses https', () => {
       for (const chain of chains) {
         for (const api of chain.apis) {
-          if ('url' in api) {
+          if ('url' in api && api.url !== undefined) {
             expect(api.url).toMatchRegex(/^https:\/\//)
           }
         }

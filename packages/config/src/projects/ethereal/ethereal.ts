@@ -42,7 +42,11 @@ export const ethereal: ScalingProject = orbitStackL3({
     explorerUrl: 'https://explorer.ethereal.trade',
     sinceTimestamp: UnixTime(1758570902),
     apis: [
-      { type: 'blockscout', url: 'https://explorer.ethereal.trade/api' },
+      {
+        type: 'sourcify',
+        chainId: 5064014,
+        url: 'https://contracts.conduit.xyz',
+      },
       { type: 'rpc', url: 'https://rpc.ethereal.trade', callsPerMinute: 300 },
     ],
     gasTokens: ['USDe'],
