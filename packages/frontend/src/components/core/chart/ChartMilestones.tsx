@@ -26,14 +26,14 @@ import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
   milestones: Milestone[]
-  /** Space left of the plot area, e.g. taken by y-axis labels. */
-  insetLeft?: number
+  /** Where the plot sits when it does not span the whole chart. */
+  plotArea?: { x: number; width: number }
 }
 
 export function ChartMilestones<T extends { timestamp: number }>({
   data,
   milestones,
-  insetLeft = 0,
+  plotArea,
 }: Props<T>) {
   const ref = useRef<HTMLDivElement>(null)
   // A ResizeObserver reports after layout. Reading the width in an effect
@@ -55,7 +55,9 @@ export function ChartMilestones<T extends { timestamp: number }>({
         return (
           <ChartMilestone
             key={data.timestamp}
-            left={insetLeft + x * (width - insetLeft) - 10}
+            left={
+              plotArea ? plotArea.x + x * plotArea.width - 10 : x * width - 10
+            }
             milestonesAtPoint={data.milestones}
             allMilestones={milestones}
           />

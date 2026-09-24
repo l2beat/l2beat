@@ -170,6 +170,7 @@ export function LivenessChart({
           isLoading={isLoading}
           yAxis={{
             tickFormatter: (value: number) => formatSeconds(value),
+            niceTicks: 'duration',
             domain: ['auto', 'auto'],
             tickCount,
           }}

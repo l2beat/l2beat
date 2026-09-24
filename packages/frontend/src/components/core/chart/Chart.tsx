@@ -47,8 +47,11 @@ export type ChartMeta = Record<
  */
 export type ChartAxisPlacement = 'inside' | 'outside'
 
-/** Width of the y-axis label gutter when `axisPlacement` is `outside`. */
-export const OUTSIDE_Y_AXIS_WIDTH = 56
+/** Where the plot sits horizontally within the chart, in pixels. */
+interface ChartPlotArea {
+  x: number
+  width: number
+}
 
 // With `outside` placement the legend sits further below the x-axis, so the
 // overlays pinned above it (logos, milestones) move up by the same amount.
@@ -64,6 +67,7 @@ type ChartContextProps = {
     disableOnboarding?: boolean
   }
   axisPlacement: ChartAxisPlacement
+  setPlotArea?: (plotArea: ChartPlotArea) => void
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -109,6 +113,9 @@ const axisClassNames: Record<ChartAxisPlacement, string> = {
     '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:z-100 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/50 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-sm dark:[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/70',
   ),
   outside: cn(
+    // Recharts measures the y-axis label gutter a hair short at times, let the
+    // widest label spill into the padding around the chart instead of clipping
+    '[&_.recharts-surface]:overflow-visible',
     // Cartesian grid line. Only a reference behind the data, so kept faint.
     "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/10 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/15",
     // Cartesian X axis baseline
@@ -161,11 +168,23 @@ function ChartContainer<T extends { timestamp: number }>(
     axisPlacement = 'inside',
   } = props
   // The screenshot chart is not the place to teach the legend
-  const interactiveLegend =
-    props.interactiveLegend && axisPlacement === 'outside'
-      ? { ...props.interactiveLegend, disableOnboarding: true }
-      : props.interactiveLegend
+  const interactiveLegend = React.useMemo(
+    () =>
+      props.interactiveLegend && axisPlacement === 'outside'
+        ? { ...props.interactiveLegend, disableOnboarding: true }
+        : props.interactiveLegend,
+    [props.interactiveLegend, axisPlacement],
+  )
   const screenshot = useChartScreenshot()
+  // Reported from inside the chart when the y-axis labels take up space
+  const [plotArea, setPlotArea] = React.useState<ChartPlotArea>()
+  // Stable, so a new plot area re-renders the overlays but not the chart.
+  // Re-rendering the axes makes Recharts measure their width again, which
+  // would move the plot area again.
+  const contextValue = React.useMemo(
+    () => ({ meta, interactiveLegend, axisPlacement, setPlotArea }),
+    [meta, interactiveLegend, axisPlacement],
+  )
 
   // Recharts renders nothing until it has measured its container, and every
   // chart measuring and re-rendering right after hydration was the longest
@@ -180,7 +199,7 @@ function ChartContainer<T extends { timestamp: number }>(
   )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
-    <ChartContext.Provider value={{ meta, interactiveLegend, axisPlacement }}>
+    <ChartContext.Provider value={contextValue}>
       <div ref={ref} className="group relative">
         <Slot
           className={cn(
@@ -240,11 +259,7 @@ function ChartContainer<T extends { timestamp: number }>(
         {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
-            style={
-              axisPlacement === 'outside'
-                ? { left: OUTSIDE_Y_AXIS_WIDTH + 12 }
-                : undefined
-            }
+            style={plotArea ? { left: plotArea.x + 12 } : undefined}
             className={cn(
               'pointer-events-none absolute left-3 opacity-50',
               !!interactiveLegend &&
@@ -260,7 +275,7 @@ function ChartContainer<T extends { timestamp: number }>(
           <ChartMilestones
             data={data}
             milestones={milestones}
-            insetLeft={axisPlacement === 'outside' ? OUTSIDE_Y_AXIS_WIDTH : 0}
+            plotArea={plotArea}
           />
         )}
         {screenshot &&

@@ -118,6 +118,7 @@ export function DataPostedChart({
           yAxis={{
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
+            niceTicks: 'binary',
           }}
           syncedUntil={syncedUntil}
         />

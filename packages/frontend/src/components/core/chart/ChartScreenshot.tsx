@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../Dialog'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 interface ChartScreenshotContextValue {
   title: string
@@ -55,22 +54,20 @@ export function ChartScreenshotDialog({
 }) {
   return (
     <Dialog>
-      <Tooltip>
-        <TooltipTrigger asChild disabledOnMobile>
-          <DialogTrigger
-            aria-label={label}
-            className={cn(
-              'flex size-6 items-center justify-center rounded-md text-secondary transition-colors',
-              'hover:bg-surface-secondary primary-card:hover:bg-surface-secondary hover:text-primary',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
-              className,
-            )}
-          >
-            <ImageIcon className="size-4" />
-          </DialogTrigger>
-        </TooltipTrigger>
-        <TooltipContent fitContent>{label}</TooltipContent>
-      </Tooltip>
+      {/* A native title, as a Radix tooltip trigger wrapping the dialog
+          trigger re-renders forever when the chart re-renders */}
+      <DialogTrigger
+        aria-label={label}
+        title={label}
+        className={cn(
+          'flex size-6 items-center justify-center rounded-md text-secondary transition-colors',
+          'hover:bg-surface-secondary primary-card:hover:bg-surface-secondary hover:text-primary',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+          className,
+        )}
+      >
+        <ImageIcon className="size-4" />
+      </DialogTrigger>
       <DialogContent
         aria-describedby={undefined}
         className="primary-card w-[1120px] max-w-[calc(100vw-1rem)] gap-0 bg-surface-primary p-4 md:p-8"
