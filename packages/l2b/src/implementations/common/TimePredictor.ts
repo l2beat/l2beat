@@ -7,10 +7,10 @@ export class TimePredictor {
     this.completed += 1
   }
 
-  predict(remainingTasks: number): number | undefined {
+  averageSeconds(): number | undefined {
     if (this.completed === 0) {
       return undefined
     }
-    return (this.totalSeconds / this.completed) * remainingTasks
+    return this.totalSeconds / this.completed
   }
 }

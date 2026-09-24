@@ -163,11 +163,13 @@ async function refreshProjects(
   let current = { index: 0, startedAt: performance.now() }
   const draw = () => {
     const elapsedSeconds = (performance.now() - current.startedAt) / 1000
-    const predicted = predictor.predict(projects.length - current.index)
+    const remainingAfterCurrent = projects.length - current.index - 1
+    const average = predictor.averageSeconds()
     const timeLeftSeconds =
-      predicted === undefined
+      average === undefined
         ? undefined
-        : Math.max(0, predicted - elapsedSeconds)
+        : Math.max(0, average - elapsedSeconds) +
+          average * remainingAfterCurrent
     progress.update(
       formatReport(
         current.index,
@@ -192,7 +194,12 @@ async function refreshProjects(
   } finally {
     clearInterval(ticker)
   }
-  progress.done(`Refreshed ${projects.length} projects`)
+  const refreshedCount = projects.length - failedProjects.length
+  progress.done(
+    failedProjects.length === 0
+      ? `Refreshed ${refreshedCount} projects`
+      : `Refreshed ${refreshedCount} projects, ${failedProjects.length} failed`,
+  )
   return failedProjects
 }
 

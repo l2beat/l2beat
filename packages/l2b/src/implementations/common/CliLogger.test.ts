@@ -311,6 +311,18 @@ describe(CliLogger.name, () => {
       backendLogger.debug('hidden')
       expect(await screenRows()).toEqual(['from logger', 'working'])
     })
+
+    it('keeps logger parameters below the message', async () => {
+      const { logger, screenRows } = terminalLogger()
+      const status = logger.status()
+      status.update('working')
+      logger.toLogger('INFO').warn('Retrying', { attempt: 2 })
+      expect(await screenRows()).toEqual([
+        'Retrying',
+        '    { attempt: 2 }',
+        'working',
+      ])
+    })
   })
 
   describe('plain', () => {
