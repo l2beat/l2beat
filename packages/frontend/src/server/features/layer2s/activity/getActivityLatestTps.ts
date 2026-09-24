@@ -76,9 +76,6 @@ export async function getActivityLatestUops(
           projectId,
           {
             pastDayUops: countPerSecond(pastDayCount),
-            // Compare daily counts, not per-second values, so that
-            // low-activity projects don't fall under the 0.01 floor in
-            // calculatePercentageChange (matches the activity page)
             change: calculatePercentageChange(pastDayCount, sevenDaysAgoCount),
             changePeriod: '7D',
             syncState,
