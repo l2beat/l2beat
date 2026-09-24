@@ -111,16 +111,14 @@ export interface GetRequestsResponse {
 }
 
 interface RelayApiClientOptions {
-  callsPerMinute: number
+  combinedCallsPerMinute: number
   maxAttempts: number
   initialRetryDelayMs: number
   maxRetryDelayMs: number
 }
 
 const DEFAULT_OPTIONS: RelayApiClientOptions = {
-  // Relay's default /requests quota is 200 calls/minute per API key. Leave
-  // headroom for rolling-window accounting and other consumers of the key.
-  callsPerMinute: 190,
+  combinedCallsPerMinute: 380,
   maxAttempts: 4,
   initialRetryDelayMs: 1_000,
   maxRetryDelayMs: 4_000,
@@ -128,23 +126,36 @@ const DEFAULT_OPTIONS: RelayApiClientOptions = {
 
 export class RelayApiClient {
   private readonly options: RelayApiClientOptions
+  private readonly apiKeys: string[]
   private readonly rateLimiter: RateLimiter
+  private nextApiKeyIndex = 0
 
   constructor(
     private readonly httpClient: HttpClient,
     private logger: Logger,
-    private readonly apiKey: string,
+    apiKeys: string,
     options: Partial<RelayApiClientOptions> = {},
   ) {
     this.logger = logger.for(this)
     this.options = { ...DEFAULT_OPTIONS, ...options }
     assert(
-      Number.isInteger(this.options.callsPerMinute) &&
-        this.options.callsPerMinute > 0,
-      'Relay callsPerMinute must be a positive integer',
+      Number.isInteger(this.options.combinedCallsPerMinute) &&
+        this.options.combinedCallsPerMinute > 0,
+      'Relay combinedCallsPerMinute must be a positive integer',
     )
+
+    const distinctApiKeys = [
+      ...new Set(
+        apiKeys
+          .split(',')
+          .map((apiKey) => apiKey.trim())
+          .filter(Boolean),
+      ),
+    ]
+    assert(distinctApiKeys.length > 0, 'Relay API key must not be empty')
+    this.apiKeys = distinctApiKeys
     this.rateLimiter = new RateLimiter({
-      callsPerMinute: this.options.callsPerMinute,
+      callsPerMinute: this.options.combinedCallsPerMinute,
     })
   }
 
@@ -258,7 +269,8 @@ export class RelayApiClient {
   private async fetchWithRetry(url: string): Promise<unknown> {
     for (let attempt = 1; ; attempt++) {
       try {
-        return await this.rateLimiter.call(() => this.fetchPage(url))
+        const apiKey = this.getNextApiKey()
+        return await this.rateLimiter.call(() => this.fetchPage(url, apiKey))
       } catch (error) {
         if (
           attempt >= this.options.maxAttempts ||
@@ -284,9 +296,16 @@ export class RelayApiClient {
     }
   }
 
-  private async fetchPage(url: string): Promise<unknown> {
+  private getNextApiKey() {
+    const apiKey = this.apiKeys[this.nextApiKeyIndex]
+    assert(apiKey !== undefined)
+    this.nextApiKeyIndex = (this.nextApiKeyIndex + 1) % this.apiKeys.length
+    return apiKey
+  }
+
+  private async fetchPage(url: string, apiKey: string): Promise<unknown> {
     const response = await this.httpClient.fetchRaw(url, {
-      headers: { 'x-api-key': this.apiKey },
+      headers: { 'x-api-key': apiKey },
     })
 
     if (!response.ok) {

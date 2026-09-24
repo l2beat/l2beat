@@ -102,11 +102,11 @@ export async function getInteropFeatureConfig(
       ? {
           apiKey: env.string('INTEROP_RELAY_API_KEY'),
           batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
-          // Relay's default /requests quota is 200 calls/minute per API key.
-          // Keep a small margin for rolling-window accounting and other users
-          // of the same key. Keys with an elevated quota can override this.
-          callsPerMinute: env.integer('INTEROP_RELAY_CALLS_PER_MINUTE', 190),
-          concurrency: env.integer('INTEROP_RELAY_CONCURRENCY', 3),
+          combinedCallsPerMinute: env.integer(
+            'INTEROP_RELAY_COMBINED_CALLS_PER_MINUTE',
+            380,
+          ),
+          concurrency: env.integer('INTEROP_RELAY_CONCURRENCY', 6),
           maxRequestsPerChunk: env.integer(
             'INTEROP_RELAY_MAX_REQUESTS_PER_CHUNK',
             env.integer('INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE', 10_000),

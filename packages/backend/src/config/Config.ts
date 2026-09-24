@@ -276,7 +276,7 @@ export interface InteropFeatureConfig {
     | {
         apiKey: string
         batchSize: number
-        callsPerMinute: number
+        combinedCallsPerMinute: number
         concurrency: number
         maxRequestsPerChunk: number
         safeTimeOffset: number

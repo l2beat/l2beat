@@ -10,9 +10,17 @@ describe(RelayApiClient.name, () => {
     expect(
       () =>
         new RelayApiClient(httpClient, Logger.SILENT, 'api-key', {
-          callsPerMinute: 0,
+          combinedCallsPerMinute: 0,
         }),
-    ).toThrow('Relay callsPerMinute must be a positive integer')
+    ).toThrow('Relay combinedCallsPerMinute must be a positive integer')
+  })
+
+  it('rejects an empty API key list', () => {
+    const httpClient = mockObject<HttpClient>({ fetchRaw: mockFn() })
+
+    expect(() => new RelayApiClient(httpClient, Logger.SILENT, ' , ')).toThrow(
+      'Relay API key must not be empty',
+    )
   })
 
   describe(RelayApiClient.prototype.getRequests.name, () => {
@@ -186,12 +194,22 @@ describe(RelayApiClient.name, () => {
           .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
           .resolvesToOnce(ok(page([request('b')], undefined))),
       })
-      const client = createClient(httpClient)
+      const client = createClient(
+        httpClient,
+        Logger.SILENT,
+        ' first-key, second-key ',
+      )
 
       const result = await client.getAllRequests({ limit: 500 })
 
       expect(result.requests.map((r) => r.id)).toEqual(['a', 'b'])
       expect(result.continuation).toEqual(undefined)
+      expect(httpClient.fetchRaw.calls[0]?.args[1]).toEqual({
+        headers: { 'x-api-key': 'first-key' },
+      })
+      expect(httpClient.fetchRaw.calls[1]?.args[1]).toEqual({
+        headers: { 'x-api-key': 'second-key' },
+      })
     })
 
     it('reports the cursor when the request limit is reached', async () => {
@@ -231,7 +249,7 @@ describe(RelayApiClient.name, () => {
           .resolvesToOnce(httpError(429, 'Too Many Requests'))
           .resolvesToOnce(ok(page([request('b')], undefined))),
       })
-      const client = createClient(httpClient, logger)
+      const client = createClient(httpClient, logger, 'first-key,second-key')
 
       const result = await client.getAllRequests({ limit: 500 })
 
@@ -241,6 +259,11 @@ describe(RelayApiClient.name, () => {
       const retriedUrl = httpClient.fetchRaw.calls[2]?.args[0] as string
       expect(failedUrl).toEqual(retriedUrl)
       expect(retriedUrl).toInclude('continuation=cursor-1')
+      expect(httpClient.fetchRaw.calls.map((call) => call.args[1])).toEqual([
+        { headers: { 'x-api-key': 'first-key' } },
+        { headers: { 'x-api-key': 'second-key' } },
+        { headers: { 'x-api-key': 'first-key' } },
+      ])
       expect(warn).toHaveBeenOnlyCalledWith('Retrying Relay API page', {
         attempt: 1,
         delay: 0,
@@ -301,9 +324,13 @@ describe(RelayApiClient.name, () => {
   })
 })
 
-function createClient(httpClient: HttpClient, logger: Logger = Logger.SILENT) {
-  return new RelayApiClient(httpClient, logger, 'api-key', {
-    callsPerMinute: 1_000_000_000,
+function createClient(
+  httpClient: HttpClient,
+  logger: Logger = Logger.SILENT,
+  apiKeys = 'api-key',
+) {
+  return new RelayApiClient(httpClient, logger, apiKeys, {
+    combinedCallsPerMinute: 1_000_000_000,
     initialRetryDelayMs: 0,
   })
 }
