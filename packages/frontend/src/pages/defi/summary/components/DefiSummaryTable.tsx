@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
@@ -101,9 +100,5 @@ export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
     onSortingChange: setSorting,
   })
 
-  return (
-    <PrimaryCard className="mt-4">
-      <BasicTable table={table} />
-    </PrimaryCard>
-  )
+  return <BasicTable table={table} />
 }
