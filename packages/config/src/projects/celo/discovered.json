@@ -3473,9 +3473,9 @@
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
   "usedBlockNumbers": { "celo": 77143640, "ethereum": 25947079 },
-  "permissionsConfigHash": "0xc86bfaa288081a73c885b3c8c5aa66d55e423fb94679da2088af1bf2429adcd2",
+  "permissionsConfigHash": "0x08e6ebd991e0c1b3d3af8402aa3fb8257a71317aeff042bede872cb578093ad0",
   "modelledAgainst": {
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
   },
   "permissions": {
     "celo:0x4200000000000000000000000000000000000018": {

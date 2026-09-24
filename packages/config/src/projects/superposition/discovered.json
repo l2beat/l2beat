@@ -1869,7 +1869,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 502808510 },
-  "permissionsConfigHash": "0x30937f7fa8f433071f1914d3200b3e15b4cc755ba9230c338226f244808e7de6",
+  "permissionsConfigHash": "0x7793699169be6ac16b353fe1f0fc2ebaf7c8bb00c502319219ee90d426fba891",
   "permissions": {
     "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90": {
       "receivedPermissions": [

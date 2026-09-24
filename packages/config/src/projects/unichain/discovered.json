@@ -4576,7 +4576,7 @@
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
   "usedBlockNumbers": { "ethereum": 25472135, "unichain": 52576205 },
-  "permissionsConfigHash": "0x0730910064cb2a3e3f9dfbf78b6310b4f7f4d9931cd6c495cc29c0bddf391031",
+  "permissionsConfigHash": "0xcdc2168b3736fc2995ae6e5cc24c232efba13b83318d87ca0b176d4f93193966",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

@@ -1954,9 +1954,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25846657 },
-  "permissionsConfigHash": "0x1c0553d084399c999281f175e13f7d769588de56db13fcd20ba920bf47072fe6",
+  "permissionsConfigHash": "0xc7abc804746f190837ebfa1b4420c483d6aff7edeb909246e4962d6dcbb9f2e4",
   "modelledAgainst": {
-    "shared-eigenlayer": "0x7b8d163165f154ee1f29ea8a5c81acad654ad24cd5952a5cdb64863bfd1d44c3"
+    "shared-eigenlayer": "0x7d7a550aa224b929f6a67bd616e3caa4c0a397d01b1507654a7341ee7eab1a51"
   },
   "permissions": {
     "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {

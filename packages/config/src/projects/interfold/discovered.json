@@ -7653,7 +7653,7 @@
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8"
   },
   "usedBlockNumbers": { "ethereum": 26033842 },
-  "permissionsConfigHash": "0x24697346acda15d9ff3740d5e07721d71c34e6675f4e417192f2f51e8f44585c",
+  "permissionsConfigHash": "0x24a3b318307aedca1e3c482d442bce32ee7b65d6743183e63910274a962a28d0",
   "permissions": {
     "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": {
       "receivedPermissions": [

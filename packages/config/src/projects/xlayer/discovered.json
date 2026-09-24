@@ -2319,10 +2319,10 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25437874 },
-  "permissionsConfigHash": "0x73ba427d62217ac58c3e9f3fddc2664ce0cff007b42c207aeadba6bacaa97605",
+  "permissionsConfigHash": "0xf51b7f1249ceea602cf954c06411e1f8479e1fab9bc568955b517cddf8a9bbea",
   "modelledAgainst": {
-    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+    "shared-polygon-cdk": "0x4ac7caa0947575fceef16b6b6c3a4a11cd40958971cd0de464f6bc72ab8b961d",
+    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
   },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {

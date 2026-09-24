@@ -384,7 +384,7 @@ describe('discovery config.jsonc', () => {
   it('model-permissions is up to date', () => {
     for (const c of configs) {
       const discoveries = loadDiscoveriesForModelling(c.name, configReader)
-      const clingoByProject = generateClingoForDiscoveries(
+      const { clingoByProject } = generateClingoForDiscoveries(
         discoveries,
         configReader,
         templateService,

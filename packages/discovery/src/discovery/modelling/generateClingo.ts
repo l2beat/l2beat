@@ -5,6 +5,7 @@ import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { StructureEntry } from '../output/types'
+import type { DescriptionTable } from './DescriptionTable'
 import { interpolateModelTemplate } from './interpolate'
 import {
   buildPermissionsModel,
@@ -16,6 +17,7 @@ export function generateClingoFromPermissionsConfig(
   permissionsConfig: PermissionsConfig,
   templateService: TemplateService,
   addressToNameMap: Record<string, string>,
+  descriptions: DescriptionTable,
 ) {
   const permissionTemplate = entry.template
     ? templateService.loadContractPermissionTemplate(entry.template)
@@ -26,7 +28,12 @@ export function generateClingoFromPermissionsConfig(
     permissionsConfig.overrides?.[entry.address.toString()],
   )
 
-  return buildPermissionsModel(mergedPermissionsConfig, entry, addressToNameMap)
+  return buildPermissionsModel(
+    mergedPermissionsConfig,
+    entry,
+    addressToNameMap,
+    descriptions,
+  )
 }
 
 export function generateClingoFromModelLp(

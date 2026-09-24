@@ -2429,7 +2429,7 @@
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
   "usedBlockNumbers": { "optimism": 156932956 },
-  "permissionsConfigHash": "0x743cfea9813a537f83e2f6a6c3985a81d691d801ea4e987ecae1590895d034d6",
+  "permissionsConfigHash": "0x40331605fe57a7930db59cc3b54d7df7c69b8d0488254cae2fadd5ef1340044d",
   "permissions": {
     "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
       "directlyReceivedPermissions": [
