@@ -6746,9 +6746,9 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25926257, "katana": 42050704 },
-  "permissionsConfigHash": "0xfa49b54efb3e742d31f4ca1f83eb3a114791cf319b4eecba1fd18bbb4ab81c6d",
+  "permissionsConfigHash": "0xf4bd27040e3304285a366a8699ecb006e9126a9ee02996ace09922f7b10cb9ff",
   "modelledAgainst": {
-    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27"
+    "shared-polygon-cdk": "0x4ac7caa0947575fceef16b6b6c3a4a11cd40958971cd0de464f6bc72ab8b961d"
   },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {

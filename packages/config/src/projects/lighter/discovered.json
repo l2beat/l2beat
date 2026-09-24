@@ -1245,7 +1245,7 @@
     "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
   "usedBlockNumbers": { "ethereum": 26005520 },
-  "permissionsConfigHash": "0x325b42a02b378a6f0d10ff2e466b2acb07e8ffcefdb6f7417613621f941e8d6f",
+  "permissionsConfigHash": "0xe67721201c88a83cd9b2d72bf3d9300978ff629a6c246054d411dad35082f5d9",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [

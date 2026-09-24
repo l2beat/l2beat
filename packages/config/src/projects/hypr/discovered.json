@@ -876,7 +876,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 24281992 },
-  "permissionsConfigHash": "0xb74f214f524a4db7d0c3de2993b736c3c2749a86e7990dceb3a7d19c01d342f3",
+  "permissionsConfigHash": "0xfc2f05abfdb1d908ad3ed8601fd816e9ca079ea8858ee626391e69dff9042eb7",
   "permissions": {
     "eth:0x20D697b63d7747cF78C94ad9ee75C1436781E27E": {
       "directlyReceivedPermissions": [

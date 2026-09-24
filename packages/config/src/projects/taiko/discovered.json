@@ -5017,9 +5017,9 @@
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
   "usedBlockNumbers": { "ethereum": 26032880, "taiko": 11724281 },
-  "permissionsConfigHash": "0xe91f5d01cac2d2f264829acea96528ca0ffa4afc1364bed5c2574f97e91954b7",
+  "permissionsConfigHash": "0xd38af7df809c47b3b61fa16d320b9b9b6416f79d9b7cab4c7bd045da8b927d3c",
   "modelledAgainst": {
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
   },
   "permissions": {
     "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438": {

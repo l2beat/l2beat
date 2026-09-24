@@ -1446,9 +1446,9 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0x05b2a8c18cdc4b02bbb7d0c0cc54c27227521f69862243065036e5a22116f303",
+  "permissionsConfigHash": "0x4df764da8a08026b417437c7aa3b4ba28a957bac48b78e3d85c917604478d128",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0x5603f7d8cce6037d1000cbe8ac3858a7c1ac434e7492934ce37d6a4c7e545f7a"
   },
   "permissions": {
     "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8": {

@@ -1396,11 +1396,11 @@
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
   "usedBlockNumbers": { "ethereum": 26019587 },
-  "permissionsConfigHash": "0x40c5ada199ee49a3adbdc57f5cabcafd4808bbe551a5d9247c9c82d7eb2b7d04",
+  "permissionsConfigHash": "0xb0a597fe8a33aa058c4e3eb99de0499464adeac848fd12d63ef265db520199de",
   "modelledAgainst": {
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9",
-    "vector": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6"
+    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf",
+    "shared-zk-stack": "0x5603f7d8cce6037d1000cbe8ac3858a7c1ac434e7492934ce37d6a4c7e545f7a",
+    "vector": "0x01fd2db65cb1ad10ebd63f0479939f344ff4e9e1290362b00adbead250071e16"
   },
   "permissions": {
     "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41": {

@@ -602,7 +602,7 @@
     "lighter/UpgradeGatekeeper": "0x510c4667b3a31f0719ea9fac40e598ae3d96880abc579c8f901e03d153b19bdb"
   },
   "usedBlockNumbers": { "robinhood": 66146640 },
-  "permissionsConfigHash": "0x4311265ccf3b973dbc8aa741ea7b57b1a475526868fe3ca1b48d368669ccb08d",
+  "permissionsConfigHash": "0x4b6df0b6aeccbae9affd7d15ade38d6fd770802b82ac2f9a9251a5ebe310ce5b",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {
       "receivedPermissions": [

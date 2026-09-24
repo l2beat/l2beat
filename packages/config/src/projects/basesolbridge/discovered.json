@@ -902,7 +902,7 @@
     "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2"
   },
   "usedBlockNumbers": { "base": 50513643 },
-  "permissionsConfigHash": "0x5504228f4975413346066ec1b8c3da373766f644d3841ec0832bfb5bbedb0bf6",
+  "permissionsConfigHash": "0x9b720a89c7e19df64713b218a51e6a80b796fdd1e0469e42167301669879e7b9",
   "permissions": {
     "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992": {
       "receivedPermissions": [

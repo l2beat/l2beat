@@ -1646,7 +1646,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25481216 },
-  "permissionsConfigHash": "0xd5d109a8f0ffb8e59dbe2e7fe86c13230d54e3e29a42ae816285fa3f2cb25eba",
+  "permissionsConfigHash": "0x3af4dc51e527a56b71381c910b3fa1e72d605c6ef8b0fd68a70944043d324186",
   "permissions": {
     "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA": {
       "directlyReceivedPermissions": [
