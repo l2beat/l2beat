@@ -476,6 +476,7 @@ export interface EtherscanApi {
 export interface SourcifyApi {
   type: 'sourcify'
   chainId: number
+  url?: string
 }
 
 // #endregion
