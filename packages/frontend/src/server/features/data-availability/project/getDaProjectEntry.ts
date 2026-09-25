@@ -12,6 +12,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
@@ -100,6 +101,7 @@ export async function getDaProjectEntry(
     'milestones' | 'archivedAt' | 'colors'
   >,
   bridgeSlug: string,
+  helpers: SsrHelpers,
 ): Promise<DaProjectPageEntry | undefined> {
   const bridges = (
     await ps.getProjects({
@@ -163,6 +165,7 @@ export async function getDaProjectEntry(
     projectsChangeReport,
     layerGrissiniValues,
     bridgeGrissiniValues,
+    helpers,
   })
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -274,6 +277,7 @@ export async function getDaProjectEntry(
 export async function getEthereumDaProjectEntry(
   layer: Project<'daLayer' | 'display' | 'statuses', 'milestones'>,
   bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
+  helpers: SsrHelpers,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
     getDaLayerRisks(layer.daLayer),
@@ -298,6 +302,7 @@ export async function getEthereumDaProjectEntry(
         layerGrissiniValues,
         bridgeGrissiniValues,
         interopData,
+        helpers,
       }),
       getDaProjectValidators(layer.id, layer.daLayer.validators),
     ])

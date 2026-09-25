@@ -3,15 +3,22 @@ import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { checkIfDataPostedExists } from '~/server/features/data-availability/throughput/utils/checkIfDataPostedExists'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
+import { getDataPostedChartCaption } from '../chart-figures/chartCaptions'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
+  helpers: SsrHelpers,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
-      'defaultRange' | 'currentDaLayers' | 'pastDaLayers' | 'daTrackingConfig'
+      | 'defaultRange'
+      | 'currentDaLayers'
+      | 'pastDaLayers'
+      | 'daTrackingConfig'
+      | 'chartDescription'
     >
   | undefined
 > {
@@ -25,6 +32,13 @@ export async function getDataPostedSection(
     }),
   ])
   if (!hasData) return undefined
+
+  const chart = await helpers.queryClient.fetchQuery(
+    helpers.trpc.da.l2ProjectChart.queryOptions({
+      range,
+      projectId: project.id,
+    }),
+  )
 
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
     project.daTrackingConfig,
@@ -45,5 +59,8 @@ export async function getDataPostedSection(
     currentDaLayers,
     pastDaLayers,
     daTrackingConfig,
+    chartDescription: {
+      caption: getDataPostedChartCaption(project.name, chart),
+    },
   }
 }

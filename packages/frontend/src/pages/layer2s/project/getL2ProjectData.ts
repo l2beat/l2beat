@@ -8,6 +8,7 @@ import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDesc
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getChartJsonAlternates } from '~/utils/project/chart-figures/chartJsonLinks'
 
 export async function getL2ProjectData(
   req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
@@ -87,6 +88,10 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
         openGraph: {
           image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
         },
+        jsonAlternates: getChartJsonAlternates(
+          project.name,
+          projectEntry.sections,
+        ),
       }),
     },
     props: {

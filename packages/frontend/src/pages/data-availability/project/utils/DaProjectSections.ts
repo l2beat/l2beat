@@ -6,7 +6,10 @@ import { getLiveness } from '~/server/features/layer2s/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
+import { getEthereumActivityChartCaption } from '~/utils/project/chart-figures/chartCaptions'
+import { getActivityJsonUrl } from '~/utils/project/chart-figures/chartJsonLinks'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -35,6 +38,7 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
+  helpers: SsrHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -44,6 +48,7 @@ export async function getRegularDaProjectSections({
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
+  helpers,
 }: RegularDetailsParams) {
   const [
     contractUtils,
@@ -135,6 +140,7 @@ export async function getRegularDaProjectSections({
         bridge,
         projectLiveness,
         projectsChangeReport.projects[bridge.id],
+        helpers,
       )
     : undefined
 
@@ -294,6 +300,7 @@ type EthereumDetailsParams = {
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
   interopData: ProjectInteropData | undefined
+  helpers: SsrHelpers
 }
 
 export async function getEthereumDaProjectSections({
@@ -303,6 +310,7 @@ export async function getEthereumDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
   interopData,
+  helpers,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     layer,
@@ -312,7 +320,15 @@ export async function getEthereumDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(layer)
+  const activityRange = optionToRange('1y')
+  const [throughputSection, activityChart] = await Promise.all([
+    getDaThroughputSection(layer),
+    helpers.queryClient.fetchQuery(
+      helpers.trpc.activity.ethereumChart.queryOptions({
+        range: activityRange,
+      }),
+    ),
+  ])
 
   if (interopData) {
     items.push({
@@ -345,9 +361,16 @@ export async function getEthereumDaProjectSections({
       id: 'activity',
       title: 'Activity',
       dataSource: undefined,
-      defaultRange: optionToRange('1y'),
+      defaultRange: activityRange,
       project: toChartProject(layer),
       milestones: layer.milestones ?? [],
+      chartDescription: {
+        caption: getEthereumActivityChartCaption(
+          layer.name,
+          activityChart.data,
+        ),
+        jsonUrl: getActivityJsonUrl(layer.slug, '1y'),
+      },
     },
   })
 

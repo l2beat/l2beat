@@ -2,6 +2,10 @@ import type { Milestone } from '@l2beat/config'
 import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
 import { Callout } from '~/components/Callout'
+import {
+  type ChartDescription,
+  ChartFigure,
+} from '~/components/chart/ChartFigure'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -35,6 +39,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   isArchived: boolean
   hideSubtypeSwitch?: boolean
   isForDaBridge?: boolean
+  chartDescription: ChartDescription
 }
 
 export function LivenessSection({
@@ -49,6 +54,7 @@ export function LivenessSection({
   isArchived,
   hideSubtypeSwitch,
   isForDaBridge,
+  chartDescription,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
@@ -70,15 +76,17 @@ export function LivenessSection({
       )}
 
       <HorizontalSeparator className="my-4" />
-      <ProjectLivenessChart
-        project={project}
-        configuredSubtypes={configuredSubtypes}
-        anomalies={anomalies}
-        milestones={milestones}
-        defaultRange={defaultRange}
-        isArchived={isArchived}
-        hideSubtypeSwitch={hideSubtypeSwitch}
-      />
+      <ChartFigure {...chartDescription}>
+        <ProjectLivenessChart
+          project={project}
+          configuredSubtypes={configuredSubtypes}
+          anomalies={anomalies}
+          milestones={milestones}
+          defaultRange={defaultRange}
+          isArchived={isArchived}
+          hideSubtypeSwitch={hideSubtypeSwitch}
+        />
+      </ChartFigure>
       <div className="mt-4">
         <TrackedTransactions
           {...trackedTransactions}

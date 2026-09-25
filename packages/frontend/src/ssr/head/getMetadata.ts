@@ -8,6 +8,11 @@ type OpenGraph = {
   image: string
 }
 
+export interface JsonAlternate {
+  title: string
+  href: string
+}
+
 export interface Metadata {
   title: string
   description: string
@@ -15,6 +20,8 @@ export interface Metadata {
   openGraph: OpenGraph
   canonicalUrl: string
   excludeFromSearchEngines?: boolean
+  /** Public API endpoints serving the data charted on the page */
+  jsonAlternates?: JsonAlternate[]
 }
 
 type PartialMetadata = {
@@ -28,6 +35,7 @@ type PartialMetadata = {
     dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
+  jsonAlternates?: JsonAlternate[]
 }
 
 export function getMetadata(
