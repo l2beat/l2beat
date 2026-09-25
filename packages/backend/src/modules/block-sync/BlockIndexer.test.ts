@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import {
+  type BlockProvider,
+  getRpcMetricsContext,
+  type LogsProvider,
+} from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../tools/uif/IndexerService'
@@ -194,9 +198,11 @@ describe(BlockIndexer.name, () => {
         transactions: [{ hash: '0xc' }],
       }
       const processBlock = mockFn().resolvesTo(undefined)
+      const receiptContexts: ReturnType<typeof getRpcMetricsContext>[] = []
       const getTransactionReceipt = mockFn<
         BlockProvider['getTransactionReceipt']
       >().executes(async (hash: string) => {
+        receiptContexts.push(getRpcMetricsContext())
         if (hash === '0xc') {
           // receipt with logs: eth_getLogs must have been incomplete
           return { blockHash: block2.hash, logs: [{}] }
@@ -227,6 +233,12 @@ describe(BlockIndexer.name, () => {
       expect(result).toEqual(10)
       expect(getTransactionReceipt).toHaveBeenCalledTimes(3)
       expect(processBlock).toHaveBeenOnlyCalledWith(block1, [])
+      // receipts are attributed to the fetch, not left uncategorized
+      expect(receiptContexts).toEqual([
+        { coreFeature: 'blockSync.fetch', chain: 'ethereum' },
+        { coreFeature: 'blockSync.fetch', chain: 'ethereum' },
+        { coreFeature: 'blockSync.fetch', chain: 'ethereum' },
+      ])
     })
 
     it('rejects a block without logs when a receipt belongs to another block', async () => {

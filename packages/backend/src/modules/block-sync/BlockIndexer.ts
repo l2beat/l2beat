@@ -64,23 +64,25 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: adjustedTo - adjustedFrom + 1,
     })
 
-    const [blocks, logs] = await withBlockSyncRpcMetricsContext(
+    const consistentBlocks = await withBlockSyncRpcMetricsContext(
       'blockSync.fetch',
       {
         chain: this.$.source,
       },
-      () =>
-        Promise.all([
+      async () => {
+        const [blocks, logs] = await Promise.all([
           Promise.all(
             blockNumbers.map((n) =>
               this.$.blockProvider.getBlockWithTransactions(n),
             ),
           ),
           this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
-        ]),
-    )
-    const consistentBlocks = await onlyConsistent(blocks, logs, (block) =>
-      this.confirmNoLogs(block),
+        ])
+        // Receipt confirmations issued here share the fetch metrics context.
+        return await onlyConsistent(blocks, logs, (block) =>
+          this.confirmNoLogs(block),
+        )
+      },
     )
     if (consistentBlocks.length === 0) {
       this.logger.info("Couldn't get consistent blocks & logs", {
