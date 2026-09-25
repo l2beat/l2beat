@@ -19,6 +19,26 @@ describe(diffsToText.name, () => {
     expect(text).toInclude('## old [REMOVED]\n\n- name:\n    "Old"')
   })
 
+  it('summarizes discovery updates of an added project', () => {
+    const entry = {
+      id: 'abc',
+      timestamp: 1789656139,
+      description: 'Deployed.',
+      isHighSeverity: false,
+      changeCount: 3,
+      sections: [{ kind: 'watched-changes', body: 'x'.repeat(5000) }],
+    }
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [],
+      projectsAfter: [{ id: 'new', name: 'New', discoveryUpdates: [entry] }],
+    })
+    expect(text).toInclude(
+      '+ discoveryUpdates:\n    2026-09-17 (3 changes): Deployed.',
+    )
+    expect(text).not.toInclude('xxxx')
+  })
+
   it('reports value changes by keyed path', () => {
     const before = project({
       contracts: {
@@ -202,6 +222,60 @@ describe(diffsToText.name, () => {
     })
     expect(text).not.toInclude('Rediscovered')
     expect(text).toInclude('+ discoveryInfo.baseTimestamp: 1789656139')
+  })
+
+  it('treats a missing column and a null column as equal', () => {
+    const before = project({ display: { name: 'Same' } })
+    const after = project({ display: { name: 'Same' }, newColumn: null })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('## Summary: 0 projects')
+  })
+
+  it('reports reordered discovery updates', () => {
+    const a = {
+      id: 'a',
+      timestamp: 1789656139,
+      description: 'A',
+      isHighSeverity: false,
+      changeCount: 1,
+    }
+    const b = {
+      id: 'b',
+      timestamp: 1789656139,
+      description: 'B',
+      isHighSeverity: false,
+      changeCount: 1,
+    }
+    const before = project({ discoveryUpdates: [a, b] })
+    const after = project({ discoveryUpdates: [b, a] })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('| p | modified | discovery updates reordered |')
+    expect(text).toInclude('~ order: [a, b] -> [b, a]')
+  })
+
+  it('shows whitespace-only changes in long strings', () => {
+    const filler =
+      'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor '
+    const before = project({
+      display: { description: `${filler}first line second line ${filler}` },
+    })
+    const after = project({
+      display: { description: `${filler}first line\n\nsecond line ${filler}` },
+    })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('line[- -]{+\\n\\n+}second')
   })
 
   it('omits projects without differences', () => {

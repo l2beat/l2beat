@@ -1,6 +1,6 @@
 import { type Difference, diff } from '@l2beat/shared'
 import { formatJson } from '@l2beat/shared-pure'
-import { diffWords } from 'diff'
+import { diffWordsWithSpace } from 'diff'
 import type { Project } from './types'
 
 export function diffsToText(props: {
@@ -84,6 +84,11 @@ function reportProject(pair: ProjectPair): ProjectReport {
   const updates = discoveryUpdateLines(pair.before, pair.after)
   if (updates.entries > 0) {
     summary.push(`${plural(updates.entries, 'discovery update')}`)
+  }
+  if (updates.reordered) {
+    summary.push('discovery updates reordered')
+  }
+  if (updates.lines.length > 0) {
     lines.push('### discoveryUpdates', '', ...updates.lines, '')
   }
 
@@ -94,8 +99,8 @@ function reportProject(pair: ProjectPair): ProjectReport {
   for (const field of [...fields].sort()) {
     const changes = fieldChanges(
       field,
-      pair.before[field],
-      pair.after[field],
+      pair.before[field] ?? null,
+      pair.after[field] ?? null,
       rediscovered !== undefined,
     )
     if (changes.length === 0) {
@@ -122,7 +127,7 @@ function wholeProject(
   const prefix = type === 'added' ? '+' : '-'
   const lines = fields.flatMap(([field, value]) => [
     `${prefix} ${field}:`,
-    ...indent(formatJson(value, { indentSize: 2, lineSize: 100 })),
+    ...indent(wholeField(project, field, value)),
     '',
   ])
   return {
@@ -131,6 +136,13 @@ function wholeProject(
     summary: fields.map(([field]) => field).join(', '),
     lines,
   }
+}
+
+function wholeField(project: Project, field: string, value: unknown) {
+  if (field === 'discoveryUpdates') {
+    return discoveryUpdates(project).map((e) => discoveryUpdateLine('', e))
+  }
+  return formatJson(value, { indentSize: 2, lineSize: 100 })
 }
 
 function fieldChanges(
@@ -169,10 +181,16 @@ interface DiscoveryUpdate {
   raw: Record<string, unknown>
 }
 
+interface DiscoveryUpdateReport {
+  entries: number
+  reordered: boolean
+  lines: string[]
+}
+
 function discoveryUpdateLines(
   before: Project,
   after: Project,
-): { entries: number; lines: string[] } {
+): DiscoveryUpdateReport {
   const entriesBefore = discoveryUpdates(before)
   const entriesAfter = discoveryUpdates(after)
   const byIdBefore = new Map(entriesBefore.map((e) => [e.id, e]))
@@ -184,7 +202,7 @@ function discoveryUpdateLines(
     const previous = byIdBefore.get(entry.id)
     if (previous === undefined) {
       entries += 1
-      lines.push(discoveryUpdateLine('+', entry))
+      lines.push(discoveryUpdateLine('+ ', entry))
       continue
     }
     const edited = editedDiscoveryUpdateLines(previous, entry)
@@ -196,10 +214,18 @@ function discoveryUpdateLines(
   for (const entry of entriesBefore) {
     if (!byIdAfter.has(entry.id)) {
       entries += 1
-      lines.push(discoveryUpdateLine('-', entry))
+      lines.push(discoveryUpdateLine('- ', entry))
     }
   }
-  return { entries, lines }
+
+  const orderBefore = entriesBefore.filter((e) => byIdAfter.has(e.id))
+  const orderAfter = entriesAfter.filter((e) => byIdBefore.has(e.id))
+  const reordered = orderBefore.some((e, i) => e.id !== orderAfter[i]?.id)
+  if (reordered) {
+    const ids = (list: DiscoveryUpdate[]) => list.map((e) => e.id).join(', ')
+    lines.push(`~ order: [${ids(orderBefore)}] -> [${ids(orderAfter)}]`)
+  }
+  return { entries, reordered, lines }
 }
 
 function editedDiscoveryUpdateLines(
@@ -218,7 +244,7 @@ function discoveryUpdateLine(prefix: string, entry: DiscoveryUpdate) {
   const severity = entry.isHighSeverity ? ' [HIGH SEVERITY]' : ''
   const count = plural(entry.changeCount, 'change')
   const description = entry.description.split('\n').filter(Boolean).join(' ')
-  return `${prefix} ${date}${severity} (${count}): ${description}`
+  return `${prefix}${date}${severity} (${count}): ${description}`
 }
 
 function discoveryUpdates(project: Project): DiscoveryUpdate[] {
@@ -312,7 +338,7 @@ function arrayKey(element: unknown): string | undefined {
 const WORD_CONTEXT = 6
 
 function wordDiff(before: string, after: string): string {
-  const parts = diffWords(before, after)
+  const parts = diffWordsWithSpace(before, after)
   const out: string[] = []
   for (const [i, part] of parts.entries()) {
     if (part.added) {
