@@ -77,7 +77,7 @@ function Item({
       ref={ref}
       href={href}
       className={cn(
-        'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors',
+        'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors duration-150 motion-reduce:transition-none',
         selected &&
           'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-branding-primary',
       )}

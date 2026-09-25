@@ -67,7 +67,7 @@ export function DesktopProjectNavigation({
         <div
           ref={headerRef}
           className={cn(
-            '-z-1 opacity-0 transition-opacity duration-300',
+            '-z-1 opacity-0 transition-opacity duration-200 motion-reduce:transition-none',
             isHeaderShown && 'opacity-100',
           )}
         >

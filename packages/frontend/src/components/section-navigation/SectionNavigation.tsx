@@ -36,7 +36,7 @@ export function SectionNavigation({
       scrollVerticallyToItem({
         item,
         overflowingContainer,
-        behavior: 'smooth',
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       }),
     [],
   )
@@ -51,7 +51,7 @@ export function SectionNavigation({
   return (
     <ScrollWithGradient
       className={cn(
-        'absolute top-0 flex w-full flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-full flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-200 ease-in-out motion-reduce:transition-none',
         className,
       )}
       style={style}
@@ -75,7 +75,7 @@ export function SectionNavigation({
               )}
               <span
                 className={cn(
-                  'mt-[3px] text-label-value-14 hover:text-primary',
+                  'mt-[3px] text-label-value-14 transition-colors duration-150 hover:text-primary motion-reduce:transition-none',
                   selected ? 'text-primary' : 'text-secondary',
                 )}
               >
@@ -114,12 +114,20 @@ function NavigationListIndex(props: { index: number }) {
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded-lg text-center text-label-value-12',
-        'bg-surface-tertiary text-secondary group-hover:text-primary',
-        'group-data-[selected=true]:group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[selected=true]:group-data-[has-colors=true]/section-wrapper:bg-branding-primary group-data-[selected=true]:bg-linear-to-r group-data-[selected=true]:from-purple-100 group-data-[selected=true]:to-pink-100 group-data-[selected=true]:text-white',
+        'relative flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg text-center text-label-value-12',
+        'bg-surface-tertiary text-secondary transition-colors duration-150 group-hover:text-primary motion-reduce:transition-none',
+        'group-data-[selected=true]:text-white',
       )}
     >
-      <span>{props.index}</span>
+      <div
+        aria-hidden
+        className={cn(
+          'absolute inset-0 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
+          'bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+          'group-data-[selected=true]:opacity-100',
+        )}
+      />
+      <span className="relative">{props.index}</span>
     </div>
   )
 }
@@ -138,15 +146,19 @@ function NavigationSubsectionEntry(props: {
       <div className="flex flex-row gap-3">
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
-          {props.selected && (
-            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary" />
-          )}
+          <div
+            className={cn(
+              'absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+              'transition-[opacity,transform] duration-150 ease-out motion-reduce:transition-none',
+              props.selected ? 'opacity-100' : 'scale-y-75 opacity-0',
+            )}
+          />
           <div className="h-full border-divider border-l" />
         </div>
         {/* Right side */}
         <div
           className={cn(
-            'flex-1 pt-0.5 pb-2 transition-opacity hover:opacity-100 group-last:pb-0.5',
+            'flex-1 pt-0.5 pb-2 transition-opacity duration-150 hover:opacity-100 group-last:pb-0.5 motion-reduce:transition-none',
             !props.selected && 'opacity-60',
           )}
         >
@@ -155,4 +167,8 @@ function NavigationSubsectionEntry(props: {
       </div>
     </a>
   )
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
