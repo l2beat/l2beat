@@ -17,6 +17,7 @@ import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getT
 import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
+import { SubsectionHeading } from '../Subsection'
 import type { ProjectSectionProps } from '../types'
 import { Last30DayAnomalies } from './Last30DayAnomalies'
 
@@ -118,10 +119,10 @@ function OngoingAnomalies({
         <div className="rounded-lg bg-surface-secondary px-5 py-4">
           <div className="mb-3 flex items-center gap-2">
             <LiveIndicator size="md" />
-            <h3 className="font-medium text-base text-negative uppercase">
+            <SubsectionHeading className="font-medium text-base text-negative uppercase">
               Ongoing{' '}
               {pluralize(approvedAnomalies.length, 'anomaly', 'anomalies')}
-            </h3>
+            </SubsectionHeading>
           </div>
           {hasTrackedContractsChanged && <ImplementationChangeCallout />}
           {approvedAnomalies.map((anomaly) => (
@@ -136,10 +137,10 @@ function OngoingAnomalies({
         <div className="rounded-lg bg-surface-secondary px-5 py-4">
           <div className="mb-3 flex items-center gap-2">
             <RoundedWarningIcon className="size-4" sentiment="warning" />
-            <h3 className="font-medium text-base text-warning uppercase">
+            <SubsectionHeading className="font-medium text-base text-warning uppercase">
               Potential ongoing{' '}
               {pluralize(unapprovedAnomalies.length, 'anomaly', 'anomalies')}
-            </h3>
+            </SubsectionHeading>
           </div>
           {hasTrackedContractsChanged && <ImplementationChangeCallout />}
           {unapprovedAnomalies.map((anomaly) => (

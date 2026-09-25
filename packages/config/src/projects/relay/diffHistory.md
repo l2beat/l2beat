@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x3083f79e640311c07e518564651670abe106d810
+Generated with discovered.json: 0xd50ce67ef4dfba6e8051b6b3bd7dfaca4ceebf02
 
 # Diff at Fri, 14 Aug 2026 13:52:03 GMT:
 
@@ -7,7 +7,7 @@ Generated with discovered.json: 0x3083f79e640311c07e518564651670abe106d810
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of the Relay settlement protocol contracts.
 
 ## Initial discovery
 

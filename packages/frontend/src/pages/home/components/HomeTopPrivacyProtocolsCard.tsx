@@ -22,6 +22,7 @@ import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { PrivacyAdversaryMergedDot } from '~/pages/privacy/adversaries/PrivacyAdversaryMergedDot'
 import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
+import { toPrivacyProjectCellProject } from '~/pages/privacy/toPrivacyProjectCellProject'
 import {
   type TrustedSetupRisk,
   TrustedSetupRiskDot,
@@ -71,20 +72,7 @@ const columns = [
     header: 'Name',
     enableHiding: false,
     cell: (ctx) => {
-      const project = {
-        name: ctx.row.original.name,
-        shortName: ctx.row.original.shortName,
-        slug: ctx.row.original.slug,
-        icon: ctx.row.original.icon,
-        backgroundColor: undefined,
-        description: ctx.row.original.description,
-        quantumResistance: ctx.row.original.quantumResistant
-          ? 'privacy'
-          : undefined,
-        statuses: {
-          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
-        },
-      } as const
+      const project = toPrivacyProjectCellProject(ctx.row.original)
 
       return (
         <div className="flex h-full items-center">

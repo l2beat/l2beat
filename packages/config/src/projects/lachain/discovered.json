@@ -977,9 +977,9 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23674967 },
-  "permissionsConfigHash": "0x491efa30d79d5461ff774687833a8483dcc7ed0ffca3d23a2cc8a5b9b7326c2f",
+  "permissionsConfigHash": "0x0870cbf37383394a20307c134e0bd637b21cf11fe3a57bbc06a183da4bd7c8a3",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {

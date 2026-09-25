@@ -2703,7 +2703,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 481341792, "ethereal": 5339100 },
-  "permissionsConfigHash": "0xe1268424e8900b7f50f584158ec2fcb5d18ce93abef2f64cf2c5424501458d66",
+  "permissionsConfigHash": "0x039793893e2598504da872684d06a986939ee0c2c2fe9c180785baf1f1c3a489",
   "permissions": {
     "arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3": {
       "receivedPermissions": [

@@ -4089,9 +4089,9 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 25846603 },
-  "permissionsConfigHash": "0x4d43ba85a1040db115883db7e4b02adcaf29e22b956debc25161f7d5e49e41bc",
+  "permissionsConfigHash": "0xf767fceb2e1ff383b05e1d39fe3d6ebcd0b5137886c043bfea61672d351b4d0c",
   "modelledAgainst": {
-    "shared-eigenlayer": "0x7b8d163165f154ee1f29ea8a5c81acad654ad24cd5952a5cdb64863bfd1d44c3"
+    "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },
   "permissions": {
     "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {

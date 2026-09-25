@@ -27,9 +27,18 @@ export function MobileSectionNavigation({ sections }: Props) {
 
   useEffect(() => {
     if (isDesktop) return
-    if (!selectedItem.current || !overflowContainer.current || !currentSection)
-      return
-    scrollToItem(selectedItem.current, overflowContainer.current)
+    const item = selectedItem.current
+    const container = overflowContainer.current
+    if (!item || !container || !currentSection) return
+    // Delivered after the browser's own layout, so the offsets read while
+    // scrolling are free. Reading them here forced a layout of the whole
+    // page inside the commit that mounted this navigation.
+    const afterLayout = new ResizeObserver(() => {
+      afterLayout.disconnect()
+      scrollToItem(item, container)
+    })
+    afterLayout.observe(container)
+    return () => afterLayout.disconnect()
   }, [scrollToItem, currentSection, isDesktop])
 
   if (sections.length === 0) return null

@@ -4078,7 +4078,7 @@
     "ethereum": 25723600,
     "optimism": 155377069
   },
-  "permissionsConfigHash": "0x0f5c97f20f260b21ab848b1da3e502c5b32faaab86457efb1f0ec71b9d49dd04",
+  "permissionsConfigHash": "0xbf5d4dcd7272d13ca2b5f7e9fadcf9f038bb832396aa700e90b7894e4a476c1d",
   "permissions": {
     "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5": {
       "receivedPermissions": [

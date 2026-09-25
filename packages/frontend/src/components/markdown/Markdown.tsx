@@ -6,9 +6,14 @@ import {
   glossaryPlugin,
   linkGlossaryTerms,
 } from '~/utils/markdown/glossaryPlugin'
+import {
+  type HeadingLevelEnv,
+  headingLevelPlugin,
+} from '~/utils/markdown/headingLevelPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
+import { useParentHeadingLevel } from './ParentHeadingLevelContext'
 
 interface MarkdownProps {
   children: string
@@ -23,13 +28,18 @@ const markdown = MarkdownIt({
 })
   .use(outLinksPlugin)
   .use(glossaryPlugin)
+  .use(headingLevelPlugin)
 
 export function Markdown(props: MarkdownProps) {
   const terms = useGlossaryContext()
+  const parentHeadingLevel = useParentHeadingLevel()
   const glossaryDescriptionIdPrefix = useId()
   const Comp = props.inline ? 'span' : 'div'
   const render = (text: string) => {
-    const env: GlossaryRenderEnv = { glossaryDescriptionIdPrefix }
+    const env: GlossaryRenderEnv & HeadingLevelEnv = {
+      glossaryDescriptionIdPrefix,
+      parentHeadingLevel,
+    }
     return props.inline
       ? markdown.renderInline(text, env)
       : markdown.render(text, env)

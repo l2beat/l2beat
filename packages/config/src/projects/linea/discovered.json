@@ -3618,7 +3618,7 @@
     "linea/YieldManager": "0x15befc37e3984bc9e0b8548c3b5266b2ad9e24ca61f02cd9ab3c9176983303ab"
   },
   "usedBlockNumbers": { "ethereum": 26019706, "linea": 32092404 },
-  "permissionsConfigHash": "0x2bcbd12d4222cc2e1f80cd5e42627f8f0aff928d7087e066fd998a5bf45eaedf",
+  "permissionsConfigHash": "0x8eaa56eb49d99e7d9296bc15341fe35049bf4ab76874017ba749e86a42aea71a",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
       "receivedPermissions": [

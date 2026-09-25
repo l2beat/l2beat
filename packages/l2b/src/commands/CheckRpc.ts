@@ -6,6 +6,7 @@ import {
   findRateLimit,
   type RateLimitResults,
 } from '../implementations/checkrpc'
+import { createCliLogger } from '../implementations/common/CliLogger'
 import { HttpUrl, LogLevelValue, PositiveRpcBoundNumber } from './types'
 
 export const CheckRpc = command({
@@ -48,6 +49,7 @@ export const CheckRpc = command({
     }),
   },
   handler: async (args) => {
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
     const results: Record<string, RateLimitResults> = {}
     for (const rpcUrl of args.rpcUrls) {
       const config: Configuration = {
@@ -66,7 +68,7 @@ export const CheckRpc = command({
         batchOnly: args.batchOnly,
       }
 
-      results[rpcUrl] = await findRateLimit(config)
+      results[rpcUrl] = await findRateLimit(config, cli)
     }
 
     const headers = ['RPC URL', 'Batch Size', 'Rate Limit']
@@ -75,7 +77,7 @@ export const CheckRpc = command({
       return [rpcUrl, result.batchSize.toString(), rateLimit]
     })
 
-    console.log('Results:')
-    console.log(formatAsAsciiTable(headers, rows))
+    cli.log('Results:')
+    cli.log(formatAsAsciiTable(headers, rows))
   },
 })

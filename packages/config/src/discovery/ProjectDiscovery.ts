@@ -74,12 +74,7 @@ export class ProjectDiscovery {
     public readonly configReader = new ConfigReader(paths.discovery),
     public readonly options?: ProjectDiscoveryOptions,
   ) {
-    // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests
-    try {
-      this.discoveries = configReader.readDiscoveryWithReferences(projectName)
-    } catch {
-      this.discoveries = []
-    }
+    this.discoveries = configReader.readDiscoveryWithReferences(projectName)
 
     // always the base discovery
     const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(

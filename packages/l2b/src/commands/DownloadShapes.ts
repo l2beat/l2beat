@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import {
   combineImplementationHashes,
   flatteningHash,
@@ -10,11 +9,15 @@ import {
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { command, positional, string } from 'cmd-ts'
 import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { rimraf } from 'rimraf'
-import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import {
+  type CliLogger,
+  createCliLogger,
+} from '../implementations/common/CliLogger'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
@@ -27,18 +30,26 @@ export const DownloadShapes = command({
     }),
   },
   handler: async (args) => {
-    const logger = getPlainLogger()
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
 
     if (templateService.exists(args.template) === false) {
-      logger.info(`Couldn't find template "${args.template}"`)
+      cli.log(`Couldn't find template "${args.template}"`)
       return
     }
 
-    const downloadShape = createShapeDownloader(templateService, logger)
-
-    await downloadShape(args.template)
+    const downloadShape = createShapeDownloader(templateService, cli)
+    const download = cli.status()
+    const result = await downloadShape(args.template, (shapeName) =>
+      download.update(`Downloading ${args.template}: ${shapeName}`),
+    )
+    download.done(
+      `Downloaded ${result.written} shapes for ${args.template}${formatMismatches(result.mismatched)}`,
+    )
+    if (result.mismatched > 0) {
+      process.exitCode = 1
+    }
   },
 })
 
@@ -48,7 +59,7 @@ export const DownloadAllShapes = command({
     'Download all Solidity files for shapes defined in all templates.',
   args: {},
   handler: async () => {
-    const logger = getPlainLogger()
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
 
@@ -58,25 +69,50 @@ export const DownloadAllShapes = command({
       .filter(([_, { shapePath }]) => shapePath !== undefined)
       .map(([templateId]) => templateId)
 
-    const downloadShape = createShapeDownloader(templateService, logger)
-    let progress = 0
+    const downloadShape = createShapeDownloader(templateService, cli)
     const total = templatesWithShapes.length
+    const download = cli.status()
+    let written = 0
+    let mismatched = 0
 
-    for (const templateId of templatesWithShapes) {
-      await downloadShape(templateId)
-      progress++
-      const percent = (progress / total) * 100
-      logger.info(`Last downloaded: ${templateId}`)
-      logger.info(`Progress: ${percent.toFixed(2)}% (${progress}/${total})`)
+    for (const [i, templateId] of templatesWithShapes.entries()) {
+      const result = await downloadShape(templateId, (shapeName) =>
+        download.update(
+          `Downloading [${i + 1}/${total}] ${templateId}: ${shapeName}`,
+        ),
+      )
+      written += result.written
+      mismatched += result.mismatched
+    }
+    download.done(
+      `Downloaded ${written} shapes for ${total} templates${formatMismatches(mismatched)}`,
+    )
+    if (mismatched > 0) {
+      process.exitCode = 1
     }
   },
 })
 
+interface DownloadResult {
+  written: number
+  mismatched: number
+}
+
+function formatMismatches(mismatched: number): string {
+  if (mismatched === 0) {
+    return ''
+  }
+  return chalk.red(`, ${mismatched} hash mismatch`)
+}
+
 function createShapeDownloader(
   templateService: TemplateService,
-  logger: Logger,
+  cli: CliLogger,
 ) {
-  return async (templateId: string) => {
+  return async (
+    templateId: string,
+    onShape: (shapeName: string) => void,
+  ): Promise<DownloadResult> => {
     const templatePath = templateService.getTemplatePath(templateId)
     const shapeSchema = templateService.readShapeSchema(
       join(templatePath, 'shapes.json'),
@@ -85,15 +121,14 @@ function createShapeDownloader(
     // 1. Remove and recreate the shapes folder
     // (helps if there are renames or removed shapes)
     const shapesFolder = join(templatePath, 'shapes')
-    logger.info('Emptying the shapes folder')
     rimraf.sync(shapesFolder)
-    logger.info('Creating the shapes folder')
     mkdirSync(shapesFolder, { recursive: true })
+    let written = 0
     for (const fileName in shapeSchema) {
       const outputFiles: Record<string, string> = {}
 
       const shape = shapeSchema[fileName]
-      logger.info(`Fetching source code of ${fileName}`)
+      onShape(fileName)
       const sources = await getSources(shape.address)
 
       const sourceHashes: string[] = []
@@ -129,23 +164,20 @@ function createShapeDownloader(
 
       // Make sure the hash matches shape.hash
       if (matchingHash !== shape.hash) {
-        logger.info('Error: hash mismatch!')
-        return
+        cli.log(chalk.red(`${templateId}/${fileName}: hash mismatch`))
+        return { written, mismatched: 1 }
       }
 
       // 3. Create the directory for the shape under shape key
-      logger.info(`Creating directory for ${fileName}`)
       mkdirSync(join(shapesFolder, fileName), { recursive: true })
 
       // 4. Write all the files to the designated shape folder
-      logger.info(
-        `Writing shape files - ${Object.keys(outputFiles).length} files`,
-      )
       for (const [filePath, content] of Object.entries(outputFiles)) {
-        logger.info(`Writing ${filePath}`)
         writeFileSync(filePath, content)
       }
+      written += 1
     }
+    return { written, mismatched: 0 }
   }
 }
 

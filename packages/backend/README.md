@@ -149,6 +149,17 @@ to use a different endpoint. For example:
 ETHEREUM_RPC_URL=https://example.provider/ethereum
 ```
 
+### `interop.relay` feature
+
+- `INTEROP_RELAY_API_KEY` - One API key or a comma-separated list of keys.
+- `INTEROP_RELAY_CALLS_PER_MINUTE_PER_KEY` - Request budget per key, including retries.
+  Defaults to 190.
+- `INTEROP_RELAY_CONCURRENCY_PER_KEY` - Concurrent fetch workers contributed by each key.
+  Defaults to 3.
+
+Capacity scales automatically with the number of distinct, non-empty keys. With the defaults,
+one key allows 190 calls/minute and 3 workers; two keys allow 380 calls/minute and 6 workers.
+
 ### `tvs` feature
 
 The tvs feature is configured via the following environment variables:

@@ -37,6 +37,8 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   quantumResistance?: QuantumResistanceType
+  /** Project page that warning anchors resolve against; defaults to the L2 page. */
+  detailsHref?: string
 }
 
 interface ProjectCellProps {
@@ -48,7 +50,9 @@ interface ProjectCellProps {
 
 function redWarningDetailHref(project: ProjectCellProject): string | undefined {
   const anchor = project.statuses?.redWarning?.detailAnchor
-  return anchor ? `/layer2s/projects/${project.slug}#${anchor}` : undefined
+  if (!anchor) return undefined
+  const detailsHref = project.detailsHref ?? `/layer2s/projects/${project.slug}`
+  return `${detailsHref}#${anchor}`
 }
 
 function MobileProjectIconTooltip({

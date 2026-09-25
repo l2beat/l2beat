@@ -98,6 +98,7 @@ export const liquityv2: BaseProject = {
   },
   defiInfo: {
     category: 'Stablecoin',
+    tvl: { source: 'l2beat' },
   },
   externalDependencies: [
     {

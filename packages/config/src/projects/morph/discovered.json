@@ -2147,7 +2147,7 @@
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 26033092 },
-  "permissionsConfigHash": "0xc951fe965189e43ff78c307b143c1bfe398afbca04dc5e7904297beeadf0a769",
+  "permissionsConfigHash": "0x1a2c28861750ddb1915bf3f5b821402f9189493cd4e0f7f00e7978e3603b50e5",
   "permissions": {
     "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {
       "receivedPermissions": [

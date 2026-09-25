@@ -209,7 +209,7 @@ describe('cluster permission modelling', () => {
         templateService,
       )
       expect(
-        generatePermissionConfigHash(inConsumerCluster.module!),
+        generatePermissionConfigHash(inConsumerCluster.clingoByProject.module!),
       ).not.toEqual(ownHash)
 
       const model = await modelPermissions(

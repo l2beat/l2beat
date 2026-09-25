@@ -52,6 +52,7 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectOssification,
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
@@ -248,6 +249,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
+  ossification?: ProjectOssification
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
@@ -430,6 +432,7 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    ossification: templateVars.ossification,
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs

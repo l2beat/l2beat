@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { loadOssificationInput, readPatch } from './loadOssification'
+import { loadOssificationInput, readPatch } from './getOssification'
 import { getUncertainNewestChange } from './measureOssification'
 
 /** The newest change sets the project clock and with it the whole score. A

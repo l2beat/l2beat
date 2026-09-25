@@ -132,6 +132,12 @@ export const uniswapv4: BaseProject = {
   },
   defiInfo: {
     category: 'DEX',
+    tvl: {
+      source: 'defillama',
+      protocolSlug: 'uniswap-v4',
+      sinceTimestamp: UnixTime(1738108800),
+      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+    },
   },
   // Declared empty on purpose: the v4 core has no oracle, no bridge, no
   // external contract its operation depends on. Hooks are per-pool opt-ins

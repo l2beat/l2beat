@@ -63,23 +63,22 @@ export function StatsForm({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    getStats(chainId, blockCount)
+    void getStats(chainId, blockCount)
   }
 
   const getStats = async (chainId: string, overrideBlockCount: number) => {
     setIsLoading(true)
-
-    const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
-
-    if (!chain) {
-      throw new Error(`Unsupported chain: ${chain}`)
-    }
 
     let currentBatchSize = 10
     let blocksLeftToFetch = overrideBlockCount ?? blockCount
     let currentLastFetched = lastFetched
 
     try {
+      const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
+      if (!chain) {
+        throw new Error(`Unsupported chain: ${chainId}`)
+      }
+
       while (blocksLeftToFetch > 0) {
         if (blocksLeftToFetch < currentBatchSize) {
           currentBatchSize = blocksLeftToFetch
