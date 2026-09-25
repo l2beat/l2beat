@@ -90,8 +90,114 @@ describe(makeEntryStructureConfig.name, () => {
 
       expect(config.ignoreRelatives).toEqual(true)
       expect(config.ignoreDiscovery).toEqual(true)
-      expect(config.ignoreMethods).toEqual(['fromOverride'])
+      expect(config.ignoreMethods).toEqual(['fromTemplate', 'fromOverride'])
       expect(config.address).toEqual(ADDRESS)
+    })
+
+    it('unions ignore lists from both sides instead of merging them by index', () => {
+      const config = mergeTemplateIntoOverride(
+        {
+          ignoreMethods: ['x'],
+          ignoreRelatives: ['r1'],
+          ignoreInWatchMode: ['w1'],
+        },
+        {
+          ignoreMethods: ['a', 'b', 'x'],
+          ignoreRelatives: ['r2'],
+          ignoreInWatchMode: ['w2'],
+        },
+      )
+
+      expect(config.ignoreMethods).toEqual(['a', 'b', 'x'])
+      expect(config.ignoreRelatives).toEqual(['r2', 'r1'])
+      expect(config.ignoreInWatchMode).toEqual(['w2', 'w1'])
+    })
+
+    it('replaces a field edit program wholesale instead of merging by index', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { a: { edit: ['get', '#'] } } },
+        { fields: { a: { edit: ['set', ['a', 'b'], '#'] } } },
+      )
+
+      expect(config.fields.a?.edit).toEqual(['get', '#'])
+    })
+
+    it('crashes when a template handler meets an override copy on one field', () => {
+      expect(() =>
+        mergeTemplateIntoOverride(
+          { fields: { a: { copy: 'b' } } },
+          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+        ),
+      ).toThrow('handler and copy cannot both be defined')
+    })
+
+    it('crashes when a template copy meets an override handler on one field', () => {
+      expect(() =>
+        mergeTemplateIntoOverride(
+          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+          { fields: { a: { copy: 'b' } } },
+        ),
+      ).toThrow('handler and copy cannot both be defined')
+    })
+
+    it('replaces a redefined template type wholesale instead of merging its keys', () => {
+      const config = mergeTemplateIntoOverride(
+        { types: { GameMap: { severity: 'HIGH' } } },
+        {
+          types: {
+            GameMap: {
+              typeCaster: 'Mapping',
+              arg: { '0': 'FaultDisputeGame' },
+            },
+          },
+        },
+      )
+
+      expect(config.types).toEqual({ GameMap: { severity: 'HIGH' } })
+    })
+
+    it('replaces a redefined project type wholesale instead of merging its keys', () => {
+      const config = makeEntryStructureConfig(
+        {
+          types: {
+            GameMap: {
+              typeCaster: 'Mapping',
+              arg: { '0': 'FaultDisputeGame' },
+            },
+          },
+          overrides: {
+            [ADDRESS.toString()]: StructureContract.parse({
+              types: { GameMap: { severity: 'HIGH' } },
+            }),
+          },
+        },
+        ADDRESS,
+      )
+
+      expect(config.types).toEqual({ GameMap: { severity: 'HIGH' } })
+    })
+
+    it('does not mutate the template it merges in', () => {
+      const template = StructureContract.parse({
+        ignoreMethods: ['a'],
+        fields: { f: { handler: { type: 'storage', slot: 1 } } },
+      })
+      const before = structuredClone(template)
+
+      const config = makeEntryStructureConfig(
+        {
+          overrides: {
+            [ADDRESS.toString()]: StructureContract.parse({
+              ignoreMethods: ['b'],
+              fields: { f: { template: 'x' } },
+            }),
+          },
+        },
+        ADDRESS,
+      )
+      config.pushValues(template)
+
+      expect(template).toEqual(before)
     })
 
     it('replaces a template handler with the override handler instead of merging them', () => {

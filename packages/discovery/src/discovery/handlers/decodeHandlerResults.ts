@@ -1,5 +1,4 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type { BlipEnv } from '../../blip/type'
 import type {
@@ -44,8 +43,9 @@ export function decodeHandlerResults(
   }
 
   const runtime = new BlipRuntime(types, env)
-  const fields = merge({}, values, fieldOverrides)
-  const copyBatches = orderByCopyDependencies(fields)
+  const copyBatches = orderByCopyDependencies(
+    fieldsWithValuesAndOverrides(values, fieldOverrides),
+  )
   for (const batch of copyBatches) {
     for (const fieldName of batch) {
       const copy = (fieldOverrides ?? {})[fieldName]?.copy
@@ -73,4 +73,18 @@ export function decodeHandlerResults(
     errors,
     usedTypes: runtime.usedTypes,
   }
+}
+
+function fieldsWithValuesAndOverrides(
+  values: EntryParameters['values'],
+  fieldOverrides: StructureContract['fields'],
+): StructureContract['fields'] {
+  const fields: StructureContract['fields'] = {}
+  for (const name of Object.keys(values ?? {})) {
+    fields[name] = {}
+  }
+  for (const [name, override] of Object.entries(fieldOverrides)) {
+    fields[name] = override
+  }
+  return fields
 }
