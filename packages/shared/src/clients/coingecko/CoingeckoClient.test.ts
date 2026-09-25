@@ -118,6 +118,22 @@ describe(CoingeckoClient.name, () => {
       ])
     })
 
+    it('accepts null symbol and name without platforms', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async (): Promise<json> => [
+          { id: 'asd', symbol: 'ASD', name: null },
+          { id: 'foobar', symbol: null, name: 'Foobar coin' },
+        ],
+      })
+      const coingeckoClient = getMockClient(http, logger)
+
+      const result = await coingeckoClient.getCoinList()
+      expect(result).toEqual([
+        { id: CoingeckoId('asd'), symbol: 'ASD', name: null },
+        { id: CoingeckoId('foobar'), symbol: null, name: 'Foobar coin' },
+      ])
+    })
+
     it('fetches coins with platforms', async () => {
       const http = mockObject<HttpClient>({
         fetch: async (): Promise<json> => [

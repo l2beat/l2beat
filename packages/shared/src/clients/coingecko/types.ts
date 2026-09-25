@@ -4,8 +4,9 @@ import { v } from '@l2beat/validate'
 export type CoinListEntry = v.infer<typeof CoinListEntry>
 export const CoinListEntry = v.object({
   id: v.string().transform((x) => (x ? CoingeckoId(x) : undefined)),
-  symbol: v.string(),
-  name: v.string(),
+  // CoinGecko occasionally returns null metadata for a coin
+  symbol: v.union([v.string(), v.null()]),
+  name: v.union([v.string(), v.null()]),
 })
 
 export type CoinListPlatformEntry = v.infer<typeof CoinListPlatformEntry>
