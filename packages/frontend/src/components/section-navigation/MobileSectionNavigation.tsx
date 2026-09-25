@@ -16,12 +16,12 @@ export function MobileSectionNavigation({ sections }: Props) {
   const selectedItem = useRef(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
 
-  const visibleIds = useVisibleSections()
+  // Hidden from lg up, but scrolling a hidden list still forces a layout.
+  const { isDesktop } = useDevice()
+  const visibleIds = useVisibleSections({ enabled: !isDesktop })
   const firstSelectedIndex = sections.findIndex((section) =>
     isSectionSelected(section, visibleIds),
   )
-  // Hidden from lg up, but scrolling a hidden list still forces a layout.
-  const { isDesktop } = useDevice()
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
