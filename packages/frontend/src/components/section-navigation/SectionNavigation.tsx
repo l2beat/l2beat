@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
+import { useDevice } from '~/hooks/useDevice'
 import { useVisibleSections } from '~/hooks/useVisibleSections'
 import { SummaryIcon } from '~/icons/Summary'
 import { cn } from '~/utils/cn'
@@ -24,7 +25,10 @@ export function SectionNavigation({
   const indexOffset = sections.some((section) => section.id === 'summary')
     ? -1
     : 0
-  const visibleIds = useVisibleSections()
+  // Mounted inside a `hidden lg:block` wrapper, so below lg only the mobile
+  // navigation should measure sections.
+  const { isDesktop } = useDevice()
+  const visibleIds = useVisibleSections({ enabled: isDesktop })
   const firstSelectedIndex = sections.findIndex((item) =>
     isSectionSelected(item, visibleIds),
   )
