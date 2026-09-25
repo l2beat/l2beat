@@ -1447,7 +1447,7 @@
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
   "usedBlockNumbers": { "ethereum": 25723564 },
-  "permissionsConfigHash": "0xdcd651e18011c5bd7576ccc2d5d06239553392442135c821c071b04b2219d404",
+  "permissionsConfigHash": "0x5ef2694fdbe635a9ef3bf2d3f8c7185865f4a33b82755eadf010c26d9b243295",
   "permissions": {
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
       "receivedPermissions": [

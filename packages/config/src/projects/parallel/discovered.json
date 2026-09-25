@@ -1719,7 +1719,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 22425701 },
-  "permissionsConfigHash": "0xe94d1ee648b877bdf85439ccd7188c466aaaaf0b9de74039b0ccab713c21f2ce",
+  "permissionsConfigHash": "0xede18529544bd421fa3e9f8bd230a884d5ae20091716d7def3219ef2e8e54109",
   "permissions": {
     "eth:0x19293FBec52F94165f903708a74513Dd6dFedd0a": {
       "receivedPermissions": [

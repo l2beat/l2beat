@@ -849,9 +849,9 @@
     "base": 45859867,
     "ethereum": 25072407
   },
-  "permissionsConfigHash": "0x59d59015fc424acdd8e2c69a17d01baeaa014c7cd448cf6092559acab9f69a7a",
+  "permissionsConfigHash": "0xdafdca90e9bef760e86bd14ded42fb4e17c936acc5c9398a444b31a862b38769",
   "modelledAgainst": {
-    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D": {

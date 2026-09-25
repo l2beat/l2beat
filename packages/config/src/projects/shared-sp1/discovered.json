@@ -1170,7 +1170,7 @@
     "base": 48445037,
     "ethereum": 25501601
   },
-  "permissionsConfigHash": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf",
+  "permissionsConfigHash": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66",
   "permissions": {
     "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
       "receivedPermissions": [

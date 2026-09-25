@@ -3716,7 +3716,7 @@
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25802896 },
-  "permissionsConfigHash": "0x4db92807b2b6f94ebe1e466b5c4f19cb64e9c7c74b5dd88a5eb8591e8838fcf5",
+  "permissionsConfigHash": "0xa9362150c006f3c0efd6c4edc373d92da1a5b6a8b47e91b6db4d61bbda9ae2a6",
   "permissions": {
     "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
       "receivedPermissions": [

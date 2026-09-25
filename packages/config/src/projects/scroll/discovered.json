@@ -7126,7 +7126,7 @@
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
   "usedBlockNumbers": { "ethereum": 26003498, "scroll": 35080001 },
-  "permissionsConfigHash": "0x5a6d08774072d93a063f5f62cd6a7193172fb326a9b6b628db8b611e35698085",
+  "permissionsConfigHash": "0x5cb120dd6c86255ccab6b6ea7d9e3492c5c9fb6b3b9ace82c0c98e98b61f7e6a",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
       "directlyReceivedPermissions": [

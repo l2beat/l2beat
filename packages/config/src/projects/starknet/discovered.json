@@ -4578,9 +4578,9 @@
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
   "usedBlockNumbers": { "ethereum": 25745123 },
-  "permissionsConfigHash": "0x97f05ed3b652f108c81e91f5dcdf571ebeff5b0c486d16872d3438b2da6e1cc4",
+  "permissionsConfigHash": "0xb32a78c07a4ccaff28b5eb36037c6c83bef003faf5255f179de5b056b758fcd3",
   "modelledAgainst": {
-    "shared-sharp-verifier": "0xa1a04ae19c64d03027c4f5a9253d6ca3886c658197f11a31647eea07b38cb867"
+    "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },
   "permissions": {
     "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": {

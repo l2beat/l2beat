@@ -1998,9 +1998,9 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25631963 },
-  "permissionsConfigHash": "0x537951d353442e951dd8158aae6cf714378b52cbd1b905bb492ccfbca6d2c459",
+  "permissionsConfigHash": "0x3366d4263bbf0ca117a12c43075dd6ea5b35a1bca224021f19ee84b1ec9cad59",
   "modelledAgainst": {
-    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "eth:0x03B85FAa108C10F6EFfec1d91954DE99dA32FB46": {

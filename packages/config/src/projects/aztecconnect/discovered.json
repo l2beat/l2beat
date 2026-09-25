@@ -503,7 +503,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 21041827 },
-  "permissionsConfigHash": "0xe56383d3ebaec772502e7e5ec9f15bc94dc29a3dd70d6873b96d77c7680aacd2",
+  "permissionsConfigHash": "0x362c1c245d1a27c39462e6fb2d89b517906b21f2b41ac9b677acc9f951ca6bce",
   "permissions": {
     "eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B": {
       "receivedPermissions": [
