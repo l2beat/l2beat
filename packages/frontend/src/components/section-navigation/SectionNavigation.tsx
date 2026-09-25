@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react'
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { useCurrentSection } from '~/hooks/useCurrentSection'
+import { useDevice } from '~/hooks/useDevice'
+import { useVisibleSections } from '~/hooks/useVisibleSections'
 import { SummaryIcon } from '~/icons/Summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
@@ -24,7 +25,13 @@ export function SectionNavigation({
   const indexOffset = sections.some((section) => section.id === 'summary')
     ? -1
     : 0
-  const currentSection = useCurrentSection()
+  // Mounted inside a `hidden lg:block` wrapper, so below lg only the mobile
+  // navigation should measure sections.
+  const { isDesktop } = useDevice()
+  const visibleIds = useVisibleSections({ enabled: isDesktop })
+  const firstSelectedIndex = sections.findIndex((item) =>
+    isSectionSelected(item, visibleIds),
+  )
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
 
@@ -33,38 +40,35 @@ export function SectionNavigation({
       scrollVerticallyToItem({
         item,
         overflowingContainer,
-        behavior: 'smooth',
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       }),
     [],
   )
 
   useEffect(() => {
-    if (currentSection && currentMenuEntry.current && menuContainer.current) {
+    if (firstSelectedIndex === -1) return
+    if (currentMenuEntry.current && menuContainer.current) {
       scrollToItem(currentMenuEntry.current, menuContainer.current)
     }
-  }, [scrollToItem, currentSection])
+  }, [scrollToItem, firstSelectedIndex])
 
   return (
     <ScrollWithGradient
       className={cn(
-        'absolute top-0 flex w-full flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-full flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-200 ease-in-out motion-reduce:transition-none',
         className,
       )}
       style={style}
       ref={menuContainer}
     >
       {sections.map((item, i) => {
-        const selected =
-          currentSection?.id === item.id ||
-          !!item.subsections?.some(
-            (subsection) => subsection.id === currentSection?.id,
-          )
+        const selected = isSectionSelected(item, visibleIds)
 
         return (
           <Fragment key={i}>
             <a
               href={`#${item.id}`}
-              ref={selected ? currentMenuEntry : null}
+              ref={i === firstSelectedIndex ? currentMenuEntry : null}
               className="group flex flex-row gap-1.5"
               data-selected={selected}
             >
@@ -75,7 +79,7 @@ export function SectionNavigation({
               )}
               <span
                 className={cn(
-                  'mt-[3px] text-label-value-14 hover:text-primary',
+                  'mt-[3px] text-label-value-14 transition-colors duration-150 hover:text-primary motion-reduce:transition-none',
                   selected ? 'text-primary' : 'text-secondary',
                 )}
               >
@@ -88,7 +92,7 @@ export function SectionNavigation({
                   <NavigationSubsectionEntry
                     key={i}
                     {...subsection}
-                    selected={subsection.id === currentSection?.id}
+                    selected={visibleIds.includes(subsection.id)}
                   />
                 ))}
               </div>
@@ -100,16 +104,34 @@ export function SectionNavigation({
   )
 }
 
+export function isSectionSelected(
+  item: SectionNavigationItem,
+  visibleIds: string[],
+) {
+  return (
+    visibleIds.includes(item.id) ||
+    !!item.subsections?.some((subsection) => visibleIds.includes(subsection.id))
+  )
+}
+
 function NavigationListIndex(props: { index: number }) {
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded-lg text-center text-label-value-12',
-        'bg-surface-tertiary text-secondary group-hover:text-primary',
-        'group-data-[selected=true]:group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[selected=true]:group-data-[has-colors=true]/section-wrapper:bg-branding-primary group-data-[selected=true]:bg-linear-to-r group-data-[selected=true]:from-purple-100 group-data-[selected=true]:to-pink-100 group-data-[selected=true]:text-white',
+        'relative flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg text-center text-label-value-12',
+        'bg-surface-tertiary text-secondary transition-colors duration-150 group-hover:text-primary motion-reduce:transition-none',
+        'group-data-[selected=true]:text-white',
       )}
     >
-      <span>{props.index}</span>
+      <div
+        aria-hidden
+        className={cn(
+          'absolute inset-0 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
+          'bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+          'group-data-[selected=true]:opacity-100',
+        )}
+      />
+      <span className="relative">{props.index}</span>
     </div>
   )
 }
@@ -128,15 +150,19 @@ function NavigationSubsectionEntry(props: {
       <div className="flex flex-row gap-3">
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
-          {props.selected && (
-            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary" />
-          )}
+          <div
+            className={cn(
+              'absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary',
+              'transition-[opacity,transform] duration-150 ease-out motion-reduce:transition-none',
+              props.selected ? 'opacity-100' : 'scale-y-75 opacity-0',
+            )}
+          />
           <div className="h-full border-divider border-l" />
         </div>
         {/* Right side */}
         <div
           className={cn(
-            'flex-1 pt-0.5 pb-2 transition-opacity hover:opacity-100 group-last:pb-0.5',
+            'flex-1 pt-0.5 pb-2 transition-opacity duration-150 hover:opacity-100 group-last:pb-0.5 motion-reduce:transition-none',
             !props.selected && 'opacity-60',
           )}
         >
@@ -145,4 +171,8 @@ function NavigationSubsectionEntry(props: {
       </div>
     </a>
   )
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
