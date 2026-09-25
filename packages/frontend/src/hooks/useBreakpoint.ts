@@ -39,6 +39,8 @@ function subscribe(onChange: () => void) {
     subscribers.delete(onChange)
     if (subscribers.size === 0) {
       window.removeEventListener('resize', onWindowResize)
+      // Nobody hears resizes now, so the next consumer must measure afresh.
+      current = undefined
     }
   }
 }

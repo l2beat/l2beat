@@ -94,9 +94,10 @@ for (const path of Object.keys(ceilings)) {
   })
 }
 
+// Merged into the file, so a filtered or interrupted run cannot drop a page.
 test.afterAll(() => {
   if (!process.env.UPDATE_CEILINGS) return
-  const next: Ceilings = {}
+  const next: Ceilings = { ...ceilings }
   for (const [path, result] of Object.entries(measured)) {
     next[path] = {
       layouts: MARGIN.layouts(result.layouts),
