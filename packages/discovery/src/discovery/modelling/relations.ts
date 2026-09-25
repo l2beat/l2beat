@@ -133,7 +133,9 @@ export function buildPermissionsModel(
           valuesWithPermission,
           addressToNameMap,
         )
-        relationsModel.push(interpolated)
+        if (!relationsModel.includes(interpolated)) {
+          relationsModel.push(interpolated)
+        }
       }
     }
   }
