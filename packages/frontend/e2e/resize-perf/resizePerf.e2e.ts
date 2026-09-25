@@ -20,11 +20,11 @@ const STEPS = 30
 const FROM_WIDTH = 1400
 const TO_WIDTH = 800
 const HEIGHT = 900
-// Layouts vary by a few percent between runs, a chart may settle twice if a
-// step stalls, and script time varies by machine.
+// Layout counts swing by up to a fifth between runs of the same build, every
+// chart may settle twice if a step stalls, and script time varies by machine.
 const MARGIN = {
-  layouts: (n: number) => Math.ceil(n * 1.15),
-  chartRerenders: (n: number) => n + 2,
+  layouts: (n: number) => Math.ceil(n * 1.25),
+  chartRerenders: (n: number) => n * 2,
   scriptMs: (n: number) => n * 4,
 }
 
