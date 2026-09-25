@@ -1,5 +1,10 @@
 import { expect } from 'earl'
-import { createElement, Fragment, type ReactNode } from 'react'
+import {
+  createElement,
+  type FunctionComponent,
+  type Provider,
+  type ReactNode,
+} from 'react'
 import { renderToString } from 'react-dom/server'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { Markdown } from '~/components/markdown/Markdown'
@@ -12,17 +17,19 @@ import { Subsection, SubsectionHeading } from './Subsection'
 describe(Subsection.name, () => {
   it('nests its heading, markdown and inner subsections below the parent', () => {
     const html = renderToString(
-      createElement(GlossaryContextProvider, {
-        terms: [],
-        children: createElement(ParentHeadingLevelProvider, {
-          value: 2,
-          children: subsection(
+      withChildren(
+        GlossaryContextProvider,
+        { terms: [] },
+        withChildren(
+          ParentHeadingLevelProvider,
+          { value: 2 },
+          subsection(
             'Sequencer',
             createElement(Markdown, null, '### Details'),
             subsection('Censorship resistance'),
           ),
-        }),
-      }),
+        ),
+      ),
     )
 
     expect(html).toInclude('<h3>Sequencer</h3>')
@@ -38,8 +45,19 @@ describe(Subsection.name, () => {
 })
 
 function subsection(title: string, ...children: ReactNode[]) {
-  return createElement(Subsection, {
-    title: createElement(SubsectionHeading, null, title),
-    children: createElement(Fragment, null, ...children),
-  })
+  return withChildren(
+    Subsection,
+    { title: createElement(SubsectionHeading, null, title) },
+    ...children,
+  )
+}
+
+// createElement's types want `children` in props, while lint wants them passed
+// as arguments; this satisfies both for components that require children.
+function withChildren<P extends { children?: ReactNode }>(
+  type: FunctionComponent<P> | Provider<unknown>,
+  props: Omit<P, 'children'>,
+  ...children: ReactNode[]
+) {
+  return createElement(type as FunctionComponent<P>, props as P, ...children)
 }
