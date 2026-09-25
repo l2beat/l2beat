@@ -82,7 +82,6 @@ interface Template {
 export class TemplateService {
   private loadedTemplates: Record<string, unknown> = {}
   private shapeHashes: Record<string, Shape> | undefined
-  private allTemplateHashes: Record<string, Hash256> | undefined
   private hashIndex:
     | Map<string, { templateId: string; criteria?: ShapeCriteria }[]>
     | undefined
@@ -258,19 +257,6 @@ export class TemplateService {
     return result
   }
 
-  getAllTemplateHashes(): Record<string, Hash256> {
-    if (this.allTemplateHashes !== undefined) {
-      return this.allTemplateHashes
-    }
-    const result: Record<string, Hash256> = {}
-    const allTemplates = this.listAllTemplates()
-    for (const templateId of Object.keys(allTemplates)) {
-      result[templateId] = this.getTemplateHash(templateId)
-    }
-    this.allTemplateHashes = result
-    return result
-  }
-
   formatReason(reason: RefreshReason): string {
     switch (reason.type) {
       case 'TEMPLATE_NO_LONGER_MATCHES':
@@ -295,7 +281,6 @@ export class TemplateService {
     config: ConfigRegistry,
   ): RefreshReason[] {
     const reasons: RefreshReason[] = []
-    const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 
     for (const contract of discovery.entries) {
@@ -363,7 +348,10 @@ export class TemplateService {
     for (const [templateId, templateHash] of Object.entries(
       discovery.usedTemplates,
     )) {
-      if (templateHash !== allTemplateHashes[templateId]) {
+      if (
+        !this.exists(templateId) ||
+        templateHash !== this.getTemplateHash(templateId)
+      ) {
         outdatedTemplates.push(templateId)
       }
     }
@@ -457,7 +445,6 @@ export class TemplateService {
 
   reload() {
     this.shapeHashes = undefined
-    this.allTemplateHashes = undefined
     this.loadedTemplates = {}
     this.hashIndex = undefined
   }
