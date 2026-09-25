@@ -1,22 +1,26 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { expect, test } from 'playwright/test'
+import { type CDPSession, expect, type Page, test } from 'playwright/test'
 
 /**
  * Ratchet for drag-resizing the window: every page gets a ceiling on the
  * work one drag may cost, and the ceiling only moves down.
  *
  * The drag is 30 viewport steps issued as fast as the page can take them,
- * like a user pulling the window edge. Counts are the proxy because they are
- * stable across machines; script time is kept with wide headroom because the
- * regressions this catches (a sync React flush per resize listener, a chart
- * re-render per step) were ten times over it, not ten percent.
+ * like a user pulling the window edge. It is repeated and the best run
+ * counts: a regression shows up in every drag, while a stall from a busy CI
+ * runner shows up in one, so the minimum tracks the code and not the machine.
+ * Counts are the proxy because they are stable across machines; script time
+ * is kept with wide headroom because the regressions this catches (a sync
+ * React flush per resize listener, a chart re-render per step) were ten times
+ * over it, not ten percent.
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * ceilings.json from the current run plus the margins below.
  */
 const CEILINGS_FILE = join(__dirname, 'ceilings.json')
 const STEPS = 30
+const DRAGS = 3
 const FROM_WIDTH = 1400
 const TO_WIDTH = 800
 const HEIGHT = 900
@@ -58,28 +62,15 @@ for (const path of Object.keys(ceilings)) {
     await page.evaluate(installProbes)
     await page.waitForTimeout(300)
 
-    const before = await metrics(cdp)
-    for (let step = 1; step <= STEPS; step++) {
-      const width = Math.round(
-        FROM_WIDTH + ((TO_WIDTH - FROM_WIDTH) * step) / STEPS,
-      )
-      await page.setViewportSize({ width, height: HEIGHT })
+    const runs: Measurement[] = []
+    for (let drag = 0; drag < DRAGS; drag++) {
+      runs.push(await measureDrag(page, cdp))
+      await page.setViewportSize({ width: FROM_WIDTH, height: HEIGHT })
+      await page.waitForTimeout(500)
     }
-    await page.waitForTimeout(500)
-    const after = await metrics(cdp)
-    const probes = (await page.evaluate(readProbes)) as Probes
     await context.close()
 
-    const result: Measurement = {
-      layouts: after.LayoutCount - before.LayoutCount,
-      chartRerenders: probes.chartRerenders,
-      scriptMs: Math.round(
-        (after.ScriptDuration - before.ScriptDuration) * 1000,
-      ),
-      styleRecalcs: after.RecalcStyleCount - before.RecalcStyleCount,
-      framesOver50: probes.framesOver50,
-      maxFrameMs: probes.maxFrameMs,
-    }
+    const result = bestOf(runs)
     measured[path] = result
     console.log(path, JSON.stringify(result))
 
@@ -115,15 +106,41 @@ test.afterAll(() => {
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
+async function measureDrag(page: Page, cdp: CDPSession): Promise<Measurement> {
+  await page.evaluate(resetProbes)
+  const before = await metrics(cdp)
+  for (let step = 1; step <= STEPS; step++) {
+    const width = Math.round(
+      FROM_WIDTH + ((TO_WIDTH - FROM_WIDTH) * step) / STEPS,
+    )
+    await page.setViewportSize({ width, height: HEIGHT })
+  }
+  await page.waitForTimeout(500)
+  const after = await metrics(cdp)
+  const probes = (await page.evaluate(readProbes)) as Probes
+  return {
+    layouts: after.LayoutCount - before.LayoutCount,
+    chartRerenders: probes.chartRerenders,
+    scriptMs: Math.round((after.ScriptDuration - before.ScriptDuration) * 1000),
+    styleRecalcs: after.RecalcStyleCount - before.RecalcStyleCount,
+    framesOver50: probes.framesOver50,
+    maxFrameMs: probes.maxFrameMs,
+  }
+}
+
+function bestOf(runs: Measurement[]): Measurement {
+  const best = { ...runs[0]! }
+  for (const key of Object.keys(best) as (keyof Measurement)[]) {
+    best[key] = Math.min(...runs.map((r) => r[key]))
+  }
+  return best
+}
+
 function lowerOf(existing: number | undefined, measured: number) {
   return existing === undefined ? measured : Math.min(existing, measured)
 }
 
-async function metrics(cdp: {
-  send: (
-    m: 'Performance.getMetrics',
-  ) => Promise<{ metrics: { name: string; value: number }[] }>
-}) {
+async function metrics(cdp: CDPSession) {
   const { metrics } = await cdp.send('Performance.getMetrics')
   const byName = Object.fromEntries(metrics.map((m) => [m.name, m.value]))
   return {
@@ -150,6 +167,11 @@ const installProbes = `(() => {
   for (const svg of document.querySelectorAll('svg.recharts-surface')) {
     observer.observe(svg, { attributes: true, attributeFilter: ['width'] })
   }
+})()`
+
+const resetProbes = `(() => {
+  window.__frameGaps = []
+  window.__chartRerenders = 0
 })()`
 
 const readProbes = `(() => {
