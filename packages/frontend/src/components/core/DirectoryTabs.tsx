@@ -1,13 +1,20 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import type * as React from 'react'
+import { createContext, useContext } from 'react'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './OverflowWrapper'
 
+const SelectedDirectoryTabContext = createContext<string | undefined>(undefined)
+const IsDirectoryTabActiveContext = createContext(true)
+
 /**
  * This component is a wrapper around the Radix Tabs component that allows you
  * to store the selected tab in the URL search params.
+ *
+ * Every panel is mounted and inactive ones are hidden, so the server HTML
+ * carries the content of all tabs, not just the selected one.
  */
 const DirectoryTabs = ({
   ref,
@@ -23,18 +30,20 @@ const DirectoryTabs = ({
 
   const { track } = useTracking()
   return (
-    <TabsPrimitive.Root
-      ref={ref}
-      value={selectedTab}
-      onValueChange={(value) => {
-        onValueChange?.(value)
-        setSelectedTab(value)
-        track('directoryTabsChanged', {
-          value,
-        })
-      }}
-      {...props}
-    />
+    <SelectedDirectoryTabContext.Provider value={selectedTab}>
+      <TabsPrimitive.Root
+        ref={ref}
+        value={selectedTab}
+        onValueChange={(value) => {
+          onValueChange?.(value)
+          setSelectedTab(value)
+          track('directoryTabsChanged', {
+            value,
+          })
+        }}
+        {...props}
+      />
+    </SelectedDirectoryTabContext.Provider>
   )
 }
 DirectoryTabs.displayName = TabsPrimitive.Root.displayName
@@ -82,22 +91,47 @@ DirectoryTabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 const DirectoryTabsContent = ({
   ref,
   className,
+  value,
+  children,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      'primary-card rounded-xl rounded-tl-none bg-surface-primary px-4 pt-3 pb-4 max-md:rounded-none md:px-6 md:pb-6',
-      'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
-      className,
-    )}
-    {...props}
-  />
-)
+}: Omit<React.ComponentProps<typeof TabsPrimitive.Content>, 'forceMount'>) => {
+  const isActive = useContext(SelectedDirectoryTabContext) === value
+  return (
+    <TabsPrimitive.Content
+      ref={ref}
+      value={value}
+      forceMount
+      // Radix leaves force-mounted panels visible, so hide inactive ones here
+      hidden={!isActive}
+      className={cn(
+        'primary-card rounded-xl rounded-tl-none bg-surface-primary px-4 pt-3 pb-4 max-md:rounded-none md:px-6 md:pb-6',
+        'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+        className,
+      )}
+      {...props}
+    >
+      <IsDirectoryTabActiveContext.Provider value={isActive}>
+        {children}
+      </IsDirectoryTabActiveContext.Provider>
+    </TabsPrimitive.Content>
+  )
+}
 DirectoryTabsContent.displayName = TabsPrimitive.Content.displayName
+
+/**
+ * Mounts its children only while the enclosing panel is active. For panel
+ * parts that add nothing crawlable but cost work per mounted panel, like
+ * client-fetched charts.
+ */
+const DirectoryTabsActiveOnly = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => (useContext(IsDirectoryTabActiveContext) ? children : null)
 
 export {
   DirectoryTabs,
+  DirectoryTabsActiveOnly,
   DirectoryTabsList,
   DirectoryTabsTrigger,
   DirectoryTabsContent,

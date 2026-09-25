@@ -3,6 +3,7 @@ import { CountBadge } from '~/components/badge/CountBadge'
 import { L2CostsChart } from '~/components/chart/costs/L2CostsChart'
 import {
   DirectoryTabs,
+  DirectoryTabsActiveOnly,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
@@ -64,11 +65,13 @@ export function L2CostsTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
             <RollupsInfo />
-            <L2CostsChart
-              tab="rollups"
-              entries={entries.rollups}
-              milestones={props.milestones}
-            />
+            <DirectoryTabsActiveOnly>
+              <L2CostsChart
+                tab="rollups"
+                entries={entries.rollups}
+                milestones={props.milestones}
+              />
+            </DirectoryTabsActiveOnly>
             <HorizontalSeparator className="my-5" />
             <L2CostsTable entries={entries.rollups} />
           </DirectoryTabsContent>
@@ -79,11 +82,13 @@ export function L2CostsTabs(props: Props) {
             className="pt-4 sm:pt-3"
           >
             <ValidiumsAndOptimiumsInfo />
-            <L2CostsChart
-              tab="validiumsAndOptimiums"
-              entries={entries.validiumsAndOptimiums}
-              milestones={props.milestones}
-            />
+            <DirectoryTabsActiveOnly>
+              <L2CostsChart
+                tab="validiumsAndOptimiums"
+                entries={entries.validiumsAndOptimiums}
+                milestones={props.milestones}
+              />
+            </DirectoryTabsActiveOnly>
             <HorizontalSeparator className="my-5" />
             <L2CostsTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
@@ -91,11 +96,13 @@ export function L2CostsTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
             <OthersInfo />
-            <L2CostsChart
-              tab="others"
-              entries={entries.others}
-              milestones={props.milestones}
-            />
+            <DirectoryTabsActiveOnly>
+              <L2CostsChart
+                tab="others"
+                entries={entries.others}
+                milestones={props.milestones}
+              />
+            </DirectoryTabsActiveOnly>
             <HorizontalSeparator className="my-5" />
             <L2CostsTable entries={entries.others} />
           </DirectoryTabsContent>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
+  DirectoryTabsActiveOnly,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
@@ -85,10 +86,12 @@ export function L2TvsTabs(props: Props) {
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
               <RollupsInfo />
-              <L2TvsCharts
-                entries={entries.rollups}
-                milestones={props.milestones}
-              />
+              <DirectoryTabsActiveOnly>
+                <L2TvsCharts
+                  entries={entries.rollups}
+                  milestones={props.milestones}
+                />
+              </DirectoryTabsActiveOnly>
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
                 tab="rollups"
@@ -104,10 +107,12 @@ export function L2TvsTabs(props: Props) {
               className="pt-4 sm:pt-3"
             >
               <ValidiumsAndOptimiumsInfo />
-              <L2TvsCharts
-                entries={entries.validiumsAndOptimiums}
-                milestones={props.milestones}
-              />
+              <DirectoryTabsActiveOnly>
+                <L2TvsCharts
+                  entries={entries.validiumsAndOptimiums}
+                  milestones={props.milestones}
+                />
+              </DirectoryTabsActiveOnly>
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
                 tab="validiumsAndOptimiums"
@@ -120,10 +125,12 @@ export function L2TvsTabs(props: Props) {
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
               <OthersInfo />
-              <L2TvsCharts
-                entries={entries.others}
-                milestones={props.milestones}
-              />
+              <DirectoryTabsActiveOnly>
+                <L2TvsCharts
+                  entries={entries.others}
+                  milestones={props.milestones}
+                />
+              </DirectoryTabsActiveOnly>
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
                 tab="others"
