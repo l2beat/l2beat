@@ -9,7 +9,7 @@ import {
 import { ChainNameHeader } from '../contracts/ContractsSection'
 import { PermissionedEntityEntry } from '../PermissionedEntityEntry'
 import { ProjectSection } from '../ProjectSection'
-import { SubsectionHeading } from '../SubsectionHeading'
+import { Subsection, SubsectionHeading } from '../Subsection'
 import type { ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
@@ -53,49 +53,60 @@ export function PermissionsSection({
           )
           return (
             <div key={chain} className="mt-8">
-              <ChainNameHeader>{chain}</ChainNameHeader>
-              {permissions.roles.length > 0 && (
-                <div className="mt-3">
-                  <SubsectionHeading depth={2} className="text-heading-18">
-                    Roles:
-                  </SubsectionHeading>
-                  {unchangedRoles.map((permission) => (
-                    <ContractEntry
-                      key={technologyContractKey(permission)}
-                      contract={permission}
-                      className="my-4"
-                    />
-                  ))}
-                  {changedRoles.length > 0 && (
-                    <ContractsWithImpactfulChanges
-                      contracts={changedRoles}
-                      type="permissions"
-                    />
-                  )}
-                </div>
-              )}
-              {permissions.actors.length > 0 && (
-                <div className="mt-3">
-                  <SubsectionHeading depth={2} className="text-heading-18">
-                    Actors:
-                  </SubsectionHeading>
-                  {unchangedActors.map((permission) => (
-                    <ContractEntry
-                      key={technologyContractKey(permission)}
-                      contract={permission}
-                      className="my-4"
-                      expandableAddresses={permission.addresses.length > 1}
-                    />
-                  ))}
-                  {changedActors.length > 0 && (
-                    <ContractsWithImpactfulChanges
-                      contracts={changedActors}
-                      type="permissions"
-                      expandableAddresses
-                    />
-                  )}
-                </div>
-              )}
+              <Subsection title={<ChainNameHeader>{chain}</ChainNameHeader>}>
+                {permissions.roles.length > 0 && (
+                  <div className="mt-3">
+                    <Subsection
+                      title={
+                        <SubsectionHeading className="text-heading-18">
+                          Roles:
+                        </SubsectionHeading>
+                      }
+                    >
+                      {unchangedRoles.map((permission) => (
+                        <ContractEntry
+                          key={technologyContractKey(permission)}
+                          contract={permission}
+                          className="my-4"
+                        />
+                      ))}
+                      {changedRoles.length > 0 && (
+                        <ContractsWithImpactfulChanges
+                          contracts={changedRoles}
+                          type="permissions"
+                        />
+                      )}
+                    </Subsection>
+                  </div>
+                )}
+                {permissions.actors.length > 0 && (
+                  <div className="mt-3">
+                    <Subsection
+                      title={
+                        <SubsectionHeading className="text-heading-18">
+                          Actors:
+                        </SubsectionHeading>
+                      }
+                    >
+                      {unchangedActors.map((permission) => (
+                        <ContractEntry
+                          key={technologyContractKey(permission)}
+                          contract={permission}
+                          className="my-4"
+                          expandableAddresses={permission.addresses.length > 1}
+                        />
+                      ))}
+                      {changedActors.length > 0 && (
+                        <ContractsWithImpactfulChanges
+                          contracts={changedActors}
+                          type="permissions"
+                          expandableAddresses
+                        />
+                      )}
+                    </Subsection>
+                  </div>
+                )}
+              </Subsection>
             </div>
           )
         })}

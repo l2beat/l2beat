@@ -17,7 +17,7 @@ import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getT
 import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
-import { SubsectionHeading } from '../SubsectionHeading'
+import { SubsectionHeading } from '../Subsection'
 import type { ProjectSectionProps } from '../types'
 import { Last30DayAnomalies } from './Last30DayAnomalies'
 

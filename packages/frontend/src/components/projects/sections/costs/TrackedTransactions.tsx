@@ -20,7 +20,7 @@ import type {
   TrackedTransaction,
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import { SubsectionHeading } from '../SubsectionHeading'
+import { SubsectionHeading } from '../Subsection'
 
 const subtypeToTitle: Record<TrackedTxsConfigSubtype, string> = {
   batchSubmissions: 'Batch submissions',

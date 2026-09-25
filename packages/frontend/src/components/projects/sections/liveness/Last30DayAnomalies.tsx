@@ -11,7 +11,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
-import { SubsectionHeading } from '../SubsectionHeading'
+import { SubsectionHeading } from '../Subsection'
 
 const ANOMALIES_PER_PAGE = 5
 
