@@ -304,6 +304,7 @@ function buildState(nodes: Node[]): State {
       mouseY: 0,
     },
     positionsBeforeMove: {},
+    tool: 'select',
     loaded: true,
   })
 }

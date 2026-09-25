@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
+import { effectiveTool } from '../store/utils/tool'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
@@ -30,6 +31,8 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
   const registerViewportContainer = useStore(
     (state) => state.registerViewportContainer,
   )
+  const isPanning = useStore((state) => state.mouseMoveAction === 'pan')
+  const isHandCursor = useStore((state) => effectiveTool(state) === 'hand')
 
   const desktopControls = useDesktopControls({
     containerRef,
@@ -106,7 +109,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
       className={clsx(
         'relative h-full w-full overflow-hidden bg-coffee-800',
         'touch-none', // Prevent browser handling of touch events
-        desktopControls.isResizing && 'cursor-col-resize',
+        cursorClass(isPanning, isHandCursor, desktopControls.isResizing),
       )}
     >
       {renderer === 'dom' ? (
@@ -122,4 +125,15 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
       <MouseSelection />
     </div>
   )
+}
+
+function cursorClass(
+  isPanning: boolean,
+  isHandCursor: boolean,
+  isResizing: boolean,
+): string | undefined {
+  if (isPanning) return 'cursor-grabbing'
+  if (isHandCursor) return 'cursor-grab'
+  if (isResizing) return 'cursor-col-resize'
+  return undefined
 }

@@ -3,6 +3,7 @@ import { boxContains } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import { buildRenderGraph, headerAt } from '../utils/renderGraph'
 import { reverseIter } from '../utils/reverseIter'
+import { effectiveTool } from '../utils/tool'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function onDoubleClick(
@@ -10,6 +11,12 @@ export function onDoubleClick(
   event: MouseEvent,
   container: HTMLElement,
 ): Partial<State> {
+  // The hand tool only moves the view; opening and closing groups is a
+  // selection-tool interaction.
+  if (effectiveTool(state) === 'hand') {
+    return {}
+  }
+
   const { x, y } = toViewCoordinates(event, container, state.transform)
   const graph = buildRenderGraph(state.nodes)
 

@@ -1,4 +1,4 @@
-import type { Node, State } from '../State'
+import type { Node, State, Tool } from '../State'
 import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
 import type { AlignDirection, DistributeAxis } from './align'
 import type { ApplyLayoutMode } from './applyStoredLayout'
@@ -41,4 +41,5 @@ export interface Actions {
   registerViewportContainer: (container: HTMLElement | null) => void
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void
+  setTool: (tool: Tool) => void
 }
