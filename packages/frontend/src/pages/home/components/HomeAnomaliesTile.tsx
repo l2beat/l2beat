@@ -1,10 +1,12 @@
 import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
+import { useState } from 'react'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
 import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
 import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
+import { OngoingAnomaliesDialog } from './OngoingAnomaliesDialog'
 
 export function HomeAnomaliesTile({
   ongoingAnomalies,
@@ -14,21 +16,32 @@ export function HomeAnomaliesTile({
   className?: string
 }) {
   const { count, items } = ongoingAnomalies
+  const [dialogOpen, setDialogOpen] = useState(false)
   const isOngoing = count > 0
   const first = items[0]
 
   return (
     <HomeCard className={cn('overflow-hidden p-0 md:p-1', className)}>
-      <a
-        href="/layer2s/liveness"
-        className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-sm md:px-7 md:py-5"
+      <button
+        type="button"
+        onClick={() => setDialogOpen(true)}
+        disabled={!isOngoing}
+        className={cn(
+          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-sm md:px-7 md:py-5',
+          isOngoing ? 'hover:bg-surface-secondary/50' : 'cursor-default',
+        )}
       >
         <div className="lg:hidden">
           <LiveIndicator size="md" disabled={!isOngoing} />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate font-bold text-label-value-14 leading-tight transition-colors group-hover:text-link">
+          <span
+            className={cn(
+              'truncate font-bold text-label-value-14 leading-tight transition-colors',
+              isOngoing && 'group-hover:text-link',
+            )}
+          >
             <span className="lg:hidden">Ongoing major anomalies</span>
             <span className="max-lg:hidden">Ongoing anomalies</span>
           </span>
@@ -62,8 +75,17 @@ export function HomeAnomaliesTile({
         <span className="shrink-0 font-bold text-heading-20 tabular-nums leading-none">
           {formatInteger(count)}
         </span>
-        <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link" />
-      </a>
+        {isOngoing && (
+          <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link" />
+        )}
+      </button>
+      {isOngoing && dialogOpen && (
+        <OngoingAnomaliesDialog
+          ongoingAnomalies={ongoingAnomalies}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      )}
     </HomeCard>
   )
 }
