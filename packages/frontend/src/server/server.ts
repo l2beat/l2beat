@@ -7,7 +7,7 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
-import { CLIENT_ENV_KEYS, rawEnv } from '~/env'
+import { CLIENT_ENV_KEYS, env, rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
@@ -17,12 +17,15 @@ import {
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
+import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { loadPagePreloads } from './PagePreloads'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
+import { createLlmsTxtRouter } from './routers/LlmsTxtRouter'
+import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
@@ -51,14 +54,21 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
   const pagePreloads = loadPagePreloads(!options.dev)
 
+  // Before every router so llms.txt, sitemaps and markdown lists are compressed too
+  if (!options.dev) {
+    app.use(compression())
+  }
+
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
-  app.use('/', createRobotsRouter())
+  app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
+  app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
+  app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
-    app.use(compression())
     app.use(
       CLIENT_ASSETS_PATH,
       sirv(CLIENT_ASSETS_OUTPUT_DIR, { maxAge: 31536000, immutable: true }),

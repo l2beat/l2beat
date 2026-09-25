@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -9,6 +10,17 @@ import { shouldHaveNoBridgePage } from './features/data-availability/utils/shoul
 import { ps } from './projects'
 
 type PagePath = `/${string}`
+
+export interface Page {
+  path: PagePath
+  /**
+   * Only for pages with a real publication date. Project pages change for many
+   * reasons that leave no record (config edits, daily TVS and activity), so
+   * dating them by discovery updates would under-report and get the field
+   * ignored by crawlers.
+   */
+  lastModified?: UnixTime
+}
 
 export const STATIC_PAGE_PATHS = [
   ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
@@ -52,7 +64,7 @@ export const STATIC_PAGE_PATHS = [
   '/publications',
 ] as const satisfies PagePath[]
 
-export async function getPagePaths(): Promise<PagePath[]> {
+export async function getPages(): Promise<Page[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS]
   if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
     paths.push('/layer2s/compare')
@@ -63,11 +75,10 @@ export async function getPagePaths(): Promise<PagePath[]> {
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
-  paths.push(...(await getDynamicPagePaths()))
-  return paths
+  return [...paths.map((path) => ({ path })), ...(await getDynamicPages())]
 }
 
-async function getDynamicPagePaths(): Promise<PagePath[]> {
+async function getDynamicPages(): Promise<Page[]> {
   const [
     l2Projects,
     zkCatalogProjects,
@@ -92,52 +103,49 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
       : Promise.resolve([]),
   ])
 
-  const paths: PagePath[] = []
-
-  for (const project of l2Projects) {
-    paths.push(`/layer2s/projects/${project.slug}`)
-    if (project.tvsConfig) {
-      paths.push(`/layer2s/projects/${project.slug}/tvs-breakdown`)
-    }
-  }
-
-  for (const project of zkCatalogProjects) {
-    paths.push(`/zk-catalog/${project.slug}`)
-  }
-
-  for (const project of ecosystemProjects) {
-    paths.push(`/ecosystems/${project.slug}`)
-  }
-
-  for (const project of privacyProjects) {
-    paths.push(`/privacy/projects/${project.slug}`)
-  }
-
-  for (const project of defiProjects) {
-    paths.push(`/defi/projects/${project.slug}`)
-  }
+  const pages: Page[] = [
+    ...l2Projects.map(projectPage('/layer2s/projects')),
+    ...l2Projects
+      .filter((project) => project.tvsConfig)
+      .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
+    ...zkCatalogProjects.map(projectPage('/zk-catalog')),
+    ...ecosystemProjects.map(projectPage('/ecosystems')),
+    ...privacyProjects.map(projectPage('/privacy/projects')),
+    ...defiProjects.map(projectPage('/defi/projects')),
+  ]
 
   for (const layer of daLayers) {
     const layerBridges = daBridges.filter(
       (b) => b.daBridge.daLayer === layer.id,
     )
     for (const bridge of layerBridges) {
-      paths.push(`/data-availability/projects/${layer.slug}/${bridge.slug}`)
+      pages.push({
+        path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
+      })
     }
     if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
-      paths.push(`/data-availability/projects/${layer.slug}/no-bridge`)
+      pages.push({
+        path: `/data-availability/projects/${layer.slug}/no-bridge`,
+      })
     }
   }
 
-  const governancePublications = getCollection('governance-publications')
-  for (const entry of governancePublications) {
-    paths.push(`/publications/${entry.id}`)
+  const publications = [
+    ...getCollection('governance-publications'),
+    ...getCollection('monthly-updates'),
+  ]
+  for (const entry of publications) {
+    pages.push({
+      path: `/publications/${entry.id}`,
+      lastModified: UnixTime.fromDate(entry.data.publishedOn),
+    })
   }
 
-  const monthlyUpdates = getCollection('monthly-updates')
-  for (const entry of monthlyUpdates) {
-    paths.push(`/publications/${entry.id}`)
-  }
+  return pages
+}
 
-  return paths
+function projectPage(prefix: PagePath, suffix = '') {
+  return (project: { slug: string }): Page => ({
+    path: `${prefix}/${project.slug}${suffix}`,
+  })
 }
