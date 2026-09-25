@@ -75,7 +75,10 @@ export async function getPrivacyAnonymitySetChart(
         () => getPrivacyAnonymitySetSnapshot(project, series, currentDay),
       )
 
-  return selectPrivacyAnonymitySetChartRange(snapshot, params.range)
+  return selectPrivacyAnonymitySetChartRange(
+    orderAnonymitySetSeriesByCurrentSize(snapshot),
+    params.range,
+  )
 }
 
 async function getPrivacyAnonymitySetSnapshot(
@@ -132,6 +135,31 @@ async function getPrivacyAnonymitySetSnapshot(
     holdingDuration,
     syncingLabels,
     syncedUntil: holdingEndpoint,
+  }
+}
+
+/**
+ * Charts list series and assign colors in response order, so ranking by the
+ * latest (current) value puts the top line first in the legend and keeps
+ * colors the same across ranges and between the history and holding charts.
+ */
+export function orderAnonymitySetSeriesByCurrentSize(
+  snapshot: PrivacyAnonymitySetChartResponse,
+): PrivacyAnonymitySetChartResponse {
+  const [, ...currentSizes] = snapshot.history.at(-1) ?? [0]
+  const order = snapshot.series
+    .map((_, index) => index)
+    .toSorted((a, b) => (currentSizes[b] ?? 0) - (currentSizes[a] ?? 0))
+  const reorderValues = <T extends [number, ...number[]]>([
+    key,
+    ...values
+  ]: T) => [key, ...order.map((index) => values[index] ?? 0)] as T
+
+  return {
+    ...snapshot,
+    series: order.flatMap((index) => snapshot.series[index] ?? []),
+    history: snapshot.history.map(reorderValues),
+    holdingDuration: snapshot.holdingDuration.map(reorderValues),
   }
 }
 
