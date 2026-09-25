@@ -1,6 +1,5 @@
 import express from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { env } from '~/env'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import { ps } from '~/server/projects'
@@ -181,31 +180,20 @@ async function getZkSections(): Promise<MarkdownSection[]> {
 }
 
 async function getPrivacySections(): Promise<MarkdownSection[]> {
-  const [privacy, defi] = await Promise.all([
-    ps.getProjects({ where: ['privacyInfo'], optional: ['display'] }),
-    env.CLIENT_SIDE_DEFI_ENABLED
-      ? ps.getProjects({ where: ['defiInfo'], optional: ['display'] })
-      : Promise.resolve([]),
-  ])
-  const sections: MarkdownSection[] = [
+  const projects = await ps.getProjects({
+    where: ['privacyInfo'],
+    optional: ['display'],
+  })
+  return [
     {
       heading: 'Privacy protocols (/privacy/projects/{slug})',
-      links: privacy.map((p) => ({
+      links: projects.map((p) => ({
         name: p.name,
         path: `/privacy/projects/${p.slug}`,
         description: firstSentence(p.display?.description ?? ''),
       })),
     },
-    {
-      heading: 'DeFi protocols (/defi/projects/{slug})',
-      links: defi.map((p) => ({
-        name: p.name,
-        path: `/defi/projects/${p.slug}`,
-        description: firstSentence(p.display?.description ?? ''),
-      })),
-    },
   ]
-  return sections.filter((section) => section.links.length > 0)
 }
 
 function scalingLink(project: {
