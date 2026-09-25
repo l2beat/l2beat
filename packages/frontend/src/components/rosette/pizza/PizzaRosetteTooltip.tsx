@@ -1,4 +1,5 @@
 import { UnderReviewBadge } from '../../badge/UnderReviewBadge'
+import { TooltipVisualOnly } from '../../core/tooltip/Tooltip'
 import { RiskValue } from '../RiskValue'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
@@ -33,21 +34,23 @@ export function PizzaRosetteTooltip({
     <div className="flex flex-col">
       <span className="mb-2 text-heading-16">Risk analysis</span>
       <div className="flex items-center gap-6">
-        <div className="relative flex size-[200px] items-center justify-center">
-          <PizzaRosetteIcon
-            values={values}
-            className="scale-75"
-            isUnderReview={isUnderReview}
-            background="surface"
-            disableSectionLinking
-          />
-          <PizzaRosetteLabels
-            values={values}
-            containerSize={200}
-            textRadius={76}
-            size="small"
-          />
-        </div>
+        <TooltipVisualOnly>
+          <div className="relative flex size-[200px] items-center justify-center">
+            <PizzaRosetteIcon
+              values={values}
+              className="scale-75"
+              isUnderReview={isUnderReview}
+              background="surface"
+              disableSectionLinking
+            />
+            <PizzaRosetteLabels
+              values={values}
+              containerSize={200}
+              textRadius={76}
+              size="small"
+            />
+          </div>
+        </TooltipVisualOnly>
         <div className="flex flex-col gap-3">
           {values.map((value) => (
             <RiskValue key={value.name} {...value} />

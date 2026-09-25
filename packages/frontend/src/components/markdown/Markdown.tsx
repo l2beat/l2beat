@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it'
 import { useId } from 'react'
 import { cn } from '~/utils/cn'
 import {
+  type GlossaryRenderEnv,
   glossaryPlugin,
   linkGlossaryTerms,
 } from '~/utils/markdown/glossaryPlugin'
@@ -31,10 +32,18 @@ const markdown = MarkdownIt({
 
 export function Markdown(props: MarkdownProps) {
   const terms = useGlossaryContext()
-  const env: HeadingLevelEnv = { parentHeadingLevel: useParentHeadingLevel() }
+  const parentHeadingLevel = useParentHeadingLevel()
+  const glossaryDescriptionIdPrefix = useId()
   const Comp = props.inline ? 'span' : 'div'
-  const render = (text: string) =>
-    props.inline ? markdown.renderInline(text) : markdown.render(text, env)
+  const render = (text: string) => {
+    const env: GlossaryRenderEnv & HeadingLevelEnv = {
+      glossaryDescriptionIdPrefix,
+      parentHeadingLevel,
+    }
+    return props.inline
+      ? markdown.renderInline(text, env)
+      : markdown.render(text, env)
+  }
 
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.

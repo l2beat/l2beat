@@ -103,9 +103,34 @@ describe(glossaryPlugin.name, () => {
     expect(output).toInclude('data-link-role="glossary"')
   })
 
+  it('renders the description as a hidden description of the link', () => {
+    const input =
+      '[Blob](/glossary#blob?description=Blob%20%3Cb%3E%20description)'
+    const output = md.render(input, { glossaryDescriptionIdPrefix: 'md1' })
+    expect(output).toInclude('aria-describedby="md1-glossary-blob"')
+    expect(output).toInclude(
+      '</a><span id="md1-glossary-blob" class="sr-only">Blob &lt;b&gt; description</span>',
+    )
+  })
+
+  it('describes repeated terms with a single hidden description', () => {
+    const link = '[Blob](/glossary#blob?description=Blob%20description)'
+    const output = md.render(`${link} and ${link}`, {
+      glossaryDescriptionIdPrefix: 'md1',
+    })
+    expect(
+      countOccurrences(output, 'aria-describedby="md1-glossary-blob"'),
+    ).toEqual(2)
+    expect(countOccurrences(output, ' id="md1-glossary-blob"')).toEqual(1)
+  })
+
   it('should not add data-link-role to non-glossary links', () => {
     const input = '[Blob](https://example.com)'
     const output = md.render(input)
     expect(output).not.toInclude('data-link-role="glossary"')
   })
 })
+
+function countOccurrences(text: string, part: string) {
+  return text.split(part).length - 1
+}

@@ -50,6 +50,9 @@ export function GlossaryTooltipWrapper({
     glossaryLinks.forEach((link) => {
       const description = link.getAttribute('data-description')
       const href = link.getAttribute('href') ?? '#'
+      // Points at the hidden description the markdown already rendered on
+      // the server, so the replacement link stays described.
+      const describedBy = link.getAttribute('aria-describedby') ?? undefined
       if (!description) return
 
       const wrapper = document.createElement('span')
@@ -68,7 +71,11 @@ export function GlossaryTooltipWrapper({
         <TooltipProvider>
           <Tooltip delayDuration={150}>
             <TooltipTrigger asChild>
-              <a href={href} data-link-role="glossary">
+              <a
+                href={href}
+                data-link-role="glossary"
+                aria-describedby={describedBy}
+              >
                 {link.textContent}
               </a>
             </TooltipTrigger>
