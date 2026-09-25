@@ -20,6 +20,7 @@ import type {
   TrackedTransaction,
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
+import { SubsectionHeading } from '../SubsectionHeading'
 
 const subtypeToTitle: Record<TrackedTxsConfigSubtype, string> = {
   batchSubmissions: 'Batch submissions',
@@ -125,7 +126,9 @@ function TransactionGroup({
 }) {
   return (
     <div className="mb-6">
-      <h3 className="mb-3 font-medium text-base text-secondary">{title}</h3>
+      <SubsectionHeading className="mb-3 font-medium text-base text-secondary">
+        {title}
+      </SubsectionHeading>
       {transactions.map((transaction, index) => (
         <TransactionDetails
           key={index}
