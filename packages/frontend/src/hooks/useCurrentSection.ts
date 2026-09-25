@@ -6,7 +6,7 @@ const DEFAULT_THRESHOLD = '20%'
 
 type ThresholdValue = `${number}%` | `${number}px`
 
-interface Threshold {
+export interface Threshold {
   desktop?: ThresholdValue
   mobile?: ThresholdValue
 }
@@ -50,7 +50,7 @@ export function useCurrentSection(threshold?: Threshold) {
   return currentSection
 }
 
-function getViewportHeightOffset(
+export function getViewportHeightOffset(
   threshold: Threshold | undefined,
   isMobile: boolean,
 ) {
@@ -65,7 +65,7 @@ function getViewportHeightOffset(
   return Number(thresholdValue.slice(0, -2))
 }
 
-function isScrolledToBottom() {
+export function isScrolledToBottom() {
   const scrollHeight = document.documentElement.scrollHeight
   const scrollTop = document.documentElement.scrollTop
   const clientHeight = document.documentElement.clientHeight
@@ -73,7 +73,7 @@ function isScrolledToBottom() {
   return scrolledToBottom
 }
 
-function isScrolledToTop() {
+export function isScrolledToTop() {
   const scrollTop = document.documentElement.scrollTop
   return scrollTop === 0
 }

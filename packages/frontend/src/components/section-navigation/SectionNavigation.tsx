@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { useCurrentSection } from '~/hooks/useCurrentSection'
+import { useVisibleSections } from '~/hooks/useVisibleSections'
 import { SummaryIcon } from '~/icons/Summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
@@ -24,7 +24,10 @@ export function SectionNavigation({
   const indexOffset = sections.some((section) => section.id === 'summary')
     ? -1
     : 0
-  const currentSection = useCurrentSection()
+  const visibleIds = useVisibleSections()
+  const firstSelectedIndex = sections.findIndex((item) =>
+    isSectionSelected(item, visibleIds),
+  )
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
 
@@ -39,10 +42,11 @@ export function SectionNavigation({
   )
 
   useEffect(() => {
-    if (currentSection && currentMenuEntry.current && menuContainer.current) {
+    if (firstSelectedIndex === -1) return
+    if (currentMenuEntry.current && menuContainer.current) {
       scrollToItem(currentMenuEntry.current, menuContainer.current)
     }
-  }, [scrollToItem, currentSection])
+  }, [scrollToItem, firstSelectedIndex])
 
   return (
     <ScrollWithGradient
@@ -54,17 +58,13 @@ export function SectionNavigation({
       ref={menuContainer}
     >
       {sections.map((item, i) => {
-        const selected =
-          currentSection?.id === item.id ||
-          !!item.subsections?.some(
-            (subsection) => subsection.id === currentSection?.id,
-          )
+        const selected = isSectionSelected(item, visibleIds)
 
         return (
           <Fragment key={i}>
             <a
               href={`#${item.id}`}
-              ref={selected ? currentMenuEntry : null}
+              ref={i === firstSelectedIndex ? currentMenuEntry : null}
               className="group flex flex-row gap-1.5"
               data-selected={selected}
             >
@@ -88,7 +88,7 @@ export function SectionNavigation({
                   <NavigationSubsectionEntry
                     key={i}
                     {...subsection}
-                    selected={subsection.id === currentSection?.id}
+                    selected={visibleIds.includes(subsection.id)}
                   />
                 ))}
               </div>
@@ -97,6 +97,16 @@ export function SectionNavigation({
         )
       })}
     </ScrollWithGradient>
+  )
+}
+
+export function isSectionSelected(
+  item: SectionNavigationItem,
+  visibleIds: string[],
+) {
+  return (
+    visibleIds.includes(item.id) ||
+    !!item.subsections?.some((subsection) => visibleIds.includes(subsection.id))
   )
 }
 
