@@ -104,9 +104,7 @@ function reportProject(pair: ProjectPair): ProjectReport {
     summary.push(`${field} (${changes.length})`)
     lines.push(`### ${field} (${plural(changes.length, 'change')})`, '')
     for (const change of changes) {
-      lines.push(
-        ...renderChange(field, change, pair.before[field], pair.after[field]),
-      )
+      lines.push(...renderChange(field, change, pair.before[field]))
     }
     lines.push('')
   }
@@ -210,7 +208,7 @@ function editedDiscoveryUpdateLines(
 ): string[] {
   const field = `discoveryUpdates[id=${after.id}]`
   return diff(before.raw, after.raw).flatMap((change) =>
-    renderChange(field, change, before.raw, after.raw),
+    renderChange(field, change, before.raw),
   )
 }
 
@@ -245,7 +243,6 @@ function renderChange(
   field: string,
   change: Difference,
   before: unknown,
-  after: unknown,
 ): string[] {
   const leaf = change.kind === 'create' ? change.rhs : change.lhs
   const path = field + renderPath(change.path, before, leaf)
