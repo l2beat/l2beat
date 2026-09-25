@@ -53,10 +53,18 @@ describe(createLlmsTxtRouter.name, () => {
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })
 
+  it('documents the markdown version of project pages', async () => {
+    const urls = getLinks(await getLlmsTxt(), 'Markdown pages').map(
+      (l) => l.url,
+    )
+
+    expect(urls).toEqual(['https://l2beat.com/layer2s/projects/{slug}.md'])
+  })
+
   it('describes every link in one line', async () => {
     const body = await getLlmsTxt()
 
-    for (const section of ['Sections', 'Public API']) {
+    for (const section of ['Sections', 'Markdown pages', 'Public API']) {
       for (const link of getLinks(body, section)) {
         expect(link.description).toMatchRegex(/^\S.+/)
       }

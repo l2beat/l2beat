@@ -15,6 +15,7 @@ export interface Metadata {
   openGraph: OpenGraph
   canonicalUrl: string
   excludeFromSearchEngines?: boolean
+  markdownAlternateUrl?: string
 }
 
 type PartialMetadata = {
@@ -28,13 +29,16 @@ type PartialMetadata = {
     dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
+  /** Set when the page is also served as markdown, so agents can find it. */
+  markdownAlternatePath?: string
 }
 
 export function getMetadata(
   manifest: Manifest,
   metadata: PartialMetadata,
 ): Metadata {
-  const { title, description, url, openGraph, ...rest } = metadata ?? {}
+  const { title, description, url, openGraph, markdownAlternatePath, ...rest } =
+    metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
   return {
@@ -46,6 +50,9 @@ export function getMetadata(
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
     // We want canonical to always point to the production URL
     canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
+    markdownAlternateUrl: markdownAlternatePath
+      ? baseUrl + markdownAlternatePath
+      : undefined,
     ...rest,
   }
 }

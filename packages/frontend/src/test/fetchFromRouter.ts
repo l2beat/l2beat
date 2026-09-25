@@ -5,6 +5,7 @@ import express from 'express'
 export async function fetchFromRouter(
   router: express.Router,
   path: string,
+  init?: RequestInit,
 ): Promise<Response> {
   const app = express()
   app.use('/', router)
@@ -14,7 +15,7 @@ export async function fetchFromRouter(
   const { port } = server.address() as AddressInfo
 
   try {
-    const response = await fetch(`http://localhost:${port}${path}`)
+    const response = await fetch(`http://localhost:${port}${path}`, init)
     // Buffered before the server closes, so callers can read it afterwards.
     const body = await response.arrayBuffer()
     return new Response(body, {
