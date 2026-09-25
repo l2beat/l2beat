@@ -34,6 +34,7 @@ import {
   getBasicTableColumnFillerClassName,
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
+  getTableElementClassName,
 } from './utils/classNames'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
@@ -126,20 +127,20 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         />
       )}
       <Table
+        stickyHeader={props.stickyHeader}
+        pinnedHeader={
+          props.stickyHeader && (
+            <BasicTablePinnedHeader
+              groupedHeader={groupedHeader}
+              actualHeader={actualHeader}
+              compact={props.compact}
+            />
+          )
+        }
         tableWrapperClassName={props.tableWrapperClassName}
         {...getPersistedTableAttributes(props.table)}
       >
         {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader sticky={props.stickyHeader}>
-          {groupedHeader && (
-            <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
-          )}
-          <BasicTableActualHeaderRow
-            actualHeader={actualHeader}
-            compact={props.compact}
-          />
-          <BasicTableHeaderDividerRow />
-        </TableHeader>
         <TableBody>
           {rows.map((row) => (
             <BasicTableRow row={row} key={row.id} {...props} />
@@ -157,15 +158,109 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
             })}
           {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
         </TableBody>
+        {/* After the body so the stuck header paints over positioned cell
+            content by tree order; CSS still lays a thead out at the top. */}
+        <TableHeader sticky={props.stickyHeader}>
+          {groupedHeader && (
+            <BasicTableGroupedHeaderRow
+              groupedHeader={groupedHeader}
+              part={props.stickyHeader ? 'scroller' : 'all'}
+            />
+          )}
+          <BasicTableActualHeaderRow
+            actualHeader={actualHeader}
+            compact={props.compact}
+            part={props.stickyHeader ? 'scroller' : 'all'}
+          />
+          <BasicTableHeaderDividerRow />
+        </TableHeader>
       </Table>
     </>
   )
 }
 
+/**
+ * Which cells a header row renders. A sticky header is split in two: the
+ * horizontal scroller keeps every cell for layout but shows only the unpinned
+ * ones, and a natively sticky overlay outside the scroller shows the pinned
+ * ones. Pinned cells cannot stay in the animated `thead`: a `position: sticky`
+ * descendant makes WebKit animate it on the main thread, where it trails touch
+ * scrolling.
+ */
+type BasicTableHeaderPart = 'all' | 'scroller' | 'overlay'
+
+function isPinnedLeft<T>(header: Header<T, unknown>) {
+  return header.column.getIsPinned() === 'left'
+}
+
+function getHeadersForPart<T>(
+  headers: Header<T, unknown>[],
+  part: BasicTableHeaderPart,
+) {
+  const rendered = getRenderedHeaders(headers)
+  return part === 'overlay' ? rendered.filter(isPinnedLeft) : rendered
+}
+
+/** Placeholder cells keep the scroller's layout but never show. */
+function getHeaderCellPresentation<T>(
+  header: Header<T, unknown>,
+  part: BasicTableHeaderPart,
+) {
+  const isPlaceholder = part === 'scroller' && isPinnedLeft(header)
+  return {
+    className: isPlaceholder ? 'invisible' : undefined,
+    style: isPlaceholder
+      ? { width: header.column.getSize() }
+      : getCommonPinningStyles(header.column),
+    'data-sticky-pinned-placeholder': isPlaceholder ? '' : undefined,
+    'data-sticky-pinned-clone': part === 'overlay' ? '' : undefined,
+  }
+}
+
+function BasicTablePinnedHeader<T>({
+  groupedHeader,
+  actualHeader,
+  compact,
+}: {
+  groupedHeader: HeaderGroup<T> | undefined
+  actualHeader: HeaderGroup<T>
+  compact: boolean | undefined
+}) {
+  if (!actualHeader.headers.some(isPinnedLeft)) {
+    return null
+  }
+  return (
+    <div className="sticky-table-pinned-header" data-sticky-pinned-header>
+      <table
+        className={getTableElementClassName()}
+        cellSpacing={0}
+        cellPadding={0}
+      >
+        <TableHeader>
+          {groupedHeader && (
+            <BasicTableGroupedHeaderRow
+              groupedHeader={groupedHeader}
+              part="overlay"
+            />
+          )}
+          <BasicTableActualHeaderRow
+            actualHeader={actualHeader}
+            compact={compact}
+            part="overlay"
+          />
+          <BasicTableHeaderDividerRow />
+        </TableHeader>
+      </table>
+    </div>
+  )
+}
+
 function BasicTableGroupedHeaderRow<T>({
   groupedHeader,
+  part,
 }: {
   groupedHeader: HeaderGroup<T>
+  part: BasicTableHeaderPart
 }) {
   const shouldRenderGroupedHeaderRow = groupedHeader.headers.some(
     (header) => !header.isPlaceholder && !!header.column.columnDef.header,
@@ -176,19 +271,23 @@ function BasicTableGroupedHeaderRow<T>({
 
   return (
     <TableHeaderRow>
-      {getRenderedHeaders(groupedHeader.headers).map(
+      {getHeadersForPart(groupedHeader.headers, part).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
+          const presentation = getHeaderCellPresentation(header, part)
           return (
             <React.Fragment key={header.id}>
               <th
                 colSpan={getRenderedColSpan(header)}
-                className={getBasicTableGroupedHeaderCellClassName({
-                  isPlaceholder: header.isPlaceholder,
-                  hasHeader: !!header.column.columnDef.header,
-                  isPinned: header.column.getIsPinned() !== false,
-                })}
-                style={getCommonPinningStyles(header.column)}
+                {...presentation}
+                className={cn(
+                  getBasicTableGroupedHeaderCellClassName({
+                    isPlaceholder: header.isPlaceholder,
+                    hasHeader: !!header.column.columnDef.header,
+                    isPinned: header.column.getIsPinned() !== false,
+                  }),
+                  presentation.className,
+                )}
               >
                 {!header.isPlaceholder &&
                   !!header.column.columnDef.header &&
@@ -211,29 +310,35 @@ function BasicTableGroupedHeaderRow<T>({
 function BasicTableActualHeaderRow<T>({
   actualHeader,
   compact,
+  part,
 }: {
   actualHeader: HeaderGroup<T>
   compact: boolean | undefined
+  part: BasicTableHeaderPart
 }) {
   return (
     <TableHeaderRow>
-      {getRenderedHeaders(actualHeader.headers).map(
+      {getHeadersForPart(actualHeader.headers, part).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
           const groupParams = getBasicTableGroupParams(header.column)
+          const presentation = getHeaderCellPresentation(header, part)
           return (
             <React.Fragment key={`${actualHeader.id}-${header.id}`}>
               <TableHead
                 colSpan={getRenderedColSpan(header)}
-                className={getBasicTableHeaderCellClassName({
-                  groupParams,
-                  isPinned: header.column.getIsPinned() !== false,
-                  headClassName: header.column.columnDef.meta?.headClassName,
-                  compact,
-                })}
+                {...presentation}
+                className={cn(
+                  getBasicTableHeaderCellClassName({
+                    groupParams,
+                    isPinned: header.column.getIsPinned() !== false,
+                    headClassName: header.column.columnDef.meta?.headClassName,
+                    compact,
+                  }),
+                  presentation.className,
+                )}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
-                style={getCommonPinningStyles(header.column)}
                 {...getPersistedColumnAttributes(header.column)}
               >
                 {header.isPlaceholder ? null : (
@@ -506,7 +611,7 @@ function BasicTableColumnFiller({
 }) {
   return (
     <Comp
-      className={getBasicTableColumnFillerClassName()}
+      className={getBasicTableColumnFillerClassName(Comp === 'th')}
       rowSpan={rowSpan}
       colSpan={colSpan}
     />

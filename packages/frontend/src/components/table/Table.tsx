@@ -16,18 +16,31 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  stickyHeader = false,
+  pinnedHeader,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  /** Pair with `sticky` on the table's `TableHeader`. */
+  stickyHeader?: boolean
+  /**
+   * The pinned header cells, rendered outside the horizontal scroller in a
+   * natively sticky overlay. See `useStickyTableHeader` for why.
+   */
+  pinnedHeader?: React.ReactNode
 }) => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  useStickyTableHeader(rootRef, stickyHeader)
   return (
-    <div className={getTableOuterWrapperClassName()}>
+    <div ref={rootRef} className={getTableOuterWrapperClassName(stickyHeader)}>
+      {pinnedHeader}
       <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
+            data-sticky-table={stickyHeader ? '' : undefined}
             {...props}
           />
         </HighlightedTableRowProvider>
@@ -42,25 +55,18 @@ const TableHeader = ({
   sticky = false,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement> & {
-  /** Keeps the header in view while the table scrolls under the viewport top. */
+  /** Pair with `stickyHeader` on the surrounding `Table`. */
   sticky?: boolean
-}) => {
-  const ref = useRef<HTMLTableSectionElement>(null)
-  useStickyTableHeader(ref, sticky)
-  return (
-    <thead
-      ref={ref}
-      className={cn(
-        'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
-        // A stuck header floats over body rows, so it must be opaque and
-        // above the pinned body cells (z-10).
-        sticky && 'relative z-20 bg-surface-primary',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
+}) => (
+  <thead
+    className={cn(
+      'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
+      sticky && 'sticky-table-header',
+      className,
+    )}
+    {...props}
+  />
+)
 TableHeader.displayName = 'TableHeader'
 
 const TableBody = ({

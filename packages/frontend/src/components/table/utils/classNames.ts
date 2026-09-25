@@ -10,8 +10,10 @@ export type BasicTableGroupParams = {
   isLastInGroup: boolean
 }
 
-export function getTableOuterWrapperClassName() {
-  return 'max-md:-mr-4'
+export function getTableOuterWrapperClassName(stickyHeader: boolean) {
+  // The header's scroll timeline lives outside the horizontal scroller so it
+  // tracks the page, not the scroller.
+  return cn('max-md:-mr-4', stickyHeader && 'sticky-table-header-root')
 }
 
 export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
@@ -32,9 +34,8 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
 }) {
   return cn(
     'font-medium text-primary tracking-[-0.13px]',
-    !params.isPlaceholder &&
-      params.hasHeader &&
-      'rounded-t-lg bg-header-secondary px-6 pt-4',
+    getHeaderCellBackground({ isGrouped: !params.isPlaceholder }),
+    !params.isPlaceholder && params.hasHeader && 'rounded-t-lg px-6 pt-4',
     params.isPinned && getRowClassNamesWithoutOpacity(null),
   )
 }
@@ -55,8 +56,8 @@ export function getBasicTableHeaderCellClassName(params: {
 }) {
   const { groupParams, isPinned, headClassName, compact } = params
   return cn(
+    getHeaderCellBackground({ isGrouped: !!groupParams }),
     groupParams && [
-      'bg-header-secondary',
       groupParams.isFirstInGroup && 'pl-6',
       groupParams.isLastInGroup && 'pr-6',
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
@@ -103,6 +104,17 @@ export function getBasicTableBodyCellClassName(params: {
   )
 }
 
-export function getBasicTableColumnFillerClassName() {
-  return 'h-full w-4 min-w-4'
+export function getBasicTableColumnFillerClassName(isHeader: boolean) {
+  return cn(
+    'h-full w-4 min-w-4',
+    isHeader && getHeaderCellBackground({ isGrouped: false }),
+  )
+}
+
+/*
+  A stuck header slides over body rows, so its cells must be opaque. They
+  repeat what the `ColGroup` paints beneath them: the group tint or the card.
+*/
+function getHeaderCellBackground(params: { isGrouped: boolean }) {
+  return params.isGrouped ? 'bg-header-secondary' : 'bg-surface-primary'
 }

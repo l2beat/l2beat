@@ -619,6 +619,61 @@
   scrollbar-gutter: stable;
 }
 
+/*
+  Sticky table header, driven by `useStickyTableHeader`. The thead is pushed
+  down by a scroll-driven animation that tracks the table's outer wrapper
+  against the page, so it moves on the compositor and never trails the scroll.
+  It must stay unpositioned: WebKit runs a scroll-driven animation on the main
+  thread (where it lags behind touch scrolling) when the animated element is
+  positioned inside an overflow scroller. Since it cannot carry a z-index, the
+  thead is rendered after the tbody, so the header paints over positioned body
+  content by tree order. Its pinned cells are only placeholders; see
+  `sticky-table-pinned-header`.
+  `--sticky-table-header-top` reserves room for sticky bars above the table;
+  `--sticky-table-header-travel` stops the header at the table's bottom.
+  Without timeline support the hook follows the scroll from JS and sets
+  `--sticky-table-header-shift` instead.
+*/
+@utility sticky-table-header-root {
+  view-timeline: --sticky-table-header block;
+  view-timeline-inset: var(--sticky-table-header-top, 0px) 0px;
+
+  @supports not (animation-timeline: view()) {
+    &[data-stuck] .sticky-table-header {
+      transform: translateY(var(--sticky-table-header-shift, 0px));
+    }
+  }
+}
+
+/*
+  The pinned header cells, natively sticky outside the scroller. Its height
+  matches the thead and the negative margin gives the space back, so it stops
+  at the table's bottom edge exactly where the animated thead does.
+*/
+@utility sticky-table-pinned-header {
+  position: sticky;
+  top: var(--sticky-table-header-top, 0px);
+  z-index: 20;
+  width: fit-content;
+  height: var(--sticky-table-header-height, 0px);
+  margin-bottom: calc(-1 * var(--sticky-table-header-height, 0px));
+}
+
+@utility sticky-table-header {
+  @supports (animation-timeline: view()) {
+    animation: sticky-table-header linear both;
+    animation-timeline: --sticky-table-header;
+    animation-range: exit-crossing 0% exit-crossing
+      var(--sticky-table-header-travel, 0px);
+  }
+}
+
+@keyframes sticky-table-header {
+  to {
+    transform: translateY(var(--sticky-table-header-travel, 0px));
+  }
+}
+
 @utility fade-out-to-left-* {
   --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
   --fade-size: --value([length]);
