@@ -10,7 +10,7 @@ describe(RelayApiClient.name, () => {
 
     expect(
       () =>
-        new RelayApiClient(httpClient, Logger.SILENT, 'api-key', {
+        new RelayApiClient(httpClient, Logger.SILENT, ['api-key'], {
           callsPerMinutePerKey: 0,
         }),
     ).toThrow('Relay callsPerMinutePerKey must be a positive integer')
@@ -19,30 +19,20 @@ describe(RelayApiClient.name, () => {
   it('rejects an empty API key list', () => {
     const httpClient = mockObject<HttpClient>({ fetchRaw: mockFn() })
 
-    expect(() => new RelayApiClient(httpClient, Logger.SILENT, ' , ')).toThrow(
-      'Relay API key must not be empty',
+    expect(() => new RelayApiClient(httpClient, Logger.SILENT, [])).toThrow(
+      'Relay API keys must not be empty',
     )
   })
 
   describe('per-key rate limit', () => {
     const cases = [
-      { apiKeys: 'first-key', expectedKeys: ['first-key'] },
-      {
-        apiKeys: 'first-key,second-key',
-        expectedKeys: ['first-key', 'second-key'],
-      },
-      {
-        apiKeys: 'first-key,second-key,third-key',
-        expectedKeys: ['first-key', 'second-key', 'third-key'],
-      },
-      {
-        apiKeys: ' first-key, second-key, first-key, , second-key ',
-        expectedKeys: ['first-key', 'second-key'],
-      },
+      ['first-key'],
+      ['first-key', 'second-key'],
+      ['first-key', 'second-key', 'third-key'],
     ]
 
-    for (const { apiKeys, expectedKeys } of cases) {
-      it(`limits all attempts per distinct key for "${apiKeys}"`, async () => {
+    for (const apiKeys of cases) {
+      it(`limits all attempts per key for ${apiKeys.length} key(s)`, async () => {
         const clock = FakeTimers.install({ now: 1_000_000 })
         const calls: { apiKey: string | null; time: number }[] = []
         const httpClient = mockObject<HttpClient>({
@@ -63,15 +53,14 @@ describe(RelayApiClient.name, () => {
         })
 
         try {
-          expect(client.apiKeyCount).toEqual(expectedKeys.length)
           const requests = Promise.all(
             Array.from({ length: 24 }, () => client.getRequests()),
           )
 
           await clock.tickAsync(59_999)
 
-          expect(calls.length).toEqual(6 * expectedKeys.length)
-          for (const apiKey of expectedKeys) {
+          expect(calls.length).toEqual(6 * apiKeys.length)
+          for (const apiKey of apiKeys) {
             const perKeyCalls = calls.filter((call) => call.apiKey === apiKey)
             expect(perKeyCalls.length).toEqual(6)
           }
@@ -80,12 +69,9 @@ describe(RelayApiClient.name, () => {
           await requests
 
           expect(calls.map((call) => call.apiKey)).toEqual(
-            Array.from(
-              { length: 25 },
-              (_, i) => expectedKeys[i % expectedKeys.length],
-            ),
+            Array.from({ length: 25 }, (_, i) => apiKeys[i % apiKeys.length]),
           )
-          for (const apiKey of expectedKeys) {
+          for (const apiKey of apiKeys) {
             const perKeyCalls = calls.filter((call) => call.apiKey === apiKey)
             for (let i = 1; i < perKeyCalls.length; i++) {
               expect(
@@ -271,11 +257,10 @@ describe(RelayApiClient.name, () => {
           .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
           .resolvesToOnce(ok(page([request('b')], undefined))),
       })
-      const client = createClient(
-        httpClient,
-        Logger.SILENT,
-        ' first-key, second-key ',
-      )
+      const client = createClient(httpClient, Logger.SILENT, [
+        'first-key',
+        'second-key',
+      ])
 
       const result = await client.getAllRequests({ limit: 500 })
 
@@ -326,7 +311,10 @@ describe(RelayApiClient.name, () => {
           .resolvesToOnce(httpError(429, 'Too Many Requests'))
           .resolvesToOnce(ok(page([request('b')], undefined))),
       })
-      const client = createClient(httpClient, logger, 'first-key,second-key')
+      const client = createClient(httpClient, logger, [
+        'first-key',
+        'second-key',
+      ])
 
       const result = await client.getAllRequests({ limit: 500 })
 
@@ -404,7 +392,7 @@ describe(RelayApiClient.name, () => {
 function createClient(
   httpClient: HttpClient,
   logger: Logger = Logger.SILENT,
-  apiKeys = 'api-key',
+  apiKeys = ['api-key'],
 ) {
   return new RelayApiClient(httpClient, logger, apiKeys, {
     callsPerMinutePerKey: 1_000_000_000,

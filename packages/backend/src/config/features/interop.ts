@@ -13,6 +13,40 @@ export type InteropAggregationConfig = InteropConfig & {
   id: string
 }
 
+export function parseRelayApiKeys(value: string): string[] {
+  const apiKeys = [
+    ...new Set(
+      value
+        .split(',')
+        .map((apiKey) => apiKey.trim())
+        .filter(Boolean),
+    ),
+  ]
+  if (apiKeys.length === 0) {
+    throw new Error('Relay API key must not be empty')
+  }
+  return apiKeys
+}
+
+function getRelayConfig(env: Env): InteropFeatureConfig['relay'] {
+  const apiKeys = parseRelayApiKeys(env.string('INTEROP_RELAY_API_KEY'))
+  return {
+    apiKeys,
+    batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
+    callsPerMinutePerKey: env.integer(
+      'INTEROP_RELAY_CALLS_PER_MINUTE_PER_KEY',
+      190,
+    ),
+    concurrency:
+      env.integer('INTEROP_RELAY_CONCURRENCY_PER_KEY', 3) * apiKeys.length,
+    maxRequestsPerChunk: env.integer(
+      'INTEROP_RELAY_MAX_REQUESTS_PER_CHUNK',
+      env.integer('INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE', 10_000),
+    ),
+    safeTimeOffset: env.integer('INTEROP_RELAY_SAFE_TIME_OFFSET', 10),
+  }
+}
+
 function parsePromotionMode(value: string): InteropPromotionConfig['mode'] {
   if (value === 'off' || value === 'shadow' || value === 'enforce') {
     return value
@@ -98,25 +132,7 @@ export async function getInteropFeatureConfig(
         12 * 60 * 60 * 1000, // 12 hours
       ),
     },
-    relay: flags.isEnabled('interop', 'relay')
-      ? {
-          apiKey: env.string('INTEROP_RELAY_API_KEY'),
-          batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
-          callsPerMinutePerKey: env.integer(
-            'INTEROP_RELAY_CALLS_PER_MINUTE_PER_KEY',
-            190,
-          ),
-          concurrencyPerKey: env.integer(
-            'INTEROP_RELAY_CONCURRENCY_PER_KEY',
-            3,
-          ),
-          maxRequestsPerChunk: env.integer(
-            'INTEROP_RELAY_MAX_REQUESTS_PER_CHUNK',
-            env.integer('INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE', 10_000),
-          ),
-          safeTimeOffset: env.integer('INTEROP_RELAY_SAFE_TIME_OFFSET', 10),
-        }
-      : false,
+    relay: flags.isEnabled('interop', 'relay') ? getRelayConfig(env) : false,
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     oneSidedChains: [
       ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>

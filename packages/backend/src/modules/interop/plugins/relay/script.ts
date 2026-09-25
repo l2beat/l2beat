@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
+import { parseRelayApiKeys } from '../../../../config/features/interop'
 import { RelayApiClient } from './RelayApiClient'
 
 main().catch((error) => {
@@ -13,7 +14,11 @@ async function main() {
   if (!apiKey) {
     throw new Error('INTEROP_RELAY_API_KEY is required')
   }
-  const client = new RelayApiClient(new HttpClient(), Logger.SILENT, apiKey)
+  const client = new RelayApiClient(
+    new HttpClient(),
+    Logger.SILENT,
+    parseRelayApiKeys(apiKey),
+  )
   const ps = new ProjectService()
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,

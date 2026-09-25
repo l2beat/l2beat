@@ -126,14 +126,13 @@ const DEFAULT_OPTIONS: RelayApiClientOptions = {
 
 export class RelayApiClient {
   private readonly options: RelayApiClientOptions
-  private readonly apiKeys: string[]
   private readonly rateLimiter: RateLimiter
   private nextApiKeyIndex = 0
 
   constructor(
     private readonly httpClient: HttpClient,
     private logger: Logger,
-    apiKeys: string,
+    private readonly apiKeys: string[],
     options: Partial<RelayApiClientOptions> = {},
   ) {
     this.logger = logger.for(this)
@@ -143,24 +142,10 @@ export class RelayApiClient {
         this.options.callsPerMinutePerKey > 0,
       'Relay callsPerMinutePerKey must be a positive integer',
     )
-
-    const distinctApiKeys = [
-      ...new Set(
-        apiKeys
-          .split(',')
-          .map((apiKey) => apiKey.trim())
-          .filter(Boolean),
-      ),
-    ]
-    assert(distinctApiKeys.length > 0, 'Relay API key must not be empty')
-    this.apiKeys = distinctApiKeys
+    assert(apiKeys.length > 0, 'Relay API keys must not be empty')
     this.rateLimiter = new RateLimiter({
-      callsPerMinute: this.options.callsPerMinutePerKey * this.apiKeyCount,
+      callsPerMinute: this.options.callsPerMinutePerKey * apiKeys.length,
     })
-  }
-
-  get apiKeyCount(): number {
-    return this.apiKeys.length
   }
 
   async getRequests(

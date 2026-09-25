@@ -221,7 +221,7 @@ export function createInteropModule({
     const relayApiClient = new RelayApiClient(
       new HttpClient(),
       logger,
-      config.interop.relay.apiKey,
+      config.interop.relay.apiKeys,
       { callsPerMinutePerKey: config.interop.relay.callsPerMinutePerKey },
     )
     const relayRootIndexer = new RelayRootIndexer(
@@ -232,11 +232,7 @@ export function createInteropModule({
       config.interop.config.chains,
       configStore,
       config.interop.capture.chains.map((c) => c.id),
-      {
-        ...config.interop.relay,
-        concurrency:
-          config.interop.relay.concurrencyPerKey * relayApiClient.apiKeyCount,
-      },
+      config.interop.relay,
       relayApiClient,
       db,
       eventStore,
