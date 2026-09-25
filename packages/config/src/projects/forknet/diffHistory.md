@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x43338e70083cb4cc099bede662fa6d0b0883470c
+
+# Diff at Fri, 25 Sep 2026 12:12:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1787644642
+- current timestamp: 1787644642
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787644642 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
 Generated with discovered.json: 0x671e124832545c8c1aeb6621896c3464e5edd505
 
 # Diff at Wed, 23 Sep 2026 05:46:26 GMT:

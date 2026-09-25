@@ -69,11 +69,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x033796B61cD66eD49d22a786cbA12a8D76717302",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "DAIBridge",
       "address": "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C",
       "type": "Contract",
@@ -4578,7 +4573,7 @@
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
   "usedBlockNumbers": { "ethereum": 25745123 },
-  "permissionsConfigHash": "0xb32a78c07a4ccaff28b5eb36037c6c83bef003faf5255f179de5b056b758fcd3",
+  "permissionsConfigHash": "0xbd4617919b9c006b3f802cfcbd2908e29978e3fcb8d8a70838dae3c1702cb4ff",
   "modelledAgainst": {
     "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },

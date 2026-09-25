@@ -1,5 +1,8 @@
-import { type UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
+import {
+  assert,
+  type UnixTime,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'
@@ -65,9 +68,11 @@ export function combineStructureAndColor(
   structure: StructureOutput,
   color: ColorOutput,
 ): DiscoveryOutput {
-  const result = merge({}, structure, color, { modelledAgainst: {} })
-  result.entries = result.entries.map((e) => sortEntry(e))
-  return result
+  assert(structure.entries.length === color.entries.length)
+  const entries = structure.entries.map((entry, i) =>
+    sortEntry({ ...entry, ...color.entries[i] }),
+  )
+  return { modelledAgainst: {}, ...structure, entries }
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
