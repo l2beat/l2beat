@@ -55,7 +55,7 @@ export function StageCell({
   }
 
   return (
-    <Tooltip hiddenDescription>
+    <Tooltip contentInHtml>
       <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={href}>{content}</TableLink>
       </TooltipTrigger>

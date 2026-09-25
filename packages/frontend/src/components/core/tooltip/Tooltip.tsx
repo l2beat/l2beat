@@ -14,7 +14,7 @@ const TooltipProvider = TooltipPrimitive.Provider
 
 const Tooltip = ({
   children,
-  hiddenDescription,
+  contentInHtml,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root> & {
   /**
@@ -25,18 +25,16 @@ const Tooltip = ({
    * elsewhere on the page. The copy renders where TooltipContent does, so it
    * does not work with TooltipPortal, which renders nothing while closed.
    */
-  hiddenDescription?: boolean
+  contentInHtml?: boolean
 }) => {
   const [open, setOpen] = useState(!!props.defaultOpen)
   const id = useId()
-  const hiddenDescriptionId = hiddenDescription
-    ? `${id}-description`
-    : undefined
+  const contentDescriptionId = contentInHtml ? `${id}-description` : undefined
 
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
       <TooltipTriggerContextProvider
-        value={{ open, setOpen, hiddenDescriptionId }}
+        value={{ open, setOpen, contentDescriptionId }}
       >
         {children}
       </TooltipTriggerContextProvider>
@@ -53,11 +51,11 @@ const TooltipTrigger = ({
 }) => {
   const localRef = useRef(null)
   const { isDesktop } = useDevice()
-  const { setOpen, hiddenDescriptionId } = useTooltipTriggerContext()
+  const { setOpen, contentDescriptionId } = useTooltipTriggerContext()
   // Omitted rather than undefined: an explicit undefined would override the
   // id Radix sets while the tooltip is open.
-  const describedBy = hiddenDescriptionId
-    ? { 'aria-describedby': hiddenDescriptionId }
+  const describedBy = contentDescriptionId
+    ? { 'aria-describedby': contentDescriptionId }
     : {}
 
   if (props.disabled) {
@@ -102,7 +100,7 @@ const tooltipContentVariants = cva(
   },
 )
 
-const InsideHiddenDescriptionContext = createContext(false)
+const InsideHtmlCopyContext = createContext(false)
 
 const TooltipContent = ({
   ref,
@@ -112,17 +110,17 @@ const TooltipContent = ({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content> &
   VariantProps<typeof tooltipContentVariants>) => {
-  const { hiddenDescriptionId } = useTooltipTriggerContext()
+  const { contentDescriptionId } = useTooltipTriggerContext()
 
   return (
     <>
-      {hiddenDescriptionId && (
+      {contentDescriptionId && (
         // A span, unlike a div, is not split by the HTML parser when the
         // tooltip sits in phrasing content, so hydration stays consistent.
-        <span id={hiddenDescriptionId} className="sr-only">
-          <InsideHiddenDescriptionContext value={true}>
+        <span id={contentDescriptionId} className="sr-only">
+          <InsideHtmlCopyContext value={true}>
             {props.children}
-          </InsideHiddenDescriptionContext>
+          </InsideHtmlCopyContext>
         </span>
       )}
       <TooltipPrimitive.Content
@@ -137,12 +135,12 @@ const TooltipContent = ({
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 /**
- * Shown in the tooltip popup but left out of its hidden description, for
+ * Shown in the tooltip popup but left out of its HTML copy, for
  * parts that mean nothing as text (diagrams, "click to view details").
  */
 const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
-  const isInsideHiddenDescription = useContext(InsideHiddenDescriptionContext)
-  return isInsideHiddenDescription ? null : children
+  const isInsideHtmlCopy = useContext(InsideHtmlCopyContext)
+  return isInsideHtmlCopy ? null : children
 }
 
 const TooltipPortal = TooltipPrimitive.Portal

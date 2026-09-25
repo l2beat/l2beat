@@ -81,7 +81,7 @@ export function TableValueCell({
 
   if (value.description) {
     return (
-      <Tooltip hiddenDescription>
+      <Tooltip contentInHtml>
         <TooltipTrigger disabledOnMobile className="h-[inherit] min-h-fit">
           {trigger}
         </TooltipTrigger>

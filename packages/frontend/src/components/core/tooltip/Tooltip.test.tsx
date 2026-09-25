@@ -37,9 +37,9 @@ describe(Tooltip.name, () => {
     expect(description.text).toEqual('Why this is Stage 1')
   })
 
-  it('renders the content as a hidden description of the trigger', () => {
+  it('keeps the content in the HTML as a description of the trigger', () => {
     const html = renderOnServer(
-      <Tooltip hiddenDescription>
+      <Tooltip contentInHtml>
         <TooltipTrigger>Stage 1</TooltipTrigger>
         <TooltipContent>Why this is Stage 1</TooltipContent>
       </Tooltip>,
@@ -50,9 +50,9 @@ describe(Tooltip.name, () => {
     expect(description.text).toEqual('Why this is Stage 1')
   })
 
-  it('leaves visual-only parts out of the hidden description', () => {
+  it('leaves visual-only parts out of the HTML copy', () => {
     const html = renderOnServer(
-      <Tooltip hiddenDescription>
+      <Tooltip contentInHtml>
         <TooltipTrigger>Stage 1</TooltipTrigger>
         <TooltipContent>
           Why this is Stage 1
