@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  orderAnonymitySetSeriesByCurrentSize,
   type PrivacyAnonymitySetChartResponse,
   selectPrivacyAnonymitySetChartRange,
   trimLeadingEmptyAnonymitySetHistory,
@@ -65,6 +66,61 @@ describe(selectPrivacyAnonymitySetChartRange.name, () => {
   })
 })
 
+describe(orderAnonymitySetSeriesByCurrentSize.name, () => {
+  // Methodology: every series carries a distinct value in each column, so
+  // checking series ids alongside both charts' columns proves the values moved
+  // together with their series.
+  it('orders series and their chart columns by the latest history value', () => {
+    const snapshot: PrivacyAnonymitySetChartResponse = {
+      ...makeSnapshot(),
+      series: [makeSeries('cdai'), makeSeries('eth-1'), makeSeries('eth-0.1')],
+      history: [
+        [DAY_1, 50, 10, 1],
+        [DAY_2, 5, 40, 90],
+      ],
+      holdingDuration: [[7, 6, 41, 91]],
+    }
+
+    const result = orderAnonymitySetSeriesByCurrentSize(snapshot)
+
+    expect(result).toEqual({
+      ...snapshot,
+      series: [makeSeries('eth-0.1'), makeSeries('eth-1'), makeSeries('cdai')],
+      history: [
+        [DAY_1, 1, 10, 50],
+        [DAY_2, 90, 40, 5],
+      ],
+      holdingDuration: [[7, 91, 41, 6]],
+    })
+  })
+
+  it('keeps the source order for series of equal size', () => {
+    const snapshot: PrivacyAnonymitySetChartResponse = {
+      ...makeSnapshot(),
+      series: [makeSeries('a'), makeSeries('b')],
+      history: [[DAY_1, 3, 3]],
+      holdingDuration: [[7, 1, 2]],
+    }
+
+    const result = orderAnonymitySetSeriesByCurrentSize(snapshot)
+
+    expect(result).toEqual(snapshot)
+  })
+
+  it('keeps the source order when there is no history', () => {
+    const snapshot: PrivacyAnonymitySetChartResponse = {
+      ...makeSnapshot(),
+      series: [makeSeries('a'), makeSeries('b')],
+      history: [],
+      holdingDuration: [],
+    }
+
+    const result = orderAnonymitySetSeriesByCurrentSize(snapshot)
+
+    expect(result).toEqual(snapshot)
+  })
+})
+
 describe(trimLeadingEmptyAnonymitySetHistory.name, () => {
   it('removes days before any series has activity', () => {
     const result = trimLeadingEmptyAnonymitySetHistory([
@@ -101,4 +157,10 @@ function makeSnapshot(): PrivacyAnonymitySetChartResponse {
     syncingLabels: [],
     syncedUntil: DAY_3,
   }
+}
+
+function makeSeries(
+  id: string,
+): PrivacyAnonymitySetChartResponse['series'][number] {
+  return { id, label: id, token: 'ETH', minimumAmount: '1' }
 }
