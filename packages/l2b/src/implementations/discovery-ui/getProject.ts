@@ -312,20 +312,15 @@ function contractFromDiscovery(
 }
 
 function abiEntry(entry: string): ApiAbiEntry {
-  if (entry.startsWith('constructor')) {
-    return { value: entry }
+  if (entry.startsWith('function')) {
+    const fragment = utils.FunctionFragment.from(entry.slice(9))
+    return { value: entry, signature: utils.Interface.getSighash(fragment) }
   }
-
-  const iface = new utils.Interface([entry])
-  return {
-    value: entry,
-    topic: entry.startsWith('event')
-      ? iface.getEventTopic(entry.slice(6))
-      : undefined,
-    signature: entry.startsWith('function')
-      ? iface.getSighash(entry.slice(9))
-      : undefined,
+  if (entry.startsWith('event')) {
+    const fragment = utils.EventFragment.from(entry.slice(6))
+    return { value: entry, topic: utils.Interface.getEventTopic(fragment) }
   }
+  return { value: entry }
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
