@@ -1,0 +1,22 @@
+{
+  "/": {
+    "layouts": 174,
+    "chartRerenders": 8,
+    "scriptMs": 108
+  },
+  "/scaling/summary": {
+    "layouts": 208,
+    "chartRerenders": 2,
+    "scriptMs": 368
+  },
+  "/scaling/projects/arbitrum": {
+    "layouts": 102,
+    "chartRerenders": 4,
+    "scriptMs": 288
+  },
+  "/scaling/projects/base": {
+    "layouts": 97,
+    "chartRerenders": 4,
+    "scriptMs": 288
+  }
+}
