@@ -82,9 +82,9 @@ function reportProject(pair: ProjectPair): ProjectReport {
   }
 
   const updates = discoveryUpdateLines(pair.before, pair.after)
-  if (updates.length > 0) {
-    summary.push(`${plural(updates.length, 'discovery update')}`)
-    lines.push('### discoveryUpdates', '', ...updates, '')
+  if (updates.entries > 0) {
+    summary.push(`${plural(updates.entries, 'discovery update')}`)
+    lines.push('### discoveryUpdates', '', ...updates.lines, '')
   }
 
   const fields = new Set([
@@ -171,27 +171,37 @@ interface DiscoveryUpdate {
   raw: Record<string, unknown>
 }
 
-function discoveryUpdateLines(before: Project, after: Project): string[] {
+function discoveryUpdateLines(
+  before: Project,
+  after: Project,
+): { entries: number; lines: string[] } {
   const entriesBefore = discoveryUpdates(before)
   const entriesAfter = discoveryUpdates(after)
   const byIdBefore = new Map(entriesBefore.map((e) => [e.id, e]))
   const byIdAfter = new Map(entriesAfter.map((e) => [e.id, e]))
 
+  let entries = 0
   const lines: string[] = []
   for (const entry of entriesAfter) {
     const previous = byIdBefore.get(entry.id)
     if (previous === undefined) {
+      entries += 1
       lines.push(discoveryUpdateLine('+', entry))
-    } else {
-      lines.push(...editedDiscoveryUpdateLines(previous, entry))
+      continue
+    }
+    const edited = editedDiscoveryUpdateLines(previous, entry)
+    if (edited.length > 0) {
+      entries += 1
+      lines.push(...edited)
     }
   }
   for (const entry of entriesBefore) {
     if (!byIdAfter.has(entry.id)) {
+      entries += 1
       lines.push(discoveryUpdateLine('-', entry))
     }
   }
-  return lines
+  return { entries, lines }
 }
 
 function editedDiscoveryUpdateLines(
@@ -237,8 +247,8 @@ function renderChange(
   before: unknown,
   after: unknown,
 ): string[] {
-  const root = change.kind === 'create' ? after : before
-  const path = field + renderPath(change.path, root)
+  const leaf = change.kind === 'create' ? change.rhs : change.lhs
+  const path = field + renderPath(change.path, before, leaf)
   if (change.kind === 'create') {
     return renderValueLine('+', path, change.rhs)
   }
@@ -267,13 +277,18 @@ function renderValueLine(prefix: string, path: string, value: unknown) {
 
 const ARRAY_KEYS = ['id', 'name', 'title', 'address', 'chain', 'slug']
 
-function renderPath(path: (string | number)[], root: unknown): string {
+function renderPath(
+  path: (string | number)[],
+  before: unknown,
+  leaf: unknown,
+): string {
   let rendered = ''
-  let cursor = root
-  for (const segment of path) {
+  let cursor = before
+  for (const [i, segment] of path.entries()) {
+    const isLeaf = i === path.length - 1
     if (typeof segment === 'number') {
       assertDefined(cursor)
-      const element = Reflect.get(cursor as object, segment)
+      const element = isLeaf ? leaf : Reflect.get(cursor as object, segment)
       rendered += `[${arrayKey(element) ?? segment}]`
       cursor = element
     } else {

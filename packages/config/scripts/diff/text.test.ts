@@ -129,6 +129,20 @@ describe(diffsToText.name, () => {
     expect(text).toInclude('~ items[name=A].value: 1 -> 2')
   })
 
+  it('resolves a nested create under a shifted outer element', () => {
+    const before = project({
+      items: [{ name: 'R' }, { name: 'A', values: [] }],
+    })
+    const after = project({ items: [{ name: 'A', values: [{ name: 'V' }] }] })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('- items[name=R]: {"name":"R"}')
+    expect(text).toInclude('+ items[name=A].values[name=V]: {"name":"V"}')
+  })
+
   it('reports edits to an existing discovery update', () => {
     const entry = {
       id: 'abc',
@@ -148,7 +162,7 @@ describe(diffsToText.name, () => {
       projectsBefore: [before],
       projectsAfter: [after],
     })
-    expect(text).toInclude('| p | modified | 2 discovery updates |')
+    expect(text).toInclude('| p | modified | 1 discovery update |')
     expect(text).toInclude(
       '~ discoveryUpdates[id=abc].description: "Old text." -> "New text."',
     )
