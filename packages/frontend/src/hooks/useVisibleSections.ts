@@ -60,9 +60,23 @@ export function useVisibleSections({
       if (isScrolledToTop() && firstSection) visible.unshift(firstSection)
       if (isScrolledToBottom() && lastSection) visible.push(lastSection)
 
+      // A jump (Page Down, scrollbar drag, restored position) can land where
+      // no section shows a meaningful part, e.g. two tall sections split a
+      // short viewport. Fall back to the reading-line rule over the sections
+      // that intersect at all; those have fresh entries, so nothing is
+      // measured.
+      if (visible.length === 0) {
+        const fallback = sections.findLast((section) => {
+          const entry = geometry.get(section)
+          return (
+            entry?.isIntersecting &&
+            entry.boundingClientRect.top < minVisibleHeight
+          )
+        })
+        if (fallback) visible.push(fallback)
+      }
+
       const ids = Array.from(new Set(visible.map((section) => section.id)))
-      // Between two sections nothing may qualify for a moment; keep the last
-      // answer rather than blanking the navigation.
       if (ids.length === 0) return
       setVisibleIds((previous) => (sameIds(previous, ids) ? previous : ids))
     }
@@ -100,12 +114,18 @@ export function useVisibleSections({
     syncSections()
     mutations.observe(document.body, { childList: true, subtree: true })
     // The observer only fires on threshold crossings; the page-edge rules
-    // depend on scroll position alone.
+    // depend on scroll position alone, and the minimum visible height on the
+    // viewport height. Resize reads wait until after the frame has laid out,
+    // so a drag does not force a layout per step.
+    const updateAfterPaint = afterNextPaint(update)
     window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', updateAfterPaint)
     return () => {
       observer.disconnect()
       mutations.disconnect()
+      updateAfterPaint.cancel()
       window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', updateAfterPaint)
     }
   }, [enabled, isMobile, threshold])
 
@@ -129,6 +149,28 @@ function isMeaningfullyVisible(
   return (
     entry.isIntersecting && visibleHeight > 0 && visibleHeight >= requiredHeight
   )
+}
+
+// A timer queued from inside a frame callback runs once that frame has been
+// laid out and painted, so reads inside `callback` find a clean layout.
+function afterNextPaint(callback: () => void) {
+  let frame: number | undefined
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const scheduled = () => {
+    if (frame !== undefined || timer !== undefined) return
+    frame = requestAnimationFrame(() => {
+      frame = undefined
+      timer = setTimeout(() => {
+        timer = undefined
+        callback()
+      }, 0)
+    })
+  }
+  scheduled.cancel = () => {
+    if (frame !== undefined) cancelAnimationFrame(frame)
+    if (timer !== undefined) clearTimeout(timer)
+  }
+  return scheduled
 }
 
 function sameIds(a: string[], b: string[]) {
