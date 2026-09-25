@@ -459,7 +459,7 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 22865800 },
-  "permissionsConfigHash": "0x4a36f64bee70e76b970ec2eba7f4415d6c24ede67bc44837a296feeaaf3f8b08",
+  "permissionsConfigHash": "0xa59768eb7e6bbd64bd0e6ffc1e40136a2c588a4d5619046e3f709014442167df",
   "permissions": {
     "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB": {
       "receivedPermissions": [

@@ -681,7 +681,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "base": 38469667 },
-  "permissionsConfigHash": "0x61cf246d7d459ad1c95a996e2789828015385e5ec8510b6650f091271c8793f0",
+  "permissionsConfigHash": "0xc0c05ec40af88150c2fe7b89eaeeeb6b8e0ea8c78a5131cecdcb693fffe0beb0",
   "permissions": {
     "base:0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5": {
       "receivedPermissions": [

@@ -76,6 +76,31 @@ describe(buildPermissionsModel.name, () => {
     expect(descriptions.resolve(id)).toEqual('set the fee recipient')
   })
 
+  it('emits an identical permission fact once', () => {
+    const permission = { type: 'interact' as const, delay: 0, role: 'owner' }
+    const model = buildPermissionsModel(
+      {
+        fields: {
+          owners: { permissions: [permission] },
+          admins: { permissions: [permission] },
+        },
+      },
+      {
+        type: 'Contract',
+        address: TIMELOCK,
+        name: 'ValidatorTimelock',
+        values: {
+          owners: [PROXY_ADMIN.toString(), PROXY_ADMIN.toString()],
+          admins: [PROXY_ADMIN.toString()],
+        },
+      },
+      CLUSTER_MAP,
+      new DescriptionTable(),
+    )
+
+    expect((model ?? '').split('permission(').length - 1).toEqual(1)
+  })
+
   it('emits nothing for a Reference stub', () => {
     const model = buildPermissionsModel(
       { fields: {} },

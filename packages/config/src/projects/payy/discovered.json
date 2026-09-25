@@ -337,7 +337,7 @@
     "payy/Rollup": "0xf7a0ec4aeecff88c7330666e8c5ed2d09340c14447c657796b7f2c1dd95b1743"
   },
   "usedBlockNumbers": { "ethereum": 25831710 },
-  "permissionsConfigHash": "0x2f67e4069c327990de0e5315013aeadbc27cd30a4fc2888c82f5d8757e9cf4b0",
+  "permissionsConfigHash": "0x5f6223f71a4942f63db8676e7ad16e0f751daeeb8636c28342525f376cb6ce9c",
   "permissions": {
     "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": {
       "receivedPermissions": [

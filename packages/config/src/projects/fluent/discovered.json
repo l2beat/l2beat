@@ -1640,9 +1640,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25896250 },
-  "permissionsConfigHash": "0x1aa4f11438ae26ab59c3ae7dc1387a49e07e904dcef726b831239980b53ace63",
+  "permissionsConfigHash": "0x6d1e0b5b93a4a9bdb7db5b0af2b742a9a2a1b9000128d0b7b013b9f12057c213",
   "modelledAgainst": {
-    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11": {

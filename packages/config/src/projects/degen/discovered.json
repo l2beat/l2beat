@@ -1698,7 +1698,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "base": 50439795 },
-  "permissionsConfigHash": "0xf6b451be87bda571b68348b4c06ff4ab7599ac5cbac37cdbcdd078029a0153aa",
+  "permissionsConfigHash": "0x4817c191b418edc11ca8fffeb086e488996e2b98bbb4a239722367376739866c",
   "permissions": {
     "base:0x2448e6487c3603860Cf48F0A82f8ab944B761e9B": {
       "receivedPermissions": [

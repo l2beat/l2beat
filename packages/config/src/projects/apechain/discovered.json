@@ -1804,7 +1804,7 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 498266371 },
-  "permissionsConfigHash": "0x69ade3da5fa1ced2086a6ebaaeed9e393154b9854f4dfd0bd76ea5f06e4c420d",
+  "permissionsConfigHash": "0xc900aa279d43192ebaadc56d8a389e7e546f37a1847b267ddb17c209466fa36c",
   "permissions": {
     "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507": {
       "directlyReceivedPermissions": [

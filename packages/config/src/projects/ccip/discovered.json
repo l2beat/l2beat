@@ -57738,7 +57738,7 @@
     "optimism": 156280333,
     "polygonpos": 92969610
   },
-  "permissionsConfigHash": "0x6532ea98cfb6fcea6cf0e71a11de023d960c1bb3c3f8cdfff353faab076c490f",
+  "permissionsConfigHash": "0x3901ed43635a77de2f289c62f913a95348d8371934af76f4b5523c9d6b2f20da",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [

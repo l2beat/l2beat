@@ -1304,7 +1304,7 @@
     "optimism": 156936533,
     "polygonpos": 93844540
   },
-  "permissionsConfigHash": "0x8f2f1e8b67ab4706372a4608bf818a469f201c25fab14e5923371b8d0506af30",
+  "permissionsConfigHash": "0xe0751756338785f0de449880933873c9cda6b52956eb2f2f14008bfa22031add",
   "permissions": {
     "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [

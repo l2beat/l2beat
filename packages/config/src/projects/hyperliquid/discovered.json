@@ -410,7 +410,7 @@
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
   "usedBlockNumbers": { "arbitrum": 492017408, "hyperevm": 42539214 },
-  "permissionsConfigHash": "0x14aa8d39b434f7b7c2b265a06e815016c788db258bb6bc41ea2b0c3f27b82210",
+  "permissionsConfigHash": "0x390bf895f788eab788e16a0b7457f7301439adda8656c6e572a4fea85dd3ae35",
   "permissions": {
     "arb1:0x263294039413B96D25E4173a5F7599F8b3801504": {
       "receivedPermissions": [

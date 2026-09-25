@@ -1283,9 +1283,9 @@
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 24170019 },
-  "permissionsConfigHash": "0x1b46be72b7dbddcca26cd29a6914b87efa29aeef6d7e00ef0f06ecdb90ba3f93",
+  "permissionsConfigHash": "0xb7a298d3d522ef540bcb9734c6d25c7d23f449a71851a4d55a8007ebd838cb53",
   "modelledAgainst": {
-    "shared-sharp-verifier": "0xa1a04ae19c64d03027c4f5a9253d6ca3886c658197f11a31647eea07b38cb867"
+    "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },
   "permissions": {
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {

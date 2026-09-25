@@ -648,9 +648,9 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825385 },
-  "permissionsConfigHash": "0x7f5a0ad0de90dfd44054e7ff29e3726913d2b41d31e729d004bca2309bda5bea",
+  "permissionsConfigHash": "0xbde535d63ab3a701679707f590056bedb09c5abfe76cfb5fd256f0558df17b65",
   "modelledAgainst": {
-    "shared-sharp-verifier": "0xa1a04ae19c64d03027c4f5a9253d6ca3886c658197f11a31647eea07b38cb867"
+    "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },
   "permissions": {
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {

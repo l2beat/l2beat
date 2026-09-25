@@ -1847,7 +1847,7 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25832879 },
-  "permissionsConfigHash": "0x18b50219e6f48f7243b454c6eb60a2376fc73572ae3102221b9eeed2cbaaf500",
+  "permissionsConfigHash": "0xf4174f880756853fbaf7d4cad43354ba792c80217da2d50ef82ef307ba73d68c",
   "permissions": {
     "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": {
       "receivedPermissions": [

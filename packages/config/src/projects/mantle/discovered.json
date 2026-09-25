@@ -1218,9 +1218,9 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
   "usedBlockNumbers": { "ethereum": 26019578 },
-  "permissionsConfigHash": "0xc99dfd6bab505bd5ee3ae14bcd733d021bb4c488c876340e7cf9f2ab1a1ef6ba",
+  "permissionsConfigHash": "0xf0350f0e41a1aac34a498ddd92bd0369870fe71cafe98bebb1981eb16a04cf60",
   "modelledAgainst": {
-    "shared-sp1": "0x857701eadb11a923dd4224c6395e62e0a3efc8a393f8ff28f81e2876c089d7cf"
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
