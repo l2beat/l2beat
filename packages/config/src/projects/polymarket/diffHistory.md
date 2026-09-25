@@ -7,7 +7,7 @@ Generated with discovered.json: 0x1ef9b2122a5a2c3d91ce2e1b767acc45c53567d3
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of Polymarket contracts on Polygon.
 
 ## Initial discovery
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0xee46ac5e8fdba59ba75e21ace048355280569400
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Replace controlsMajorityOfUpgradePermissions with eoaWithUpgradePermissions.
 
 ## Config/verification related changes
 
