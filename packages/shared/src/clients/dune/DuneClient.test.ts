@@ -109,5 +109,37 @@ describe(DuneClient.name, () => {
       )
       expect(result.result.rows).toEqual(resultResponse.result.rows)
     })
+
+    it('passes the offset and returns the next page pointers', async () => {
+      const executionId = 'exec-123'
+      const resultResponse = {
+        result: {
+          rows: [{ col1: 'value3' }],
+        },
+        next_offset: 4,
+        next_uri: `https://api.dune.com/api/v1/execution/${executionId}/results?offset=4`,
+      }
+
+      const mockHttp = mockObject<HttpClient>({
+        fetch: mockFn().resolvesTo(resultResponse),
+      })
+
+      const client = createClient(mockHttp)
+      const result = await client.getExecutionResult(executionId, 2)
+
+      expect(mockHttp.fetch).toHaveBeenCalledWith(
+        `https://api.dune.com/api/v1/execution/${executionId}/results?offset=2`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Dune-API-Key': apiKey,
+          },
+          body: undefined,
+        },
+      )
+      expect(result.next_offset).toEqual(4)
+      expect(result.next_uri).toEqual(resultResponse.next_uri)
+    })
   })
 })

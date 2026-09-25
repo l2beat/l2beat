@@ -64,6 +64,7 @@ describe(DuneQueryService.name, () => {
       )
       expect(mockDuneClient.getExecutionResult).toHaveBeenCalledWith(
         executionId,
+        undefined,
       )
     })
 
@@ -320,6 +321,89 @@ describe(DuneQueryService.name, () => {
       )
 
       expect(result).toEqual(resultRows)
+    })
+
+    it('fetches every page until next_offset is absent', async () => {
+      const executionId = 'exec-123'
+      const resultSchema = v.array(v.object({ col1: v.string() }))
+
+      const mockDuneClient = mockObject<DuneClient>({
+        executeSql: mockFn().resolvesTo({
+          execution_id: executionId,
+          state: 'QUERY_STATE_PENDING',
+        }),
+        getExecutionStatus: mockFn().resolvesTo({
+          execution_id: executionId,
+          state: 'QUERY_STATE_COMPLETED',
+          result_metadata: {
+            datapoint_count: 3,
+            execution_time_millis: 500,
+            total_result_set_bytes: 1000,
+          },
+          execution_cost_credits: 10,
+        }),
+        getExecutionResult: mockFn()
+          .resolvesToOnce({
+            result: { rows: [{ col1: 'a' }, { col1: 'b' }] },
+            next_offset: 2,
+            next_uri: `https://api.dune.com/api/v1/execution/${executionId}/results?offset=2`,
+          })
+          .resolvesToOnce({
+            result: { rows: [{ col1: 'c' }] },
+          }),
+      })
+
+      const service = createService(mockDuneClient)
+      const result = await service.query(
+        'SELECT * FROM test',
+        'large',
+        resultSchema,
+      )
+
+      expect(result).toEqual([{ col1: 'a' }, { col1: 'b' }, { col1: 'c' }])
+      expect(mockDuneClient.getExecutionResult).toHaveBeenCalledTimes(2)
+      expect(mockDuneClient.getExecutionResult).toHaveBeenNthCalledWith(
+        1,
+        executionId,
+        undefined,
+      )
+      expect(mockDuneClient.getExecutionResult).toHaveBeenNthCalledWith(
+        2,
+        executionId,
+        2,
+      )
+    })
+
+    it('throws when the reported next_offset does not advance', async () => {
+      const executionId = 'exec-123'
+      const resultSchema = v.array(v.object({ col1: v.string() }))
+
+      const mockDuneClient = mockObject<DuneClient>({
+        executeSql: mockFn().resolvesTo({
+          execution_id: executionId,
+          state: 'QUERY_STATE_PENDING',
+        }),
+        getExecutionStatus: mockFn().resolvesTo({
+          execution_id: executionId,
+          state: 'QUERY_STATE_COMPLETED',
+          result_metadata: {
+            datapoint_count: 1,
+            execution_time_millis: 100,
+            total_result_set_bytes: 1000,
+          },
+          execution_cost_credits: 1,
+        }),
+        getExecutionResult: mockFn().resolvesTo({
+          result: { rows: [{ col1: 'a' }] },
+          next_offset: 0,
+        }),
+      })
+
+      const service = createService(mockDuneClient)
+
+      await expect(
+        service.query('SELECT * FROM test', 'large', resultSchema),
+      ).toBeRejectedWith('Dune pagination did not advance: offset 0 -> 0')
     })
   })
 })

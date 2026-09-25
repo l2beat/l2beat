@@ -123,7 +123,41 @@ export class DuneQueryService {
       }
       lastState = status.state
     }
-    const { result } = await this.$.duneClient.getExecutionResult(execution_id)
-    return resultSchema.parse(result.rows)
+    // Dune paginates large result sets, so the first page is not necessarily
+    // the whole result. Follow `next_offset` until it is absent - a short page
+    // does not mean the end of the data, because the server may silently cap
+    // the page size below the one that was requested. We rebuild the URL from
+    // the offset rather than following `next_uri` so that the API key is never
+    // sent to a host chosen by the response body.
+    const rows: unknown[] = []
+    let offset: number | undefined
+    let pages = 0
+
+    do {
+      const page = await this.$.duneClient.getExecutionResult(
+        execution_id,
+        offset,
+      )
+      rows.push(...page.result.rows)
+      pages++
+
+      const nextOffset = page.next_offset
+      if (nextOffset !== undefined && nextOffset <= (offset ?? 0)) {
+        throw new Error(
+          `Dune pagination did not advance: offset ${offset ?? 0} -> ${nextOffset}`,
+        )
+      }
+      offset = nextOffset
+    } while (offset !== undefined)
+
+    if (pages > 1) {
+      this.logger.info('Fetched paginated result', {
+        executionId: execution_id,
+        pages,
+        rows: rows.length,
+      })
+    }
+
+    return resultSchema.parse(rows)
   }
 }

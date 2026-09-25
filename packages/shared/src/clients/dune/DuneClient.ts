@@ -39,9 +39,10 @@ export class DuneClient {
     return DuneExecutionStatusResponse.parse(response)
   }
 
-  async getExecutionResult(executionId: string) {
+  async getExecutionResult(executionId: string, offset?: number) {
+    const query = offset === undefined ? '' : `?offset=${offset}`
     const response = await this.fetch(
-      `v1/execution/${executionId}/results`,
+      `v1/execution/${executionId}/results${query}`,
       'GET',
     )
 

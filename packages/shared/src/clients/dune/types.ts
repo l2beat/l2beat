@@ -41,8 +41,12 @@ export const DuneExecutionStatusResponse = v.union([
   }),
 ])
 
+// Dune paginates large result sets. `next_offset` and `next_uri` are returned
+// as long as there are more rows to fetch and are absent on the last page.
 export const DuneExecutionResultResponse = v.object({
   result: v.object({
     rows: v.array(v.unknown()),
   }),
+  next_offset: v.number().optional(),
+  next_uri: v.string().optional(),
 })
