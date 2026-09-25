@@ -7,10 +7,9 @@ import { expect, test } from 'playwright/test'
  * the section, at a desktop and a tablet width.
  */
 const PAGE = '/scaling/projects/base'
-const viewports = [
-  { width: 1400, height: 900 },
-  { width: 900, height: 900 },
-]
+const DESKTOP = { width: 1400, height: 900 }
+const TABLET = { width: 900, height: 900 }
+const viewports = [DESKTOP, TABLET]
 
 for (const viewport of viewports) {
   test(`hash on load lands on the section at ${viewport.width}px`, async ({
@@ -27,7 +26,7 @@ for (const viewport of viewports) {
 }
 
 test('section navigation click lands on the section', async ({ browser }) => {
-  const context = await browser.newContext({ viewport: viewports[0] })
+  const context = await browser.newContext({ viewport: DESKTOP })
   const page = await context.newPage()
   await page.goto(PAGE, { waitUntil: 'networkidle' })
   await page.waitForTimeout(1500)
@@ -37,6 +36,24 @@ test('section navigation click lands on the section', async ({ browser }) => {
     expect(await sectionTop(page, id), id).toBeLessThan(100)
     expect(await sectionTop(page, id), id).toBeGreaterThanOrEqual(0)
   }
+  await context.close()
+})
+
+// Skipped sections remember the height they had at the last width they were
+// laid out at, so a jump after a resize is the case most likely to land off.
+test('section navigation lands after resizing desktop to tablet', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ viewport: DESKTOP })
+  const page = await context.newPage()
+  await page.goto(PAGE, { waitUntil: 'networkidle' })
+  await page.waitForTimeout(1500)
+  await page.setViewportSize(TABLET)
+  await page.waitForTimeout(1000)
+  await page.locator('a[href="#state-validation"]:visible').first().click()
+  await waitForScrollToSettle(page)
+  expect(await sectionTop(page, 'state-validation')).toBeLessThan(100)
+  expect(await sectionTop(page, 'state-validation')).toBeGreaterThanOrEqual(0)
   await context.close()
 })
 

@@ -94,19 +94,30 @@ for (const path of Object.keys(ceilings)) {
   })
 }
 
-// Merged into the file, so a filtered or interrupted run cannot drop a page.
+// Merged into the file, so a filtered or interrupted run cannot drop a page,
+// and clamped to the existing ceiling, so a noisy run cannot raise one. A
+// ceiling that has to go up (a new page, an accepted regression) is edited
+// by hand.
 test.afterAll(() => {
   if (!process.env.UPDATE_CEILINGS) return
   const next: Ceilings = { ...ceilings }
   for (const [path, result] of Object.entries(measured)) {
+    const existing = ceilings[path]
     next[path] = {
-      layouts: MARGIN.layouts(result.layouts),
-      chartRerenders: MARGIN.chartRerenders(result.chartRerenders),
-      scriptMs: MARGIN.scriptMs(result.scriptMs),
+      layouts: lowerOf(existing?.layouts, MARGIN.layouts(result.layouts)),
+      chartRerenders: lowerOf(
+        existing?.chartRerenders,
+        MARGIN.chartRerenders(result.chartRerenders),
+      ),
+      scriptMs: lowerOf(existing?.scriptMs, MARGIN.scriptMs(result.scriptMs)),
     }
   }
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
+
+function lowerOf(existing: number | undefined, measured: number) {
+  return existing === undefined ? measured : Math.min(existing, measured)
+}
 
 async function metrics(cdp: {
   send: (

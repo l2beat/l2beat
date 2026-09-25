@@ -11,6 +11,8 @@ interface Props {
 }
 
 const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
+// A drag fires resize events every frame; remeasuring waits for the last one.
+const RESIZE_SETTLE_MS = 200
 
 /**
  * Keeps the server-rendered markup in place and mounts the React tree only
@@ -46,12 +48,10 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
     (element: HTMLDivElement | null) => {
       const stopObserving = nearViewportRef(element)
       if (!element) return stopObserving
-      const cancel = afterFirstPaint(() =>
-        element.classList.add(SKIP_WHILE_OFFSCREEN),
-      )
+      const stopSkipping = skipWhileOffscreen(element)
       return () => {
         stopObserving?.()
-        cancel()
+        stopSkipping()
       }
     },
     [nearViewportRef],
@@ -72,6 +72,52 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
       dangerouslySetInnerHTML={{ __html: '' }}
     />
   )
+}
+
+const skippingWrappers = new Set<HTMLElement>()
+let lastWidth: number | undefined
+let resizeSettleTimer: ReturnType<typeof setTimeout> | undefined
+let cancelRemeasure = () => {}
+
+function skipWhileOffscreen(element: HTMLElement) {
+  if (skippingWrappers.size === 0) {
+    lastWidth = window.innerWidth
+    window.addEventListener('resize', remeasureWhenResizeSettles)
+  }
+  skippingWrappers.add(element)
+  const cancel = afterFirstPaint(() =>
+    element.classList.add(SKIP_WHILE_OFFSCREEN),
+  )
+  return () => {
+    cancel()
+    skippingWrappers.delete(element)
+    if (skippingWrappers.size === 0) {
+      window.removeEventListener('resize', remeasureWhenResizeSettles)
+    }
+  }
+}
+
+// A skipped section keeps the height it had at the width it was last laid
+// out at, so after the width changes every wrapper is laid out once more
+// before it may skip again; otherwise a jump to a deep section lands off by
+// the reflow of everything above it.
+function remeasureWhenResizeSettles() {
+  if (window.innerWidth === lastWidth) return
+  lastWidth = window.innerWidth
+  clearTimeout(resizeSettleTimer)
+  resizeSettleTimer = setTimeout(remeasureAll, RESIZE_SETTLE_MS)
+}
+
+function remeasureAll() {
+  cancelRemeasure()
+  for (const element of skippingWrappers) {
+    element.classList.remove(SKIP_WHILE_OFFSCREEN)
+  }
+  cancelRemeasure = afterFirstPaint(() => {
+    for (const element of skippingWrappers) {
+      element.classList.add(SKIP_WHILE_OFFSCREEN)
+    }
+  })
 }
 
 // Two frames: the first callback runs before the pending frame paints.
