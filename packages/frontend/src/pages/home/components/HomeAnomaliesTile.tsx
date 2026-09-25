@@ -31,9 +31,6 @@ export function HomeAnomaliesTile({
               isOngoing ? 'hover:bg-surface-secondary/50' : 'cursor-default',
             )}
           >
-            <div className="lg:hidden">
-              <LiveIndicator size="md" disabled={!isOngoing} />
-            </div>
 
             <div className="flex min-w-0 flex-1 flex-col">
               <span
@@ -71,9 +68,7 @@ export function HomeAnomaliesTile({
                 )}
               </span>
             </div>
-            <div className="max-lg:hidden">
-              <LiveIndicator size="md" disabled={!isOngoing} />
-            </div>
+            <LiveIndicator size="md" disabled={!isOngoing} />
             <span className="shrink-0 font-bold text-heading-20 tabular-nums leading-none">
               {formatInteger(count)}
             </span>
