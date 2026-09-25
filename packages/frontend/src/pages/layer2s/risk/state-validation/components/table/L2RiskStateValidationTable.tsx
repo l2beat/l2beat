@@ -36,7 +36,7 @@ export function L2RiskValidityTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return <BasicTable table={table} stickyHeader />
 }
 
 export function L2RiskOptimisticTable({
@@ -62,7 +62,7 @@ export function L2RiskOptimisticTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return <BasicTable table={table} stickyHeader />
 }
 
 export function L2RiskNoProofsTable({
@@ -88,5 +88,5 @@ export function L2RiskNoProofsTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return <BasicTable table={table} stickyHeader />
 }

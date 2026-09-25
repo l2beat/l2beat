@@ -60,6 +60,7 @@ export function TvsBreakdownTokenTable(props: Props) {
         <BasicTable
           table={table}
           renderSubComponent={renderFormulaSubComponent}
+          stickyHeader
         />
       </PrimaryCard>
     </div>

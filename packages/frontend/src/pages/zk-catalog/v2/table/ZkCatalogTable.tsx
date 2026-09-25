@@ -37,7 +37,7 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
   return (
     <PrimaryCard className="mt-1">
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} getHighlightId={(row) => row.id} />
+      <BasicTable table={table} getHighlightId={(row) => row.id} stickyHeader />
     </PrimaryCard>
   )
 }

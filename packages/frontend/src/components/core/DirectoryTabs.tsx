@@ -3,6 +3,7 @@ import type * as React from 'react'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
+import { stickyTopBarAttributes } from '../table/useStickyTableHeader'
 import { OverflowWrapper } from './OverflowWrapper'
 
 /**
@@ -44,7 +45,10 @@ const DirectoryTabsList = ({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) => (
-  <div className="sticky top-0 z-50 bg-background pt-2 max-md:mt-2 md:pt-4">
+  <div
+    className="sticky top-0 z-50 bg-background pt-2 max-md:mt-2 md:pt-4"
+    {...stickyTopBarAttributes()}
+  >
     <OverflowWrapper className="pr-4">
       <TabsPrimitive.List
         ref={ref}

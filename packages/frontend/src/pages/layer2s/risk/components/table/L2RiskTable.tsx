@@ -28,7 +28,7 @@ export function L2RiskTable({ entries }: { entries: L2RiskEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </>
   )
 }

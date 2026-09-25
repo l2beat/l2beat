@@ -1,10 +1,12 @@
 import type * as React from 'react'
+import { useRef } from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './TableTooltip'
+import { useStickyTableHeader } from './useStickyTableHeader'
 import {
   getTableElementClassName,
   getTableOuterWrapperClassName,
@@ -37,16 +39,28 @@ Table.displayName = 'Table'
 
 const TableHeader = ({
   className,
+  sticky = false,
   ...props
-}: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <thead
-    className={cn(
-      'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
-      className,
-    )}
-    {...props}
-  />
-)
+}: React.HTMLAttributes<HTMLTableSectionElement> & {
+  /** Keeps the header in view while the table scrolls under the viewport top. */
+  sticky?: boolean
+}) => {
+  const ref = useRef<HTMLTableSectionElement>(null)
+  useStickyTableHeader(ref, sticky)
+  return (
+    <thead
+      ref={ref}
+      className={cn(
+        'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
+        // A stuck header floats over body rows, so it must be opaque and
+        // above the pinned body cells (z-10).
+        sticky && 'relative z-20 bg-surface-primary',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 TableHeader.displayName = 'TableHeader'
 
 const TableBody = ({

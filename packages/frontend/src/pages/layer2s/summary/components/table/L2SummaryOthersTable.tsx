@@ -62,7 +62,7 @@ export function L2SummaryOthersTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </>
   )
 }

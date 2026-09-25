@@ -40,7 +40,7 @@ export function L2RiskDaTable({ entries, hideType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </>
   )
 }

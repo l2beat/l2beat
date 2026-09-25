@@ -103,7 +103,7 @@ export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
 
   return (
     <PrimaryCard className="mt-4">
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </PrimaryCard>
   )
 }

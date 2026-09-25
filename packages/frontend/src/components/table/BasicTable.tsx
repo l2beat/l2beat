@@ -73,6 +73,12 @@ export interface BasicTableProps<T extends BasicTableRow> {
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
   /**
+   * Keeps the header in view while the table scrolls under the viewport top.
+   * For long, page-level tables; tables inside clipping cards would lose
+   * their header to the clip.
+   */
+  stickyHeader?: boolean
+  /**
    * Trims the row and header heights. For tables shown alongside other content
    * rather than as a page's main subject.
    */
@@ -124,7 +130,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         {...getPersistedTableAttributes(props.table)}
       >
         {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader>
+        <TableHeader sticky={props.stickyHeader}>
           {groupedHeader && (
             <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
           )}
