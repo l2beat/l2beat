@@ -274,9 +274,9 @@ export interface InteropFeatureConfig {
   }
   relay:
     | {
-        apiKey: string
+        apiKeys: string[]
         batchSize: number
-        callsPerMinute: number
+        callsPerMinutePerKey: number
         concurrency: number
         maxRequestsPerChunk: number
         safeTimeOffset: number
