@@ -22,8 +22,6 @@
     "test:e2e:all-pages": "pnpm build && playwright test e2e/all-pages/all-pages.e2e.ts",
     "perf:resize": "playwright test e2e/resize-perf",
     "perf:resize:ratchet": "UPDATE_CEILINGS=1 playwright test e2e/resize-perf",
-    "perf:resize:profile": "tsx scripts/perf/resizeProfile.ts",
-    "perf:resize:trace": "tsx scripts/perf/resizeTrace.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
