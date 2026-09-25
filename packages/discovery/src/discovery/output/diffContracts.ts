@@ -1,7 +1,7 @@
+import { diff } from '@l2beat/shared'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
-import { diff } from './diff'
 import type { EntryParameters } from './types'
 
 export interface FieldDiff {

@@ -1,3 +1,4 @@
+export { type Difference, diff } from '@l2beat/shared'
 export { DiscoverCommandArgs, discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export {
@@ -87,7 +88,6 @@ export {
   type DiffHistorySection,
   type DiffHistorySectionKind,
 } from './discovery/output/DiffHistoryParser'
-export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
