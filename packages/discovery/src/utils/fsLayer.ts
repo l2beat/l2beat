@@ -1,5 +1,5 @@
 import { readdirSync, statSync } from 'fs'
-import { basename, dirname } from 'path'
+import { basename, dirname, join } from 'path'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
 // NTFS the path names are not case sensitive. So while you can have a file
@@ -31,4 +31,23 @@ function listDirectory(directory: string): Set<string> {
   const names = new Set(readdirSync(directory))
   directoryListings.set(directory, { mtimeMs, names })
   return names
+}
+
+// A directory's mtime only changes when its entries change, not when a file
+// inside it is edited, so every file has to be stat'ed.
+export function fingerprintDirectoryTree(root: string): string {
+  const files: string[] = []
+  const pending = [root]
+  for (let dir = pending.pop(); dir !== undefined; dir = pending.pop()) {
+    for (const name of listDirectory(dir)) {
+      const path = join(dir, name)
+      const stat = statSync(path)
+      if (stat.isDirectory()) {
+        pending.push(path)
+      } else {
+        files.push(`${path}:${stat.mtimeMs}:${stat.size}`)
+      }
+    }
+  }
+  return files.join('\n')
 }
