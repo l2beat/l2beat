@@ -47,6 +47,7 @@ describe(DataAvailabilityProjectPage.name, () => {
       'h2 Enshrined bridge',
       'h3 Bridge technology',
       'h3 Permissions',
+      'h4 Ethereum',
     ])
   })
 
@@ -55,6 +56,7 @@ describe(DataAvailabilityProjectPage.name, () => {
 
     expect(html).toInclude('<h3 class="mdc-h1">Architecture</h3>')
     expect(html).toInclude('<h4 class="mdc-h2">Upgradeability</h4>')
+    expect(html).toInclude('<h4 class="mdc-h2">Consensus</h4>')
   })
 
   it('keeps each section heading linked to its section anchor', () => {
@@ -85,7 +87,8 @@ function renderPage(): string {
               markdownSection(
                 'da-layer-technology',
                 'Technology',
-                '# Consensus\n\nBody',
+                // Real DA technology descriptions start at `##`.
+                '## Consensus\n\nBody',
               ),
             ],
           },
@@ -97,7 +100,16 @@ function renderPage(): string {
             title: 'Enshrined bridge',
             items: [
               markdownSection('da-bridge-technology', 'Bridge technology'),
-              markdownSection('da-bridge-permissions', 'Permissions'),
+              {
+                type: 'PermissionsSection',
+                props: {
+                  id: 'da-bridge-permissions',
+                  title: 'Permissions',
+                  permissionsByChain: {
+                    Ethereum: { roles: [], actors: [] },
+                  },
+                },
+              },
             ],
           },
         },
@@ -161,6 +173,14 @@ function headingsFromFirstSection(outline: string[]): string[] {
   return outline.slice(outline.indexOf('h2 Detailed description'))
 }
 
+// Repeats until nothing changes, so a tag split across a removed one is
+// removed too.
 function stripTags(html: string): string {
-  return html.replace(/<[^>]*>/g, '').trim()
+  let previous: string
+  let current = html
+  do {
+    previous = current
+    current = current.replace(/<[^>]*>/g, '')
+  } while (current !== previous)
+  return current.trim()
 }

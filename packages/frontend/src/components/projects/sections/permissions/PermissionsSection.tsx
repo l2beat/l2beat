@@ -9,6 +9,7 @@ import {
 import { ChainNameHeader } from '../contracts/ContractsSection'
 import { PermissionedEntityEntry } from '../PermissionedEntityEntry'
 import { ProjectSection } from '../ProjectSection'
+import { SubsectionHeading } from '../SubsectionHeading'
 import type { ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
@@ -33,9 +34,9 @@ export function PermissionsSection({
     <ProjectSection {...sectionProps}>
       {discoUi && <DiscoUiBanner href={discoUi.href} images={discoUi.images} />}
       {permissionedEntities && permissionedEntities.length > 0 && (
-        <h3 className="mt-4 font-bold">
+        <SubsectionHeading className="mt-4 font-bold">
           The DA committee has the following members:
-        </h3>
+        </SubsectionHeading>
       )}
       {permissionedEntities?.map((entity, i) => (
         <PermissionedEntityEntry key={i} entity={entity} className="my-2" />
@@ -55,7 +56,9 @@ export function PermissionsSection({
               <ChainNameHeader>{chain}</ChainNameHeader>
               {permissions.roles.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="text-heading-18">Roles:</h4>
+                  <SubsectionHeading depth={2} className="text-heading-18">
+                    Roles:
+                  </SubsectionHeading>
                   {unchangedRoles.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}
@@ -73,7 +76,9 @@ export function PermissionsSection({
               )}
               {permissions.actors.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="text-heading-18">Actors:</h4>
+                  <SubsectionHeading depth={2} className="text-heading-18">
+                    Actors:
+                  </SubsectionHeading>
                   {unchangedActors.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}

@@ -14,6 +14,7 @@ import type { StateValidationProgramHashData } from '../program-hashes/ProgramHa
 import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
+import { SubsectionHeading } from '../SubsectionHeading'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './ContractsUpdated'
 
@@ -113,7 +114,9 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.programHashes && props.programHashes.length > 0 && (
         <div id="program-hashes" className="mt-4 space-y-2 md:mt-6">
           <div className="flex items-baseline gap-3">
-            <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
+            <SubsectionHeading className="whitespace-pre text-heading-20">
+              Program Hashes
+            </SubsectionHeading>
             <div className="w-full border-divider border-b-2" />
           </div>
           <ProgramHashesTable entries={props.programHashes} />
@@ -131,7 +134,9 @@ export function ContractsSection(props: ContractsSectionProps) {
 export function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <h3 className="whitespace-pre text-heading-20">{props.children}</h3>
+      <SubsectionHeading className="whitespace-pre text-heading-20">
+        {props.children}
+      </SubsectionHeading>
       <div className="w-full border-divider border-b-2" />
     </div>
   )

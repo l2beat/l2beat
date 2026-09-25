@@ -10,6 +10,7 @@ import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
+import { SubsectionHeading } from './SubsectionHeading'
 import type { ProjectSectionProps } from './types'
 
 export interface TechnologyChoicesSectionProps extends ProjectSectionProps {
@@ -38,9 +39,12 @@ export function TechnologyChoicesSection({
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
-          <h3 id={item.id} className="font-bold text-lg md:text-xl">
+          <SubsectionHeading
+            id={item.id}
+            className="font-bold text-lg md:text-xl"
+          >
             <a href={`#${item.id}`}>{item.name}</a>
-          </h3>
+          </SubsectionHeading>
           {item.isIncomplete && <SectionIncompleteNote />}
           {item.isUnderReview ? (
             <UnderReviewCallout />
