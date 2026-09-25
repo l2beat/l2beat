@@ -1,5 +1,3 @@
-import { isDeepStrictEqual } from 'util'
-
 export interface DifferenceCreate {
   kind: 'create'
   path: (string | number)[]
@@ -107,7 +105,7 @@ function getLCSLength<T, U>(a: T[], b: U[]): number[][] {
     for (let j = 0; j < b.length + 1; j++) {
       if (i === 0 || j === 0) {
         lcs[i]?.push(0)
-      } else if (isDeepStrictEqual(a[i - 1], b[j - 1])) {
+      } else if (isDeepEqual(a[i - 1], b[j - 1])) {
         // biome-ignore lint/style/noNonNullAssertion: it's there
         lcs[i]?.push(1 + lcs[i - 1]![j - 1]!)
       } else {
@@ -130,7 +128,7 @@ function lcsDiff<T, U>(lhs: T[], rhs: U[]): Difference[] {
   while (i > 0 || j > 0) {
     const u = i - 1
     const v = j - 1
-    if (i > 0 && j > 0 && isDeepStrictEqual(lhs[u], rhs[v])) {
+    if (i > 0 && j > 0 && isDeepEqual(lhs[u], rhs[v])) {
       i--
       j--
       continue
@@ -170,4 +168,42 @@ function lcsDiff<T, U>(lhs: T[], rhs: U[]): Difference[] {
   }
 
   return out.reverse()
+}
+
+function isDeepEqual(left: unknown, right: unknown): boolean {
+  const stack: [unknown, unknown][] = [[left, right]]
+  while (stack.length > 0) {
+    // biome-ignore lint/style/noNonNullAssertion: length checked above
+    const [a, b] = stack.pop()!
+    if (Object.is(a, b)) {
+      continue
+    }
+    if (typeof a !== 'object' || typeof b !== 'object' || !a || !b) {
+      return false
+    }
+    if (a instanceof Date || b instanceof Date) {
+      if (!(a instanceof Date && b instanceof Date)) {
+        return false
+      }
+      if (a.getTime() !== b.getTime()) {
+        return false
+      }
+      continue
+    }
+    if (Array.isArray(a) !== Array.isArray(b)) {
+      return false
+    }
+    const keysA = Object.keys(a)
+    const keysB = Object.keys(b)
+    if (keysA.length !== keysB.length) {
+      return false
+    }
+    for (const key of keysA) {
+      if (!Object.hasOwn(b, key)) {
+        return false
+      }
+      stack.push([Reflect.get(a, key), Reflect.get(b, key)])
+    }
+  }
+  return true
 }

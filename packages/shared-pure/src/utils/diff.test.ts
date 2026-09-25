@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { diff } from './diff'
+import { diff } from './diff.js'
 
 describe('diff', () => {
   it('empty arrays', () => {
