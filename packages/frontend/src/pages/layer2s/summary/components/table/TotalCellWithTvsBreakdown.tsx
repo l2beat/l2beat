@@ -24,6 +24,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { describeWarnings } from '~/utils/describeWarnings'
 
 interface TotalCellProps {
   breakdown:
@@ -55,6 +56,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
       sentiment={
         anyBadWarnings ? 'bad' : anyWarningWarnings ? 'warning' : 'neutral'
       }
+      aria-label={describeWarnings(tvsWarnings)}
     />
   ) : null
 

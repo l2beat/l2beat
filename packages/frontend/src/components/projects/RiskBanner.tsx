@@ -1,5 +1,6 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
+import { describeWarnings } from '~/utils/describeWarnings'
 import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
@@ -9,6 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/Tooltip'
+import { HiddenSentiment } from '../HiddenSentiment'
 import { Markdown } from '../markdown/Markdown'
 import { GrissiniStick } from '../rosette/grissini/GrissiniStick'
 import type { RosetteValue } from '../rosette/types'
@@ -75,12 +77,14 @@ export function RiskBanner({
             )}
           >
             {regular ? `${value} (emergency upgrade path)` : value}
+            <HiddenSentiment sentiment={adjSentiment} />
             {warning && info === 'compact' && (
               <RoundedWarningIcon
                 className={cn(
                   'ml-1 inline-block fill-current',
                   sentimentToTextColor(warning.sentiment),
                 )}
+                aria-label={describeWarnings([warning])}
               />
             )}
           </div>
@@ -109,7 +113,8 @@ export function RiskBanner({
                 }),
               )}
             >
-              {regular.value} (regular upgrade path)
+              {`${regular.value} (regular upgrade path)`}
+              <HiddenSentiment sentiment={regular.sentiment ?? 'neutral'} />
             </div>
             <Markdown className="font-normal text-paragraph-15 md:text-paragraph-16">
               {regular.description}
@@ -135,6 +140,7 @@ export function RiskBanner({
             text={warning.value}
             color={sentimentToWarningBarColor(warning.sentiment)}
           />
+          <HiddenSentiment sentiment={warning.sentiment} />
         </div>
       )}
       {description && info === 'full' && (

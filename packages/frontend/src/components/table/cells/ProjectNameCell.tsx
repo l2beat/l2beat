@@ -20,7 +20,6 @@ import {
   type QuantumResistanceType,
 } from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
-import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
 import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { ShieldIcon } from '~/icons/Shield'
@@ -30,6 +29,7 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
+import { StatusIcon } from './StatusIcon'
 
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   isLayer3?: boolean
@@ -83,26 +83,24 @@ function DesktopStatusIcons({
 }) {
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
-      {project.isLayer3 && <Layer3Icon className="size-4" />}
-      {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
-      {project.quantumResistance && (
-        <QuantumResistanceIcon className="size-4" />
+      {project.isLayer3 && <StatusIcon status="layer3" />}
+      {project.ecosystemInfo?.isPartOfSuperchain && (
+        <StatusIcon status="superchain" />
       )}
+      {project.quantumResistance && <StatusIcon status="quantumResistance" />}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
-        ) && <UnverifiedIcon className="size-4 fill-red-300" />}
-      {project.statuses?.redWarning && (
-        <ShieldIcon className="size-4 fill-red-300" />
-      )}
+        ) && <StatusIcon status="unverified" />}
+      {project.statuses?.redWarning && <StatusIcon status="redWarning" />}
       {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-        <UnderReviewIcon className="size-4" />
+        <StatusIcon status="underReview" />
       )}
-      {project.statuses?.yellowWarning && (
-        <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+      {project.statuses?.yellowWarning && <StatusIcon status="yellowWarning" />}
+      {project.statuses?.syncWarning && <StatusIcon status="syncWarning" />}
+      {project.statuses?.ongoingAnomaly && (
+        <StatusIcon status="ongoingAnomaly" />
       )}
-      {project.statuses?.syncWarning && <ClockIcon className="size-4" />}
-      {project.statuses?.ongoingAnomaly && <LiveIndicator />}
     </div>
   )
 }
@@ -120,12 +118,12 @@ export function ProjectNameMobileStatusIcons({
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && (
-        <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
+        <MobileProjectIconTooltip icon={<StatusIcon status="layer3" />}>
           {project.nameSecondLine}
         </MobileProjectIconTooltip>
       )}
       {project.ecosystemInfo?.isPartOfSuperchain && (
-        <MobileProjectIconTooltip icon={<SuperchainIcon />}>
+        <MobileProjectIconTooltip icon={<StatusIcon status="superchain" />}>
           The project is officially part of the Superchain - it contributes
           revenue to the Optimism Collective and uses the SuperchainConfig to
           manage chain configuration values.
@@ -133,7 +131,7 @@ export function ProjectNameMobileStatusIcons({
       )}
       {project.quantumResistance && (
         <MobileProjectIconTooltip
-          icon={<QuantumResistanceIcon className="size-4" />}
+          icon={<StatusIcon status="quantumResistance" />}
         >
           {QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance]}
         </MobileProjectIconTooltip>
@@ -143,7 +141,7 @@ export function ProjectNameMobileStatusIcons({
           (value) => value !== undefined,
         ) && (
           <MobileProjectIconTooltip
-            icon={<UnverifiedIcon className="size-4 fill-red-300" />}
+            icon={<StatusIcon status="unverified" />}
             contentClassName="flex flex-col gap-2"
           >
             {project.statuses.verificationWarnings.contracts && (
@@ -181,7 +179,7 @@ export function ProjectNameMobileStatusIcons({
         )}
       {project.statuses?.redWarning && (
         <MobileProjectIconTooltip
-          icon={<ShieldIcon className="size-4 fill-red-300" />}
+          icon={<StatusIcon status="redWarning" />}
           contentClassName="flex flex-col gap-2"
         >
           <Markdown inline ignoreGlossary>
@@ -198,29 +196,25 @@ export function ProjectNameMobileStatusIcons({
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-        <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+        <MobileProjectIconTooltip icon={<StatusIcon status="underReview" />}>
           {getUnderReviewText(project.statuses.underReview)}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.yellowWarning && (
-        <MobileProjectIconTooltip
-          icon={
-            <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-          }
-        >
+        <MobileProjectIconTooltip icon={<StatusIcon status="yellowWarning" />}>
           <Markdown inline ignoreGlossary>
             {project.statuses.yellowWarning}
           </Markdown>
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.syncWarning && (
-        <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
+        <MobileProjectIconTooltip icon={<StatusIcon status="syncWarning" />}>
           {project.statuses.syncWarning}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.ongoingAnomaly && (
         <MobileProjectIconTooltip
-          icon={<LiveIndicator />}
+          icon={<StatusIcon status="ongoingAnomaly" />}
           contentClassName="flex flex-col gap-2"
         >
           <p>

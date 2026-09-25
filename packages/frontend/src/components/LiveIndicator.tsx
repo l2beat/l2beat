@@ -3,12 +3,16 @@ import { cn } from '~/utils/cn'
 export function LiveIndicator({
   size = 'sm',
   disabled,
+  label,
 }: {
   size?: 'sm' | 'md'
   disabled?: boolean
+  label?: string
 }) {
   return (
     <span
+      role={label ? 'img' : undefined}
+      aria-label={label}
       className={cn(
         'relative flex',
         size === 'sm' && 'ml-0.5 size-2',
