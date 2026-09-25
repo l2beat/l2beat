@@ -36,7 +36,7 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
             data-project-page
           >
             {!isNavigationEmpty && (
-              <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
+              <div className="md:-mx-5 sticky top-0 z-100 lg:hidden">
                 <MobileSectionNavigation sections={navigationSections} />
               </div>
             )}
