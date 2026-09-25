@@ -64,22 +64,26 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: adjustedTo - adjustedFrom + 1,
     })
 
-    const [blocks, logs] = await withBlockSyncRpcMetricsContext(
+    const consistentBlocks = await withBlockSyncRpcMetricsContext(
       'blockSync.fetch',
       {
         chain: this.$.source,
       },
-      () =>
-        Promise.all([
+      async () => {
+        const [blocks, logs] = await Promise.all([
           Promise.all(
             blockNumbers.map((n) =>
               this.$.blockProvider.getBlockWithTransactions(n),
             ),
           ),
           this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
-        ]),
+        ])
+        // Receipt confirmations issued here share the fetch metrics context.
+        return await onlyConsistent(blocks, logs, (block) =>
+          this.confirmNoLogs(block),
+        )
+      },
     )
-    const consistentBlocks = onlyConsistent(blocks, logs)
     if (consistentBlocks.length === 0) {
       this.logger.info("Couldn't get consistent blocks & logs", {
         from: adjustedFrom,
@@ -167,6 +171,37 @@ export class BlockIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+
+  /**
+   * Used only for blocks whose header logsBloom cannot vouch for the block
+   * (see `onlyConsistent`). A block with transactions and no logs is accepted
+   * when every receipt exists, belongs to this block and carries no logs.
+   */
+  private async confirmNoLogs(block: Block): Promise<boolean> {
+    const hashes = block.transactions.flatMap((tx) =>
+      tx.hash ? [tx.hash] : [],
+    )
+    if (hashes.length !== block.transactions.length) {
+      this.logger.warn('Cannot confirm empty block, transaction hash missing', {
+        blockNumber: block.number,
+      })
+      return false
+    }
+
+    const receipts = await Promise.all(
+      hashes.map((hash) => this.$.blockProvider.getTransactionReceipt(hash)),
+    )
+    const confirmed = receipts.every(
+      (receipt) =>
+        receipt.blockHash === block.hash && receipt.logs.length === 0,
+    )
+    this.logger.info('Confirmed block without logs via receipts', {
+      blockNumber: block.number,
+      transactions: hashes.length,
+      confirmed,
+    })
+    return confirmed
+  }
 }
 
 /*
@@ -178,25 +213,47 @@ In order to guarantee that the logs we're getting belong to the blocks we're get
 we need to check that:
 1) The log hashes match the block hashes (reorg protection)
 2) If and only if the logsBloom is empty there are no logs (no logs protection)
+
+On chains with asynchronous execution (Avalanche C-Chain since Helicon, ACP-194)
+the header logsBloom describes the receipts of the blocks settled by the block,
+not the block itself, so check 2 is impossible there. Such blocks are recognised
+by `settledHeight` and, when they have transactions but no logs, are confirmed
+through their receipts instead.
 */
 const LOGS_BLOOM_ZERO = `0x${'0'.repeat(512)}`
-export function onlyConsistent(blocks: Block[], logs: Log[]) {
+export async function onlyConsistent(
+  blocks: Block[],
+  logs: Log[],
+  confirmNoLogs: (block: Block) => Promise<boolean>,
+) {
   const result: { block: Block; logs: Log[] }[] = []
   for (const block of blocks) {
     const blockLogs = logs.filter((l) => l.blockHash === block.hash)
 
-    // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
-    // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.
-    const isBlockValid =
-      (blockLogs.length === 0 && block.logsBloom === LOGS_BLOOM_ZERO) ||
-      (blockLogs.length > 0 &&
-        blockLogs.every((log) => log.blockHash === block.hash))
-
-    if (!isBlockValid) {
+    if (!(await isConsistent(block, blockLogs, confirmNoLogs))) {
       break
     }
 
     result.push({ block, logs: blockLogs })
   }
   return result
+}
+
+async function isConsistent(
+  block: Block,
+  blockLogs: Log[],
+  confirmNoLogs: (block: Block) => Promise<boolean>,
+): Promise<boolean> {
+  if (blockLogs.length > 0) {
+    return true // blockLogs are already matched by hash
+  }
+  if (block.settledHeight === undefined) {
+    // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
+    // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.
+    return block.logsBloom === LOGS_BLOOM_ZERO
+  }
+  if (block.transactions.length === 0) {
+    return true
+  }
+  return await confirmNoLogs(block)
 }

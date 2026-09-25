@@ -1,5 +1,5 @@
 import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { BlockClient } from '../../clients'
+import type { BlockClient, TransactionReceipt } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
@@ -57,6 +57,22 @@ export class BlockProvider {
         }
         assert(out.size === blockNumbers.length, 'Missing block timestamps')
         return out
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  async getTransactionReceipt(txHash: string): Promise<TransactionReceipt> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        assert(
+          client.getTransactionReceipt,
+          'Client does not support fetching transaction receipts',
+        )
+        return await client.getTransactionReceipt(txHash)
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }

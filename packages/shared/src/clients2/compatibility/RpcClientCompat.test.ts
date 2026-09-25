@@ -26,6 +26,46 @@ describe(RpcClientCompat.name, () => {
     })
   })
 
+  describe(RpcClientCompat.prototype.getBlock.name, () => {
+    it('exposes settledHeight only when the header has it', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getBlockByNumber: mockFn()
+            .resolvesToOnce({ ...block(100), settledHeight: 98n })
+            .resolvesToOnce(block(101)),
+        }),
+        'avalanche',
+      )
+
+      const settled = await client.getBlock(100, false)
+      const legacy = await client.getBlock(101, false)
+
+      expect(settled.settledHeight).toEqual(98)
+      expect(legacy.settledHeight).toEqual(undefined)
+    })
+  })
+
+  describe(RpcClientCompat.prototype.getTransactionReceipt.name, () => {
+    it('keeps the block hash', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getTransactionReceipt: mockFn().resolvesTo({
+            blockHash: `0x${'ab'.repeat(32)}`,
+            logs: [{ topics: ['0x1'], data: '0x2', logIndex: 0n }],
+          }),
+        }),
+        'avalanche',
+      )
+
+      const receipt = await client.getTransactionReceipt('0xtx')
+
+      expect(receipt).toEqual({
+        blockHash: `0x${'ab'.repeat(32)}`,
+        logs: [{ topics: ['0x1'], data: '0x2' }],
+      })
+    })
+  })
+
   describe(RpcClientCompat.prototype.getLogs.name, () => {
     it('passes positional topic filters through unchanged', async () => {
       const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
