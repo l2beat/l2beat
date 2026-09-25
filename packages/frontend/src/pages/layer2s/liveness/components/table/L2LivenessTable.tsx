@@ -11,10 +11,11 @@ import { toLivenessTableEntry } from './toTableEntry'
 
 interface Props {
   entries: L2LivenessEntry[]
+  caption: string
   hideType?: boolean
 }
 
-export function L2LivenessTable({ entries, hideType }: Props) {
+export function L2LivenessTable({ entries, caption, hideType }: Props) {
   const { timeRange } = useLivenessTimeRangeContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -45,7 +46,7 @@ export function L2LivenessTable({ entries, hideType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

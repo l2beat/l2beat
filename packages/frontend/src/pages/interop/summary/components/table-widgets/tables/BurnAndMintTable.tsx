@@ -36,6 +36,10 @@ export function BurnAndMintTable({
   })
 
   return (
-    <BasicTable table={table} tableWrapperClassName="pb-0 md:min-h-[210px]" />
+    <BasicTable
+      caption="Burn & Mint protocols"
+      table={table}
+      tableWrapperClassName="pb-0 md:min-h-[210px]"
+    />
   )
 }

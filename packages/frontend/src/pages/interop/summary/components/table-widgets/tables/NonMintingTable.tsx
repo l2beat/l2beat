@@ -36,6 +36,10 @@ export function NonMintingTable({
   })
 
   return (
-    <BasicTable table={table} tableWrapperClassName="pb-0 md:min-h-[210px]" />
+    <BasicTable
+      caption="Non-minting protocols"
+      table={table}
+      tableWrapperClassName="pb-0 md:min-h-[210px]"
+    />
   )
 }

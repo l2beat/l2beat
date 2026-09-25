@@ -77,6 +77,7 @@ export function InteropTokensTableView({
   return (
     <>
       <BasicTable
+        caption="Tokens transferred"
         skeletonCount={TOKENS_PER_PAGE}
         table={table}
         tableWrapperClassName="pb-0"

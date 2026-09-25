@@ -7,6 +7,7 @@ import type { CommonProjectColumnsOptions } from '~/components/table/common-proj
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
+import { getLastShownCellPadding } from '~/components/table/utils/classNames'
 import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/components/tables/categoryToLabel'
 import { sourceToLabel } from '~/server/features/layer2s/tvs/utils/sourceToLabel'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
@@ -210,7 +211,8 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         tooltip:
           'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
         headClassName: getColumnHeaderUnderline(
-          'before:bg-chart-stacked-yellow last:pr-3',
+          'before:bg-chart-stacked-yellow',
+          getLastShownCellPadding('pr-3'),
         ),
       },
     }),
@@ -274,7 +276,10 @@ function getTokenAssetCategoryColumns(opts: {
       isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
-        headClassName: getColumnHeaderUnderline('before:bg-lime-650 last:pr-3'),
+        headClassName: getColumnHeaderUnderline(
+          'before:bg-lime-650',
+          getLastShownCellPadding('pr-3'),
+        ),
       },
     }),
     ...(!opts.excludeRwaRestrictedTokens
@@ -287,7 +292,8 @@ function getTokenAssetCategoryColumns(opts: {
           meta: {
             align: 'right',
             headClassName: getColumnHeaderUnderline(
-              'before:bg-pink-750 last:pr-3',
+              'before:bg-pink-750',
+              getLastShownCellPadding('pr-3'),
             ),
           },
         })

@@ -159,6 +159,7 @@ export function InteropTokenTransfersSection({
         <EmptySelectionNotice />
       ) : (
         <BasicTable
+          caption="Transfers of the token"
           skeletonCount={TRANSFERS_PER_PAGE}
           table={table}
           tableWrapperClassName="pb-0"

@@ -46,7 +46,7 @@ export function L2ActivityTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption="Activity of scaling projects" table={table} />
     </>
   )
 }

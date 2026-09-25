@@ -13,6 +13,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2RiskDaEntry } from '~/server/features/layer2s/risks/data-availability/getL2RiskDaEntries'
 import { L2RiskDaTable } from './table/L2RiskDaTable'
@@ -58,19 +59,38 @@ export function L2RiskDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <L2RiskDaTable entries={entries.rollups} />
+            <L2RiskDaTable
+              entries={entries.rollups}
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'rollups',
+              )}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <L2RiskDaTable entries={entries.validiumsAndOptimiums} />
+            <L2RiskDaTable
+              entries={entries.validiumsAndOptimiums}
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'validiumsAndOptimiums',
+              )}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <L2RiskDaTable entries={entries.others} hideType />
+            <L2RiskDaTable
+              entries={entries.others}
+              caption={getL2TabTableCaption(
+                'Data availability risks of scaling projects',
+                'others',
+              )}
+              hideType
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -61,6 +61,7 @@ export function IntentBridgesTable({
       </p>
       <div className="px-4 md:px-5">
         <BasicTable
+          caption="Intent bridges"
           table={table}
           isLoading={isLoading}
           skeletonCount={8}

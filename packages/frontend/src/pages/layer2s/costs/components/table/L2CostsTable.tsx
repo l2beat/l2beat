@@ -18,9 +18,10 @@ import { getL2CostsColumns } from './columns'
 
 interface Props {
   entries: L2CostsEntry[]
+  caption: string
 }
 
-export function L2CostsTable({ entries }: Props) {
+export function L2CostsTable({ entries, caption }: Props) {
   const trpc = useTRPC()
   const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
@@ -67,7 +68,7 @@ export function L2CostsTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

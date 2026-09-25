@@ -3,7 +3,9 @@ import { useFilterState } from './UseFilterState'
 
 type TableFilterContextValue = ReturnType<typeof useFilterState>
 
-const TableFilterContext = createContext<TableFilterContextValue | null>(null)
+export const TableFilterContext = createContext<TableFilterContextValue | null>(
+  null,
+)
 
 interface Props {
   children: React.ReactNode

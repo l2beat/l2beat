@@ -36,7 +36,10 @@ export function L2RiskSequencingTable({ entries }: Props) {
         </h2>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
-      <BasicTable table={table} />
+      <BasicTable
+        caption="Scaling projects with decentralized sequencing"
+        table={table}
+      />
     </>
   )
 }

@@ -75,7 +75,11 @@ export function InteropTokenOnchainDeploymentsSection({
           <HorizontalSeparator className="my-4" />
         </>
       )}
-      <BasicTable table={table} tableWrapperClassName="pb-0" />
+      <BasicTable
+        caption="Onchain deployments of the token"
+        table={table}
+        tableWrapperClassName="pb-0"
+      />
       {pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">

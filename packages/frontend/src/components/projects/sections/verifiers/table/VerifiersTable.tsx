@@ -32,6 +32,7 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
   })
   return (
     <BasicTable
+      caption="Verifiers"
       table={table}
       renderSubComponent={({ row }) => (
         <VerifierRowDetails verifierHash={row.original} />

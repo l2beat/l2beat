@@ -9,10 +9,11 @@ import { getL2RiskDataAvailabilityColumns } from './columns'
 
 interface Props {
   entries: L2RiskDaEntry[]
+  caption: string
   hideType?: boolean
 }
 
-export function L2RiskDaTable({ entries, hideType }: Props) {
+export function L2RiskDaTable({ entries, caption, hideType }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
   const columns = useMemo(
@@ -40,7 +41,7 @@ export function L2RiskDaTable({ entries, hideType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable caption={caption} table={table} />
     </>
   )
 }

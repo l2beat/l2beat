@@ -1,5 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
+import { getTabTableCaption } from '~/components/table/getTabTableCaption'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type {
@@ -36,7 +37,15 @@ export function L2RiskValidityTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption={getTabTableCaption(
+        'State validation of scaling projects',
+        'Validity',
+      )}
+      table={table}
+    />
+  )
 }
 
 export function L2RiskOptimisticTable({
@@ -62,7 +71,15 @@ export function L2RiskOptimisticTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption={getTabTableCaption(
+        'State validation of scaling projects',
+        'Optimistic',
+      )}
+      table={table}
+    />
+  )
 }
 
 export function L2RiskNoProofsTable({
@@ -88,5 +105,13 @@ export function L2RiskNoProofsTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <BasicTable
+      caption={getTabTableCaption(
+        'State validation of scaling projects',
+        'No Proofs',
+      )}
+      table={table}
+    />
+  )
 }

@@ -13,6 +13,7 @@ import {
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2LivenessEntry } from '~/server/features/layer2s/liveness/getL2LivenessEntries'
 import { useLivenessTimeRangeContext } from './LivenessTimeRangeContext'
@@ -60,19 +61,38 @@ export function L2LivenessTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <L2LivenessTable entries={entries.rollups} />
+            <L2LivenessTable
+              entries={entries.rollups}
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'rollups',
+              )}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <L2LivenessTable entries={entries.validiumsAndOptimiums} />
+            <L2LivenessTable
+              entries={entries.validiumsAndOptimiums}
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'validiumsAndOptimiums',
+              )}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <L2LivenessTable entries={entries.others} hideType />
+            <L2LivenessTable
+              entries={entries.others}
+              caption={getL2TabTableCaption(
+                'Liveness of scaling projects',
+                'others',
+              )}
+              hideType
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

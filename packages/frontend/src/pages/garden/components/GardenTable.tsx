@@ -16,7 +16,10 @@ import type { GardenEntry } from '../getGardenData'
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   const entranceHold = useEntranceHold()
   return (
-    <Table className={cn('min-w-[680px]', entranceHold)}>
+    <Table
+      caption="CROPS evaluations of projects"
+      className={cn('min-w-[680px]', entranceHold)}
+    >
       <TableBody>
         {entries.map((entry, rowIndex) => (
           <TableRow key={entry.slug} highlightId={undefined}>

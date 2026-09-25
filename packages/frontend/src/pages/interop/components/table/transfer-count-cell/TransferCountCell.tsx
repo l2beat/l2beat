@@ -184,6 +184,7 @@ export function TransferDetailsDialog({
             className="max-h-[60vh] overflow-x-auto overflow-y-auto"
           >
             <BasicTable
+              caption="Transfers"
               table={table}
               isLoading={isLoading}
               skeletonCount={8}
@@ -215,6 +216,7 @@ export function TransferDetailsDialog({
         >
           <div className="mx-6">
             <BasicTable
+              caption="Transfers"
               table={table}
               isLoading={isLoading}
               skeletonCount={8}

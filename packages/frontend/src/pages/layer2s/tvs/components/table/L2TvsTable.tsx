@@ -6,6 +6,7 @@ import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
+import { getL2TabTableCaption } from '~/pages/layer2s/utils/getL2TabTableCaption'
 import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
@@ -15,6 +16,11 @@ interface Props {
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   entries: L2TvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
+}
+
+const BREAKDOWN_LABELS: Record<Props['breakdownType'], string> = {
+  bridgeType: 'by bridge type',
+  assetCategory: 'by asset category',
 }
 
 export function L2TvsTable({ tab, entries, breakdownType }: Props) {
@@ -69,7 +75,10 @@ export function L2TvsTable({ tab, entries, breakdownType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        caption={`${getL2TabTableCaption('Total value secured by scaling projects', tab)}, ${BREAKDOWN_LABELS[breakdownType]}`}
+        table={table}
+      />
     </>
   )
 }

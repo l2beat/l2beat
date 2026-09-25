@@ -11,7 +11,7 @@ import { useDevice } from '~/hooks/useDevice'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import type { FilterableValueId } from './filterableValue'
-import { filterIdToLabel } from './filterableValue'
+import { filterIdToLabel, getFilterOperatorLabel } from './filterableValue'
 import { useTableFilterContext } from './TableFilterContext'
 import {
   TableFilterInternalContextProvider,
@@ -53,7 +53,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
           })
         }}
       >
-        {operatorLabel(filter)}
+        {getFilterOperatorLabel(filter)}
       </button>
       <VerticalSeparator className="h-[30px]" />
       <TableFilterInternalContextProvider>
@@ -113,12 +113,4 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
       </CommandDialog>
     </>
   )
-}
-
-function operatorLabel(filter: Filter) {
-  if (filter.inversed) {
-    return 'is not'
-  }
-
-  return filter.values.length > 1 ? 'is any of' : 'is'
 }
