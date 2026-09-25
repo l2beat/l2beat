@@ -111,14 +111,14 @@ export interface GetRequestsResponse {
 }
 
 interface RelayApiClientOptions {
-  combinedCallsPerMinute: number
+  callsPerMinutePerKey: number
   maxAttempts: number
   initialRetryDelayMs: number
   maxRetryDelayMs: number
 }
 
 const DEFAULT_OPTIONS: RelayApiClientOptions = {
-  combinedCallsPerMinute: 380,
+  callsPerMinutePerKey: 190,
   maxAttempts: 4,
   initialRetryDelayMs: 1_000,
   maxRetryDelayMs: 4_000,
@@ -139,9 +139,9 @@ export class RelayApiClient {
     this.logger = logger.for(this)
     this.options = { ...DEFAULT_OPTIONS, ...options }
     assert(
-      Number.isInteger(this.options.combinedCallsPerMinute) &&
-        this.options.combinedCallsPerMinute > 0,
-      'Relay combinedCallsPerMinute must be a positive integer',
+      Number.isInteger(this.options.callsPerMinutePerKey) &&
+        this.options.callsPerMinutePerKey > 0,
+      'Relay callsPerMinutePerKey must be a positive integer',
     )
 
     const distinctApiKeys = [
@@ -155,8 +155,12 @@ export class RelayApiClient {
     assert(distinctApiKeys.length > 0, 'Relay API key must not be empty')
     this.apiKeys = distinctApiKeys
     this.rateLimiter = new RateLimiter({
-      callsPerMinute: this.options.combinedCallsPerMinute,
+      callsPerMinute: this.options.callsPerMinutePerKey * this.apiKeyCount,
     })
+  }
+
+  get apiKeyCount(): number {
+    return this.apiKeys.length
   }
 
   async getRequests(

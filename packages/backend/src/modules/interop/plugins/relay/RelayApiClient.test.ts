@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import FakeTimers from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { RelayApiClient } from './RelayApiClient'
 
@@ -10,9 +11,9 @@ describe(RelayApiClient.name, () => {
     expect(
       () =>
         new RelayApiClient(httpClient, Logger.SILENT, 'api-key', {
-          combinedCallsPerMinute: 0,
+          callsPerMinutePerKey: 0,
         }),
-    ).toThrow('Relay combinedCallsPerMinute must be a positive integer')
+    ).toThrow('Relay callsPerMinutePerKey must be a positive integer')
   })
 
   it('rejects an empty API key list', () => {
@@ -21,6 +22,82 @@ describe(RelayApiClient.name, () => {
     expect(() => new RelayApiClient(httpClient, Logger.SILENT, ' , ')).toThrow(
       'Relay API key must not be empty',
     )
+  })
+
+  describe('per-key rate limit', () => {
+    const cases = [
+      { apiKeys: 'first-key', expectedKeys: ['first-key'] },
+      {
+        apiKeys: 'first-key,second-key',
+        expectedKeys: ['first-key', 'second-key'],
+      },
+      {
+        apiKeys: 'first-key,second-key,third-key',
+        expectedKeys: ['first-key', 'second-key', 'third-key'],
+      },
+      {
+        apiKeys: ' first-key, second-key, first-key, , second-key ',
+        expectedKeys: ['first-key', 'second-key'],
+      },
+    ]
+
+    for (const { apiKeys, expectedKeys } of cases) {
+      it(`limits all attempts per distinct key for "${apiKeys}"`, async () => {
+        const clock = FakeTimers.install({ now: 1_000_000 })
+        const calls: { apiKey: string | null; time: number }[] = []
+        const httpClient = mockObject<HttpClient>({
+          fetchRaw: mockFn<HttpClient['fetchRaw']>().executes(
+            async (_url, init) => {
+              calls.push({
+                apiKey: new Headers(init.headers).get('x-api-key'),
+                time: Date.now(),
+              })
+              return calls.length === 1
+                ? new Response('{}', { status: 429 })
+                : new Response(JSON.stringify({ requests: [] }))
+            },
+          ),
+        })
+        const client = new RelayApiClient(httpClient, Logger.SILENT, apiKeys, {
+          callsPerMinutePerKey: 6,
+        })
+
+        try {
+          expect(client.apiKeyCount).toEqual(expectedKeys.length)
+          const requests = Promise.all(
+            Array.from({ length: 24 }, () => client.getRequests()),
+          )
+
+          await clock.tickAsync(59_999)
+
+          expect(calls.length).toEqual(6 * expectedKeys.length)
+          for (const apiKey of expectedKeys) {
+            const perKeyCalls = calls.filter((call) => call.apiKey === apiKey)
+            expect(perKeyCalls.length).toEqual(6)
+          }
+
+          await clock.runAllAsync()
+          await requests
+
+          expect(calls.map((call) => call.apiKey)).toEqual(
+            Array.from(
+              { length: 25 },
+              (_, i) => expectedKeys[i % expectedKeys.length],
+            ),
+          )
+          for (const apiKey of expectedKeys) {
+            const perKeyCalls = calls.filter((call) => call.apiKey === apiKey)
+            for (let i = 1; i < perKeyCalls.length; i++) {
+              expect(
+                (perKeyCalls[i]?.time ?? 0) - (perKeyCalls[i - 1]?.time ?? 0),
+              ).toBeGreaterThanOrEqual(10_000)
+            }
+          }
+        } finally {
+          clock.uninstall()
+        }
+      })
+    }
   })
 
   describe(RelayApiClient.prototype.getRequests.name, () => {
@@ -330,7 +407,7 @@ function createClient(
   apiKeys = 'api-key',
 ) {
   return new RelayApiClient(httpClient, logger, apiKeys, {
-    combinedCallsPerMinute: 1_000_000_000,
+    callsPerMinutePerKey: 1_000_000_000,
     initialRetryDelayMs: 0,
   })
 }
