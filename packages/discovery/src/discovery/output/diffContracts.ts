@@ -1,4 +1,4 @@
-import { diff } from '@l2beat/shared-pure'
+import { diff } from '@l2beat/shared'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'

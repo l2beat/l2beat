@@ -87,7 +87,7 @@ export {
   type DiffHistorySection,
   type DiffHistorySectionKind,
 } from './discovery/output/DiffHistoryParser'
-export { type Difference, diff } from '@l2beat/shared-pure'
+export { type Difference, diff } from '@l2beat/shared'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
