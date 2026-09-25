@@ -7,6 +7,7 @@ import type {
   InclusionDelayEntityLegendEntry,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import { mergeInclusionDelaySeries } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import { SubsectionHeading } from '../Subsection'
 import {
   InclusionDelayChart,
   type InclusionDelayYAxisScale,
@@ -45,9 +46,9 @@ export function ProjectInclusionDelayChart({
     <div className="my-6 flex flex-col">
       <ChartControlsWrapper>
         <div className="flex min-w-0 flex-col">
-          <h4 className="font-bold text-heading-16 md:text-heading-20">
+          <SubsectionHeading className="font-bold text-heading-16 md:text-heading-20">
             Inclusion delay by censorship fraction
-          </h4>
+          </SubsectionHeading>
           <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
             T99 inclusion delay in a static sequencer set by censoring fraction
             of sequencers/validators

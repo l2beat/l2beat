@@ -64,11 +64,11 @@ export function ProjectHeader({
               className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
             >
               <LiveIndicator />
-              <h3 className="font-medium text-negative text-xs uppercase leading-none">
+              <span className="font-medium text-negative text-xs uppercase leading-none">
                 {ongoingAnomaly === 'single'
                   ? 'Ongoing anomaly'
                   : 'Ongoing anomalies'}
-              </h3>
+              </span>
               <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
             </a>
           )}
@@ -77,11 +77,11 @@ export function ProjectHeader({
               href="#updates"
               className="flex h-8 items-center justify-center gap-2 rounded border border-brand p-2"
             >
-              <h3 className="font-medium text-brand text-xs uppercase leading-none">
+              <span className="font-medium text-brand text-xs uppercase leading-none">
                 {recentUpdatesCount === 1
                   ? '1 recent update'
                   : `${recentUpdatesCount} recent updates`}
-              </h3>
+              </span>
               <ChevronIcon className="-rotate-90 size-2.5 fill-brand" />
             </a>
           )}

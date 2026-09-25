@@ -9,6 +9,7 @@ import {
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import { formatTimestamp } from '~/utils/dates'
+import { SubsectionHeading } from '../Subsection'
 import type { DataPostedSectionProps } from './DataPostedSection'
 
 export function DataPostedTrackedTransactions({
@@ -53,9 +54,9 @@ export function DataPostedTrackedTransactions({
           </Checkbox>
         )}
         <div className="mb-6">
-          <h2 className="font-medium text-base text-secondary">
+          <SubsectionHeading className="font-medium text-base text-secondary">
             Blob submissions
-          </h2>
+          </SubsectionHeading>
           {transactions.map((transaction, index) => (
             <TransactionDetails
               key={index}
