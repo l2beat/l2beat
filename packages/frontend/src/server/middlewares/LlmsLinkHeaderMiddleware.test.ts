@@ -15,4 +15,10 @@ describe(getLinkHeader.name, () => {
       '<https://l2beat.com/layer2s/summary.md>; rel="alternate"; type="text/markdown", <https://l2beat.com/llms.txt>; rel="describedby"',
     )
   })
+
+  it('finds the alternate when the page path has a trailing slash', () => {
+    expect(getLinkHeader('/layer2s/summary/')).toEqual(
+      getLinkHeader('/layer2s/summary'),
+    )
+  })
 })
