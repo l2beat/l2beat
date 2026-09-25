@@ -20,7 +20,10 @@ import {
   contractFlatteningHash,
   getHashForMatchingFromSources,
 } from '../../flatten/utils'
-import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import {
+  fileExistsCaseSensitive,
+  fingerprintDirectoryTree,
+} from '../../utils/fsLayer'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { ColorContract } from '../config/ColorConfig'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
@@ -85,6 +88,7 @@ export class TemplateService {
   private hashIndex:
     | Map<string, { templateId: string; criteria?: ShapeCriteria }[]>
     | undefined
+  private templatesFingerprint: string | undefined
 
   constructor(private readonly rootPath: string) {}
 
@@ -458,6 +462,14 @@ export class TemplateService {
   }
 
   reload() {
+    const templatesPath = path.join(this.rootPath, TEMPLATES_PATH)
+    const fingerprint = existsSync(templatesPath)
+      ? fingerprintDirectoryTree(templatesPath)
+      : ''
+    if (fingerprint === this.templatesFingerprint) {
+      return
+    }
+    this.templatesFingerprint = fingerprint
     this.shapeHashes = undefined
     this.loadedTemplates = {}
     this.hashIndex = undefined
