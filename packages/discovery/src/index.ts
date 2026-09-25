@@ -1,4 +1,3 @@
-export { type Difference, diff } from '@l2beat/shared'
 export { DiscoverCommandArgs, discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export {
