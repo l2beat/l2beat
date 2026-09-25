@@ -1,8 +1,10 @@
 import type { Project, ProjectDefiCategory } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
+import { getDefiTvlDataSource } from './getDefiTvlDataSource'
 import {
   type DefiDependency,
   type DefiDependencyProject,
@@ -25,6 +27,7 @@ export interface DefiSummaryEntry {
   description: string
   category: ProjectDefiCategory
   totalValueLockedUsd?: number
+  tvlDataSource?: string
   dependencies?: DefiDependency[]
   isUnderReview: boolean
 }
@@ -58,6 +61,9 @@ export function buildDefiSummaryEntries(
         description: project.display.description,
         category: project.defiInfo.category,
         totalValueLockedUsd: tvlByProject.get(project.id),
+        tvlDataSource: project.defiInfo.tvl
+          ? getDefiTvlDataSource(project.defiInfo.tvl).name
+          : undefined,
         dependencies:
           project.externalDependencies !== undefined
             ? resolveDefiDependencies(
@@ -74,9 +80,21 @@ export function buildDefiSummaryEntries(
 async function getTotalValueLockedByProject(
   projects: DefiProject[],
 ): Promise<Map<string, number>> {
-  const trackedIds = projects
-    .filter((project) => project.tvsConfig !== undefined)
+  const l2beatIds = projects
+    .filter((project) => project.defiInfo.tvl?.source === 'l2beat')
     .map((project) => project.id)
+  const externalIds = projects
+    .filter((project) => project.defiInfo.tvl?.source === 'defillama')
+    .map((project) => project.id)
+  const externalChainCountByProject = new Map<string, number>(
+    projects.flatMap((project) => {
+      const tvl = project.defiInfo.tvl
+      return tvl?.source === 'defillama'
+        ? [[project.id, tvl.chains.length] as const]
+        : []
+    }),
+  )
+  const trackedIds = [...l2beatIds, ...externalIds]
 
   if (trackedIds.length === 0) {
     return new Map()
@@ -91,18 +109,30 @@ async function getTotalValueLockedByProject(
     )
   }
 
-  const values = await getDb().tvsTokenValue.getSummedByProjectForRanges(
-    trackedIds,
-    [optionToRange('3d')],
-    {
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: false,
-    },
-  )
+  const [l2beatValues, externalValues] = await Promise.all([
+    getDb().tvsTokenValue.getSummedByProjectForRanges(
+      l2beatIds,
+      [optionToRange('3d')],
+      {
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: false,
+      },
+    ),
+    getDb().defiTvl.getLatestByProjects(externalIds),
+  ])
 
   const tvlByProject = new Map<string, number>()
-  for (const row of values) {
+  for (const row of l2beatValues) {
     tvlByProject.set(row.project, row.value)
+  }
+  const freshnessCutoff = UnixTime.now() - 3 * UnixTime.DAY
+  for (const row of externalValues) {
+    if (
+      row.timestamp >= freshnessCutoff &&
+      row.chainCount === externalChainCountByProject.get(row.projectId)
+    ) {
+      tvlByProject.set(row.projectId, row.valueUsd)
+    }
   }
   return tvlByProject
 }
