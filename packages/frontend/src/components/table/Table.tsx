@@ -10,19 +10,24 @@ import {
   getTableOuterWrapperClassName,
   getTableScrollWrapperClassName,
 } from './utils/classNames'
+import { measureStickyHeaderTravel } from './utils/measureStickyHeaderTravel'
 
 const Table = ({
   className,
   tableWrapperClassName,
+  stickyHeader,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  /** Pair with `sticky-table-header` on the table's `thead`. */
+  stickyHeader?: boolean
 }) => {
   return (
-    <div className={getTableOuterWrapperClassName()}>
+    <div className={getTableOuterWrapperClassName(stickyHeader)}>
       <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
+            ref={stickyHeader ? measureStickyHeaderTravel : undefined}
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}

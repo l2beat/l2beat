@@ -10,8 +10,9 @@ export type BasicTableGroupParams = {
   isLastInGroup: boolean
 }
 
-export function getTableOuterWrapperClassName() {
-  return 'max-md:-mr-4'
+export function getTableOuterWrapperClassName(stickyHeader?: boolean) {
+  // The timeline sits outside the horizontal scroller so it tracks the page.
+  return cn('max-md:-mr-4', stickyHeader && 'sticky-table-header-timeline')
 }
 
 export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
@@ -32,6 +33,7 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
 }) {
   return cn(
     'font-medium text-primary tracking-[-0.13px]',
+    getStickyHeaderCellBackground({ isGrouped: !params.isPlaceholder }),
     !params.isPlaceholder && params.hasHeader && 'rounded-t-lg px-6 pt-4',
     params.isPinned && getRowClassNamesWithoutOpacity(null),
   )
@@ -53,6 +55,7 @@ export function getBasicTableHeaderCellClassName(params: {
 }) {
   const { groupParams, isPinned, headClassName, compact } = params
   return cn(
+    getStickyHeaderCellBackground({ isGrouped: !!groupParams }),
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
       groupParams.isLastInGroup && 'pr-6',
@@ -100,6 +103,17 @@ export function getBasicTableBodyCellClassName(params: {
   )
 }
 
-export function getBasicTableColumnFillerClassName() {
-  return 'h-full w-4 min-w-4'
+export function getBasicTableColumnFillerClassName(isHeader: boolean) {
+  return cn(
+    'h-full w-4 min-w-4',
+    isHeader && getStickyHeaderCellBackground({ isGrouped: false }),
+  )
+}
+
+/*
+  The sticky header slides over body rows, so its cells must be opaque. They
+  repeat what the `ColGroup` paints beneath them: the group tint or the card.
+*/
+function getStickyHeaderCellBackground(params: { isGrouped: boolean }) {
+  return params.isGrouped ? 'bg-header-secondary' : 'bg-surface-primary'
 }

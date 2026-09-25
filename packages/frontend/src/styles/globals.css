@@ -619,6 +619,38 @@
   scrollbar-gutter: stable;
 }
 
+/*
+  Sticky table header. The table's horizontal scroller also traps
+  `position: sticky` vertically, so the header is instead pushed down by a
+  scroll-driven animation tracking the table's outer wrapper against the page.
+  Being compositor-driven, it doesn't lag behind scrolling like a JS listener.
+  `--sticky-table-header-top` reserves room for sticky bars above the table;
+  `--sticky-table-header-travel` is measured in `measureStickyHeaderTravel`.
+*/
+@utility sticky-table-header-timeline {
+  view-timeline: --sticky-table-header block;
+  view-timeline-inset: var(--sticky-table-header-top, 0px) 0px;
+}
+
+@utility sticky-table-header {
+  position: relative;
+  z-index: 20;
+
+  /* Without timeline support the animation would run on time and jump to its end. */
+  @supports (animation-timeline: view()) {
+    animation: sticky-table-header linear both;
+    animation-timeline: --sticky-table-header;
+    animation-range: exit-crossing 0% exit-crossing
+      var(--sticky-table-header-travel, 0px);
+  }
+}
+
+@keyframes sticky-table-header {
+  to {
+    transform: translateY(var(--sticky-table-header-travel, 0px));
+  }
+}
+
 @utility fade-out-to-left-* {
   --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
   --fade-size: --value([length]);

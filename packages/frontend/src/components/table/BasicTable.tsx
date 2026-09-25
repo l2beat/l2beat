@@ -120,11 +120,12 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         />
       )}
       <Table
+        stickyHeader
         tableWrapperClassName={props.tableWrapperClassName}
         {...getPersistedTableAttributes(props.table)}
       >
         {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader>
+        <TableHeader className="sticky-table-header">
           {groupedHeader && (
             <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
           )}
@@ -500,7 +501,7 @@ function BasicTableColumnFiller({
 }) {
   return (
     <Comp
-      className={getBasicTableColumnFillerClassName()}
+      className={getBasicTableColumnFillerClassName(Comp === 'th')}
       rowSpan={rowSpan}
       colSpan={colSpan}
     />

@@ -11,6 +11,7 @@ import { OverflowWrapper } from './OverflowWrapper'
  */
 const DirectoryTabs = ({
   ref,
+  className,
   defaultValue,
   onValueChange,
   ...props
@@ -26,6 +27,7 @@ const DirectoryTabs = ({
     <TabsPrimitive.Root
       ref={ref}
       value={selectedTab}
+      className={cn(TABS_LIST_HEIGHT_FOR_STICKY_TABLE_HEADERS, className)}
       onValueChange={(value) => {
         onValueChange?.(value)
         setSelectedTab(value)
@@ -38,6 +40,13 @@ const DirectoryTabs = ({
   )
 }
 DirectoryTabs.displayName = TabsPrimitive.Root.displayName
+
+/*
+  Tables inside tabs keep their sticky header below the sticky tabs list, so
+  this must match the list's height: its top padding plus the trigger height.
+*/
+const TABS_LIST_HEIGHT_FOR_STICKY_TABLE_HEADERS =
+  '[--sticky-table-header-top:40px] md:[--sticky-table-header-top:56px]'
 
 const DirectoryTabsList = ({
   ref,
