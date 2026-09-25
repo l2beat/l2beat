@@ -38,6 +38,14 @@ const LLMS_TXT = {
     '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
+    '',
+    'When to use L2BEAT:',
+    '',
+    '- To answer which layer 2s exist, how mature they are (stage), what their risks are and how they compare.',
+    '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
+    '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
+    '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
+    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling and its infrastructure.',
   ].join('\n'),
 }
 

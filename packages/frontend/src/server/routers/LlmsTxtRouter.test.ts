@@ -72,6 +72,13 @@ describe(createLlmsTxtRouter.name, () => {
     )
   })
 
+  it('tells agents when to use the site, before the link sections', async () => {
+    const body = await getLlmsTxt()
+    const [notes] = body.split('\n## ')
+
+    expect(notes ?? '').toInclude('When to use L2BEAT:')
+  })
+
   it('keeps secondary links in the Optional section', async () => {
     const urls = getLinks(await getLlmsTxt(), 'Optional').map((l) => l.url)
 

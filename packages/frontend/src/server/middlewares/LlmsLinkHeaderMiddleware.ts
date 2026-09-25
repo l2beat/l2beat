@@ -9,7 +9,7 @@ import { getMarkdownAlternatePath } from '~/server/routers/MarkdownAlternatesRou
  */
 export function LlmsLinkHeaderMiddleware() {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (req.method === 'GET' && !hasExtension(req.path)) {
+    if (isPageRequest(req) && !hasExtension(req.path)) {
       res.header('Link', getLinkHeader(req.path))
     }
     next()
@@ -25,6 +25,10 @@ export function getLinkHeader(path: string): string {
     )
   }
   return links.join(', ')
+}
+
+function isPageRequest(req: Request) {
+  return req.method === 'GET' || req.method === 'HEAD'
 }
 
 function hasExtension(path: string) {
