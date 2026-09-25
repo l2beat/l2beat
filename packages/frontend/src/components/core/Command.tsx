@@ -21,7 +21,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary primary-card:bg-surface-secondary focus-visible:border-brand focus-visible:outline-none',
+      'flex size-full flex-col overflow-hidden rounded-[inherit] border border-divider bg-surface-primary primary-card:bg-surface-secondary focus-visible:border-brand focus-visible:outline-none dark:border-transparent dark:focus-visible:border-brand',
       className,
     )}
     {...props}
