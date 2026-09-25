@@ -92,7 +92,12 @@ function reportProject(pair: ProjectPair): ProjectReport {
     ...Object.keys(pair.after),
   ])
   for (const field of [...fields].sort()) {
-    const changes = fieldChanges(field, pair.before[field], pair.after[field])
+    const changes = fieldChanges(
+      field,
+      pair.before[field],
+      pair.after[field],
+      rediscovered !== undefined,
+    )
     if (changes.length === 0) {
       continue
     }
@@ -130,19 +135,19 @@ function wholeProject(
   }
 }
 
-const IGNORED_PATHS = new Set(['discoveryInfo.baseTimestamp'])
-
 function fieldChanges(
   field: string,
   before: unknown,
   after: unknown,
+  rediscovered: boolean,
 ): Difference[] {
   if (field === 'discoveryUpdates') {
     return []
   }
-  return diff(before, after).filter(
-    (change) => !IGNORED_PATHS.has(`${field}.${change.path.join('.')}`),
-  )
+  return diff(before, after).filter((change) => {
+    const path = `${field}.${change.path.join('.')}`
+    return !(rediscovered && path === 'discoveryInfo.baseTimestamp')
+  })
 }
 
 function rediscoveredLine(before: Project, after: Project) {
@@ -159,37 +164,53 @@ function rediscoveredLine(before: Project, after: Project) {
 
 interface DiscoveryUpdate {
   id: string
-  timestamp: number
+  timestamp: number | null
   description: string
   isHighSeverity: boolean
   changeCount: number
+  raw: Record<string, unknown>
 }
 
 function discoveryUpdateLines(before: Project, after: Project): string[] {
   const entriesBefore = discoveryUpdates(before)
   const entriesAfter = discoveryUpdates(after)
-  const idsBefore = new Set(entriesBefore.map((e) => e.id))
-  const idsAfter = new Set(entriesAfter.map((e) => e.id))
+  const byIdBefore = new Map(entriesBefore.map((e) => [e.id, e]))
+  const byIdAfter = new Map(entriesAfter.map((e) => [e.id, e]))
 
   const lines: string[] = []
   for (const entry of entriesAfter) {
-    if (!idsBefore.has(entry.id)) {
+    const previous = byIdBefore.get(entry.id)
+    if (previous === undefined) {
       lines.push(discoveryUpdateLine('+', entry))
+    } else {
+      lines.push(...editedDiscoveryUpdateLines(previous, entry))
     }
   }
   for (const entry of entriesBefore) {
-    if (!idsAfter.has(entry.id)) {
+    if (!byIdAfter.has(entry.id)) {
       lines.push(discoveryUpdateLine('-', entry))
     }
   }
   return lines
 }
 
+function editedDiscoveryUpdateLines(
+  before: DiscoveryUpdate,
+  after: DiscoveryUpdate,
+): string[] {
+  const field = `discoveryUpdates[id=${after.id}]`
+  return diff(before.raw, after.raw).flatMap((change) =>
+    renderChange(field, change, before.raw, after.raw),
+  )
+}
+
 function discoveryUpdateLine(prefix: string, entry: DiscoveryUpdate) {
+  const date =
+    entry.timestamp === null ? 'unknown date' : isoDate(entry.timestamp)
   const severity = entry.isHighSeverity ? ' [HIGH SEVERITY]' : ''
   const count = plural(entry.changeCount, 'change')
   const description = entry.description.split('\n').filter(Boolean).join(' ')
-  return `${prefix} ${isoDate(entry.timestamp)}${severity} (${count}): ${description}`
+  return `${prefix} ${date}${severity} (${count}): ${description}`
 }
 
 function discoveryUpdates(project: Project): DiscoveryUpdate[] {
@@ -201,10 +222,11 @@ function discoveryUpdates(project: Project): DiscoveryUpdate[] {
     assertRecord(entry)
     return {
       id: String(entry.id),
-      timestamp: Number(entry.timestamp),
+      timestamp: typeof entry.timestamp === 'number' ? entry.timestamp : null,
       description: String(entry.description),
       isHighSeverity: entry.isHighSeverity === true,
       changeCount: Number(entry.changeCount),
+      raw: entry,
     }
   })
 }
@@ -215,7 +237,7 @@ function renderChange(
   before: unknown,
   after: unknown,
 ): string[] {
-  const root = change.kind === 'remove' ? before : after
+  const root = change.kind === 'create' ? after : before
   const path = field + renderPath(change.path, root)
   if (change.kind === 'create') {
     return renderValueLine('+', path, change.rhs)

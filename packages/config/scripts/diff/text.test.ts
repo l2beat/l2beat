@@ -112,6 +112,84 @@ describe(diffsToText.name, () => {
     )
   })
 
+  it('names a changed element by its pre-change position when the array shifted', () => {
+    const before = project({ items: [{ name: 'A', value: 1 }] })
+    const after = project({
+      items: [
+        { name: 'X', value: 0 },
+        { name: 'A', value: 2 },
+      ],
+    })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('+ items[name=X]: {"name":"X","value":0}')
+    expect(text).toInclude('~ items[name=A].value: 1 -> 2')
+  })
+
+  it('reports edits to an existing discovery update', () => {
+    const entry = {
+      id: 'abc',
+      timestamp: 1789656139,
+      description: 'Old text.',
+      isHighSeverity: false,
+      changeCount: 1,
+    }
+    const before = project({ discoveryUpdates: [entry] })
+    const after = project({
+      discoveryUpdates: [
+        { ...entry, description: 'New text.', isHighSeverity: true },
+      ],
+    })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('| p | modified | 2 discovery updates |')
+    expect(text).toInclude(
+      '~ discoveryUpdates[id=abc].description: "Old text." -> "New text."',
+    )
+    expect(text).toInclude(
+      '~ discoveryUpdates[id=abc].isHighSeverity: false -> true',
+    )
+  })
+
+  it('prints an unknown date for legacy discovery updates without a timestamp', () => {
+    const entry = {
+      id: 'abc',
+      timestamp: null,
+      description: 'Legacy.',
+      isHighSeverity: false,
+      changeCount: 1,
+    }
+    const before = project({ discoveryUpdates: [] })
+    const after = project({ discoveryUpdates: [entry] })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).toInclude('+ unknown date (1 change): Legacy.')
+    expect(text).not.toInclude('1970')
+  })
+
+  it('reports a base timestamp that appears or disappears', () => {
+    const before = project({ discoveryInfo: { hasDiscoUi: false } })
+    const after = project({
+      discoveryInfo: { baseTimestamp: 1789656139, hasDiscoUi: false },
+    })
+    const text = diffsToText({
+      ...commits,
+      projectsBefore: [before],
+      projectsAfter: [after],
+    })
+    expect(text).not.toInclude('Rediscovered')
+    expect(text).toInclude('+ discoveryInfo.baseTimestamp: 1789656139')
+  })
+
   it('omits projects without differences', () => {
     const same = project({ display: { name: 'Same' } })
     const text = diffsToText({
