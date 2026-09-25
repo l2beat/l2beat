@@ -217,6 +217,124 @@ describe(TvsPriceIndexer.name, () => {
       expect(safeHeight).toEqual(adjustedTo)
     })
 
+    it('quarantines failing configurations and keeps syncing the others', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      const configs = [
+        config('config-1', 'token-1'),
+        config('config-2', 'bad'),
+        config('config-3', 'token-3'),
+        config('config-4', 'token-4'),
+        config('config-5', 'token-5'),
+        config('config-6', 'token-6'),
+      ]
+
+      const priceProvider = mockObject<PriceProvider>({
+        getAdjustedTo: mockFn().returns(adjustedTo),
+        getUsdPriceHistoryHourly: mockFn(async (coingeckoId: CoingeckoId) => {
+          if (coingeckoId === CoingeckoId('bad')) {
+            throw new Error('Network error')
+          }
+          return [{ timestamp: UnixTime(150), value: 1500 }]
+        }),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([UnixTime(150)]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+        upsertMany: mockFn().returns(undefined),
+      })
+
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: configs,
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, configs)
+      const safeHeight = await updateFn()
+
+      // the failing configuration does not block the others
+      expect(safeHeight).toEqual(adjustedTo)
+      expect(tvsPriceRepository.upsertMany).toHaveBeenNthCalledWith(
+        1,
+        configs
+          .filter((c) => c.properties.priceId !== 'bad')
+          .map((c) => ({
+            configurationId: c.id,
+            timestamp: UnixTime(150),
+            priceUsd: 1500,
+            priceId: c.properties.priceId,
+          })),
+      )
+      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenCalledTimes(6)
+
+      // the quarantined configuration is skipped on subsequent updates
+      const updateFn2 = await indexer.multiUpdate(from, to, configs)
+      await updateFn2()
+
+      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenCalledTimes(11)
+    })
+
+    it('rethrows when too many configurations fail', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      // 2 out of 6 failing configurations exceed the allowed
+      // quarantined ratio, so the error is treated as systemic
+      const configs = [
+        config('config-1', 'token-1'),
+        config('config-2', 'bad-1'),
+        config('config-3', 'bad-2'),
+        config('config-4', 'token-4'),
+        config('config-5', 'token-5'),
+        config('config-6', 'token-6'),
+      ]
+
+      const priceProvider = mockObject<PriceProvider>({
+        getAdjustedTo: mockFn().returns(adjustedTo),
+        getUsdPriceHistoryHourly: mockFn(async (coingeckoId: CoingeckoId) => {
+          if (String(coingeckoId).startsWith('bad')) {
+            throw new Error('Network error')
+          }
+          return [{ timestamp: UnixTime(150), value: 1500 }]
+        }),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([UnixTime(150)]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: configs,
+          priceProvider,
+          db: mockDatabase({ tvsPrice: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await expect(async () => {
+        await indexer.multiUpdate(from, to, configs)
+      }).toBeRejectedWith('Network error')
+    })
+
     it('rethrows other errors', async () => {
       const from = 100
       const to = 300
