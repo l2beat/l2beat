@@ -118,15 +118,3 @@
 .mdc.sequencing-censorship-resistance .mdc-h3 {
   @apply mt-5 mb-2 text-heading-16;
 }
-
-.mdc.zk-description .mdc-h1 {
-  @apply text-xl font-bold;
-}
-
-.mdc.zk-description .mdc-h2 {
-  @apply text-xl font-bold;
-}
-
-.mdc.zk-description .mdc-h3 {
-  @apply text-xl font-bold;
-}

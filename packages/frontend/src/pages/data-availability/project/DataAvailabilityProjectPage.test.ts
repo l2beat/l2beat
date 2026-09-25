@@ -1,4 +1,5 @@
 import { PROJECT_COUNTDOWNS } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
@@ -170,7 +171,9 @@ function getHeadingOutline(html: string): string[] {
 // Page chrome (search dialog, links accordion) precedes the sections and is
 // not what these tests are about.
 function headingsFromFirstSection(outline: string[]): string[] {
-  return outline.slice(outline.indexOf('h2 Detailed description'))
+  const firstSection = outline.indexOf('h2 Detailed description')
+  assert(firstSection !== -1, `No first section heading in ${outline}`)
+  return outline.slice(firstSection)
 }
 
 // Repeats until nothing changes, so a tag split across a removed one is
