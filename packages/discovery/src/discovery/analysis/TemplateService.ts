@@ -349,7 +349,7 @@ export class TemplateService {
       discovery.usedTemplates,
     )) {
       if (
-        !this.exists(templateId) ||
+        allShapes[templateId] === undefined ||
         templateHash !== this.getTemplateHash(templateId)
       ) {
         outdatedTemplates.push(templateId)
