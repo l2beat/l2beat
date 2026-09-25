@@ -17,6 +17,7 @@ import {
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
+import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
@@ -24,6 +25,7 @@ import { loadPagePreloads } from './PagePreloads'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createLlmsTxtRouter } from './routers/LlmsTxtRouter'
+import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
@@ -56,6 +58,8 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
   app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
+  app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
     app.use('/', express.static('./static'))

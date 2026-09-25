@@ -1,37 +1,27 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import {
-  getProjectSections,
-  type LlmsTxtSection,
-} from '~/server/llmsTxtProjects'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
-
-interface LlmsTxtSources {
-  getProjectSections: () => Promise<LlmsTxtSection[]>
-}
+import {
+  type MarkdownAlternatePath,
+  type MarkdownSection,
+  renderMarkdown,
+} from './MarkdownAlternatesRouter'
 
 /**
- * Machine-oriented entry point for AI crawlers and agents, following the
- * llms.txt convention (https://llmstxt.org). The page and API lists are
- * curated below; the project lists come from the config database so they
- * never drift from what the site actually tracks.
+ * Entry point for AI agents, following the llms.txt spec (https://llmstxt.org):
+ * a short curated map of the site that fits in context, with detail behind
+ * the links. Project lists live in the markdown alternates, not here.
  */
-export function createLlmsTxtRouter(
-  sources: LlmsTxtSources = { getProjectSections },
-) {
+export function createLlmsTxtRouter() {
   const router = express.Router()
+  const body = renderMarkdown(LLMS_TXT, [
+    ...PAGE_SECTIONS,
+    API_SECTION,
+    OPTIONAL_SECTION,
+  ])
 
-  router.get('/llms.txt', async (_req, res) => {
-    const sections = [
-      ...PAGE_SECTIONS,
-      ...(await sources.getProjectSections()),
-      API_SECTION,
-      OPTIONAL_SECTION,
-    ]
-    res
-      .header('Content-Type', 'text/markdown; charset=utf-8')
-      .send(renderLlmsTxt({ ...LLMS_TXT, sections }))
+  router.get('/llms.txt', (_req, res) => {
+    res.header('Content-Type', 'text/markdown; charset=utf-8').send(body)
   })
 
   return router
@@ -40,19 +30,28 @@ export function createLlmsTxtRouter(
 const LLMS_TXT = {
   title: 'L2BEAT',
   summary:
-    'L2BEAT is an independent analytics and research website about Ethereum scaling. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols, privacy protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. All project data is open source and every risk assessment is backed by on-chain contract discovery.',
+    'L2BEAT is an independent analytics and research website about Ethereum scaling. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols, privacy protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [
-    'Every project has a page under the URL patterns listed in the project sections below; the last path segment is the project slug, which is also the {slug} used by the API.',
-    'All API endpoints except the scaling summary wrap their result as { success, data }.',
-    `The full project configuration, including risks, contracts, permissions and discovery history, lives in the packages/config directory of ${externalLinks.github}.`,
-  ].join('\n\n'),
+    'Important notes:',
+    '',
+    '- Links ending in .md are markdown versions of the page, listing every tracked project with its page URL. The other links are HTML pages.',
+    '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
+    '- All API endpoints except the scaling summary wrap their result as { success, data }.',
+    '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
+  ].join('\n'),
 }
 
 /** To list a new page, add one entry to the matching section. */
-const PAGE_SECTIONS: LlmsTxtSection[] = [
+const PAGE_SECTIONS: MarkdownSection[] = [
   {
     heading: 'Scaling (layer 2s and layer 3s)',
     links: [
+      {
+        name: 'All scaling projects',
+        path: markdownAlternate('/layer2s/summary.md'),
+        description:
+          'Markdown list of every tracked layer 2, layer 3 and ecosystem with category, stage, stack, host chain and page URL.',
+      },
       {
         name: 'Summary',
         path: staticPagePath('/layer2s/summary'),
@@ -136,6 +135,12 @@ const PAGE_SECTIONS: LlmsTxtSection[] = [
   {
     heading: 'Data availability',
     links: [
+      {
+        name: 'All data availability layers',
+        path: markdownAlternate('/data-availability/summary.md'),
+        description:
+          'Markdown list of every tracked data availability layer and bridge with page URL.',
+      },
       {
         name: 'Summary',
         path: staticPagePath('/data-availability/summary'),
@@ -224,10 +229,22 @@ const PAGE_SECTIONS: LlmsTxtSection[] = [
           'Privacy protocols on Ethereum and its layer 2s, with what they hide, anonymity set sizes and trust assumptions.',
       },
       {
+        name: 'All privacy protocols',
+        path: markdownAlternate('/privacy/summary.md'),
+        description:
+          'Markdown list of every tracked privacy protocol with page URL.',
+      },
+      {
         name: 'ZK catalog',
         path: staticPagePath('/zk-catalog'),
         description:
           'Zero-knowledge proving systems used by tracked projects, with their verifiers, trusted setups, audits and which projects rely on them.',
+      },
+      {
+        name: 'All proving systems',
+        path: markdownAlternate('/zk-catalog.md'),
+        description:
+          'Markdown list of every proving system in the ZK catalog with creator and page URL.',
       },
       {
         name: 'Governance',
@@ -274,22 +291,12 @@ const PAGE_SECTIONS: LlmsTxtSection[] = [
         path: staticPagePath('/about-us'),
         description: 'The mission, team and funding of L2BEAT.',
       },
-      {
-        name: 'Donate',
-        path: staticPagePath('/donate'),
-        description: 'How to support L2BEAT as a public good.',
-      },
-      {
-        name: 'Terms of service',
-        path: staticPagePath('/terms-of-service'),
-        description: 'Terms of use for the site and its data.',
-      },
     ],
   },
 ]
 
 /** To list a new endpoint, add one entry here; a test compares this with the public API router. */
-const API_SECTION: LlmsTxtSection = {
+const API_SECTION: MarkdownSection = {
   heading: 'Public API',
   links: [
     {
@@ -331,7 +338,7 @@ const API_SECTION: LlmsTxtSection = {
   ],
 }
 
-const OPTIONAL_SECTION: LlmsTxtSection = {
+const OPTIONAL_SECTION: MarkdownSection = {
   heading: 'Optional',
   links: [
     {
@@ -355,6 +362,16 @@ const OPTIONAL_SECTION: LlmsTxtSection = {
       url: externalLinks.x,
       description: 'Announcements and short updates.',
     },
+    {
+      name: 'Donate',
+      path: staticPagePath('/donate'),
+      description: 'How to support L2BEAT as a public good.',
+    },
+    {
+      name: 'Terms of service',
+      path: staticPagePath('/terms-of-service'),
+      description: 'Terms of use for the site and its data.',
+    },
   ],
 }
 
@@ -363,30 +380,7 @@ function staticPagePath(path: (typeof STATIC_PAGE_PATHS)[number]) {
   return path
 }
 
-function renderLlmsTxt(llmsTxt: {
-  title: string
-  summary: string
-  notes: string
-  sections: LlmsTxtSection[]
-}): string {
-  const sections = llmsTxt.sections.map((section) =>
-    [
-      `## ${section.heading}`,
-      '',
-      ...section.links.map(
-        (link) => `- [${link.name}](${linkUrl(link)}): ${link.description}`,
-      ),
-    ].join('\n'),
-  )
-
-  return `${[
-    `# ${llmsTxt.title}`,
-    `> ${llmsTxt.summary}`,
-    llmsTxt.notes,
-    ...sections,
-  ].join('\n\n')}\n`
-}
-
-function linkUrl(link: LlmsTxtSection['links'][number]) {
-  return 'url' in link ? link.url : PRODUCTION_ORIGIN + link.path
+/** Typed against the alternates, and a test checks each one is actually served. */
+function markdownAlternate(path: MarkdownAlternatePath) {
+  return path
 }
