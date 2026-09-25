@@ -54,6 +54,11 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
   const pagePreloads = loadPagePreloads(!options.dev)
 
+  // Before every router so llms.txt, sitemaps and markdown lists are compressed too
+  if (!options.dev) {
+    app.use(compression())
+  }
+
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
@@ -64,7 +69,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
-    app.use(compression())
     app.use(
       CLIENT_ASSETS_PATH,
       sirv(CLIENT_ASSETS_OUTPUT_DIR, { maxAge: 31536000, immutable: true }),

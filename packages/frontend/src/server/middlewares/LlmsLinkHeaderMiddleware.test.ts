@@ -16,8 +16,8 @@ describe(getLinkHeader.name, () => {
     )
   })
 
-  it('finds the alternate when the page path has a trailing slash', () => {
-    expect(getLinkHeader('/layer2s/summary/')).toEqual(
+  it('finds the alternate for every path Express routes to the page', () => {
+    expect(getLinkHeader('/Layer2s/Summary/')).toEqual(
       getLinkHeader('/layer2s/summary'),
     )
   })

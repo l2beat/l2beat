@@ -80,14 +80,12 @@ export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
   },
 ]
 
-/** Express routing is not strict, so `/layer2s/summary/` serves the same page. */
+/** Express routing is neither strict nor case-sensitive, so `/Layer2s/Summary/` serves the same page. */
 export function getMarkdownAlternatePath(
   pagePath: string,
 ): MarkdownAlternatePath | undefined {
-  const withoutTrailingSlash = pagePath.replace(/\/+$/, '')
-  return MARKDOWN_ALTERNATES.find(
-    (a) => a.path === `${withoutTrailingSlash}.md`,
-  )?.path
+  const routedPath = pagePath.replace(/\/+$/, '').toLowerCase()
+  return MARKDOWN_ALTERNATES.find((a) => a.path === `${routedPath}.md`)?.path
 }
 
 async function getScalingSections(): Promise<MarkdownSection[]> {
