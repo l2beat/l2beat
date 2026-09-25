@@ -97,13 +97,16 @@ export class TemplateService {
     return existsSync(join(resolvedRootPath, template, 'template.jsonc'))
   }
 
-  private loadTemplateFromPath(path: string): Template | undefined {
-    if (!existsSync(join(path, 'template.jsonc'))) return undefined
+  private loadTemplateFromPath(
+    path: string,
+    fileNames: ReadonlySet<string>,
+  ): Template | undefined {
+    if (!fileNames.has('template.jsonc')) return undefined
     const shapePath = join(path, 'shapes.json')
 
-    const hasShape = existsSync(shapePath)
+    const hasShape = fileNames.has('shapes.json')
     const criteriaPath = join(path, 'criteria.json')
-    const criteria = existsSync(criteriaPath)
+    const criteria = fileNames.has('criteria.json')
       ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
       : undefined
 
@@ -116,13 +119,21 @@ export class TemplateService {
     if (!fileExistsCaseSensitive(resolvedRootPath)) {
       return {}
     }
-    const templatePaths = listAllPaths(resolvedRootPath)
-    for (const path of templatePaths) {
-      const template = this.loadTemplateFromPath(path)
+    const pending = [resolvedRootPath]
+    for (let dir = pending.pop(); dir !== undefined; dir = pending.pop()) {
+      const entries = readdirSync(dir, { withFileTypes: true })
+      const fileNames = new Set(
+        entries.filter((x) => !x.isDirectory()).map((x) => x.name),
+      )
+      const template = this.loadTemplateFromPath(dir, fileNames)
       if (template !== undefined) {
-        const templateId = path.substring(resolvedRootPath.length + 1)
+        const templateId = dir.substring(resolvedRootPath.length + 1)
         result[templateId] = template
       }
+      const subdirectories = entries
+        .filter((x) => x.isDirectory())
+        .map((x) => join(dir, x.name))
+      pending.push(...subdirectories.reverse())
     }
     return result
   }
@@ -131,7 +142,10 @@ export class TemplateService {
     const templatePath = path.join(this.rootPath, TEMPLATES_PATH, templateId)
     if (!fileExistsCaseSensitive(templatePath)) return undefined
 
-    return this.loadTemplateFromPath(templatePath)
+    return this.loadTemplateFromPath(
+      templatePath,
+      new Set(readdirSync(templatePath)),
+    )
   }
 
   findMatchingTemplates(
@@ -580,15 +594,4 @@ function referenceRefreshDetail(
     return `references ${targetProject} but the entrypoint is owned by ${entrypoint.project}`
   }
   return undefined
-}
-
-function listAllPaths(path: string): string[] {
-  let result = [path]
-  const subPaths = readdirSync(path, { withFileTypes: true })
-    .filter((x) => x.isDirectory())
-    .map((x) => join(path, x.name))
-  for (const subPath of subPaths) {
-    result = result.concat(listAllPaths(subPath))
-  }
-  return result
 }
