@@ -32,6 +32,9 @@ pnpm build:dependencies
 - `pnpm test` - run the tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm test-all-pages` - test all pages
+- `pnpm perf:resize` - check a drag-resize of each page in `e2e/resize-perf/ceilings.json` against its ceiling (runs in `test:e2e`)
+- `pnpm perf:resize:ratchet` - lower the resize ceilings to the current build (needs `pnpm start:mock` running, or lets Playwright start it)
+- `pnpm perf:resize:profile` / `pnpm perf:resize:trace` - CPU profile or forced-layout attribution for a drag-resize of `PAGE` (default `/scaling/projects/arbitrum`)
 
 ### Environment variables
 If you are running `pnpm dev:mock` you do not need any environment variables.
