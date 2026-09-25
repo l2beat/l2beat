@@ -32,7 +32,7 @@ cd packages/config
 mkdir -p /tmp/compare/out
 # pnpm exec puts node_modules/.bin on PATH; bare `tsx` is not found when this
 # script is invoked directly (e.g. `bash diff.sh` in CI) instead of via pnpm
-pnpm exec tsx scripts/diff/index.ts /tmp/compare/out/index.html
+pnpm exec tsx scripts/diff/index.ts /tmp/compare/out/index.html /tmp/compare/out/index-llms.txt
 
 if [ -z "$GITHUB_ACTIONS" ]; then
   open /tmp/compare/out/index.html

@@ -47,6 +47,7 @@ jobs:
         run: |
           URL="https://config-diff-v2.l2beat.com/upload/pr-${{ github.event.pull_request.number }}/"
           curl -f -u "${{ secrets.CONFIG_DIFF_AUTH }}" -T /tmp/compare/out/index.html $URL/index.html
+          curl -f -u "${{ secrets.CONFIG_DIFF_AUTH }}" -T /tmp/compare/out/index-llms.txt $URL/index-llms.txt
           echo "domain=$URL" >> $GITHUB_OUTPUT
 
       - name: Find Comment
@@ -72,7 +73,7 @@ jobs:
             
             Config changes have been detected between main and this PR.
             
-            [View Full Report](${{ steps.publish.outputs.domain }})
+            [View Full Report](${{ steps.publish.outputs.domain }}) · [Plain text for LLMs](${{ steps.publish.outputs.domain }}index-llms.txt)
             
             *Last updated: ${{ steps.timestamp.outputs.value }}*
           edit-mode: replace
