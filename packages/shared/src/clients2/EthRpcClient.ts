@@ -372,6 +372,8 @@ const blockBase = {
   parentBeaconBlockRoot: vData(32).optional(),
   // not mentioned in docs, added after EIP-4895
   requestsHash: vData(32).optional(),
+  // Avalanche C-Chain after Helicon (ACP-194)
+  settledHeight: vQuantity.optional(),
   withdrawals: v
     .array(
       v.passthroughObject({
