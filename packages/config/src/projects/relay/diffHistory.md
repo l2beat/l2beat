@@ -7,7 +7,7 @@ Generated with discovered.json: 0xd50ce67ef4dfba6e8051b6b3bd7dfaca4ceebf02
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of the Relay settlement protocol contracts.
 
 ## Initial discovery
 

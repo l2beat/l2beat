@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcc9d7ecfbf8fa0e843d78fdf099ad59d5213c478
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Cross module permission modelling
 
 ## Config/verification related changes
 
