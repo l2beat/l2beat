@@ -58,6 +58,7 @@ export async function getInteropBurnAndMintData(
         openGraph: {
           image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
         },
+        breadcrumb: { name: 'Burn & Mint' },
       }),
     },
     ssr: {

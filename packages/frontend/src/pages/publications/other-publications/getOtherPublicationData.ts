@@ -2,6 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getOtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getPublicationArticleStructuredData } from '~/ssr/head/structured-data/getArticleStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -23,6 +24,9 @@ export async function getOtherPublicationData(
           image: `/meta-images/publications/${publication.id}.png`,
           type: 'article',
         },
+        structuredData: [
+          getPublicationArticleStructuredData(manifest, publicationEntry),
+        ],
       }),
     },
     ssr: {

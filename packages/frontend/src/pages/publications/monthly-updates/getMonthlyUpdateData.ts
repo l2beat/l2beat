@@ -3,6 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getMonthlyUpdateArticleStructuredData } from '~/ssr/head/structured-data/getArticleStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -35,6 +36,10 @@ export async function getMonthlyUpdateData(
         openGraph: {
           image: `/meta-images/publications/${monthlyUpdateEntry.id}.png`,
         },
+        breadcrumb: { name: monthlyUpdateEntry.title },
+        structuredData: [
+          getMonthlyUpdateArticleStructuredData(manifest, monthlyUpdate),
+        ],
       }),
     },
     ssr: {

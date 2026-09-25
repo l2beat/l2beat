@@ -1,8 +1,10 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
 import { getL2SummaryEntries } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -37,6 +39,11 @@ export async function getL2SummaryData(
         openGraph: {
           image: '/meta-images/layer2s/summary/opengraph-image.png',
         },
+        // Without the home page flag, "/" redirects here, making this the
+        // landing page where crawlers look for the Organization.
+        structuredData: env.CLIENT_SIDE_HOME_PAGE
+          ? []
+          : [getOrganizationStructuredData()],
       }),
     },
     ssr: {

@@ -36,6 +36,7 @@ export async function getDefiProjectData(
         openGraph: {
           image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,
         },
+        breadcrumb: { name: entry.name },
       }),
     },
     ssr: {

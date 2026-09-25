@@ -1,5 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { faqItems } from '~/pages/faq/FaqItems'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getFaqPageStructuredData } from '~/ssr/head/structured-data/getFaqPageStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -20,6 +22,7 @@ export async function getFaqData(
         openGraph: {
           image: '/meta-images/faq/opengraph-image.png',
         },
+        structuredData: [getFaqPageStructuredData(faqItems)],
       }),
     },
     ssr: {

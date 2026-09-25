@@ -1,3 +1,4 @@
+import type { Project } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
@@ -5,6 +6,7 @@ import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2Projec
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getScalingProjectStructuredData } from '~/ssr/head/structured-data/getScalingProjectStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -80,14 +82,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
   return {
     head: {
       manifest,
-      metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
-        description: getProjectMetadataDescription(project),
-        url,
-        openGraph: {
-          image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
-        },
-      }),
+      metadata: getL2ProjectMetadata(manifest, project, url),
     },
     props: {
       ...appLayoutProps,
@@ -95,4 +90,29 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       queryState: helpers.dehydrate(),
     },
   }
+}
+
+export function getL2ProjectMetadata(
+  manifest: Manifest,
+  project: Pick<
+    Project<never, 'discoveryInfo' | 'tvsConfig' | 'activityConfig'>,
+    'name' | 'slug' | 'discoveryInfo' | 'tvsConfig' | 'activityConfig'
+  > & { display: { description: string } },
+  url: string,
+) {
+  return getMetadata(manifest, {
+    title: `${project.name} - L2BEAT`,
+    description: getProjectMetadataDescription(project),
+    url,
+    openGraph: {
+      image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
+    },
+    structuredData: [
+      getScalingProjectStructuredData({
+        ...project,
+        hasTvsApi: project.tvsConfig !== undefined,
+        hasActivityApi: project.activityConfig !== undefined,
+      }),
+    ],
+  })
 }

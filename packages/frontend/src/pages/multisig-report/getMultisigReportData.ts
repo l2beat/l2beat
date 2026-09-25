@@ -21,6 +21,7 @@ export async function getMultisigReportData(
         openGraph: {
           image: '/meta-images/multisig-report/opengraph-image.png',
         },
+        breadcrumb: { name: 'Multisig Report' },
       }),
     },
     ssr: {

@@ -58,6 +58,7 @@ export async function getInteropLockAndMintData(
         openGraph: {
           image: '/meta-images/interop/lock-&-mint/opengraph-image.png',
         },
+        breadcrumb: { name: 'Lock & Mint' },
       }),
     },
     ssr: {

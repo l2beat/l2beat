@@ -15,6 +15,7 @@ import {
   CLIENT_TEMPLATE_PATH,
 } from '../paths.mjs'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
+import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
@@ -189,11 +190,6 @@ async function getTemplate(
   }
 
   return productionTemplate
-}
-
-/** Safe to embed in `<script>`: avoids `</script>` in JSON closing the tag early. */
-function jsonForInlineScript(value: unknown): string {
-  return JSON.stringify(value).replace(/</g, '\\u003c')
 }
 
 function getClientEnvData() {

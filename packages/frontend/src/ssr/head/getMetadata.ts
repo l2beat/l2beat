@@ -1,7 +1,16 @@
+import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { env } from '~/env'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
+import {
+  getBreadcrumbList,
+  type PageBreadcrumb,
+} from './structured-data/getBreadcrumbList'
+import {
+  type StructuredData,
+  toProductionUrl,
+} from './structured-data/StructuredData'
 
 type OpenGraph = {
   type: 'article' | 'website'
@@ -15,6 +24,7 @@ export interface Metadata {
   openGraph: OpenGraph
   canonicalUrl: string
   excludeFromSearchEngines?: boolean
+  structuredData: StructuredData[]
 }
 
 type PartialMetadata = {
@@ -28,13 +38,24 @@ type PartialMetadata = {
     dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
+  breadcrumb?: PageBreadcrumb
+  /** Page-specific JSON-LD; the BreadcrumbList is added for every page. */
+  structuredData?: StructuredData[]
 }
 
 export function getMetadata(
   manifest: Manifest,
   metadata: PartialMetadata,
 ): Metadata {
-  const { title, description, url, openGraph, ...rest } = metadata ?? {}
+  const {
+    title,
+    description,
+    url,
+    openGraph,
+    breadcrumb,
+    structuredData,
+    ...rest
+  } = metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
   return {
@@ -44,8 +65,14 @@ export function getMetadata(
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     url: baseUrl + strippedPath,
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
-    // We want canonical to always point to the production URL
-    canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
+    canonicalUrl: toProductionUrl(strippedPath),
+    // Crawlers skip noindex pages, so their structured data would go unread.
+    structuredData: rest.excludeFromSearchEngines
+      ? []
+      : compact([
+          getBreadcrumbList(strippedPath, title, breadcrumb),
+          ...(structuredData ?? []),
+        ]),
     ...rest,
   }
 }
