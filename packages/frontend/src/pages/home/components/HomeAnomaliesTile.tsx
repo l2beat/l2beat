@@ -1,5 +1,4 @@
 import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
-import { useState } from 'react'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
 import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
@@ -16,76 +15,74 @@ export function HomeAnomaliesTile({
   className?: string
 }) {
   const { count, items } = ongoingAnomalies
-  const [dialogOpen, setDialogOpen] = useState(false)
   const isOngoing = count > 0
   const first = items[0]
 
   return (
     <HomeCard className={cn('overflow-hidden p-0 md:p-1', className)}>
-      <button
-        type="button"
-        onClick={() => setDialogOpen(true)}
-        disabled={!isOngoing}
-        className={cn(
-          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-sm md:px-7 md:py-5',
-          isOngoing ? 'hover:bg-surface-secondary/50' : 'cursor-default',
-        )}
-      >
-        <div className="lg:hidden">
-          <LiveIndicator size="md" disabled={!isOngoing} />
-        </div>
-
-        <div className="flex min-w-0 flex-1 flex-col">
-          <span
+      <OngoingAnomaliesDialog
+        ongoingAnomalies={ongoingAnomalies}
+        trigger={
+          <button
+            type="button"
+            disabled={!isOngoing}
             className={cn(
-              'truncate font-bold text-label-value-14 leading-tight transition-colors',
-              isOngoing && 'group-hover:text-link',
+              'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-sm md:px-7 md:py-5',
+              isOngoing ? 'hover:bg-surface-secondary/50' : 'cursor-default',
             )}
           >
-            <span className="lg:hidden">Ongoing major anomalies</span>
-            <span className="max-lg:hidden">Ongoing anomalies</span>
-          </span>
-          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary leading-tight lg:hidden">
-            {isOngoing && first ? (
-              <>
-                <img
-                  src={first.iconUrl}
-                  alt={first.name}
-                  className="size-3.5 shrink-0 rounded-full"
-                />
-                <span className="truncate">
-                  {`${first.name} · no ${first.subtypes
-                    .map((subtype) =>
-                      anomalySubtypeToLabel(subtype).toLowerCase(),
-                    )
-                    .join(', ')} · ${formatSeconds(first.durationInSeconds)}`}
-                  {count > 1 && ` · +${count - 1} more`}
-                </span>
-              </>
-            ) : (
-              <span className="truncate">
-                All tracked projects are posting as expected
+            <div className="lg:hidden">
+              <LiveIndicator size="md" disabled={!isOngoing} />
+            </div>
+
+            <div className="flex min-w-0 flex-1 flex-col">
+              <span
+                className={cn(
+                  'truncate font-bold text-label-value-14 leading-tight transition-colors',
+                  isOngoing && 'group-hover:text-link',
+                )}
+              >
+                <span className="lg:hidden">Ongoing major anomalies</span>
+                <span className="max-lg:hidden">Ongoing anomalies</span>
               </span>
+              <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary leading-tight lg:hidden">
+                {isOngoing && first ? (
+                  <>
+                    <img
+                      src={first.iconUrl}
+                      alt={first.name}
+                      className="size-3.5 shrink-0 rounded-full"
+                    />
+                    <span className="truncate">
+                      {`${first.name} · no ${first.subtypes
+                        .map((subtype) =>
+                          anomalySubtypeToLabel(subtype).toLowerCase(),
+                        )
+                        .join(
+                          ', ',
+                        )} · ${formatSeconds(first.durationInSeconds)}`}
+                      {count > 1 && ` · +${count - 1} more`}
+                    </span>
+                  </>
+                ) : (
+                  <span className="truncate">
+                    All tracked projects are posting as expected
+                  </span>
+                )}
+              </span>
+            </div>
+            <div className="max-lg:hidden">
+              <LiveIndicator size="md" disabled={!isOngoing} />
+            </div>
+            <span className="shrink-0 font-bold text-heading-20 tabular-nums leading-none">
+              {formatInteger(count)}
+            </span>
+            {isOngoing && (
+              <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link" />
             )}
-          </span>
-        </div>
-        <div className="max-lg:hidden">
-          <LiveIndicator size="md" disabled={!isOngoing} />
-        </div>
-        <span className="shrink-0 font-bold text-heading-20 tabular-nums leading-none">
-          {formatInteger(count)}
-        </span>
-        {isOngoing && (
-          <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link" />
-        )}
-      </button>
-      {isOngoing && dialogOpen && (
-        <OngoingAnomaliesDialog
-          ongoingAnomalies={ongoingAnomalies}
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-        />
-      )}
+          </button>
+        }
+      />
     </HomeCard>
   )
 }

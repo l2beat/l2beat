@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import type { ReactNode } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -6,6 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '~/components/core/Dialog'
 import {
   Drawer,
@@ -13,6 +15,7 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from '~/components/core/Drawer'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { useDevice } from '~/hooks/useDevice'
@@ -43,20 +46,16 @@ const CATEGORIES: {
 
 interface Props {
   ongoingAnomalies: OngoingAnomaliesOverview
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  trigger: ReactNode
 }
 
-export function OngoingAnomaliesDialog({
-  ongoingAnomalies,
-  open,
-  onOpenChange,
-}: Props) {
+export function OngoingAnomaliesDialog({ ongoingAnomalies, trigger }: Props) {
   const { isMobile } = useDevice()
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={onOpenChange}>
+      <Drawer>
+        <DrawerTrigger asChild>{trigger}</DrawerTrigger>
         <DrawerContent
           className="max-h-[90dvh]"
           contentClassName="flex min-h-0 flex-col px-0 pb-0"
@@ -74,7 +73,8 @@ export function OngoingAnomaliesDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="primary-card flex max-h-[90dvh] w-[560px] flex-col overflow-hidden bg-surface-primary p-0">
         <DialogClose className="top-5 right-5" />
         <DialogHeader className="px-6 pt-6 pb-2 text-left">
