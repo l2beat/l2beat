@@ -1067,7 +1067,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
       "critical": true,
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1753169519,
       "sinceBlock": 22973253,

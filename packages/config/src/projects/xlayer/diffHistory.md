@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x57f86e0e20ba4f4b1dbfbb35e9ecdd5dea2fc667
+
+# Diff at Fri, 25 Sep 2026 12:13:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      usedTypes.0.arg.8:
+-        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xc3ec7dd59991d30e15f978a7b80813e7d93f6232
 
 # Diff at Wed, 23 Sep 2026 05:50:37 GMT:

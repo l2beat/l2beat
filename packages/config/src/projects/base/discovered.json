@@ -1991,7 +1991,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "critical": true,
-      "ignoreInWatchMode": ["gasLimit", "overhead"],
+      "ignoreInWatchMode": ["scalar", "overhead", "gasLimit"],
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
       "sinceBlock": 17482143,

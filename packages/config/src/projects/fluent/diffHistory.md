@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x669305c8a92447cd9c1e43a9d547421b09da1b34
+
+# Diff at Fri, 25 Sep 2026 12:12:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1788432124
+- current timestamp: 1788432124
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788432124 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xa6df8c418c1f8967e6c9f9cdc805f0f77056dddf
 
 # Diff at Mon, 21 Sep 2026 07:13:40 GMT:

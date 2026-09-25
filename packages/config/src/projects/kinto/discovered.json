@@ -329,6 +329,8 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "validators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
@@ -336,8 +338,8 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -347,9 +349,7 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        },
-        "validators": { "severity": "LOW" },
-        "anyTrustFastConfirmer": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
@@ -497,9 +497,8 @@
         "executors": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
       },
       "fieldMeta": {
-        "executors": { "severity": "LOW" },
         "$admin": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" }
+        "executors": { "severity": "LOW" }
       },
       "implementationNames": {
         "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
@@ -734,6 +733,8 @@
         "sequencerReportedSubMessageCount": 919356
       },
       "fieldMeta": {
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -749,9 +750,7 @@
         "inboxHistory": {
           "severity": "HIGH",
           "description": "All Inboxes that were ever set as allowed in the bridge."
-        },
-        "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "TransparentUpgradeableProxy",
@@ -1136,18 +1135,18 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
-        "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
-          "severity": "HIGH"
-        },
-        "batchPosters": { "severity": "LOW" },
-        "dacKeyset": { "severity": "HIGH" },
         "isUsingFeeToken": { "severity": "HIGH" },
         "isDelayBufferable": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "batchPosterManager": { "severity": "HIGH" }
+        "maxTimeVariation": {
+          "severity": "HIGH",
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+        },
+        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosters": { "severity": "LOW" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "TransparentUpgradeableProxy",
@@ -1975,10 +1974,7 @@
         "implementation": "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D",
         "owner": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "kinto:0x87f0eE85bF3198654900a422832157abBba30828": "UpgradeableBeacon"
       }
