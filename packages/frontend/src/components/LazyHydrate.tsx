@@ -75,13 +75,11 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
 }
 
 const skippingWrappers = new Set<HTMLElement>()
-let lastWidth: number | undefined
 let resizeSettleTimer: ReturnType<typeof setTimeout> | undefined
 let cancelRemeasure = () => {}
 
 function skipWhileOffscreen(element: HTMLElement) {
   if (skippingWrappers.size === 0) {
-    lastWidth = window.innerWidth
     window.addEventListener('resize', remeasureWhenResizeSettles)
   }
   skippingWrappers.add(element)
@@ -97,13 +95,11 @@ function skipWhileOffscreen(element: HTMLElement) {
   }
 }
 
-// A skipped section keeps the height it had at the width it was last laid
-// out at, so after the width changes every wrapper is laid out once more
-// before it may skip again; otherwise a jump to a deep section lands off by
-// the reflow of everything above it.
+// A skipped section keeps the height it had at the viewport it was last laid
+// out in (below `md`, charts are sized in vh), so after any resize every
+// wrapper is laid out once more before it may skip again; otherwise a jump
+// to a deep section lands off by the reflow of everything above it.
 function remeasureWhenResizeSettles() {
-  if (window.innerWidth === lastWidth) return
-  lastWidth = window.innerWidth
   clearTimeout(resizeSettleTimer)
   resizeSettleTimer = setTimeout(remeasureAll, RESIZE_SETTLE_MS)
 }
