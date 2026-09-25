@@ -162,6 +162,7 @@ function ChartContainer<T extends { timestamp: number }>({
         </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
+            animated={shouldMountChart && !!isLoading}
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
               '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-18px)]',

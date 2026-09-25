@@ -7,6 +7,8 @@ import { chromium } from 'playwright'
 const base = process.env.BASE_URL ?? 'http://localhost:7357'
 const path = process.env.PAGE ?? '/scaling/projects/arbitrum'
 const steps = Number(process.env.STEPS ?? 30)
+const fromWidth = Number(process.env.FROM ?? 1400)
+const toWidth = Number(process.env.TO ?? 800)
 
 interface Frame {
   functionName?: string
@@ -29,11 +31,15 @@ type Bucket = { n: number; ms: number }
 async function main() {
   const browser = await chromium.launch()
   const context = await browser.newContext({
-    viewport: { width: 1400, height: 900 },
+    viewport: { width: fromWidth, height: 900 },
   })
   const page = await context.newPage()
   const cdp = await context.newCDPSession(page)
   await page.goto(base + path, { waitUntil: 'networkidle' })
+  // INJECT_CSS lets a CSS-only hypothesis be measured without a rebuild.
+  if (process.env.INJECT_CSS) {
+    await page.addStyleTag({ content: process.env.INJECT_CSS })
+  }
   await page.waitForTimeout(1500)
   const events: TraceEvent[] = []
   cdp.on('Tracing.dataCollected', (d) => {
@@ -51,7 +57,7 @@ async function main() {
   })
   for (let i = 1; i <= steps; i++) {
     await page.setViewportSize({
-      width: Math.round(1400 - (600 * i) / steps),
+      width: Math.round(fromWidth + ((toWidth - fromWidth) * i) / steps),
       height: 900,
     })
   }

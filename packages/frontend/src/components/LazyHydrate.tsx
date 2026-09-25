@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
+import { useCallback } from 'react'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
+import { cn } from '~/utils/cn'
 
 interface Props {
   children: ReactNode
@@ -8,11 +10,21 @@ interface Props {
   className?: string
 }
 
+const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
+
 /**
  * Keeps the server-rendered markup in place and mounts the React tree only
  * once the wrapper approaches the viewport. Until then React hydrates an
  * element with no children and leaves the existing innerHTML alone, so
  * below-the-fold sections cost nothing on the hydration task.
+ *
+ * The same wrapper lets the browser skip style and layout of the contents
+ * while they are off screen (`content-visibility: auto`), which is most of
+ * what a long page pays on every resize step and scroll. The class goes on
+ * after the first paint, and by hand rather than through a render: the
+ * browser has then remembered each wrapper's real height so fragment
+ * navigation on load lands where it did, and re-rendering this wrapper
+ * before it hydrates would wipe the server markup.
  *
  * Not a Suspense boundary on purpose: React client-renders a boundary it has
  * not hydrated yet as soon as any context above it changes, and next-themes
@@ -20,12 +32,34 @@ interface Props {
  * every section to hydrate at once.
  */
 export function LazyHydrate({ children, eager = false, className }: Props) {
-  const [ref, isNear] = useIsNearViewport()
+  const [nearViewportRef, isNear] = useIsNearViewport()
   const isServer = typeof window === 'undefined'
+  // Layout containment from the start, as `content-visibility` implies it
+  // later: it stops the section's top margin collapsing through the wrapper,
+  // so the remembered height already includes that margin.
+  const wrapperClassName = cn(
+    className,
+    '[contain-intrinsic-size:auto_800px] [contain:layout]',
+  )
+
+  const ref = useCallback(
+    (element: HTMLDivElement | null) => {
+      const stopObserving = nearViewportRef(element)
+      if (!element) return stopObserving
+      const cancel = afterFirstPaint(() =>
+        element.classList.add(SKIP_WHILE_OFFSCREEN),
+      )
+      return () => {
+        stopObserving?.()
+        cancel()
+      }
+    },
+    [nearViewportRef],
+  )
 
   if (isServer || eager || isNear) {
     return (
-      <div ref={ref} className={className}>
+      <div ref={ref} className={wrapperClassName}>
         {children}
       </div>
     )
@@ -33,9 +67,21 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
   return (
     <div
       ref={ref}
-      className={className}
+      className={wrapperClassName}
       suppressHydrationWarning
       dangerouslySetInnerHTML={{ __html: '' }}
     />
   )
+}
+
+// Two frames: the first callback runs before the pending frame paints.
+function afterFirstPaint(callback: () => void) {
+  let inner: number | undefined
+  const outer = requestAnimationFrame(() => {
+    inner = requestAnimationFrame(callback)
+  })
+  return () => {
+    cancelAnimationFrame(outer)
+    if (inner !== undefined) cancelAnimationFrame(inner)
+  }
 }

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { startTransition, useLayoutEffect, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 
@@ -33,8 +33,10 @@ export function ChartSettledSize({
       }
       inner.style.transform = `scale(${width / settled.width}, ${height / settled.height})`
       clearTimeout(settleTimer.current)
+      // The stretched chart is already right on screen, so the real
+      // re-render can be time-sliced instead of blocking a frame.
       settleTimer.current = setTimeout(
-        () => setSettled({ width, height }),
+        () => startTransition(() => setSettled({ width, height })),
         SETTLE_MS,
       )
     },
