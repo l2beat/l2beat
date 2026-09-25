@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x3da321c221b303a7c33bb6a9eee9e85292c13bc5
+
+# Diff at Wed, 23 Sep 2026 05:55:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789748170
+- current timestamp: 1789748170
+
+## Description
+
+Review ossification configuration at the main-branch discovery block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789748170 (main branch discovery), not current.
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.desertVerifier:
+-        {"severity":"HIGH"}
+      fieldMeta.governance:
+-        {"severity":"HIGH"}
+      fieldMeta.desertMode.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.getMaster:
+-        {"severity":"HIGH"}
+      fieldMeta.approvedUpgradeNoticePeriod:
++        {"severity":"HIGH","description":"Raw upgrade delay in seconds. It can be skipped by the security council."}
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      fieldMeta:
+-        {"networkGovernor":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xc231309ed793c81d4008f951d4d9204dd8fe7e54
 
 # Diff at Fri, 18 Sep 2026 16:17:19 GMT:

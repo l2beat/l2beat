@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BfvDecryptionVerifierRouter",
+  "category": "core",
+  "description": "Immutable router for BFV threshold-decryption proofs. It forwards each proof to the per-committee-size BfvDecryptionVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.",
+  "fields": {
+    "routes": {
+      "description": "Per-committee-size verifiers with the public-input length and verification-key hashes each one enforces.",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "array",
+        "method": "function routeAt(uint256 index) view returns (address verifier, uint256 expectedPublicInputsLen, bytes32 expectedC6FoldKeyHash, bytes32 expectedC7KeyHash)",
+        "length": "{{ routeCount }}"
+      }
+    },
+    "threshold": {
+      "description": "Default decryption-share threshold reported to the coordinator for the active committee configuration.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

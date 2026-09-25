@@ -10,9 +10,6 @@
     "pendingGlobalExitRootRemover": {
       "severity": "MEDIUM"
     },
-    "bridgeAddress": {
-      "severity": "HIGH"
-    },
     "$admin": {
       "severity": "HIGH"
     },

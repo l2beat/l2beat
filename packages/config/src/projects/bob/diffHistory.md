@@ -1,3 +1,408 @@
+Generated with discovered.json: 0x7a8c0353362cda50e72fdc067984fa6821964aa1
+
+# Diff at Wed, 23 Sep 2026 05:45:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1783498944
+- current timestamp: 1783498944
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783498944 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.2.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1A08BA77CB95184Ea0C31e56f199Db068eb6B35d) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta:
+-        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53) [risc0/KailuaTreasury] {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.anchorStateRegistry:
+-        {"severity":"HIGH"}
+      fieldMeta.DISPUTE_GAME_FACTORY:
+-        {"severity":"HIGH"}
+      fieldMeta.OPTIMISM_PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.KAILUA_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.participationBondFmt:
++        {"severity":"HIGH"}
+      fieldMeta.vanguardAdvantageFmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A] {
+    +++ description: None
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+      fieldMeta.PERMIT_DURATION:
+-        {"severity":"HIGH"}
+      fieldMeta.PERMIT_DELAY:
+-        {"severity":"HIGH"}
+      fieldMeta.ROLLUP_CONFIG_HASH:
+-        {"severity":"HIGH"}
+      fieldMeta.RISC_ZERO_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.FPVM_IMAGE_ID:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.4.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      critical:
+-        true
++        {"untilTimestamp":1789547003}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2dc77c697e892542cC53336178a78Bb313DFDC7) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x09143910d04aafe86f99e36721daae87e9cff12f
 
 # Diff at Mon, 21 Sep 2026 11:23:58 GMT:

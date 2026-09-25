@@ -3361,9 +3361,9 @@
     "liquityv2/WSTETHPriceFeed": "0x2950a7e278e191e5814c929bfcb2492613a84ec4d4a443f43e2803988e695dcd"
   },
   "usedBlockNumbers": { "ethereum": 25982617 },
-  "permissionsConfigHash": "0x414ca41cf24f95a38474dbf0720fee436e78b25bd41bd8de865e0d783b144864",
+  "permissionsConfigHash": "0x40dfbd2613357ddcdcb10becdf0caee0ab9781e729ae645ec9fb1883ac7f1dca",
   "modelledAgainst": {
-    "chainlink": "0xb5d6fcc8fe4a133dc96e6f006df452e5094ade3fe103e08277d59ef1c42cc6d0"
+    "chainlink": "0x3e561bc8cf3cd79d55d3c00c1506471d94d8cc488825feaaa68cda5696b058a4"
   },
   "permissions": {
     "eth:0x05FD2a0Ce04700375e475a12d2708F1632992D32": {

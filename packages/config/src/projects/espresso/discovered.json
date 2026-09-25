@@ -197,12 +197,7 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" },
-        "Proposer": { "severity": "HIGH" },
-        "Canceller": { "severity": "HIGH" },
-        "Executor": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
@@ -571,11 +566,11 @@
     ]
   },
   "usedTemplates": {
-    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25631964 },
-  "permissionsConfigHash": "0xd420b255f32db1ed07cd6971c62c6ba64efd6172e70ed179484b38ed9893765b",
+  "permissionsConfigHash": "0x5d947e8fee2af04282ba4c95fa138fd2f888898bf3ffce1bce4836be5fd73e0c",
   "permissions": {
     "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": {
       "receivedPermissions": [

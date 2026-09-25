@@ -540,7 +540,7 @@
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
   "usedBlockNumbers": { "ethereum": 25999309 },
-  "permissionsConfigHash": "0xfd60d5a8e890e4194051f0ee2c4d97bae85636b992bd6af7a53689d21c5f89e6",
+  "permissionsConfigHash": "0x1fbe963c36dacc593ce8809c10553dc89d419541a2f988185d72ff2cdd5039dd",
   "permissions": {
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {
       "receivedPermissions": [

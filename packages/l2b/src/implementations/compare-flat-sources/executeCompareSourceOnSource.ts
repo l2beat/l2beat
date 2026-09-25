@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import {
   type DiscoveryPaths,
   estimateSimilarity,
@@ -6,6 +5,7 @@ import {
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import path from 'path'
+import type { CliLogger } from '../common/CliLogger'
 import { computeStackSimilarity, type Project } from './common'
 import { colorMap } from './output'
 
@@ -13,7 +13,7 @@ export interface CompareSourceOnSourceCommand {
   projectPath: string
   paths: DiscoveryPaths
   forceTable: boolean
-  logger: Logger
+  cli: CliLogger
 }
 
 export async function executeCompareSourceOnSource(
@@ -21,7 +21,7 @@ export async function executeCompareSourceOnSource(
 ): Promise<void> {
   const name = command.projectPath
   const { projects: projectsWithBase } = await computeStackSimilarity(
-    command.logger,
+    command.cli,
     command.paths,
   )
   const base = projectsWithBase.find((e) => e.name === name)
@@ -29,10 +29,10 @@ export async function executeCompareSourceOnSource(
   const projects = projectsWithBase.filter((e) => e.name !== name)
   for (const source of base.sources) {
     const mostSimilar = findMostSimilarContract(source, projects)
-    command.logger.info(`${path.basename(source.path)}`)
+    command.cli.log(`${path.basename(source.path)}`)
     for (const [i, e] of mostSimilar.entries()) {
       const prefix = i === mostSimilar.length - 1 ? '└─' : '├─'
-      command.logger.info(
+      command.cli.log(
         `${prefix} [${colorMap(e.similarity)}] ${
           e.projectName
         }:${path.basename(e.path)}`,

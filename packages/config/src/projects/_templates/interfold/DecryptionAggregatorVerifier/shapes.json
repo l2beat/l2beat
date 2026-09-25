@@ -4,5 +4,17 @@
     "address": "eth:0x53Fc34b412E16A1aE05A86934b821F82ca2a10da",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "DecryptionAggregatorVerifier_secure8192_micro": {
+    "hash": "0x29da202a07cec4492a3b6b0edcb94234bc23186a745e70f6c96a939c0495b1c8",
+    "address": "eth:0xbeF207838845b227394Eb46579372FEE5E2a95fd",
+    "chain": "ethereum",
+    "blockNumber": 25998916
+  },
+  "DecryptionAggregatorVerifier_secure8192_small": {
+    "hash": "0xd20f75a52880fc415485d8b64911dfd641bc3c51f14f0028d02d2dbc1eccbc27",
+    "address": "eth:0xEB4D0d5FfbDD508d6FF352255DCFc7b13FA28EC0",
+    "chain": "ethereum",
+    "blockNumber": 25998905
   }
 }

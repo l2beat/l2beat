@@ -644,10 +644,6 @@
         "$immutable": true,
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d": "ProxyAdmin"
       }
@@ -1120,7 +1116,7 @@
   "usedBlockNumbers": { "ethereum": 25595172 },
   "permissionsConfigHash": "0x12f2f23203ef0f79a6f7cf788a694c8f703a3a7cb17cfc277916d13597c2ecea",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0x5603f7d8cce6037d1000cbe8ac3858a7c1ac434e7492934ce37d6a4c7e545f7a"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {

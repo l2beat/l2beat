@@ -4,7 +4,7 @@
   "critical": true,
   "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
   "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
-  "ignoreRelatives": ["anchorGame"],
+  "ignoreRelatives": ["anchorGame", "blacklistedGames"],
   "types": {
     "DisputeGameMap": {
       "typeCaster": "Mapping",
@@ -18,25 +18,10 @@
     }
   },
   "fields": {
-    "disputeGameFactory": {
-      "severity": "HIGH"
-    },
-    "superchainConfig": {
-      "severity": "HIGH"
-    },
-    "systemConfig": {
-      "severity": "HIGH"
-    },
-    "disputeGameFinalityDelaySeconds": {
-      "severity": "HIGH"
-    },
     "paused": {
       "severity": "MEDIUM"
     },
 
-    "$admin": {
-      "severity": "HIGH"
-    },
     "respectedGameType": {
       "severity": "HIGH"
     },
@@ -51,6 +36,14 @@
     },
     "retirementTimestamp": {
       "severity": "HIGH"
+    },
+    "blacklistedGames": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "disputeGame",
+        "add": { "event": "DisputeGameBlacklisted" }
+      }
     }
   }
 }

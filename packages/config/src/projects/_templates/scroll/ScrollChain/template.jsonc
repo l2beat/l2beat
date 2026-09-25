@@ -18,24 +18,6 @@
     "isEnforcedModeEnabled": {
       "severity": "HIGH"
     },
-    "systemConfig": {
-      "severity": "HIGH"
-    },
-    "messageQueueV2": {
-      "severity": "HIGH"
-    },
-    "messageQueueV1": {
-      "severity": "HIGH"
-    },
-    "verifier": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "sequencers": {
       "handler": {
         "type": "event",

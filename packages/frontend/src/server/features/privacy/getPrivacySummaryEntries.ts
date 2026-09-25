@@ -6,7 +6,9 @@ import type {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { sortTableValues } from '~/components/table/sorting/sortTableValues'
 import { env } from '~/env'
+import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
@@ -208,10 +210,19 @@ function getPoolsTracked(project: PrivacyProject): number {
   )
 }
 
+/** Sorts by privacy. */
 function comparePrivacySummaryEntries(
   a: PrivacySummaryEntry,
   b: PrivacySummaryEntry,
 ): number {
+  const byPrivacy = sortTableValues(
+    getPrivacyAdversariesTableValue(b.adversaries),
+    getPrivacyAdversariesTableValue(a.adversaries),
+  )
+  if (byPrivacy !== 0) {
+    return byPrivacy
+  }
+
   if (a.isTracked !== b.isTracked) {
     return a.isTracked ? -1 : 1
   }

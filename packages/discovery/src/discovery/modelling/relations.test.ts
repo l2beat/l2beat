@@ -2,6 +2,7 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { StructureEntry } from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
+import { DescriptionTable } from './DescriptionTable'
 import { buildPermissionsModel } from './relations'
 
 const TIMELOCK = address('0x111')
@@ -24,6 +25,7 @@ describe(buildPermissionsModel.name, () => {
       { fields: {} },
       proxyAdministeredBy(PROXY_ADMIN),
       CLUSTER_MAP,
+      new DescriptionTable(),
     )
 
     expect(model ?? '').toInclude('permission(')
@@ -36,9 +38,42 @@ describe(buildPermissionsModel.name, () => {
       { fields: {} },
       proxyAdministeredBy(PROXY_ADMIN),
       OWN_MAP,
+      new DescriptionTable(),
     )
 
     expect(model ?? '').not.toInclude('permission(')
+  })
+
+  it('replaces the description with an id the table resolves', () => {
+    const descriptions = new DescriptionTable()
+    const model = buildPermissionsModel(
+      {
+        fields: {
+          owner: {
+            permissions: [
+              {
+                type: 'interact',
+                delay: 0,
+                description: 'set the fee recipient',
+              },
+            ],
+          },
+        },
+      },
+      {
+        type: 'Contract',
+        address: TIMELOCK,
+        name: 'ValidatorTimelock',
+        values: { owner: PROXY_ADMIN.toString() },
+      },
+      CLUSTER_MAP,
+      descriptions,
+    )
+
+    const id = new DescriptionTable().intern('set the fee recipient')
+    expect(model ?? '').not.toInclude('set the fee recipient')
+    expect(model ?? '').toInclude(id)
+    expect(descriptions.resolve(id)).toEqual('set the fee recipient')
   })
 
   it('emits nothing for a Reference stub', () => {
@@ -46,6 +81,7 @@ describe(buildPermissionsModel.name, () => {
       { fields: {} },
       { type: 'Reference', address: PROXY_ADMIN, targetProject: 'shared' },
       CLUSTER_MAP,
+      new DescriptionTable(),
     )
 
     expect(model).toEqual(undefined)

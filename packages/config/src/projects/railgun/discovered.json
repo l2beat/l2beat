@@ -130,17 +130,14 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
         "delegator": {
-          "severity": "HIGH",
           "description": "Railgun Delegator contract that can switch this helper into COMMITTING and is the contract used to forward verifier-key updates onward.",
           "type": "PERMISSION"
         },
         "verifier": {
-          "severity": "HIGH",
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
@@ -304,17 +301,14 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
         "delegator": {
-          "severity": "HIGH",
           "description": "Railgun Delegator contract that can switch this helper into COMMITTING and is the contract used to forward verifier-key updates onward.",
           "type": "PERMISSION"
         },
         "verifier": {
-          "severity": "HIGH",
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
@@ -744,55 +738,44 @@
           "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
         },
         "DELEGATOR_CONTRACT": {
-          "severity": "HIGH",
           "description": "Delegator contract that executes successful proposal actions."
         },
         "STAKING_CONTRACT": {
-          "severity": "HIGH",
           "description": "Staking contract whose snapshots determine sponsorship and voting power."
         },
         "QUORUM": {
-          "severity": "HIGH",
           "description": "Minimum affirmative voting power required for a proposal to reach quorum.",
           "type": "RISK_PARAMETER"
         },
         "PROPOSAL_SPONSOR_THRESHOLD": {
-          "severity": "HIGH",
           "description": "Minimum sponsorship required before a proposal can be moved into the voting phase.",
           "type": "RISK_PARAMETER"
         },
         "SPONSOR_WINDOW": {
-          "severity": "HIGH",
           "description": "Maximum time after publication during which a proposal can collect sponsorship.",
           "type": "RISK_PARAMETER"
         },
         "SPONSOR_LOCKOUT_TIME": {
-          "severity": "HIGH",
           "description": "Cooldown that limits how often the same account can newly sponsor different proposals.",
           "type": "RISK_PARAMETER"
         },
         "VOTING_START_OFFSET": {
-          "severity": "HIGH",
           "description": "Delay between calling a proposal to vote and the opening of the voting window.",
           "type": "RISK_PARAMETER"
         },
         "VOTING_YAY_END_OFFSET": {
-          "severity": "HIGH",
           "description": "Deadline for casting affirmative votes after a vote has been called.",
           "type": "RISK_PARAMETER"
         },
         "VOTING_NAY_END_OFFSET": {
-          "severity": "HIGH",
           "description": "Deadline for casting negative votes after a vote has been called.",
           "type": "RISK_PARAMETER"
         },
         "EXECUTION_START_OFFSET": {
-          "severity": "HIGH",
           "description": "Delay between a successful vote and when execution can begin.",
           "type": "RISK_PARAMETER"
         },
         "EXECUTION_END_OFFSET": {
-          "severity": "HIGH",
           "description": "End of the execution window for a successful proposal.",
           "type": "RISK_PARAMETER"
         }
@@ -895,7 +878,6 @@
           "type": "PERMISSION"
         },
         "cap": {
-          "severity": "HIGH",
           "description": "Hard cap on total RAIL supply.",
           "type": "RISK_PARAMETER"
         },
@@ -1044,16 +1026,13 @@
           "description": "Total RAIL locked in this contract by governance participants for voting power."
         },
         "stakingToken": {
-          "severity": "HIGH",
           "description": "RAIL token contract that users lock here to obtain voting power."
         },
         "STAKE_LOCKTIME": {
-          "severity": "HIGH",
           "description": "Delay between unlocking a stake and being able to claim the underlying RAIL.",
           "type": "RISK_PARAMETER"
         },
         "SNAPSHOT_INTERVAL": {
-          "severity": "HIGH",
           "description": "Length of the interval used when taking governance voting-power snapshots.",
           "type": "RISK_PARAMETER"
         }
@@ -1197,7 +1176,6 @@
           "type": "PERMISSION"
         },
         "$implementation": {
-          "severity": "HIGH",
           "description": "Current Railgun smart wallet implementation.",
           "type": "CODE_CHANGE"
         },
@@ -1207,7 +1185,7 @@
           "type": "PERMISSION"
         },
         "treasury": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
         },
         "shieldFee": {
@@ -1235,7 +1213,6 @@
           "description": "Whether the smart wallet proxy currently blocks all calls to its implementation."
         },
         "proxyOwnershipChangeCount": {
-          "severity": "HIGH",
           "description": "Number of proxy ownership transfers, including changes later reverted."
         },
         "proxyPauseCount": {
@@ -1247,11 +1224,9 @@
           "description": "Number of times the proxy has been unpaused."
         },
         "logicOwnershipChangeCount": {
-          "severity": "HIGH",
           "description": "Number of logic ownership transfers, including changes later reverted."
         },
         "feeChangeCount": {
-          "severity": "HIGH",
           "description": "Number of fee schedule changes, including changes later reverted."
         },
         "blocklistAdditionCount": {
@@ -1263,7 +1238,6 @@
           "description": "Number of token blocklist removals, including removals later reverted."
         },
         "verificationKeyChangeCount": {
-          "severity": "HIGH",
           "description": "Number of SNARK verification key changes, including keys later replaced or restored."
         },
         "ZERO_VALUE": {
@@ -1719,7 +1693,7 @@
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
   "usedBlockNumbers": { "ethereum": 26002488 },
-  "permissionsConfigHash": "0x55bd3f2567e9f9384e6eab55f3da6dbc14e6dedcade3ac13ab8aed026e4f629a",
+  "permissionsConfigHash": "0x6d6a8714cd5243a9c96b606e36285f495af64cc1a339cf498ddbd833ba69f300",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
       "directlyReceivedPermissions": [

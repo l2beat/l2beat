@@ -177,10 +177,6 @@
         "owner": "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590": "ProxyAdmin"
       }
@@ -335,13 +331,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "payy/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "payy/Rollup": "0xf7a0ec4aeecff88c7330666e8c5ed2d09340c14447c657796b7f2c1dd95b1743"
   },
   "usedBlockNumbers": { "ethereum": 25831710 },
-  "permissionsConfigHash": "0xb51ef675ec1c4f55e2b7f9dd9adbfce3c3ad64a31251315f29ddda5daf8c5139",
+  "permissionsConfigHash": "0x2f67e4069c327990de0e5315013aeadbc27cd30a4fc2888c82f5d8757e9cf4b0",
   "permissions": {
     "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": {
       "receivedPermissions": [

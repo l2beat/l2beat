@@ -35,7 +35,7 @@
       ]
     },
     "$members": {
-      "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.",
+      "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition.",
       "type": "PERMISSION",
       "handler": {
         "type": "event",
@@ -49,25 +49,6 @@
           "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
         }
       ]
-    },
-    "$threshold": {
-      "description": "Decryption shares required within each newly selected minimum-size committee. This represents two of the selected three ciphernodes, not two of all registered $members.",
-      "handler": {
-        "type": "call",
-        "address": "{{ interfold }}",
-        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
-        "args": [0, 0]
-      }
-    },
-    "selectedCommitteeSize": {
-      "description": "Number of ciphernodes selected from $members for each minimum-size committee.",
-      "type": "RISK_PARAMETER",
-      "handler": {
-        "type": "call",
-        "address": "{{ interfold }}",
-        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
-        "args": [0, 1]
-      }
     },
     "interfold": {
       "permissions": [
@@ -116,6 +97,10 @@
           "description": "deliver the entropy used to select ciphernode committees for each E3."
         }
       ]
+    },
+    "randomnessDegraded": {
+      "description": "Whether the randomness circuit breaker has tripped, which blocks new E3 requests until governance resets the provider.",
+      "type": "RISK_PARAMETER"
     },
     "randomnessRequestTimeout": {
       "description": "Time window in which the randomness provider must deliver sortition entropy for an E3, bounded between 60 seconds and 1 day.",

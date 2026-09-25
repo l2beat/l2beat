@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > {{getMinDelayFormatted}} old. If the Sequencers are censoring or down for more than {{getMinDelayFormatted}}, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
+  "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > {{getMinDelayFormatted}} old. If the submitters are censoring or down for more than {{getMinDelayFormatted}}, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
   // Core protocol contract: batch commitment, state root finalization and the
   // challenge/proof system all live here - a code or config change can alter
   // how withdrawals are validated.
@@ -42,9 +42,13 @@
     "proofWindow": {
       "severity": "HIGH"
     },
-    // Defines the permissioned staker set allowed to sequence and propose.
-    "l1StakingContract": {
+    // Defines the permissioned submitter set allowed to commit batches and
+    // propose, and is the contract the Rollup slashes on a lost challenge.
+    "submitterContract": {
       "severity": "HIGH"
+    },
+    "legacyCutoverBatchIndex": {
+      "description": "Batch index at which the Rollup switched batch-submission authorization to the Submitter contract; batches above it are attributed to a single submitter account."
     },
     // Queue enforcing L1 -> L2 message inclusion (forced transactions).
     "messageQueue": {

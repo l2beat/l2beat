@@ -1494,10 +1494,6 @@
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "ProxyAdmin"
       }
@@ -1523,10 +1519,6 @@
       "values": {
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": "ProxyAdmin"
@@ -2443,10 +2435,6 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ProxyAdmin"
       },
@@ -2468,10 +2456,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin"
@@ -2867,10 +2851,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "ProxyAdmin"
@@ -9834,7 +9814,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
@@ -9883,7 +9863,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 506406352, "ethereum": 26003769 },
-  "permissionsConfigHash": "0xc1b4fe309c26a6ceae425ed9ffa603ec0e01b8007f911f75774cbfc1cfe86256",
+  "permissionsConfigHash": "0xf9dd266fea35c0a0a0a59d3af1db9558c58cb99900f7630e7a8ae63cb32c51b5",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
       "directlyReceivedPermissions": [

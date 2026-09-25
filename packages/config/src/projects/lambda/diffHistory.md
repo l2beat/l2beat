@@ -1,3 +1,222 @@
+Generated with discovered.json: 0x2bd4123eb02ed94d0819d2890664feaf7b1b865f
+
+# Diff at Wed, 23 Sep 2026 05:47:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1728316727
+- current timestamp: 1728316727
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1728316727 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+      directlyReceivedPermissions.8.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x6de38b49bc1a04f15ed8bf666e32170c813f9e69b7c213c6e3fdb961091ec37e"
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x2d6eed673d2bab5d76faa0267fc22e2e2bc709d60036b7a47290ed08a484a8d8"
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x624808dc4A34B79B90C3c085942D2100F09A0376) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
++        "0x031598b0829eb9faac545348e21492db93e743727481662e352da3ebb01c7510"
+      fieldMeta.L1_MNT_ADDRESS:
+-        {"severity":"HIGH"}
+      fieldMeta.SYSTEM_CONFIG:
+-        {"severity":"HIGH"}
+      fieldMeta.L2_ORACLE:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.guardian:
+-        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
+-        {"severity":"MEDIUM"}
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0xb5cdeba050b0d5fed747efec2a9d555a5ed7bb2ec4261d47d68083a1bbe20e11"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x8334f9A70294556101527bfB9bdEdeF7EB382D94) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342"
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0x0ac0fae0ed2876181efd8e1d628f619f4723b088e8afe466f00e008d69b13375"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
+```diff
+    EOA (eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40) {
+    +++ description: None
+      receivedPermissions.12.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.12.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0xb10826d619883150b87a259a32e62c5e0b477760d05f8bb62024341d936d808f"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
+    }
+```
+
 Generated with discovered.json: 0x3a8f6dcc32062727ae17325af8a2548f6a75b63e
 
 # Diff at Mon, 21 Sep 2026 11:24:02 GMT:

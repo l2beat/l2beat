@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc21fafb95a300b289bdce41c48f6a0f32188243b
+
+# Diff at Wed, 23 Sep 2026 05:52:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1756898514
+- current timestamp: 1756898514
+
+## Description
+
+Refresh archived Kinto colorization at its main-branch block; no onchain state was fetched.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756898514 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x1c9fb409ab2838362cb49284b606e25131ccf4c2
 
 # Diff at Mon, 21 Sep 2026 11:24:02 GMT:

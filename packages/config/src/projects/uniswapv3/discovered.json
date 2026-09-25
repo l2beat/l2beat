@@ -139,11 +139,7 @@
         "symbol": "UNI",
         "totalSupply": "1000000000000000000000000000"
       },
-      "fieldMeta": {
-        "minimumTimeBetweenMints": { "severity": "HIGH" },
-        "mintCap": { "severity": "HIGH" },
-        "minter": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "minter": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "Uni"
       }
@@ -233,8 +229,6 @@
         "votingTokenSymbol": "UNI"
       },
       "fieldMeta": {
-        "uni": { "severity": "HIGH" },
-        "timelock": { "severity": "HIGH" },
         "implementation": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
@@ -348,6 +342,7 @@
         "fee": 500,
         "feeGrowthGlobal0X128": "4812563195332808166897045866562170",
         "feeGrowthGlobal1X128": "2051267001107534919613865008024280826640110",
+        "feeProtocol": 68,
         "liquidity": "9001201275211611417",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
         "protocolFees": { "token0": 156651893, "token1": "120407798350187590" },
@@ -365,9 +360,12 @@
         "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "factory": { "severity": "HIGH" },
         "slot0": {
           "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "feeProtocol": {
+          "severity": "HIGH",
+          "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees."
         },
         "protocolFees": {
           "description": "Protocol fees accrued and not yet collected by the factory owner."
@@ -404,8 +402,6 @@
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "WETH9": { "severity": "HIGH" },
-        "factory": { "severity": "HIGH" },
         "totalSupply": {
           "description": "Number of position NFTs minted so far."
         }
@@ -441,6 +437,7 @@
         "fee": 3000,
         "feeGrowthGlobal0X128": "69405417289652257427961674355348",
         "feeGrowthGlobal1X128": "15612722894372763149846873124167683519753445",
+        "feeProtocol": 102,
         "liquidity": "32897615873851277",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": { "token0": 21, "token1": 1 },
@@ -458,9 +455,12 @@
         "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "factory": { "severity": "HIGH" },
         "slot0": {
           "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "feeProtocol": {
+          "severity": "HIGH",
+          "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees."
         },
         "protocolFees": {
           "description": "Protocol fees accrued and not yet collected by the factory owner."
@@ -1069,21 +1069,21 @@
   },
   "usedTemplates": {
     "uniswapv3/Firepit": "0x703007707cf394ab3f48090fd6cd3adedcb5be8fcbef542951bb894deb4bb6bb",
-    "uniswapv3/GovernorBravoDelegate": "0x3116f09c9102e0f913021aaf0fd08bfe81d6adce5fbd1c3764ee33d1f1d0e362",
-    "uniswapv3/NonfungiblePositionManager": "0x49e01677b971bedc27f1ef96d521163d6515a68571b34333dc6fe6527fbf3ba3",
+    "uniswapv3/GovernorBravoDelegate": "0x93444bf90be73c54222526d6c9152374e151c7aa4d0212144c626fda2a95b0b9",
+    "uniswapv3/NonfungiblePositionManager": "0x622be50d7a2722d99993e34ef932a16ff8317c5c2d4f7bcc73f2b233a174330b",
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter02": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/Timelock": "0x1af830301f6824613ae3ac5bc1428e6ec237408b962a514f16babc65c102702a",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
-    "uniswapv3/Uni": "0x2dae32d9f53d692733953ebacb60cdf1b7a93bff67b281ef673b258c80f7b904",
+    "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
     "uniswapv3/UniswapV3Factory": "0x5e0c14e07a63feedadd8c50b27af35d0dbdaf5a8fa83bcdac52444324d2f8636",
-    "uniswapv3/UniswapV3Pool": "0x04da8e983df4c096c6ff8ced889cedd5a2adb01089140586290483dd8237781d",
+    "uniswapv3/UniswapV3Pool": "0x65021131b44c8c45c85d9ea8406ba8417f889c14156d9ae901919723b6456d62",
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
     "uniswapv3/V3OpenFeeAdapter": "0xfacd2e561908ae18410c983606de37bd3a1f12dd9b911f25debdeedb42b3ad6b"
   },
   "usedBlockNumbers": { "ethereum": 25770096 },
-  "permissionsConfigHash": "0x4d4790adca0e0f42cc18f45d357d0aa0ee988e4811e4014390383b3ec0473b8e",
+  "permissionsConfigHash": "0xca9dc1733cbbe525f007ee631699431ba17cc574105694d53bce5c2a3b14c080",
   "permissions": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "directlyReceivedPermissions": [

@@ -17,7 +17,6 @@
       "severity": "HIGH"
     },
     "timelockAdminAC": {
-      "severity": "HIGH",
       // assuming they also have PROPOSER_ROLE, EXECUTOR_ROLE, CANCELLER_ROLE roles
       "handler": {
         "type": "accessControl",
@@ -46,14 +45,8 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
-    "accessControl": {
-      "severity": "HIGH",
-      "handler": {
-        "type": "accessControl"
-      }
-    },
+    "accessControl": { "handler": { "type": "accessControl" } },
     "polygonZkEVM": {
-      "severity": "HIGH",
       "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
     },
     "scheduledTransactionsDecoded": {

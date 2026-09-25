@@ -1336,6 +1336,7 @@
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 22744284,
+        "untilBlock": 26031669,
         "inbox": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "sequencers": [
           "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
@@ -1343,6 +1344,20 @@
           "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
           "0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
           "0x76F91869161dC4348230D5F60883Dd17462035f4"
+        ]
+      }
+    },
+    {
+      "id": "44ebeba30788",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 26031669,
+        "inbox": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "sequencers": [
+          "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
         ]
       }
     },

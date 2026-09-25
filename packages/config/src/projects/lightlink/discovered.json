@@ -438,17 +438,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.4.0"
       },
-      "fieldMeta": {
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": "Proxy",
         "eth:0x38104856c02f83f4048c0FBA3D7613042FEAc988": "L1CrossDomainMessenger"
@@ -550,17 +540,7 @@
         "paused": false,
         "version": "2.2.0"
       },
-      "fieldMeta": {
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "messenger": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "otherBridge": { "severity": "HIGH" },
-        "OTHER_BRIDGE": { "severity": "HIGH" },
-        "l2TokenBridge": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "Proxy",
         "eth:0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": "L1StandardBridge"
@@ -1121,11 +1101,11 @@
     "lightlink/LightLinkPortal": "0xe0fcc9299776b8384b60df1e2908abb375fe01985e75e67684bd590a74bb49c0",
     "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
     "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
-    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef"
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641"
   },
   "usedBlockNumbers": { "ethereum": 22208513 },
-  "permissionsConfigHash": "0xa3143610c31eeda640c5afae23575b32b2b207360cbcbce395e7913a4040d9bb",
+  "permissionsConfigHash": "0xcd3101ddf65e83a5ebf58ddf4e237e3093999647fa9e1509b2e25223abf81ae5",
   "permissions": {
     "eth:0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": {
       "receivedPermissions": [
@@ -1200,8 +1180,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         }
       ]
     }

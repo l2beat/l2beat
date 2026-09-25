@@ -30,13 +30,11 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "Proposer": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -53,7 +51,6 @@
       ]
     },
     "Canceller": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -66,7 +63,6 @@
       ]
     },
     "Executor": {
-      "severity": "HIGH",
       "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
       "handler": {
         "type": "accessControl",

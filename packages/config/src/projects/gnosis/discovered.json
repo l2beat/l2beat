@@ -720,10 +720,6 @@
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd": "ProxyAdmin"
       }
@@ -2542,7 +2538,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "gnosis/BridgeRouter": "0x908249a79f82ee0ad86c54633e5d1e8e4677c0c13c1402a91370e634df5afd93",
     "gnosis/BridgeValidators": "0x897057a079a579bb068ff172ecfa93504ba751b86ed162bdaa079902fb6686a1",
     "gnosis/ForeignAMB": "0x162b5f9d7eebd6d819414c2a6d881e2af976fb4708bb3099bc7dcf824faaa9dd",
@@ -2560,7 +2556,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25982580, "gnosis": 48262424 },
-  "permissionsConfigHash": "0x38b69de7f92a38e97d18050764668fa5e3caaec500bcbf160ba1a449a53f6413",
+  "permissionsConfigHash": "0xc4b9a72c78195f032199e374cbf10cca770f6d939e6f80dfab15f798fe74b93d",
   "permissions": {
     "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca": {
       "receivedPermissions": [

@@ -4,26 +4,12 @@
   "critical": true,
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
-    "PAUSE_DURATION": {
-      "severity": "HIGH"
-    },
-    "COOLDOWN_DURATION": {
-      "severity": "HIGH"
-    },
-    "tokenBeacon": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "accessControl": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "defaultAdminAC": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -161,7 +147,7 @@
         "type": "event",
         "select": ["role"],
         "set": {
-          "event": "PauseTypeRoleSet"
+          "event": ["PauseTypeRoleSet", "PauseTypeRoleUpdated"]
         },
         "groupBy": "pauseType"
       }
@@ -172,12 +158,13 @@
         "type": "event",
         "select": ["role"],
         "set": {
-          "event": "UnPauseTypeRoleSet"
+          "event": ["UnPauseTypeRoleSet", "UnPauseTypeRoleUpdated"]
         },
         "groupBy": "unPauseType"
       }
     },
     "allPausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "PAUSE_ALL_ROLE", "members"],
       "permissions": [
@@ -188,6 +175,7 @@
       ]
     },
     "initiateTokenBridgingPausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
@@ -198,6 +186,7 @@
       ]
     },
     "completeTokenBridgingPausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
@@ -208,6 +197,7 @@
       ]
     },
     "allUnpausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "UNPAUSE_ALL_ROLE", "members"],
       "permissions": [
@@ -218,6 +208,7 @@
       ]
     },
     "initiateTokenBridgingUnpausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
@@ -228,6 +219,7 @@
       ]
     },
     "completeTokenBridgingUnpausers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
@@ -238,7 +230,6 @@
       ]
     },
     "customContractSetters": {
-      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
       "permissions": [
@@ -249,7 +240,6 @@
       ]
     },
     "reserveTokenSetters": {
-      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -260,7 +250,6 @@
       ]
     },
     "reserveTokenRemovers": {
-      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -271,7 +260,6 @@
       ]
     },
     "messageServiceSetters": {
-      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
       "permissions": [
@@ -282,7 +270,6 @@
       ]
     },
     "remoteSender": {
-      "severity": "HIGH",
       "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.",
       "edit": ["format", "LineaAddress"]
     },

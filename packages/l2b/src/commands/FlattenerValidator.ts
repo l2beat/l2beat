@@ -1,12 +1,16 @@
 import { AuxdataStyle, splitAuxdata } from '@ethereum-sourcify/bytecode-utils'
-import { useSolidityCompiler } from '@ethereum-sourcify/compilers'
+import {
+  type ICompilersLogger,
+  setCompilersLogger,
+  useSolidityCompiler,
+} from '@ethereum-sourcify/compilers'
 import type {
   Libraries,
   SolidityJsonInput,
   SolidityOutput,
   SolidityOutputContract,
 } from '@ethereum-sourcify/compilers-types'
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   ConfigReader,
@@ -32,6 +36,10 @@ import { command, number, option, restPositionals } from 'cmd-ts'
 import { createHash } from 'crypto'
 import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
+import {
+  type CliLogger,
+  createCliLogger,
+} from '../implementations/common/CliLogger'
 import { formatOpcodeDiff } from '../implementations/common/disassemble'
 import { ChainSpecificAddressValue } from './types'
 
@@ -63,17 +71,16 @@ export const FlattenerValidator = command({
   handler: async ({ concurrency, filterAddresses }) => {
     assertPositiveInteger(concurrency, 'concurrency')
 
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
+    setCompilersLogger(getCompilersLogger(cli))
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
-    const { allProviders, cache } = getProviders(paths)
+    const { allProviders, cache } = getProviders(paths, cli.toLogger('INFO'))
 
     const now = UnixTime(1778573466)
-    let addresses = getAllContractAddresses(configReader)
-    if (filterAddresses.length > 0) {
-      addresses = intersection(addresses, filterAddresses)
-    }
+    const addresses = selectAddresses(configReader, filterAddresses)
     if (addresses.length === 0) {
-      console.log('No contracts to verify')
+      cli.log('No contracts to verify')
       return
     }
 
@@ -86,6 +93,13 @@ export const FlattenerValidator = command({
     let failed = 0
     let verificationTimeMsTotal = 0
     const failures: { address: ChainSpecificAddress; message: string }[] = []
+    const runStatus = cli.status()
+    const formatRunStatus = () =>
+      `Status: completed=${completed.toString().padStart(maxLength)}/${totalText} ` +
+      `matching=${matching.toString().padStart(maxLength)} ` +
+      `failed=${failed.toString().padStart(maxLength)} ` +
+      `avg=${formatDuration(verificationTimeMsTotal / completed)} ` +
+      `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`
 
     await mapWithConcurrency(addresses, concurrency, async (address) => {
       const chain = ChainSpecificAddress.longChain(address)
@@ -109,25 +123,19 @@ export const FlattenerValidator = command({
         completed / total,
       )
 
-      const cursorControl = completed === 1 ? '' : '\x1b[1A\r\x1b[K'
       const failureMessage =
         status.type === 'failure' ? `: ${status.message}` : ''
-      console.log(
-        `${cursorControl}${progress}/${totalText}: ` +
+      runStatus.update(formatRunStatus())
+      cli.log(
+        `${progress}/${totalText}: ` +
           `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${address}${failureMessage}`,
       )
-      console.log(
-        `Status: completed=${completed.toString().padStart(maxLength)}/${totalText} ` +
-          `matching=${matching.toString().padStart(maxLength)} ` +
-          `failed=${failed.toString().padStart(maxLength)} ` +
-          `avg=${formatDuration(verificationTimeMsTotal / completed)} ` +
-          `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`,
-      )
     })
+    runStatus.done(formatRunStatus())
 
     printFailures(failures)
     if (failures.length > 0) {
-      throw new Error(`${failures.length} contract(s) failed validation`)
+      process.exitCode = 1
     }
   },
 })
@@ -232,16 +240,43 @@ function flattenSource(source: ContractSource): string {
   return flat
 }
 
-function getProviders(paths: DiscoveryPaths) {
+function getProviders(paths: DiscoveryPaths, logger: Logger) {
   const http = new HttpClient()
   const chainConfigs = getChainConfigs()
   const cache = new SQLiteCache(paths.cache)
-  const logger = Logger.INFO
 
   return {
     cache,
     allProviders: new AllProviders(chainConfigs, http, cache, logger),
   }
+}
+
+const COMPILERS_LOG_LEVEL_WARN = 1
+
+function getCompilersLogger(cli: CliLogger): ICompilersLogger {
+  const logger: ICompilersLogger = {
+    logLevel: COMPILERS_LOG_LEVEL_WARN,
+    setLevel: (level) => {
+      logger.logLevel = level
+    },
+    log: (level, message) => {
+      if (level <= logger.logLevel) {
+        cli.log(message)
+      }
+    },
+  }
+  return logger
+}
+
+function selectAddresses(
+  configReader: ConfigReader,
+  filterAddresses: ChainSpecificAddress[],
+): ChainSpecificAddress[] {
+  const addresses = getAllContractAddresses(configReader)
+  if (filterAddresses.length === 0) {
+    return addresses
+  }
+  return intersection(addresses, filterAddresses)
 }
 
 function getAllContractAddresses(

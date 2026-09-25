@@ -34,6 +34,9 @@
     "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
     "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": "DelayedWETH_PermissionlessGames",
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames",
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
 
     "oeth:0x4200000000000000000000000000000000000042": "OPToken",
     "oeth:0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
@@ -44,20 +47,55 @@
     "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
   },
   "overrides": {
-    "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
-      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
-    },
-    // The air gap: how long a resolved dispute game must wait before its root
-    // can finalize withdrawals. Changing it alters the guardian's window to
-    // blacklist a faulty game, i.e. the conditions under which user
-    // withdrawals are validated.
-    "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113": {
+    // Effective 2-of-2 owner of the SuperchainProxyAdmin. Its two owners are
+    // the Foundation Upgrade Safe and the Optimism Security Council.
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
+      "critical": { "sinceTimestamp": 1707514547 },
       "fields": {
-        "disputeGameFinalityDelaySeconds": {
-          "severity": "HIGH",
-          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // One branch of the 2-of-2 upgrade authority.
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
+      "critical": { "sinceTimestamp": 1707514547 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // The other upgrade-authority branch and the controller behind the
+    // protocol guardian path.
+    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
+      "critical": { "sinceTimestamp": 1707514547 },
+      "references": [
+        {
+          "text": "Security Council members - Optimism Collective Governance Forum",
+          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+        }
+      ],
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "isL2beatStillAnOwner": {
+          "handler": {
+            "type": "call",
+            "method": "isOwner",
+            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"]
+          }
         }
       }
+    },
+    // Executes the guardian's pause and dispute-game blacklist powers.
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": {
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
     // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
     "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
@@ -67,24 +105,6 @@
     // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
-    },
-    // Optimism Security Council: co-owner (2-of-2) of the SuperchainProxyAdminOwner and sole owner (1/1) of the Guardian Multisig. The Safe shell is not part of the ossification perimeter.
-    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
-      "references": [
-        {
-          "text": "Security Council members - Optimism Collective Governance Forum",
-          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
-        }
-      ],
-      "fields": {
-        "isL2beatStillAnOwner": {
-          "handler": {
-            "type": "call",
-            "method": "isOwner",
-            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"]
-          }
-        }
-      }
     },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
@@ -299,26 +319,32 @@
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       // sole minter of OP, which is counted (natively minted) in the TVS.
-      "critical": true,
+      "critical": { "sinceTimestamp": 1665503636 },
       "fields": {
-        "MINT_PERIOD": {
-          "severity": "HIGH"
-        },
-        "MINT_CAP": {
-          "severity": "HIGH"
-        },
-        "governanceToken": {
-          "severity": "HIGH"
-        },
         "owner": {
-          "severity": "HIGH",
           "permissions": [
             {
               "type": "interact",
-              "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+              "description": "can mint OP up to the hardcoded inflation cap."
             }
           ]
         }
+      }
+    },
+    // Safe directly owning the MintManager once OP minting moved to it.
+    "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": {
+      "critical": { "sinceTimestamp": 1665503636 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // Nested Safe that replaced the direct MintManagerOwner signer set.
+    "oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2": {
+      "critical": { "sinceTimestamp": 1775575311 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
       }
     },
     "oeth:0x4200000000000000000000000000000000000042": {
@@ -329,7 +355,12 @@
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "owner": {
-          "severity": "HIGH"
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can mint OP tokens."
+            }
+          ]
         }
       }
     }

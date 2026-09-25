@@ -188,22 +188,11 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
@@ -360,10 +349,6 @@
         "isUpgrading": false,
         "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d": "ProxyAdmin"
       }
@@ -386,7 +371,6 @@
         "$immutable": true,
         "owner": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd": "AddressManager"
       },
@@ -440,17 +424,7 @@
         "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.4.0"
       },
-      "fieldMeta": {
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6": "ResolvedDelegateProxy",
         "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
@@ -984,19 +958,19 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
     "opstack/L2OutputOracle_soon": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal_soon": "0x501665d0286b3d5ec36d23208700c4c03246a24a07ae843b04971530af9ec17b",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b"
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25797241 },
-  "permissionsConfigHash": "0xfd09bde6c6d2d99bd8a8455515994431b5273f84703712c988325621e5a00275",
+  "permissionsConfigHash": "0xbf3b45226526c7856c57ae0e758a29bff1ac11c411e072de6c2e99e939d62050",
   "permissions": {
     "eth:0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a": {
       "receivedPermissions": [

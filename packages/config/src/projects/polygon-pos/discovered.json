@@ -5618,7 +5618,7 @@
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25982648 },
-  "permissionsConfigHash": "0xe9b5e7aba97ce945843431043415c5e6f7bde3643dc5f3970215b298633d844b",
+  "permissionsConfigHash": "0xe597679fd10eca9cd6b7e4cbad35c65ba59f6a90d2963fba2f452e2ba8a690ca",
   "permissions": {
     "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
       "receivedPermissions": [

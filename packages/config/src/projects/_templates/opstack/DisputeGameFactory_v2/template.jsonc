@@ -18,21 +18,28 @@
       "typeCaster": "SliceAddress",
       "arg": { "offset": 72 }
     },
+    "AnchorStateRegistryFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 52 }
+    },
+    "AbsolutePrestateFromArgs": {
+      "typeCaster": "SliceBytes32",
+      "arg": { "offset": 0 }
+    },
+    "ChainIdFromArgs": {
+      "typeCaster": "SliceUint256",
+      "arg": { "offset": 92 }
+    },
     "VmFromGame8Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 32 }
+    },
+    "VmFromPermissionedArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 32 }
     }
   },
   "fields": {
-    "gameImpls": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
     "game1337": {
       "severity": "HIGH",
       "handler": {
@@ -117,11 +124,9 @@
       }
     },
     "permissionedGameArgs": {
-      // CWIA clone args of the permissioned game: absolutePrestate (bytes 0-32,
-      // the fault-proof program commitment), then vm, anchor registry, weth,
-      // proposer, challenger. setImplementation() can replace these WITHOUT
-      // changing the game1 impl address, so the whole blob is HIGH.
-      "severity": "HIGH",
+      // CWIA clone args of the permissioned game: absolutePrestate, vm, anchor
+      // registry, weth, chain ID, proposer and challenger. Security-relevant
+      // values are exposed separately below so each change has one kind.
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -129,18 +134,45 @@
         "expectRevert": true
       }
     },
-    "game8Args": {
-      // CWIA clone args of the type-8 game: absolutePrestate (bytes 0-32,
-      // the fault-proof program commitment), then vm, anchor registry, weth,
-      // chainId. setImplementation() can replace these WITHOUT changing the
-      // game8 impl address, so the whole blob is HIGH.
+    "absolutePrestateFromDGF": {
       "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
+    },
+    "vmFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromPermissionedArgs"]
+    },
+    "game8Args": {
+      // CWIA clone args of the type-8 game. Security-relevant values are
+      // exposed separately below so each change has one kind.
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
         "args": [8],
         "expectRevert": true
       }
+    },
+    "game8AbsolutePrestate": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
     },
     // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
     // (prestate(32) | vm(20) -> offset 32).
@@ -153,6 +185,36 @@
         "expectRevert": true
       },
       "edit": ["format", "VmFromGame8Args"]
+    },
+    "game8AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "game8Weth": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
+    },
+    "game8ChainId": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChainIdFromArgs"]
     },
     "proposerFromDGF": {
       "handler": {
@@ -181,6 +243,26 @@
         "expectRevert": true
       },
       "edit": ["format", "WethFromArgs"]
+    },
+    "anchorStateRegistryFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "chainIdFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChainIdFromArgs"]
     },
     "permissionedGamesTotal": {
       "handler": {

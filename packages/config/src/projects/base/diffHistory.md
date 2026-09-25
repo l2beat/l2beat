@@ -1,3 +1,488 @@
+Generated with discovered.json: 0x041b5aae0a18f466626ca1b550fc8be9edd70676
+
+# Diff at Wed, 23 Sep 2026 05:45:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1785226129
+- current timestamp: 1785226129
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (base:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2StandardBridge (base:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      fieldMeta.l1TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (base:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec","role":"admin"}
+      directlyReceivedPermissions.3.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.DISPUTE_GAME_FACTORY:
+-        {"severity":"HIGH"}
+      fieldMeta.NITRO_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.MAX_AGE:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
+    +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+      fieldMeta.TEE_PROVER_REGISTRY:
+-        {"severity":"HIGH"}
+      fieldMeta.ANCHOR_STATE_REGISTRY:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.absolutePrestateFromDGF:
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e"
++++ severity: HIGH
+      values.anchorStateRegistryFromDGF:
++        "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72"
++++ severity: HIGH
+      values.chainIdFromDGF:
++        8453
++++ severity: HIGH
+      values.game8AbsolutePrestate:
++        "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa"
++++ severity: HIGH
+      values.game8AnchorStateRegistry:
++        "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72"
++++ severity: HIGH
+      values.game8ChainId:
++        8453
++++ severity: HIGH
+      values.game8Weth:
++        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
++++ severity: HIGH
+      values.vmFromDGF:
++        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+      fieldMeta.game8Args:
+-        {"severity":"HIGH"}
+      fieldMeta.absolutePrestateFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.vmFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.game8AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game8AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game8Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game8ChainId:
++        {"severity":"HIGH"}
+      fieldMeta.anchorStateRegistryFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.chainIdFromDGF:
++        {"severity":"HIGH"}
+      usedTypes.0:
++        {"typeCaster":"SliceBytes32","arg":{"offset":0}}
+      usedTypes.1:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.3:
++        {"typeCaster":"SliceAddress","arg":{"offset":52}}
+      usedTypes.4:
++        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+      usedTypes.5:
++        {"typeCaster":"SliceUint256","arg":{"offset":92}}
+      usedTypes.3:
+-        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      fieldMeta:
+-        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.5.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
++++ severity: HIGH
+      values.blacklistedGames:
++        []
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.blacklistedGames:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
+      fieldMeta.pauseExpiry:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
+    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+      fieldMeta.SP1_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.ANCHOR_STATE_REGISTRY:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
 Generated with discovered.json: 0xeb92de3b9438904e50e1c9650d05723d65556990
 
 # Diff at Mon, 21 Sep 2026 11:23:57 GMT:

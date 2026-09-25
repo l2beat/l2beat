@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xe1e547c9f481365da618005df14d30b16ef774c3
+
+# Diff at Wed, 23 Sep 2026 05:50:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MantaProxyAdmin (manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x9e601207e2fb3d7aff2e10ebc7d1693668168acd
 
 # Diff at Mon, 21 Sep 2026 11:24:09 GMT:

@@ -1,5 +1,5 @@
 import { CropFindings, CropNote } from '~/components/garden/CropFindings'
-import { CropPlant } from '~/components/garden/CropPlant'
+import { CropPlant, EASE_OUT_BACK } from '~/components/garden/CropPlant'
 import {
   CROP_BORDER,
   CROP_INK,
@@ -20,6 +20,9 @@ import { cn } from '~/utils/cn'
 // laptop. Measured inner widths: 680-760px on 1280px laptops and portrait
 // tablets, 930-1110px on landscape tablets, 360-400px on phones. Four rooted
 // columns from 720px, two with inline chips from 520px, one below.
+
+/** Seconds between neighbouring plants; longer and the last one feels late. */
+const STAGGER = 0.05
 
 /**
  * The four plants stand full-size in one garden bed, and each roots straight
@@ -81,13 +84,13 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
       <CropPlant
         status={evaluation.status}
         sentiment={evaluation.sentiment}
-        delay={index * 0.12}
+        delay={index * STAGGER}
         width={80}
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
       />
       <LetterChip
         entry={entry}
-        delay={index * 0.12}
+        delay={index * STAGGER}
         className="size-7 text-[11px]"
       />
     </div>
@@ -116,7 +119,7 @@ function LetterChip({
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{ animation: `garden-pop .5s ease-out ${delay}s both` }}
+      style={{ animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s both` }}
     >
       <span
         aria-hidden
@@ -139,7 +142,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
       <h3 className="flex items-center gap-2 font-bold text-paragraph-15 leading-tight">
         <LetterChip
           entry={entry}
-          delay={index * 0.12}
+          delay={index * STAGGER}
           className={'@max-[719.9px]:grid hidden size-[22px] text-[10px]'}
         />
         {definition.label}
@@ -217,12 +220,16 @@ function Sky({ inGarden }: { inGarden: boolean }) {
         className={cn(
           'absolute inset-0 bg-gradient-to-b',
           inGarden
-            ? 'from-garden-canvas via-garden-tint to-garden-tint'
+            ? 'from-garden-sky via-garden-tint to-garden-tint'
             : 'from-surface-secondary/70 via-surface-secondary/30 to-surface-secondary/20',
         )}
       />
       {inGarden && (
-        <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+        <>
+          <Sun />
+          <Moon />
+          <Stars />
+        </>
       )}
       <svg
         className="absolute inset-x-0 bottom-0 h-10 w-full"
@@ -238,6 +245,49 @@ function Sky({ inGarden }: { inGarden: boolean }) {
           }
         />
       </svg>
+    </div>
+  )
+}
+
+function Sun() {
+  return (
+    <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+  )
+}
+
+/** A crescent: the inset shadow paints the lit side of an otherwise transparent disc. */
+function Moon() {
+  return (
+    <span className="absolute top-3 right-5 hidden size-12 rotate-[-20deg] rounded-full shadow-[inset_-13px_-5px_0_0_var(--garden-moon)] drop-shadow-[0_0_6px_var(--garden-moon)] dark:block" />
+  )
+}
+
+const STARS = [
+  { left: '6%', top: '18%', size: 2 },
+  { left: '17%', top: '42%', size: 1.5 },
+  { left: '29%', top: '12%', size: 1.5 },
+  { left: '41%', top: '30%', size: 2 },
+  { left: '54%', top: '10%', size: 1.5 },
+  { left: '63%', top: '38%', size: 1.5 },
+  { left: '74%', top: '16%', size: 2 },
+  { left: '96%', top: '46%', size: 1.5 },
+]
+
+function Stars() {
+  return (
+    <div className="absolute inset-0 hidden dark:block">
+      {STARS.map((star) => (
+        <span
+          key={star.left}
+          className="absolute rounded-full bg-garden-moon/70"
+          style={{
+            left: star.left,
+            top: star.top,
+            width: star.size,
+            height: star.size,
+          }}
+        />
+      ))}
     </div>
   )
 }

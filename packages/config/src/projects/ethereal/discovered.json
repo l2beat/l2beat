@@ -755,10 +755,6 @@
         "$immutable": true,
         "owner": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2": "ProxyAdmin"
       }
@@ -2688,7 +2684,7 @@
     "ethereal/ExchangeGateway": "0x829d7a798a8382e04fe2a61864a0b42a1418de67c6445cef344eea70bdecf0cd",
     "ethereal/ExchangeGatewayRegistryContracts": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "ethereal/PythLazer": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OrbitNativeOFTAdapter": "0x910d4dbc62ab1d4375020ae6c121c0114f3316b914330fbcfa4c3aa22b405a92",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
@@ -2707,7 +2703,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 481341792, "ethereal": 5339100 },
-  "permissionsConfigHash": "0xe1268424e8900b7f50f584158ec2fcb5d18ce93abef2f64cf2c5424501458d66",
+  "permissionsConfigHash": "0x0b76d58a164610b5a3420da6f4476bf6bb5d48d8b922f63cdc6134a880d19e27",
   "permissions": {
     "arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3": {
       "receivedPermissions": [

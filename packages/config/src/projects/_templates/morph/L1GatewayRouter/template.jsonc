@@ -7,11 +7,7 @@
   // dust-holding non-TVS gateways registered in it are part of the system.
   "ignoreRelatives": ["erc20Gateways"],
   "fields": {
-    "$admin": {
-      "severity": "HIGH"
-    },
     "gateways": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "newEthGateway",
@@ -36,7 +32,6 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

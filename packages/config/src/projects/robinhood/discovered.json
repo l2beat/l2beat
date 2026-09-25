@@ -68,10 +68,6 @@
         "$immutable": true,
         "owner": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin"
       }
@@ -361,10 +357,6 @@
         "$immutable": true,
         "owner": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839": "ProxyAdmin"
@@ -1107,12 +1099,7 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" },
-        "Proposer": { "severity": "HIGH" },
-        "Canceller": { "severity": "HIGH" },
-        "Executor": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465": "TransparentUpgradeableProxy",
@@ -1479,12 +1466,7 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" },
-        "Proposer": { "severity": "HIGH" },
-        "Canceller": { "severity": "HIGH" },
-        "Executor": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" }
       },
       "implementationNames": {
         "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173": "TransparentUpgradeableProxy",
@@ -1522,10 +1504,6 @@
         "$immutable": true,
         "owner": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF": "ProxyAdmin"
@@ -1606,10 +1584,6 @@
       "values": {
         "$immutable": true,
         "owner": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF": "ProxyAdmin"
@@ -2711,8 +2685,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
-    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/EdgeChallengeManager": "0xeaaa590ceeab252a14ceeb88a8d39ce03a969fdb64c2861704b072e3f885a748",
@@ -2731,7 +2705,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25885371, "robinhood": 52069252 },
-  "permissionsConfigHash": "0xe595523f9f305f89089055a34ff3412f3268df174ee4baf52f77f98cfd9d4797",
+  "permissionsConfigHash": "0x6b72b7e1d887e4c44d2ad43dc54147b5aebc0c8d85f83923dfeb5c5fcf5bc688",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
       "directlyReceivedPermissions": [

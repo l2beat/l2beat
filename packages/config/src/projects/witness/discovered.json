@@ -1,7 +1,7 @@
 {
   "name": "witness",
   "timestamp": 1762264414,
-  "configHash": "0x0f7e1589c5f89e4a22e0866d64a90be1f101ff2aa509987c6027107c330e5289",
+  "configHash": "0xd12e4cd5b97cea19b59d8f406f81580e47c6fab38fbd23b2c3601d2baa4aaa35",
   "entries": [
     {
       "name": "Verifier",
@@ -134,10 +134,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": "ProxyAdmin"
@@ -393,9 +389,9 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726377 },
-  "permissionsConfigHash": "0xeac55b7643d8c2f8c14a8b5029bddcd0a204aba381e4ffb58cd49ba5fa9e2824",
+  "permissionsConfigHash": "0x644ff5d369d5cdfc237abb0d79629f22f917cc0dc49e14981dd307ee9f7baff0",
   "modelledAgainst": {
-    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27"
+    "shared-polygon-cdk": "0x4ac7caa0947575fceef16b6b6c3a4a11cd40958971cd0de464f6bc72ab8b961d"
   },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {

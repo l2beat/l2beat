@@ -13,6 +13,11 @@ const EtherscanErrorResponse = v.object({
   result: v.string(),
 })
 
+export const EtherscanNoDataResponse = v.object({
+  message: v.literal('No data found'),
+  result: v.null(),
+})
+
 export type EtherscanResponse = v.infer<typeof EtherscanResponse>
 const EtherscanResponse = v.union([
   EtherscanSuccessResponse,

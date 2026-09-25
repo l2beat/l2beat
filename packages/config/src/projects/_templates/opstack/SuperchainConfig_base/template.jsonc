@@ -7,9 +7,6 @@
     "$admin": {
       "severity": "HIGH"
     },
-    "pauseExpiry": {
-      "severity": "HIGH"
-    },
     "GUARDIAN": {
       "severity": "MEDIUM"
     },
@@ -20,7 +17,6 @@
       "severity": "MEDIUM"
     },
     "pauseExpiryFmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "pauseExpiry",

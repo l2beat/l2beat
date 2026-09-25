@@ -2,11 +2,12 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "interfold",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 130,
   "initialAddresses": [
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715", // E3 coordinator
     "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7", // ciphernode registry
     "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F", // bonding registry
-    "eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9", // slashing manager
+    "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4", // slashing manager
     "eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e", // refund manager
     "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D", // ticket token
     "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904", // FOLD token
@@ -18,13 +19,22 @@
     "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2", // public proposal condition
     "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E", // voting-power adapter used by TokenVoting
     "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of the voting-escrow DAO
-    "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76" // membership condition on its public proposal grant
+    "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76", // membership condition on its public proposal grant
+    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB", // Interfold Protocol Proposal (IPP) staged proposal processor
+    "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9", // IPP proposal-creation condition (currently no rules)
+    "eth:0x197be4E09614285Abb4b74b672377c404FD44d54" // CRISP secret-ballot token voting plugin
   ],
   "names": {
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715": "Interfold",
     "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7": "CiphernodeRegistry",
     "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F": "BondingRegistry",
-    "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712": "RandomnessProvider",
+    "eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e": "E3RefundManager",
+    "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4": "SlashingManager",
+    "eth:0xC60919F8Bd128B76E11F4B071C8c38e1391a3e00": "RandomnessProvider",
+    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB": "ProtocolProposalProcessor",
+    "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9": "ProtocolProposalCondition",
+    "eth:0x197be4E09614285Abb4b74b672377c404FD44d54": "CrispTokenVoting",
+    "eth:0x53fcdb21e73a461cfe6c64b19855204384b91ba3": "CRISPProgramV2",
     "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry",
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldDAO",
     "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
@@ -563,6 +573,376 @@
           ],
           "permissions": [{ "type": "upgrade" }]
         },
+        "ippStageManagers": {
+          "description": "Current grantees allowed to replace the Interfold Protocol Proposal (IPP) staged process.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x6f36f8bf0398781285f5a40c489dbf3268ce3e205aba87f21e49e6805391b5a1",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals."
+            }
+          ]
+        },
+        "ippProposalCreators": {
+          "description": "Current grantees allowed to create Interfold Protocol Proposals. Conditional grants remain visible in $activePermissions.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "create an Interfold Protocol Proposal when the attached Aragon condition permits it."
+            }
+          ]
+        },
+        "ippAdvancers": {
+          "description": "Current grantees allowed to advance Interfold Protocol Proposals whose stage conditions have passed.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xb014ce248804cab6a144581acce1eeb70ce5d54f08433b989d73bb0ccee3d3f9",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "advance Interfold Protocol Proposals only after the configured stage rules permit advancement."
+            }
+          ]
+        },
+        "ippExecutors": {
+          "description": "Current grantees allowed to execute an Interfold Protocol Proposal after its stages have passed.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute an Interfold Protocol Proposal only after every configured stage has passed."
+            }
+          ]
+        },
+        "ippTargetManagers": {
+          "description": "Current grantees allowed to redirect the IPP processor's execution target.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "redirect passed Interfold Protocol Proposal actions to another executor or target."
+            }
+          ]
+        },
+        "ippTrustedForwarderManagers": {
+          "description": "Current grantees allowed to replace the IPP processor's trusted meta-transaction forwarder.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the address trusted to append the effective caller to IPP proposal transactions."
+            }
+          ]
+        },
+        "ippUpgraders": {
+          "description": "Current grantees of the UPGRADE_PLUGIN permission on the IPP processor.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "upgrade"
+            }
+          ]
+        },
+        "ippConditionRuleManagers": {
+          "description": "Current grantees allowed to replace the IPP proposal-creation condition rules.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xd3d98e95f3486fc234d80c098cf0d2a0a3fb187833d7e9cc930f8c4f8335a0e7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the rules that gate creation of Interfold Protocol Proposals."
+            }
+          ]
+        },
+        "crispVotingSettingsManagers": {
+          "description": "Current grantees of the settings-update permission (id 0x2cf8b995...) on the CRISP token-voting plugin.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x2cf8b99554b63927353c04c2e1cee7fe05352aeb3c52d2576a2f7fd7fb8e180a",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
+            }
+          ]
+        },
+        "crispVotingProposalCreators": {
+          "description": "Current grantees allowed to open votes in the CRISP token-voting plugin.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "open a CRISP token vote using the caller-supplied proposal payload."
+            }
+          ]
+        },
+        "crispVotingTargetManagers": {
+          "description": "Current grantees allowed to redirect the CRISP token-voting plugin's execution target.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "redirect passed CRISP vote actions to another executor or target."
+            }
+          ]
+        },
+        "crispVotingUpgraders": {
+          "description": "Current grantees of the UPGRADE_PLUGIN permission on the CRISP token-voting plugin.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "upgrade"
+            }
+          ]
+        },
         "conditionRuleManagers": {
           "description": "Current grantees allowed to replace the public proposal-creation condition.",
           "type": "PERMISSION",
@@ -983,78 +1363,6 @@
     },
     "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": {
       "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
-    },
-    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": {
-      "description": "CRISP encrypted-ballot application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.",
-      "category": "core",
-      "fields": {
-        "owner": {
-          "description": "Account controlling application-level proof configuration and requester-supplied census roots.",
-          "type": "PERMISSION",
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "set the eligible-voter Merkle root once per requester-census E3 and replace the application RISC Zero verifier or guest image ID immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail."
-            }
-          ]
-        },
-        "interfold": {
-          "description": "Permanently bound E3 coordinator.",
-          "handler": {
-            "type": "call",
-            "method": "function interfold() view returns (address)",
-            "args": []
-          }
-        },
-        "risc0Verifier": {
-          "description": "Application-level RISC Zero verifier. The external RISC Zero deployment is outside this discovery perimeter.",
-          "type": "CODE_CHANGE",
-          "handler": {
-            "type": "call",
-            "method": "function risc0Verifier() view returns (address)",
-            "args": [],
-            "ignoreRelative": true
-          }
-        },
-        "imageId": {
-          "description": "Application-level RISC Zero guest image ID. It must agree with the protocol ciphertext verifier for successful completion.",
-          "type": "CODE_CHANGE",
-          "handler": {
-            "type": "call",
-            "method": "function imageId() view returns (bytes32)",
-            "args": []
-          }
-        }
-      }
-    },
-    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": {
-      "description": "Unverified wrapper that accepts a RISC Zero receipt for the immutable guest image ID and the E3-specific journal constructed by Interfold.",
-      "category": "core",
-      "fields": {
-        "imageId": {
-          "description": "Immutable RISC Zero guest image ID accepted as the encrypted-computation program.",
-          "type": "CODE_CHANGE",
-          "handler": {
-            "type": "call",
-            "method": "function imageId() view returns (bytes32)",
-            "args": []
-          }
-        },
-        "risc0Verifier": {
-          "description": "Immutable RISC Zero verifier used to validate computation receipts.",
-          "handler": {
-            "type": "call",
-            "method": "function risc0Verifier() view returns (address)",
-            "args": [],
-            "ignoreRelative": true
-          }
-        }
-      }
     }
   }
 }

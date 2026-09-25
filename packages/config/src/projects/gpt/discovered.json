@@ -1,7 +1,7 @@
 {
   "name": "gpt",
   "timestamp": 1762264385,
-  "configHash": "0x42c148df3207e47049dba7f484d31c5d12df536e19d72e070e2f1cc64daaf9d4",
+  "configHash": "0x1f795cc0ff047513b2c8e3223bade0450debddf3555d27144c27cfcc72b34104",
   "entries": [
     {
       "name": "Verifier",
@@ -125,10 +125,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xada59D145126A746976F0F56477aafFEB3acc8e3": "ProxyAdmin"
@@ -393,9 +389,9 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726375 },
-  "permissionsConfigHash": "0x5f43618ad22644de0d44e394979e7c4ea11621704fa5aa5509e988b25002706e",
+  "permissionsConfigHash": "0x12b5a737e217eeebccdab3406520818a38021575ad90aa55231ec3dbca4bcf84",
   "modelledAgainst": {
-    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27"
+    "shared-polygon-cdk": "0x4ac7caa0947575fceef16b6b6c3a4a11cd40958971cd0de464f6bc72ab8b961d"
   },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {

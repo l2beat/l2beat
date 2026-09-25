@@ -394,10 +394,6 @@
         "$immutable": true,
         "owner": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C": "ProxyAdmin"
       }
@@ -629,10 +625,6 @@
       "values": {
         "$immutable": true,
         "owner": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9": "ProxyAdmin"
@@ -1166,10 +1158,6 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin"
       }
@@ -1261,10 +1249,6 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin"
       }
@@ -1301,10 +1285,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B": "ProxyAdmin"
@@ -1392,10 +1372,6 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin"
       }
@@ -1415,10 +1391,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xd3132d052C9045D7cB0236586C9E2276e654343D"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d": "ProxyAdmin"
@@ -1484,10 +1456,6 @@
         "$immutable": true,
         "owner": "eth:0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678": "ProxyAdmin"
       }
@@ -1512,10 +1480,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE": "ProxyAdmin"
@@ -1946,10 +1910,6 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4": "ProxyAdmin"
@@ -6266,10 +6226,6 @@
         "$immutable": true,
         "owner": "eth:0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428": "ProxyAdmin"
       }
@@ -7766,7 +7722,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
@@ -7791,7 +7747,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25926132, "nova": 85273856 },
-  "permissionsConfigHash": "0x1f6e6050b6e564a7d70803278ca3b447086dd787ea2aa12d39bc83c6cbb85945",
+  "permissionsConfigHash": "0xd5128dd6f8bd3f7f75e1c940a51df55b03584c13e0eec86b697f58ce884fadec",
   "permissions": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "directlyReceivedPermissions": [

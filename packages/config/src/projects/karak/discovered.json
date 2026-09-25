@@ -1,7 +1,7 @@
 {
   "name": "karak",
   "timestamp": 1789570151,
-  "configHash": "0x8bad24510c03de28bb009a5dae1515f5c5ac9aa8a37a04f2a1a1a13eb130520c",
+  "configHash": "0x08c2bb0e4f213b05399add43c300bf53eaca990e1f7d2f66d6f08b7e88e964b6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -90,10 +90,6 @@
         "addressManager": "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
         "isUpgrading": false,
         "owner": "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "addressManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": "ProxyAdmin"
@@ -219,26 +215,15 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "$admin": { "severity": "HIGH" },
-        "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "optimismPortal": { "severity": "HIGH" },
-        "l1CrossDomainMessenger": { "severity": "HIGH" },
-        "l1StandardBridge": { "severity": "HIGH" },
-        "delayedWETH": { "severity": "HIGH" },
-        "batchInbox": { "severity": "HIGH" },
-        "gasPayingToken": { "severity": "HIGH" },
-        "resourceConfig": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
+        }
       },
       "implementationNames": {
         "eth:0x622333688CC1878C7ff4205c89bDe051798788A7": "Proxy",
@@ -347,17 +332,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.7.0"
       },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
-        "superchainConfig": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
-        "portal": { "severity": "HIGH" },
-        "PORTAL": { "severity": "HIGH" },
-        "otherMessenger": { "severity": "HIGH" },
-        "OTHER_MESSENGER": { "severity": "HIGH" },
-        "paused": { "severity": "MEDIUM" }
-      },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d": "ResolvedDelegateProxy",
         "eth:0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b": "L1CrossDomainMessenger"
@@ -528,7 +503,6 @@
         "$immutable": true,
         "owner": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9": "AddressManager"
       },
@@ -899,16 +873,16 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_K2_claim": "0xbb7901de8335cb470739828011c2a11ae93ef4e1ebb27e77167ebf61e8385c69",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal_K2_claim": "0xd1314e340753c0385b972657a1befc155e3c80bb3ec8dcd61c40922d725ac187",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25990739 },
-  "permissionsConfigHash": "0x084479ff60c397136de21b7f01831541073ef9f268b9bb3d4e75997f3b436b15",
+  "permissionsConfigHash": "0x66e2164d7448d26a180679fefc6eb45a447f5b76bff255c2d69a1e75c7456d2c",
   "permissions": {
     "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": {
       "directlyReceivedPermissions": [

@@ -4,5 +4,11 @@
     "address": "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712",
     "chain": "ethereum",
     "blockNumber": 25883001
+  },
+  "ChainlinkVrfRandomnessProviderV2": {
+    "hash": "0x783f51c169370e4560b709d8caab8db7d42e16f3ea06f6dec9b38d6a64391c95",
+    "address": "eth:0xC60919F8Bd128B76E11F4B071C8c38e1391a3e00",
+    "chain": "ethereum",
+    "blockNumber": 25998900
   }
 }

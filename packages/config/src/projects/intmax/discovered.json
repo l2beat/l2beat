@@ -164,10 +164,6 @@
         "owner": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": "ProxyAdmin"
       }
@@ -1650,7 +1646,7 @@
   },
   "usedTemplates": {
     "eigenlayer/PredicateServiceManager": "0xcd86cf671cd3a2752f83bbda6131c455658841f9daef6307544da099dd4baf39",
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
@@ -1661,7 +1657,7 @@
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
   "usedBlockNumbers": { "ethereum": 25796469, "scroll": 34702306 },
-  "permissionsConfigHash": "0xd758ce54f002993c1e3392e6d153bfd182ac74b52bd11ed1d2b83b56be672e1c",
+  "permissionsConfigHash": "0xa0fd7e9a4953a249befd578050a7657cb69ae7b869c41d98cb5bff98021c7585",
   "permissions": {
     "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E": {
       "directlyReceivedPermissions": [

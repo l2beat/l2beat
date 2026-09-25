@@ -104,10 +104,6 @@
         "$immutable": true,
         "owner": "eth:0x6BCe4c44668C77ff67730C14d2378857103F53C7"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790": "ProxyAdmin"
       }
@@ -1555,7 +1551,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
@@ -1571,7 +1567,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24799210 },
-  "permissionsConfigHash": "0xa8fc40ed63332d5143aca6db91b15d8bd70db5bd8e222faf0e55c77e1024fe8c",
+  "permissionsConfigHash": "0xfa97404a64b64fc789ea498a2745ff006f4c2ed7814e9c1dc36b45d613997c4b",
   "permissions": {
     "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715": {
       "receivedPermissions": [

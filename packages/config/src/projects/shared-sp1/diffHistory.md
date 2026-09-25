@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x2c8170e986030e2e700f188ab010c484d87408ad
+
+# Diff at Wed, 23 Sep 2026 05:49:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1783679422
+- current timestamp: 1783679422
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
+-        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x0b9ca2f6c0540164397c8573f9071a11765948fc
 
 # Diff at Mon, 21 Sep 2026 11:24:07 GMT:

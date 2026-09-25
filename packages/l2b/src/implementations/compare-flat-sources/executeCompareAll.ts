@@ -1,5 +1,5 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
+import type { CliLogger } from '../common/CliLogger'
 import { computeStackSimilarity } from './common'
 import { colorMap } from './output'
 
@@ -7,13 +7,13 @@ export interface CompareAllCommand {
   paths: DiscoveryPaths
   minProjectSimilarity: number
   minClusterSimilarity: number
-  logger: Logger
+  cli: CliLogger
 }
 
 export async function executeCompareAll(
   command: CompareAllCommand,
 ): Promise<void> {
-  const { matrix } = await computeStackSimilarity(command.logger, command.paths)
+  const { matrix } = await computeStackSimilarity(command.cli, command.paths)
 
   const clusters = computeClusters(
     matrix,
@@ -25,7 +25,7 @@ export async function executeCompareAll(
   )
 
   for (const cluster of clusters) {
-    command.logger.info(`:: === (${cluster.length} projects) === ::`)
+    command.cli.log(`:: === (${cluster.length} projects) === ::`)
     const longestItem = cluster.reduce((acc, i) => Math.max(acc, i.length), 0)
 
     cluster
@@ -38,21 +38,19 @@ export async function executeCompareAll(
       })
       .sort((a, b) => b.average - a.average)
       .forEach((i) =>
-        command.logger.info(
-          `${i.item.padEnd(longestItem)} ${colorMap(i.average)}`,
-        ),
+        command.cli.log(`${i.item.padEnd(longestItem)} ${colorMap(i.average)}`),
       )
   }
 
-  command.logger.info(':: === (unique) === ::')
+  command.cli.log(':: === (unique) === ::')
   for (const item of unique) {
-    command.logger.info(item)
+    command.cli.log(item)
   }
 
-  command.logger.info('STATS:')
-  command.logger.info(`projects: ${Object.keys(matrix).length}`)
-  command.logger.info(`clusters: ${clusters.length}`)
-  command.logger.info(`unique: ${unique.length}`)
+  command.cli.log('STATS:')
+  command.cli.log(`projects: ${Object.keys(matrix).length}`)
+  command.cli.log(`clusters: ${clusters.length}`)
+  command.cli.log(`unique: ${unique.length}`)
 }
 
 function computeClusters(

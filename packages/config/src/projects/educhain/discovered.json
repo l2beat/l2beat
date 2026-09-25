@@ -401,10 +401,6 @@
         "$immutable": true,
         "owner": "arb1:0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "arb1:0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A": "ProxyAdmin"
       }
@@ -1725,7 +1721,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
@@ -1746,7 +1742,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 502808483 },
-  "permissionsConfigHash": "0x066308298032a79901bae4b38534eb272fbe20b9571293d637a3a2e9c17a1783",
+  "permissionsConfigHash": "0xf91a19942c2d5d71495dbdb7eafb73b6eb3cf24bdf483382adaba4fe63cde8b0",
   "permissions": {
     "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": {
       "receivedPermissions": [

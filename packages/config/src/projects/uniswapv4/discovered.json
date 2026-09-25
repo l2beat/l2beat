@@ -219,11 +219,7 @@
         "symbol": "UNI",
         "totalSupply": "1000000000000000000000000000"
       },
-      "fieldMeta": {
-        "minimumTimeBetweenMints": { "severity": "HIGH" },
-        "mintCap": { "severity": "HIGH" },
-        "minter": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "minter": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "Uni"
       }
@@ -274,8 +270,6 @@
         "votingTokenSymbol": "UNI"
       },
       "fieldMeta": {
-        "uni": { "severity": "HIGH" },
-        "timelock": { "severity": "HIGH" },
         "implementation": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
@@ -393,10 +387,6 @@
         "$immutable": true,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93": "ProxyAdmin"
@@ -992,13 +982,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "uniswapv3/Firepit": "0x703007707cf394ab3f48090fd6cd3adedcb5be8fcbef542951bb894deb4bb6bb",
-    "uniswapv3/GovernorBravoDelegate": "0x3116f09c9102e0f913021aaf0fd08bfe81d6adce5fbd1c3764ee33d1f1d0e362",
+    "uniswapv3/GovernorBravoDelegate": "0x93444bf90be73c54222526d6c9152374e151c7aa4d0212144c626fda2a95b0b9",
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/Timelock": "0x1af830301f6824613ae3ac5bc1428e6ec237408b962a514f16babc65c102702a",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
-    "uniswapv3/Uni": "0x2dae32d9f53d692733953ebacb60cdf1b7a93bff67b281ef673b258c80f7b904",
+    "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
     "uniswapv4/PoolManager": "0x1cd7221b70c84682aa4dcee1a51810449abafdd81b761c996b3de5b0bc98be3f",
     "uniswapv4/PositionDescriptor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1007,7 +997,7 @@
     "uniswapv4/V4FeePolicy": "0xebe90526446ca427a224bf116b8d21f9fde112f11d851b5b1392a07d35616e52"
   },
   "usedBlockNumbers": { "ethereum": 25846806 },
-  "permissionsConfigHash": "0xbde2d6cc6a3d1fd76965c5f304fd136320857f8194d4415e8b2879f6affc1f60",
+  "permissionsConfigHash": "0x78bc71a637220ea9634614d170488de81f0fcce502236b75c52c45b66a820e5e",
   "permissions": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "directlyReceivedPermissions": [

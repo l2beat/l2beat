@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x6d822a5d59502a5b482dd8ee63a28cfa3a541876
+
+# Diff at Wed, 23 Sep 2026 05:49:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788943774
+- current timestamp: 1788943774
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788943774 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x6794643c41b90941013b77248a86bf816d62dd74
 
 # Diff at Mon, 21 Sep 2026 11:24:06 GMT:

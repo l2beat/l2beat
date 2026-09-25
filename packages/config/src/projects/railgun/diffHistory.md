@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x73eb4c335218e8278961f725372e7bd92207a1b8
+
+# Diff at Wed, 23 Sep 2026 05:56:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789711666
+- current timestamp: 1789711666
+
+## Description
+
+Review ossification configuration at the main-branch discovery block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.delegator.severity:
+-        "HIGH"
+      fieldMeta.verifier.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.delegator.severity:
+-        "HIGH"
+      fieldMeta.verifier.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+      fieldMeta.DELEGATOR_CONTRACT.severity:
+-        "HIGH"
+      fieldMeta.STAKING_CONTRACT.severity:
+-        "HIGH"
+      fieldMeta.QUORUM.severity:
+-        "HIGH"
+      fieldMeta.PROPOSAL_SPONSOR_THRESHOLD.severity:
+-        "HIGH"
+      fieldMeta.SPONSOR_WINDOW.severity:
+-        "HIGH"
+      fieldMeta.SPONSOR_LOCKOUT_TIME.severity:
+-        "HIGH"
+      fieldMeta.VOTING_START_OFFSET.severity:
+-        "HIGH"
+      fieldMeta.VOTING_YAY_END_OFFSET.severity:
+-        "HIGH"
+      fieldMeta.VOTING_NAY_END_OFFSET.severity:
+-        "HIGH"
+      fieldMeta.EXECUTION_START_OFFSET.severity:
+-        "HIGH"
+      fieldMeta.EXECUTION_END_OFFSET.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      fieldMeta.cap.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      fieldMeta.stakingToken.severity:
+-        "HIGH"
+      fieldMeta.STAKE_LOCKTIME.severity:
+-        "HIGH"
+      fieldMeta.SNAPSHOT_INTERVAL.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      fieldMeta.$implementation.severity:
+-        "HIGH"
+      fieldMeta.treasury.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.proxyOwnershipChangeCount.severity:
+-        "HIGH"
+      fieldMeta.logicOwnershipChangeCount.severity:
+-        "HIGH"
+      fieldMeta.feeChangeCount.severity:
+-        "HIGH"
+      fieldMeta.verificationKeyChangeCount.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x6a2e2bf51833a1ec14508c4a574cec02ee99dc7f
 
 # Diff at Mon, 21 Sep 2026 11:24:05 GMT:

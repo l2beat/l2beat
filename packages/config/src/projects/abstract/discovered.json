@@ -177,8 +177,6 @@
       },
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
         "executionDelay_fmt": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -552,7 +550,6 @@
           "severity": "HIGH",
           "description": "l1da, l2da"
         },
-        "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
           "description": "0 - Rollup, 1 - Validium"
@@ -868,10 +865,6 @@
         "owner": "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": {
-        "addressManager": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": "ProxyAdmin"
       }
@@ -1063,12 +1056,8 @@
         "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
       },
       "fieldMeta": {
-        "validatorTimelock": { "severity": "HIGH" },
         "executionDelay": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
         "executionDelay_fmt": { "severity": "HIGH" },
-        "executor": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1768,20 +1757,20 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0x57a8af2e43f19d45b7496a20cca383d3aaa9f8617fbc179639ad84fd80daa9dc",
+    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
     "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xc16e72da058ff83e0f85ed205bae5f53a06f0652ad801254e5ced2c3fdf68cec",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xd384a9c9e6643cddbc13f8e706f8c2ad62ec8f9e6dbef85bcdf7eb8853fd6239",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_post29": "0xc705047a5ab40ad374452332f3f56b976fd4ac0146b467df702b423427c8587e"
+    "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 25774510 },
-  "permissionsConfigHash": "0x8846cc087fa4360611e537657bccd9d5de448aea117185bc16ce837d31e8cf4b",
+  "permissionsConfigHash": "0xc32e5b16d53d3f396a57cd20e037ef4cde70f7ecc1b2b86f2357f62ec6d2a7b9",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0x5603f7d8cce6037d1000cbe8ac3858a7c1ac434e7492934ce37d6a4c7e545f7a"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {

@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
   "timestamp": 1779964040,
-  "configHash": "0x7051501e582ee197960b18e4686b109130977bb9a8da130b5b806e6bd3744174",
+  "configHash": "0xf16442dd0a5c3211046085673666ed05752418c06df661163b0705a20038f1da",
   "entries": [
     {
       "name": "WithdrawalVerifier",
@@ -67,21 +67,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -143,21 +138,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -219,21 +209,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -333,9 +318,7 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
         "accessControl": {
-          "severity": "HIGH",
           "description": "Current role membership map for the Entrypoint's owner and postman roles."
         },
         "associationSets": {
@@ -347,12 +330,11 @@
           "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events."
         },
         "ownerRoleMembers": {
-          "severity": "HIGH",
           "description": "Addresses with OWNER_ROLE.",
           "type": "PERMISSION"
         },
         "aspPostmen": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses with ASP_POSTMAN.",
           "type": "PERMISSION"
         }
@@ -407,21 +389,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -469,6 +446,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
       "sinceTimestamp": 1742919851,
@@ -489,6 +467,10 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 33,
         "VERSION": "1.4.1"
+      },
+      "fieldMeta": {
+        "GnosisSafe_modules": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": "SafeProxy",
@@ -544,21 +526,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -620,21 +597,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -696,21 +668,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -772,21 +739,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -848,21 +810,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -924,21 +881,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -1029,21 +981,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -1105,21 +1052,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -1186,21 +1128,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -1262,21 +1199,16 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
-          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes withdrawals from this pool."
         },
         "RAGEQUIT_VERIFIER": {
-          "severity": "HIGH",
           "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool."
         },
         "ENTRYPOINT": {
-          "severity": "HIGH",
           "description": "Entrypoint whose latest association-set root every withdrawal proof must match."
         },
         "dead": {
@@ -2190,13 +2122,13 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "privacy-pools/CommitmentVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "privacy-pools/Entrypoint": "0x8a9e902ce5ccb54e58d6ca843503088bafa2f737a78fd8d0d6c422562c1af43d",
-    "privacy-pools/PrivacyPoolComplex": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
-    "privacy-pools/PrivacyPoolSimple": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
+    "privacy-pools/Entrypoint": "0x73ace37ad5a6f13a98c7c375f4b9c77352b90b6b85ab19f58913ee9324939a61",
+    "privacy-pools/PrivacyPoolComplex": "0xca9e6d12b1da3fb6a5974b9e8f7dbd953f42ee4eabe82264cf4427211addfc78",
+    "privacy-pools/PrivacyPoolSimple": "0xca9e6d12b1da3fb6a5974b9e8f7dbd953f42ee4eabe82264cf4427211addfc78",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25193240 },
-  "permissionsConfigHash": "0x4b1d8660be426214869c1b5f67d1f7b0cab17a2ca203bad79777c18183d2793b",
+  "permissionsConfigHash": "0xb540b58614844645e024117b4ddfd371e5e1f54ab70395f736164267d21609cc",
   "permissions": {
     "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187": {
       "receivedPermissions": [

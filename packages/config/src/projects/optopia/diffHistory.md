@@ -1,3 +1,167 @@
+Generated with discovered.json: 0xddbd72686d7ca522c46dd9c98813a27796e56a97
+
+# Diff at Wed, 23 Sep 2026 05:48:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1768569941
+- current timestamp: 1768569941
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768569941 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0xb5cdeba050b0d5fed747efec2a9d555a5ed7bb2ec4261d47d68083a1bbe20e11"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x710fc3f6ed40ea4a5162760cb3c7201edd6bdc10b1462da5f27b5dc809a532db"
++        "0x7ccab8db631918c4f8ca6f19b1f9ee3b3ffa5b255ca194ceff93b6c853fded68"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract Optopia Multisig (eth:0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x39A90926306E11497EC5FE1C459910258B620edD) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x94485995648eb1348d02f16b00f8be4872ab3d1da83d8ebb27b4cd2bf8bad0b3"
++        "0xb93748ad03a3bdd8cc3ed2ff062aabb7f1d55e195cc3aebe78e37a5022aeb343"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0x0ac0fae0ed2876181efd8e1d628f619f4723b088e8afe466f00e008d69b13375"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xAFc9946b25e3e93208b7E2D477680C5B6e2952be) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
++        "0xdd6f0ffd7f9350b0645ec66d1174cdd6434d367842932e6a9763741aaf943542"
+      deployerAddress:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+    }
+```
+
 Generated with discovered.json: 0x5de20118758104ab866fa98d6efbd00bcd47946b
 
 # Diff at Mon, 21 Sep 2026 11:24:03 GMT:

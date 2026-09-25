@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xaa59b2a79c8c17221849c7aa1496321cc024a289
+
+# Diff at Wed, 23 Sep 2026 05:45:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789727053
+- current timestamp: 1789727053
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x1c5d1d848ab70e442d957dfd893339e979a72372
 
 # Diff at Mon, 21 Sep 2026 11:23:57 GMT:

@@ -18,6 +18,7 @@ import type {
 } from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
+import { DescriptionTable } from './DescriptionTable'
 import {
   generateClingoFromModelLp,
   generateClingoFromPermissionsConfig,
@@ -136,17 +137,22 @@ export async function modelPermissions(
     debug: boolean
   },
 ): Promise<PermissionsOutput> {
-  const { permissionFacts, permissionsConfigHash, modelledAgainst } =
-    await modelPermissionFactsUsingClingo(
-      project,
-      discoveries,
-      configReader,
-      templateService,
-      paths,
-      options,
-    )
+  const {
+    permissionFacts,
+    descriptions,
+    permissionsConfigHash,
+    modelledAgainst,
+  } = await modelPermissionFactsUsingClingo(
+    project,
+    discoveries,
+    configReader,
+    templateService,
+    paths,
+    options,
+  )
   return buildPermissionsOutput(
     permissionFacts,
+    descriptions,
     permissionsConfigHash,
     modelledAgainst,
   )
@@ -154,6 +160,7 @@ export async function modelPermissions(
 
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
+  descriptions: DescriptionTable,
   permissionsConfigHash: Hash256,
   modelledAgainst: Record<string, Hash256>,
 ): PermissionsOutput {
@@ -161,7 +168,7 @@ export function buildPermissionsOutput(
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
-    parseUltimatePermissionFact(fact, modelIdRegistry),
+    parseUltimatePermissionFact(fact, modelIdRegistry, descriptions),
   )
   const eoasWithUpgradePermissions = parseEoaWithUpgradePermissionsFacts(
     kb.getFacts('eoaWithUpgradePermissions'),
@@ -200,7 +207,7 @@ export async function modelPermissionFactsUsingClingo(
     debug: boolean
   },
 ) {
-  const clingoByProject = generateClingoForDiscoveries(
+  const { clingoByProject, descriptions } = generateClingoForDiscoveries(
     discoveries,
     configReader,
     templateService,
@@ -246,6 +253,7 @@ export async function modelPermissionFactsUsingClingo(
     permissionsConfigHash,
     modelledAgainst,
     permissionFacts: result,
+    descriptions,
   }
 }
 
@@ -281,7 +289,7 @@ export function hashPermissionsConfigInOwnCluster(
   templateService: TemplateService,
 ): Hash256 {
   const discoveries = loadDiscoveriesForModelling(project, configReader)
-  const clingoByProject = generateClingoForDiscoveries(
+  const { clingoByProject } = generateClingoForDiscoveries(
     discoveries,
     configReader,
     templateService,
@@ -322,7 +330,7 @@ export function generateClingoForDiscoveries(
   discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
-): Record<string, string> {
+): { clingoByProject: Record<string, string>; descriptions: DescriptionTable } {
   // One map across the whole cluster: an address owned by a referenced project
   // is only a Reference stub here, and without its id every permission aimed
   // at it is dropped when the clingo facts are generated.
@@ -331,21 +339,23 @@ export function generateClingoForDiscoveries(
       .getSortedProjects()
       .flatMap((project) => discoveries.get(project).discoveryOutput.entries),
   )
-  const byProject: Record<string, string> = {}
+  const descriptions = new DescriptionTable()
+  const clingoByProject: Record<string, string> = {}
 
   for (const project of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project).discoveryOutput
     const config = configReader.readConfig(project)
-    byProject[project] = generateClingoForProjectOnChain(
+    clingoByProject[project] = generateClingoForProjectOnChain(
       config.permission,
       configReader,
       discovery,
       templateService,
       addressToNameMap,
+      descriptions,
     )
   }
 
-  return byProject
+  return { clingoByProject, descriptions }
 }
 
 export function generateClingoForProjectOnChain(
@@ -354,6 +364,7 @@ export function generateClingoForProjectOnChain(
   discovery: DiscoveryOutput,
   templateService: TemplateService,
   addressToNameMap: Record<string, string>,
+  descriptions: DescriptionTable,
 ) {
   const generatedClingo: string[] = []
 
@@ -373,6 +384,7 @@ export function generateClingoForProjectOnChain(
         config,
         templateService,
         addressToNameMap,
+        descriptions,
       )
       if (clingoFromPermissions !== undefined) {
         generatedClingo.push(clingoFromPermissions)

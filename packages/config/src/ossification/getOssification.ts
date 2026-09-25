@@ -11,7 +11,7 @@ import {
   makeEntryColorConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import type { ProjectOssification } from '../types'
@@ -34,13 +34,13 @@ interface DiscoveryServices {
 }
 
 let services: DiscoveryServices | undefined
+const buildTime = UnixTime.now()
 
-export function loadOssification(
+export function getOssification(
   projectId: string,
-  now: UnixTime,
-  projectStart?: number,
+  projectStart?: UnixTime,
 ): ProjectOssification | undefined {
-  const input = loadOssificationInput(projectId, now, projectStart)
+  const input = loadOssificationInput(projectId, buildTime, projectStart)
   return input === undefined ? undefined : measureOssification(input)
 }
 

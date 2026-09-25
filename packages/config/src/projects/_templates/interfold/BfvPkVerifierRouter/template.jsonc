@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BfvPkVerifierRouter",
+  "category": "core",
+  "description": "Immutable router for BFV distributed-key-generation proofs. It forwards each proof to the per-committee-size BfvPkVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.",
+  "fields": {
+    "routes": {
+      "description": "Per-committee-size verifiers with the public-input length and verification-key hashes each one enforces.",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "array",
+        "method": "function routeAt(uint256 index) view returns (address verifier, uint256 expectedPublicInputsLen, bytes32 expectedNodesFoldKeyHash, bytes32 expectedC5KeyHash)",
+        "length": "{{ routeCount }}"
+      }
+    },
+    "h": {
+      "description": "Default honest-node count reported to the coordinator for the active committee configuration.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
