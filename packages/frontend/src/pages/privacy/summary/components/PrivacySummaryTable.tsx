@@ -62,6 +62,7 @@ const columns = [
           : undefined,
         statuses: {
           underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
+          redWarning: ctx.row.original.redWarning,
         },
       } as const
 

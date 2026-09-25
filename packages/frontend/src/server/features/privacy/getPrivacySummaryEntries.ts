@@ -3,10 +3,15 @@ import type {
   PrivacyCategory,
   PrivacyExitWindow,
   PrivacySummaryValue,
+  ProjectRedWarning,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { sortTableValues } from '~/components/table/sorting/sortTableValues'
+import {
+  getRowBackgroundColor,
+  type RowBackgroundColor,
+} from '~/components/table/utils/rowType'
 import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
@@ -40,6 +45,8 @@ export interface PrivacySummaryEntry {
   totalValueDeposited30dUsd?: number
   anonymitySet: PrivacyAnonymitySetSummary
   isUnderReview: boolean
+  redWarning?: ProjectRedWarning
+  backgroundColor: RowBackgroundColor
   category: PrivacyCategory
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
@@ -174,6 +181,10 @@ function getPrivacySummaryBaseEntry(
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
+    redWarning: project.statuses.redWarning,
+    backgroundColor: getRowBackgroundColor({
+      redWarning: project.statuses.redWarning,
+    }),
     category: project.privacyInfo.category,
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
