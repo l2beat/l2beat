@@ -108,6 +108,13 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       ),
       token: 'USDT',
     },
+    eurcPool: {
+      address: EthereumAddress('0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c'),
+      tokenAddress: Address32.from(
+        '0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c',
+      ),
+      token: 'EURC',
+    },
     tokenMessaging: EthereumAddress(
       '0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980',
     ),
@@ -286,29 +293,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',
     ),
   },
-  {
-    chain: 'gnosis',
-    eid: 30145,
-    nativePool: {
-      address: EthereumAddress('0xe9aBA835f813ca05E50A6C0ce65D0D74390F7dE7'),
-      tokenAddress: Address32.from(
-        '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1',
-      ),
-      // This is Stargate's native-ETH asset. It is represented by WETH on
-      // Gnosis, but the cross-chain asset key must match the other pools.
-      token: 'ETH',
-    },
-    usdcPool: {
-      address: EthereumAddress('0xB1EeAD6959cb5bB9B20417d6689922523B2B86C3'),
-      tokenAddress: Address32.from(
-        '0x2a22f9c3b484c3629090FeED35F17Ff8F88f76F0',
-      ),
-      token: 'USDC',
-    },
-    tokenMessaging: EthereumAddress(
-      '0xAf368c91793CB22739386DFCbBb2F1A9e4bCBeBf',
-    ),
-  },
+  // gnosis was disconnected on 2026-09-27 (all TokenMessaging peers zeroed)
   {
     chain: 'linea',
     eid: 30183,
@@ -377,7 +362,9 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       tokenAddress: Address32.from(
         '0x20c000000000000000000000b9537d11c60e8b50',
       ),
-      token: 'USDC.e',
+      // USDC.e on Tempo, but the cross-chain asset key must match the other
+      // pools so bus passengers can be matched.
+      token: 'USDC',
       hydra: true,
     },
     eurcPool: {
@@ -385,7 +372,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       tokenAddress: Address32.from(
         '0x20c0000000000000000000001621e21f71cf12fb',
       ),
-      token: 'EURC.e',
+      token: 'EURC',
       hydra: true,
     },
     tokenMessaging: EthereumAddress(
@@ -429,19 +416,19 @@ export class StargatePlugin implements InteropPlugin {
       return
     }
 
-    const poolAddresses = [
-      network.nativePool?.address,
-      network.usdcPool?.address,
-      network.usdtPool?.address,
-    ].filter((addy): addy is EthereumAddress => !!addy)
+    const pools = [
+      network.nativePool,
+      network.usdcPool,
+      network.usdtPool,
+      network.eurcPool,
+    ].filter((pool) => pool !== undefined)
+    const poolAddresses = pools.map((pool) => pool.address)
 
     const oftSent = parseOFTSent(input.log, poolAddresses)
     if (oftSent) {
-      const pool = [
-        network.nativePool,
-        network.usdcPool,
-        network.usdtPool,
-      ].find((t) => t?.address === EthereumAddress(input.log.address))
+      const pool = pools.find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
       if (!pool) {
         return
       }
@@ -488,11 +475,9 @@ export class StargatePlugin implements InteropPlugin {
 
     const oftReceived = parseOFTReceived(input.log, poolAddresses)
     if (oftReceived) {
-      const pool = [
-        network.nativePool,
-        network.usdcPool,
-        network.usdtPool,
-      ].find((t) => t?.address === EthereumAddress(input.log.address))
+      const pool = pools.find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
       if (!pool) {
         return
       }

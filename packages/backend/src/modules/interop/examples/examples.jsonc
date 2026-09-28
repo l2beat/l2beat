@@ -3545,80 +3545,112 @@
       }
     ]
   },
-  "stargatev2bus-gnosis": {
-    "description": "Stargate bus maps Gnosis WETH to native ETH on Base",
+  "stargatev2-eurc": {
+    "description": "Stargate EURC between the Ethereum pool and the Tempo Hydra OFT",
     "loadConfigs": ["layerzero-v2"],
+    // 1. taxi from Ethereum to Tempo
+    // 2. taxi from Tempo to Ethereum
     "txs": [
       {
-        "chain": "gnosis",
-        "tx": "0xf72cf180885f3807d1104c2ec710cab1fd01c702b0722c1e6d9986e16b93c7b5"
+        "chain": "ethereum",
+        "tx": "0x410c75143951aa2168987ed6f088081bee5917fa8a78dc11acccc682f18eda4b"
       },
       {
-        "chain": "gnosis",
-        "tx": "0x6191fb41ce33580616bb9cf2d94e1996d32d5bcb49cc5f708e498ce0c424fcfa"
+        "chain": "tempo",
+        "tx": "0xad8574a633a59dbe7dddb8a7dbb45d3146d6e2d0f68de2689683a719da4c3dd7"
       },
       {
-        "chain": "base",
-        "tx": "0x2c0f5bd84720034214710b0054808b7752bc97493663dd33298b3df749a1824a"
+        "chain": "tempo",
+        "tx": "0x1e9b127ba95d39aed3df10335ab643a817196aa7c6cf56c840cb3f9884b9ebf3"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa06a86322a887e9108b3bc296f30c699e5ed4de70c2fa4b58a21f8bc835461da"
       }
     ],
     "expects": {
-      "events": [
+      "transfers": [
         {
-          "type": "stargate-v2.OFTSentBus",
-          "ctx": { "chain": "gnosis" },
-          "args": {
-            "token": "ETH",
-            "ticketId": 6252,
-            "$dstChain": "base"
+          "type": "stargate-v2-taxi.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000001abaea1f7c830bd89acc67ec4af516284b1bc33c",
+            "tokenAmount": "422130620000",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "ethereum" } }
+          },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000020c0000000000000000000001621e21f71cf12fb",
+            "tokenAmount": "422130620000",
+            "wasMinted": true,
+            "event": { "ctx": { "chain": "tempo" } }
           }
         },
         {
-          "type": "stargate-v2.BusDriven",
-          "ctx": { "chain": "gnosis" },
-          "args": {
-            "startTicketId": 6252,
-            "numPassengers": 1,
-            "$dstChain": "base"
-          }
-        },
-        {
-          "type": "stargate-v2.OFTReceived",
-          "ctx": { "chain": "base" },
-          "args": {
-            "token": "ETH",
-            "$srcChain": "gnosis"
+          "type": "stargate-v2-taxi.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000020c0000000000000000000001621e21f71cf12fb",
+            "tokenAmount": "126585550000",
+            "wasBurned": true,
+            "event": { "ctx": { "chain": "tempo" } }
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000001abaea1f7c830bd89acc67ec4af516284b1bc33c",
+            "tokenAmount": "126585550000",
+            "wasMinted": false,
+            "event": { "ctx": { "chain": "ethereum" } }
           }
         }
-      ],
+      ]
+    }
+  },
+  "stargatev2bus-tempo": {
+    "description": "Stargate bus from the Base USDC pool to the Tempo USDC.e Hydra OFT",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2e4e141b4f7f3b813fc2fe17cc00b1a5976811a83d1736ccc230e0cc49dd5805"
+      },
+      {
+        "chain": "base",
+        "tx": "0xad84318789d05480a0500666fdb9d4872a6174e6228a17af5d77cb2c859009cd"
+      },
+      {
+        "chain": "tempo",
+        "tx": "0x6698cdbef4229bea9b37b6c21bf575d0881495b1a9012d2588bf0236ea65debf"
+      }
+    ],
+    "expects": {
       "messages": [
         {
           "type": "layerzero-v2.Message",
           "app": "stargate-v2-bus",
-          "src": { "ctx": { "chain": "gnosis" } },
-          "dst": { "ctx": { "chain": "base" } }
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "tempo" } }
         }
       ],
       "transfers": [
         {
           "type": "stargate-v2-bus.Transfer",
-          "bridgeType": "nonMinting",
+          "bridgeType": "lockAndMint",
           "src": {
-            "tokenAddress": "0x0000000000000000000000006a023ccd1ff6f2045c3309768ead9e68f978f6e1",
-            "tokenAmount": "2964000000000000",
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "tokenAmount": "4900000",
             "wasBurned": false,
             "event": {
               "type": "stargate-v2.OFTSentBus",
-              "ctx": { "chain": "gnosis" }
+              "ctx": { "chain": "base" }
             }
           },
           "dst": {
-            "tokenAddress": "native",
-            "tokenAmount": "2962000000000000",
-            "wasMinted": false,
+            "tokenAddress": "0x00000000000000000000000020c000000000000000000000b9537d11c60e8b50",
+            "tokenAmount": "4900000",
+            "wasMinted": true,
             "event": {
               "type": "stargate-v2.OFTReceived",
-              "ctx": { "chain": "base" }
+              "ctx": { "chain": "tempo" }
             }
           }
         }
