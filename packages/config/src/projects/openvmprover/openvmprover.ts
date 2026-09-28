@@ -90,7 +90,11 @@ export const openvmprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps: readProjectMarkdown(
+          'openvmprover',
+          'verificationSteps-0x00dfb685',
+        ),
         description:
           'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },

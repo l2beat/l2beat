@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6b9ddd8db68ce5c02ae666fb7f68df4783f85519
 
 ## Description
 
-OpenVM verifier upgraded to v2.0.0 on Scroll: https://forum.scroll.io/t/announcement-openvm-v2-0-0-upgrade-on-scroll/1495. ZK programs are successfully reproduced, verifier smart contract is not yet regenerated.
+OpenVM verifier upgraded to v2.0.0 on Scroll: https://forum.scroll.io/t/announcement-openvm-v2-0-0-upgrade-on-scroll/1495. ZK programs and verifiers are successfully reproduced.
 
 ## Watched changes
 
