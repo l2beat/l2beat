@@ -2,6 +2,7 @@ import type { InteropPlugin, Project } from '@l2beat/config'
 import type { TokenRelationRoute } from '@l2beat/database'
 import { Address32, assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import { getInteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
 
@@ -38,6 +39,7 @@ const interopProjects = [
     { plugin: 'opstack', bridgeType: 'lockAndMint', chain: 'optimism' },
   ]),
 ]
+const resolveProjects = createInteropProjectResolver(interopProjects)
 
 describe(getInteropTokenRelationsGraph.name, () => {
   it('counts a transfer once per node and once per deployment it touches', () => {
@@ -53,7 +55,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
         ],
       },
       [],
-      interopProjects,
+      resolveProjects,
     )
 
     const [clusterNode, baseNode] = graph.nodes
@@ -85,7 +87,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
         pairStats: [pair(ethereum, arbitrum, { volume: 100, duration: 10 })],
       },
       [],
-      interopProjects,
+      resolveProjects,
     )
 
     expect(
@@ -104,7 +106,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
         [ethereum],
         { routes: [], pairStats },
         [],
-        interopProjects,
+        resolveProjects,
       )
       const expected = {
         volume: pairStats ? 0 : null,
@@ -143,7 +145,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
         ],
       },
       [],
-      interopProjects,
+      resolveProjects,
     )
 
     const node = graph.nodes[0]
@@ -161,7 +163,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       [ethereum, arbitrum, base],
       { routes: [cluster, backing], pairStats: undefined },
       [],
-      interopProjects,
+      resolveProjects,
     )
 
     expect(graph.nodes.map((node) => node.bridges.map((b) => b.name))).toEqual([
@@ -218,7 +220,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       ],
       { routes: [], pairStats: undefined },
       [],
-      [
+      createInteropProjectResolver([
         project('zeta', 'Zeta bridge', [
           { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
         ]),
@@ -226,7 +228,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
           { plugin: 'ccip', bridgeType: 'burnAndMint' },
           { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
         ]),
-      ],
+      ]),
     )
 
     expect(graph.nodes[0]?.deployments[0]?.minters.map((m) => m.name)).toEqual([
@@ -258,7 +260,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       ],
       { routes: [], pairStats: undefined },
       [chainProject],
-      interopProjects,
+      resolveProjects,
     )
 
     const [custom, supported, unknown] = graph.nodes.flatMap(

@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 import type { TokenGraphTile } from './buildTokenGraphTiles'
-import { getTokenGraphTiles } from './getTokenGraphTiles'
+import { getTokenGraphs } from './getTokenGraphs'
 
 const PAGE_SIZE = 24
 
@@ -21,7 +21,7 @@ export interface TokenGraphTilesPage {
 export async function getTokenGraphTilesPage({
   cursor = 0,
 }: TokenGraphTilesParams): Promise<TokenGraphTilesPage> {
-  const tiles = await getTokenGraphTiles()
+  const { tiles } = await getTokenGraphs()
   const end = cursor + PAGE_SIZE
   return {
     items: tiles.slice(cursor, end),

@@ -43,9 +43,21 @@ export async function getInteropTokenOnchainDeployments(
       address: token.address,
     })),
   )
+  return toInteropTokenDeployments(
+    deployedTokens,
+    relations,
+    new Set(supportedChainIds),
+  )
+}
+
+/** `relations` are those touching any of the deployed tokens. */
+export function toInteropTokenDeployments(
+  deployedTokens: (Endpoint & { symbol: string })[],
+  relations: TokenRelationRoute[],
+  supportedChains: ReadonlySet<string>,
+): InteropTokenDeployments {
   const keys = new Set(deployedTokens.map(deploymentKey))
   const mintingPlugins = getMintingPlugins(relations, keys)
-  const supportedChains = new Set(supportedChainIds)
 
   return {
     deployments: deployedTokens.map((token) => ({

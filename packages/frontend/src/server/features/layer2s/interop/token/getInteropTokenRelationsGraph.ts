@@ -6,10 +6,7 @@ import type {
 import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import {
-  createInteropProjectResolver,
-  type InteropProjectResolver,
-} from '../utils/createInteropProjectResolver'
+import type { InteropProjectResolver } from '../utils/createInteropProjectResolver'
 import {
   deploymentTransferKey,
   type Endpoint,
@@ -18,7 +15,6 @@ import {
 import { INTEROP_CHAIN_DETAILS } from '../utils/interopChainDetails'
 import {
   buildTokenRelationsGraph,
-  type TokenRelationsGraphNode,
   type TokenRelationsGraphSource,
 } from './buildTokenRelationsGraph'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
@@ -68,10 +64,9 @@ export function getInteropTokenRelationsGraph(
   deployments: InteropTokenOnchainDeployment[],
   relations: InteropTokenRelations,
   projectsWithChains: Project<'chainConfig'>[],
-  interopProjects: Project<'interopConfig'>[],
+  resolveProjects: InteropProjectResolver,
 ): InteropTokenRelationsGraph {
   const graph = buildTokenRelationsGraph(deployments, relations.routes)
-  const resolveProjects = createInteropProjectResolver(interopProjects)
 
   const resolveBridges = (sources: TokenRelationsGraphSource[]) =>
     toInteropProjectIconListItems(
@@ -87,8 +82,18 @@ export function getInteropTokenRelationsGraph(
       ),
     )
 
+  const nodeOf = new Map(
+    graph.nodes.flatMap((node) =>
+      node.members.flatMap((member) => {
+        const key = deploymentTransferKey(member)
+        return key ? [[key, node.id] as const] : []
+      }),
+    ),
+  )
   const pairs = relations.pairStats ?? []
-  const nodeStats = getNodeStats(graph.nodes, pairs)
+  const nodeStats = aggregateStats(pairs, (side) =>
+    nodeOf.get(transferTokenKey(side)),
+  )
   const deploymentStats = aggregateStats(pairs, transferTokenKey)
 
   function getStats(
@@ -188,7 +193,7 @@ function toInteropProjectIconListItems(
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export function getChainDisplayInfo(
+function getChainDisplayInfo(
   chainId: string,
   projects: Project<'chainConfig'>[],
 ) {
@@ -205,22 +210,6 @@ export function getChainDisplayInfo(
       explorerUrl: project.chainConfig.explorerUrl,
     }
   )
-}
-
-/** Stats per node; a transfer counts once even when both ends are in the node. */
-export function getNodeStats<T extends { chain: string; address: string }>(
-  nodes: TokenRelationsGraphNode<T>[],
-  pairStats: InteropTransferDeployedTokenPairStats[],
-): Map<string, InteropTokenStats> {
-  const nodeOf = new Map(
-    nodes.flatMap((node) =>
-      node.members.flatMap((member) => {
-        const key = deploymentTransferKey(member)
-        return key ? [[key, node.id] as const] : []
-      }),
-    ),
-  )
-  return aggregateStats(pairStats, (side) => nodeOf.get(transferTokenKey(side)))
 }
 
 /** Count a transfer once per group, even when both endpoints belong to it. */

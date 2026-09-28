@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../utils/getInteropChains'
 import {
@@ -58,6 +59,6 @@ async function loadInteropTokenRelationsGraph(
     deployments,
     { routes, pairStats },
     projectsWithChains,
-    interopProjects,
+    createInteropProjectResolver(interopProjects),
   )
 }
