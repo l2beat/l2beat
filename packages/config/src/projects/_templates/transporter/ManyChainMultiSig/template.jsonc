@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ManyChainMultiSig",
-  "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum {{minSigs}} signatures across {{memberCount}} total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat {{minSigs}}-of-{{memberCount}} multisig and is strictly more constrained. {{summaryRoot}}. [click for per-group breakdown: {{summaryGroups}}]. The owner can rotate the entire signer tree.",
+  "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. {{quorumSummary}} The owner can rotate the entire signer tree.",
   "category": "gov",
   "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
   "ignoreMethods": ["getConfig", "NUM_GROUPS", "MAX_NUM_SIGNERS"],
@@ -20,6 +20,11 @@
       "description": "Just the root-group line of the tree summary (e.g. \"Root: 2-of-4, childGroups=(1,2,3,4)\"). Always-visible head of the description.",
       "copy": "config",
       "edit": ["get", "summaryRoot"]
+    },
+    "quorumSummary": {
+      "description": "Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.",
+      "copy": "config",
+      "edit": ["get", "quorumSummary"]
     },
     "summaryGroups": {
       "description": "The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.",

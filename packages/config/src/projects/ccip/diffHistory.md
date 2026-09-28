@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
+Generated with discovered.json: 0x5b3b211fb33878482395b67ecdbc157160981598
 
-# Diff at Mon, 28 Sep 2026 15:45:35 GMT:
+# Diff at Mon, 28 Sep 2026 17:00:27 GMT:
 
 - id: 39cc542e
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -9,7 +9,7 @@ Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 
 ## Description
 
-- CCIP 2.0 cutover on Ethereum: the MainRouter now selects the shared EthereumOnRamp_v2_0 for 47 destinations (35 before), moving most remaining per-lane and v1.6 routes (Optimism, Polygon PoS, Arbitrum, Avalanche, BNB, Base, Gnosis, Linea, Scroll, World Chain and others). EthereumOnRamp_v2_0, EthereumOffRamp_v2_0, the Executor and the CommitteeVerifier were configured for about 52 new remote chains. The CommitteeVerifier now holds 65 source-chain signature configs (13 before), all with a threshold of 9 out of 14 to 16 signers.
+- CCIP 2.0 cutover on Ethereum: the MainRouter now selects the shared EthereumOnRamp_v2_0 for 47 destinations (7 before), moving 40 per-lane and v1.6 routes (Optimism, Polygon PoS, Arbitrum, Avalanche, BNB, Base, Gnosis, Linea, Scroll, World Chain and others). EthereumOnRamp_v2_0, EthereumOffRamp_v2_0, the Executor and the CommitteeVerifier were configured for about 52 new remote chains. The CommitteeVerifier now holds 65 source-chain signature configs (13 before), all with a threshold of 9 out of 14 to 16 signers.
 - USDCTokenPoolProxy switched USDC transfers to Optimism, Arbitrum, Unichain, Polygon PoS, Avalanche and Base from CCTP v1 to the CCTP-through-CCV path.
 - Ownership of CCTPVerifier_v2_1 and USDCCCTPVerifierResolver moved from an EOA (0x062f) to ARMTimelock (3h delay). The resolver dropped CCTPVerifier_v2_0 as an inbound implementation.
 - EthereumOnRamp_v1_6 now sends fees to a new FeeAggregatorTimelock instead of the same EOA. The timelock has no delay; its proposer and bypasser are 2-of-4 ManyChainMultiSigs and its canceller a 1-of-4 one, all sharing the same four new EOA signers. It runs the same code as ARMTimelock and only receives fee tokens; it holds no CCIP permissions.
@@ -2999,19 +2999,19 @@ Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 ```diff
 +   Status: CREATED
     contract FeeAggregatorTimelock (eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178) [transporter/RBACTimelock]
-    +++ description: Role based timelock used to administer CCIP contracts.
+    +++ description: Role-based timelock that CCIP uses as a fee aggregator, collecting fee tokens withdrawn from its ramps.
 ```
 
 ```diff
 +   Status: CREATED
     contract FeeAggregator_ProposerMultisig (eth:0x3d54fF2Fd088bFB8aad30cC408273Ed641ABDA91) [transporter/ManyChainMultiSig]
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 4 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-4 multisig and is strictly more constrained. Root: 2-of-4, signers=4. [click for per-group breakdown: ]. The owner can rotate the entire signer tree.
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 2-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
 ```
 
 ```diff
 +   Status: CREATED
     contract FeeAggregator_BypasserMultisig (eth:0x75FDCe0C6fABcaAa2B392010CE1C711dCf8AfADD) [transporter/ManyChainMultiSig]
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 4 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-4 multisig and is strictly more constrained. Root: 2-of-4, signers=4. [click for per-group breakdown: ]. The owner can rotate the entire signer tree.
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 2-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
 ```
 
 ```diff
@@ -3023,7 +3023,7 @@ Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 ```diff
 +   Status: CREATED
     contract FeeAggregator_CancellerMultisig (eth:0xB747c1486D8aCa1d13018B574701F325F497D198) [transporter/ManyChainMultiSig]
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 4 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-4 multisig and is strictly more constrained. Root: 1-of-4, signers=4. [click for per-group breakdown: ]. The owner can rotate the entire signer tree.
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
 ```
 
 ## Source code changes
@@ -3094,6 +3094,19 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
     contract CCTPVerifier_v2_1 (eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af) [ccip/CCTPVerifier] {
     +++ description: USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.
       usedTypes.0.arg.2988178761202034333:
@@ -3156,10 +3169,55 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RMN_CurseBypasserMultisig (eth:0x42e83F35E8f32056884311C07CB195547785Efa9) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
     contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
     +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
       usedTypes.0.arg.2988178761202034333:
 +        "gravity"
+    }
+```
+
+```diff
+    contract RMN_Multisig1 (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-40 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 4 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-40 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 4 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-40 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract RMN_CurseProposerMultisig (eth:0x7a07a474D8c33E25327b4BEb659B9be65012e852) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
     }
 ```
 
@@ -3188,6 +3246,32 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RMN_Multisig2 (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract RMN_Multisig3 (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 5 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-40 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 5 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-40 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 5 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-40 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
     contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6] {
     +++ description: OnRamp used to send messages from its local chain to other chains. It stores each destination route's authorized Router and optional sender allowlist, prices messages through the configured FeeQuoter, and advances outbound nonces through the NonceManager.
       usedTypes.0.arg.2988178761202034333:
@@ -3204,10 +3288,39 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RMN_CurseCancellerMultisig (eth:0x95176427A9555fCa942828F3d22b665bE36b718B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
     contract CCTPVerifier_v2_0 (eth:0xa22606F055146f0eac2FBEd49253E779b781355D) [N/A] {
     +++ description: None
       usedTypes.0.arg.2988178761202034333:
 +        "gravity"
+    }
+```
+
+```diff
+    contract ARM_Multisig3 (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
     }
 ```
 
@@ -3230,6 +3343,32 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
     +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
       usedTypes.0.arg.2988178761202034333:
 +        "gravity"
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      values.config.quorumSummary:
++        "Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
     }
 ```
 

@@ -74,6 +74,7 @@ export class ManyChainMultiSigHandler implements Handler {
     const summaryLines = renderSummaryLines(groups)
     const summaryRoot = summaryLines[0] ?? ''
     const summaryGroups = summaryLines.slice(1).join(' | ')
+    const minSigs = minSigsForRoot(groups)
 
     return {
       field: this.field,
@@ -81,14 +82,34 @@ export class ManyChainMultiSigHandler implements Handler {
         summary: summaryLines.join(' | '),
         summaryRoot,
         summaryGroups,
+        quorumSummary: describeQuorum(
+          minSigs,
+          allMembers.length,
+          summaryRoot,
+          summaryGroups,
+        ),
         rootQuorum: groups[0]?.quorum ?? 0,
-        minSigs: minSigsForRoot(groups),
+        minSigs,
         allMembers,
         signerGroups: renderGroups(groups, longChain),
       },
       ignoreRelative: this.definition.ignoreRelative,
     }
   }
+}
+
+// A root without sub-groups is an ordinary flat M-of-N multisig, so the
+// tree-quorum caveat and the per-group breakdown only apply when it has some.
+function describeQuorum(
+  minSigs: number,
+  memberCount: number,
+  summaryRoot: string,
+  summaryGroups: string,
+): string {
+  if (summaryGroups === '') {
+    return `Flat ${minSigs}-of-${memberCount} multisig: every signer belongs directly to the root group.`
+  }
+  return `Minimum ${minSigs} signatures across ${memberCount} total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat ${minSigs}-of-${memberCount} multisig and is strictly more constrained. ${summaryRoot}. [click for per-group breakdown: ${summaryGroups}].`
 }
 
 // Recursively computes the minimum signature count required to satisfy the
