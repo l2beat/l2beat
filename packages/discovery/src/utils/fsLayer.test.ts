@@ -87,17 +87,17 @@ describe(fingerprintDirectoryTree.name, () => {
     rmSync(root, { recursive: true, force: true })
   })
 
-  it('does not follow a symlink back to an ancestor', () => {
+  it('rejects symlinks', () => {
     mkdirSync(join(root, 'template'))
-    symlinkSync('..', join(root, 'template', 'loop'))
+    writeFileSync(join(root, 'shapes.json'), '{}')
+    symlinkSync(
+      join(root, 'shapes.json'),
+      join(root, 'template', 'shapes.json'),
+    )
 
-    expect(() => fingerprintDirectoryTree(root)).not.toThrow()
-  })
-
-  it('does not follow a dangling symlink', () => {
-    symlinkSync(join(root, 'missing'), join(root, 'broken'))
-
-    expect(() => fingerprintDirectoryTree(root)).not.toThrow()
+    expect(() => fingerprintDirectoryTree(root)).toThrow(
+      'Symlinks are not supported',
+    )
   })
 })
 

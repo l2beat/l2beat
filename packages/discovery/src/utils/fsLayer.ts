@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { lstatSync, readdirSync, statSync } from 'fs'
 import { basename, dirname, join } from 'path'
 
@@ -42,6 +43,7 @@ function listDirectory(directory: string): Set<string> {
 // inside it is edited, so every file has to be stat'ed. Contents are not hashed
 // because that means reading every file on each call, so a rewrite that keeps
 // both the size and the exact mtime goes unnoticed. That is accepted.
+// Symlinks are rejected because following them has too many edge cases.
 export function fingerprintDirectoryTree(root: string): string {
   const files: string[] = []
   const pending = [root]
@@ -49,6 +51,7 @@ export function fingerprintDirectoryTree(root: string): string {
     for (const name of listDirectory(dir)) {
       const path = join(dir, name)
       const stat = lstatSync(path)
+      assert(!stat.isSymbolicLink(), `Symlinks are not supported: ${path}`)
       if (stat.isDirectory()) {
         pending.push(path)
       } else {
