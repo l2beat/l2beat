@@ -17,7 +17,7 @@ import {
   buildTokenRelationsGraph,
   type TokenRelationsGraphSource,
 } from './buildTokenRelationsGraph'
-import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+import type { InteropTokenOnchainDeployment } from './toInteropTokenDeployments'
 
 export interface InteropTokenRelations {
   /** Relations with both endpoints among the token's deployments. */

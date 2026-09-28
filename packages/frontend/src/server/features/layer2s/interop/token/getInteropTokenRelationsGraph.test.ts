@@ -3,8 +3,8 @@ import type { TokenRelationRoute } from '@l2beat/database'
 import { Address32, assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
-import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import { getInteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
+import type { InteropTokenOnchainDeployment } from './toInteropTokenDeployments'
 
 const usdc = 'circle-usdc'
 const ethereum = deployment('ethereum', '0xe1')

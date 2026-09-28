@@ -22,7 +22,7 @@ describe(groupRelationInputsByToken.name, () => {
   const usdceArbitrum = assignment('arbitrum', '0xA1', 'usdce1')
   const daiEthereum = assignment('ethereum', '0xE3', 'dai001')
 
-  it('gives a token its deployments and the relations among them', () => {
+  it('gives every token its deployments and the relations among them', () => {
     const within = route(usdcEthereum, usdcBase)
 
     const inputs = groupRelationInputsByToken(
@@ -35,6 +35,7 @@ describe(groupRelationInputsByToken.name, () => {
         'usdc01',
         { deployedTokens: [usdcEthereum, usdcBase], routes: [within] },
       ],
+      ['dai001', { deployedTokens: [daiEthereum], routes: [] }],
     ])
   })
 

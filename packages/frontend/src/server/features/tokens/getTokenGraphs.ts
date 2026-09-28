@@ -1,24 +1,22 @@
 import type { Project } from '@l2beat/config'
-import type {
-  AbstractTokenSummary,
-  DeployedTokenAssignment,
-  TokenRelationRoute,
+import {
+  type AbstractTokenSummary,
+  type DeployedTokenAssignment,
+  INTEROP_TRANSFER_RETENTION,
+  type InteropTransferDeployedTokenPairStats,
+  type TokenRelationRoute,
 } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
-import { toInteropTokenDeployments } from '../layer2s/interop/token/getInteropTokenOnchainDeployments'
-import {
-  getPairStatsParams,
-  MOCK_INTEROP_TOKEN_PAIR_STATS,
-} from '../layer2s/interop/token/getInteropTokenPairStats'
 import {
   getInteropTokenRelationsGraph,
   type InteropTokenRelationsGraph,
 } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
+import { toInteropTokenDeployments } from '../layer2s/interop/token/toInteropTokenDeployments'
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../layer2s/interop/utils/getInteropChains'
@@ -33,7 +31,10 @@ import {
 export interface TokenGraphs {
   /** Busiest first. */
   tiles: TokenGraphTile[]
-  /** The full graph behind each tile, so its dialog cannot disagree with it. */
+  /**
+   * The full graph of every tiled token and every token with a detail page,
+   * so the dialog and the detail page cannot disagree with the tile.
+   */
   graphs: Map<string, InteropTokenRelationsGraph>
 }
 
@@ -75,7 +76,9 @@ async function getTokenGraphsData(): Promise<TokenGraphs> {
   const graphs = new Map<string, InteropTokenRelationsGraph>()
   for (const token of tokens) {
     const inputs = inputsByToken.get(token.id)
-    if (!inputs) continue
+    const linkable = linkableTokenIds.has(token.id)
+    // Without a relation there is no tile, so only a detail page needs the graph.
+    if (!inputs || (inputs.routes.length === 0 && !linkable)) continue
 
     const { deployments, routes } = toInteropTokenDeployments(
       inputs.deployedTokens,
@@ -95,12 +98,10 @@ async function getTokenGraphsData(): Promise<TokenGraphs> {
     )
     const tile = toTokenGraphTile(token, graph, {
       volume: volumeByTokenId.get(token.id) ?? null,
-      linkable: linkableTokenIds.has(token.id),
+      linkable,
     })
-    if (!tile) continue
-
-    tiles.push(tile)
-    graphs.set(token.id, graph)
+    if (tile) tiles.push(tile)
+    if (tile || linkable) graphs.set(token.id, graph)
   }
 
   return { tiles: tiles.toSorted(compareTokenGraphTiles), graphs }
@@ -141,15 +142,21 @@ async function getPairStatsByTokenId(
   snapshotTimestamp: UnixTime | undefined,
   projects: Project<'interopConfig'>[],
 ) {
-  if (env.MOCK) return new Map([['usdc01', MOCK_INTEROP_TOKEN_PAIR_STATS]])
+  if (env.MOCK) return new Map([['usdc01', MOCK_USDC_PAIR_STATS]])
+  if (!snapshotTimestamp) return undefined
 
-  const params = snapshotTimestamp
-    ? getPairStatsParams(snapshotTimestamp, projects)
-    : undefined
-  if (!params) return undefined
+  const from = snapshotTimestamp - UnixTime.DAY
+  // Aggregates outlive raw transfers, so an aggregates timestamp override can
+  // point at a day the cleaner has already emptied.
+  if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
+  const chains = getActiveInteropChainIds()
   const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(
-    params.timeRange,
-    params.selection,
+    { from, to: snapshotTimestamp },
+    {
+      plugins: projects.flatMap((project) => project.interopConfig.plugins),
+      sourceChains: chains,
+      destinationChains: chains,
+    },
   )
   return Map.groupBy(rows, (row) => row.abstractTokenId)
 }
@@ -307,6 +314,37 @@ const MOCK_TOKEN_RELATION_DATA: TokenRelationData = {
     ),
   ],
 }
+
+const MOCK_USDC_PAIR_STATS: InteropTransferDeployedTokenPairStats[] = [
+  {
+    src: {
+      chain: 'ethereum',
+      address: Address32.from(MOCK_DEPLOYMENTS.usdcEthereum.address),
+    },
+    dst: {
+      chain: 'arbitrum',
+      address: Address32.from(MOCK_DEPLOYMENTS.usdcArbitrum.address),
+    },
+    transferCount: 403,
+    transfersWithDurationCount: 403,
+    totalDurationSum: 9_672,
+    volume: 2_170_000,
+  },
+  {
+    src: {
+      chain: 'arbitrum',
+      address: Address32.from(MOCK_DEPLOYMENTS.usdcArbitrum.address),
+    },
+    dst: {
+      chain: 'ethereum',
+      address: Address32.from(MOCK_DEPLOYMENTS.usdcEthereum.address),
+    },
+    transferCount: 125,
+    transfersWithDurationCount: 125,
+    totalDurationSum: 2_375,
+    volume: 392_430,
+  },
+]
 
 function mockDeployment(
   abstractTokenId: string,

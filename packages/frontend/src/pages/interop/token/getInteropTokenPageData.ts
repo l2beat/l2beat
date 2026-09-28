@@ -4,10 +4,10 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import { getInteropTokenRelationsGraphById } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraphById'
 import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import { getRelationsGraphProjects } from '~/server/features/layer2s/interop/utils/getRelationsGraphProjects'
+import { getTokenGraphs } from '~/server/features/tokens/getTokenGraphs'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -102,26 +102,23 @@ async function getCachedData({
   activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const [abstractTokens, snapshotTimestamp, projects] = await Promise.all([
-    getInteropAbstractTokens(activeInteropChainIds),
-    getAggregatedInteropSnapshotTimestamp(),
-    getRelationsGraphProjects(),
-  ])
+  const [abstractTokens, snapshotTimestamp, interopProjects, { graphs }] =
+    await Promise.all([
+      getInteropAbstractTokens(activeInteropChainIds),
+      getAggregatedInteropSnapshotTimestamp(),
+      ps.getProjects({ select: ['interopConfig'] }),
+      getTokenGraphs(),
+    ])
   const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const [tokenData, relationsGraph] = await Promise.all([
-    getInteropTokenData(
-      { tokenId: token.id, ...apiSelection },
-      { snapshotTimestamp, interopProjects: projects.interopProjects },
-    ),
-    getInteropTokenRelationsGraphById(token.id, {
-      snapshotTimestamp,
-      projects,
-    }),
-  ])
+  const tokenData = await getInteropTokenData(
+    { tokenId: token.id, ...apiSelection },
+    { snapshotTimestamp, interopProjects },
+  )
+  const relationsGraph = graphs.get(token.id)
 
   const deploymentsCount =
     relationsGraph?.nodes.reduce(

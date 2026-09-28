@@ -1001,43 +1001,9 @@ export class InteropTransferRepository extends BaseRepository {
    * abstract token even when several project configs match. Volume uses
    * getInteropTransferValue's convention; only the token's own sides are kept.
    */
-  getAllDeployedTokenPairStats(
+  async getAllDeployedTokenPairStats(
     timeRange: InteropTransferTimeRange,
     selection: DeployedTokenPairStatsSelection,
-  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
-    return this.queryDeployedTokenPairStats(timeRange, selection, (eb) =>
-      eb.or([
-        eb('srcAbstractTokenId', 'is not', null),
-        eb('dstAbstractTokenId', 'is not', null),
-      ]),
-    )
-  }
-
-  async getDeployedTokenPairStats(
-    abstractTokenId: string,
-    timeRange: InteropTransferTimeRange,
-    selection: DeployedTokenPairStatsSelection,
-  ): Promise<InteropTransferDeployedTokenPairStats[]> {
-    const rows = await this.queryDeployedTokenPairStats(
-      timeRange,
-      selection,
-      (eb) =>
-        eb.or([
-          eb('srcAbstractTokenId', '=', abstractTokenId),
-          eb('dstAbstractTokenId', '=', abstractTokenId),
-        ]),
-    )
-    return rows
-      .filter((row) => row.abstractTokenId === abstractTokenId)
-      .map(({ abstractTokenId: _, ...stats }) => stats)
-  }
-
-  private async queryDeployedTokenPairStats(
-    timeRange: InteropTransferTimeRange,
-    selection: DeployedTokenPairStatsSelection,
-    tokenFilter: (
-      eb: ExpressionBuilder<DB, 'InteropTransfer'>,
-    ) => Expression<SqlBool>,
   ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
     if (
       selection.plugins.length === 0 ||
@@ -1083,7 +1049,12 @@ export class InteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', selection.sourceChains)
       .where('dstChain', 'in', selection.destinationChains)
       .whereRef('srcChain', '!=', 'dstChain')
-      .where(tokenFilter)
+      .where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', 'is not', null),
+          eb('dstAbstractTokenId', 'is not', null),
+        ]),
+      )
       .groupBy([
         ...groupColumns,
         sql`"srcEventId" IS NULL`,

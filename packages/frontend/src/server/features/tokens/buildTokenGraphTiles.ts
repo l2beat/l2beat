@@ -52,11 +52,7 @@ interface TokenRelationInputs {
   routes: TokenRelationRoute[]
 }
 
-/**
- * The bulk counterpart of `getInteropTokenOnchainDeployments`' reads, so both
- * must select the same deployments and relations. Tokens without a relation
- * cannot have a tile and are left out.
- */
+/** Each token's deployments, ignored ones aside, and the relations touching them. */
 export function groupRelationInputsByToken(
   assignments: DeployedTokenAssignment[],
   routes: TokenRelationRoute[],
@@ -86,16 +82,18 @@ export function groupRelationInputsByToken(
     }
   }
 
-  const deploymentsByToken = Map.groupBy(
-    deployedTokens,
-    (token) => token.abstractTokenId,
-  )
-  return new Map(
-    [...routesByToken].map(([tokenId, routes]) => [
-      tokenId,
-      { deployedTokens: deploymentsByToken.get(tokenId) ?? [], routes },
-    ]),
-  )
+  const inputs = new Map<string, TokenRelationInputs>()
+  for (const token of deployedTokens) {
+    const tokenId = token.abstractTokenId
+    if (!tokenId) continue
+    const entry = inputs.get(tokenId) ?? {
+      deployedTokens: [],
+      routes: routesByToken.get(tokenId) ?? [],
+    }
+    entry.deployedTokens.push(token)
+    inputs.set(tokenId, entry)
+  }
+  return inputs
 }
 
 /** Hides unconnected deployments like the full view; undefined if none remain. */
