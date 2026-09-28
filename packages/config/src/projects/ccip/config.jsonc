@@ -490,7 +490,7 @@
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
       "fields": {
-        // CCIP 2.0 verifiers and ramps authenticate ramps through this Router, so its OffRamp registrations are tracked.
+        // v2.0 ramps are wired to this Router for lanes not yet moved to v2.0 on the MainRouter, so its OffRamp registrations are tracked.
         "getOffRamps": {
           "handler": { "type": "call", "method": "getOffRamps", "args": [] }
         }

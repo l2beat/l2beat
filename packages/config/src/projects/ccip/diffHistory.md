@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 
-# Diff at Mon, 28 Sep 2026 15:39:08 GMT:
+# Diff at Mon, 28 Sep 2026 15:45:35 GMT:
 
 - id: 39cc542e
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -13,7 +13,7 @@ Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 - USDCTokenPoolProxy switched USDC transfers to Optimism, Arbitrum, Unichain, Polygon PoS, Avalanche and Base from CCTP v1 to the CCTP-through-CCV path.
 - Ownership of CCTPVerifier_v2_1 and USDCCCTPVerifierResolver moved from an EOA (0x062f) to ARMTimelock (3h delay). The resolver dropped CCTPVerifier_v2_0 as an inbound implementation.
 - EthereumOnRamp_v1_6 now sends fees to a new FeeAggregatorTimelock instead of the same EOA. The timelock has no delay; its proposer and bypasser are 2-of-4 ManyChainMultiSigs and its canceller a 1-of-4 one, all sharing the same four new EOA signers. It runs the same code as ARMTimelock and only receives fee tokens; it holds no CCIP permissions.
-- The DeprecatedRouter (a second Router 1.2.0 deployment) is now load-bearing for CCIP 2.0: the CommitteeVerifier authenticates ramps through it for 63 of its 65 remote chains (12 before), 18 v2.0 lanes use it as their Router (6 before), and EthereumOffRamp_v2_0 was registered on it for 52 more sources. Its owner is still the EOA 0x062f, which can add or replace its OnRamps and OffRamps without delay. It now uses the RouterV1_2_0 template (same Router logic as the MainRouter) with its owner crawled, so this permission is modelled; its stale "used by BSC" description was dropped.
+- The DeprecatedRouter (a second Router 1.2.0 deployment) is wired to the v2.0 ramps for the 18 lanes the MainRouter has not moved to v2.0 yet (6 before), and EthereumOffRamp_v2_0 was registered on it for 52 more sources. It delivered no messages in the last week, so production traffic on those lanes still goes through the MainRouter and the v1.6 ramps. The CommitteeVerifier uses it only to check the calling OnRamp on outbound messages; inbound verification relies on committee signatures alone. Its owner is still the EOA 0x062f, which can add or replace its ramps without delay. It now uses the RouterV1_2_0 template (same Router logic as the MainRouter) with its owner crawled, so this permission is modelled; its stale "used by BSC" description was dropped.
 - One CommitteeVerifier signer (0x89A4) was replaced by 0xD173 in the arc, cronos, ab and robinhood signature configs; thresholds are unchanged.
 - RMN added an EOA (0x2acE, already a signer on the three RMN curse multisigs) as an authorized caller, so it can place global or route-specific curses alone. It cannot uncurse.
 - New lanes: Gravity (chain selector `2988178761202034333`, now labeled in the selector map) to and from Ethereum, arc to Base and Polygon PoS, and tempo to Polygon PoS. Routine OCR execution digest rotations on Ethereum, Base, BNB, Solana, Sonic and others, CCTP source pool updates in the token data observers, and FeeQuoter limit and fee changes.
