@@ -8,6 +8,7 @@ import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s
 import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { getTokenGraphs } from '~/server/features/tokens/getTokenGraphs'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -102,23 +103,24 @@ async function getCachedData({
   activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const [abstractTokens, snapshotTimestamp, interopProjects, { graphs }] =
+  const [abstractTokens, snapshotTimestamp, interopProjects] =
     await Promise.all([
       getInteropAbstractTokens(activeInteropChainIds),
       getAggregatedInteropSnapshotTimestamp(),
       ps.getProjects({ select: ['interopConfig'] }),
-      getTokenGraphs(),
     ])
   const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const tokenData = await getInteropTokenData(
-    { tokenId: token.id, ...apiSelection },
-    { snapshotTimestamp, interopProjects },
-  )
-  const relationsGraph = graphs.get(token.id)
+  const [tokenData, relationsGraph] = await Promise.all([
+    getInteropTokenData(
+      { tokenId: token.id, ...apiSelection },
+      { snapshotTimestamp, interopProjects },
+    ),
+    getRelationsGraph(token.id),
+  ])
 
   const deploymentsCount =
     relationsGraph?.nodes.reduce(
@@ -140,5 +142,17 @@ async function getCachedData({
     tokenEntry,
     tokenData,
     apiSelection,
+  }
+}
+
+/** The page stays useful without its deployments section, so a failed build only hides it. */
+async function getRelationsGraph(tokenId: string) {
+  try {
+    return (await getTokenGraphs()).graphs.get(tokenId)
+  } catch (error) {
+    getLogger()
+      .for('getInteropTokenPageData')
+      .error('Token graphs unavailable', { tokenId, error })
+    return undefined
   }
 }
