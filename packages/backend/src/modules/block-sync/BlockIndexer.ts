@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
-import type { Block, Log } from '@l2beat/shared-pure'
+import type { Block } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
@@ -8,6 +8,7 @@ import {
 } from '../../tools/uif/ManagedChildIndexer'
 import type { BlockProcessor } from '../types'
 import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
+import { onlyConsistent } from './consistentBlocks'
 
 export interface BlockIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -20,7 +21,20 @@ export interface BlockIndexerDeps
   batchSize: number
 }
 
+/**
+ * How far before a batch the settled ranges of its blocks may begin. Logs are
+ * fetched from that far back so the ranges can be rebuilt, see
+ * `onlyConsistent`. Avalanche settles a block within about fifteen heights.
+ */
+const SETTLEMENT_LOOKBACK = 32
+
 export class BlockIndexer extends ManagedChildIndexer {
+  /**
+   * Set once a header with `settledHeight` was seen: the chain executes
+   * asynchronously and settles its blocks a few heights later.
+   */
+  private settlesAsynchronously = false
+
   constructor(
     private readonly $: BlockIndexerDeps,
     logger: Logger,
@@ -55,6 +69,10 @@ export class BlockIndexer extends ManagedChildIndexer {
       blockNumbers.push(blockNumber)
     }
 
+    const logsFrom = this.settlesAsynchronously
+      ? Math.max(adjustedFrom - SETTLEMENT_LOOKBACK, 0)
+      : adjustedFrom
+
     const start = Date.now()
 
     this.logger.info('Fetching blocks and logs', {
@@ -64,22 +82,31 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: adjustedTo - adjustedFrom + 1,
     })
 
-    const [blocks, logs] = await withBlockSyncRpcMetricsContext(
+    const consistentBlocks = await withBlockSyncRpcMetricsContext(
       'blockSync.fetch',
       {
         chain: this.$.source,
       },
-      () =>
-        Promise.all([
+      async () => {
+        const [blocks, logs] = await Promise.all([
           Promise.all(
             blockNumbers.map((n) =>
               this.$.blockProvider.getBlockWithTransactions(n),
             ),
           ),
-          this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
-        ]),
+          this.$.logsProvider.getLogs(logsFrom, adjustedTo),
+        ])
+        this.settlesAsynchronously ||= blocks.some(
+          (block) => block.settledHeight !== undefined,
+        )
+        return await onlyConsistent({
+          blocks,
+          logs,
+          logsFromBlock: logsFrom,
+          confirmNoLogs: (block) => this.confirmNoLogs(block),
+        })
+      },
     )
-    const consistentBlocks = onlyConsistent(blocks, logs)
     if (consistentBlocks.length === 0) {
       this.logger.info("Couldn't get consistent blocks & logs", {
         from: adjustedFrom,
@@ -167,36 +194,44 @@ export class BlockIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
-}
 
-/*
-There are two cases where logs can become inconsistent with blocks.
-1) A reorg happened in between the requests and log hashes don't match block hashes
-2) The node has block headers but doesn't yet have the logs
-
-In order to guarantee that the logs we're getting belong to the blocks we're getting
-we need to check that:
-1) The log hashes match the block hashes (reorg protection)
-2) If and only if the logsBloom is empty there are no logs (no logs protection)
-*/
-const LOGS_BLOOM_ZERO = `0x${'0'.repeat(512)}`
-export function onlyConsistent(blocks: Block[], logs: Log[]) {
-  const result: { block: Block; logs: Log[] }[] = []
-  for (const block of blocks) {
-    const blockLogs = logs.filter((l) => l.blockHash === block.hash)
-
-    // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
-    // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.
-    const isBlockValid =
-      (blockLogs.length === 0 && block.logsBloom === LOGS_BLOOM_ZERO) ||
-      (blockLogs.length > 0 &&
-        blockLogs.every((log) => log.blockHash === block.hash))
-
-    if (!isBlockValid) {
-      break
+  /**
+   * Last resort for a block with transactions but no logs that no settled
+   * range vouches for, see `onlyConsistent`. The block is accepted when every
+   * receipt exists, belongs to it and carries no logs. A failed lookup only
+   * stops the batch at this block, the blocks before it stay processed.
+   */
+  private async confirmNoLogs(block: Block): Promise<boolean> {
+    const hashes = block.transactions.flatMap((tx) =>
+      tx.hash ? [tx.hash] : [],
+    )
+    if (hashes.length !== block.transactions.length) {
+      this.logger.warn('Cannot confirm block without logs, tx hash missing', {
+        blockNumber: block.number,
+      })
+      return false
     }
 
-    result.push({ block, logs: blockLogs })
+    try {
+      const receipts = await Promise.all(
+        hashes.map((hash) => this.$.blockProvider.getTransactionReceipt(hash)),
+      )
+      const confirmed = receipts.every(
+        (receipt) =>
+          receipt.blockHash === block.hash && receipt.logs.length === 0,
+      )
+      this.logger.info('Confirmed block without logs via receipts', {
+        blockNumber: block.number,
+        transactions: hashes.length,
+        confirmed,
+      })
+      return confirmed
+    } catch (error) {
+      this.logger.warn('Failed to confirm block without logs via receipts', {
+        blockNumber: block.number,
+        error,
+      })
+      return false
+    }
   }
-  return result
 }

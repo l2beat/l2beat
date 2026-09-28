@@ -12,7 +12,16 @@ export interface BlockClient {
   /** Optional capability: batch-fetch block timestamps. Implementations are
    *  expected to chunk requests internally. */
   getBlockTimestamps?(blockNumbers: number[]): Promise<Map<number, number>>
+  /** Optional capability: fetch a transaction receipt. Block sync uses it to
+   *  confirm that a block genuinely has no logs on chains where the header
+   *  logsBloom does not describe the block itself (see Block.settledHeight). */
+  getTransactionReceipt?(txHash: string): Promise<TransactionReceipt>
   chain: string
+}
+
+export interface TransactionReceipt {
+  blockHash?: string
+  logs: unknown[]
 }
 
 export interface SvmBlockClient {
