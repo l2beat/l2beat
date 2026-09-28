@@ -8,6 +8,7 @@ import { BADGES } from '../../common/badges'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('roninnetwork')
@@ -147,6 +148,7 @@ const roninTemplate = opStackL2({
       },
     ],
   },
+  ossification: getOssification('roninnetwork', genesisTimestamp),
   milestones: [
     {
       title: 'Ronin migrates to an Ethereum L2',

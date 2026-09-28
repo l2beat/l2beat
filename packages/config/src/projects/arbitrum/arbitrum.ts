@@ -20,6 +20,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import {
   getNitroGovernance,
   getOrbitStackDaTracking,
@@ -208,6 +209,8 @@ function formatWethAmount(amount: string): string {
 }
 
 const chainId = 42161
+// ~ Timestamp of block number 0 on Arbitrum
+const chainStart = UnixTime.fromDate(new Date('2021-05-28T22:15:00Z'))
 
 export const arbitrum: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
@@ -351,8 +354,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     chainId,
     explorerUrl: 'https://arbiscan.io',
     coingeckoPlatform: 'arbitrum-one',
-    // ~ Timestamp of block number 0 on Arbitrum
-    sinceTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -377,6 +379,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
+  ossification: getOssification('arbitrum', chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
       l2CoreQuorumPercent,
