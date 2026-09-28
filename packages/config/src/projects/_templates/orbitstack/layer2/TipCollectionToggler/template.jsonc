@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TipCollectionToggler",
+  "description": "ArbOS chain owner that can only toggle the collection of priority fees (tips), which enables PGA transaction ordering. Anyone can remove it from the chain owners after the expiry timestamp.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "tipCollectionManagers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "toggle the collection of priority fees (tips)."
+        }
+      ]
+    },
+    // ArbOS state, read from the ArbOwnerPublic precompile
+    "collectTips": {
+      "handler": {
+        "type": "call",
+        "method": "function getCollectTips() view returns (bool)",
+        "args": [],
+        "address": "0x000000000000000000000000000000000000006b"
+      }
+    }
+  }
+}
