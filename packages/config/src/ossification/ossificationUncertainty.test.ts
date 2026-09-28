@@ -4,7 +4,7 @@ import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { readPatch } from './getOssification'
+import { readPatch } from './loadOssificationInput'
 import { getUncertainNewestChange } from './measureOssification'
 
 /** The newest change sets the project clock and with it the whole score. A

@@ -27,7 +27,7 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { loadOssificationInput } from '../ossification/getOssification'
+import { loadOssificationInput } from '../ossification/loadOssificationInput'
 import { measureOssification } from '../ossification/measureOssification'
 import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
