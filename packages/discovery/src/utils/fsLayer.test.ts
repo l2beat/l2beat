@@ -52,6 +52,28 @@ describe(fileExistsCaseSensitive.name, () => {
     expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(false)
     expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
   })
+
+  it('does not trust a listing whose mtime is too recent', () => {
+    const now = new Date()
+    pinMtime(root, now)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+
+    mkdirSync(join(root, 'project'))
+    pinMtime(root, now)
+
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+  })
+
+  it('trusts a listing whose mtime is old', () => {
+    const old = new Date(Date.now() - 60_000)
+    pinMtime(root, old)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+
+    mkdirSync(join(root, 'project'))
+    pinMtime(root, old)
+
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+  })
 })
 
 describe(fingerprintDirectoryTree.name, () => {
@@ -83,4 +105,9 @@ describe(fingerprintDirectoryTree.name, () => {
 function bumpMtime(directory: string) {
   const future = new Date(Date.now() + 60_000)
   utimesSync(directory, future, future)
+}
+
+// Pinning the same mtime around a change simulates both landing in one tick.
+function pinMtime(directory: string, time: Date) {
+  utimesSync(directory, time, time)
 }

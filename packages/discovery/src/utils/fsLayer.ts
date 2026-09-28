@@ -17,10 +17,13 @@ export function fileExistsCaseSensitive(path: string): boolean {
 // Every project lookup lists the same large projects directory, which
 // dominated config loading. A directory's mtime changes whenever an entry is
 // added, removed or renamed, so a stat is enough to know the listing is fresh.
+// Coarse clocks can give a change right after the listing the same mtime, so
+// like git's racy timestamp rule, a recently changed directory is not cached.
 const directoryListings = new Map<
   string,
   { mtimeMs: number; names: Set<string> }
 >()
+const RACY_MTIME_WINDOW_MS = 2_000
 
 function listDirectory(directory: string): Set<string> {
   const { mtimeMs } = statSync(directory)
@@ -29,7 +32,9 @@ function listDirectory(directory: string): Set<string> {
     return cached.names
   }
   const names = new Set(readdirSync(directory))
-  directoryListings.set(directory, { mtimeMs, names })
+  if (Date.now() - mtimeMs >= RACY_MTIME_WINDOW_MS) {
+    directoryListings.set(directory, { mtimeMs, names })
+  }
   return names
 }
 
