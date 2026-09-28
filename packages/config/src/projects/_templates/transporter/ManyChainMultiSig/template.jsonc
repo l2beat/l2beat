@@ -32,7 +32,7 @@
       "edit": ["get", "summaryGroups"]
     },
     "$threshold": {
-      "description": "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading.",
+      "description": "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule.",
       "copy": "config",
       "edit": ["get", "minSigs"]
     },
@@ -42,12 +42,12 @@
       "edit": ["get", "allMembers"]
     },
     "minSigs": {
-      "description": "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected.",
+      "description": "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums.",
       "copy": "config",
       "edit": ["get", "minSigs"]
     },
     "memberCount": {
-      "description": "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule.",
+      "description": "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.",
       "copy": "config",
       "edit": ["pipe", ["get", "allMembers"], ["length"]]
     },

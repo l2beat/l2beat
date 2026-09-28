@@ -127,7 +127,7 @@ describe(ManyChainMultiSigHandler.name, () => {
       'Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2',
     )
     expect(v.quorumSummary).toEqual(
-      'Minimum 4 signatures across 8 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-8 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2].',
+      'At least 4 of 8 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2].',
     )
     expect(v.rootQuorum).toEqual(2)
     expect(Object.keys(v.signerGroups)).toEqual([
