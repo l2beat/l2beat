@@ -1,5 +1,8 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs'
+import { tmpdir } from 'os'
+import { join } from 'path'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { Entrypoint } from '../config/StructureConfig'
@@ -45,6 +48,60 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
     // even though there is an implementation match. That's because
     // the more specific match (criteria+hash) is found.
     expect(result).toEqual(['opstack/SuperchainConfig'])
+  })
+})
+
+describe(TemplateService.prototype.reload.name, () => {
+  const HASH_A = Hash256('0x' + 'a'.repeat(64))
+  const HASH_B = Hash256('0x' + 'b'.repeat(64))
+  let rootPath: string
+
+  beforeEach(() => {
+    rootPath = mkdtempSync(join(tmpdir(), 'template-service-'))
+    writeTemplate('first', HASH_A)
+  })
+
+  afterEach(() => {
+    rmSync(rootPath, { recursive: true, force: true })
+  })
+
+  function writeTemplate(templateId: string, ...hashes: Hash256[]) {
+    const path = join(rootPath, '_templates', templateId)
+    mkdirSync(path, { recursive: true })
+    writeFileSync(join(path, 'template.jsonc'), '{}')
+    const shapes = Object.fromEntries(hashes.map((hash, i) => [i, { hash }]))
+    writeFileSync(join(path, 'shapes.json'), JSON.stringify(shapes))
+  }
+
+  it('keeps the loaded shapes when no template changed', () => {
+    const templateService = new TemplateService(rootPath)
+    templateService.reload()
+    const shapes = templateService.getAllShapes()
+    templateService.reload()
+    expect(templateService.getAllShapes()).toExactlyEqual(shapes)
+  })
+
+  it('picks up an edited shape', () => {
+    const templateService = new TemplateService(rootPath)
+    templateService.reload()
+    templateService.getAllShapes()
+    writeTemplate('first', HASH_A, HASH_B)
+    templateService.reload()
+    expect(templateService.getAllShapes()).toEqual({
+      first: { criteria: undefined, hashes: [HASH_A, HASH_B] },
+    })
+  })
+
+  it('picks up a new template', () => {
+    const templateService = new TemplateService(rootPath)
+    templateService.reload()
+    templateService.getAllShapes()
+    writeTemplate('nested/second', HASH_B)
+    templateService.reload()
+    expect(Object.keys(templateService.getAllShapes()).sort()).toEqual([
+      'first',
+      'nested/second',
+    ])
   })
 })
 
