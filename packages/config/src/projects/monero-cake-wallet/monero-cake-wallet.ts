@@ -21,7 +21,7 @@ export const moneroCakeWallet: BaseProject = {
   },
   display: {
     description:
-      "A round trip from Ethereum into Monero and back through the swap screen of Cake Wallet, which hands each leg to a centralized instant exchange.Monero's ledger serves as the privacy pool.",
+      "A round trip from Ethereum into Monero and back through the swap screen of Cake Wallet, which hands each leg to a centralized instant exchange. Monero's ledger serves as the privacy pool.",
     detailedDescription: readProjectMarkdown(
       'monero-cake-wallet',
       'detailedDescription',
@@ -55,7 +55,7 @@ export const moneroCakeWallet: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        "Monero's output set, outside the chains L2BEAT indexes. Entry and exit amounts are public on Ethereum, so the effective set is the entries that could match an exit in amount and time and that no service ties together.",
+        'Each Monero spend hides among 16 ring members, not among all outputs. A party that knows the entry output looks for it in the rings behind the exit, so against the swap services the set is small. Entry and exit amounts are public on Ethereum.',
     },
     exitWindow: {
       value: 'None',
@@ -77,7 +77,6 @@ export const moneroCakeWallet: BaseProject = {
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,
-      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],

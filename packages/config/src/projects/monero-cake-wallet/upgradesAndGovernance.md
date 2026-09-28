@@ -2,7 +2,7 @@ No onchain governance, no contracts, instant change permissions. Three parties c
 
 ### Cake Labs LLC (the wallet)
 
-MIT-licensed and self-custodial. Cake runs no swap backend. Privacy defaults, all user-changeable: Tor off, swap mode "Enabled", Blink on, Etherscan on, Moralis on, Cake's price API on, Cake's Monero node, publicnode's Ethereum RPC.
+MIT-licensed and self-custodial. Cake runs no swap backend. Privacy defaults, all user-changeable: Tor off, swap mode "Enabled", Blink on, Etherscan on, Cake's price API on, Cake's Monero node, publicnode's Ethereum RPC. Moralis token discovery is always on.
 
 ### The swap services (the custodians)
 
