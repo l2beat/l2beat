@@ -15,7 +15,6 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
@@ -109,7 +108,7 @@ export const tornadoCash: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-04-15')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: getOssification('tornado-cash'),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
     redWarning: {

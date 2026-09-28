@@ -27,10 +27,12 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
+import { getOssification } from '../ossification/getOssification'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
   ProjectEscrow,
+  ProjectOssification,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -1087,6 +1089,10 @@ export class ProjectDiscovery {
       delete result[chainToRemove]
     }
     return result
+  }
+
+  getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
+    return getOssification(this.projectName, projectStart)
   }
 
   hasEoaWithUpgradePermissions(): boolean {

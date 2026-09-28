@@ -22,7 +22,6 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -280,7 +279,7 @@ export const morph: ScalingProject = {
       },
     ],
   },
-  ossification: getOssification('morph', chainStart),
+  ossification: discovery.getOssification(chainStart),
   stateValidation: {
     categories: [
       {
