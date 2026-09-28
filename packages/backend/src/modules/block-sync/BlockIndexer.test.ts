@@ -108,30 +108,35 @@ describe(BlockIndexer.name, () => {
       ])
     })
 
-    it('fetches logs from before the batch once the chain settles asynchronously', async () => {
-      const blocks = new Map(
-        [100, 101, 102, 103].map((number) => [
-          number,
-          { ...makeBlock(number, 1_000), settledHeight: number - 2 },
-        ]),
-      )
+    it('fetches logs from right after the settled height of the last processed block', async () => {
       const getLogs = mockFn<LogsProvider['getLogs']>().resolvesTo([])
-      const indexer = createIndexer({
-        blockProvider: mockObject<BlockProvider>({
-          getBlockWithTransactions: async (number) => {
-            const block = blocks.get(Number(number))
-            if (!block) throw new Error(`Unexpected block ${number}`)
-            return block
-          },
-        }),
-        logsProvider: mockObject<LogsProvider>({ getLogs }),
-      })
+      const indexer = createAsyncIndexer(getLogs, (number) => number - 2)
 
       await indexer.update(100, 101)
       await indexer.update(102, 103)
 
       expect(getLogs).toHaveBeenNthCalledWith(1, 100, 101)
+      expect(getLogs).toHaveBeenNthCalledWith(2, 100, 103)
+    })
+
+    it('caps how far before the batch logs are fetched', async () => {
+      const getLogs = mockFn<LogsProvider['getLogs']>().resolvesTo([])
+      const indexer = createAsyncIndexer(getLogs, (number) => number - 50)
+
+      await indexer.update(100, 101)
+      await indexer.update(102, 103)
+
       expect(getLogs).toHaveBeenNthCalledWith(2, 70, 103)
+    })
+
+    it('fetches only the batch logs when it does not follow the last processed block', async () => {
+      const getLogs = mockFn<LogsProvider['getLogs']>().resolvesTo([])
+      const indexer = createAsyncIndexer(getLogs, (number) => number - 2)
+
+      await indexer.update(100, 101)
+      await indexer.update(110, 111)
+
+      expect(getLogs).toHaveBeenNthCalledWith(2, 110, 111)
     })
 
     it('stops at a block whose receipts cannot be fetched', async () => {
@@ -237,6 +242,21 @@ function createIndexer(overrides: Partial<BlockIndexerDeps> = {}) {
   }
 
   return new BlockIndexer({ ...defaults, ...overrides }, Logger.SILENT)
+}
+
+function createAsyncIndexer(
+  getLogs: LogsProvider['getLogs'],
+  settledHeight: (number: number) => number,
+) {
+  return createIndexer({
+    blockProvider: mockObject<BlockProvider>({
+      getBlockWithTransactions: async (number) => ({
+        ...makeBlock(Number(number), 1_000),
+        settledHeight: settledHeight(Number(number)),
+      }),
+    }),
+    logsProvider: mockObject<LogsProvider>({ getLogs }),
+  })
 }
 
 function makeBlock(number: number, timestamp: number): Block {
