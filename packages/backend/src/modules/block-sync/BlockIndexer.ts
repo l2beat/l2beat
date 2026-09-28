@@ -206,10 +206,7 @@ export class BlockIndexer extends ManagedChildIndexer {
     if (previous?.number !== from - 1 || previous.settledHeight === undefined) {
       return from
     }
-    return Math.min(
-      from,
-      Math.max(previous.settledHeight + 1, from - MAX_SETTLEMENT_LOOKBACK),
-    )
+    return Math.max(previous.settledHeight + 1, from - MAX_SETTLEMENT_LOOKBACK)
   }
 
   /**
