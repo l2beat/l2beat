@@ -1,0 +1,8 @@
+{
+  "BaseFeeManager": {
+    "hash": "0xedbaaf7958a6807b3281df6b6c630a762c638c553b71fa94d019171975129031",
+    "address": "arb1:0x6e031B6e9f667Ed6953E627276fBbEfa4c28529A",
+    "chain": "arbitrum",
+    "blockNumber": 509711963
+  }
+}
