@@ -78,6 +78,23 @@ export const openvmprover: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x00dfb6855747412fa70b8a75aaa4950f1deafaace9d2a4e9923ad2e1a3589928',
+        name: 'OpenVM v2.0.0 PostFeynman',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v2.0.0',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x0d2A59fd7060460F07c30C2817b4E79576da01C6',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      },
+      {
         hash: '0x6a74f16c472ea2698ee461daf35ffb62faaef6280d40390961daa181bc805663',
         name: 'OpenVM v1.6.0 PostFeynman',
         sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.6.0',

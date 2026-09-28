@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xff8a9c8d640049921e7348f9808c39c0158a290d
+
+# Diff at Mon, 28 Sep 2026 13:34:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1765380759
+- current timestamp: 1790592527
+
+## Description
+
+Upgraded Cartesi ms to Safe 1.5.0.
+
+## Watched changes
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [N/A] {
+    +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.nonce:
+-        328
++        335
+      values.VERSION:
+-        "1.3.0"
++        "1.5.0"
+      values.getOwners:
++        ["eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032","eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961","eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E","eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1","eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325","eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"]
+      values.getThreshold:
++        3
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Cartesi Multisig/GnosisSafe.sol => /dev/null   | 1026 -----------
+ .../.flat/Cartesi Multisig/Safe.sol                | 1797 ++++++++++++++++++++
+ 2 files changed, 1797 insertions(+), 1026 deletions(-)
+```
+
 Generated with discovered.json: 0xfe028d2fd9afa3fb171d2fafbe536df2a3ceacf4
 
 # Diff at Fri, 08 May 2026 07:51:10 GMT:
