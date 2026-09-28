@@ -13,7 +13,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
 }
 ```
 
-If the chain's Chainlink identifier is a key AND the L2BEAT chain name on the right is registered (passed into `CCIPConfigPlugin` via `chains`), nothing more is needed. Lanes, onRamps, offRamps, and chain selectors auto-populate from Chainlink's docs repo on the next run.
+If the chain's Chainlink identifier is a key AND the L2BEAT chain name on the right is registered (passed into `CCIPConfigPlugin` via `chains`), nothing more is needed. Lanes, onRamps, offRamps, and chain selectors auto-populate from Chainlink's docs repo on the next run. The chain's Router is also queried (`getOnRamp` per destination, `getOffRamps`), and every ramp seen is kept across refreshes, so ramps that later drop out of the docs are still tracked.
 
 Chainlink identifier reference: `https://raw.githubusercontent.com/smartcontractkit/documentation/main/src/config/data/ccip/v1_2_0/mainnet/chains.json`
 
