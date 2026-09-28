@@ -72,6 +72,9 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
   }
+  if (env.CLIENT_SIDE_TOKENS_PAGE) {
+    paths.push('/tokens')
+  }
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }

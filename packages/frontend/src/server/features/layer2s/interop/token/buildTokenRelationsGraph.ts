@@ -103,7 +103,10 @@ function edgeId(backer: string, backed: string): string {
   return `${backer}->${backed}`
 }
 
-function endpointKey(route: TokenRelationRoute, slot: 'A' | 'B'): string {
+export function endpointKey(
+  route: TokenRelationRoute,
+  slot: 'A' | 'B',
+): string {
   return deploymentKey({
     chain: route[`token${slot}Chain`],
     address: route[`token${slot}Address`],

@@ -7,6 +7,7 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 export type {
   AbstractTokenRecord,
+  AbstractTokenSummary,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
@@ -45,6 +46,7 @@ export type {
   SummedDefiTvlRecord,
 } from './repositories/DefiTvlRepository'
 export type {
+  DeployedTokenAssignment,
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,
   DeployedTokenUpdateable,
@@ -85,6 +87,7 @@ export {
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferDeployedTokenPairStats,
+  type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,
