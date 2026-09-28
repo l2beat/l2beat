@@ -22,18 +22,19 @@ export interface BlockIndexerDeps
 }
 
 /**
- * How far before a batch the settled ranges of its blocks may begin. Logs are
- * fetched from that far back so the ranges can be rebuilt, see
- * `onlyConsistent`. Avalanche settles a block within about fifteen heights.
+ * Upper bound on how far before a batch logs are fetched to rebuild settled
+ * ranges, see `lastProcessed`. Ranges reaching further back fall back to
+ * receipts. Avalanche settles a block within about fifteen heights.
  */
-const SETTLEMENT_LOOKBACK = 32
+const MAX_SETTLEMENT_LOOKBACK = 32
 
 export class BlockIndexer extends ManagedChildIndexer {
   /**
-   * Set once a header with `settledHeight` was seen: the chain executes
-   * asynchronously and settles its blocks a few heights later.
+   * The last processed block. On chains that execute asynchronously every
+   * settled range a following batch can rebuild starts after its
+   * `settledHeight`, so logs are fetched from there, see `onlyConsistent`.
    */
-  private settlesAsynchronously = false
+  private lastProcessed: Pick<Block, 'number' | 'settledHeight'> | undefined
 
   constructor(
     private readonly $: BlockIndexerDeps,
@@ -69,9 +70,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       blockNumbers.push(blockNumber)
     }
 
-    const logsFrom = this.settlesAsynchronously
-      ? Math.max(adjustedFrom - SETTLEMENT_LOOKBACK, 0)
-      : adjustedFrom
+    const logsFrom = this.getLogsFrom(adjustedFrom)
 
     const start = Date.now()
 
@@ -96,9 +95,6 @@ export class BlockIndexer extends ManagedChildIndexer {
           ),
           this.$.logsProvider.getLogs(logsFrom, adjustedTo),
         ])
-        this.settlesAsynchronously ||= blocks.some(
-          (block) => block.settledHeight !== undefined,
-        )
         return await onlyConsistent({
           blocks,
           logs,
@@ -128,7 +124,7 @@ export class BlockIndexer extends ManagedChildIndexer {
     const stopBlockIndexerAtTimestampMs = this.$.stopBlockIndexerAtTimestampMs
     let processedBlocks = 0
     let processedLogs = 0
-    let lastProcessedBlockNumber: number | undefined
+    let lastProcessedBlock: Block | undefined
     for (const { block, logs } of consistentBlocks) {
       const blockTimestampMs = block.timestamp
       if (
@@ -140,7 +136,7 @@ export class BlockIndexer extends ManagedChildIndexer {
           blockTimestampMs,
           stopBlockIndexerAtTimestampMs,
         })
-        if (lastProcessedBlockNumber === undefined) {
+        if (lastProcessedBlock === undefined) {
           throw new Error(
             `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
           )
@@ -177,7 +173,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       })
       processedBlocks++
       processedLogs += logs.length
-      lastProcessedBlockNumber = block.number
+      lastProcessedBlock = block
     }
     const processingDuration = Date.now() - processingStart
     this.logger.info('Processed blocks', {
@@ -188,11 +184,32 @@ export class BlockIndexer extends ManagedChildIndexer {
       durationMs: Number.parseFloat(processingDuration.toFixed(2)),
     })
 
-    return lastProcessedBlockNumber ?? actualTo
+    if (lastProcessedBlock) {
+      this.lastProcessed = {
+        number: lastProcessedBlock.number,
+        settledHeight: lastProcessedBlock.settledHeight,
+      }
+    }
+    return lastProcessedBlock?.number ?? actualTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
+  }
+
+  /**
+   * Without a `settledHeight` right before the batch (synchronous chain,
+   * first batch after a restart) the logs of the batch itself are enough.
+   */
+  private getLogsFrom(from: number): number {
+    const previous = this.lastProcessed
+    if (previous?.number !== from - 1 || previous.settledHeight === undefined) {
+      return from
+    }
+    return Math.min(
+      from,
+      Math.max(previous.settledHeight + 1, from - MAX_SETTLEMENT_LOOKBACK),
+    )
   }
 
   /**
