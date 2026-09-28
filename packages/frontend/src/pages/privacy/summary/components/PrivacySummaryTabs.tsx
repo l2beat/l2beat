@@ -15,7 +15,7 @@ import {
 import { PrivacySummaryCards } from './PrivacySummaryCards'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
-/** V1, V4 and V5: a tab per kind of privacy, holding a table or cards. */
+/** V2, V4 and V5: a tab per kind of privacy, holding a table or cards. */
 export function PrivacySummaryTabs({
   entries,
   view,

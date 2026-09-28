@@ -249,7 +249,7 @@ const privacySortingFn = (
     getPrivacyAdversariesTableValue(b.original.adversaries),
   )
 
-/** V2 and V3: one rosette over the adversaries and the protocol risks. */
+/** V3 and V4: one rosette over the adversaries and the protocol risks. */
 const getRosetteColumn = (compact: boolean): PrivacyColumn =>
   columnHelper.accessor(privacyAccessor, {
     // Also the label in the columns picker, which shows the id whenever the
