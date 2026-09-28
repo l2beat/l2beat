@@ -4,12 +4,13 @@ import {
   mkdtempSync,
   renameSync,
   rmSync,
+  symlinkSync,
   utimesSync,
   writeFileSync,
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { fileExistsCaseSensitive } from './fsLayer'
+import { fileExistsCaseSensitive, fingerprintDirectoryTree } from './fsLayer'
 
 // Listings are cached per directory, so each test mutates a real temporary
 // directory between lookups and forces a distinct mtime to prove the cache
@@ -50,6 +51,31 @@ describe(fileExistsCaseSensitive.name, () => {
 
     expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(false)
     expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+  })
+})
+
+describe(fingerprintDirectoryTree.name, () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), 'fsLayer-'))
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('does not follow a symlink back to an ancestor', () => {
+    mkdirSync(join(root, 'template'))
+    symlinkSync('..', join(root, 'template', 'loop'))
+
+    expect(() => fingerprintDirectoryTree(root)).not.toThrow()
+  })
+
+  it('does not follow a dangling symlink', () => {
+    symlinkSync(join(root, 'missing'), join(root, 'broken'))
+
+    expect(() => fingerprintDirectoryTree(root)).not.toThrow()
   })
 })
 

@@ -1,4 +1,4 @@
-import { readdirSync, statSync } from 'fs'
+import { lstatSync, readdirSync, statSync } from 'fs'
 import { basename, dirname, join } from 'path'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
@@ -41,7 +41,7 @@ export function fingerprintDirectoryTree(root: string): string {
   for (let dir = pending.pop(); dir !== undefined; dir = pending.pop()) {
     for (const name of listDirectory(dir)) {
       const path = join(dir, name)
-      const stat = statSync(path)
+      const stat = lstatSync(path)
       if (stat.isDirectory()) {
         pending.push(path)
       } else {
