@@ -21,6 +21,8 @@ export function mergeOssificationInputs(
   return {
     now: first.now,
     contracts,
+    // TODO(L2B-15037): update ids of a shared module's changes are not in the
+    // project's discoveryUpdates.
     changes: inputs.flatMap((input) => input.changes),
     resets: inputs.flatMap((input) => input.resets),
     observedSince: Math.min(...inputs.map((input) => input.observedSince)),
