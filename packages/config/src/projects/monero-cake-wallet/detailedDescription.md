@@ -24,7 +24,7 @@ Client defaults weaken this. An EVM wallet in Cake has one address: it is sent a
 
 ### Custody, fees and compliance
 
-Both legs are transfers to and from exchange-controlled wallets. No multisig, proof or timelock exists. ChangeNOW documents automated holds, ID and source-of-funds checks through SumSub, refunds minus network fees and blacklisting. Trocador grades partners A to D by KYC risk and Cake accepts down to grade C. kycnot.me quotes a grade C partner as one that refunds failed AML checks unless its liquidity provider blocks funds "until KYC/SoF verification is passed". Cake ships its API keys, and for some providers a markup, as build secrets, so the fee cannot be verified from source. Cake Labs holds no keys and proxies nothing.
+Both legs are transfers to and from custodial exchange-controlled wallets. The centralized swap providers used by Cake can automatically freeze funds while in-flight and hold them for KYC and compliance checks, as documented in their terms of service. Cake ships its API keys, and for some providers a markup, as build secrets, so the fee cannot be verified from source. Cake Labs holds no keys and proxies nothing.
 
 ### Anonymity set
 
