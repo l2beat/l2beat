@@ -997,8 +997,8 @@
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "critical": true,
       "ignoreInWatchMode": [
-        "permissionedGamesTotal",
         "gameCount",
+        "permissionedGameArgs",
         "permissionedGamesTotal"
       ],
       "deployerAddress": "eth:0x1c788Ec62A67805C3276Bd4754904455431FC4f6",

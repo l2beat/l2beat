@@ -2193,7 +2193,7 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 25830861 },
-  "permissionsConfigHash": "0x3a17f51ddf67e9a0e69efb82e59b82709a4ea7ac6a932bb1dc1c55b4ac0bece6",
+  "permissionsConfigHash": "0x5a84afbba8b7d5ce6dac67494ff9f9a91328952c97525c048eaf1f0fb63ab9f9",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -2401,12 +2401,6 @@
     },
     "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
         {
           "permission": "interact",
           "from": "eth:0x2258d4C98AaeDB54f6f1be40ca347FD3160B34C2",

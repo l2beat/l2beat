@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9825f3a0eacd1f42f6131eee0b1a7bc57efc5cfa
+
+# Diff at Fri, 25 Sep 2026 11:34:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Recolorize after replacing deep merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getPendingAdmin:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x054ba07fd15f48d82dc73f35d6008a201debfa36
 
 # Diff at Mon, 21 Sep 2026 07:13:57 GMT:

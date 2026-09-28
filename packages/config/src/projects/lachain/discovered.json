@@ -56,12 +56,12 @@
         "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
       },
       "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility).",
-          "severity": "HIGH"
-        },
         "PLONK_VERIFIER": { "severity": "HIGH" },
-        "FFLONK_VERIFIER": { "severity": "HIGH" }
+        "FFLONK_VERIFIER": { "severity": "HIGH" },
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+        }
       },
       "implementationNames": {
         "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": "DualVerifier"
@@ -352,6 +352,18 @@
         "validators": ["eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
       },
       "fieldMeta": {
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" },
+        "getSettlementLayer": {
+          "severity": "HIGH",
+          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+        },
         "getAdmin": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
@@ -369,7 +381,6 @@
           "severity": "HIGH",
           "description": "l1da, l2da"
         },
-        "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
           "description": "0 - Rollup, 1 - Validium"
@@ -381,19 +392,7 @@
         "getVerifierParams": {
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
-        },
-        "getSettlementLayer": {
-          "severity": "HIGH",
-          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
-        },
-        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
-        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
-        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
-        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
-        "getRollupDAManager": { "severity": "HIGH" },
-        "getChainTypeManager": { "severity": "HIGH" },
-        "getBridgehub": { "severity": "HIGH" },
-        "getVerifier": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": "DiamondProxy",
@@ -528,11 +527,11 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        },
-        "owner": { "severity": "HIGH" },
-        "tokenMultiplierSetter": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD": "ChainAdminOwnable"

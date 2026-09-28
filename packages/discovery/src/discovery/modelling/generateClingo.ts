@@ -1,9 +1,12 @@
 import { existsSync, readFileSync } from 'fs'
-import merge from 'lodash/merge'
 import { join } from 'path'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
-import type { PermissionsConfig } from '../config/PermissionConfig'
+import {
+  ContractPermission,
+  type PermissionsConfig,
+} from '../config/PermissionConfig'
+import { mergePermissionContract } from '../config/permissionUtils'
 import type { StructureEntry } from '../output/types'
 import type { DescriptionTable } from './DescriptionTable'
 import { interpolateModelTemplate } from './interpolate'
@@ -19,13 +22,16 @@ export function generateClingoFromPermissionsConfig(
   addressToNameMap: Record<string, string>,
   descriptions: DescriptionTable,
 ) {
-  const permissionTemplate = entry.template
-    ? templateService.loadContractPermissionTemplate(entry.template)
-    : undefined
-  const mergedPermissionsConfig = merge(
-    {},
+  const permissionTemplate =
+    entry.template !== undefined
+      ? templateService.loadContractPermissionTemplate(entry.template)
+      : ContractPermission.parse({})
+  const permissionOverride =
+    permissionsConfig.overrides?.[entry.address.toString()] ??
+    ContractPermission.parse({})
+  const mergedPermissionsConfig = mergePermissionContract(
     permissionTemplate,
-    permissionsConfig.overrides?.[entry.address.toString()],
+    permissionOverride,
   )
 
   return buildPermissionsModel(

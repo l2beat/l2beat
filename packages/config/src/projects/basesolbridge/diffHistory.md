@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x29a6f3484edc2b815c058288852a5179fdd14d11
+
+# Diff at Fri, 25 Sep 2026 12:12:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1787816633
+- current timestamp: 1787816633
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787816633 (main branch discovery), not current.
+
+```diff
+    contract TwinBeacon (base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract CrossChainERC20Beacon (base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xac77759fc174c49b48f5170ab7f257ab521e8e1a
 
 # Diff at Mon, 21 Sep 2026 11:23:57 GMT:

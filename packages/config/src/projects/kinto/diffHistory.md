@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x0e6d8cf2b5f062d8858c9726a1c6b6e41d803b00
+
+# Diff at Fri, 25 Sep 2026 11:34:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1756898514
+- current timestamp: 1756898514
+
+## Description
+
+Recolorize after replacing deep merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756898514 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (kinto:0x87f0eE85bF3198654900a422832157abBba30828) [global/UpgradeableBeacon] {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x8f8f4b702d4b874d9cbf5eb4c51d0351e30b8e72
 
 # Diff at Wed, 23 Sep 2026 05:52:12 GMT:
