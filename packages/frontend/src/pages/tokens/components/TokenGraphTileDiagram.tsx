@@ -51,7 +51,7 @@ function NodeMark({ mark }: { mark: Mark }) {
   const scale = radius / BASE_RADIUS
 
   if (node.chains.length > 1) {
-    const metrics = getClusterMetrics(node, radius)
+    const metrics = getClusterMetrics(node.chains.length, radius)
     const shown = node.chains.slice(0, MAX_CLUSTER_ICONS)
     const remaining = node.chains.length - shown.length
     const contentLeft = x - metrics.contentWidth / 2
@@ -143,10 +143,7 @@ function ChainMark({
 
 export function TokenGraphTilesLegend() {
   const radius = BASE_RADIUS * 1.5
-  const pill = getClusterMetrics(
-    { id: '', volume: null, chains: [{ id: '', iconUrl: undefined }] },
-    radius,
-  )
+  const pill = getClusterMetrics(1, radius)
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
       <span className="flex items-center gap-2">

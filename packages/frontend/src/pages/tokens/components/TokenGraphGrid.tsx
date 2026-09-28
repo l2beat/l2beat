@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   InfiniteScrollTrigger,
@@ -10,19 +11,28 @@ import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTil
 import { useTRPC } from '~/trpc/React'
 import { TokenGraphTileCard } from './TokenGraphTileCard'
 
+const GRID_CLASS_NAME =
+  'grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+
 export function TokenGraphGrid({
   onOpen,
 }: {
   onOpen: (tile: TokenGraphTile) => void
 }) {
   const trpc = useTRPC()
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      trpc.tokens.tiles.infiniteQueryOptions(
-        {},
-        { getNextPageParam: (lastPage) => lastPage.nextCursor },
-      ),
-    )
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+    refetch,
+  } = useInfiniteQuery(
+    trpc.tokens.tiles.infiniteQueryOptions(
+      {},
+      { getNextPageParam: (lastPage) => lastPage.nextCursor },
+    ),
+  )
   const tiles = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
@@ -33,13 +43,28 @@ export function TokenGraphGrid({
     loadMore: fetchNextPage,
   })
 
+  if (!data) {
+    return isError ? (
+      <div className="flex flex-col items-center gap-3 py-8 text-label-value-14 text-secondary">
+        Could not load the tokens.
+        <Button variant="outline" size="sm" onClick={() => refetch()}>
+          Try again
+        </Button>
+      </div>
+    ) : (
+      <div className={GRID_CLASS_NAME}>
+        <TileSkeletons count={8} />
+      </div>
+    )
+  }
+
   if (tiles.length === 0) {
     return <NoDataBanner content="No token relations observed yet." />
   }
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className={GRID_CLASS_NAME}>
         {tiles.map((tile) => (
           <TokenGraphTileCard
             key={tile.id}
@@ -47,10 +72,7 @@ export function TokenGraphGrid({
             onOpen={() => onOpen(tile)}
           />
         ))}
-        {isFetchingNextPage &&
-          Array.from({ length: 4 }, (_, index) => (
-            <Skeleton key={index} className="h-[236px] rounded-lg" />
-          ))}
+        {isFetchingNextPage && <TileSkeletons count={4} />}
       </div>
       {hasNextPage && <InfiniteScrollTrigger triggerRef={loadMoreRef} />}
       <p className="mt-4 text-center text-label-value-13 text-secondary">
@@ -58,4 +80,10 @@ export function TokenGraphGrid({
       </p>
     </div>
   )
+}
+
+function TileSkeletons({ count }: { count: number }) {
+  return Array.from({ length: count }, (_, index) => (
+    <Skeleton key={index} className="h-[236px] rounded-lg" />
+  ))
 }

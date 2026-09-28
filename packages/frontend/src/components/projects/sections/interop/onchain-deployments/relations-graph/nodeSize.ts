@@ -1,5 +1,5 @@
 // Members are listed up to a cap that guards the canvas against a runaway cluster.
-export const CLUSTER_MEMBERS_CAP = 16
+const CLUSTER_MEMBERS_CAP = 16
 
 // The layout needs sizes before anything renders, so the same numbers drive
 // both the size formula and the card's inline styles.

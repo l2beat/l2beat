@@ -85,7 +85,9 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
 
   const marks = new Map<string, Mark>()
   rows.forEach((row, rowIndex) => {
-    const halfWidths = row.map((node) => getHalfWidth(node, radius))
+    const halfWidths = row.map((node) =>
+      getHalfWidth(node.chains.length, radius),
+    )
     const xs = placeRow(halfWidths, nodes.length)
     row.forEach((node, index) => {
       marks.set(node.id, {
@@ -126,7 +128,7 @@ function getScale(nodeCount: number, rows: TokenGraphTileNode[][]): number {
   const desired = getSizeBucket(nodeCount).scale
   const widthCaps = rows.map((row) => {
     const width = row.reduce(
-      (sum, node) => sum + getHalfWidth(node, BASE_RADIUS) * 2,
+      (sum, node) => sum + getHalfWidth(node.chains.length, BASE_RADIUS) * 2,
       0,
     )
     const gaps = Math.max(0, row.length - 1) * MIN_GAP
@@ -318,12 +320,12 @@ interface ClusterMetrics {
 }
 
 export function getClusterMetrics(
-  node: TokenGraphTileNode,
+  chainCount: number,
   radius: number,
 ): ClusterMetrics {
   const scale = radius / BASE_RADIUS
-  const shown = Math.min(MAX_CLUSTER_ICONS, node.chains.length)
-  const remaining = node.chains.length - shown
+  const shown = Math.min(MAX_CLUSTER_ICONS, chainCount)
+  const remaining = chainCount - shown
   const iconDiameter = CLUSTER.iconDiameter * scale
   const iconStep = CLUSTER.iconStep * scale
   const iconsWidth = iconDiameter + (shown - 1) * iconStep
@@ -343,8 +345,8 @@ export function getClusterMetrics(
   }
 }
 
-function getHalfWidth(node: TokenGraphTileNode, radius: number): number {
-  return node.chains.length > 1
-    ? getClusterMetrics(node, radius).width / 2
+function getHalfWidth(chainCount: number, radius: number): number {
+  return chainCount > 1
+    ? getClusterMetrics(chainCount, radius).width / 2
     : radius
 }

@@ -46,7 +46,7 @@ export interface TokenGraphTile {
   }
 }
 
-export interface TokenRelationInputs {
+interface TokenRelationInputs {
   deployedTokens: DeployedTokenAssignment[]
   /** Every relation touching one of the deployed tokens. */
   routes: TokenRelationRoute[]

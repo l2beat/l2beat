@@ -17,30 +17,65 @@ import {
 const usdc = { id: 'usdc01', symbol: 'USDC', issuer: 'circle', iconUrl: null }
 
 describe(groupRelationInputsByToken.name, () => {
-  it('gives each token the relations touching its deployments', () => {
-    const usdcEthereum = assignment('ethereum', '0xE1', 'usdc01')
-    const usdcBase = assignment('base', '0xB1', 'usdc01')
-    const usdceArbitrum = assignment('arbitrum', '0xA1', 'usdce1')
-    const daiEthereum = assignment('ethereum', '0xE3', 'dai001')
-    const ignored = { ...assignment('nova', '0xF1', 'usdc01'), ignored: true }
-    const unassigned = assignment('optimism', '0x01', null)
+  const usdcEthereum = assignment('ethereum', '0xE1', 'usdc01')
+  const usdcBase = assignment('base', '0xB1', 'usdc01')
+  const usdceArbitrum = assignment('arbitrum', '0xA1', 'usdce1')
+  const daiEthereum = assignment('ethereum', '0xE3', 'dai001')
+
+  it('gives a token its deployments and the relations among them', () => {
     const within = route(usdcEthereum, usdcBase)
+
+    const inputs = groupRelationInputsByToken(
+      [usdcEthereum, usdcBase, daiEthereum],
+      [within],
+    )
+
+    expect([...inputs]).toEqual([
+      [
+        'usdc01',
+        { deployedTokens: [usdcEthereum, usdcBase], routes: [within] },
+      ],
+    ])
+  })
+
+  it('gives a relation between two tokens to both', () => {
     const across = route(usdcEthereum, usdceArbitrum)
+
+    const inputs = groupRelationInputsByToken(
+      [usdcEthereum, usdceArbitrum],
+      [across],
+    )
+
+    expect(inputs.get('usdc01')?.routes).toEqual([across])
+    expect(inputs.get('usdce1')?.routes).toEqual([across])
+  })
+
+  it('leaves out ignored deployments but keeps relations touching them', () => {
+    const ignored = { ...assignment('nova', '0xF1', 'usdc01'), ignored: true }
     const toIgnored = route(daiEthereum, ignored)
+
+    const inputs = groupRelationInputsByToken(
+      [daiEthereum, ignored],
+      [toIgnored],
+    )
+
+    expect([...inputs]).toEqual([
+      ['dai001', { deployedTokens: [daiEthereum], routes: [toIgnored] }],
+    ])
+  })
+
+  it('leaves out unassigned deployments but keeps relations touching them', () => {
+    const unassigned = assignment('optimism', '0x01', null)
     const toUnassigned = route(usdcBase, unassigned)
 
     const inputs = groupRelationInputsByToken(
-      [usdcEthereum, usdcBase, usdceArbitrum, daiEthereum, ignored, unassigned],
-      [within, across, toIgnored, toUnassigned],
+      [usdcBase, unassigned],
+      [toUnassigned],
     )
 
-    expect([...inputs.keys()]).toEqual(['usdc01', 'usdce1', 'dai001'])
-    expect(inputs.get('usdc01')).toEqual({
-      deployedTokens: [usdcEthereum, usdcBase],
-      routes: [within, across, toUnassigned],
-    })
-    expect(inputs.get('usdce1')?.routes).toEqual([across])
-    expect(inputs.get('dai001')?.routes).toEqual([toIgnored])
+    expect([...inputs]).toEqual([
+      ['usdc01', { deployedTokens: [usdcBase], routes: [toUnassigned] }],
+    ])
   })
 })
 

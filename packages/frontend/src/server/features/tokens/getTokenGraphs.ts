@@ -11,7 +11,10 @@ import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
 import { toInteropTokenDeployments } from '../layer2s/interop/token/getInteropTokenOnchainDeployments'
-import { getPairStatsParams } from '../layer2s/interop/token/getInteropTokenPairStats'
+import {
+  getPairStatsParams,
+  MOCK_INTEROP_TOKEN_PAIR_STATS,
+} from '../layer2s/interop/token/getInteropTokenPairStats'
 import {
   getInteropTokenRelationsGraph,
   type InteropTokenRelationsGraph,
@@ -138,7 +141,7 @@ async function getPairStatsByTokenId(
   snapshotTimestamp: UnixTime | undefined,
   projects: Project<'interopConfig'>[],
 ) {
-  if (env.MOCK) return undefined
+  if (env.MOCK) return new Map([['usdc01', MOCK_INTEROP_TOKEN_PAIR_STATS]])
 
   const params = snapshotTimestamp
     ? getPairStatsParams(snapshotTimestamp, projects)

@@ -20,7 +20,8 @@ export function createTokensRouter(
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getTokensPageData(manifest, req.originalUrl),
+      // The cache is shared across query strings, so the metadata cannot use them.
+      () => getTokensPageData(manifest, '/tokens'),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
