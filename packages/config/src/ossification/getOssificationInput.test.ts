@@ -158,6 +158,21 @@ describe(getOssificationInput.name, () => {
       expect(rows(input)).toEqual([['A', T0, 0, 0]])
     })
 
+    it('are empty when every contract has retired, and the history stays', () => {
+      const input = derive({
+        entries: [
+          entry({
+            critical: { untilTimestamp: RUN_1 },
+            values: pastUpgrades([T0, TX_1], [T0 + 10 * DAY, TX_2]),
+          }),
+        ],
+      })
+      expect(rows(input)).toEqual([])
+      expect(changes(input)).toEqual([
+        ['code', T0 + 10 * DAY, T0 + 10 * DAY, undefined],
+      ])
+    })
+
     it('are nothing when no contract is critical', () => {
       expect(derive({ entries: [entry({ critical: undefined })] })).toEqual(
         undefined,
@@ -179,7 +194,7 @@ describe(getOssificationInput.name, () => {
           },
         ],
       })
-      expect(input).toEqual(undefined)
+      expect(rows(input)).toEqual([])
     })
 
     it('refuse a critical flag on something that is not a contract', () => {

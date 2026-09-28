@@ -46,8 +46,9 @@ every shared module it references, not only the referenced contracts. These
 are the discoveries `ProjectDiscovery` loads with the project. Each module's
 contracts are judged by the module's own `config.jsonc`, templates,
 `diffHistory.md` and `ossification.json`. The project start also bounds the
-changes of the module. A contract that two discoveries both contain has one
-row, taken from the first of them.
+changes of the module. A module whose critical contracts have all retired
+still adds its changes and resets. A contract that two discoveries both
+contain has one row, taken from the first of them.
 
 **Critical code change.** A change of the implementation of a critical
 contract.

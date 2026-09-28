@@ -77,7 +77,6 @@ export function getOssificationInput(
   const contracts = [...members.values()]
     .filter((member) => member.until === undefined)
     .map((member) => toRow(member, events, perimeteredChanges))
-  if (contracts.length === 0) return undefined
 
   return {
     now: sources.now,

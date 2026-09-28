@@ -12,12 +12,15 @@ export function mergeOssificationInputs(
     'merged perimeters are measured at one time',
   )
 
+  const contracts = uniqBy(
+    inputs.flatMap((input) => input.contracts),
+    (contract) => contract.address,
+  )
+  if (contracts.length === 0) return undefined
+
   return {
     now: first.now,
-    contracts: uniqBy(
-      inputs.flatMap((input) => input.contracts),
-      (contract) => contract.address,
-    ),
+    contracts,
     changes: inputs.flatMap((input) => input.changes),
     resets: inputs.flatMap((input) => input.resets),
     observedSince: Math.min(...inputs.map((input) => input.observedSince)),

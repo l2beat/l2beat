@@ -59,8 +59,27 @@ describe(mergeOssificationInputs.name, () => {
     })
   })
 
-  it('is nothing without a perimeter', () => {
+  it('is nothing without a live contract', () => {
     expect(mergeOssificationInputs([])).toEqual(undefined)
+    expect(
+      mergeOssificationInputs([input(ADDRESS_A, { contracts: [] })]),
+    ).toEqual(undefined)
+  })
+
+  it('keeps the history of a perimeter whose contracts all retired', () => {
+    const merged = mergeOssificationInputs([
+      input(ADDRESS_A),
+      input(ADDRESS_B, {
+        contracts: [],
+        changes: [{ timestamp: 50, type: 'code' }],
+        resets: [40],
+        observedSince: 40,
+      }),
+    ])
+    expect(merged?.contracts).toEqual([contract(ADDRESS_A)])
+    expect(merged?.changes).toEqual([{ timestamp: 50, type: 'code' }])
+    expect(merged?.resets).toEqual([40])
+    expect(merged?.observedSince).toEqual(40)
   })
 
   it('keeps a contract two perimeters share as the first one has it', () => {
