@@ -136,14 +136,14 @@ export async function updateDiffHistoryForChain(
     existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()
   if (diffHistoryExists) {
     const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
-    const unmergedLines = findUnmergedLines(
+    const unmerged = findUnmergedEntry(
       diffHistoryPath,
       diskDiffHistory,
       historyFileFromMainBranch,
       logger,
     )
-    previousDescription = findDescription(unmergedLines)
-    previousId = new DiffHistoryParser().parse(unmergedLines.join('\n'))[0]?.id
+    previousDescription = unmerged.description
+    previousId = unmerged.id
   }
 
   const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
@@ -425,6 +425,24 @@ discovery. Values are for block ${timestampFromMainBranchDiscovery} (main branch
   }
 
   return result.join('\n')
+}
+
+export function findUnmergedEntry(
+  diskDiffHistoryPath: string,
+  diskDiffHistory: string,
+  masterDiffHistory: string,
+  logger: Logger,
+): { description: string | undefined; id: string | undefined } {
+  const lines = findUnmergedLines(
+    diskDiffHistoryPath,
+    diskDiffHistory,
+    masterDiffHistory,
+    logger,
+  )
+  return {
+    description: findDescription(lines),
+    id: new DiffHistoryParser().parse(lines.join('\n'))[0]?.id,
+  }
 }
 
 function findUnmergedLines(

@@ -1941,9 +1941,8 @@ export interface ProjectDiscoveryInfo {
 }
 
 export interface ProjectDiscoveryUpdate {
-  /** The diffHistory.md entry id (DiffHistoryEntry.id): derived from the
-   *  header date and chain point only, so it survives description edits and
-   *  matches ossification criticalUpdates. */
+  /** The diffHistory.md entry id (DiffHistoryEntry.id), shared with
+   *  ossification.json anchors and ossification criticalUpdates. */
   id: string
   date: string
   /** Run timestamp; header date for legacy block-numbered entries; null when
