@@ -34,7 +34,9 @@ function listDirectory(directory: string): Set<string> {
 }
 
 // A directory's mtime only changes when its entries change, not when a file
-// inside it is edited, so every file has to be stat'ed.
+// inside it is edited, so every file has to be stat'ed. Contents are not hashed
+// because that means reading every file on each call, so a rewrite that keeps
+// both the size and the exact mtime goes unnoticed. That is accepted.
 export function fingerprintDirectoryTree(root: string): string {
   const files: string[] = []
   const pending = [root]
