@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1781042179,
+      "type": "state",
+      "contract": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
+      "updateId": "337ad264",
+      "transaction": "0xc8e76a8dd460f50d8f0ecf97fed1153e2715c7d2c86593d9e8530b3ec8758afa",
+      "reason": "RollupProxy wasmModuleRoot changed from 0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a (ArbOS v40) to 0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c (ArbOS v51.1)."
+    }
+  ]
+}

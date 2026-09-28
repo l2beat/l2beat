@@ -1,6 +1,12 @@
 export const pageLoaders = {
-  IconPreviewPage: async () =>
-    (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
+  IconPreviewPage: async () => {
+    // The static condition lets both bundlers drop the page from production
+    // builds; it relies on import.meta.glob, which exists only under Vite.
+    if (process.env.NODE_ENV === 'development') {
+      return (await import('./dev/icons/IconPreviewPage')).IconPreviewPage
+    }
+    throw new Error('IconPreviewPage is available only in development')
+  },
   HomePage: async () => (await import('./home/HomePage')).HomePage,
   L2SummaryPage: async () =>
     (await import('./layer2s/summary/L2SummaryPage')).L2SummaryPage,

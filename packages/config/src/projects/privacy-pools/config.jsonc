@@ -37,5 +37,15 @@
     "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": "PrivacyPoolUSDT",
     "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": "PrivacyPoolETH",
     "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": "PrivacyPoolWBTC"
+  },
+  "overrides": {
+    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": {
+      // Controls Entrypoint upgrades, pool routing and wind-down.
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    }
   }
 }

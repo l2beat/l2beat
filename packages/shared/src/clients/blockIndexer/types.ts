@@ -1,4 +1,4 @@
-import { v as v } from '@l2beat/validate'
+import { v } from '@l2beat/validate'
 
 export const BlockTimestampResponse = v.union([
   v

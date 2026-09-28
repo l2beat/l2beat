@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1779262271,
+      "type": "state",
+      "contract": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "transaction": "0x65faba3f9c7fa39584ae60bcae75ae8c5b1fcff803ba058223edf5006636e728",
+      "updateId": "ee77660f",
+      "reason": "Rotated the SecurityCouncil (0x66E4\u2026f410 -> 0x5919\u20269035) and EmergencyUpgradeBoard (0xECE8\u2026e3f6 -> 0xF73a\u2026a111) contracts trusted by the ProtocolUpgradeHandler to approve and execute protocol upgrades."
+    }
+  ]
+}

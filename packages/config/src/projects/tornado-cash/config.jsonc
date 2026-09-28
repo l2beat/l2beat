@@ -45,6 +45,7 @@
     },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
       "description": "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
       "category": "core",
       "manualSourcePaths": {
         "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"

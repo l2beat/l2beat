@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Risc0BfvCiphertextVerifier",
+  "category": "core",
+  "description": "Ciphertext-output verifier for BFV E3s. It accepts a RISC Zero receipt for the immutable guest image ID against the E3-specific journal constructed by Interfold.",
+  "fields": {
+    "imageId": {
+      "description": "Immutable RISC Zero guest image ID accepted as the encrypted-computation program.",
+      "type": "CODE_CHANGE"
+    },
+    "risc0Verifier": {
+      "description": "Immutable RISC Zero verifier used to validate computation receipts. The external RISC Zero deployment is outside this discovery perimeter."
+    }
+  },
+  "ignoreRelatives": ["risc0Verifier"]
+}

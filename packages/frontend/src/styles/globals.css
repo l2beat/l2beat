@@ -55,8 +55,7 @@
   --link: #2a5bd8;
   --scrollbar: #8a909d;
 
-  --row-highlight: #ce66f466;
-  --row-highlight-no-opacity: #e9bff8;
+  --row-highlight: #ce66f4;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -126,8 +125,7 @@
   --link: #66b2ff;
   --scrollbar: #3f444c;
 
-  --row-highlight: #9521bf66;
-  --row-highlight-no-opacity: #4b1d5f;
+  --row-highlight: #9521bf;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -555,62 +553,43 @@
   }
 
   @keyframes row-highlight {
-    0% {
-      background-color: transparent;
-    }
-    12% {
-      background-color: var(--row-highlight);
-    }
-    32% {
-      background-color: var(--row-highlight);
-    }
-    44% {
-      background-color: transparent;
-    }
-    52% {
-      background-color: transparent;
-    }
-    64% {
-      background-color: var(--row-highlight);
-    }
-    84% {
-      background-color: var(--row-highlight);
-    }
-    96% {
-      background-color: transparent;
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: transparent;
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        transparent
+      );
     }
   }
 
+  /* For pinned cells, which must stay opaque over the columns scrolling beneath. */
   @keyframes row-highlight-no-opacity {
-    0% {
-      background-color: var(--surface-primary);
-    }
-    12% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    32% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    44% {
-      background-color: var(--surface-primary);
-    }
-    52% {
-      background-color: var(--surface-primary);
-    }
-    64% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    84% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    96% {
-      background-color: var(--surface-primary);
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: var(--surface-primary);
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        var(--surface-primary)
+      );
     }
   }
 }
@@ -631,6 +610,8 @@
   --color-garden-canvas: var(--garden-canvas);
   --color-plot-canvas: var(--plot-canvas);
   --color-garden-sun: var(--garden-sun);
+  --color-garden-moon: var(--garden-moon);
+  --color-garden-sky: var(--garden-sky);
   --color-garden-sprout: var(--garden-sprout);
 }
 
@@ -853,6 +834,8 @@
   --garden-canvas: #eaf4e6;
   --plot-canvas: #fdf1de;
   --garden-sun: #ffd54a;
+  --garden-moon: #f1ecd2;
+  --garden-sky: #eaf4e6;
   --garden-sprout: #7fae6a;
 }
 
@@ -872,6 +855,8 @@
   --garden-canvas: #141b10;
   --plot-canvas: #1e1b12;
   --garden-sun: #c9a437;
+  --garden-moon: #e9e4c8;
+  --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
 }
 
@@ -908,61 +893,82 @@ html:has([data-backdrop="plot"]) {
   }
 }
 
+/* Bloom and pop are one segment each: the overshoot comes from the caller's
+   back-easing, because stacking an overshoot keyframe on top of one hitches. */
 @keyframes garden-bloom {
-  0% {
-    transform: scale(0);
+  from {
+    transform: scale(0.4);
     opacity: 0;
   }
-  70% {
-    transform: scale(1.2);
+  40% {
+    opacity: 1;
   }
-  100% {
+  to {
     transform: scale(1);
     opacity: 1;
   }
 }
 
 @keyframes garden-pop {
-  0% {
-    transform: scale(0.3);
+  from {
+    transform: scale(0.6);
     opacity: 0;
   }
-  70% {
-    transform: scale(1.09);
+  40% {
+    opacity: 1;
   }
-  100% {
+  to {
     transform: scale(1);
     opacity: 1;
   }
 }
 
+/* The idles start after the entrance with no backwards fill, so they must
+   leave from rest or the plant snaps sideways. The per-keyframe easings keep
+   the swing moving through upright instead of pausing there. */
 @keyframes garden-sway {
-  0%,
-  100% {
-    transform: rotate(-2.6deg);
+  0% {
+    transform: rotate(0);
+    animation-timing-function: ease-out;
   }
-  50% {
+  25% {
+    transform: rotate(-2.6deg);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
     transform: rotate(2.6deg);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
 @keyframes garden-sway-s {
-  0%,
-  100% {
-    transform: rotate(-1.5deg);
+  0% {
+    transform: rotate(0);
+    animation-timing-function: ease-out;
   }
-  50% {
+  25% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
     transform: rotate(1.5deg);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
 @keyframes garden-wilt {
   0%,
   100% {
-    transform: rotate(-0.5deg) translateY(0);
+    transform: rotate(0) translateY(0);
   }
   50% {
-    transform: rotate(1.6deg) translateY(0.5px);
+    transform: rotate(2.1deg) translateY(0.5px);
   }
 }
 
@@ -1006,5 +1012,63 @@ html:has([data-backdrop="plot"]) {
   100% {
     transform: translateY(-90px);
     opacity: 0;
+  }
+}
+
+/* The plants animate from inline styles, so reduced motion swaps the keyframes
+   themselves: entrances become fades, the idles hold still, the ghost holds its
+   mid-pulse opacity and the pollen (only ever visible mid-float) stays hidden. */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes garden-grow {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-leaf {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-bloom {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-pop {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-sway {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-sway-s {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-wilt {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-drift {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-float {
+    from,
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-ghost {
+    from,
+    to {
+      opacity: 0.66;
+    }
   }
 }

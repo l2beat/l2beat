@@ -61,7 +61,7 @@ export function PlantLegendSection() {
                 className="h-10"
                 sentiment={plant.sentiment}
                 status={plant.status}
-                delay={index * 0.14}
+                delay={index * 0.05}
               />
               <h3 className="mt-1 font-bold text-heading-16">{plant.title}</h3>
               <p className="text-paragraph-13 text-secondary md:text-paragraph-14">

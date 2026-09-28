@@ -300,6 +300,52 @@ jobs:
           cd packages/frontend
           pnpm test:e2e
 
+  test-e2e-discoui:
+    name: DiscoUI E2E tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_API: ${{ secrets.TURBO_API_RO }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: |
+          cd packages/protocolbeat
+          sudo apt update
+          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
+          pnpm exec playwright install chromium
+
+      - name: Build dependencies
+        run: pnpm build:dependencies:l2b
+
+      - name: Run backend e2e tests
+        run: |
+          cd packages/l2b
+          pnpm test:e2e
+
+      - name: Run page e2e tests
+        run: |
+          cd packages/protocolbeat
+          pnpm test:e2e
+
   biome:
     name: Lint & Format
     runs-on: ubuntu-latest

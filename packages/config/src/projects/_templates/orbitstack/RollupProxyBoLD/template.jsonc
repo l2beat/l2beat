@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RollupProxy",
+  "critical": true,
   "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
   "ignoreMethods": ["proxiableUUID"],
   "category": "core",
@@ -15,7 +16,44 @@
     "stakeToken"
   ],
   "fields": {
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "rollupEventInbox": {
+      "severity": "HIGH"
+    },
+    "sequencerInbox": {
+      "severity": "HIGH"
+    },
+    "outbox": {
+      "severity": "HIGH"
+    },
+    "inbox": {
+      "severity": "HIGH"
+    },
+    "bridge": {
+      "severity": "HIGH"
+    },
+    "loserStakeEscrow": {
+      "severity": "HIGH"
+    },
+    "stakeToken": {
+      "severity": "HIGH"
+    },
+    "baseStake": {
+      "severity": "HIGH"
+    },
+    "validatorAfkBlocks": {
+      "severity": "HIGH"
+    },
+    "challengeGracePeriodBlocks": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "getValidators": {
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",
@@ -38,12 +76,14 @@
       ]
     },
     "minimumAssertionPeriod": {
+      "severity": "HIGH",
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
     },
     "confirmPeriodBlocks": {
       "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
     },
     "wasmModuleRoot": {
+      "severity": "HIGH",
       "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
     },
     "arbOsFromWmRoot": {

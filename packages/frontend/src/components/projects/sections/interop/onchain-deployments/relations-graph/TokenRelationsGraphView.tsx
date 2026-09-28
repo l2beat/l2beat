@@ -114,7 +114,7 @@ export function TokenRelationsGraphView({
         >
           <DrawerContent
             className="max-h-[85vh]"
-            contentClassName="overflow-y-auto px-0"
+            contentClassName="flex min-h-0 flex-1 flex-col px-0"
           >
             <DrawerTitle className="sr-only">Deployment details</DrawerTitle>
             <DrawerDescription className="sr-only">
@@ -125,6 +125,8 @@ export function TokenRelationsGraphView({
                 graph={graph}
                 node={selectedNode}
                 onSelectNode={selectNode}
+                className="min-h-0 flex-1"
+                headerClassName="pt-0"
               />
             )}
           </DrawerContent>
@@ -190,7 +192,7 @@ function DiagramPane({
             node={detailsNode}
             onSelectNode={onSelectNode}
             onClose={onCloseDetails}
-            className="overflow-y-auto rounded-lg border border-divider shadow-xl"
+            className="overflow-hidden rounded-lg border border-divider shadow-xl"
           />
         </aside>
       )}

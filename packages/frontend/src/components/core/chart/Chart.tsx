@@ -23,6 +23,7 @@ import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
 import { ChartProjectLogo } from './ChartProjectLogo'
+import { ChartSettledSize } from './ChartSettledSize'
 import { sortLegend } from './utils/sortLegend'
 
 export type ChartMeta = Record<
@@ -135,26 +136,33 @@ function ChartContainer<T extends { timestamp: number }>({
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div ref={ref} className="group relative">
-        <Slot
+        <ChartSettledSize
           className={cn(
-            chartContainerClassNames,
-            // Chrome dispatches mouse moves as content scrolls under the
-            // pointer; each one re-renders the tooltip with forced layouts.
-            ignorePointerWhileScrollingClassName,
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
-            noDataSourcesSelected && [
-              '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
-              '[&_.recharts-reference-area]:hidden',
-            ],
-            (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {shouldMountChart ? children : <div />}
-        </Slot>
+          <Slot
+            className={cn(
+              chartContainerClassNames,
+              'size-full',
+              // Chrome dispatches mouse moves as content scrolls under the
+              // pointer; each one re-renders the tooltip with forced layouts.
+              ignorePointerWhileScrollingClassName,
+              noDataSourcesSelected && [
+                '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+                '[&_.recharts-reference-area]:hidden',
+              ],
+              (isLoading || !hasData) && 'pointer-events-none',
+            )}
+          >
+            {shouldMountChart ? children : <div />}
+          </Slot>
+        </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
+            animated={shouldMountChart && !!isLoading}
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
               '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-18px)]',

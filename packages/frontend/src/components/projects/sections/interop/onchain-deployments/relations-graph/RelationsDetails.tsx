@@ -40,6 +40,7 @@ interface Props {
   onSelectNode: (id: string) => void
   onClose?: () => void
   className?: string
+  headerClassName?: string
 }
 
 export function RelationsDetails({
@@ -48,28 +49,34 @@ export function RelationsDetails({
   onSelectNode,
   onClose,
   className,
+  headerClassName,
 }: Props) {
   return (
-    <div
-      className={cn(
-        'flex h-full flex-col divide-y divide-divider bg-surface-primary px-4',
-        className,
-      )}
-    >
-      <Header node={node} onClose={onClose} />
-      <PanelSection
-        title="Past 24h crosschain activity"
-        hint={
-          isCluster(node)
-            ? 'Each transfer touching the cluster is counted once, so this is less than the sum of its deployments.'
-            : undefined
-        }
-      >
-        <Stats stats={node} />
-      </PanelSection>
-      <SameChainSection graph={graph} node={node} onSelectNode={onSelectNode} />
-      <BackedBySection graph={graph} node={node} onSelectNode={onSelectNode} />
-      <BacksSection graph={graph} node={node} onSelectNode={onSelectNode} />
+    <div className={cn('flex h-full flex-col bg-surface-primary', className)}>
+      <Header node={node} onClose={onClose} className={headerClassName} />
+      <div className="min-h-0 flex-1 divide-y divide-divider overflow-y-auto px-4">
+        <PanelSection
+          title="Past 24h crosschain activity"
+          hint={
+            isCluster(node)
+              ? 'Each transfer touching the cluster is counted once, so this is less than the sum of its deployments.'
+              : undefined
+          }
+        >
+          <Stats stats={node} />
+        </PanelSection>
+        <SameChainSection
+          graph={graph}
+          node={node}
+          onSelectNode={onSelectNode}
+        />
+        <BackedBySection
+          graph={graph}
+          node={node}
+          onSelectNode={onSelectNode}
+        />
+        <BacksSection graph={graph} node={node} onSelectNode={onSelectNode} />
+      </div>
     </div>
   )
 }
@@ -83,15 +90,22 @@ interface SectionProps {
 function Header({
   node,
   onClose,
+  className,
 }: {
   node: InteropTokenRelationsNode
   onClose: (() => void) | undefined
+  className: string | undefined
 }) {
   const first = node.deployments[0]
   if (!first) return null
   const cluster = isCluster(node)
   return (
-    <header className="sticky top-0 z-10 flex items-start justify-between gap-3 bg-surface-primary py-4">
+    <header
+      className={cn(
+        'flex shrink-0 items-start justify-between gap-3 border-divider border-b p-4',
+        className,
+      )}
+    >
       <div className="flex min-w-0 items-center gap-3">
         {cluster ? (
           <span className="-space-x-2 flex shrink-0">

@@ -1,0 +1,206 @@
+{
+  "events": [
+    {
+      "timestamp": 1742960075,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xba0596a785ee4770587d7d2f12d78f379e8ba43ff92decfb442bf795f634e0cd",
+      "reason": "Registered Celo's initial permissionless FaultDisputeGame implementation (game type 0)."
+    },
+    {
+      "timestamp": 1742960075,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x883a31a907189606ace0fdbab7baa3d45a711b2e99d10c443c9cec5dbc856982",
+      "reason": "Registered Celo's initial PermissionedDisputeGame implementation (game type 1)."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: the L1StandardBridge implementation slot changed to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: upgraded the DisputeGameFactory to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: temporarily replaced both permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: replaced the temporary L1StandardBridge implementation with the final v2.3.0 implementation."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: upgraded the DisputeGameFactory to the final v1.0.1 implementation."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: registered the final permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "contract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+      "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Celo (Safe is the guardianSafe of DeputyPauseModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "contract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+      "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former Celo pause deputy on the Guardian Safe (Safe is the guardianSafe of DeputyPauseModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1765362083,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x33733fb387ac7c7b04813d5694fd1bb27020ad5468f49651c2cba1ac131db869",
+      "updateId": "4c71daa7",
+      "reason": "Registered the first OPSuccinctFaultDisputeGame (game type 42) implementation as part of the Jello hardfork, introducing SP1 ZK proofs for dispute resolution."
+    },
+    {
+      "timestamp": 1765362251,
+      "type": "state",
+      "contract": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
+      "transaction": "0x5fb3f2225dd2ba91efe941d4c9151df120ab06f6611b7b494bdecc96ff84c44b",
+      "updateId": "4c71daa7",
+      "reason": "Set the respected game type to the new OPSuccinctFaultDisputeGame (type 42); withdrawals now clear through SP1-proven dispute games."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it co-governed the shared SuperchainConfig that can pause Celo (Safe is the fallbackOwner of LivenessModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1770648059,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xeb5a5286b0ccca1e8fcf58126fc828dd0e89622961fc31904346a22eac568ca7",
+      "updateId": "953d9862",
+      "reason": "Registered a new OPSuccinctFaultDisputeGame implementation, rotating the SP1 program verification keys."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: the L1StandardBridge implementation slot changed to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: upgraded the DisputeGameFactory to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "state",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: initialized the L1StandardBridge against the new CeloSuperchainConfig."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: temporarily replaced both permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: replaced the temporary L1StandardBridge implementation with the final v2.8.0 implementation."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: upgraded the DisputeGameFactory to the final v1.3.0 implementation."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: registered the final permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1774941071,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x49fc2a34633400d01827e7326f7d12d99f61d0d3c73f27b0620f71a24fab1089",
+      "updateId": "616cc8c8",
+      "reason": "Completed the op-contracts v5 migration by registering the replacement OPSuccinctFaultDisputeGame (game type 42)."
+    },
+    {
+      "timestamp": 1776164147,
+      "type": "state",
+      "contract": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+      "transaction": "0x3254e1dbfc1b116770d0bd9697081941df3155d1e1e05cb04bf73675c38d1ec9",
+      "updateId": "4e1af81f",
+      "reason": "Transferred ownership of the OPSuccinct proposer and challenger allowlists away from the deployer path."
+    },
+    {
+      "timestamp": 1776249827,
+      "type": "state",
+      "contract": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+      "transaction": "0x685779b0d553d85e04fa2e3da01ea321f7746868e22a5febb93ad1017e219e41",
+      "updateId": "4e1af81f",
+      "reason": "Transferred ownership of the OPSuccinct proposer and challenger allowlists to the Celo cLabs Multisig."
+    },
+    {
+      "timestamp": 1777372319,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x8d20b8b21620bb9a7d2f6efcbb1c4782b110be0e0d701445ad9a3234f5f6aae0",
+      "reason": "Registered a new OPSuccinctFaultDisputeGame implementation, rotating the SP1 program verification keys. Invisible to discovery diffs: it was replaced again before the next state capture."
+    },
+    {
+      "timestamp": 1779804539,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x1c00d778e4dd672637b88583dbced60a95898f4b1599ba51d29fb9086a0b203f",
+      "updateId": "49f509dc",
+      "reason": "Registered the OPSuccinct celo/v2.1.0 game implementation (SP1 Hypercube), rotating the aggregation and range verification keys."
+    }
+  ]
+}

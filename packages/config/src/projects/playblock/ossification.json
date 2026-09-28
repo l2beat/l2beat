@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "timestamp": 1778503895,
+      "type": "state",
+      "contract": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+      "updateId": "151f9dab",
+      "transaction": "0x040f0c019ef06e38f1bf680b0b9c116343acdd71069cabae74303ce85137f1c8",
+      "reason": "SequencerInbox dacKeyset: SetValidKeyset added keyset 0xc2c008db9d0d25ca30d60080f5ebd3d114dbccd95f2bd2df05446eae6b1acadf (1 member) next to the previous 2-member keyset 0x7bee20c417c1577126fb7d4d204da9ee2d4aea8f4884d0d716994dd73e744b3f."
+    },
+    {
+      "timestamp": 1778504023,
+      "type": "state",
+      "contract": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+      "transaction": "0xd59f865a1eab0710ef9cd7ddf37d7e3e8ebc189bc1c8e4516f2e9a07cc44101b",
+      "reason": "SequencerInbox dacKeyset: InvalidateKeyset removed the previous 2-member keyset 0x7bee20c417c1577126fb7d4d204da9ee2d4aea8f4884d0d716994dd73e744b3f, leaving only 0xc2c008db9d0d25ca30d60080f5ebd3d114dbccd95f2bd2df05446eae6b1acadf."
+    }
+  ]
+}

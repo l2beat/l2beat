@@ -58,7 +58,6 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
     entrypoints: Record<string, Entrypoint>,
   ) {
     const templateService = new TemplateService(getDiscoveryPaths().discovery)
-    templateService.getAllTemplateHashes = mockFn().returns({})
     templateService.getAllShapes = mockFn().returns({})
 
     const config = new ConfigRegistry({

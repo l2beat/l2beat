@@ -151,7 +151,7 @@ describe('discovery entrypoints.json', () => {
       if (entrypoint.isLegacy) {
         assert(
           discovery.entries.every((e) => e.address !== addr),
-          `Entrypoint for ${addr} is marked as legacy but it\'s fully discovered in ${discovery.name}`,
+          `Entrypoint for ${addr} is marked as legacy but it's fully discovered in ${discovery.name}`,
         )
       } else {
         assert(

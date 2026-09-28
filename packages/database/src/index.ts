@@ -42,6 +42,10 @@ export type {
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
 export type {
+  DefiTvlRecord,
+  SummedDefiTvlRecord,
+} from './repositories/DefiTvlRepository'
+export type {
   DeployedTokenAssignment,
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,

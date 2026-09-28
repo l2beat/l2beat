@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "ignoreMethods": ["l1RollingHashes"],
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",

@@ -97,11 +97,9 @@ export function ParticleLayer({
         )
         const color = getChainColor(interopChains, flow.srcChain)
 
-        const highlighted =
-          highlightedChains.length === 0 ||
-          highlightedChains.every(
-            (chain) => chain === flow.srcChain || chain === flow.dstChain,
-          )
+        const highlighted = highlightedChains.every(
+          (chain) => chain === flow.srcChain || chain === flow.dstChain,
+        )
 
         const groupOpacity = highlighted ? 1 : 0.15
 

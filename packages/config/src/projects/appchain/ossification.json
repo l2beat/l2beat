@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1759165883,
+      "type": "state",
+      "contract": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
+      "transaction": "0x74d968eaa40147ed3e6be671c4f9b4aa2e7b7ed27c4b4965e7ad7e479200e790",
+      "updateId": "21051640",
+      "reason": "RollupProxy: wasmModuleRoot changed (0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39 -> 0xdb698a2576298f25448bc092e52cf13b1e24141c997135d7)."
+    }
+  ]
+}

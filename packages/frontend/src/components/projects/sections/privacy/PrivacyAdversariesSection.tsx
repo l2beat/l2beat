@@ -100,7 +100,7 @@ function AdversaryBlock({
       <p className="text-paragraph-15 md:text-paragraph-16">{cell.exposure}</p>
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">How to keep it private: </span>
+          <span className="font-medium">Advice: </span>
           {cell.advice}
         </p>
       )}

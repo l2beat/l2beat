@@ -1,7 +1,7 @@
 import type { ContractValue } from '@l2beat/discovery'
 import {
+  assert,
   ChainSpecificAddress,
-  // assert,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -95,6 +95,38 @@ const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
 const securityCouncilMembersCount = discovery.getContractValue<number>(
   'SignerList (Security Council)',
   'addresslistLength',
+)
+const securityCouncilMembers = discovery.getContractValue<
+  ChainSpecificAddress[]
+>('SignerList (Security Council)', 'multisigSigners')
+assert(
+  securityCouncilMembers.length === securityCouncilMembersCount,
+  'Taiko Security Council member count mismatch, update the governance research.',
+)
+const securityCouncilMemberNames = securityCouncilMembers.map((member) =>
+  discovery.getName(member),
+)
+assert(
+  securityCouncilMemberNames.every((name) => !name.startsWith('EOA ')),
+  'Unnamed Taiko Security Council member, add its name to globalConfig.jsonc (see security-council-profiles.json).',
+)
+const securityCouncilEoaMemberNames = securityCouncilMembers
+  .filter((member) => discovery.isEOA(member))
+  .map((member) => discovery.getName(member))
+const securityCouncilEoaNote =
+  securityCouncilEoaMemberNames.length > 0
+    ? ` ${securityCouncilEoaMemberNames.join(' and ')} sign as plain EOAs rather than multisigs.`
+    : ''
+// Taiko-affiliated members referenced in the Composition text
+const taikoLabsSafe = 'eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a'
+const taikoCoFounderEoa = 'eth:0xF74F2bBaEd41e3e4AbAcbA24563a5Ce5aB071C8A'
+assert(
+  [taikoLabsSafe, taikoCoFounderEoa].every((affiliated) =>
+    securityCouncilMembers.some(
+      (member) => member.toLowerCase() === affiliated.toLowerCase(),
+    ),
+  ),
+  'Taiko-affiliated Security Council members changed, update the Composition text.',
 )
 const standardProposalThreshold = discovery.getContractValue<number>(
   'Multisig',
@@ -525,8 +557,8 @@ export const taiko: ScalingProject = {
     }),
     governanceInfo: {
       securityCouncil: {
-        Composition: `**${standardProposalThreshold}/${securityCouncilMembersCount} standard · ${emergencyProposalThreshold}/${securityCouncilMembersCount} emergency** — ${securityCouncilMembersCount}-member signer set shared by custom Aragon OSx standard and emergency multisig plugins. Members were appointed by the Taiko team rather than elected and include Taiko Labs employees. Members can appoint EOA agents to act for them.`,
-        'Members public': `**Mapped** — Taiko publishes a [member wallet-to-entity mapping](https://github.com/taikoxyz/dao-ui-mono/blob/main/packages/ui/src/data/security-council-profiles.json). The ${securityCouncilMembersCount} current onchain members are Aragon, Chainbound, Drew Van der Werff, Gattaca, Taiko Labs, Halborn, L2BEAT, Nethermind, and Toni Wahrstätter. Each member wallet is mapped to its voting agent onchain.`,
+        Composition: `**${standardProposalThreshold}/${securityCouncilMembersCount} standard · ${emergencyProposalThreshold}/${securityCouncilMembersCount} emergency** — ${securityCouncilMembersCount}-member signer set shared by custom Aragon OSx standard and emergency multisig plugins. Members were appointed by the Taiko team rather than elected and include the Taiko Labs multisig and a Taiko co-founder. Members can appoint EOA agents to act for them.`,
+        'Members public': `**Mapped** — Taiko publishes a [member wallet-to-entity mapping](https://github.com/taikoxyz/dao-ui-mono/blob/main/packages/ui/src/data/security-council-profiles.json). The ${securityCouncilMembersCount} current onchain members are ${securityCouncilMemberNames.join(', ')}.${securityCouncilEoaNote} Each member wallet is mapped to its voting agent onchain.`,
         Charter:
           '**No public charter** — the [DAO values](https://dao-docs.taiko.xyz/understanding-the-dao/taiko-dao-values/) define the council’s security mission and principles, while the [proposal guidelines](https://dao-docs.taiko.xyz/understanding-the-dao/proposal-guidelines/) restrict emergency proposals to protocol-security and integrity matters. Council selection, terms, conflicts, and accountability are not defined in a public charter.',
         'Can bypass DAO?': `**Yes, for emergencies** — ${emergencyProposalThreshold} Security Council approvals execute an encrypted proposal immediately, with no TAIKO-holder veto or delay. Standard proposals require ${standardProposalThreshold} approvals and remain vetoable. The council controls most core upgrades but no longer has permissions over Treasury funds.`,

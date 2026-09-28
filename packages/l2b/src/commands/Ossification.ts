@@ -1,4 +1,4 @@
-import { loadOssificationInput } from '@l2beat/config/build/ossification/loadOssification'
+import { loadOssificationInput } from '@l2beat/config/build/ossification/getOssification'
 import { measureOssification } from '@l2beat/config/build/ossification/measureOssification'
 import { formatJson, UnixTime } from '@l2beat/shared-pure'
 import { boolean, command, flag, positional, string } from 'cmd-ts'

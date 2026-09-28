@@ -1,5 +1,5 @@
 import { openPanelPlugin } from '@l2beat/shared-pure'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 
 // https://vitejs.dev/config/

@@ -5,6 +5,7 @@
   "description": "Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.",
   "ignoreMethods": [
     "checkFailureCondition",
+    "isFeeTokenAllowed",
     "e3CryptoConfigIds",
     "e3Payments",
     "e3s",
@@ -40,36 +41,6 @@
         "type": "event",
         "select": "e3Program",
         "add": { "event": "event E3ProgramRegistered(address e3Program)" }
-      }
-    },
-    "bfvDecryptionThreshold": {
-      "description": "Number of decryption shares required for the active minimum-size BFV committee.",
-      "type": "RISK_PARAMETER",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
-        "args": [0, 0]
-      }
-    },
-    "bfvCommitteeSize": {
-      "description": "Number of ciphernode seats in the active minimum-size BFV committee.",
-      "type": "RISK_PARAMETER",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
-        "args": [0, 1]
-      }
-    },
-    "bfvParamSet": {
-      "description": "ABI-encoded BFV parameter set accepted by the active circuits. Param-set index 0 is the only set accepted by the current crypto configuration.",
-      "type": "RISK_PARAMETER",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function paramSetRegistry(uint8 paramSet) view returns (bytes)",
-        "args": [0]
       }
     },
     "bfvPkVerifier": {
@@ -109,9 +80,13 @@
       }
     },
     "activeCryptoConfigId": {
-      "description": "Hash of the exact circuit configuration accepted for new requests.",
+      "description": "Compiled-in identifier of the BFV parameter set and circuit configuration accepted for new requests. Changing it requires a new implementation.",
       "type": "CODE_CHANGE",
       "severity": "HIGH"
+    },
+    "MAX_COMMITTEE_SIZE": {
+      "description": "Committee size of the compiled-in active BFV configuration; the matching decryption threshold and assumed-honest count are constants of the ActiveCryptoConfig library in the verified source and are not readable onchain.",
+      "type": "RISK_PARAMETER"
     },
     "getTimeoutConfig": {
       "description": "Protocol-wide DKG, encrypted-computation and decryption timeout windows applied to new E3s.",

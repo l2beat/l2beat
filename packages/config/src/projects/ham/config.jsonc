@@ -4,5 +4,11 @@
   "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["base:0x936c137699230c4732d534c7E968cC7cEAa6Cf45"],
+  "overrides": {
+    "base:0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": { "base:0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA": "HamMultisig1" }
 }

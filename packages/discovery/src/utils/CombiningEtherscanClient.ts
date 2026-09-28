@@ -65,7 +65,7 @@ export class CombiningEtherscanClient implements IEtherscanClient {
           )
         }
         case 'sourcify': {
-          return new SourcifyClient(httpClient, config.chainId)
+          return new SourcifyClient(httpClient, config.chainId, config.url)
         }
         default: {
           throw new Error('Unknown explorer type')

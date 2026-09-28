@@ -40,6 +40,7 @@ interface RoutescanExplorerConfig {
 interface SourcifyExplorerConfig {
   type: 'sourcify'
   chainId: number
+  url?: string
 }
 
 export interface Transaction {

@@ -225,6 +225,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     } as Timing,
     saveSources,
     overwriteCache,
+    logger,
   )
   discoveries.set(prevStructure.name, prevStructure)
   // Without this the previous model spans one project while the current one

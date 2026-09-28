@@ -28,7 +28,7 @@ export function DecoderApp() {
       to: (values.address as `0x${string}`) || undefined,
       chainId: values.chainId || undefined,
     }
-    navigate(`/decoder-new/?${getQueryParams(query)}`)
+    void navigate(`/decoder-new/?${getQueryParams(query)}`)
   }
 
   if (search.size !== 0) {

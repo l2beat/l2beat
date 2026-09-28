@@ -1,28 +1,38 @@
-import type { AbiFunction, DecodeFunctionDataReturnType } from 'viem'
-import {
-  decodeFunctionData,
-  toFunctionSelector,
-  toFunctionSignature,
-} from 'viem/utils'
+import { assert } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import type { Method, Operation } from '../types'
 
-export function defineMethod<T extends AbiFunction>(
-  abi: T,
+export function defineMethod(
+  humanReadableAbi: string,
   countOperations: (
-    decoded: DecodeFunctionDataReturnType<[T]>['args'],
+    decoded: utils.Result,
     calldata: `0x${string}`,
   ) => Operation[],
   contractName?: string,
 ): Method {
-  abi.inputs
+  const contractInterface = new utils.Interface([humanReadableAbi])
+  const fragment = singleFunction(contractInterface)
   return {
-    name: abi.name,
+    name: fragment.name,
     contractName: contractName,
-    selector: toFunctionSelector(abi),
-    signature: toFunctionSignature(abi),
+    selector: contractInterface.getSighash(fragment),
+    signature: fragment.format(),
     count(calldata: `0x${string}`) {
-      const decoded = decodeFunctionData({ abi: [abi], data: calldata })
-      return countOperations(decoded.args, calldata)
+      const decoded = contractInterface.decodeFunctionData(fragment, calldata)
+      return countOperations(decoded, calldata)
     },
   }
+}
+
+export function functionSelector(humanReadableAbi: string): string {
+  const contractInterface = new utils.Interface([humanReadableAbi])
+  return contractInterface.getSighash(singleFunction(contractInterface))
+}
+
+function singleFunction(
+  contractInterface: utils.Interface,
+): utils.FunctionFragment {
+  const fragments = Object.values(contractInterface.functions)
+  assert(fragments.length === 1)
+  return fragments[0]
 }

@@ -3,6 +3,7 @@
   "displayName": "MembershipManager",
   "category": "gov",
   "description": "Manages membership NFTs recording loyalty points and tiers for depositors.",
+  "ignoreInWatchMode": ["tierVaults"],
   "ignoreMethods": [
     "allTimeHighDepositAmount",
     "hasMetBurnFeeWaiverPeriod",
