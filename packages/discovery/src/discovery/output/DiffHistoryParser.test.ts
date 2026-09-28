@@ -50,6 +50,54 @@ describe('DiffHistoryParser', () => {
       expect(twice[1]!.id).not.toEqual(twice[0]!.id)
     })
 
+    it('takes the id from the id line when there is one', () => {
+      const entry = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- id: 1a2b3c4d',
+        '- current timestamp: 1777994288',
+        '',
+      ]
+      const rerun = entry.map((line) =>
+        line
+          .replace('Tue, 05 May 2026 15:19:12', 'Wed, 06 May 2026 08:00:00')
+          .replace('1777994288', '1778054400'),
+      )
+      expect(parser.parse(entry.join('\n'))[0]!.id).toEqual('1a2b3c4d')
+      expect(parser.parse(rerun.join('\n'))[0]!.id).toEqual('1a2b3c4d')
+    })
+
+    it('keeps the ids of entries without an id line below one with it', () => {
+      const legacy = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+      ]
+      const explicit = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- id: 1a2b3c4d',
+        '- current timestamp: 1777994288',
+        '',
+      ]
+      const before = parser.parse([...legacy, ...legacy].join('\n'))
+      const after = parser.parse([...explicit, ...legacy, ...legacy].join('\n'))
+      expect(after.slice(1).map((e) => e.id)).toEqual(before.map((e) => e.id))
+    })
+
+    it('rejects two entries with the same id', () => {
+      const entry = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- id: 1a2b3c4d',
+        '',
+      ]
+      expect(() => parser.parse([...entry, ...entry].join('\n'))).toThrow(
+        'duplicate diffHistory id 1a2b3c4d',
+      )
+    })
+
     it('takes the timestamp from the run, else from the header date', () => {
       const modern = parser.parse(
         [
