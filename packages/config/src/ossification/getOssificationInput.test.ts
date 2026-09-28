@@ -158,13 +158,16 @@ describe(getOssificationInput.name, () => {
       expect(rows(input)).toEqual([['A', T0, 0, 0]])
     })
 
-    it('are nothing when no contract is critical or one has no known age', () => {
+    it('are nothing when no contract is critical', () => {
       expect(derive({ entries: [entry({ critical: undefined })] })).toEqual(
         undefined,
       )
-      expect(
+    })
+
+    it('refuse a critical contract with no known age', () => {
+      expect(() =>
         derive({ entries: [entry({ sinceTimestamp: undefined })] }),
-      ).toEqual(undefined)
+      ).toThrow('no known age')
     })
 
     it('let a config override win over the discovered flag', () => {

@@ -67,7 +67,7 @@ aggregates. The input is four tables:
 - `contracts`: one row per contract that is critical today, with its name,
   address, verification status, `ossifyingSince` (the last reset of its
   clock: deployment, initialization or change) and its own change counts.
-  A critical contract with no known age gives no input at all.
+  Every critical contract must have a known age.
 - `changes`: every critical change made while its contract was critical,
   for current and retired contracts, ascending. A retired contract exists
   only here. A reviewed change from `ossification.json` is always here.
