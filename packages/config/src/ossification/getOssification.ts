@@ -1,10 +1,11 @@
 import {
   type ColorConfig,
   type ColorContract,
-  ConfigReader,
+  type ConfigReader,
   type CriticalFlag,
   type DiffHistoryChange,
   DiffHistoryParser,
+  type DiscoveryOutput,
   type EntryParameters,
   getDiffHistoryChanges,
   getDiscoveryPaths,
@@ -25,25 +26,16 @@ import {
   OssificationPatch,
 } from './OssificationPatch'
 
-interface DiscoveryServices {
-  root: string
-  configReader: ConfigReader
-  templateService: TemplateService
-}
-
-let services: DiscoveryServices | undefined
+let templateService: TemplateService | undefined
 
 export function loadOssificationInput(
-  projectId: string,
+  discovery: DiscoveryOutput,
+  configReader: ConfigReader,
   now: UnixTime,
   projectStart?: number,
 ): OssificationInput | undefined {
-  const { root, configReader, templateService } = getServices()
-  const projectPath = join(root, projectId)
-  if (!existsSync(join(projectPath, 'discovered.json'))) return undefined
-
-  const entries = configReader.readDiscovery(projectId).entries
-  const color = configReader.readConfig(projectId).color
+  const entries = discovery.entries
+  const color = configReader.readConfig(discovery.name).color
   const overrides = getCriticalOverrides(color)
   if (
     overrides.length === 0 &&
@@ -52,27 +44,21 @@ export function loadOssificationInput(
     return undefined
   }
 
+  const projectPath = configReader.getProjectPath(discovery.name)
   return getOssificationInput({
     now,
     projectStart,
     entries,
     overrides,
     changes: readDiffHistory(join(projectPath, 'diffHistory.md')),
-    judgement: new DiscoveryJudgement(templateService, color, entries),
+    judgement: new DiscoveryJudgement(getTemplateService(), color, entries),
     patch: readPatch(join(projectPath, 'ossification.json')),
   })
 }
 
-function getServices(): DiscoveryServices {
-  if (services === undefined) {
-    const root = getDiscoveryPaths().discovery
-    services = {
-      root,
-      configReader: new ConfigReader(root),
-      templateService: new TemplateService(root),
-    }
-  }
-  return services
+function getTemplateService(): TemplateService {
+  templateService ??= new TemplateService(getDiscoveryPaths().discovery)
+  return templateService
 }
 
 function getCriticalOverrides(color: ColorConfig): CriticalOverride[] {

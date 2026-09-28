@@ -1103,7 +1103,12 @@ export class ProjectDiscovery {
     now: UnixTime,
     projectStart?: UnixTime,
   ): OssificationInput | undefined {
-    return loadOssificationInput(this.projectName, now, projectStart)
+    return loadOssificationInput(
+      this.discoveries[0],
+      this.configReader,
+      now,
+      projectStart,
+    )
   }
 
   hasEoaWithUpgradePermissions(): boolean {
