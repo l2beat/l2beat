@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xac45e98a8efe3a107cac466171221b678250fe4a
+Generated with discovered.json: 0x158b964d0ddc8b40a5c469b5efa24befaba6e957
 
-# Diff at Mon, 28 Sep 2026 15:31:35 GMT:
+# Diff at Mon, 28 Sep 2026 15:39:08 GMT:
 
 - id: 39cc542e
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -9,13 +9,15 @@ Generated with discovered.json: 0xac45e98a8efe3a107cac466171221b678250fe4a
 
 ## Description
 
-- CCIP 2.0 cutover on Ethereum: the MainRouter now selects the shared EthereumOnRamp_v2_0 for 47 destinations (35 before), moving most remaining per-lane and v1.6 routes (Optimism, Polygon PoS, Arbitrum, Avalanche, BNB, Base, Gnosis, Linea, Scroll, World Chain and others). EthereumOnRamp_v2_0, EthereumOffRamp_v2_0, the Executor and the CommitteeVerifier were configured for about 52 new remote chains. The CommitteeVerifier now holds 65 source-chain signature configs (13 before), all with a threshold of 9 out of 14 to 16 signers; the arc, cronos, ab and robinhood signer sets were rotated. EthereumOffRamp_v2_0 was also registered on the DeprecatedRouter for the same sources.
+- CCIP 2.0 cutover on Ethereum: the MainRouter now selects the shared EthereumOnRamp_v2_0 for 47 destinations (35 before), moving most remaining per-lane and v1.6 routes (Optimism, Polygon PoS, Arbitrum, Avalanche, BNB, Base, Gnosis, Linea, Scroll, World Chain and others). EthereumOnRamp_v2_0, EthereumOffRamp_v2_0, the Executor and the CommitteeVerifier were configured for about 52 new remote chains. The CommitteeVerifier now holds 65 source-chain signature configs (13 before), all with a threshold of 9 out of 14 to 16 signers.
 - USDCTokenPoolProxy switched USDC transfers to Optimism, Arbitrum, Unichain, Polygon PoS, Avalanche and Base from CCTP v1 to the CCTP-through-CCV path.
 - Ownership of CCTPVerifier_v2_1 and USDCCCTPVerifierResolver moved from an EOA (0x062f) to ARMTimelock (3h delay). The resolver dropped CCTPVerifier_v2_0 as an inbound implementation.
-- EthereumOnRamp_v1_6 now sends fees to a new FeeAggregatorTimelock (0 delay, governed by three new 2-of-4 ManyChainMultiSigs) instead of the same EOA. It only receives fee tokens and holds no CCIP permissions.
+- EthereumOnRamp_v1_6 now sends fees to a new FeeAggregatorTimelock instead of the same EOA. The timelock has no delay; its proposer and bypasser are 2-of-4 ManyChainMultiSigs and its canceller a 1-of-4 one, all sharing the same four new EOA signers. It runs the same code as ARMTimelock and only receives fee tokens; it holds no CCIP permissions.
+- The DeprecatedRouter (a second Router 1.2.0 deployment) is now load-bearing for CCIP 2.0: the CommitteeVerifier authenticates ramps through it for 63 of its 65 remote chains (12 before), 18 v2.0 lanes use it as their Router (6 before), and EthereumOffRamp_v2_0 was registered on it for 52 more sources. Its owner is still the EOA 0x062f, which can add or replace its OnRamps and OffRamps without delay. It now uses the RouterV1_2_0 template (same Router logic as the MainRouter) with its owner crawled, so this permission is modelled; its stale "used by BSC" description was dropped.
+- One CommitteeVerifier signer (0x89A4) was replaced by 0xD173 in the arc, cronos, ab and robinhood signature configs; thresholds are unchanged.
 - RMN added an EOA (0x2acE, already a signer on the three RMN curse multisigs) as an authorized caller, so it can place global or route-specific curses alone. It cannot uncurse.
 - New lanes: Gravity (chain selector `2988178761202034333`, now labeled in the selector map) to and from Ethereum, arc to Base and Polygon PoS, and tempo to Polygon PoS. Routine OCR execution digest rotations on Ethereum, Base, BNB, Solana, Sonic and others, CCTP source pool updates in the token data observers, and FeeQuoter limit and fee changes.
-- No contract implementation, proxy or ABI changed for existing contracts.
+- No contract implementation, proxy or ABI changed for existing contracts. The five new contracts share source hashes with already-tracked ones (RBACTimelock, ManyChainMultiSig, CallProxy).
 
 ## Watched changes
 
@@ -217,9 +219,9 @@ Generated with discovered.json: 0xac45e98a8efe3a107cac466171221b678250fe4a
 -        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner"}
       receivedPermissions.1:
 -        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner"}
-      receivedPermissions.6:
+      receivedPermissions.8:
 -        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner"}
-      receivedPermissions.7:
+      receivedPermissions.9:
 -        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner"}
     }
 ```
@@ -438,8 +440,8 @@ Generated with discovered.json: 0xac45e98a8efe3a107cac466171221b678250fe4a
 ```
 
 ```diff
-    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A] {
-    +++ description: Deprecated router used by BSC.
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
       values.getOffRamps.17:
 +        {"sourceChainSelector":"14894068710063348487","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
       values.getOffRamps.18:
@@ -544,6 +546,113 @@ Generated with discovered.json: 0xac45e98a8efe3a107cac466171221b678250fe4a
 +        {"sourceChainSelector":"1294465214383781161","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
       values.getOffRamps.68:
 +        {"sourceChainSelector":"15971525489660198786","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.onRamps.bsc:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.base:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hedera:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.apechain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.opbnb:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bsquared:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.celo:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.core:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.creditcoin:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hashkey:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.linea:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.andromeda:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.mode:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.scroll:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.taiko:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.worldchain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.zircuit:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.fraxtal:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hemi:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.lens:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.morph:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.henesys:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.astar:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.rootstock:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sei:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.shibarium:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.soneium:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.zksync:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdc:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.tempo:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.jovay:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bittensor:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.0g:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.unichain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xlayer:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdai:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.plasma:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.pharos:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.ronin:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hyperliquid:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bob:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.wemix:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.neox:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bitlayer:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sonic:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.katana:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.avalanche:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.monad:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.etherlink:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.megaeth:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.stable:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.berachain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
     }
 ```
 
@@ -2967,6 +3076,16 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"add, remove, or replace OnRamps and OffRamps used by the Router.","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"change the wrapped native token used for native-fee payments.","role":".owner"}
+    }
+```
+
+```diff
     contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
     +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
       usedTypes.0.arg.2988178761202034333:
@@ -2999,10 +3118,40 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
 ```
 
 ```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      description:
+-        "Deprecated router used by BSC."
++        "CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain."
++++ description: All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route.
+      values.onRamps:
++        {"bsc":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","base":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","arbitrum":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","solana":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","mantle":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","ink":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","plume":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","hedera":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","arc":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","cronos":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","ab":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","abstract":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","robinhood":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","adi":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","optimism":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","matic":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"}
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"},{"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}]
+      template:
++        "transporter/RouterV1_2_0"
+      fieldMeta:
++        {"onRamps":{"description":"All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"4426351306075016396":"0g","4829375610284793157":"ab","3577778157919314504":"abstract","4059281736450291836":"adi","14894068710063348487":"apechain","4741433654826277614":"aptos","6433500567565415381":"avalanche","1294465214383781161":"berachain","465944652040885897":"opbnb","7937294810946806131":"bitlayer","3849287863852499584":"bob","4560701533377838164":"botanix","5406759801798337480":"bsquared","241851231317828981":"bitcoin-merlin","2135107236357186872":"bittensor","11344663589394136015":"bsc","2308837218439511688":"canton","1346049177634351622":"celo","1224752112135636129":"core","9043146809313071210":"corn","18240105181246962294":"creditcoin","1456215246176062136":"cronos","8788096068760390840":"cronos-zkevm","6325494908023253251":"edge","8805746078405598895":"andromeda","4949039107694359620":"arbitrum","15971525489660198786":"base","7613811247471741961":"hashkey","3461204551265785888":"ink","4627098889531055414":"linea","1556008542357238666":"mantle","7264351850409363825":"mode","3734403246176062136":"optimism","13204309965629103672":"scroll","16468599424800719238":"taiko","1923510103922296319":"unichain","2049429975587534727":"worldchain","3016212468291539606":"xlayer","17198166215261833993":"zircuit","1562403441176082196":"zksync","13624601974233774587":"etherlink","1462016016387883143":"fraxtal","3229138320728879060":"hedera","1804312132722180201":"hemi","2442541497099098535":"hyperliquid","1523760397290643893":"jovay","9813823125703490621":"kaia","5608378062013572713":"lens","15293031020466096408":"lisk","5009297550715157269":"ethereum","4051577828743386545":"matic","6093540873831549674":"megaeth","13447077090413146373":"metal","11690709103138290329":"mind","17164792800244661392":"mint","8481857512324358265":"monad","18164309074156128038":"morph","4215185756725900654":"mova","12657445206920369324":"henesys","7801139999541420232":"pharos","9335212494177455608":"plasma","17912061998839310979":"plume","6422105447186081193":"astar","2459028469735686113":"katana","6180753054346818345":"robinhood","6370580034781731079":"arc","2988178761202034333":"gravity","6916147374840168594":"ronin","11964252391146578476":"rootstock","9027416829622342829":"sei","3993510008929295315":"shibarium","124615329519749607":"solana","12505351618335765396":"soneium","1673871237479749969":"sonic","16978377838628290997":"stable","470401360549526817":"superseed","5936861837188149645":"tac","7281642695469137430":"tempo","16448340667252469081":"ton","5142893604156789321":"wemix","465200170687744372":"xdai","17673274061779414707":"xdc","3555797439612589184":"zora","17529533435026248318":"sui","9762610643973837292":"sui-testnet","6473245816409426016":"memento","9723842205701363942":"everclear","1546563616611573946":"tron","4348158687435793198":"polygonzkevm","4411394078118774322":"blast","5214452172935136222":"treasure","7222032299962346917":"neox"}}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"},{"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}]
+    }
+```
+
+```diff
     contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
     +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
       usedTypes.0.arg.2988178761202034333:
 +        "gravity"
+    }
+```
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) [transporter/ARMProxy] {
+    +++ description: Call-forwarding proxy for the active ARM/RMN implementation. It transparently forwards curse checks, the legacy isBlessed() compatibility check and other supported ARM/RMN interface calls; their semantics depend on the selected implementation.
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"block routed messages when ARM/RMN reports the relevant subject as cursed.","role":".getArmProxy"}
     }
 ```
 
@@ -3068,6 +3217,12 @@ discovery. Values are for block 1788159443 (main branch discovery), not current.
       usedTypes.0.arg.2988178761202034333:
 +        "gravity"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: Token accepted as fee token for sending outgoing messages.
 ```
 
 ```diff

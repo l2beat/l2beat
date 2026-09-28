@@ -489,9 +489,15 @@
       }
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
-      "description": "Deprecated router used by BSC.",
+      "fields": {
+        // CCIP 2.0 verifiers and ramps authenticate ramps through this Router, so its OffRamp registrations are tracked.
+        "getOffRamps": {
+          "handler": { "type": "call", "method": "getOffRamps", "args": [] }
+        }
+      },
       // The shared v2.0 OffRamp is an explicit entrypoint; do not crawl it once per route.
-      "ignoreRelatives": ["getOffRamps"]
+      // Unlike the MainRouter template default, crawl the owner so its Router permissions are modelled.
+      "ignoreRelatives": ["getOffRamps", "getWrappedNative"]
     }
   }
 }

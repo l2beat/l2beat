@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1790609268,
-  "configHash": "0x9596fac015d6b92f3c68f49b1e686c81090cd87eac4dae7ebf85faeb331c77dc",
+  "configHash": "0x9a002194a695184dafe18a0d70e3aa0c08d764e4197776d3d0cba1ab9366f71c",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -5750,11 +5750,12 @@
       "name": "DeprecatedRouter",
       "address": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
       "type": "Contract",
+      "template": "transporter/RouterV1_2_0",
       "sourceHashes": [
         "0x7194051726bebe186057b3e109f4a54e8fd634b1a564c87954f7e685c4e18214"
       ],
       "proxyType": "immutable",
-      "description": "Deprecated router used by BSC.",
+      "description": "CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.",
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752947,
       "sinceBlock": 22277106,
@@ -6041,12 +6042,183 @@
         ],
         "getWrappedNative": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "MAX_RET_BYTES": 132,
+        "onRamps": {
+          "bsc": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "base": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "arbitrum": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "solana": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "mantle": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "ink": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "plume": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "hedera": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "arc": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "cronos": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "ab": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "abstract": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "robinhood": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "adi": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "optimism": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "matic": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "apechain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "opbnb": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "bsquared": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "celo": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "core": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "creditcoin": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "hashkey": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "linea": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "andromeda": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "mode": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "scroll": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "taiko": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "worldchain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "zircuit": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "fraxtal": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "hemi": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "lens": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "morph": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "henesys": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "astar": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "rootstock": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "sei": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "shibarium": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "soneium": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "zksync": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "xdc": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "tempo": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "jovay": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "bittensor": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "0g": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "unichain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "xlayer": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "xdai": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "plasma": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "pharos": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "ronin": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "hyperliquid": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "bob": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "wemix": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "neox": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "bitlayer": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "sonic": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "katana": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "avalanche": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "monad": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "etherlink": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "megaeth": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "stable": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "berachain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+        },
         "owner": "eth:0x062f05CD6c835677B05a8658A351969476861316",
         "typeAndVersion": "Router 1.2.0"
       },
+      "fieldMeta": {
+        "onRamps": {
+          "description": "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route."
+        }
+      },
       "implementationNames": {
         "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": "Router"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
+            "2988178761202034333": "gravity",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ]
     },
     {
       "address": "eth:0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
@@ -49266,30 +49438,6 @@
       ]
     },
     {
-      "name": "Wrapped Ether Token",
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
-      ],
-      "proxyType": "immutable",
-      "description": "Token accepted as fee token for sending outgoing messages.",
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0x4F26FfBe5F04ED43630fdC30A87638d53D0b0876",
-      "sinceTimestamp": 1513077455,
-      "sinceBlock": 4719568,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2063333806584579508911486"
-      },
-      "implementationNames": {
-        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
-      }
-    },
-    {
       "address": "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -60217,23 +60365,6 @@
       "function typeAndVersion() view returns (string)",
       "function withdrawFeeTokens(address[] feeTokens)"
     ],
-    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
-    ],
     "eth:0xc2e3A3C18ccb634622B57fF119a1C8C7f12e8C0c": [
       "constructor(address tokenMessenger, address token, address[] allowlist, address rmnProxy, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -62640,7 +62771,7 @@
     "optimism": 157505245,
     "polygonpos": 94602752
   },
-  "permissionsConfigHash": "0xf3b82abbc5b11fb8d874277c8be8f71e4cbddbb8a227a4973cb1bf162a942df2",
+  "permissionsConfigHash": "0x291ef373da102412fe43c5e4ff164589278c8e575a16942f9c9b3019cd6cc5f6",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -62720,6 +62851,18 @@
           "permission": "interact",
           "from": "eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D",
           "description": "add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "description": "add, remove, or replace OnRamps and OffRamps used by the Router.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "description": "change the wrapped native token used for native-fee payments.",
           "role": ".owner"
         },
         {
@@ -66034,7 +66177,7 @@
       ]
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F",
@@ -66393,6 +66536,12 @@
           "from": "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB",
           "description": "be trusted by this CommitStore either as the source OnRamp whose address is accepted in commit reports, or as the RMN proxy supplying route-curse and legacy root-blessing results.",
           "role": ".getStaticConfig"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "description": "block routed messages when ARM/RMN reports the relevant subject as cursed.",
+          "role": ".getArmProxy"
         },
         {
           "permission": "interact",
