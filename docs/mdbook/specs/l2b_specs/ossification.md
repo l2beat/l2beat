@@ -41,6 +41,14 @@ The override remains valid when discovery does not find the contract any more.
 Set `untilTimestamp` on the override to keep the history of a contract that
 left the project.
 
+**Shared modules.** The perimeter of a project includes the whole perimeter of
+every shared module it references, not only the referenced contracts. These
+are the discoveries `ProjectDiscovery` loads with the project. Each module's
+contracts are judged by the module's own `config.jsonc`, templates,
+`diffHistory.md` and `ossification.json`. The project start also bounds the
+changes of the module. A contract that two discoveries both contain has one
+row, taken from the first of them.
+
 **Critical code change.** A change of the implementation of a critical
 contract.
 
@@ -116,7 +124,8 @@ lists the update in `acceptedIntervals`.
 
 `ossification.json` contains manual corrections. `OssificationPatch.ts`
 validates the file. The file does not define the perimeter. The perimeter is
-in the discovery configuration.
+in the discovery configuration. A file corrects only the contracts of its own
+discovery, so the corrections for a shared module are in the module's file.
 
 - `events`: reviewed changes anchored to their transaction, each on a
   perimeter contract (a change on an excluded Safe is attributed to the

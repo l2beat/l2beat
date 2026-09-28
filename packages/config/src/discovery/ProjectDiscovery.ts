@@ -29,6 +29,7 @@ import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { loadOssificationInput } from '../ossification/loadOssificationInput'
 import { measureOssification } from '../ossification/measureOssification'
+import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
 import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
   ProjectContract,
@@ -1103,11 +1104,17 @@ export class ProjectDiscovery {
     now: UnixTime,
     projectStart?: UnixTime,
   ): OssificationInput | undefined {
-    return loadOssificationInput(
-      this.discoveries[0],
-      this.configReader,
-      now,
-      projectStart,
+    return mergeOssificationInputs(
+      this.discoveries
+        .map((discovery) =>
+          loadOssificationInput(
+            discovery,
+            this.configReader,
+            now,
+            projectStart,
+          ),
+        )
+        .filter(notUndefined),
     )
   }
 
