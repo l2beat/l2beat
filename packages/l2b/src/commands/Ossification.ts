@@ -1,4 +1,4 @@
-import { loadOssificationInput } from '@l2beat/config/build/ossification/getOssification'
+import { ProjectDiscovery } from '@l2beat/config/build/discovery/ProjectDiscovery'
 import { measureOssification } from '@l2beat/config/build/ossification/measureOssification'
 import { formatJson, UnixTime } from '@l2beat/shared-pure'
 import { boolean, command, flag, positional, string } from 'cmd-ts'
@@ -16,7 +16,9 @@ export const Ossification = command({
     }),
   },
   handler: (args) => {
-    const input = loadOssificationInput(args.project, UnixTime.now())
+    const input = new ProjectDiscovery(args.project).getOssificationInput(
+      UnixTime.now(),
+    )
     if (input === undefined) {
       console.log(`${args.project} has no critical perimeter`)
       return

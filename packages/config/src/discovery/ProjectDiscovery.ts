@@ -27,7 +27,9 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { getOssification } from '../ossification/getOssification'
+import { loadOssificationInput } from '../ossification/getOssification'
+import { measureOssification } from '../ossification/measureOssification'
+import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
@@ -51,6 +53,7 @@ import {
 } from './utils'
 
 const paths = getDiscoveryPaths()
+const buildTime = UnixTime.now()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -1092,7 +1095,15 @@ export class ProjectDiscovery {
   }
 
   getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
-    return getOssification(this.projectName, projectStart)
+    const input = this.getOssificationInput(buildTime, projectStart)
+    return input === undefined ? undefined : measureOssification(input)
+  }
+
+  getOssificationInput(
+    now: UnixTime,
+    projectStart?: UnixTime,
+  ): OssificationInput | undefined {
+    return loadOssificationInput(this.projectName, now, projectStart)
   }
 
   hasEoaWithUpgradePermissions(): boolean {

@@ -3,7 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { loadOssificationInput, readPatch } from './getOssification'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { readPatch } from './getOssification'
 import { getUncertainNewestChange } from './measureOssification'
 
 /** The newest change sets the project clock and with it the whole score. A
@@ -19,7 +20,7 @@ describe('ossification newest change', () => {
     for (const project of readdirSync(root)) {
       const projectPath = join(root, project)
       if (!existsSync(join(projectPath, 'discovered.json'))) continue
-      const input = loadOssificationInput(project, now)
+      const input = new ProjectDiscovery(project).getOssificationInput(now)
       if (input === undefined) continue
       const uncertain = getUncertainNewestChange(input)
       if (uncertain === undefined) continue
