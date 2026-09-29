@@ -8,6 +8,11 @@ interface FlowsParticleLegendProps {
   isLoading?: boolean
   layout?: 'stacked' | 'inline'
   className?: string
+  /** What flows through the graph. Defaults to dollars of value */
+  unit?: {
+    label: string
+    format: (value: number) => string
+  }
 }
 
 export function FlowsParticleLegend({
@@ -16,14 +21,17 @@ export function FlowsParticleLegend({
   isLoading = false,
   layout = 'stacked',
   className,
+  unit,
 }: FlowsParticleLegendProps) {
   const avgValuePerSecond = totalVolume / UnixTime.DAY
 
   const avgLine = (
     <>
-      Avg value per second ≈{' '}
+      Avg {unit?.label ?? 'value'} per second ≈{' '}
       <span className="font-bold text-brand">
-        {formatCurrency(avgValuePerSecond, 'usd')}
+        {unit
+          ? unit.format(avgValuePerSecond)
+          : formatCurrency(avgValuePerSecond, 'usd')}
       </span>
     </>
   )
@@ -32,10 +40,12 @@ export function FlowsParticleLegend({
     <>
       <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
       <span className="font-bold text-brand">
-        {formatCurrency(dollarsPerParticle, 'usd', {
-          // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
-          decimals: dollarsPerParticle < 1 ? 1 : 0,
-        })}
+        {unit
+          ? unit.format(dollarsPerParticle)
+          : formatCurrency(dollarsPerParticle, 'usd', {
+              // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
+              decimals: dollarsPerParticle < 1 ? 1 : 0,
+            })}
       </span>
     </>
   ) : null

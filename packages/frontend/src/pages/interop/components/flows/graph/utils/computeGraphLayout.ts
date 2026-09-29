@@ -8,6 +8,12 @@ export type FlowsGraphLayout = Map<string, ChainNodeLayout>
 const MIN_BUBBLE_RADIUS = 8
 const MAX_BUBBLE_RADIUS = 50
 const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
+const CENTER_BUBBLE_RADIUS = 58
+const SMALL_SCREEN_CENTER_BUBBLE_RADIUS = 42
+const RING_RADIUS_RATIO = 0.4
+// A hub keeps its labels outside the ring, away from the spokes, so the
+// ring is pulled in to leave them room
+const HUB_RING_RADIUS_RATIO = 0.33
 
 /**
  * Places chains evenly around a circle and sizes each bubble
@@ -15,6 +21,10 @@ const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
  * Sqrt makes the bubble area proportional to volume. This means:
  *   - 10x volume → ~3.2x radius → 10x area
  *   - Low-volume chains still get a small but visible bubble (MIN_RADIUS = 8px)
+ *
+ * With a center chain the graph becomes a hub: that chain sits in the middle
+ * with a fixed radius and the others go around it. Its volume is the sum of
+ * everything flowing through it, so it is left out of the bubble scale.
  */
 export function computeGraphLayout(
   chainIds: string[],
@@ -22,23 +32,45 @@ export function computeGraphLayout(
   size: number,
   isSmallScreen: boolean,
   topChainId?: string,
+  centerChainId?: string,
 ): FlowsGraphLayout {
   const layout: FlowsGraphLayout = new Map()
   if (chainIds.length === 0 || size === 0) return layout
 
+  const hasCenter =
+    centerChainId !== undefined && chainIds.includes(centerChainId)
+  const ringIds = hasCenter
+    ? chainIds.filter((id) => id !== centerChainId)
+    : chainIds
+
   const volumeMap = new Map(
     chainVolumes.map((cv) => [cv.chainId, cv.totalVolume]),
   )
-  const maxVolume = Math.max(...chainVolumes.map((cv) => cv.totalVolume))
+  const maxVolume = Math.max(
+    ...chainVolumes
+      .filter((cv) => !hasCenter || cv.chainId !== centerChainId)
+      .map((cv) => cv.totalVolume),
+  )
   const maxBubbleRadius = isSmallScreen
     ? SMALL_SCREEN_MAX_BUBBLE_RADIUS
     : MAX_BUBBLE_RADIUS
 
-  const spreadIds = spreadByVolume(chainIds, volumeMap, topChainId)
+  const spreadIds = spreadByVolume(ringIds, volumeMap, topChainId)
 
   const centerX = size / 2
   const centerY = size / 2
-  const circleRadius = size * 0.4
+  const circleRadius =
+    size * (hasCenter ? HUB_RING_RADIUS_RATIO : RING_RADIUS_RATIO)
+
+  if (hasCenter) {
+    layout.set(centerChainId, {
+      x: centerX,
+      y: centerY,
+      radius: isSmallScreen
+        ? SMALL_SCREEN_CENTER_BUBBLE_RADIUS
+        : CENTER_BUBBLE_RADIUS,
+    })
+  }
 
   for (let i = 0; i < spreadIds.length; i++) {
     const chainId = spreadIds[i]

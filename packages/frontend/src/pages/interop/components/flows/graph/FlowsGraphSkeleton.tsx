@@ -1,19 +1,21 @@
 import { useMemo } from 'react'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BackgroundRoads } from './BackgroundRoads'
 import { FlowsLogo } from './FlowsLogo'
 import { computeGraphLayout } from './utils/computeGraphLayout'
+import { useFlowsGraph } from './utils/FlowsGraphContext'
 
 interface FlowsGraphSkeletonProps {
   size: number
   isSmallScreen: boolean
+  centerChainId?: string
 }
 
 export function FlowsGraphSkeleton({
   size,
   isSmallScreen,
+  centerChainId,
 }: FlowsGraphSkeletonProps) {
-  const { selectedChains } = useInteropFlows()
+  const { selectedChains } = useFlowsGraph()
 
   const layout = useMemo(
     () =>
@@ -22,8 +24,10 @@ export function FlowsGraphSkeleton({
         selectedChains.map((chainId) => ({ chainId, totalVolume: 1 })),
         size,
         isSmallScreen,
+        undefined,
+        centerChainId,
       ),
-    [selectedChains, size, isSmallScreen],
+    [selectedChains, size, isSmallScreen, centerChainId],
   )
 
   const center = size / 2
@@ -41,12 +45,15 @@ export function FlowsGraphSkeleton({
         layout={layout}
         centerX={center}
         centerY={center}
+        centerChainId={centerChainId}
       />
-      <FlowsLogo
-        centerX={center}
-        centerY={center}
-        isSmallScreen={isSmallScreen}
-      />
+      {!centerChainId && (
+        <FlowsLogo
+          centerX={center}
+          centerY={center}
+          isSmallScreen={isSmallScreen}
+        />
+      )}
       {selectedChains.map((chainId) => {
         const nodeLayout = layout.get(chainId)
         if (!nodeLayout) return null

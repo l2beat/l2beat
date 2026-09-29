@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BubbleHolesClip } from './BubbleHolesClip'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
+import { useFlowsGraph } from './utils/FlowsGraphContext'
 import {
   BIDIRECTIONAL_OFFSET,
   getConnectionPath,
@@ -12,14 +12,22 @@ interface Props {
   layout: FlowsGraphLayout
   centerX: number
   centerY: number
+  centerChainId?: string
 }
 
 /**
  * Renders two faint curved lines for every unique chain pair,
  * so the "roads" between nodes are always visible in the background.
+ * With a center chain only the spokes to it are drawn, one line each.
  */
-export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
-  const { highlightedChains } = useInteropFlows()
+export function BackgroundRoads({
+  chainIds,
+  layout,
+  centerX,
+  centerY,
+  centerChainId,
+}: Props) {
+  const { highlightedChains } = useFlowsGraph()
   const clipId = `roads-clip-${useId().replace(/\W/g, '')}`
 
   const { activePaths, inactivePaths } = useMemo(() => {
@@ -31,6 +39,9 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
         const a = chainIds[i]
         const b = chainIds[j]
         if (!a || !b) continue
+        if (centerChainId && a !== centerChainId && b !== centerChainId) {
+          continue
+        }
 
         const srcLayout = layout.get(a)
         const dstLayout = layout.get(b)
@@ -40,22 +51,12 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
           (chain) => chain === a || chain === b,
         )
 
-        const elements = [
-          getConnectionPath(
-            srcLayout,
-            dstLayout,
-            centerX,
-            centerY,
-            BIDIRECTIONAL_OFFSET,
-          ),
-          getConnectionPath(
-            srcLayout,
-            dstLayout,
-            centerX,
-            centerY,
-            -BIDIRECTIONAL_OFFSET,
-          ),
-        ]
+        const offsets = centerChainId
+          ? [0]
+          : [BIDIRECTIONAL_OFFSET, -BIDIRECTIONAL_OFFSET]
+        const elements = offsets.map((offset) =>
+          getConnectionPath(srcLayout, dstLayout, centerX, centerY, offset),
+        )
 
         if (highlighted) {
           active.push(...elements)
@@ -69,13 +70,18 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
       activePaths: active.join(' '),
       inactivePaths: inactive.join(' '),
     }
-  }, [chainIds, layout, centerX, centerY, highlightedChains])
+  }, [chainIds, layout, centerX, centerY, highlightedChains, centerChainId])
 
   const activeStrokeWidth = highlightedChains.length > 0 ? 1.5 : 0.5
 
   return (
     <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
-      <BubbleHolesClip id={clipId} chainIds={chainIds} layout={layout} />
+      <BubbleHolesClip
+        id={clipId}
+        chainIds={chainIds}
+        layout={layout}
+        centerChainId={centerChainId}
+      />
       {inactivePaths && (
         <path
           d={inactivePaths}

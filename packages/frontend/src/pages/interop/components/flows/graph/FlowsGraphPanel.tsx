@@ -3,21 +3,18 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
-import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
-import { FlowsGraph } from './FlowsGraph'
+import { FlowsGraph, type FlowsGraphOptions } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
+import type { FlowsGraphData, FlowsGraphNode } from './types'
 
-interface FlowsGraphPanelProps {
-  activeChains: InteropChainWithIcon[]
-  data: InteropFlowsData | undefined
+interface FlowsGraphPanelProps extends FlowsGraphOptions {
+  activeChains: FlowsGraphNode[]
+  data: FlowsGraphData | undefined
   hasEnoughChains: boolean
   hasEnoughProtocols: boolean
   isLoading: boolean
-  baseDollarsPerParticle?: number
-  topChainId?: string
   className?: string
   maxSizeClassName?: string
 }
@@ -30,6 +27,9 @@ export function FlowsGraphPanel({
   isLoading,
   baseDollarsPerParticle,
   topChainId,
+  centerChainId,
+  particleScale,
+  getCaption,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
 }: FlowsGraphPanelProps) {
@@ -67,7 +67,11 @@ export function FlowsGraphPanel({
               message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
             />
           ) : isLoading || !data ? (
-            <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
+            <FlowsGraphSkeleton
+              size={size}
+              isSmallScreen={isSmallScreen}
+              centerChainId={centerChainId}
+            />
           ) : (
             <FlowsGraph
               interopChains={activeChains}
@@ -77,6 +81,9 @@ export function FlowsGraphPanel({
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
               topChainId={topChainId}
+              centerChainId={centerChainId}
+              particleScale={particleScale}
+              getCaption={getCaption}
             />
           )}
         </div>

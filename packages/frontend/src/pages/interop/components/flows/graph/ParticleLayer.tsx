@@ -1,30 +1,33 @@
 import { useId } from 'react'
 import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
-import type {
-  ChainData,
-  Flow,
-} from '~/server/features/layer2s/interop/getInteropFlows'
-import type { InteropChainWithIcon } from '../../chain-selector/types'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BubbleHolesClip } from './BubbleHolesClip'
+import type {
+  FlowsGraphFlow,
+  FlowsGraphNode,
+  FlowsGraphNodeData,
+} from './types'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
+import { useFlowsGraph } from './utils/FlowsGraphContext'
 import { getChainColor } from './utils/getChainColor'
 import {
   BIDIRECTIONAL_OFFSET,
   getConnectionPath,
 } from './utils/getConnectionPath'
+import type { ParticleScale } from './utils/particleScale'
 import { useScaledParticleCounts } from './utils/useScaledParticleCounts'
 
 interface Props {
-  flows: Flow[]
-  chainData: ChainData[]
+  flows: FlowsGraphFlow[]
+  chainData: FlowsGraphNodeData[]
   visibleChainIds: string[]
   layout: FlowsGraphLayout
-  interopChains: InteropChainWithIcon[]
+  interopChains: FlowsGraphNode[]
   centerX: number
   centerY: number
   isSmallScreen: boolean
   baseDollarsPerParticle?: number
+  particleScale?: ParticleScale
+  centerChainId?: string
 }
 
 /**
@@ -63,8 +66,10 @@ export function ParticleLayer({
   centerY,
   isSmallScreen,
   baseDollarsPerParticle,
+  particleScale,
+  centerChainId,
 }: Props) {
-  const { highlightedChains } = useInteropFlows()
+  const { highlightedChains } = useFlowsGraph()
   const particleRadius = isSmallScreen ? 1.5 : 2
   const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
 
@@ -73,11 +78,17 @@ export function ParticleLayer({
     chainData,
     flows,
     baseDollarsPerParticle,
+    { centerChainId, scale: particleScale },
   )
 
   return (
     <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
-      <BubbleHolesClip id={clipId} chainIds={visibleChainIds} layout={layout} />
+      <BubbleHolesClip
+        id={clipId}
+        chainIds={visibleChainIds}
+        layout={layout}
+        centerChainId={centerChainId}
+      />
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
@@ -93,7 +104,8 @@ export function ParticleLayer({
           { ...dst, x: dst.x - src.x, y: dst.y - src.y },
           centerX - src.x,
           centerY - src.y,
-          BIDIRECTIONAL_OFFSET,
+          // Spokes of a hub carry one direction only, so they stay straight
+          centerChainId ? 0 : BIDIRECTIONAL_OFFSET,
         )
         const color = getChainColor(interopChains, flow.srcChain)
 
