@@ -163,12 +163,13 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     const notEvenAStage0 =
       props.type === 'Other' && !!stageConfig.missing?.requirements
     return joinBlocks([
-      renderWarnings(props.emergencyWarning, stageConfig.message?.text),
+      renderWarnings(props.emergencyWarning),
       notEvenAStage0
         ? `${name} is not even a ${stageConfig.stage} project.`
         : `${name} is a ${stageConfig.stage} ${props.type}.`,
       renderScopeOfAssessment(props.scopeOfAssessment, level),
       nestHeadings(props.additionalConsiderations?.long ?? '', level),
+      renderWarnings(stageConfig.message?.text),
       ...stageConfig.summary.map((stage) => {
         const principle = stage.principle && {
           ...stage.principle,

@@ -19,15 +19,11 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
-  it('summarizes type, stage, host chain and description', () => {
+  it('lists the stats in the order of the HTML stats block, then the description', () => {
     const summary = getSection(renderL2ProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Type: Optimistic Rollup',
-      '- Stage: Stage 1',
-      '- Host chain: Ethereum',
-      '- Purpose: Universal',
-      '- Chain ID: 42161',
+      '- Stage: Stage 1\n- Gas token: ETH\n- Type: Optimistic Rollup\n- Purpose: Universal\n- Host chain: Ethereum\n- Chain ID: 42161',
       'Arbitrum One is a general-purpose optimistic rollup.',
     )
   })
@@ -765,6 +761,7 @@ const ENTRY: ProjectL2Entry = {
     chainId: 42161,
     category: 'Optimistic Rollup',
     purposes: ['Universal'],
+    gasTokens: ['ETH'],
     tvs: {
       breakdown: {
         total: 15_200_000_000,

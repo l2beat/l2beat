@@ -56,7 +56,7 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
   })
 }
 
-/** Labels follow the stats block at the top of the HTML page. */
+/** Labels and order follow the stats block at the top of the HTML page. */
 function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
   return compact([
     header.tvs?.breakdown && {
@@ -70,16 +70,27 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
       label: 'Past day UOPS',
       value: `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`,
     },
-    header.category && { label: 'Type', value: header.category },
     stageConfig.stage !== 'NotApplicable' && {
       label: 'Stage',
       value: formatStage(stageConfig),
     },
-    { label: 'Host chain', value: hostChainName },
+    header.gasTokens &&
+      header.gasTokens.length > 0 && {
+        label: `Gas ${pluralize(header.gasTokens.length, 'token')}`,
+        value: header.gasTokens.join(', '),
+      },
+    header.category
+      ? { label: 'Type', value: header.category }
+      : header.proofSystemType && {
+          label: 'Proof system',
+          value: header.proofSystemType,
+        },
     header.purposes.length > 0 && {
       label: pluralize(header.purposes.length, 'Purpose'),
       value: header.purposes.join(', '),
     },
+    // The HTML shows it for L3s only; an agent cannot infer Ethereum from its absence.
+    { label: 'Host chain', value: hostChainName },
     header.chainId !== undefined && {
       label: 'Chain ID',
       value: String(header.chainId),
