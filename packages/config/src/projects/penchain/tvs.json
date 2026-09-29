@@ -16,7 +16,8 @@
         "address": "0x5A77f1443D16ee5761d310e38b62f77f726bC71c",
         "chain": "penchain",
         "decimals": 18,
-        "sinceTimestamp": 1740743363
+        "sinceTimestamp": 1740743363,
+        "untilTimestamp": 1790668297
       },
       "isAssociated": false
     },

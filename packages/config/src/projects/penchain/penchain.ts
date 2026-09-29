@@ -6,9 +6,11 @@ import { agglayer } from '../../templates/agglayer'
 
 const discovery = new ProjectDiscovery('penchain')
 const bridge = discovery.getContract('AgglayerBridge')
+const archivedAt = UnixTime(1790668297) // 2026-09-29T07:51:37Z
 
 export const penchain: ScalingProject = agglayer({
   addedAt: UnixTime(1740706975),
+  archivedAt,
   additionalPurposes: ['Gaming'],
   additionalBadges: [BADGES.RaaS.Zeeve],
   display: {
@@ -37,6 +39,7 @@ export const penchain: ScalingProject = agglayer({
     gasTokens: ['PC'],
     explorerUrl: 'https://explorer.pentagon.games',
     sinceTimestamp: UnixTime(1740743363),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',
