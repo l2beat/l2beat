@@ -9,12 +9,7 @@ import {
   parseAbi,
 } from 'viem'
 import { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import {
-  CCIPConfigPlugin,
-  type CCIPNetwork,
-  getKnownOffRamps,
-  getOffRampsBySource,
-} from './ccip.config'
+import { CCIPConfigPlugin, type CCIPNetwork } from './ccip.config'
 
 const ROUTER_ABI = parseAbi([
   'function getOnRamp(uint64 destChainSelector) view returns (address)',
@@ -98,44 +93,6 @@ describe(CCIPConfigPlugin.name, () => {
         sorted([OFF_RAMP_V2, RETIRED_OFF_RAMP, UNLISTED_OFF_RAMP]),
       )
     })
-
-    it('still resolves OnRamps when the OffRamp lookup fails', async () => {
-      const plugin = createPlugin(
-        rpcReturning({
-          onRamps: { [ARBITRUM_SELECTOR]: ROUTER_ON_RAMP },
-          offRamps: 'revert',
-        }),
-      )
-
-      const { networks } = await plugin.getLatestNetworks()
-      const ethereum = getNetwork(networks, 'ethereum')
-
-      expect(ethereum.onRampsByDestination).toEqual({
-        arbitrum: [ROUTER_ON_RAMP],
-      })
-      expect(ethereum.offRampsBySource).toEqual({})
-      expect(ethereum.offRamps).toEqual([OFF_RAMP_V2])
-    })
-  })
-})
-
-describe(getKnownOffRamps.name, () => {
-  it('reads configs persisted before OffRamp history existed', () => {
-    const network: CCIPNetwork = {
-      chain: 'ethereum',
-      chainSelector: ETHEREUM_SELECTOR,
-      outboundLanes: {},
-      inboundLanes: { arbitrum: RETIRED_OFF_RAMP },
-      offRamp: UNLISTED_OFF_RAMP,
-      offRampV2: OFF_RAMP_V2,
-    }
-
-    expect(getOffRampsBySource(network)).toEqual({
-      arbitrum: [RETIRED_OFF_RAMP],
-    })
-    expect(getKnownOffRamps(network)).toEqual(
-      sorted([OFF_RAMP_V2, RETIRED_OFF_RAMP, UNLISTED_OFF_RAMP]),
-    )
   })
 })
 
@@ -158,7 +115,7 @@ function createPlugin(rpc: IRpcClient | undefined) {
 
 function rpcReturning(options: {
   onRamps: Record<string, EthereumAddress>
-  offRamps: [string, EthereumAddress][] | 'revert'
+  offRamps: [string, EthereumAddress][]
 }) {
   return mockObject<IRpcClient>({
     getLatestBlockNumber: mockFn().resolvesTo(100),
@@ -172,9 +129,6 @@ function rpcReturning(options: {
         const onRamp =
           options.onRamps[args[0].toString()] ?? EthereumAddress.ZERO
         return encodeResult('getOnRamp', onRamp)
-      }
-      if (options.offRamps === 'revert') {
-        throw new Error('execution reverted')
       }
       return encodeResult(
         'getOffRamps',
