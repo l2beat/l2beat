@@ -1,6 +1,8 @@
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
+  absolutizeLinks,
   bulletList,
   heading,
   joinBlocks,
@@ -32,12 +34,13 @@ export interface ProjectMarkdown extends SectionContext {
 }
 
 export function renderProjectMarkdown(page: ProjectMarkdown): string {
-  return `${joinBlocks([
+  const markdown = joinBlocks([
     heading(1, page.name),
     `Markdown version of ${page.pageUrl}`,
     renderSummary(page.summary),
     ...page.sections.map((section) => renderProjectSection(section, 2, page)),
-  ])}\n`
+  ])
+  return `${absolutizeLinks(markdown, PRODUCTION_ORIGIN)}\n`
 }
 
 /** The block above the sections on the HTML page: stats, risk rosette and About. */

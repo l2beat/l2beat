@@ -25,9 +25,8 @@ describe(Head.name, () => {
       createElement(Head, { manifest, metadata }),
     )
 
-    // The origin depends on the deployment environment, the path does not.
-    expect(html).toMatchRegex(
-      /<link rel="alternate" type="text\/markdown" href="https?:\/\/[^"/]+\/layer2s\/projects\/arbitrum\.md"\/>/,
+    expect(html).toInclude(
+      '<link rel="alternate" type="text/markdown" href="https://l2beat.com/layer2s/projects/arbitrum.md"/>',
     )
   })
 

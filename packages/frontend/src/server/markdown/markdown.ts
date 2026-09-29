@@ -44,6 +44,14 @@ export function markCritical(text: string, isCritical: boolean | undefined) {
 }
 
 /**
+ * Config text links site pages and images by path (e.g. "/images/x.png"),
+ * which only resolves on the site; the markdown is read elsewhere.
+ */
+export function absolutizeLinks(markdown: string, origin: string) {
+  return markdown.replaceAll(/\]\(\/(?!\/)/g, `](${origin}/`)
+}
+
+/**
  * Config text can carry its own headings (e.g. "## Architecture"). Shifted so
  * the shallowest one lands at `level`, they nest under the heading the text is
  * rendered below instead of breaking the page outline.

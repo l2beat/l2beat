@@ -50,8 +50,9 @@ export function getMetadata(
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
     // We want canonical to always point to the production URL
     canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
+    // Production, like canonical: the markdown cites production URLs too
     markdownAlternateUrl: markdownAlternatePath
-      ? baseUrl + markdownAlternatePath
+      ? PRODUCTION_ORIGIN + markdownAlternatePath
       : undefined,
     ...rest,
   }

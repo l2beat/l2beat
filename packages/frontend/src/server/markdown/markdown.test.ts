@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { nestHeadings, subsection } from './markdown'
+import { absolutizeLinks, nestHeadings, subsection } from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
 // expected text literally.
@@ -38,5 +38,23 @@ describe(subsection.name, () => {
   it('drops the heading when there is no body to head', () => {
     expect(subsection(3, 'Roles', '')).toEqual('')
     expect(subsection(3, 'Roles', undefined)).toEqual('')
+  })
+})
+
+describe(absolutizeLinks.name, () => {
+  it('prefixes site paths in links and images with the origin', () => {
+    expect(
+      absolutizeLinks(
+        'See [best practices](/publications/x) and ![diagram](/images/y.png).',
+        'https://l2beat.com',
+      ),
+    ).toEqual(
+      'See [best practices](https://l2beat.com/publications/x) and ![diagram](https://l2beat.com/images/y.png).',
+    )
+  })
+
+  it('leaves absolute and protocol-relative URLs alone', () => {
+    const text = '[a](https://example.com/x) [b](//cdn.example.com/y)'
+    expect(absolutizeLinks(text, 'https://l2beat.com')).toEqual(text)
   })
 })

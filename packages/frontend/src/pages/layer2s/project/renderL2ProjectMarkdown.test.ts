@@ -77,6 +77,23 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('links site paths from config text on the production origin', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          description: 'See the ![diagram](/images/arbitrum/overview.png).',
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '![diagram](https://l2beat.com/images/arbitrum/overview.png)',
+    )
+  })
+
   it('follows the HTML page outline with one H2 per section', () => {
     const headings = renderL2ProjectMarkdown(ENTRY)
       .split('\n')
