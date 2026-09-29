@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2d2894cc642b320eee2b15e6bb6f51cf502aba07
+
+# Diff at Mon, 28 Sep 2026 13:34:25 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1788432124
+- current timestamp: 1790592672
+
+## Description
+
+Upgraded TEE verification SP1 program to v1.0.7, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00022b9b7769bd21b7bc4171ba458ffc80b46cab6f5fbd5629fa2d873df676fc"
++        "0x00f291835495d0af627923c963f18395bb9a7e6783b694497460f757866ea34b"
+    }
+```
+
 Generated with discovered.json: 0x669305c8a92447cd9c1e43a9d547421b09da1b34
 
 # Diff at Fri, 25 Sep 2026 12:12:21 GMT:
