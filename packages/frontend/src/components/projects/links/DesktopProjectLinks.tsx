@@ -7,10 +7,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/NavigationMenu'
+import { usePathname } from '~/hooks/usePathname'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { DiscoUiLink } from './DiscoUiLink'
 import { MarkdownLink } from './MarkdownLink'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
@@ -20,14 +22,10 @@ import type { ProjectLink } from './types'
 interface Props {
   projectLinks: ProjectLink[]
   discoUiHref?: string
-  markdownHref?: string
 }
 
-export function DesktopProjectLinks({
-  projectLinks,
-  discoUiHref,
-  markdownHref,
-}: Props) {
+export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
+  const markdownHref = getMarkdownAlternatePath(usePathname())
   return (
     <NavigationMenu asChild>
       <div>

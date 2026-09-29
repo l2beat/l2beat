@@ -92,7 +92,6 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
   })
   if (!project) return undefined
 
-  const markdownPath = `/layer2s/projects/${project.slug}.md`
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getL2ProjectEntry(project, helpers),
@@ -109,13 +108,11 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
         },
-        markdownAlternatePath: markdownPath,
       }),
     },
     props: {
       ...appLayoutProps,
       projectEntry,
-      markdownPath,
       queryState: helpers.dehydrate(),
     },
   }

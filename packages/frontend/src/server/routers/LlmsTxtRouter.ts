@@ -1,8 +1,8 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { MARKDOWN_AS_PLAIN_TEXT } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
-  MARKDOWN_AS_PLAIN_TEXT,
   type MarkdownAlternatePath,
   type MarkdownSection,
   renderMarkdown,

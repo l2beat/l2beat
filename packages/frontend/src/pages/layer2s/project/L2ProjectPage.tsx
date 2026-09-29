@@ -23,14 +23,12 @@ import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
-  markdownPath: string
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function L2ProjectPage({
   projectEntry,
-  markdownPath,
   queryState,
   selectedUpdateId,
   ...props
@@ -102,15 +100,11 @@ export function L2ProjectPage({
                     <DesktopProjectLinks
                       projectLinks={projectEntry.header.links}
                       discoUiHref={projectEntry.discoUiHref}
-                      markdownHref={markdownPath}
                     />
                   </div>
                 </div>
                 <div className="row-start-2">
-                  <ProjectL2Summary
-                    project={projectEntry}
-                    markdownHref={markdownPath}
-                  />
+                  <ProjectL2Summary project={projectEntry} />
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

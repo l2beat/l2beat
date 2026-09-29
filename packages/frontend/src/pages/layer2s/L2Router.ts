@@ -1,11 +1,8 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import { env } from '~/env'
-import {
-  serveMarkdown,
-  serveMarkdownIfPreferred,
-} from '~/server/markdown/markdownAlternate'
+import { registerPageWithMarkdown } from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -132,24 +129,12 @@ export function createL2Router(
     res.status(200).send(html)
   })
 
-  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getL2ProjectMarkdown(req.params.slug, manifest, cache)
-
-  // Before `:slug`, which would otherwise take "arbitrum.md" as the slug.
-  router.get(
-    '/layer2s/projects/:slug.md',
-    validateRoute({ params: v.object({ slug: v.string() }) }),
-    serveMarkdown(getProjectMarkdown),
-  )
-
-  router.get(
-    '/layer2s/projects/:slug',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: v.object({ update: v.string().optional() }),
-    }),
-    serveMarkdownIfPreferred(getProjectMarkdown),
-    async (req, res) => {
+  registerPageWithMarkdown(router, {
+    path: '/layer2s/projects/:slug',
+    params: v.object({ slug: v.string() }),
+    query: v.object({ update: v.string().optional() }),
+    getMarkdown: ({ slug }) => getL2ProjectMarkdown(slug, manifest, cache),
+    sendHtml: async (req, res) => {
       const data = await getL2ProjectData(req, manifest, cache)
       if (!data) {
         await sendNotFoundPage(manifest, render, req.originalUrl, res)
@@ -158,7 +143,7 @@ export function createL2Router(
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
-  )
+  })
 
   router.get(
     '/layer2s/projects/:slug/tvs-breakdown',

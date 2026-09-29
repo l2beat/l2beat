@@ -16,6 +16,12 @@ describe(getLinkHeader.name, () => {
     )
   })
 
+  it('adds the markdown alternate of project pages', () => {
+    expect(getLinkHeader('/layer2s/projects/arbitrum')).toEqual(
+      '<https://l2beat.com/layer2s/projects/arbitrum.md>; rel="alternate"; type="text/markdown", <https://l2beat.com/llms.txt>; rel="describedby"',
+    )
+  })
+
   it('finds the alternate for every path Express routes to the page', () => {
     expect(getLinkHeader('/Layer2s/Summary/')).toEqual(
       getLinkHeader('/layer2s/summary'),
