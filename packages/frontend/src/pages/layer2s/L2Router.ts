@@ -1,7 +1,11 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
 import { env } from '~/env'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -11,7 +15,10 @@ import { getL2ArchivedData } from './archived/getL2ArchivedData'
 import { getL2CompareData } from './compare/getL2CompareData'
 import { getL2CostsData } from './costs/getL2CostsData'
 import { getL2LivenessData } from './liveness/getL2LivenessData'
-import { getL2ProjectData } from './project/getL2ProjectData'
+import {
+  getL2ProjectData,
+  getL2ProjectMarkdown,
+} from './project/getL2ProjectData'
 import { getL2ProjectTvsBreakdownData } from './project/tvs-breakdown/getL2ProjectTvsBreakdownData'
 import { getL2RiskDataAvailabilityData } from './risk/data-availability/getL2RiskDataAvailabilityData'
 import { getL2RiskData } from './risk/getL2RiskData'
@@ -125,12 +132,23 @@ export function createL2Router(
     res.status(200).send(html)
   })
 
+  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
+    getL2ProjectMarkdown(req.params.slug, manifest, cache)
+
+  // Before `:slug`, which would otherwise take "arbitrum.md" as the slug.
+  router.get(
+    '/layer2s/projects/:slug.md',
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdown(getProjectMarkdown),
+  )
+
   router.get(
     '/layer2s/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
+    serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
       const data = await getL2ProjectData(req, manifest, cache)
       if (!data) {

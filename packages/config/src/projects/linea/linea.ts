@@ -22,7 +22,6 @@ import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -398,7 +397,7 @@ export const linea: ScalingProject = {
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],
   },
-  ossification: getOssification('linea', chainStart),
+  ossification: discovery.getOssification(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

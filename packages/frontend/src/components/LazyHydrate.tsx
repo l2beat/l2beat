@@ -11,6 +11,11 @@ interface Props {
 }
 
 const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
+// Skipping implies paint containment, which clips a highlighted card's ring
+// and glow to the wrapper; containment also makes the wrapper a stacking
+// context, so it has to rise itself for the glow to cover its neighbours.
+const SHOW_HIGHLIGHT_OVERFLOW =
+  'has-data-highlighted:[content-visibility:visible] has-data-highlighted:relative has-data-highlighted:z-10'
 // A drag fires resize events every frame; remeasuring waits for the last one.
 const RESIZE_SETTLE_MS = 200
 
@@ -42,6 +47,7 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
   const wrapperClassName = cn(
     className,
     '[contain-intrinsic-size:auto_800px] [contain:layout]',
+    SHOW_HIGHLIGHT_OVERFLOW,
   )
 
   const ref = useCallback(

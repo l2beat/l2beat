@@ -24,7 +24,6 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -182,7 +181,7 @@ export const scroll: ScalingProject = {
       { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
-  ossification: getOssification('scroll', chainStart),
+  ossification: discovery.getOssification(chainStart),
   config: {
     associatedTokens: ['SCR'],
     escrows: [

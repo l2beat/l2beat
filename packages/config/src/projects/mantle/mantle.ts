@@ -7,7 +7,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -67,7 +66,7 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
-  ossification: getOssification('mantle', genesisTimestamp),
+  ossification: discovery.getOssification(genesisTimestamp),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],

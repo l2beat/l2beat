@@ -1,5 +1,6 @@
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { env } from '~/env'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
@@ -15,6 +16,7 @@ export interface Metadata {
   openGraph: OpenGraph
   canonicalUrl: string
   excludeFromSearchEngines?: boolean
+  markdownAlternateUrl?: string
 }
 
 type PartialMetadata = {
@@ -37,6 +39,7 @@ export function getMetadata(
   const { title, description, url, openGraph, ...rest } = metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
+  const markdownAlternatePath = getMarkdownAlternatePath(strippedPath)
   return {
     title: title ?? 'L2BEAT - The state of the layer two ecosystem',
     description:
@@ -46,6 +49,10 @@ export function getMetadata(
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
     // We want canonical to always point to the production URL
     canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
+    // Production, like canonical: the markdown cites production URLs too
+    markdownAlternateUrl: markdownAlternatePath
+      ? PRODUCTION_ORIGIN + markdownAlternatePath
+      : undefined,
     ...rest,
   }
 }

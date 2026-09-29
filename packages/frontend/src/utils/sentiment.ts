@@ -10,7 +10,7 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
       return 'fill-green-300 dark:fill-green-450'
     case 'neutral':
     case 'UnderReview':
-      return 'fill-gray-400 dark:fill-zinc-700'
+      return 'fill-gray-400 dark:fill-zinc-500'
   }
 }
 
@@ -24,7 +24,7 @@ export function sentimentToOpaqueBgColor(sentiment: Sentiment): string {
       return 'bg-green-300 dark:bg-green-450'
     case 'neutral':
     case 'UnderReview':
-      return 'bg-gray-400 dark:bg-zinc-700'
+      return 'bg-gray-400 dark:bg-zinc-500'
   }
 }
 
