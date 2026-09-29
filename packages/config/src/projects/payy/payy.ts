@@ -34,6 +34,9 @@ export const payy: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA, BADGES.Other.Privacy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
+    redWarning: {
+      text: 'The protocol was [exploited](https://x.com/PeckShieldAlert/status/2103041942405960096) on September 24, 2026. Do not deposit funds.',
+    },
     name: 'Payy',
     slug: 'payy',
     description:
@@ -247,6 +250,7 @@ export const payy: ScalingProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     // TODO: privacy flow tracking is not configured yet. Deposits could be
     // tracked via the Rollup's `MintAdded(bytes32 indexed mint_hash, uint256

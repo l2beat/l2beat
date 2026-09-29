@@ -147,6 +147,7 @@ const roninTemplate = opStackL2({
       },
     ],
   },
+  ossification: discovery.getOssification(genesisTimestamp),
   milestones: [
     {
       title: 'Ronin migrates to an Ethereum L2',

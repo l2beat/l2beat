@@ -1,9 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "category": "shared",
   "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "executionDelay": {
+      "severity": "HIGH"
+    },
     "owner": {
       "permissions": [
         {
@@ -13,6 +17,7 @@
       ]
     },
     "executionDelay_fmt": {
+      "severity": "HIGH",
       "handler": { "type": "call", "method": "executionDelay", "args": [] },
       "edit": ["format", "FormatSeconds"]
     },
@@ -39,8 +44,7 @@
           "event": "MultisigMemberChanged",
           "where": ["!=", "#isMember", true]
         }
-      },
-      "severity": "HIGH"
+      }
     },
     "$members": {
       "copy": "multisigMembers"

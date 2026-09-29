@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CRISPProgram",
+  "category": "core",
+  "description": "CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.",
+  "ignoreMethods": [
+    "ballotDigest",
+    "censusModeOf",
+    "decodeTally",
+    "getParamsHash",
+    "getRoundData",
+    "getSlotIndex",
+    "inputCommitmentDeadline",
+    "inputCommitmentOf",
+    "pendingInputCount",
+    "votingPowerDivisorOf",
+    "votingPowerOf"
+  ],
+  "ignoreRelatives": ["risc0Verifier"],
+  "fields": {
+    "owner": {
+      "description": "Account controlling application-level proof configuration and requester-supplied census roots.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set census roots and replace the application RISC Zero verifier or guest image ID immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail."
+        }
+      ]
+    },
+    "interfold": {
+      "description": "Bound E3 coordinator."
+    },
+    "risc0Verifier": {
+      "description": "Application-level RISC Zero verifier. The external RISC Zero deployment is outside this discovery perimeter.",
+      "type": "CODE_CHANGE"
+    },
+    "imageId": {
+      "description": "Application-level RISC Zero guest image ID. It must agree with the protocol ciphertext verifier for successful completion.",
+      "type": "CODE_CHANGE"
+    },
+    "dataAvailabilityVerifier": {
+      "description": "Immutable verifier of the proof-backed data availability attestation for ballot inputs.",
+      "type": "CODE_CHANGE"
+    },
+    "inputAvailabilitySigner": {
+      "description": "Immutable signer whose attestations vouch for ballot input availability.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "attest that ballot inputs are available so a CRISP round can proceed."
+        }
+      ]
+    },
+    "availabilityFinalizationWindow": {
+      "description": "Immutable window after voting in which input availability must be finalized.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

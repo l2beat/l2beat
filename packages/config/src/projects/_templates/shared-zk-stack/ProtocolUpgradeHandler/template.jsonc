@@ -1,14 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
   "category": "shared",
   "ignoreRelatives": ["ZKSYNC_ERA"],
   "canActIndependently": false,
   "fields": {
     "emergencyUpgradeBoard": {
+      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     },
     "guardians": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -17,6 +20,7 @@
       ]
     },
     "securityCouncil": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -25,6 +29,7 @@
       ]
     },
     "L2_PROTOCOL_GOVERNOR": {
+      "severity": "HIGH",
       "permissions": [
         { "type": "interact", "description": "start (queue) upgrades." }
       ],
@@ -35,7 +40,6 @@
       "severity": "HIGH"
     },
     "emergencyUpgradesExecuted": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "_id",

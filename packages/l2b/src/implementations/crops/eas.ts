@@ -1,54 +1,37 @@
 import {
-  type Address,
-  type Chain,
-  createPublicClient,
-  createWalletClient,
-  decodeAbiParameters,
-  encodeAbiParameters,
-  type Hex,
-  http,
-  type Log,
-  type PublicClient,
-  parseAbi,
-  parseAbiParameters,
-  parseEventLogs,
-  publicActions,
-  zeroAddress,
-  zeroHash,
-} from 'viem'
-import { privateKeyToAccount } from 'viem/accounts'
-import { mainnet, sepolia } from 'viem/chains'
+  BigNumber,
+  Contract,
+  constants,
+  providers,
+  utils,
+  Wallet,
+} from 'ethers'
 import {
+  type Address,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_RESOLVER,
   ATTESTATION_SCHEMA_REVOCABLE,
   ATTESTATION_SCHEMA_UID,
-  type AttestationNetwork,
   type AttestationNetworkConfig,
+  type Hex,
 } from './easConfig'
 
-const CHAINS: Record<AttestationNetwork, Chain> = { sepolia, ethereum: mainnet }
-
-export const EAS_ABI = parseAbi([
-  'struct AttestationRequestData { address recipient; uint64 expirationTime; bool revocable; bytes32 refUID; bytes data; uint256 value; }',
-  'struct MultiAttestationRequest { bytes32 schema; AttestationRequestData[] data; }',
-  'struct RevocationRequestData { bytes32 uid; uint256 value; }',
-  'struct MultiRevocationRequest { bytes32 schema; RevocationRequestData[] data; }',
-  'struct Attestation { bytes32 uid; bytes32 schema; uint64 time; uint64 expirationTime; uint64 revocationTime; bytes32 refUID; address recipient; address attester; bool revocable; bytes data; }',
-  'function multiAttest(MultiAttestationRequest[] multiRequests) payable returns (bytes32[])',
-  'function multiRevoke(MultiRevocationRequest[] multiRequests) payable',
-  'function getAttestation(bytes32 uid) view returns (Attestation)',
+export const EAS_ABI = [
+  'function multiAttest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data)[] multiRequests) payable returns (bytes32[])',
+  'function multiRevoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data)[] multiRequests) payable',
+  'function getAttestation(bytes32 uid) view returns (tuple(bytes32 uid, bytes32 schema, uint64 time, uint64 expirationTime, uint64 revocationTime, bytes32 refUID, address recipient, address attester, bool revocable, bytes data))',
   'event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)',
-])
+]
 
-export const SCHEMA_REGISTRY_ABI = parseAbi([
-  'struct SchemaRecord { bytes32 uid; address resolver; bool revocable; string schema; }',
+export const SCHEMA_REGISTRY_ABI = [
   'function register(string schema, address resolver, bool revocable) returns (bytes32)',
-  'function getSchema(bytes32 uid) view returns (SchemaRecord)',
-])
+  'function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))',
+]
 
 /** Parsed from the one schema string config registers, so the codec cannot disagree with it. */
-export const ATTESTATION_PARAMS = parseAbiParameters(ATTESTATION_SCHEMA)
+export const ATTESTATION_PARAM_TYPES = ATTESTATION_SCHEMA.split(',').map(
+  (param) => param.trim().split(' ')[0],
+)
 
 /** Case-insensitive: EAS returns uids in lowercase, config may not. */
 export function isCurrentSchema(schema: string): boolean {
@@ -74,22 +57,22 @@ export interface CropPayload {
 }
 
 export function encodePayload(payload: CropPayload): Hex {
-  return encodeAbiParameters(ATTESTATION_PARAMS, [
+  return utils.defaultAbiCoder.encode(ATTESTATION_PARAM_TYPES, [
     payload.projectIds,
-    BigInt(payload.reviewedAt),
+    payload.reviewedAt,
     payload.revision,
-  ])
+  ]) as Hex
 }
 
 export function decodePayload(data: Hex): CropPayload {
-  const [projectIds, reviewedAt, revision] = decodeAbiParameters(
-    ATTESTATION_PARAMS,
+  const [projectIds, reviewedAt, revision] = utils.defaultAbiCoder.decode(
+    ATTESTATION_PARAM_TYPES,
     data,
   )
   return {
     projectIds: [...projectIds],
-    reviewedAt: Number(reviewedAt),
-    revision: Number(revision),
+    reviewedAt: BigNumber.from(reviewedAt).toNumber(),
+    revision: BigNumber.from(revision).toNumber(),
   }
 }
 
@@ -115,84 +98,76 @@ export interface Revocation {
 }
 
 /**
- * With the chain object viem supplies a public rpc when none is given and
- * checks the rpc's chain id before every write.
+ * Given the chain id, ethers refuses every call once the rpc reports a
+ * different network, so a wrong --rpc-url cannot write to the wrong chain.
  */
 export function createReader(
   network: AttestationNetworkConfig,
   rpcUrl?: string,
-): PublicClient {
-  return createPublicClient({
-    chain: CHAINS[network.name],
-    transport: http(rpcUrl),
-  })
+): providers.JsonRpcProvider {
+  return new providers.JsonRpcProvider(
+    rpcUrl ?? network.publicRpc,
+    network.chainId,
+  )
 }
 
-/** Signs and simulates: every write is dry-run against the node before it is sent. */
+/** Every write is gas-estimated against the node first, which reverts before anything is sent. */
 export function createSigner(
   network: AttestationNetworkConfig,
   privateKey: Hex,
   rpcUrl?: string,
-) {
-  return createWalletClient({
-    chain: CHAINS[network.name],
-    account: privateKeyToAccount(privateKey),
-    transport: http(rpcUrl),
-  }).extend(publicActions)
+): Signer {
+  return new Wallet(privateKey, createReader(network, rpcUrl))
 }
 
-export type Signer = ReturnType<typeof createSigner>
+export type Signer = Wallet
 
 export async function isSchemaRegistered(
-  reader: PublicClient,
+  reader: providers.JsonRpcProvider,
   network: AttestationNetworkConfig,
 ): Promise<boolean> {
-  const record = await reader.readContract({
-    address: network.schemaRegistry,
-    abi: SCHEMA_REGISTRY_ABI,
-    functionName: 'getSchema',
-    args: [ATTESTATION_SCHEMA_UID],
-  })
-  return record.uid !== zeroHash
+  const registry = new Contract(
+    network.schemaRegistry,
+    SCHEMA_REGISTRY_ABI,
+    reader,
+  )
+  const record = await registry.getSchema(ATTESTATION_SCHEMA_UID)
+  return record.uid !== constants.HashZero
 }
 
 export async function registerSchema(
   signer: Signer,
   network: AttestationNetworkConfig,
 ): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.schemaRegistry,
-    abi: SCHEMA_REGISTRY_ABI,
-    functionName: 'register',
-    args: [
-      ATTESTATION_SCHEMA,
-      ATTESTATION_SCHEMA_RESOLVER,
-      ATTESTATION_SCHEMA_REVOCABLE,
-    ],
-  })
-  return await signer.writeContract(request)
+  const registry = new Contract(
+    network.schemaRegistry,
+    SCHEMA_REGISTRY_ABI,
+    signer,
+  )
+  const tx = await registry.register(
+    ATTESTATION_SCHEMA,
+    ATTESTATION_SCHEMA_RESOLVER,
+    ATTESTATION_SCHEMA_REVOCABLE,
+  )
+  return tx.hash
 }
 
 export async function getAttestation(
-  reader: PublicClient,
+  reader: providers.JsonRpcProvider,
   network: AttestationNetworkConfig,
   uid: Hex,
 ): Promise<OnchainAttestation | undefined> {
-  const result = await reader.readContract({
-    address: network.eas,
-    abi: EAS_ABI,
-    functionName: 'getAttestation',
-    args: [uid],
-  })
-  if (result.uid === zeroHash) {
+  const eas = new Contract(network.eas, EAS_ABI, reader)
+  const result = await eas.getAttestation(uid)
+  if (result.uid === constants.HashZero) {
     return undefined
   }
   return {
     uid: result.uid,
     schema: result.schema,
     attester: result.attester,
-    time: Number(result.time),
-    revocationTime: Number(result.revocationTime),
+    time: BigNumber.from(result.time).toNumber(),
+    revocationTime: BigNumber.from(result.revocationTime).toNumber(),
     refUID: result.refUID,
     data: result.data,
   }
@@ -200,7 +175,7 @@ export async function getAttestation(
 
 /** By uid; a uid EAS does not know is simply absent. */
 export async function getAttestations(
-  reader: PublicClient,
+  reader: providers.JsonRpcProvider,
   network: AttestationNetworkConfig,
   uids: Hex[],
 ): Promise<Map<Hex, OnchainAttestation>> {
@@ -214,28 +189,49 @@ export async function getAttestations(
   return found
 }
 
+interface MultiAttestationRequest {
+  schema: Hex
+  data: {
+    recipient: Address
+    expirationTime: number
+    revocable: boolean
+    refUID: Hex
+    data: Hex
+    value: number
+  }[]
+}
+
+interface MultiRevocationRequest {
+  schema: Hex
+  data: { uid: Hex; value: number }[]
+}
+
 // No recipient (the subject is a protocol, not an account) and no expiry
 // (revocation is the only way an attestation stops being valid).
-function multiAttestArgs(attestations: NewAttestation[]) {
+function multiAttestArgs(
+  attestations: NewAttestation[],
+): [MultiAttestationRequest[]] {
   return [
     [
       {
         schema: ATTESTATION_SCHEMA_UID,
         data: attestations.map((attestation) => ({
-          recipient: zeroAddress,
-          expirationTime: 0n,
+          recipient: constants.AddressZero as Address,
+          expirationTime: 0,
           revocable: true,
           refUID: attestation.refUID,
           data: attestation.data,
-          value: 0n,
+          value: 0,
         })),
       },
     ],
-  ] as const
+  ]
 }
 
 /** EAS groups revocations by schema. */
-export function multiRevokeArgs(revocations: Revocation[]) {
+export function multiRevokeArgs(
+  revocations: Revocation[],
+): [MultiRevocationRequest[]] {
   const bySchema = new Map<Hex, Hex[]>()
   for (const revocation of revocations) {
     const uids = bySchema.get(revocation.schema) ?? []
@@ -245,9 +241,9 @@ export function multiRevokeArgs(revocations: Revocation[]) {
   return [
     [...bySchema].map(([schema, uids]) => ({
       schema,
-      data: uids.map((uid) => ({ uid, value: 0n })),
+      data: uids.map((uid) => ({ uid, value: 0 })),
     })),
-  ] as const
+  ]
 }
 
 export async function multiAttest(
@@ -255,13 +251,9 @@ export async function multiAttest(
   network: AttestationNetworkConfig,
   attestations: NewAttestation[],
 ): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.eas,
-    abi: EAS_ABI,
-    functionName: 'multiAttest',
-    args: multiAttestArgs(attestations),
-  })
-  return await signer.writeContract(request)
+  const eas = new Contract(network.eas, EAS_ABI, signer)
+  const tx = await eas.multiAttest(...multiAttestArgs(attestations))
+  return tx.hash
 }
 
 export async function multiRevoke(
@@ -269,18 +261,16 @@ export async function multiRevoke(
   network: AttestationNetworkConfig,
   revocations: Revocation[],
 ): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.eas,
-    abi: EAS_ABI,
-    functionName: 'multiRevoke',
-    args: multiRevokeArgs(revocations),
-  })
-  return await signer.writeContract(request)
+  const eas = new Contract(network.eas, EAS_ABI, signer)
+  const tx = await eas.multiRevoke(...multiRevokeArgs(revocations))
+  return tx.hash
 }
 
 /** EAS emits one Attested event per attestation, in submission order. */
-export function readAttestedUids(logs: Log[]): Hex[] {
-  return parseEventLogs({ abi: EAS_ABI, eventName: 'Attested', logs }).map(
-    (log) => log.args.uid,
-  )
+export function readAttestedUids(logs: providers.Log[]): Hex[] {
+  const eas = new utils.Interface(EAS_ABI)
+  const attested = eas.getEventTopic('Attested')
+  return logs
+    .filter((log) => log.topics[0] === attested)
+    .map((log) => eas.parseLog(log).args.uid)
 }

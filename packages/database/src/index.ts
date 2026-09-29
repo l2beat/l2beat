@@ -7,16 +7,14 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 export type {
   AbstractTokenRecord,
+  AbstractTokenSummary,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
-export type {
-  AggregatedInteropDeployedTokenRecord,
-  AggregatedInteropDeployedTokenStats,
-} from './repositories/AggregatedInteropDeployedTokenRepository'
+export type { AggregatedInteropDeployedTokenRecord } from './repositories/AggregatedInteropDeployedTokenRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
@@ -44,6 +42,11 @@ export type {
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
 export type {
+  DefiTvlRecord,
+  SummedDefiTvlRecord,
+} from './repositories/DefiTvlRepository'
+export type {
+  DeployedTokenAssignment,
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,
   DeployedTokenUpdateable,
@@ -80,8 +83,11 @@ export type {
 } from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
+  INTEROP_TRANSFER_RETENTION,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
+  type InteropTransferDeployedTokenPairStats,
+  type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,
@@ -136,14 +142,16 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
-  MintingPluginRecord,
   TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
   TokenRelationRoute,
   TokenRelationUpdateable,
 } from './repositories/TokenRelationRepository'
-export { normalizeTokenRelation } from './repositories/TokenRelationRepository'
+export {
+  isMintedAtEndpoint,
+  normalizeTokenRelation,
+} from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

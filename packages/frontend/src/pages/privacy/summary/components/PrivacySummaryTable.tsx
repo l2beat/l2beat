@@ -3,9 +3,7 @@ import {
   createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
-  type SortingState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
@@ -26,10 +24,13 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { toPrivacyProjectCellProject } from '../../toPrivacyProjectCellProject'
+import { AnonymitySetCell } from './AnonymitySetCell'
 import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -50,20 +51,7 @@ const columns = [
     header: 'Name',
     enableHiding: false,
     cell: (ctx) => {
-      const project = {
-        name: ctx.row.original.name,
-        shortName: ctx.row.original.shortName,
-        slug: ctx.row.original.slug,
-        icon: ctx.row.original.icon,
-        backgroundColor: undefined,
-        description: ctx.row.original.description,
-        quantumResistance: ctx.row.original.quantumResistant
-          ? 'privacy'
-          : undefined,
-        statuses: {
-          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
-        },
-      } as const
+      const project = toPrivacyProjectCellProject(ctx.row.original)
 
       return (
         <ProjectNameInfoTooltip project={project}>
@@ -86,6 +74,32 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => {
+        const { adversaries, href } = ctx.row.original
+        return (
+          <DotWithLabel
+            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
+            label={adversaries.promiseLabel}
+          />
+        )
+      },
+      sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
+      meta: {
+        align: 'center',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
+    },
+  ),
   ...withChangeSort(
     columnHelper,
     columnHelper.accessor('totalValueLockedUsd', {
@@ -161,28 +175,23 @@ const columns = [
     },
   }),
   columnHelper.accessor(
-    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
+    (entry) =>
+      entry.anonymitySet.status === 'available'
+        ? entry.anonymitySet.value
+        : undefined,
     {
-      id: 'adversaries',
-      header: PRIVACY_ASSESSMENT.title,
-      cell: (ctx) => {
-        const { adversaries, href } = ctx.row.original
-        return (
-          <DotWithLabel
-            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={adversaries.promiseLabel}
-          />
-        )
-      },
-      sortDescFirst: true,
-      sortingFn: (a, b) =>
-        sortTableValues(
-          getPrivacyAdversariesTableValue(a.original.adversaries),
-          getPrivacyAdversariesTableValue(b.original.adversaries),
-        ),
+      id: 'anonymitySet',
+      header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,
+      cell: (ctx) => (
+        <AnonymitySetCell
+          anonymitySet={ctx.row.original.anonymitySet}
+          projectName={ctx.row.original.name}
+        />
+      ),
+      sortUndefined: 'last',
       meta: {
-        align: 'center',
-        tooltip: PRIVACY_ASSESSMENT.tooltip,
+        align: 'right',
+        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       },
     },
   ),
@@ -269,27 +278,26 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
-
 export function PrivacySummaryTable({
   entries,
 }: {
   entries: PrivacySummaryEntry[]
 }) {
-  const [sorting, setSorting] = useState<SortingState>(initialSorting)
-
   const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
-      sorting,
       columnPinning: {
         left: ['#', 'logo'],
       },
     },
-    onSortingChange: setSorting,
+    // The server already hands the entries over in privacy order; starting the
+    // table on the same column marks its arrow so the ordering is visible.
+    initialState: {
+      sorting: [{ id: 'adversaries', desc: true }],
+    },
   })
 
   return (

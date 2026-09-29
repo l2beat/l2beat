@@ -4,12 +4,13 @@ import {
   mkdtempSync,
   renameSync,
   rmSync,
+  symlinkSync,
   utimesSync,
   writeFileSync,
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { fileExistsCaseSensitive } from './fsLayer'
+import { fileExistsCaseSensitive, fingerprintDirectoryTree } from './fsLayer'
 
 // Listings are cached per directory, so each test mutates a real temporary
 // directory between lookups and forces a distinct mtime to prove the cache
@@ -51,10 +52,62 @@ describe(fileExistsCaseSensitive.name, () => {
     expect(fileExistsCaseSensitive(join(root, 'Project'))).toEqual(false)
     expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
   })
+
+  it('does not trust a listing whose mtime is too recent', () => {
+    const now = new Date()
+    pinMtime(root, now)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+
+    mkdirSync(join(root, 'project'))
+    pinMtime(root, now)
+
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(true)
+  })
+
+  it('trusts a listing whose mtime is old', () => {
+    const old = new Date(Date.now() - 60_000)
+    pinMtime(root, old)
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+
+    mkdirSync(join(root, 'project'))
+    pinMtime(root, old)
+
+    expect(fileExistsCaseSensitive(join(root, 'project'))).toEqual(false)
+  })
+})
+
+describe(fingerprintDirectoryTree.name, () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), 'fsLayer-'))
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('rejects symlinks', () => {
+    mkdirSync(join(root, 'template'))
+    writeFileSync(join(root, 'shapes.json'), '{}')
+    symlinkSync(
+      join(root, 'shapes.json'),
+      join(root, 'template', 'shapes.json'),
+    )
+
+    expect(() => fingerprintDirectoryTree(root)).toThrow(
+      'Symlinks are not supported',
+    )
+  })
 })
 
 // Coarse-grained filesystems can give two quick mutations the same mtime.
 function bumpMtime(directory: string) {
   const future = new Date(Date.now() + 60_000)
   utimesSync(directory, future, future)
+}
+
+// Pinning the same mtime around a change simulates both landing in one tick.
+function pinMtime(directory: string, time: Date) {
+  utimesSync(directory, time, time)
 }

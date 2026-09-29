@@ -1,6 +1,6 @@
 # @l2beat/frontend
 
-The dynamic, public-facing Next.js frontend of L2BEAT.
+The dynamic, public-facing frontend of L2BEAT.
 
 ## Setup
 
@@ -13,8 +13,8 @@ pnpm build:dependencies
 ```
 
 ## Scripts
-- `pnpm dev` - run the Next.js development server
-- `pnpm dev:mock` - run the Next.js development server with mock data
+- `pnpm dev` - run the development server
+- `pnpm dev:mock` - run the development server with mock data
 - `pnpm build` - compile the production build
 - `pnpm start` - start the production server
 - `pnpm start:mock` - start the production server with mock data
@@ -32,6 +32,8 @@ pnpm build:dependencies
 - `pnpm test` - run the tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm test-all-pages` - test all pages
+- `pnpm perf:resize` - build and check a drag-resize of each page in `e2e/resize-perf/ceilings.json` against its ceiling (also runs as part of `test:e2e`)
+- `pnpm perf:resize:ratchet` - build, measure, and lower the resize ceilings to the current source
 
 ### Environment variables
 If you are running `pnpm dev:mock` you do not need any environment variables.

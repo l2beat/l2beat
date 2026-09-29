@@ -11,6 +11,7 @@ import { v } from '@l2beat/validate'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
+  EtherscanNoDataResponse,
   OneTransactionListResult,
   TransactionListResult,
   tryParseEtherscanResponse,
@@ -182,7 +183,8 @@ export class EtherscanClient implements IEtherscanClient {
     }
   }
 
-  // Returns undefined if the method is not supported by API.
+  // Returns undefined if the method is not supported by API or the explorer
+  // has no creation record (EOAs, precompiles added after genesis).
   async getContractDeploymentTx(
     address: EthereumAddress,
   ): Promise<Hash256 | undefined> {
@@ -197,6 +199,9 @@ export class EtherscanClient implements IEtherscanClient {
         contractaddresses: address.toString(),
       },
     )
+    if (response === null) {
+      return undefined
+    }
 
     const tx = ContractCreatorAndCreationTxHashResult.parse(response)[0]
 
@@ -290,6 +295,12 @@ export class EtherscanClient implements IEtherscanClient {
     const response = await this.httpClient.fetch(url, {
       timeout: this.timeoutMs,
     })
+
+    if (action === 'getcontractcreation') {
+      if (EtherscanNoDataResponse.safeParse(response).success) {
+        return null
+      }
+    }
 
     const etherscanResponse = tryParseEtherscanResponse(response)
 

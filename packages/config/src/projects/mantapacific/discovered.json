@@ -1,7 +1,7 @@
 {
   "name": "mantapacific",
   "timestamp": 1787230124,
-  "configHash": "0x75caed9155c84608d681c263f126e33b40bcb7af4fbd9e5a050b38ef5af5438c",
+  "configHash": "0x1c5ee19b94b5494094783283ad0ebb7cc9bde4c16ba4724323573552e1324c5b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -109,6 +109,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224835,
       "sinceBlock": 18095723,
@@ -132,6 +133,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224907,
       "sinceBlock": 18095729,
@@ -146,6 +148,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5": "L1ChugSplashProxy",
         "eth:0x62b257A1b1fC81c4e6E5Dc5b47F1E6184341Cd58": "L1StandardBridge"
@@ -207,6 +210,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224919,
@@ -243,6 +247,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310": "ResolvedDelegateProxy",
         "eth:0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f": "L1CrossDomainMessenger"
@@ -270,6 +275,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224895,
@@ -311,10 +317,12 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -391,6 +399,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224871,
@@ -423,6 +432,7 @@
         "SYSTEM_CONFIG": "eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622": "Proxy",
         "eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388": "OptimismPortal"
@@ -979,13 +989,13 @@
     "mantapacific/FinalityRelayerManager": "0xc0b6211e00f61dfe8911cd14e7a0d28057c9a61faf30900d9ba008210430f254",
     "mantapacific/L2OutputOracle_FinalityProvider": "0xa2d43a71bd121156db784aa64cb0c3149d1f0b6e60a0a97102bdb964f97d407d",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
+    "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
+    "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
+    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25796430 },
-  "permissionsConfigHash": "0xf75d6ee5575dd8a43cb0fbe7cca699f8485f994e21a60c50e72379ab7aef202f",
+  "permissionsConfigHash": "0xac621023f58b5113f94501582a25e64d72a19658b2b0b8eab13335fc7c4eaa25",
   "permissions": {
     "eth:0x170f4f5a53901d40f8394eBBB2E2B5eC536EBC21": {
       "receivedPermissions": [
@@ -1029,8 +1039,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xa2DCa85BB892De55D8B262d1806114733106e8D1" }
           ]
@@ -1179,8 +1188,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",

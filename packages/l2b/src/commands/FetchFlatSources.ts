@@ -2,7 +2,7 @@ import { getDiscoveryPaths } from '@l2beat/discovery'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import { createCliLogger } from '../implementations/common/CliLogger'
 import {
   fetchFlatSources,
   saveIntoDirectory,
@@ -42,7 +42,6 @@ export const FetchFlatSources = command({
   },
   handler: async (args) => {
     const paths = getDiscoveryPaths()
-    const logger = getPlainLogger()
     if (
       !args.confirmed &&
       paths.discovery !== undefined &&
@@ -55,11 +54,13 @@ export const FetchFlatSources = command({
       return
     }
 
-    const flat = await fetchFlatSources(logger, args.backendUrl)
+    const cli = createCliLogger({ output: process.stdout, quiet: args.quiet })
+    cli.log(`Fetching flat sources from ${chalk.magenta(args.backendUrl)}`)
+    const flat = await fetchFlatSources(cli, args.backendUrl)
 
     if (args.outputPath !== undefined) {
-      saveIntoDirectory(logger, flat, args.outputPath)
+      saveIntoDirectory(cli, flat, args.outputPath)
     }
-    saveIntoDiscovery(logger, flat, paths.discovery)
+    saveIntoDiscovery(cli, flat, paths.discovery)
   },
 })

@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x5fbdcdcc173aa1f06f224f3786aa6d5d09e971c4
+Generated with discovered.json: 0x07d8f5879b6f0808ad02b8c2a87efd0521309758
 
 # Diff at Sat, 22 Aug 2026 12:49:14 GMT:
 
@@ -7,7 +7,7 @@ Generated with discovered.json: 0x5fbdcdcc173aa1f06f224f3786aa6d5d09e971c4
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of Cloaked's ENS CCIP-Read OffchainResolver and the EOA that controls its gateway and signer.
 
 ## Initial discovery
 

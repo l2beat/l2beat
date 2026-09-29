@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contract used to update the verifier and keep track of current and old versions.",
+  "critical": true,
   "category": "core",
   "ignoreMethods": ["getVerifier"],
   "fields": {
@@ -13,6 +14,7 @@
       "description": "Each element of the array says which version of verifier is registered under this index in latestVerifier array."
     },
     "latestVerifier": {
+      "severity": "HIGH",
       "handler": {
         "type": "array",
         "maxLength": 20,

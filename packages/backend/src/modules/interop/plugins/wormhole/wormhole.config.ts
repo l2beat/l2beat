@@ -64,7 +64,11 @@ export function getWormholeCoreAddresses(
 }
 
 const DOCS_URL = 'https://wormhole.com/docs/reference/contract-addresses/'
-const CHAIN_IDS_DOCS_URL = 'https://wormhole.com/docs/reference/chain-ids/'
+// The docs no longer publish a chain ID table and point to this file as the
+// source of truth. Chain IDs are declared as `ChainIDSolana ChainID = 1`.
+const CHAIN_IDS_SOURCE_URL =
+  'https://raw.githubusercontent.com/wormhole-foundation/wormhole/main/sdk/vaa/structs.go'
+const CHAIN_ID_DECLARATION = /^\s*ChainID(\w+)\s+ChainID\s*=\s*(\d+)/gm
 
 // Wormhole Standard Relayer — same address on all EVM chains (CREATE2 deployment).
 // No longer listed on the Wormhole docs page, so we hardcode it.
@@ -72,59 +76,29 @@ const WORMHOLE_RELAYER = EthereumAddress(
   '0x27428DD2d3DD32A4D7f7C497eAaa23130d894911',
 )
 
-// Map our chain names to Wormhole docs chain names
-const CHAIN_NAME_TO_DOCS: Record<string, string> = {
-  bsc: 'bnb smart chain',
-  polygonpos: 'polygon',
+// Map normalized upstream chain names (docs labels, SDK constant names) to ours
+const UPSTREAM_CHAIN_NAME_TO_CHAIN: Record<string, string> = {
+  bnbsmartchain: 'bsc',
+  polygon: 'polygonpos',
+  robinhoodchain: 'robinhood',
 }
 
-function normalizeDocsChainName(chainName: string): string {
-  return chainName
+function toChainName(upstreamName: string): string {
+  const normalized = upstreamName
     .toLowerCase()
     .replace(/\(.+?\)/g, '')
     .replace(/[^a-z0-9]/g, '')
+  return UPSTREAM_CHAIN_NAME_TO_CHAIN[normalized] ?? normalized
 }
 
-const DOCS_CHAIN_NAME_TO_CHAIN = Object.fromEntries(
-  Object.entries(CHAIN_NAME_TO_DOCS).map(([chain, docsChain]) => [
-    normalizeDocsChainName(docsChain),
-    chain,
-  ]),
-)
-
-function toDocsChainName(chainName: string): string {
-  return CHAIN_NAME_TO_DOCS[chainName] ?? chainName
-}
-
-function toChainNameFromDocs(chainName: string): string | undefined {
-  const normalized = normalizeDocsChainName(chainName)
-  return DOCS_CHAIN_NAME_TO_CHAIN[normalized] ?? normalized
-}
-
-export function parseWormholeChainIdNetworks(html: string): WormholeNetwork[] {
-  const $ = cheerio.load(html)
-  const table = $('table').first()
+export function parseWormholeChainIds(goSource: string): WormholeNetwork[] {
   const networks: WormholeNetwork[] = []
-
-  table.find('tbody tr').each((_, row) => {
-    const cells = $(row).find('td')
-    if (cells.length < 2) return
-
-    const chain = toChainNameFromDocs($(cells[0]).text().trim())
-    const wormholeChainIdText =
-      $(cells[1]).find('code').first().text().trim() ||
-      $(cells[1]).text().trim()
-    if (!/^\d+$/.test(wormholeChainIdText)) return
-
-    const wormholeChainId = Number(wormholeChainIdText)
-    if (!chain || !Number.isInteger(wormholeChainId)) return
-
-    networks.push({
-      chain,
-      wormholeChainId,
-    })
-  })
-
+  for (const [, name, id] of goSource.matchAll(CHAIN_ID_DECLARATION)) {
+    const wormholeChainId = Number(id)
+    // ChainIDUnset = 0 is a sentinel, not a chain
+    if (wormholeChainId === 0) continue
+    networks.push({ chain: toChainName(name), wormholeChainId })
+  }
   return networks
 }
 
@@ -192,15 +166,22 @@ export class WormholeConfigPlugin
   async getLatestNetworks(): Promise<WormholeNetwork[]> {
     const [response, chainIdsResponse] = await Promise.all([
       this.http.fetchRaw(DOCS_URL, { timeout: 10_000 }),
-      this.http.fetchRaw(CHAIN_IDS_DOCS_URL, { timeout: 10_000 }),
+      this.http.fetchRaw(CHAIN_IDS_SOURCE_URL, { timeout: 10_000 }),
     ])
 
-    const [html, chainIdsHtml] = await Promise.all([
+    const [html, chainIdsSource] = await Promise.all([
       response.text(),
       chainIdsResponse.text(),
     ])
     const $ = cheerio.load(html)
-    const chainIdNetworks = parseWormholeChainIdNetworks(chainIdsHtml)
+    const chainIdNetworks = parseWormholeChainIds(chainIdsSource)
+    // The sources are scraped, so parsing nothing means the file format or URL
+    // changed - fail loudly instead of emptying the config.
+    if (chainIdNetworks.length === 0) {
+      throw new Error(
+        'Failed to parse Wormhole chain IDs from the SDK source, the file format or URL likely changed',
+      )
+    }
 
     // Parse Core Contracts (first tabbed-block, first table = mainnet)
     const coreContractsTable = $('.tabbed-block').first().find('table').first()
@@ -236,7 +217,7 @@ export class WormholeConfigPlugin
         table.find('tbody tr').each((__, row) => {
           const cells = $(row).find('td')
           if (cells.length === 2) {
-            const chain = $(cells[0]).text().trim().toLowerCase()
+            const chain = toChainName($(cells[0]).text().trim())
             const address = $(cells[1]).find('code').text().trim()
 
             if (
@@ -252,11 +233,9 @@ export class WormholeConfigPlugin
       }
     })
 
-    // The docs pages are scraped, so parsing zero contracts means the page
-    // structure (or URL) changed - fail loudly instead of emptying the config.
-    if (evmContracts.length === 0 || chainIdNetworks.length === 0) {
+    if (evmContracts.length === 0) {
       throw new Error(
-        'Failed to parse Wormhole networks from docs, the page structure or URLs likely changed',
+        'Failed to parse Wormhole core contracts from docs, the page structure or URL likely changed',
       )
     }
 
@@ -319,14 +298,13 @@ export class WormholeConfigPlugin
         const selected = validNonZero[0]
         if (!selected) return undefined
 
-        const docsChainName = toDocsChainName(chain.name.toLowerCase())
         return {
           chain: chain.name,
           chainId: chain.id,
           wormholeChainId: selected.wormholeChainId,
           coreContract: selected.coreContract,
           relayer: WORMHOLE_RELAYER,
-          tokenBridge: tokenBridgeByChain.get(docsChainName),
+          tokenBridge: tokenBridgeByChain.get(chain.name),
         }
       } catch (error) {
         this.logger.debug('Failed to resolve Wormhole core for chain', {

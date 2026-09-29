@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1766738255,
+      "type": "state",
+      "contract": "eth:0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6",
+      "transaction": "0xb86dbcdb6e9eed8947e8330b5e40dd341d9299a71f639733390a49fc6f8b31a3",
+      "updateId": "92c67c45",
+      "reason": "SequencerInbox: DAC keyset changed (dacKeyset; SetValidKeyset 0x0938f6618ee91c38f66dee5c7f45bec7d2ea07501d71c3aa230b54b92fec2629 0x00000000000)."
+    }
+  ]
+}

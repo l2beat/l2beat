@@ -3,7 +3,7 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { type WithProjectIcon, withProjectIcon } from '~/utils/withProjectIcon'
 import {
-  getProjectTokensEntries as getProjectTokensEntries,
+  getProjectTokensEntries,
   type ProjectTvsBreakdownTokenEntry,
 } from '../tvs/breakdown/getProjectTokensEntries'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'

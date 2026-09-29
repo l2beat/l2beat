@@ -1,10 +1,12 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ProxyAdmin",
+  "critical": true,
   "description": "Administration contract for other contract proxies.",
   "ignoreRelatives": ["addressManager"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     }
   }

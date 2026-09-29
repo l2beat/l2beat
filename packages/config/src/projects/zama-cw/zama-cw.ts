@@ -205,6 +205,7 @@ export const zamaCw: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
       type: 'not-applicable',

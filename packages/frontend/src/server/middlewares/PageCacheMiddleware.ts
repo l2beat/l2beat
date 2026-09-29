@@ -15,7 +15,7 @@ import type { NextFunction, Request, Response } from 'express'
  * - stale-if-error=3600: the edge keeps serving the expired copy for up to
  *   1 h if the origin returns 5xx, so the site stays up.
  */
-const PAGE_CACHE_CONTROL =
+export const PAGE_CACHE_CONTROL =
   'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600'
 
 /**

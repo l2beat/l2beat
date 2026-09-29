@@ -2,7 +2,10 @@ import { ProjectDatabase } from './ProjectDatabase'
 import { getProjects } from './processing/getProjects'
 import { getTokenList } from './tokens/tokens'
 
-main()
+main().catch((error: unknown) => {
+  console.error(error)
+  process.exitCode = 1
+})
 async function main() {
   const db = new ProjectDatabase('build/db.sqlite')
   await db.init()

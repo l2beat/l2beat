@@ -1,6 +1,22 @@
+import {
+  EIP712_methods,
+  EIP7821_methods,
+  ERC20ROUTER_methods,
+  ERC4337_methods,
+  MULTICALLV3_methods,
+  type Operation,
+  SAFE_methods,
+} from '@l2beat/shared/uops'
 import { FourByteClient } from './FourByteClient'
-import { methods } from './methods'
-import type { Operation } from './types'
+
+const methods = [
+  ...ERC4337_methods,
+  ...SAFE_methods,
+  ...MULTICALLV3_methods,
+  ...EIP712_methods,
+  ...EIP7821_methods,
+  ...ERC20ROUTER_methods,
+]
 
 interface CountedOperation {
   level: number
@@ -13,8 +29,13 @@ function countOperations(
   operation: Operation,
   level: number,
 ): CountedOperation {
-  if (operation.type === 'static') {
-    return { level, name: operation.name, count: operation.count, children: [] }
+  if (operation.type !== 'recursive') {
+    return {
+      level,
+      name: operation.name ?? 'static',
+      count: operation.count,
+      children: [],
+    }
   }
 
   const selector = operation.calldata.slice(0, 10)
@@ -31,7 +52,7 @@ function countOperations(
     count += result.count
     children.push(result)
   }
-  return { level, name: method.name, count, children }
+  return { level, name: method.name ?? selector, count, children }
 }
 
 export async function countUserOperations(calldata: string) {

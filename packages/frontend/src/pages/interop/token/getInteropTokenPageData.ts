@@ -4,9 +4,11 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
-import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
+import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { getTokenGraphs } from '~/server/features/tokens/getTokenGraphs'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -23,8 +25,7 @@ export async function getInteropTokenPageData(
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const interopChains = getInteropChains()
-  const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
+  const activeInteropChains = getActiveInteropChains()
   const activeInteropChainIds = activeInteropChains.map((chain) => chain.id)
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
     manifest,
@@ -102,33 +103,35 @@ async function getCachedData({
   activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
+  const [abstractTokens, snapshotTimestamp, interopProjects] =
+    await Promise.all([
+      getInteropAbstractTokens(activeInteropChainIds),
+      getAggregatedInteropSnapshotTimestamp(),
+      ps.getProjects({ select: ['interopConfig'] }),
+    ])
   const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments, projectsWithChains, interopProjects] =
-    await Promise.all([
-      getInteropTokenData({
-        tokenId: token.id,
-        ...apiSelection,
-      }),
-      getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-      ps.getProjects({
-        select: ['chainConfig'],
-      }),
-      ps.getProjects({
-        select: ['interopConfig'],
-      }),
-    ])
+  const [tokenData, relationsGraph] = await Promise.all([
+    getInteropTokenData(
+      { tokenId: token.id, ...apiSelection },
+      { snapshotTimestamp, interopProjects },
+    ),
+    getRelationsGraph(token.id),
+  ])
 
+  const deploymentsCount =
+    relationsGraph?.nodes.reduce(
+      (sum, node) => sum + node.deployments.length,
+      0,
+    ) ?? 0
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
-    projectsWithChains,
-    interopProjects,
-    deployments,
+    deploymentsCount,
+    relationsGraph,
   )
 
   return {
@@ -139,5 +142,17 @@ async function getCachedData({
     tokenEntry,
     tokenData,
     apiSelection,
+  }
+}
+
+/** The page stays useful without its deployments section, so a failed build only hides it. */
+async function getRelationsGraph(tokenId: string) {
+  try {
+    return (await getTokenGraphs()).graphs.get(tokenId)
+  } catch (error) {
+    getLogger()
+      .for('getInteropTokenPageData')
+      .error('Token graphs unavailable', { tokenId, error })
+    return undefined
   }
 }

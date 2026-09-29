@@ -221,8 +221,8 @@ export function createInteropModule({
     const relayApiClient = new RelayApiClient(
       new HttpClient(),
       logger,
-      config.interop.relay.apiKey,
-      { callsPerMinute: config.interop.relay.callsPerMinute },
+      config.interop.relay.apiKeys,
+      { callsPerMinutePerKey: config.interop.relay.callsPerMinutePerKey },
     )
     const relayRootIndexer = new RelayRootIndexer(
       logger,

@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
@@ -33,15 +34,10 @@ const RAILGUN_WITHDRAWAL_EVENT =
 interface TrackedToken {
   address: string
   symbol: string
-  minimumAmounts?: string[]
 }
 
 const TRACKED_TOKENS: TrackedToken[] = [
-  {
-    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    symbol: 'WETH',
-    minimumAmounts: ['100000000000000000', '10000000000000000000'],
-  },
+  { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH' },
   { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', symbol: 'USDT' },
   { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', symbol: 'USDC' },
   { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI' },
@@ -117,6 +113,7 @@ const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
+  const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol]
 
   return {
     token: {
@@ -138,9 +135,7 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
           resolved.coingeckoListingTimestamp,
         ),
         anonymitySet:
-          token.minimumAmounts === undefined
-            ? undefined
-            : { minimumAmounts: token.minimumAmounts },
+          minimumAmounts === undefined ? undefined : { minimumAmounts },
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',
@@ -167,6 +162,7 @@ export const railgun: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -241,6 +237,7 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',
@@ -281,7 +278,7 @@ export const railgun: BaseProject = {
           'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatNumber(railStaked)} RAIL**, the rest is circulating supply.`,
           'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
           'Voting venue':
-            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of \`createPropsal()\` call on the voting contract.',
+            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of `createPropsal()` call on the voting contract.',
           'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
           Quorum: `**${formatNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
           'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,

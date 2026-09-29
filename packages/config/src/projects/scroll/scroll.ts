@@ -63,6 +63,7 @@ const slowUpgradeDelay = discovery.getContractValue<number>(
 
 const finalizationPeriod = 0 // state root immediately finalized when proven
 const chainId = 534352
+const chainStart = UnixTime(1696917600)
 
 export const scroll: ScalingProject = {
   type: 'layer2',
@@ -163,7 +164,7 @@ export const scroll: ScalingProject = {
     name: 'scroll',
     chainId,
     explorerUrl: 'https://scrollscan.com',
-    sinceTimestamp: UnixTime(1696917600),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -180,6 +181,7 @@ export const scroll: ScalingProject = {
       { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
+  ossification: discovery.getOssification(chainStart),
   config: {
     associatedTokens: ['SCR'],
     escrows: [

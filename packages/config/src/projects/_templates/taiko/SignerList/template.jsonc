@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SignerList (Security Council)",
+  "critical": true,
   "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
   "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
   "ignoreRelatives": ["settings"],
@@ -33,10 +34,10 @@
       }
     },
     "$threshold": {
-      "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.",
+      "description": "Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract.",
       "handler": {
         "type": "hardcoded",
-        "value": 7
+        "value": 4
       }
     },
     "settings": {

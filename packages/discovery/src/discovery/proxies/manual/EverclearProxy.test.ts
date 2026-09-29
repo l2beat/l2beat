@@ -95,21 +95,21 @@ describe(getEverclearProxy.name, () => {
 
     const logs = [
       Upgraded(EMI0_R),
-      ModuleAddressUpdated(modules[0]?.toString()!, M0I0_R, M0I1_R),
-      ModuleAddressUpdated(modules[3]?.toString()!, M3I0_R, M3I1_R),
+      ModuleAddressUpdated(modules[0]!.toString(), M0I0_R, M0I1_R),
+      ModuleAddressUpdated(modules[3]!.toString(), M3I0_R, M3I1_R),
       Upgraded(MAIN_IMPLEMENTATION_R),
       ModuleAddressUpdated(
-        modules[2]?.toString()!,
+        modules[2]!.toString(),
         M2I0_R,
         MODULE_IMPLEMENTATIONS_R[2]!,
       ),
       ModuleAddressUpdated(
-        modules[0]?.toString()!,
+        modules[0]!.toString(),
         M0I1_R,
         MODULE_IMPLEMENTATIONS_R[0]!,
       ),
       ModuleAddressUpdated(
-        modules[3]?.toString()!,
+        modules[3]!.toString(),
         M3I1_R,
         MODULE_IMPLEMENTATIONS_R[3]!,
       ),

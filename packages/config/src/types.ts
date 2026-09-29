@@ -476,6 +476,7 @@ export interface EtherscanApi {
 export interface SourcifyApi {
   type: 'sourcify'
   chainId: number
+  url?: string
 }
 
 // #endregion
@@ -1039,6 +1040,30 @@ export type ProjectDefiCategory =
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
+  tvl?: ProjectDefiTvlConfig
+}
+
+export type ProjectDefiTvlConfig =
+  | {
+      /** Uses L2BEAT TVS data and requires the project to define tvsConfig. */
+      source: 'l2beat'
+    }
+  | {
+      /** Uses external DeFiLlama data and must not be combined with tvsConfig. */
+      source: 'defillama'
+      /** DeFiLlama protocol slug used by /protocol/{slug}. */
+      protocolSlug: string
+      /** First timestamp included in the historical import. */
+      sinceTimestamp: UnixTime
+      /** Explicit allowlist of researched chains. */
+      chains: ProjectDefiTvlChain[]
+    }
+
+export interface ProjectDefiTvlChain {
+  /** L2BEAT chain name persisted in the database. */
+  chain: string
+  /** Exact key used by DeFiLlama in chainTvls/currentChainTvls. */
+  providerChain: string
 }
 
 export type ProjectExternalDependency =
@@ -1064,6 +1089,12 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
+  /**
+   * Chains on which L2BEAT tracks this protocol's deployment, mostly through
+   * project discovery. Each chain needs a project with a matching chainConfig
+   * for its icon.
+   */
+  trackedOn: string[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
@@ -1351,7 +1382,11 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
   (
     | {
         anonymitySet: {
-          /** Minimum deposit amounts in token base units. */
+          /**
+           * Public deposit-amount thresholds in token base units. Each value
+           * defines a cohort of depositors whose deposit was at least that
+           * amount. These are analytical thresholds, not protocol minimums.
+           */
           minimumAmounts: string[]
         }
         address: ChainSpecificAddress
@@ -1906,9 +1941,8 @@ export interface ProjectDiscoveryInfo {
 }
 
 export interface ProjectDiscoveryUpdate {
-  /** The diffHistory.md entry id (DiffHistoryEntry.id): derived from the
-   *  header date and chain point only, so it survives description edits and
-   *  matches ossification criticalUpdates. */
+  /** The diffHistory.md entry id (DiffHistoryEntry.id), shared with
+   *  ossification.json anchors and ossification criticalUpdates. */
   id: string
   date: string
   /** Run timestamp; header date for legacy block-numbered entries; null when

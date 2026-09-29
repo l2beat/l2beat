@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "timestamp": 1770639543,
-  "configHash": "0xe08bf65db7a24ffd0560000cabd8199efad7cf8d76c36e82021c97a7fad7ce83",
+  "configHash": "0xf0e37bb2f85febde3556deeb01a52ed75ab3a6952d4037a2df0532120afa1170",
   "entries": [
     {
       "address": "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
@@ -19,6 +19,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
@@ -93,6 +94,10 @@
             ]
           }
         }
+      },
+      "fieldMeta": {
+        "executionDelay": { "severity": "HIGH" },
+        "executionDelay_fmt": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
@@ -239,6 +244,7 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -503,6 +509,18 @@
         "validators": ["eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"]
       },
       "fieldMeta": {
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" },
+        "getSettlementLayer": {
+          "severity": "HIGH",
+          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+        },
         "getAdmin": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
@@ -520,7 +538,6 @@
           "severity": "HIGH",
           "description": "l1da, l2da"
         },
-        "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
           "description": "0 - Rollup, 1 - Validium"
@@ -579,6 +596,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
@@ -613,6 +631,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
@@ -659,6 +678,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
@@ -669,7 +689,10 @@
         "verificationKeyHash": "0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84"
       },
       "fieldMeta": {
+        "PLONK_VERIFIER": { "severity": "HIGH" },
+        "FFLONK_VERIFIER": { "severity": "HIGH" },
         "verificationKeyHash": {
+          "severity": "HIGH",
           "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
         }
       },
@@ -726,6 +749,7 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769799107,
       "sinceBlock": 24349594,
@@ -797,6 +821,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
+      "critical": true,
       "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1745941307,
       "sinceBlock": 22375679,
@@ -813,6 +838,8 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -832,6 +859,7 @@
       ],
       "proxyType": "immutable",
       "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
+      "critical": true,
       "deployerAddress": "gateway:0x0000000000000000000000000000000000008007",
       "sinceTimestamp": 1761040360,
       "sinceBlock": 74512,
@@ -1408,19 +1436,19 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
-    "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
+    "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
     "shared-zk-stack/ExecutionMultisigValidatorTimelock": "0xa78d6a65e5fdcbca480e1c592bb20e3bd69cc36c22e445b229309a14133737e2",
     "shared-zk-stack/GatewayTransactionFilterer": "0xa76aef97935fb7a6867df3455e3fc9e7034f5c104c8330e8dd9cd9c34d1302ed",
     "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
+    "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0x05b2a8c18cdc4b02bbb7d0c0cc54c27227521f69862243065036e5a22116f303",
+  "permissionsConfigHash": "0xcf5f1b989c8084364b85eae87f351af9902f17b72ba7c98cdc13f36a2867a9f0",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {
     "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8": {

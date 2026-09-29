@@ -53,6 +53,7 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectOssification,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingContractsProgramHash,
@@ -152,6 +153,7 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
+  ossification?: ProjectOssification
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
@@ -534,6 +536,7 @@ function orbitStackCommon(
         ? templateVars.chainConfig?.gasTokens
         : ['ETH'],
     },
+    ossification: templateVars.ossification,
     technology: {
       sequencing:
         templateVars.nonTemplateTechnology?.sequencing ??
