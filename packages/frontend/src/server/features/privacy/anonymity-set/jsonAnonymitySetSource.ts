@@ -14,17 +14,16 @@ import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
  *   `pnpm privacy:starknet-anonymity-set`
  * - key registrations (Umbra), by PrivacyKeyRegistrationIndexer /
  *   `pnpm privacy:key-registration-anonymity-set`
+ * The files are committed next to the frontend so its Docker image, which
+ * does not include the backend package, contains them.
  */
 const JSON_FILES = [
   process.env.PRIVACY_STARKNET_ANONYMITY_SET_FILE ??
-    resolve(
-      process.cwd(),
-      '../backend/cache/privacy-starknet-anonymity-set.json',
-    ),
+    resolve(process.cwd(), 'data/privacy/privacy-starknet-anonymity-set.json'),
   process.env.PRIVACY_KEY_REGISTRATION_ANONYMITY_SET_FILE ??
     resolve(
       process.cwd(),
-      '../backend/cache/privacy-key-registration-anonymity-set.json',
+      'data/privacy/privacy-key-registration-anonymity-set.json',
     ),
 ]
 

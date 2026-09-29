@@ -230,12 +230,12 @@ export async function getPrivacyConfig(
     starknetAnonymitySetConfigs,
     starknetAnonymitySetFile: env.string(
       'PRIVACY_STARKNET_ANONYMITY_SET_FILE',
-      'cache/privacy-starknet-anonymity-set.json',
+      '../frontend/data/privacy/privacy-starknet-anonymity-set.json',
     ),
     keyRegistrationAnonymitySetConfigs,
     keyRegistrationAnonymitySetFile: env.string(
       'PRIVACY_KEY_REGISTRATION_ANONYMITY_SET_FILE',
-      'cache/privacy-key-registration-anonymity-set.json',
+      '../frontend/data/privacy/privacy-key-registration-anonymity-set.json',
     ),
     flowConfigs,
     starknetFlowConfigs,
