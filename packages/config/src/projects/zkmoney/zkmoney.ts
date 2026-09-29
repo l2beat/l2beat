@@ -8,7 +8,6 @@ import {
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
@@ -162,7 +161,7 @@ export const zkmoney: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: getOssification('zkmoney'),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
