@@ -49,6 +49,62 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('names the proof system of a project without a category', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          category: undefined,
+          proofSystemType: 'Validity',
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('- Proof system: Validity\n')
+    expect(summary).not.toInclude('- Type:')
+  })
+
+  it('qualifies TVS with its warnings, nested under the TVS fact', () => {
+    const tvs = ENTRY.header.tvs
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          tvs: tvs && {
+            ...tvs,
+            warning: {
+              value: 'The TVS includes tokens locked in a third-party bridge.',
+              sentiment: 'warning',
+            },
+            tokens: {
+              ...tvs.tokens,
+              warnings: [
+                {
+                  value:
+                    'The ARB token associated with Arbitrum One accounts for 40% of the TVS.',
+                  sentiment: 'bad',
+                },
+              ],
+            },
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      [
+        'canonical messaging bridge)',
+        '  - **Warning:** The TVS includes tokens locked in a third-party bridge. (sentiment: warning)',
+        '  - **Warning:** The ARB token associated with Arbitrum One accounts for 40% of the TVS. (sentiment: bad)',
+        '- Past day UOPS:',
+      ].join('\n'),
+    )
+  })
+
   it('surfaces project warnings before the facts', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({

@@ -6,11 +6,12 @@ import {
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import { withSentiment } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
+  type ProjectFact,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
-import { formatStage } from '~/server/markdown/renderProjectSection'
 import {
   COMPARED_TO_PERIOD,
   formatPercent,
@@ -57,7 +58,11 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
 }
 
 /** Labels and order follow the stats block at the top of the HTML page. */
-function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
+function getFacts({
+  header,
+  stageConfig,
+  hostChainName,
+}: ProjectL2Entry): ProjectFact[] {
   return compact([
     header.tvs?.breakdown && {
       label: 'Total Value Secured',
@@ -65,6 +70,11 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
         header.tvs.breakdown,
         header.tvs.additionalTrustAssumptionsPercentage,
       ),
+      // The HTML shows these next to the TVS value and the tokens breakdown.
+      warnings: compact([
+        header.tvs.warning,
+        ...header.tvs.tokens.warnings,
+      ]).map((w) => withSentiment(w.value, w.sentiment)),
     },
     header.activity && {
       label: 'Past day UOPS',
@@ -72,7 +82,10 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
     },
     stageConfig.stage !== 'NotApplicable' && {
       label: 'Stage',
-      value: formatStage(stageConfig),
+      value:
+        stageConfig.stage === 'UnderReview'
+          ? 'Under review'
+          : stageConfig.stage,
     },
     header.gasTokens &&
       header.gasTokens.length > 0 && {

@@ -10,12 +10,12 @@ import {
   bulletList,
   heading,
   joinBlocks,
-  nestHeadings,
   subsection,
+  textSubsection,
   warning,
+  withSentiment,
 } from './markdown'
 import {
-  formatRiskValue,
   renderProjectSection,
   type SectionContext,
 } from './renderProjectSection'
@@ -30,11 +30,18 @@ export interface ProjectMarkdown extends SectionContext {
   name: string
   summary: {
     warnings: string[]
-    facts: { label: string; value: string }[]
+    facts: ProjectFact[]
     risks: RosetteValue[]
     description: string | undefined
   }
   sections: ProjectDetailsSection[]
+}
+
+export interface ProjectFact {
+  label: string
+  value: string
+  /** Caveats on how to read the value; the HTML shows them as a warning icon next to it. */
+  warnings?: string[]
 }
 
 export function renderProjectMarkdown(page: ProjectMarkdown): string {
@@ -70,14 +77,23 @@ function renderSummary(summary: ProjectMarkdown['summary']): string {
   return joinBlocks([
     heading(2, 'Summary'),
     ...summary.warnings.map(warning),
-    bulletList(summary.facts.map((fact) => `${fact.label}: ${fact.value}`)),
+    bulletList(summary.facts.map(renderFact)),
     subsection(
       3,
       'Risks',
       bulletList(
-        summary.risks.map((risk) => `${risk.name}: ${formatRiskValue(risk)}`),
+        summary.risks.map(
+          (risk) =>
+            `${risk.name}: ${withSentiment(risk.value, risk.sentiment)}`,
+        ),
       ),
     ),
-    subsection(3, 'About', nestHeadings(summary.description ?? '', 4)),
+    textSubsection(3, 'About', summary.description),
   ])
+}
+
+/** Warnings nest under the fact they qualify, so they cannot be read as applying to the whole project. */
+function renderFact(fact: ProjectFact) {
+  const warnings = (fact.warnings ?? []).map((text) => `\n  - ${warning(text)}`)
+  return `${fact.label}: ${fact.value}${warnings.join('')}`
 }

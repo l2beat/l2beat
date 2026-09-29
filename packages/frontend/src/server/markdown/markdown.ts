@@ -19,7 +19,11 @@ export function subsection(
 }
 
 /** For config text, whose own headings must nest under the subsection heading. */
-export function textSubsection(level: number, title: string, text: string) {
+export function textSubsection(
+  level: number,
+  title: string,
+  text: string | undefined,
+) {
   return subsection(level, title, nestHeadings(text, level + 1))
 }
 
@@ -61,9 +65,11 @@ export function absolutizeLinks(markdown: string, origin: string) {
 /**
  * Config text can carry its own headings (e.g. "## Architecture"). Shifted so
  * the shallowest one lands at `level`, they nest under the heading the text is
- * rendered below instead of breaking the page outline.
+ * rendered below instead of breaking the page outline. Optional config text
+ * that is absent renders as no block at all.
  */
-export function nestHeadings(content: string, level: number) {
+export function nestHeadings(content: string | undefined, level: number) {
+  if (content === undefined) return ''
   const lines = content.split('\n')
   const headingDepthByLine = findHeadingDepthByLine(lines)
   if (headingDepthByLine.size === 0) return content
