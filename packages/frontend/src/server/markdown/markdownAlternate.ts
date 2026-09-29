@@ -58,13 +58,12 @@ export function sendMarkdownDocument(
   }
   res
     .status(markdown === undefined ? 404 : 200)
-    .header('Content-Type', MARKDOWN_AS_PLAIN_TEXT)
+    .header('Content-Type', MARKDOWN_CONTENT_TYPE)
     .header('Link', LLMS_TXT_LINK)
     .send(markdown ?? NOT_FOUND_MARKDOWN)
 }
 
-// Not text/markdown: some agent fetchers (ChatGPT's) reject that type outright.
-export const MARKDOWN_AS_PLAIN_TEXT = 'text/plain; charset=utf-8'
+export const MARKDOWN_CONTENT_TYPE = 'text/markdown; charset=utf-8'
 
 /** The link relation the llms.txt spec recommends for pointing at it. */
 export const LLMS_TXT_LINK = `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`
@@ -96,7 +95,7 @@ function serveMarkdownIfPreferred<P, Q>(
     res
       .status(markdown === undefined ? 404 : 200)
       .header('Cache-Control', 'private, no-store')
-      .header('Content-Type', NEGOTIATED_MARKDOWN)
+      .header('Content-Type', MARKDOWN_CONTENT_TYPE)
       .send(markdown ?? NOT_FOUND_MARKDOWN)
   }
 }
@@ -106,6 +105,4 @@ function prefersMarkdown(req: Pick<Request, 'accepts'>) {
   return req.accepts(['text/html', 'text/markdown']) === 'text/markdown'
 }
 
-// Safe to send only because the client asked for this type in Accept.
-const NEGOTIATED_MARKDOWN = 'text/markdown; charset=utf-8'
 const NOT_FOUND_MARKDOWN = '# Not found\n'

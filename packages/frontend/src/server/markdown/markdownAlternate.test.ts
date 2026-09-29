@@ -10,8 +10,7 @@ import { registerPageWithMarkdown } from './markdownAlternate'
 // pins the route order: the page pattern registered first would take
 // "arbitrum.md" as the slug and answer HTML.
 describe(registerPageWithMarkdown.name, () => {
-  // Plain text, because ChatGPT's fetcher rejects text/markdown responses.
-  it('serves the .md suffix as markdown in plain text', async () => {
+  it('serves the .md suffix as markdown', async () => {
     const response = await fetchFromRouter(
       createRouter(),
       '/layer2s/projects/arbitrum.md',
@@ -19,7 +18,7 @@ describe(registerPageWithMarkdown.name, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
     expect(await response.text()).toEqual('# arbitrum\n')
   })
@@ -46,7 +45,7 @@ describe(registerPageWithMarkdown.name, () => {
 
     expect(response.status).toEqual(404)
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
     expect(response.headers.get('cache-control')).toEqual(null)
     expect(await response.text()).toEqual('# Not found\n')

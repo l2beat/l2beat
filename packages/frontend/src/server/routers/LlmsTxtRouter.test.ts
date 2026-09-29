@@ -15,13 +15,12 @@ import { createPublicApiRouter } from './PublicApiRouter'
 // as having a markdown version, so a new or removed one fails here until
 // llms.txt is updated.
 describe(createLlmsTxtRouter.name, () => {
-  // Plain text, because ChatGPT's fetcher rejects text/markdown responses.
-  it('serves markdown as plain text', async () => {
+  it('serves markdown', async () => {
     const response = await fetchFromRouter(createLlmsTxtRouter(), '/llms.txt')
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
   })
 
