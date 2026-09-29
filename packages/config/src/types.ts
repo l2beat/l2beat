@@ -1893,7 +1893,7 @@ export interface ProjectOssificationCriticalUpdate {
 
 export interface ProjectOssificationContract {
   name: string
-  address: string
+  address: ChainSpecificAddress
   isVerified: boolean
   /** Start of the battle-tested clock: last critical change, or deployment
    *  if the contract never changed. */

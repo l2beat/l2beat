@@ -1,4 +1,9 @@
-import { Bytes, Hash160, UnixTime } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  Hash160,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectOssificationContract } from '../types'
 import {
@@ -23,7 +28,9 @@ function row(
 ): ProjectOssificationContract {
   return {
     name: 'A',
-    address: 'eth:0xA',
+    address: ChainSpecificAddress(
+      'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+    ),
     isVerified: true,
     ossifyingSince: NOW - 3 * YEAR,
     codeChangeCount: 0,
