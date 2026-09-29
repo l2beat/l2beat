@@ -58,10 +58,12 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
 
   // EXPERIMENT: markdown served uncompressed with Content-Length, to test whether
   // ChatGPT's fetcher rejects compressed text/markdown. no-transform stops
-  // Cloudflare from compressing it at the edge.
+  // Cloudflare from compressing it at the edge; identity stops the proxy.
   app.use((req, res, next) => {
     if (req.path === '/llms.txt' || req.path.endsWith('.md')) {
       res.header('Cache-Control', 'no-transform')
+      // Proxies skip responses that already declare an encoding
+      res.header('Content-Encoding', 'identity')
     }
     next()
   })
