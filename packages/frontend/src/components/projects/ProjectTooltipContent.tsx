@@ -108,7 +108,9 @@ function TooltipSection({
   return (
     <div className={tooltipSectionVariants({ variant })}>
       <div className="flex items-start gap-2">
-        <div className="shrink-0">{icon}</div>
+        <div className="shrink-0" aria-hidden>
+          {icon}
+        </div>
         <div className="min-w-0">
           <Markdown inline ignoreGlossary>
             {children}

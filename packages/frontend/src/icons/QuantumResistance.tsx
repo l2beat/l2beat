@@ -1,4 +1,5 @@
 import type { SVGProps } from 'react'
+import { imgRoleIfLabelled } from './imgRoleIfLabelled'
 
 export function QuantumResistanceIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -7,7 +8,7 @@ export function QuantumResistanceIcon(props: SVGProps<SVGSVGElement>) {
       height="32"
       viewBox="0 0 32 32"
       fill="none"
-      role="img"
+      {...imgRoleIfLabelled(props['aria-label'])}
       {...props}
     >
       <g clipPath="url(#clip0_1250_76)">

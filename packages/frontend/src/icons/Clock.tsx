@@ -1,3 +1,4 @@
+import { imgRoleIfLabelled } from './imgRoleIfLabelled'
 import type { SvgIconProps } from './SvgIcon'
 
 export function ClockIcon(props: SvgIconProps) {
@@ -7,7 +8,7 @@ export function ClockIcon(props: SvgIconProps) {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      role="img"
+      {...imgRoleIfLabelled(props['aria-label'])}
       {...props}
     >
       <g clipPath="url(#clip0_6337_40212)">

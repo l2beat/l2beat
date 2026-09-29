@@ -1,3 +1,4 @@
+import { describeRisks } from '../describeRisks'
 import type { RosetteValue } from '../types'
 
 export function PizzaElementLink({
@@ -11,5 +12,11 @@ export function PizzaElementLink({
 }) {
   if (disableSectionLinking || !elementValue.href) return children
 
-  return <a href={elementValue.href}>{children}</a>
+  // Keyboard focus lands on the slice, not the SVG, so the slice carries its
+  // own name rather than relying on the rosette's <desc>.
+  return (
+    <a href={elementValue.href} aria-label={describeRisks([elementValue])}>
+      {children}
+    </a>
+  )
 }

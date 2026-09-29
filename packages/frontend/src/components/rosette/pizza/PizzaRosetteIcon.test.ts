@@ -37,6 +37,19 @@ describe(PizzaRosetteIcon.name, () => {
     expect(html).not.toInclude('alt-text')
   })
 
+  it('names each slice link, since focus lands on the link and not the SVG', () => {
+    const [first, ...rest] = VALUES
+    const html = renderToStaticMarkup(
+      createElement(PizzaRosetteIcon, {
+        values: [{ ...first!, href: '#sequencer' }, ...rest],
+      }),
+    )
+
+    expect(html).toInclude(
+      '<a href="#sequencer" aria-label="Sequencer failure: Self sequence, warning">',
+    )
+  })
+
   it('reports every risk as under review when the rosette is greyed out', () => {
     const html = renderToStaticMarkup(
       createElement(PizzaRosetteIcon, { values: VALUES, isUnderReview: true }),
