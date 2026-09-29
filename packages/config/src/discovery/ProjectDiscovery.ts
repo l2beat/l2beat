@@ -1109,6 +1109,7 @@ export class ProjectDiscovery {
         .map((discovery) =>
           loadOssificationInput(
             discovery,
+            this.reachableAddresses,
             this.configReader,
             now,
             projectStart,

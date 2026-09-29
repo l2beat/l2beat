@@ -41,9 +41,13 @@ The override remains valid when discovery does not find the contract any more.
 Set `untilTimestamp` on the override to keep the history of a contract that
 left the project.
 
-**Shared modules.** The perimeter of a project includes the whole perimeter of
-every shared module it references, not only the referenced contracts. These
-are the discoveries `ProjectDiscovery` loads with the project. Each module's
+**Shared modules.** The perimeter of a project includes the critical
+contracts of every shared module it references that the project can reach.
+These are the discoveries `ProjectDiscovery` loads with the project, and the
+reachability is the one it uses for contracts and permissions. A module
+contract the project cannot reach is left out together with its overrides and
+reviewed events. A retired contract known only from a module's
+`diffHistory.md` counts for every project that references it. Each module's
 contracts are judged by the module's own `config.jsonc`, templates,
 `diffHistory.md` and `ossification.json`. The project start also bounds the
 changes of the module. A module whose critical contracts have all retired
