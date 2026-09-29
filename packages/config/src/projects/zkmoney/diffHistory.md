@@ -8,7 +8,7 @@ Generated with discovered.json: 0x46dbf67d3948b4ec3d307cb693f14023e390e517
 
 ## Description
 
-Initial discovery of zk.money on the Aztec Network (prod generation deployed 2026-09-25).
+Initial discovery of zk.money on the Aztec Network.
 
 ## Initial discovery
 

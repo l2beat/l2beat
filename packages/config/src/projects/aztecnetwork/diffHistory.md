@@ -9,7 +9,7 @@ Generated with discovered.json: 0x1101497382272dc0f39d7849f98a2c3fa5764834
 
 ## Description
 
-Add the zk.money escrow (ZkMoneyPortal), which uses the Aztec canonical messaging bridge.
+Config: Add the zk.money escrow (ZkMoneyPortal), which uses the Aztec canonical messaging bridge. The full discovery is in the zkmoney config and not shown here for clarity.
 
 ## Watched changes
 
