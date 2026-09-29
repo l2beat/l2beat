@@ -39,6 +39,22 @@
       "transaction": "0xbfde7e5d076c1426906e91a647c8385f24587baf2845fb4485d956164c3bd118",
       "updateId": "b88b47e3",
       "reason": "OptimismPortal2: respectedGameType changed in the same transaction that set it on the AnchorStateRegistry."
+    },
+    {
+      "timestamp": 1789457183,
+      "type": "state",
+      "contract": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+      "transaction": "0x02fe71437f0c96dbac6e938383f48c8db7b0b2b6f18cfb5c4ea22960045b026b",
+      "updateId": "51a48b89",
+      "reason": "DisputeGameFactory: owner changed from OwnerContract to the TimelockController."
+    },
+    {
+      "timestamp": 1789460903,
+      "type": "state",
+      "contract": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+      "transaction": "0x96125f2a9e99bf85d7f20565d4c26eb2e4074ffff4c1f6fc81918586b41172a6",
+      "updateId": "51a48b89",
+      "reason": "DisputeGameFactory: proxy admin changed to a new ProxyAdmin owned by the TimelockController."
     }
   ]
 }

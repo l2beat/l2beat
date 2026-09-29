@@ -1716,7 +1716,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25575013 },
-  "permissionsConfigHash": "0xb59392becd8c7f444487ffd199952011a287ff7f254cb99639183e093c624643",
+  "permissionsConfigHash": "0x1a48d34ed0286459ad4115bcff459c9c2d62478556ef828b7030f944f0488fbc",
   "permissions": {
     "eth:0x060b915cA4904b56adA63565626b9c97F6CaD212": {
       "receivedPermissions": [
@@ -1735,6 +1735,12 @@
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
           "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0fD13C7f11d95070cE5CF31BAf1aCf9355BF4578",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "interact",

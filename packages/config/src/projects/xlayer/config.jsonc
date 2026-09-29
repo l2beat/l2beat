@@ -31,17 +31,7 @@
       }
     },
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
-      "fields": {
-        "owner": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "set the dispute game implementation and initial bond for any game type."
-            }
-          ]
-        }
-      }
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
     "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": {
       "fields": {
