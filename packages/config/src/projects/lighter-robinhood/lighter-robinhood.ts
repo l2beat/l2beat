@@ -53,7 +53,10 @@ export const lighterRobinhood: ScalingProject = {
     purposes: ['Exchange'],
     links: {
       websites: ['https://lighter.xyz', 'https://robinhood.com/chain/'],
-      explorers: ['https://robinhoodchain.blockscout.com/'],
+      explorers: [
+        'https://robin.etherscan.io',
+        'https://robinhoodchain.blockscout.com/',
+      ],
       documentation: [
         'https://robinhood.com/us/en/support/articles/robinhood-wallet-perpetual-futures/',
         'https://docs.robinhood.com/chain/',

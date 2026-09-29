@@ -15,7 +15,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toEqual('# arbitrum\n')
   })
@@ -42,7 +42,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
 
     expect(response.status).toEqual(404)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(response.headers.get('cache-control')).toEqual(null)
     expect(await response.text()).toEqual('# Not found\n')
@@ -58,7 +58,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
 
       expect(response.status).toEqual(200)
       expect(response.headers.get('content-type')).toEqual(
-        'text/markdown; charset=utf-8',
+        'text/plain; charset=utf-8',
       )
       expect(await response.text()).toEqual('# arbitrum\n')
     }

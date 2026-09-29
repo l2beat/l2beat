@@ -15,12 +15,12 @@ import { createPublicApiRouter } from './PublicApiRouter'
 // as having a markdown version, so a new or removed one fails here until
 // llms.txt is updated.
 describe(createLlmsTxtRouter.name, () => {
-  it('serves markdown', async () => {
+  it('serves markdown as plain text', async () => {
     const response = await fetchFromRouter(createLlmsTxtRouter(), '/llms.txt')
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
   })
 
