@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import type { GetFlowsGraphCaption } from '~/pages/interop/components/flows/graph/types'
@@ -14,6 +15,9 @@ import { DaFlowsStats } from './DaFlowsStats'
 import { getDaFlowsUnit, TIME_SCALE } from './daFlowsUnit'
 import { formatPosted } from './formatPosted'
 
+// A phone has room for the labels of this many bubbles, and no more
+const SMALL_SCREEN_RING_SIZE = 7
+
 const getCaption: GetFlowsGraphCaption = (node) =>
   node ? { text: formatPosted(node.totalVolume), tone: 'neutral' } : undefined
 
@@ -24,19 +28,14 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
   )
 
   const unit = getDaFlowsUnit(daLayer.id)
+  // the DA layer takes the middle, so the whole ring is free
+  const ringSize =
+    useBreakpoint() === 'xs' ? SMALL_SCREEN_RING_SIZE : MAX_SELECTED_CHAINS
 
   const graph = useMemo(
     () =>
-      data
-        ? buildDaFlowsGraph(
-            daLayer,
-            projects,
-            data,
-            // the DA layer takes the middle, so the whole ring is free
-            MAX_SELECTED_CHAINS,
-          )
-        : undefined,
-    [data, daLayer, projects],
+      data ? buildDaFlowsGraph(daLayer, projects, data, ringSize) : undefined,
+    [data, daLayer, projects, ringSize],
   )
 
   const [highlighted, setHighlighted] = useState<string>()
@@ -51,11 +50,8 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
       graph
         ? graph.nodes.map((node) => node.id)
         : // placeholders until the ranking is known
-          [daLayer.id, ...projects.map((p) => p.id)].slice(
-            0,
-            MAX_SELECTED_CHAINS + 1,
-          ),
-    [graph, daLayer.id, projects],
+          [daLayer.id, ...projects.map((p) => p.id)].slice(0, ringSize + 1),
+    [graph, daLayer.id, projects, ringSize],
   )
 
   const { valuePerParticle } = useScaledParticleCounts(
