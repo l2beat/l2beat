@@ -2,6 +2,7 @@ import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
+  MARKDOWN_AS_PLAIN_TEXT,
   type MarkdownAlternatePath,
   type MarkdownSection,
   renderMarkdown,
@@ -22,7 +23,7 @@ export function createLlmsTxtRouter() {
   ])
 
   router.get('/llms.txt', (_req, res) => {
-    res.header('Content-Type', 'text/plain; charset=utf-8').send(body)
+    res.header('Content-Type', MARKDOWN_AS_PLAIN_TEXT).send(body)
   })
 
   return router

@@ -7,7 +7,8 @@ import { serveMarkdown, serveMarkdownIfPreferred } from './markdownAlternate'
 // the HTML route) over a fake markdown source, then make real HTTP requests
 // with the Accept headers browsers and agents send and check what comes back.
 describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
-  it('serves the .md suffix as markdown', async () => {
+  // Plain text, because ChatGPT's fetcher rejects text/markdown responses.
+  it('serves the .md suffix as markdown in plain text', async () => {
     const response = await fetchFromRouter(
       createRouter(),
       '/projects/arbitrum.md',
@@ -15,7 +16,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toEqual('# arbitrum\n')
   })
@@ -28,7 +29,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
 
     expect(response.status).toEqual(404)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toEqual('# Not found\n')
   })
