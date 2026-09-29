@@ -701,9 +701,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",
@@ -3617,10 +3615,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -3825,12 +3820,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository. H-02 spans the FaultDisputeGame clock extension and the PreimageOracle challenge period.",
                 "majorFindings": 4,
-                "findingIds": [
-                  "H-02",
-                  "H-03",
-                  "H-04",
-                  "H-05"
-                ],
+                "findingIds": ["H-02", "H-03", "H-04", "H-05"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -3972,9 +3962,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "832c01759a98a77182470ab8f08f67a927224dfb461144a7a757647dd302f353",
@@ -8044,9 +8032,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",
@@ -16468,9 +16454,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "9166e1d5496a2cae73e440b08e6202f597e4ee03e12b4745e12aa6628ead8414",

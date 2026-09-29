@@ -471,9 +471,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -968,9 +966,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -1465,9 +1461,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -3123,9 +3117,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -3698,9 +3690,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -4195,9 +4185,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -4692,9 +4680,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -5189,9 +5175,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -5686,9 +5670,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -6183,9 +6165,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -6680,9 +6660,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -7177,9 +7155,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -7682,9 +7658,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5
@@ -8078,9 +8052,7 @@
                 "reviewPhase": "final commit",
                 "coverage": "Final audited commit; M-02 remains acknowledged.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "M-02"
-                ],
+                "findingIds": ["M-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5

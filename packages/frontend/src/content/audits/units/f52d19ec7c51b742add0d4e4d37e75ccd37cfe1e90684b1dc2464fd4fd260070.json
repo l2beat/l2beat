@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"f52d19ec7c51b742add0d4e4d37e75ccd37cfe1e90684b1dc2464fd4fd260070","name":"ERC165","kind":"abstract","lines":8,"source":"abstract contract ERC165 is IERC165 {\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IERC165).interfaceId;\n    }\n}","resolutions":{"d293c6ecba42b698":{"status":"identical","coveredLines":8,"match":{"origin":"other","collection":"arbitrum","relation":{"type":"name"},"rank":4,"matchedBy":"identity","auditedName":"ERC165","similarity":1,"reportId":"arbitrum/trailofbits-custom-fee-token-2024-08","repository":"OffchainLabs/token-bridge-contracts","path":"contracts/tokenbridge/libraries/ERC165.sol","commit":"6396a178e001da2b86509bb21c775488530fd541","commitTimestamp":"2023-09-07T08:11:22Z","url":"https://github.com/OffchainLabs/token-bridge-contracts/blob/6396a178e001da2b86509bb21c775488530fd541/contracts/tokenbridge/libraries/ERC165.sol","auditStatus":"partially_audited_without_major_findings","reviewPhase":"review of changes","coverage":"Only the PR #33 changes (Solidity 0.8 release with fee-token support; reviewed range 8cb573a...6396a17) were reviewed.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":2},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "f52d19ec7c51b742add0d4e4d37e75ccd37cfe1e90684b1dc2464fd4fd260070",
+  "name": "ERC165",
+  "kind": "abstract",
+  "lines": 8,
+  "source": "abstract contract ERC165 is IERC165 {\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IERC165).interfaceId;\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 8,
+      "match": {
+        "origin": "other",
+        "collection": "arbitrum",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "ERC165",
+        "similarity": 1,
+        "reportId": "arbitrum/trailofbits-custom-fee-token-2024-08",
+        "repository": "OffchainLabs/token-bridge-contracts",
+        "path": "contracts/tokenbridge/libraries/ERC165.sol",
+        "commit": "6396a178e001da2b86509bb21c775488530fd541",
+        "commitTimestamp": "2023-09-07T08:11:22Z",
+        "url": "https://github.com/OffchainLabs/token-bridge-contracts/blob/6396a178e001da2b86509bb21c775488530fd541/contracts/tokenbridge/libraries/ERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "review of changes",
+        "coverage": "Only the PR #33 changes (Solidity 0.8 release with fee-token support; reviewed range 8cb573a...6396a17) were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}
