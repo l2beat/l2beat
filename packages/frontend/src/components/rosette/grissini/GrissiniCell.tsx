@@ -24,7 +24,7 @@ export function GrissiniCell(props: GrissiniCellProps) {
     props.values.some((value) => value.sentiment === 'UnderReview')
 
   return (
-    <Tooltip>
+    <Tooltip contentInHtml>
       <TooltipTrigger
         className={cn(
           'flex h-[inherit] w-full items-center justify-center',

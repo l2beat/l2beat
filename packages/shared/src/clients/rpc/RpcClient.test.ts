@@ -56,6 +56,20 @@ describe(RpcClient.name, () => {
       )
     })
 
+    it('parses settledHeight when present', async () => {
+      const response = mockResponse(100)
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...response.result, settledHeight: '0x62' },
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlock(100, false)
+
+      expect(result.settledHeight).toEqual(98)
+    })
+
     it('do not include tx bodies', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
@@ -129,6 +143,19 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
+    it('keeps the block hash', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...mockReceipt, blockHash: '0xabcdef', status: '0x1' },
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result).toEqual({ ...mockReceipt, blockHash: '0xabcdef' })
+    })
+
     it('fetches tx receipt from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({

@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { Database } from 'sqlite3'
 import { diffAll } from './diff'
 import { diffsToHtml } from './html'
+import { diffsToText } from './text'
 import type { Project } from './types'
 
 main().catch((error: unknown) => {
@@ -11,10 +12,10 @@ main().catch((error: unknown) => {
 
 async function main() {
   const args = process.argv.slice(2)
-  if (args.length !== 1) {
-    throw new Error('Invalid argument count')
+  if (args.length !== 2) {
+    throw new Error('Usage: index.ts <output.html> <output.txt>')
   }
-  const outputPath = args[0]
+  const [htmlPath, textPath] = args
 
   const dbBefore = new Database('/tmp/compare/main/db.sqlite')
   const dbAfter = new Database('/tmp/compare/pr/db.sqlite')
@@ -22,22 +23,26 @@ async function main() {
   const commitBefore = readFileSync('/tmp/compare/main/commit', 'utf-8').trim()
   const commitAfter = readFileSync('/tmp/compare/pr/commit', 'utf-8').trim()
 
-  const projectBefore = (await query(dbBefore, 'SELECT * FROM projects'))
+  const projectsBefore = (await query(dbBefore, 'SELECT * FROM projects'))
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
   const projectsAfter = (await query(dbAfter, 'SELECT * FROM projects'))
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
 
-  const diffs = diffAll(projectBefore, projectsAfter)
+  const diffs = diffAll(projectsBefore, projectsAfter)
 
   if (diffs.length === 0) {
-    writeFileSync(outputPath, 'No changes detected')
+    writeFileSync(htmlPath, 'No changes detected')
+    writeFileSync(textPath, 'No changes detected')
     return
   }
 
-  const html = diffsToHtml({ diffs, commitBefore, commitAfter })
-  writeFileSync(outputPath, html)
+  writeFileSync(htmlPath, diffsToHtml({ diffs, commitBefore, commitAfter }))
+  writeFileSync(
+    textPath,
+    diffsToText({ projectsBefore, projectsAfter, commitBefore, commitAfter }),
+  )
 }
 
 function query(

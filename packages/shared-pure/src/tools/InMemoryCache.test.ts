@@ -17,23 +17,6 @@ describe(InMemoryCache.name, () => {
       expect(result).toEqual('test')
     })
 
-    it('should return value from fallback if it is expired', async () => {
-      const now = UnixTime.now()
-      const cache = new InMemoryCache({})
-      cache._set(['key'], { result: 'test', timestamp: now - 10000 })
-      const fallback = mockFn().resolvesTo('test2')
-
-      const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
-
-      expect(fallback).toHaveBeenCalled()
-      expect(cache._get(['key'])).toEqual({
-        result: 'test2',
-        timestamp: now,
-        maxLifetime: 1000,
-      })
-      expect(result).toEqual('test2')
-    })
-
     it('should not run fallback three times if three getData calls are ongoing', async () => {
       const cache = new InMemoryCache({})
       const fallback = mockFn().resolvesTo('test2')
@@ -394,29 +377,6 @@ describe(InMemoryCache.name, () => {
         expect(cache._get(['key'])).toEqual(undefined)
       })
 
-      it('should cache undefined when cacheNullish is set', async () => {
-        const now = UnixTime.now()
-        const cache = new InMemoryCache({})
-        const fallback = mockFn().resolvesTo(undefined)
-
-        await cache.get(
-          { key: ['key'], ttl: 1000, cacheNullish: true },
-          fallback,
-        )
-
-        expect(cache._get(['key'])).toEqual({
-          result: undefined,
-          timestamp: now,
-          maxLifetime: 1000,
-        })
-
-        await cache.get(
-          { key: ['key'], ttl: 1000, cacheNullish: true },
-          fallback,
-        )
-        expect(fallback).toHaveBeenCalledTimes(1)
-      })
-
       it('should still cache falsy values that are not nullish', async () => {
         const cache = new InMemoryCache({})
 
@@ -441,6 +401,44 @@ describe(InMemoryCache.name, () => {
 
       afterEach(() => {
         UnixTime.now = realNow
+      })
+
+      it('should return value from fallback if it is expired', async () => {
+        const cache = new InMemoryCache({})
+        cache._set(['key'], { result: 'test', timestamp: fakeNow - 10000 })
+        const fallback = mockFn().resolvesTo('test2')
+
+        const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
+
+        expect(fallback).toHaveBeenCalled()
+        expect(cache._get(['key'])).toEqual({
+          result: 'test2',
+          timestamp: fakeNow,
+          maxLifetime: 1000,
+        })
+        expect(result).toEqual('test2')
+      })
+
+      it('should cache undefined when cacheNullish is set', async () => {
+        const cache = new InMemoryCache({})
+        const fallback = mockFn().resolvesTo(undefined)
+
+        await cache.get(
+          { key: ['key'], ttl: 1000, cacheNullish: true },
+          fallback,
+        )
+
+        expect(cache._get(['key'])).toEqual({
+          result: undefined,
+          timestamp: fakeNow,
+          maxLifetime: 1000,
+        })
+
+        await cache.get(
+          { key: ['key'], ttl: 1000, cacheNullish: true },
+          fallback,
+        )
+        expect(fallback).toHaveBeenCalledTimes(1)
       })
 
       it('should sweep at most once per second', async () => {

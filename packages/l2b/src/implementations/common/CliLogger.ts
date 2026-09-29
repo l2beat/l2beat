@@ -1,4 +1,4 @@
-import { Logger, type LogLevel } from '@l2beat/backend-tools'
+import { formatRaw, Logger, type LogLevel } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import { stripVTControlCharacters } from 'util'
 
@@ -62,10 +62,11 @@ export class CliLogger {
   }
 
   toLogger(level: LogLevel): Logger {
+    const format = formatRaw()
     return Logger.INFO.configure({
       level,
       transports: [
-        { log: (entry) => this.log(entry.message), flush: () => {} },
+        { log: (entry) => this.log(format(entry)), flush: () => {} },
       ],
     })
   }

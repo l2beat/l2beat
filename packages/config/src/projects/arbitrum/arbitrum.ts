@@ -20,6 +20,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import {
   getNitroGovernance,
   getOrbitStackDaTracking,
@@ -32,8 +33,8 @@ const discovery = new ProjectDiscovery('arbitrum')
 
 const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 const l2BlockTimeMilliseconds = HARDCODED.ARBITRUM.L2_BLOCK_TIME_MILLISECONDS
-const timeboostExpressLaneAdvantageMilliseconds =
-  HARDCODED.ARBITRUM.TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS
+const pgaRoundsPerBlock = HARDCODED.ARBITRUM.PGA_ROUNDS_PER_BLOCK
+const pgaRoundMilliseconds = l2BlockTimeMilliseconds / pgaRoundsPerBlock
 
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
@@ -208,6 +209,8 @@ function formatWethAmount(amount: string): string {
 }
 
 const chainId = 42161
+// ~ Timestamp of block number 0 on Arbitrum
+const chainStart = UnixTime.fromDate(new Date('2021-05-28T22:15:00Z'))
 
 export const arbitrum: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
@@ -351,8 +354,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     chainId,
     explorerUrl: 'https://arbiscan.io',
     coingeckoPlatform: 'arbitrum-one',
-    // ~ Timestamp of block number 0 on Arbitrum
-    sinceTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -377,6 +379,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
+  ossification: getOssification('arbitrum', chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
       l2CoreQuorumPercent,
@@ -582,13 +585,13 @@ export const arbitrum: ScalingProject = orbitStackL2({
         trustedPreconfirmation: {
           value: `${l2BlockTimeMilliseconds} ms`,
           secondLine: `${l2BlockTimeMilliseconds} ms L2 block time`,
-          description: `The sequencer feed provides a trusted soft confirmation with no protocol enforcement or slashing. While a Timeboost express lane controller is active, non-express transactions are delayed by ${timeboostExpressLaneAdvantageMilliseconds} ms before ordering.`,
+          description: `The public sequencer feed provides a trusted soft confirmation per block with no protocol enforcement or slashing. A block closes early when it fills, up to ${pgaRoundsPerBlock * (1_000 / l2BlockTimeMilliseconds)} blocks per second. A paid Fast Feed publishes each transaction as soon as it is ordered and executed within a ${pgaRoundMilliseconds} ms round, before its block closes. These messages are tentative and can be lost if the sequencer fails mid-block.`,
           orderHint: l2BlockTimeMilliseconds / 1_000,
         },
         trustedOrdering: {
-          value: 'Timeboost',
-          secondLine: 'Auctioned express lane',
-          description: `The express lane controller, selected by auction for each round, receives a ${timeboostExpressLaneAdvantageMilliseconds} ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.`,
+          value: 'Priority gas auction',
+          secondLine: `Fee order per ${pgaRoundMilliseconds} ms round`,
+          description: `Transactions arriving during each ${pgaRoundMilliseconds} ms round (${pgaRoundsPerBlock} per ${l2BlockTimeMilliseconds} ms block) are included in descending priority fee order, with the sequencer's arrival time breaking ties. After each round, waiting transactions receive an anti-starvation boost to their queue position, not to the fee they pay. Priority fees are paid to the network fee account. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.`,
         },
         sequencer: {
           value: 'Centralized',
@@ -654,8 +657,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
           url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/sequencer',
         },
         {
-          title: 'Arbitrum - Timeboost launch',
-          url: 'https://blog.arbitrum.io/gattaca-titan-timeboost-live-on-arbitrum/',
+          title: 'Arbitrum documentation - Priority Gas Auctions',
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/priority-gas-auction/pga',
+        },
+        {
+          title: 'Arbitrum documentation - Fast Feed',
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/priority-gas-auction/fast-feed',
         },
         {
           title: 'Arbitrum documentation - High-availability sequencer',
@@ -683,6 +690,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Timeboost replaced by Priority Gas Auctions',
+      url: 'https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942',
+      date: '2026-09-23T00:00:00Z',
+      description:
+        'Transactions are ordered by priority fee in short rounds. A paid Fast Feed is introduced.',
+      type: 'general',
+    },
     {
       title: 'Bridge emergency upgrade',
       url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-24-05-2026/30910',

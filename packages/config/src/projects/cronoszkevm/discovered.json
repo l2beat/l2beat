@@ -1255,9 +1255,9 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25803139 },
-  "permissionsConfigHash": "0x2377bd25584fe0cc38b98965cc3cb0986d8b2e4df63b205a6826af68f4de1123",
+  "permissionsConfigHash": "0x5a6701e21a3025f1ae6b97f034f87c2f9833377ff76cde349ed7e127b8e5b7d0",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {

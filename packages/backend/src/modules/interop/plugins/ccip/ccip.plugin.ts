@@ -45,7 +45,9 @@ import {
 } from '../types'
 import {
   CCIPConfig,
+  getKnownOffRamps,
   getKnownOnRamps,
+  getOffRampsBySource,
   getOnRampsByDestination,
 } from './ccip.config'
 import { decodeCCIPV2Message } from './ccip.v2'
@@ -223,6 +225,33 @@ function findPrecedingTransferForToken(
   return undefined
 }
 
+// A transaction can send several CCIP messages. Each message's TokenPool and
+// CCTP events are emitted between the previous send event and its own, so the
+// source-side scan is bounded the same way as the destination side to avoid
+// attributing another message's tokens to this one.
+function getLogsSincePreviousSend(input: LogToCapture): LogToCapture['txLogs'] {
+  const currentLogIndex = input.log.logIndex ?? 0
+  const previousSendLogIndex = input.txLogs
+    .filter(
+      (log) => (log.logIndex ?? 0) < currentLogIndex && isCcipSendLog(log),
+    )
+    .reduce((max, log) => Math.max(max, log.logIndex ?? 0), -1)
+
+  return input.txLogs.filter(
+    (log) =>
+      (log.logIndex ?? 0) > previousSendLogIndex &&
+      (log.logIndex ?? 0) < currentLogIndex,
+  )
+}
+
+function isCcipSendLog(log: LogToCapture['log']): boolean {
+  return (
+    parseCCIPSendRequested(log, null) !== undefined ||
+    parseCCIPMessageSent(log, null) !== undefined ||
+    parseCCIPMessageSentV2(log, null) !== undefined
+  )
+}
+
 // --- Plugin ---
 
 const SOURCE_TOKEN_POOL_EVENTS = [
@@ -273,10 +302,12 @@ export class CCIPPlugin implements InteropPluginResyncable {
             )
           }
         }
-        for (const addr of Object.values(network.inboundLanes)) {
-          v15RecvAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, addr),
-          )
+        for (const addresses of Object.values(getOffRampsBySource(network))) {
+          for (const address of addresses) {
+            v15RecvAddresses.push(
+              ChainSpecificAddress.fromLong(network.chain, address),
+            )
+          }
         }
         for (const address of getKnownOnRamps(network)) {
           const chainAddress = ChainSpecificAddress.fromLong(
@@ -288,15 +319,14 @@ export class CCIPPlugin implements InteropPluginResyncable {
           v16SendAddresses.push(chainAddress)
           v2SendAddresses.push(chainAddress)
         }
-        if (network.offRamp) {
-          v16RecvAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, network.offRamp),
+        for (const address of getKnownOffRamps(network)) {
+          const chainAddress = ChainSpecificAddress.fromLong(
+            network.chain,
+            address,
           )
-        }
-        if (network.offRampV2) {
-          v2RecvAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, network.offRampV2),
-          )
+          // As with OnRamps, the event signature identifies the ramp generation.
+          v16RecvAddresses.push(chainAddress)
+          v2RecvAddresses.push(chainAddress)
         }
       } catch {
         // Chain not supported by ChainSpecificAddress, skip
@@ -371,8 +401,9 @@ export class CCIPPlugin implements InteropPluginResyncable {
     // --- v1.5 destination: ExecutionStateChanged from per-lane OffRamp ---
     const execChanged = parseExecutionStateChanged(input.log, null)
     if (execChanged) {
-      const srcChainEntry = Object.entries(network.inboundLanes).find(
-        ([_, address]) => address === EthereumAddress(input.log.address),
+      const logAddress = EthereumAddress(input.log.address)
+      const srcChainEntry = Object.entries(getOffRampsBySource(network)).find(
+        ([_, addresses]) => addresses.includes(logAddress),
       )
       if (!srcChainEntry) return
 
@@ -409,8 +440,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
     const execChangedV16 = parseExecutionStateChangedV16(input.log, null)
     if (execChangedV16) {
       if (
-        !network.offRamp ||
-        EthereumAddress(input.log.address) !== network.offRamp
+        !getKnownOffRamps(network).includes(EthereumAddress(input.log.address))
       )
         return
 
@@ -467,8 +497,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
     const execChangedV2 = parseExecutionStateChangedV2(input.log, null)
     if (execChangedV2) {
       if (
-        !network.offRampV2 ||
-        EthereumAddress(input.log.address) !== network.offRampV2
+        !getKnownOffRamps(network).includes(EthereumAddress(input.log.address))
       )
         return
 
@@ -498,7 +527,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
       tokenAddressFromEvent: boolean
     },
   ) {
-    const srcTokenInfo = this.collectSourceTokenInfo(input)
+    const sendLogs = getLogsSincePreviousSend(input)
+    const srcTokenInfo = this.collectSourceTokenInfo(sendLogs)
 
     if (opts.tokenAmounts.length === 0) {
       return [
@@ -528,7 +558,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
         wasBurned: srcTokenInfo[index]?.wasBurned,
         isCctpBacked:
           rawTokenAddress &&
-          this.isCctpBackedToken(input, rawTokenAddress, ta.amount)
+          this.isCctpBackedToken(sendLogs, rawTokenAddress, ta.amount)
             ? true
             : undefined,
       })
@@ -566,31 +596,26 @@ export class CCIPPlugin implements InteropPluginResyncable {
   }
 
   // Check if a token transfer was delegated to CCTP (e.g. USDC).
-  // Looks for a DepositForBurn event before the CCIP send event
+  // Looks for a DepositForBurn event among this message's logs
   // matching both token address and amount.
   private isCctpBackedToken(
-    input: LogToCapture,
+    sendLogs: LogToCapture['txLogs'],
     tokenAddress: string,
     amount: bigint,
   ): boolean {
     return (
-      findCctpDepositForBurn(input.txLogs, {
-        tokenAddress,
-        amount,
-        beforeLogIndex: input.log.logIndex ?? 0,
-      }) !== undefined
+      findCctpDepositForBurn(sendLogs, { tokenAddress, amount }) !== undefined
     )
   }
 
-  // Collect source-side token info from TokenPool events before the send event.
+  // Collect source-side token info from this message's TokenPool events.
   // Handles both the separate (Locked/Burned) and unified (LockedOrBurned)
   // formats.
   // Events appear in the same order as tokenAmounts[] in the message.
-  private collectSourceTokenInfo(input: LogToCapture): CcipSrcToken[] {
+  private collectSourceTokenInfo(
+    logsBeforeSend: LogToCapture['txLogs'],
+  ): CcipSrcToken[] {
     const result: CcipSrcToken[] = []
-    const logsBeforeSend = input.txLogs.filter(
-      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
-    )
 
     const processedTokens = new Set<string>()
     const addPrecedingToken = (

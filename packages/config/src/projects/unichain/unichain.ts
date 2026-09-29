@@ -7,6 +7,7 @@ import {
 import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
@@ -128,6 +129,7 @@ export const unichain: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
     ],
   },
+  ossification: getOssification('unichain', genesisTimestamp),
   milestones: [
     {
       title: 'UNIfication proposal executed',

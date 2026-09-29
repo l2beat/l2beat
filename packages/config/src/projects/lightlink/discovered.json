@@ -1105,7 +1105,7 @@
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641"
   },
   "usedBlockNumbers": { "ethereum": 22208513 },
-  "permissionsConfigHash": "0x84b89ee482c56e7568e5ca627712b240578b0717f453ff8893d36ba46dd3d175",
+  "permissionsConfigHash": "0xf2458fd7b816465277eb1f2376cfb2fb43ed2c08fe7b6a822807a90d26dc59c9",
   "permissions": {
     "eth:0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": {
       "receivedPermissions": [

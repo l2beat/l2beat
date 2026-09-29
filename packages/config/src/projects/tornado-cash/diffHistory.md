@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xa7438c8073e99200a8f3521da0a89437a311a183
+Generated with discovered.json: 0x2e16fadd112013d339429f6094c9434c899a3237
+
+# Diff at Mon, 28 Sep 2026 13:34:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1787307944
+- current timestamp: 1790592851
+
+## Description
+
+New proposal on DAO to reward Mr Anon with 1000 TORN for taking down fradulent `tornado.cash` frontend. This is a legit proposal that originates from Tornado Cash DAO tg channel.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        68
++        69
+    }
+```
+
+Generated with discovered.json: 0xaeedbc07b4239fde7b8504b096b3fb96343757f9
 
 # Diff at Wed, 23 Sep 2026 05:56:10 GMT:
 

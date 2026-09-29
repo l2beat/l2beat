@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x89956a3197d0d597dc128ebac48da75bb7ec75aa
+Generated with discovered.json: 0x6b9ddd8db68ce5c02ae666fb7f68df4783f85519
+
+# Diff at Mon, 28 Sep 2026 13:34:41 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1789723805
+- current timestamp: 1790601073
+
+## Description
+
+OpenVM verifier upgraded to v2.0.0 on Scroll: https://forum.scroll.io/t/announcement-openvm-v2-0-0-upgrade-on-scroll/1495. ZK programs and verifiers are successfully reproduced.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955"
++        "eth:0x7966FE0De13e3B81533470640Ac489223476B254"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) [N/A]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierOpenVMv2 (eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...erifierPostFeynman-eth:0x7966FE0De13e3B81533470640Ac489223476B254.sol} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
+Generated with discovered.json: 0x639730331f01ec33aa98d6ea5b973cde9c80e0c7
 
 # Diff at Wed, 23 Sep 2026 05:54:18 GMT:
 

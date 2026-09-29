@@ -22,7 +22,7 @@ interface ChainConfig {
         url: string
         unsupported?: EtherscanUnsupportedMethods
       }
-    | { type: 'sourcify' }
+    | { type: 'sourcify'; url?: string }
   >
   multicall: MulticallConfig | undefined
   coingeckoPlatform?: string
@@ -354,8 +354,8 @@ export const chains: ChainConfig[] = [
     shortName: 'ethereal',
     multicall: undefined,
     explorer: {
-      type: 'blockscout',
-      url: 'https://explorer.ethereal.trade/api',
+      type: 'sourcify',
+      url: 'https://contracts.conduit.xyz',
     },
   },
   {

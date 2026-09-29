@@ -103,13 +103,11 @@ export const DiscoverCommand = command({
 export async function discover(
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[] = getChainConfigs(),
-  logger: Logger = Logger.DEBUG,
+  logger: Logger = configureLogger(Logger.DEBUG),
 ): Promise<void> {
   const http = new HttpClient()
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-
-  logger = configureLogger(logger)
 
   if (config.dryRun) {
     logger = logger.for('DryRun')

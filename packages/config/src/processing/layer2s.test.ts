@@ -77,22 +77,18 @@ describe('layer2s', () => {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
         if (layer2.display.stacks?.includes('Agglayer CDK')) continue
 
-        try {
-          const discovery = new ProjectDiscovery(layer2.id.toString())
+        const discovery = new ProjectDiscovery(layer2.id.toString())
 
-          for (const escrow of layer2.config.escrows.filter(
-            (e) => e.contract && !e.isHistorical,
-          )) {
-            it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
-              // try to resolve escrow by address
-              // if it does not exist the assert will throw
-              discovery.getContractByAddress(
-                ChainSpecificAddress.from('eth', escrow.address),
-              )
-            })
-          }
-        } catch {
-          continue
+        for (const escrow of layer2.config.escrows.filter(
+          (e) => e.contract && !e.isHistorical,
+        )) {
+          it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
+            // try to resolve escrow by address
+            // if it does not exist the assert will throw
+            discovery.getContractByAddress(
+              ChainSpecificAddress.from('eth', escrow.address),
+            )
+          })
         }
       }
     })

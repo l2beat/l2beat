@@ -112,6 +112,7 @@ function getChainDiscoveryConfig(
         explorer.push({
           type: api.type,
           chainId: api.chainId,
+          url: api.url,
         })
         break
       case 'etherscan':

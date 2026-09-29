@@ -93,6 +93,7 @@
         "2459028469735686113": "katana",
         "6180753054346818345": "robinhood",
         "6370580034781731079": "arc",
+        "2988178761202034333": "gravity",
         "6916147374840168594": "ronin",
         "11964252391146578476": "rootstock",
         "9027416829622342829": "sei",
@@ -186,10 +187,18 @@
     "eth:0x79bC82F3931A7d017719146A822e4AD8152b157e": "RMN_Multisig1",
     "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413": "RMN_Multisig2",
     "eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F": "RMN_Multisig3",
+    "eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178": "FeeAggregatorTimelock",
+    "eth:0x981c2b5C5B3B479A6088a7B20A043373B2d69EA9": "FeeAggregatorCallProxy",
+    "eth:0x3d54fF2Fd088bFB8aad30cC408273Ed641ABDA91": "FeeAggregator_ProposerMultisig",
+    "eth:0xB747c1486D8aCa1d13018B574701F325F497D198": "FeeAggregator_CancellerMultisig",
+    "eth:0x75FDCe0C6fABcaAa2B392010CE1C711dCf8AfADD": "FeeAggregator_BypasserMultisig",
     "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": "GhoCcipSteward",
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
+    "eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178": {
+      "description": "Role-based timelock that CCIP uses as a fee aggregator, collecting fee tokens withdrawn from its ramps."
+    },
     // These two contracts are not source-verified. Only fields read through their deployed runtime interface are included.
     "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": {
       "fields": {
@@ -483,9 +492,15 @@
       }
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
-      "description": "Deprecated router used by BSC.",
+      "fields": {
+        // v2.0 ramps are wired to this Router for lanes not yet moved to v2.0 on the MainRouter, so its OffRamp registrations are tracked.
+        "getOffRamps": {
+          "handler": { "type": "call", "method": "getOffRamps", "args": [] }
+        }
+      },
       // The shared v2.0 OffRamp is an explicit entrypoint; do not crawl it once per route.
-      "ignoreRelatives": ["getOffRamps"]
+      // Unlike the MainRouter template default, crawl the owner so its Router permissions are modelled.
+      "ignoreRelatives": ["getOffRamps", "getWrappedNative"]
     }
   }
 }

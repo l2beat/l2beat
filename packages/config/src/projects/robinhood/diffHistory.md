@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7bf7355c39cca73ddcabcb191f0ae9b7f8995e7e
+Generated with discovered.json: 0xad931198571a8787a3eba369ec1ab59d40e97843
 
-# Diff at Tue, 29 Sep 2026 08:08:17 GMT:
+# Diff at Tue, 29 Sep 2026 08:50:38 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@9d2c04bd3219ef0284cb0257e2edf41e8ac6ebef block: 1788301081
-- current timestamp: 1790669158
+- comparing to: main@c3621fa7eb494214211a85dc9afaff12f0d2ed79 block: 1788301081
+- current timestamp: 1790671700
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
@@ -31,15 +31,23 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [N/A]
+    contract SafeL2 (robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E) [GnosisSafe]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [orbitstack/layer2/ResourceConstraintManager]
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
 ```
 
 ## Source code changes
 
 ```diff
 .../robinhood/.flat/ResourceConstraintManager.sol  | 1423 ++++++++++++++++++++
- 1 file changed, 1423 insertions(+)
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 3 files changed, 2751 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -72,7 +80,7 @@ discovery. Values are for block 1788301081 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xfb20a7315733efb5b47145bfd9e312d7d660b9d8
+Generated with discovered.json: 0x6ebd80dc0d044e709f8606c0751d5d221942da3b
 
 # Diff at Wed, 23 Sep 2026 05:49:08 GMT:
 

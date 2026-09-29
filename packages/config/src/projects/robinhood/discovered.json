@@ -1,6 +1,6 @@
 {
   "name": "robinhood",
-  "timestamp": 1790669158,
+  "timestamp": 1790671700,
   "configHash": "0x2bc7641a43c2ca72886d36455a7798e7513549df46582894d44d2bf4af11b818",
   "entries": [
     {
@@ -216,7 +216,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0xd32d8fbb0bd1f05ecb16f51ae5007391f269ae61a4281d997a81bbbaeb4e28b5",
+        "latestConfirmed": "0x49ffad5df95b6c30e34aea084c2783e9934455d703284ed2bae7b309c705eb3f",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -751,7 +751,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 289141,
+        "batchCount": 289210,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -790,7 +790,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 331989,
+        "totalDelayedMessagesRead": 332062,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -871,7 +871,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2057739552856348051277246"
+        "totalSupply": "2056213109158101210345235"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -978,7 +978,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 332004,
+        "delayedMessageCount": 332081,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -986,8 +986,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 289141,
-        "sequencerReportedSubMessageCount": 75499616
+        "sequencerMessageCount": 289210,
+        "sequencerReportedSubMessageCount": 75524663
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -1479,21 +1479,70 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SafeL2",
+      "address": "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
+      "sinceTimestamp": 1788711043,
+      "sinceBlock": 56109938,
+      "values": {
+        "$immutable": false,
+        "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "robinhood:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c",
+          "robinhood:0x91886E7ecAD146aE89F20c6f05CfdC81e7069ACc"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x006b580aec57eb5d509c22099a920570a29661247a3d06ba3b61011dfd93c785",
+        "getChainId": 4663,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": "SafeProxy",
+        "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
       "name": "ResourceConstraintManager",
       "address": "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690",
       "type": "Contract",
+      "template": "orbitstack/layer2/ResourceConstraintManager",
       "sourceHashes": [
         "0x19b7a35a10637b9a742952537232cc31e1d460b60452dd4792f3e0964202dc1c"
       ],
       "proxyType": "immutable",
+      "description": "ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.",
       "deployerAddress": "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
       "sinceTimestamp": 1788711044,
       "sinceBlock": 56109950,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "expiryTimestamp": 1798761600,
-        "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08"
+        "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "resourceConstraintManagers": [
+          "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E"
+        ]
       },
       "implementationNames": {
         "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": "ResourceConstraintManager"
@@ -1582,6 +1631,11 @@
     },
     {
       "address": "robinhood:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x91886E7ecAD146aE89F20c6f05CfdC81e7069ACc",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2680,6 +2734,9 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": [
+      "constructor(address _singleton)"
+    ],
     "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": [
       "constructor(address admin, address manager, uint256 _expiryTimestamp)",
       "error InvalidPeriod(uint64 gasTargetPerSec, uint64 adjustmentWindowSecs, uint64 startingBacklogValue)",
@@ -2739,6 +2796,7 @@
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/GatewayRouter": "0x158482b47e53cd684e16e1958fafbba9719c7bcb319f6710653b4ca535034350",
     "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
+    "orbitstack/layer2/ResourceConstraintManager": "0xbd2c2f5448d2a6631fe8c9cabbeba8c3844b36f2ce84641bb7d7e420d1454ed1",
     "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2750,8 +2808,8 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "ethereum": 26081814, "robinhood": 75499954 },
-  "permissionsConfigHash": "0x7485e9223cba2bfa007f94bdf3e398895c5dc78e12ba8b51eb972b9dbc11e437",
+  "usedBlockNumbers": { "ethereum": 26082026, "robinhood": 75525166 },
+  "permissionsConfigHash": "0xafdc4e586ac9c9de1a3e6a65eac4026c7d7a7e926887f64b153c4d2175591821",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
       "directlyReceivedPermissions": [
@@ -3319,6 +3377,16 @@
           "from": "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173",
           "description": "manage all access control roles.",
           "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690",
+          "description": "set the gas pricing constraints of the L2 base fee model within hardcoded bounds.",
+          "role": ".resourceConstraintManagers"
         }
       ]
     },

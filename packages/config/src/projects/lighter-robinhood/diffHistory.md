@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x12a70a23f08866b620745cd7afa81c978c7c08f4
+Generated with discovered.json: 0xbe68e213bc715af24642df11ad9e77b9d0766e5a
 
-# Diff at Tue, 29 Sep 2026 08:41:46 GMT:
+# Diff at Mon, 28 Sep 2026 13:34:29 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@9d2c04bd3219ef0284cb0257e2edf41e8ac6ebef block: 1789726631
-- current timestamp: 1790671227
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1789726631
+- current timestamp: 1790600981
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Verified lighter implementation on robinhood.
 
 ## Config/verification related changes
 
@@ -29,7 +29,7 @@ discovery. Values are for block 1789726631 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x9e7c985db5b6e7a75164571d4ac68ce53fc57592
+Generated with discovered.json: 0xfd19b81dd4f580286c920192740dc9e87a5df190
 
 # Diff at Wed, 23 Sep 2026 05:47:40 GMT:
 

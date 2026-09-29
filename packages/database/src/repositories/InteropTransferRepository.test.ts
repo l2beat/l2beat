@@ -1556,7 +1556,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   )
 
   describe(
-    InteropTransferRepository.prototype.getDeployedTokenPairStats.name,
+    InteropTransferRepository.prototype.getAllDeployedTokenPairStats.name,
     () => {
       const usdc = 'circle-usdc'
       const ethereumUsdc = {
@@ -1598,6 +1598,17 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         })
       }
 
+      async function getUsdcPairStats(
+        ...args: Parameters<
+          InteropTransferRepository['getAllDeployedTokenPairStats']
+        >
+      ) {
+        const rows = await repository.getAllDeployedTokenPairStats(...args)
+        return rows
+          .filter((row) => row.abstractTokenId === usdc)
+          .map(({ abstractTokenId: _, ...stats }) => stats)
+      }
+
       it('aggregates per pair, valuing a transfer like getInteropTransferValue', async () => {
         await repository.insertMany([
           usdcTransfer('both', ethereumUsdc, arbitrumUsdc, {
@@ -1624,9 +1635,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           }),
         ])
 
-        expect(
-          await repository.getDeployedTokenPairStats(usdc, range, selection),
-        ).toEqualUnsorted([
+        expect(await getUsdcPairStats(range, selection)).toEqualUnsorted([
           {
             src: ethereumUsdc,
             dst: arbitrumUsdc,
@@ -1660,9 +1669,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           }),
         ])
 
-        expect(
-          await repository.getDeployedTokenPairStats(usdc, range, selection),
-        ).toEqualUnsorted([
+        expect(await getUsdcPairStats(range, selection)).toEqualUnsorted([
           {
             src: ethereumUsdc,
             transferCount: 1,
@@ -1703,7 +1710,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
             plugin: 'chain-only',
           }),
         ])
-        const rows = await repository.getDeployedTokenPairStats(usdc, range, {
+        const rows = await getUsdcPairStats(range, {
           ...selection,
           plugins: [
             ...selection.plugins,
@@ -1761,7 +1768,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
             dstWasMinted: true,
           }),
         ])
-        const rows = await repository.getDeployedTokenPairStats(usdc, range, {
+        const rows = await getUsdcPairStats(range, {
           ...selection,
           plugins: [{ plugin: 'plugin', bridgeType: 'burnAndMint' }],
         })
@@ -1787,7 +1794,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           { destinationChains: [] },
         ]) {
           expect(
-            await repository.getDeployedTokenPairStats(usdc, range, {
+            await getUsdcPairStats(range, {
               ...selection,
               ...empty,
             }),
@@ -1811,8 +1818,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           }),
         ])
 
-        const [stats] = await repository.getDeployedTokenPairStats(
-          usdc,
+        const [stats] = await getUsdcPairStats(
           {
             from: UnixTime(100),
             to: UnixTime(200),
@@ -1821,6 +1827,38 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         )
 
         expect(stats?.transferCount).toEqual(2)
+      })
+
+      it('lists every abstract token involved, with only its own sides', async () => {
+        await repository.insertMany([
+          usdcTransfer('bridge', ethereumUsdc, arbitrumUsdc),
+          usdcTransfer('swapOut', ethereumUsdc, arbitrumWeth, {
+            dstAbstractTokenId: 'weth',
+          }),
+          usdcTransfer('unassignedSide', ethereumUsdc, arbitrumUsdc, {
+            srcAbstractTokenId: undefined,
+          }),
+        ])
+
+        const stats = {
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 10,
+          volume: 100,
+        }
+        expect(
+          await repository.getAllDeployedTokenPairStats(range, selection),
+        ).toEqualUnsorted([
+          {
+            abstractTokenId: usdc,
+            src: ethereumUsdc,
+            dst: arbitrumUsdc,
+            ...stats,
+          },
+          { abstractTokenId: usdc, src: ethereumUsdc, ...stats },
+          { abstractTokenId: 'weth', dst: arbitrumWeth, ...stats },
+          { abstractTokenId: usdc, dst: arbitrumUsdc, ...stats },
+        ])
       })
     },
   )

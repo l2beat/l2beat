@@ -10,6 +10,7 @@ import {
   ConfigReader,
   clusterEntries,
   combinePermissionsIntoDiscovery,
+  DiffHistoryParser,
   type DiscoveryDiff,
   type DiscoveryOutput,
   DiscoveryRegistry,
@@ -20,6 +21,7 @@ import {
   modelPermissions,
   TemplateService,
 } from '@l2beat/discovery'
+import { hashJson } from '@l2beat/shared'
 import {
   assert,
   formatAsciiBorder,
@@ -129,16 +131,19 @@ export async function updateDiffHistoryForChain(
   )
 
   let previousDescription = undefined
+  let previousId = undefined
   const diffHistoryExists =
     existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()
   if (diffHistoryExists) {
     const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
-    previousDescription = findDescription(
+    const unmerged = findUnmergedEntry(
       diffHistoryPath,
       diskDiffHistory,
       historyFileFromMainBranch,
       logger,
     )
+    previousDescription = unmerged.description
+    previousId = unmerged.id
   }
 
   const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
@@ -152,6 +157,7 @@ export async function updateDiffHistoryForChain(
       logger,
       codeDiff,
       description ?? previousDescription,
+      previousId,
     )
 
     const diffHistory =
@@ -225,6 +231,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     } as Timing,
     saveSources,
     overwriteCache,
+    logger,
   )
   discoveries.set(prevStructure.name, prevStructure)
   // Without this the previous model spans one project while the current one
@@ -346,12 +353,15 @@ function generateDiffHistoryMarkdown(
   logger: Logger,
   codeDiff?: string,
   description?: string,
+  previousId?: string,
 ): string {
   const result = []
 
   const now = new Date().toUTCString()
   result.push(`${FIRST_SECTION_PREFIX} ${now}:`)
   result.push('')
+  const id = previousId ?? hashJson([now, 'timestamp', timestamp]).slice(2, 10)
+  result.push(`- id: ${id}`)
   const { name, email } = getGitUser(logger)
   result.push(`- author: ${name} (<${email}>)`)
   if (timestampFromMainBranchDiscovery !== undefined) {
@@ -417,17 +427,34 @@ discovery. Values are for block ${timestampFromMainBranchDiscovery} (main branch
   return result.join('\n')
 }
 
-function findDescription(
+export function findUnmergedEntry(
   diskDiffHistoryPath: string,
   diskDiffHistory: string,
   masterDiffHistory: string,
   logger: Logger,
-): string | undefined {
+): { description: string | undefined; id: string | undefined } {
+  const lines = findUnmergedLines(
+    diskDiffHistoryPath,
+    diskDiffHistory,
+    masterDiffHistory,
+    logger,
+  )
+  return {
+    description: findDescription(lines),
+    id: new DiffHistoryParser().parse(lines.join('\n'))[0]?.id,
+  }
+}
+
+function findUnmergedLines(
+  diskDiffHistoryPath: string,
+  diskDiffHistory: string,
+  masterDiffHistory: string,
+  logger: Logger,
+): string[] {
   const masterDiffLines = masterDiffHistory.split('\n')
   const latestSectionIndex = masterDiffLines.findIndex((l) =>
     l.startsWith(FIRST_SECTION_PREFIX),
   )
-  let lines: string[] = []
   if (latestSectionIndex >= 0) {
     const lastCommitted = masterDiffLines[latestSectionIndex]
     const diskLines = diskDiffHistory.split('\n')
@@ -457,11 +484,12 @@ function findDescription(
       logger.info(errorMessage)
       throw new Error()
     }
-    lines = diskLines.slice(0, lastCommittedIndex)
-  } else {
-    lines = diskDiffHistory.split('\n')
+    return diskLines.slice(0, lastCommittedIndex)
   }
+  return diskDiffHistory.split('\n')
+}
 
+function findDescription(lines: string[]): string | undefined {
   const index = lines.findIndex((l) => l === '## Description')
   if (index < 0) {
     return undefined

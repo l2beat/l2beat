@@ -3,6 +3,7 @@ import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ink')
@@ -137,6 +138,7 @@ export const ink: ScalingProject = opStackL2({
       },
     ],
   },
+  ossification: getOssification('ink', genesisTimestamp),
   milestones: [
     {
       title: 'Ink becomes Stage 1',
