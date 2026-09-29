@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x7bf7355c39cca73ddcabcb191f0ae9b7f8995e7e
+
+# Diff at Tue, 29 Sep 2026 08:08:17 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@9d2c04bd3219ef0284cb0257e2edf41e8ac6ebef block: 1788301081
+- current timestamp: 1790669158
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6092
++        6096
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.chainOwners.1:
++        "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../robinhood/.flat/ResourceConstraintManager.sol  | 1423 ++++++++++++++++++++
+ 1 file changed, 1423 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788301081 (main branch discovery), not current.
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      deployerAddress:
+-        "robinhood:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1777567931
+      sinceBlock:
+-        0
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      sourceHashes.1:
+-        "0x4f3e8e6c5b1c8bb195977df29816a2b30d65f6017df81bd01ba9934736baf1c8"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+      implementationNames.robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd:
+-        "UpgradeExtractor"
++        "UpgradeExecutor"
+    }
+```
+
 Generated with discovered.json: 0xfb20a7315733efb5b47145bfd9e312d7d660b9d8
 
 # Diff at Wed, 23 Sep 2026 05:49:08 GMT:

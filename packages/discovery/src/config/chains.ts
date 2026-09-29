@@ -62,11 +62,12 @@ export const chains: ChainConfig[] = [
     shortName: 'robinhood',
     multicall: getMulticall3Config(406),
     explorer: [
+      { type: 'etherscan' },
+      { type: 'sourcify' },
       {
         type: 'blockscout',
         url: 'https://robinhoodchain.blockscout.com/api',
       },
-      { type: 'sourcify' },
     ],
   },
   {
