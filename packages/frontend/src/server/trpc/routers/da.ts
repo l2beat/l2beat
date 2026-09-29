@@ -1,4 +1,8 @@
 import {
+  DaFlowsParams,
+  getDaFlows,
+} from '~/server/features/data-availability/flows/getDaFlows'
+import {
   DaThroughputChartParams,
   getDaThroughputChart,
 } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -37,4 +41,8 @@ export const daRouter = router({
   l2ProjectChart: procedure
     .input(L2ProjectDaThroughputChartParams)
     .query(async ({ input }) => getL2ProjectDaThroughputChart(input)),
+
+  flows: procedure
+    .input(DaFlowsParams)
+    .query(async ({ input }) => getDaFlows(input)),
 })

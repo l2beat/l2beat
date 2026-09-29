@@ -6,12 +6,9 @@ import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
-import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import { EM_DASH } from '~/consts/characters'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
-import { DacMembersCell } from '../../../components/DacMembersCell'
 import { BridgeNameCell } from './BridgeNameCell'
 import { BridgeRiskCell } from './BridgeRiskCell'
 import { BridgeUsedByCell } from './BridgeUsedByCell'
@@ -57,31 +54,6 @@ const daRisksColumn = columnHelper.display({
   },
 })
 
-const daBridgeRisksColumn = columnHelper.display({
-  id: 'bridge-risks',
-  header: 'Bridge Risks',
-  cell: (ctx) => {
-    const [bridge] = ctx.row.original.bridges
-    if (!bridge) {
-      return EM_DASH
-    }
-    return (
-      <GrissiniCell
-        values={bridge.risks}
-        href={
-          ctx.row.original.id === ProjectId.ETHEREUM
-            ? undefined
-            : `/data-availability/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`
-        }
-        disabledOnMobile
-      />
-    )
-  },
-  meta: {
-    align: 'center',
-  },
-})
-
 const tvsColumn = (href?: (row: DaSummaryEntry) => string) =>
   columnHelper.accessor('tvs', {
     header: 'TVS',
@@ -102,37 +74,6 @@ const tvsColumn = (href?: (row: DaSummaryEntry) => string) =>
       align: 'right',
     },
   })
-
-const membersColumn = columnHelper.display({
-  header: 'Members',
-  cell: (ctx) => (
-    <DacMembersCell dacInfo={ctx.row.original.bridges[0]?.dacInfo} />
-  ),
-})
-
-const challengeMechanismColumn = columnHelper.display({
-  header: 'Challenge\nmechanism',
-  cell: (ctx) => (
-    <TableValueCell
-      value={{ value: ctx.row.original.challengeMechanism ?? '' }}
-    />
-  ),
-  meta: {
-    tooltip:
-      'Shows if there is a mechanism that  users to dispute the availability or accuracy of data committed by the DA provider',
-  },
-})
-
-const fallbackColumn = columnHelper.display({
-  header: 'Fallback',
-  cell: (ctx) => (
-    <TableValueCell value={ctx.row.original.fallback ?? { value: 'None' }} />
-  ),
-  meta: {
-    tooltip:
-      'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
-  },
-})
 
 function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
@@ -265,15 +206,4 @@ export const publicSystemsColumns = [
       }),
     ],
   }),
-]
-
-export const customColumns = [
-  ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}#da-layer`),
-  daLayerColumn('da-layer'),
-  daRisksColumn,
-  daBridgeRisksColumn,
-  tvsColumn((row) => `${row.href}#tvs`),
-  membersColumn,
-  fallbackColumn,
-  challengeMechanismColumn,
 ]
