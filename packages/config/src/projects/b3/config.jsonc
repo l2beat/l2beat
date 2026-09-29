@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "b3",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["base:0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38"],

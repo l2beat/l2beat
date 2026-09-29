@@ -1393,11 +1393,11 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 26019585 },
-  "permissionsConfigHash": "0xa7346715a24de53730021c222a527942d3a5e3bbe16810993cf5009351b50d09",
+  "permissionsConfigHash": "0x1ad00ce8505a4845635fed8cc9406343db3475e9d9c86e6ad3f0bd2173c313e9",
   "modelledAgainst": {
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9",
-    "vector": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6"
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66",
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073",
+    "vector": "0x06660950581d2f3cbd344f65924c5b2608fd3621003893ee03bc43ad3065d19c"
   },
   "permissions": {
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {

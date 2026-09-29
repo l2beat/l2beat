@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BaseFeeManager",
+  "description": "ArbOS chain owner that can only set the L2 base fee and minimum base fee within 0.01-0.1 gwei. Anyone can remove it from the chain owners after the expiry timestamp.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "baseFeeManagers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the L2 base fee and minimum base fee within 0.01-0.1 gwei."
+        }
+      ]
+    }
+  }
+}

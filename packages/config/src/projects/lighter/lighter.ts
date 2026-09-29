@@ -18,6 +18,7 @@ import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -77,6 +78,7 @@ export const lighter: ScalingProject = {
     chainId: undefined,
     apis: [],
   },
+  ossification: getOssification('lighter'),
   config: {
     associatedTokens: ['LIT'],
     escrows: [
@@ -331,7 +333,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xac3Ce44B6ff4E402858C99D5699ff63131572BaA#code#F1#L54',
+            url: 'https://etherscan.io/address/0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',

@@ -1168,9 +1168,9 @@
     "starknet/StarknetERC20Bridge": "0x2e2541f04c46b7c8acf11507b954418d31524b2fb5f1e661281ca8efeb18f765"
   },
   "usedBlockNumbers": { "ethereum": 25544316 },
-  "permissionsConfigHash": "0xf6446f545c5b2976561dc573a1d38625ba85459252696d65fddad7ffee9c524b",
+  "permissionsConfigHash": "0xe69b64b36507ebebac5499139024ec2ba1ac1ae0a910d42da20b91acda2a65b4",
   "modelledAgainst": {
-    "shared-sharp-verifier": "0xedbb05e5ad7dcdb7f8a130d8e366de52ebbb6c9f3785ea1da95bd467a3299966"
+    "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },
   "permissions": {
     "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044": {

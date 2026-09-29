@@ -1,4 +1,35 @@
-Generated with discovered.json: 0x9e7c985db5b6e7a75164571d4ac68ce53fc57592
+Generated with discovered.json: 0x68c41ba1f1f8eef21bf5b193e460aa5e79bc4bb7
+
+# Diff at Mon, 28 Sep 2026 13:34:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1789726631
+- current timestamp: 1790600981
+
+## Description
+
+Verified lighter implementation on robinhood.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789726631 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
+-        ""
++        "ZkLighter"
+      sourceHashes:
++        ["0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6","0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"]
+    }
+```
+
+Generated with discovered.json: 0xfd19b81dd4f580286c920192740dc9e87a5df190
 
 # Diff at Wed, 23 Sep 2026 05:47:40 GMT:
 

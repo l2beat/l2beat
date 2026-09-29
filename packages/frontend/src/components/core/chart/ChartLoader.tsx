@@ -1,6 +1,29 @@
 import { cn } from '~/utils/cn'
 
-export function ChartLoader({ className }: { className?: string }) {
+// SMIL keeps the main thread recalculating style every frame, even for a
+// loader far below the fold, so a loader nobody is waiting on stands still.
+export function ChartLoader({
+  className,
+  animated = true,
+}: {
+  className?: string
+  animated?: boolean
+}) {
+  if (!animated) {
+    return (
+      <svg
+        data-role="chart-loader"
+        className={cn('pointer-events-none z-40', className)}
+        width="50px"
+        height="50px"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid"
+      >
+        <circle cx="30" cy="50" fill="var(--chart-pink)" r="20" />
+        <circle cx="70" cy="50" fill="var(--brand)" r="20" />
+      </svg>
+    )
+  }
   return (
     <svg
       data-role="chart-loader"

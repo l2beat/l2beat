@@ -175,16 +175,13 @@ export class ExampleInputs {
     this.content.tokenDb[key] = value
   }
 
-  writeAll(
-    content: Partial<RawExampleInputs> | null | undefined,
-  ): Promise<void> {
+  writeAll(content: Partial<RawExampleInputs> | null | undefined): void {
     const safeContent = content ?? {}
     this.content = {
       rpc: safeContent.rpc ?? {},
       config: safeContent.config ?? {},
       tokenDb: safeContent.tokenDb ?? {},
     }
-    return Promise.resolve()
   }
 }
 

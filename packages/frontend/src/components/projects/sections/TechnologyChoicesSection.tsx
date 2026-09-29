@@ -10,6 +10,7 @@ import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
+import { Subsection, SubsectionHeading } from './Subsection'
 import type { ProjectSectionProps } from './types'
 
 export interface TechnologyChoicesSectionProps extends ProjectSectionProps {
@@ -38,27 +39,35 @@ export function TechnologyChoicesSection({
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
-          <h3 id={item.id} className="font-bold text-lg md:text-xl">
-            <a href={`#${item.id}`}>{item.name}</a>
-          </h3>
-          {item.isIncomplete && <SectionIncompleteNote />}
-          {item.isUnderReview ? (
-            <UnderReviewCallout />
-          ) : (
-            <>
-              <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
-                {item.description}
-              </Markdown>
-              <RiskList risks={item.risks} />
-              <ReferenceList references={item.references} />{' '}
-            </>
-          )}
-          {item.relatedProjectBanner && (
-            <ProjectDetailsRelatedProjectBanner
-              className="mt-4 md:mt-6"
-              {...item.relatedProjectBanner}
-            />
-          )}
+          <Subsection
+            title={
+              <SubsectionHeading
+                id={item.id}
+                className="font-bold text-lg md:text-xl"
+              >
+                <a href={`#${item.id}`}>{item.name}</a>
+              </SubsectionHeading>
+            }
+          >
+            {item.isIncomplete && <SectionIncompleteNote />}
+            {item.isUnderReview ? (
+              <UnderReviewCallout />
+            ) : (
+              <>
+                <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
+                  {item.description}
+                </Markdown>
+                <RiskList risks={item.risks} />
+                <ReferenceList references={item.references} />{' '}
+              </>
+            )}
+            {item.relatedProjectBanner && (
+              <ProjectDetailsRelatedProjectBanner
+                className="mt-4 md:mt-6"
+                {...item.relatedProjectBanner}
+              />
+            )}
+          </Subsection>
         </div>
       ))}
     </ProjectSection>

@@ -1991,7 +1991,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "critical": true,
-      "ignoreInWatchMode": ["gasLimit", "overhead"],
+      "ignoreInWatchMode": ["scalar", "overhead", "gasLimit"],
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
       "sinceBlock": 17482143,
@@ -5385,7 +5385,7 @@
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "base": 49218391, "ethereum": 25630023 },
-  "permissionsConfigHash": "0x3028a74dc30bdd42989614279b53137c9e526244d63805aea33d8fbb3c3f9b4e",
+  "permissionsConfigHash": "0xdd40ddf31aeaf5989f675d8d729962bf4bc12b39db9a43ede13b2f93c2d26be8",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [

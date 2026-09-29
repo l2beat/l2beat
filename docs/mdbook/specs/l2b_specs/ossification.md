@@ -146,8 +146,10 @@ in the discovery configuration.
   `ColorConfig.ts` is the shape of `critical`.
 - `packages/config/src/ossification/` (this folder): `getOssificationInput`
   calculates the input. `measureOssification` calculates the result.
-  `loadOssification` reads the files. `getProjects` calls it at build time
-  with one `now` value for all projects. The build stores the result in the
+  `getOssification` reads the files. A project opts in by setting
+  `ossification: getOssification('<id>', chainStart)` in its config, so
+  ossification can be switched off per project without touching the discovery
+  data. All calls share one `now` value. The build stores the result in the
   `ossification` column of the SQLite database. The clocks are timestamps. The
   frontend calculates the ages at request time.
 - `l2b ossification <project> [--input]`: Shows the result for a project. With

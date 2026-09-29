@@ -28,6 +28,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -36,6 +37,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('starknet')
+const chainStart = UnixTime(1637069048) // block 0
 
 const starknetDelaySeconds = discovery.getContractValue<number>(
   'Starknet',
@@ -355,7 +357,7 @@ export const starknet: ScalingProject = {
     name: 'starknet',
     chainId: undefined,
     gasTokens: ['ETH', 'STRK'],
-    sinceTimestamp: UnixTime(1637069048), // block 0
+    sinceTimestamp: chainStart,
     apis: [
       {
         type: 'starknet',
@@ -364,6 +366,7 @@ export const starknet: ScalingProject = {
       },
     ],
   },
+  ossification: getOssification('starknet', chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
