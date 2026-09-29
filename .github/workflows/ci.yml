@@ -21,12 +21,14 @@ jobs:
       - name: Set up Docker.io mirror
         uses: docker/setup-buildx-action@v4
         with:
+          cleanup: false
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: false
           file: packages/backend/Dockerfile
           build-args: |
@@ -172,12 +174,14 @@ jobs:
       - name: Set up Docker.io mirror
         uses: docker/setup-buildx-action@v4
         with:
+          cleanup: false
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: false
           file: packages/token-backend/Dockerfile
           build-args: |
