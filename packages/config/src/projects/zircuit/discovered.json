@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1790697481,
+  "timestamp": 1790702786,
   "configHash": "0xf4145c5e9c133f58cb9a55bc0688ea5dbbdbb4afd197d302fe46ec566f70f8b4",
   "entries": [
     {
@@ -1595,10 +1595,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 5371090658,
+        "basefee": 1018988623,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 236808943,
+        "blobBaseFee": 62558895,
         "blobBaseFeeScalar": 862000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -1608,15 +1608,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xc0fc376e5840df8e1ea5d93210a593f655ea1dd156a04839250eb7cba34bac01",
+        "hash": "0x44181eae85e796bee45de44e9858d4c2d612b911e633a13c5eaa8f3640a742a9",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26084163,
+        "number": 26084602,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 6,
-        "timestamp": 1790697407,
+        "sequenceNumber": 2,
+        "timestamp": 1790702723,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -2627,7 +2627,7 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26084169, "zircuit": 35380633 },
+  "usedBlockNumbers": { "ethereum": 26084607, "zircuit": 35383285 },
   "permissionsConfigHash": "0xcf11b7967cd550b02267d72f91bee744c7ddcffe3088caff6c8b5eb896842946",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {

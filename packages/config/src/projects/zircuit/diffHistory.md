@@ -1,21 +1,21 @@
-Generated with discovered.json: 0xecd591d27a9c1ce5ee2e6f9fbb44785d66adb264
+Generated with discovered.json: 0x1728bd7c8390bd4764975a2fe91e78684380b55a
 
-# Diff at Tue, 29 Sep 2026 15:59:08 GMT:
+# Diff at Tue, 29 Sep 2026 17:27:33 GMT:
 
 - id: be94796b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044680
-- current timestamp: 1790697481
+- current timestamp: 1790702786
 
 ## Description
 
 Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.), executed via a Conduit-deployed OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA.
 
-ProxyAdmin replaced by another ProxyAdmin with an AddressManager, owner unchanged (Conduit Multisig 1). New DelayedWETH deployed. PermissionedDisputeGame, MIPS (v1.9.0 to v1.10.1) and PreimageOracle (v1.1.4 to v1.1.5) replaced; proposer, challenger and absolute prestate unchanged.
+ProxyAdmin replaced, owner unchanged (Conduit Multisig 1). AddressManager added. New DelayedWETH. PermissionedDisputeGame, MIPS (v1.9.0 to v1.10.1) and PreimageOracle (v1.1.4 to v1.1.5) replaced. Proposer, challenger and absolute prestate unchanged. SystemConfig `batchInbox` changed.
 
 L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1BlockValuesJovian()` and `daFootprintGasScalar` (`400`).
 
-L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The `upgradePredeploys` call of the same batch reverted, so the other predeploys were not upgraded. Implementation marked as manually verified.
+L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged.
 
 ## Watched changes
 
