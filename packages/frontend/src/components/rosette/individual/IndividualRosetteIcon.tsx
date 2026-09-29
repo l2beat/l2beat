@@ -3,8 +3,10 @@ import { useEventListener } from '~/hooks/useEventListener'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
+import { describeRisks } from '../describeRisks'
 import { PizzaElementLink } from '../pizza/PizzaElementLink'
 import type { RosetteValue } from '../types'
+import { useRosetteDescription } from '../useRosetteDescription'
 import { useIndividualRosetteTooltipContext } from './IndividualRosetteTooltipContext'
 
 export type RosetteValueTuple = [
@@ -40,6 +42,10 @@ export function IndividualPizzaRosetteIcon({
 }: Props) {
   const context = useIndividualRosetteTooltipContext()
   const svgRef = useRef(null)
+  const rosetteDescription = useRosetteDescription(
+    `${l2.name} risks: ${describeRisks(l2.risks, isUnderReview)}. ` +
+      `${l3.name} risks: ${describeRisks(l3.risks, isUnderReview)}`,
+  )
 
   const [
     innerSequencerFailure,
@@ -85,11 +91,12 @@ export function IndividualPizzaRosetteIcon({
       height="180"
       viewBox="0 0 180 180"
       fill="none"
-      alt-text="Rosette showing risk summary"
+      {...rosetteDescription.svgProps}
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
       className={cn(className)}
     >
+      {rosetteDescription.accessibleDefs}
       <defs>
         <clipPath id="outer-clip">
           <rect width="180" height="180" rx="90" />

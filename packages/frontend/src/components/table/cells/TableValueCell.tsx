@@ -4,6 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
+import { describeWarnings } from '~/utils/describeWarnings'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../../badge/UnderReviewBadge'
 import {
@@ -67,6 +68,7 @@ export function TableValueCell({
                 'size-3.5 md:size-4',
                 sentimentToFillColor(value.warning.sentiment),
               )}
+              aria-label={describeWarnings([value.warning])}
             />
           )}
         </TwoRowCell.First>

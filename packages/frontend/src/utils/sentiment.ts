@@ -58,3 +58,7 @@ export function sentimentToTextColor(
       return ''
   }
 }
+
+export function sentimentToText(sentiment: Sentiment): string {
+  return sentiment === 'UnderReview' ? 'under review' : sentiment
+}

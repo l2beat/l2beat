@@ -1,4 +1,5 @@
 import { cn } from '~/utils/cn'
+import { describeRisks } from '../describeRisks'
 import type { RosetteValue } from '../types'
 import { GrissiniStick } from './GrissiniStick'
 
@@ -29,6 +30,9 @@ export function GrissiniIcon({ values, className }: Props) {
           key={i}
         />
       ))}
+      <span className="sr-only">
+        {hasNoBridge ? 'No bridge' : describeRisks(values)}
+      </span>
       {hasNoBridge && (
         <div className="absolute flex items-center justify-center">
           <ExclamationIcon />

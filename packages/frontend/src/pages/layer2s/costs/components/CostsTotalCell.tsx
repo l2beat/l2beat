@@ -13,6 +13,7 @@ import {
 import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { describeWarnings } from '~/utils/describeWarnings'
 import { formatCostValue } from '../utils/formatCostValue'
 import { useCostsMetricContext } from './CostsMetricContext'
 import { useCostsUnitContext } from './CostsUnitContext'
@@ -64,7 +65,11 @@ function Warning({ warning }: { warning: WarningWithSentiment }) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <RoundedWarningIcon className="size-4" sentiment={warning.sentiment} />
+        <RoundedWarningIcon
+          className="size-4"
+          sentiment={warning.sentiment}
+          aria-label={describeWarnings([warning])}
+        />
       </TooltipTrigger>
       <TooltipContent>
         <Callout

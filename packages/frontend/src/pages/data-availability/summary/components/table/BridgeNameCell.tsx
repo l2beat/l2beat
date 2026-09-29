@@ -3,11 +3,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { LiveIndicator } from '~/components/LiveIndicator'
 import { NoDataIcon } from '~/components/NoDataIcon'
+import { StatusIcon } from '~/components/table/cells/StatusIcon'
 import { TableLink } from '~/components/table/TableLink'
-import { UnderReviewIcon } from '~/icons/UnderReview'
-import { UnverifiedIcon } from '~/icons/Unverified'
 import type { DaLivenessBridgeTableEntry } from '~/pages/data-availability/liveness/components/table/toDaLivenessTableEntry'
 import type { DaBridgeArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import type { DaBridgeRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
@@ -35,7 +33,7 @@ export function BridgeNameCell({
         ) && (
           <Tooltip>
             <TooltipTrigger>
-              <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+              <StatusIcon status="unverified" className="size-3.5 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
               {bridge.statuses.verificationWarnings.contracts && (
@@ -50,7 +48,7 @@ export function BridgeNameCell({
       {bridge.statuses?.underReview && (
         <Tooltip>
           <TooltipTrigger>
-            <UnderReviewIcon className="size-3.5 md:size-4" />
+            <StatusIcon status="underReview" className="size-3.5 md:size-4" />
           </TooltipTrigger>
           <TooltipContent>
             {getUnderReviewText(bridge.statuses?.underReview)}
@@ -63,7 +61,7 @@ export function BridgeNameCell({
       {bridge.statuses?.ongoingAnomaly && (
         <Tooltip>
           <TooltipTrigger>
-            <LiveIndicator />
+            <StatusIcon status="ongoingAnomaly" />
           </TooltipTrigger>
           <TooltipContent>
             There's an ongoing anomaly. Check detailed page for more
