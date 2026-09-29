@@ -70,7 +70,6 @@ export const _StructureContract = {
   fields: v.record(v.string(), StructureContractField).default({}),
   methods: v.record(v.string(), v.string()).default({}),
   manualSourcePaths: v.record(v.string(), v.string()).default({}),
-  preferManualSourcePaths: v.boolean().optional(),
   types: v.record(v.string(), DiscoveryCustomType).default({}),
 }
 export const StructureContract = v.object(_StructureContract)

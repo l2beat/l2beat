@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
-  "timestamp": 1790697130,
-  "configHash": "0x61f69824d0e276b2f43f1c2971b9967013d39fb81b1d8651fa05d57701042617",
+  "timestamp": 1790697481,
+  "configHash": "0xf4145c5e9c133f58cb9a55bc0688ea5dbbdbb4afd197d302fe46ec566f70f8b4",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1560,7 +1560,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0xe3d774c76169aad00bb7a8144fca1c771d610384bd0577d33702eda5ed156eee"
+        "0xd9798824e7bda5321f6d983a265feb6c701d8d6fb6a009646c744ea5f90d7077"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
@@ -1595,10 +1595,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 2771277462,
+        "basefee": 5371090658,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 129703669,
+        "blobBaseFee": 236808943,
         "blobBaseFeeScalar": 862000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -1608,27 +1608,21 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x55a275724633243881de257a12a8ffc1b9cf131ba2f4efe00bd6f144e52128fb",
+        "hash": "0xc0fc376e5840df8e1ea5d93210a593f655ea1dd156a04839250eb7cba34bac01",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26084134,
+        "number": 26084163,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 4,
-        "timestamp": 1790697059,
+        "sequenceNumber": 6,
+        "timestamp": 1790697407,
         "version": "1.7.0"
       },
       "implementationNames": {
         "zircuit:0x4200000000000000000000000000000000000015": "Proxy",
-        "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": ""
-      },
-      "references": [
-        {
-          "text": "Source Code",
-          "href": "https://github.com/ethereum-optimism/optimism/blob/773798a67678ab28c3ef7ee3405f25c04616af19/packages/contracts-bedrock/src/L2/L1Block.sol"
-        }
-      ]
+        "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "L2ToL1MessagePasser"
+      }
     },
     {
       "name": "L2ProxyAdmin",
@@ -2574,6 +2568,25 @@
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
     ],
+    "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event Initialized(uint64 version)",
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function accessController() view returns (address)",
+      "function initialize()",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function isUsedNonceForWithdrawal(uint256 _nonce) view returns (bool)",
+      "function leftHashes(uint256) view returns (bytes32)",
+      "function messageNonce() view returns (uint256)",
+      "function messageRoot() view returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function totalWithdrawals() view returns (uint256)",
+      "function version() view returns (string)"
+    ],
     "zircuit:0x4200000000000000000000000000000000000015": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2614,7 +2627,7 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26084139, "zircuit": 35380457 },
+  "usedBlockNumbers": { "ethereum": 26084169, "zircuit": 35380633 },
   "permissionsConfigHash": "0xcf11b7967cd550b02267d72f91bee744c7ddcffe3088caff6c8b5eb896842946",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {

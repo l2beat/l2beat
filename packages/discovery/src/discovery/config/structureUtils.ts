@@ -84,6 +84,5 @@ const structureContractPolicy: MergePolicy<StructureContract> = {
   fields: mergeRecordByName(mergeStructureField),
   methods: mergeRecordShallow,
   manualSourcePaths: mergeRecordShallow,
-  preferManualSourcePaths: overrideScalar,
   types: mergeRecordShallow,
 }

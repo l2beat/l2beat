@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x66a1c0cfb62e43a4cd4abc31c556ab1916df9f7d
+Generated with discovered.json: 0xecd591d27a9c1ce5ee2e6f9fbb44785d66adb264
 
-# Diff at Tue, 29 Sep 2026 15:53:19 GMT:
+# Diff at Tue, 29 Sep 2026 15:59:08 GMT:
 
 - id: be94796b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044680
-- current timestamp: 1790697130
+- current timestamp: 1790697481
 
 ## Description
 
@@ -13,7 +13,7 @@ Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v
 
 ProxyAdmin replaced by another ProxyAdmin with an AddressManager, owner unchanged (Conduit Multisig 1). New DelayedWETH deployed. PermissionedDisputeGame, MIPS (v1.9.0 to v1.10.1) and PreimageOracle (v1.1.4 to v1.1.5) replaced; proposer, challenger and absolute prestate unchanged.
 
-L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1BlockValuesJovian()` and `daFootprintGasScalar` (`400`). Implementation marked as manually verified.
+L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1BlockValuesJovian()` and `daFootprintGasScalar` (`400`).
 
 L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The `upgradePredeploys` call of the same batch reverted, so the other predeploys were not upgraded. Implementation marked as manually verified.
 
@@ -560,7 +560,7 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The
 -        "opstack/Layer2/L1Block"
       sourceHashes.1:
 -        "0xba1197cf8ad03c23a68877c7bad92c7d43c0348aa7b03d38f36a17acb35a942e"
-+        "0xe3d774c76169aad00bb7a8144fca1c771d610384bd0577d33702eda5ed156eee"
++        "0xd9798824e7bda5321f6d983a265feb6c701d8d6fb6a009646c744ea5f90d7077"
       values.$implementation:
 -        "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66"
 +        "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
@@ -579,9 +579,7 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The
       implementationNames.zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66:
 -        "L1Block"
       implementationNames.zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
-+        ""
-      references:
-+        [{"text":"Source Code","href":"https://github.com/ethereum-optimism/optimism/blob/773798a67678ab28c3ef7ee3405f25c04616af19/packages/contracts-bedrock/src/L2/L1Block.sol"}]
++        "L2ToL1MessagePasser"
     }
 ```
 
@@ -663,6 +661,7 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The
  .../DelayedWETH/DelayedWETH.sol                    |   54 +-
  .../DisputeGameFactory/DisputeGameFactory.sol      |   92 +-
  .../L1Block/L1Block.sol => /dev/null               |  294 --
+ .../zircuit/.flat/L1Block/L2ToL1MessagePasser.sol  | 4003 ++++++++++++++++++
  .../L1CrossDomainMessenger.sol                     | 1619 +++-----
  .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 +-
  .../L1StandardBridge/L1StandardBridge.sol          |  212 +-
@@ -675,7 +674,7 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The
  ...:0x3A317fCEE068868BE7628eFb233170df2DD5B71d.sol |  427 ++
  .../dev/null                                       |  238 --
  .../SystemConfig/SystemConfig.sol                  | 1615 ++------
- 17 files changed, 5029 insertions(+), 7614 deletions(-)
+ 18 files changed, 9032 insertions(+), 7614 deletions(-)
 ```
 
 ## Config/verification related changes

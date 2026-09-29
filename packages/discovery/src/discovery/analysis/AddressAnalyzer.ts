@@ -127,7 +127,6 @@ export class AddressAnalyzer {
       provider,
       proxy.addresses,
       config.manualSourcePaths,
-      config.preferManualSourcePaths === true,
     )
     const libraries =
       config.discoverLibraries === true

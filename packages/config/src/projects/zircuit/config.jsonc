@@ -65,15 +65,19 @@
     },
     "zircuit:0x4200000000000000000000000000000000000015": {
       // Sourcify (the only explorer for this chain) serves a stale
-      // L2ToL1MessagePasser match for the Jovian L1Block implementation. The path
-      // below is a manual label, not an integrity check: the deployed code was
-      // checked by hand against the L1Block code hash in the Jovian spec
-      // (https://specs.optimism.io/protocol/jovian/derivation.html). It carries no
-      // ABI, so the getters are declared here. Drop once the implementation changes.
-      "preferManualSourcePaths": true,
-      "manualSourcePaths": {
-        "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://github.com/ethereum-optimism/optimism/blob/773798a67678ab28c3ef7ee3405f25c04616af19/packages/contracts-bedrock/src/L2/L1Block.sol"
-      },
+      // L2ToL1MessagePasser match for the Jovian L1Block implementation, so the
+      // ABI it returns is wrong. Its getters are ignored and the L1Block ones are
+      // declared here. Drop once the implementation changes.
+      "ignoreMethods": [
+        "accessController",
+        "MESSAGE_VERSION",
+        "messageNonce",
+        "messageRoot",
+        "paused",
+        "totalWithdrawals",
+        "isUsedNonceForWithdrawal",
+        "leftHashes"
+      ],
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
       "ignoreInWatchMode": [
         "basefee",
