@@ -2,6 +2,7 @@ import type {
   FlowsGraphData,
   FlowsGraphNode,
 } from '~/pages/interop/components/flows/graph/types'
+import type { DaFlowsData } from '~/server/features/data-availability/flows/getDaFlows'
 import type { DaFlowsProject } from '~/server/features/data-availability/flows/getDaFlowsProjects'
 
 export const OTHERS_ID = 'others'
@@ -14,7 +15,21 @@ export interface DaFlowsPoster {
   href: string | undefined
   posted: number
   share: number
+  /** How it posts. Left out when nothing tells how often it does */
+  batch: DaFlowsBatch | undefined
 }
+
+export interface DaFlowsBatch {
+  /** Seconds from one batch to the next, on average */
+  interval: number
+  /** Bytes in a batch, on average */
+  size: number
+}
+
+export type DaFlowsInput = Pick<
+  DaFlowsData,
+  'posted' | 'batchIntervals' | 'range'
+>
 
 export interface DaFlowsGraph {
   /** The DA layer first, then the posters shown on the ring */
@@ -30,20 +45,25 @@ export interface DaFlowsGraph {
  * middle, the largest posters around it, each sending its bytes inwards.
  * The ring holds `maxNodes` bubbles, so posters that do not fit are summed
  * into a single "Others" bubble rather than dropped — the total stays whole.
+ *
+ * A poster whose batches are timed sends its bytes a batch at a time. The
+ * others, "Others" among them, send theirs as a steady stream.
  */
 export function buildDaFlowsGraph(
   daLayer: DaFlowsProject,
   projects: DaFlowsProject[],
-  posted: Record<string, number>,
+  { posted, batchIntervals, range }: DaFlowsInput,
   maxNodes: number,
 ): DaFlowsGraph {
   const known = new Map(projects.map((p) => [p.id, p]))
+  const period = range[1] - range[0]
   const totalPosted = Object.values(posted).reduce((sum, v) => sum + v, 0)
 
   const posters: DaFlowsPoster[] = Object.entries(posted)
     .filter(([, value]) => value > 0)
     .map(([id, value]) => {
       const project = known.get(id)
+      const interval = batchIntervals[id]
       return {
         id,
         name: project?.name ?? id,
@@ -51,6 +71,13 @@ export function buildDaFlowsGraph(
         href: project?.href,
         posted: value,
         share: totalPosted > 0 ? value / totalPosted : 0,
+        batch: interval
+          ? {
+              interval,
+              // a batch cannot hold more than was posted in all
+              size: Math.min(value, (value * interval) / period),
+            }
+          : undefined,
       }
     })
     .sort((a, b) => b.posted - a.posted)
@@ -65,7 +92,11 @@ export function buildDaFlowsGraph(
   const rest = posters.filter((p) => !onRingIds.has(p.id))
   const restPosted = rest.reduce((sum, p) => sum + p.posted, 0)
 
-  const ring: { node: FlowsGraphNode; posted: number }[] = onRing.map((p) => {
+  const ring: {
+    node: FlowsGraphNode
+    posted: number
+    batch?: DaFlowsBatch
+  }[] = onRing.map((p) => {
     const project = known.get(p.id)
     return {
       node: {
@@ -75,6 +106,7 @@ export function buildDaFlowsGraph(
         color: project?.color ?? OTHERS_COLOR,
       },
       posted: p.posted,
+      batch: p.batch,
     }
   })
   if (rest.length > 0) {
@@ -104,6 +136,7 @@ export function buildDaFlowsGraph(
         srcChain: r.node.id,
         dstChain: daLayer.id,
         volume: r.posted,
+        ...(r.batch && { burstVolume: r.batch.size }),
       })),
       chainData: [
         { chainId: daLayer.id, totalVolume: totalPosted, netFlow: totalPosted },

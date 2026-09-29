@@ -1,6 +1,10 @@
 import { expect } from 'earl'
 import type { DaFlowsProject } from '~/server/features/data-availability/flows/getDaFlowsProjects'
-import { buildDaFlowsGraph, OTHERS_ID } from './buildDaFlowsGraph'
+import {
+  buildDaFlowsGraph,
+  type DaFlowsInput,
+  OTHERS_ID,
+} from './buildDaFlowsGraph'
 
 describe(buildDaFlowsGraph.name, () => {
   const daLayer = project('ethereum')
@@ -9,7 +13,7 @@ describe(buildDaFlowsGraph.name, () => {
     const graph = buildDaFlowsGraph(
       daLayer,
       [project('a'), project('b')],
-      { a: 100, b: 300 },
+      flows({ a: 100, b: 300 }),
       15,
     )
 
@@ -30,7 +34,7 @@ describe(buildDaFlowsGraph.name, () => {
     const graph = buildDaFlowsGraph(
       daLayer,
       [project('a'), project('b'), project('c'), project('d')],
-      { a: 400, b: 300, c: 200, d: 100 },
+      flows({ a: 400, b: 300, c: 200, d: 100 }),
       3,
     )
 
@@ -55,7 +59,7 @@ describe(buildDaFlowsGraph.name, () => {
     const graph = buildDaFlowsGraph(
       daLayer,
       [project('a'), project('b'), project('c')],
-      { a: 600, b: 300, c: 100 },
+      flows({ a: 600, b: 300, c: 100 }),
       2,
     )
 
@@ -70,7 +74,7 @@ describe(buildDaFlowsGraph.name, () => {
     const graph = buildDaFlowsGraph(
       daLayer,
       [project('a')],
-      { a: 100, unknown: 50 },
+      flows({ a: 100, unknown: 50 }),
       15,
     )
 
@@ -82,7 +86,7 @@ describe(buildDaFlowsGraph.name, () => {
     const graph = buildDaFlowsGraph(
       daLayer,
       [project('a'), project('b')],
-      { a: 100, b: 0 },
+      flows({ a: 100, b: 0 }),
       15,
     )
 
@@ -90,14 +94,68 @@ describe(buildDaFlowsGraph.name, () => {
     expect(graph.posters.length).toEqual(1)
   })
 
+  it('sends a poster whose batches are timed a batch at a time', () => {
+    const graph = buildDaFlowsGraph(
+      daLayer,
+      [project('a'), project('b')],
+      // a posts every 100 s, so 10 times over the 1000 s
+      flows({ a: 5000, b: 300 }, { a: 100 }),
+      15,
+    )
+
+    expect(graph.posters.map((p) => p.batch)).toEqual([
+      { interval: 100, size: 500 },
+      undefined,
+    ])
+    expect(graph.data.flows).toEqual([
+      { srcChain: 'a', dstChain: 'ethereum', volume: 5000, burstVolume: 500 },
+      { srcChain: 'b', dstChain: 'ethereum', volume: 300 },
+    ])
+  })
+
+  it('never makes a batch larger than everything that was posted', () => {
+    const graph = buildDaFlowsGraph(
+      daLayer,
+      [project('a')],
+      flows({ a: 5000 }, { a: 4000 }),
+      15,
+    )
+
+    expect(graph.posters[0]?.batch).toEqual({ interval: 4000, size: 5000 })
+  })
+
+  it('sends Others as a steady stream', () => {
+    const graph = buildDaFlowsGraph(
+      daLayer,
+      [project('a'), project('b'), project('c')],
+      flows({ a: 600, b: 300, c: 100 }, { a: 100, b: 100, c: 100 }),
+      2,
+    )
+
+    expect(graph.data.flows.at(-1)).toEqual({
+      srcChain: OTHERS_ID,
+      dstChain: 'ethereum',
+      volume: 400,
+    })
+    // the list still tells how each of them posts
+    expect(graph.posters.every((p) => p.batch !== undefined)).toEqual(true)
+  })
+
   it('returns only the DA layer when nothing was posted', () => {
-    const graph = buildDaFlowsGraph(daLayer, [project('a')], {}, 15)
+    const graph = buildDaFlowsGraph(daLayer, [project('a')], flows({}), 15)
 
     expect(graph.nodes.map((n) => n.id)).toEqual(['ethereum'])
     expect(graph.data.flows).toEqual([])
     expect(graph.totalPosted).toEqual(0)
   })
 })
+
+function flows(
+  posted: Record<string, number>,
+  batchIntervals: Record<string, number> = {},
+): DaFlowsInput {
+  return { posted, batchIntervals, range: [1000, 2000] }
+}
 
 function project(id: string): DaFlowsProject {
   return {

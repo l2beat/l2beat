@@ -5,33 +5,14 @@ import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import type { GetFlowsGraphCaption } from '~/pages/interop/components/flows/graph/types'
 import { FlowsGraphContext } from '~/pages/interop/components/flows/graph/utils/FlowsGraphContext'
-import type { ParticleScale } from '~/pages/interop/components/flows/graph/utils/particleScale'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import type { DaFlowsProjects } from '~/server/features/data-availability/flows/getDaFlowsProjects'
 import { useTRPC } from '~/trpc/React'
 import { buildDaFlowsGraph, OTHERS_ID } from './buildDaFlowsGraph'
 import { DaFlowsPosters } from './DaFlowsPosters'
 import { DaFlowsStats } from './DaFlowsStats'
+import { getDaFlowsUnit, TIME_SCALE } from './daFlowsUnit'
 import { formatPosted } from './formatPosted'
-
-const KIB = 1024
-
-// One particle starts at 256 B of data and doubles up the usual byte steps
-export const BYTES_PARTICLE_SCALE: ParticleScale = {
-  base: 256,
-  options: [
-    256,
-    512,
-    KIB,
-    2 * KIB,
-    5 * KIB,
-    10 * KIB,
-    20 * KIB,
-    50 * KIB,
-    100 * KIB,
-  ],
-  extensionStep: 100 * KIB,
-}
 
 const getCaption: GetFlowsGraphCaption = (node) =>
   node ? { text: formatPosted(node.totalVolume), tone: 'neutral' } : undefined
@@ -42,13 +23,15 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
     trpc.da.flows.queryOptions({ daLayerId: daLayer.id }),
   )
 
+  const unit = getDaFlowsUnit(daLayer.id)
+
   const graph = useMemo(
     () =>
       data
         ? buildDaFlowsGraph(
             daLayer,
             projects,
-            data.posted,
+            data,
             // the DA layer takes the middle, so the whole ring is free
             MAX_SELECTED_CHAINS,
           )
@@ -80,7 +63,7 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
     graph?.data.chainData,
     graph?.data.flows,
     undefined,
-    { centerChainId: daLayer.id, scale: BYTES_PARTICLE_SCALE },
+    { centerChainId: daLayer.id, scale: unit.scale, timeScale: TIME_SCALE },
   )
 
   const ringIds = useMemo(
@@ -102,6 +85,7 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
             daLayerName={daLayer.name}
             graph={graph}
             bytesPerParticle={valuePerParticle}
+            unit={unit}
             isLoading={isLoading}
           />
         </div>
@@ -113,7 +97,8 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
             hasEnoughProtocols
             isLoading={isLoading}
             centerChainId={daLayer.id}
-            particleScale={BYTES_PARTICLE_SCALE}
+            particleScale={unit.scale}
+            timeScale={TIME_SCALE}
             getCaption={getCaption}
             className="pt-4"
             maxSizeClassName="max-w-[max(min(70svh,calc(100svh-20rem)),30rem)] lg:h-full lg:w-auto lg:max-w-full"
@@ -124,6 +109,7 @@ export function DaFlowsCard({ daLayer, projects }: DaFlowsProjects) {
             posters={graph?.posters}
             isLoading={isLoading}
             highlighted={highlighted}
+            unit={unit}
             // posters without a bubble of their own are part of "Others"
             getNodeId={(id) => (ringIds.has(id) ? id : OTHERS_ID)}
             onSelect={toggleHighlightedChain}

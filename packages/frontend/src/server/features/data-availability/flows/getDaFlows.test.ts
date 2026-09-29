@@ -1,6 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getCapacity, sumPostedByProject, sumUsed } from './getDaFlows'
+import {
+  getBatchIntervals,
+  getCapacity,
+  sumPostedByProject,
+  sumUsed,
+} from './getDaFlows'
 
 const RANGE: [number, number] = [1000, 2000]
 
@@ -67,6 +72,66 @@ describe(sumUsed.name, () => {
 
   it('returns zero when the layer has no record', () => {
     expect(sumUsed([record('base', 1500, 7n)], 'ethereum', RANGE)).toEqual(0)
+  })
+})
+
+describe(getBatchIntervals.name, () => {
+  it('reads the batch submissions of each project', () => {
+    const intervals = getBatchIntervals(
+      [
+        { projectId: 'base', subtype: 'batchSubmissions', avg: 54 },
+        { projectId: 'base', subtype: 'stateUpdates', avg: 3600 },
+        { projectId: 'arbitrum', subtype: 'batchSubmissions', avg: 132.5 },
+      ],
+      [],
+    )
+
+    expect(intervals).toEqual({ base: 54, arbitrum: 132.5 })
+  })
+
+  it('leaves out a project with no batch submissions', () => {
+    const intervals = getBatchIntervals(
+      [{ projectId: 'abstract', subtype: 'stateUpdates', avg: 3600 }],
+      [],
+    )
+
+    expect(intervals).toEqual({})
+  })
+
+  it('reads the transactions that stand for batch submissions', () => {
+    const intervals = getBatchIntervals(
+      [
+        { projectId: 'a', subtype: 'batchSubmissions', avg: 10 },
+        { projectId: 'a', subtype: 'stateUpdates', avg: 600 },
+        { projectId: 'b', subtype: 'batchSubmissions', avg: 20 },
+        { projectId: 'b', subtype: 'stateUpdates', avg: 700 },
+      ],
+      [
+        {
+          id: 'a',
+          livenessConfig: {
+            duplicateData: { from: 'stateUpdates', to: 'batchSubmissions' },
+          },
+        },
+        {
+          id: 'b',
+          livenessConfig: {
+            duplicateData: { from: 'stateUpdates', to: 'proofSubmissions' },
+          },
+        },
+      ],
+    )
+
+    expect(intervals).toEqual({ a: 600, b: 20 })
+  })
+
+  it('leaves out an interval of no length', () => {
+    const intervals = getBatchIntervals(
+      [{ projectId: 'a', subtype: 'batchSubmissions', avg: 0 }],
+      [],
+    )
+
+    expect(intervals).toEqual({})
   })
 })
 

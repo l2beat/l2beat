@@ -1,5 +1,8 @@
-import type { DaLayerThroughput } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DaLayerThroughput, ProjectLivenessConfig } from '@l2beat/config'
+import type {
+  AggregatedLivenessRecord,
+  DataAvailabilityRecord,
+} from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -14,6 +17,11 @@ export type DaFlowsParams = v.infer<typeof DaFlowsParams>
 export interface DaFlowsData {
   /** Bytes each project posted to the DA layer over the range */
   posted: Record<string, number>
+  /**
+   * Average seconds between a project's batch submissions over the range.
+   * Left out for projects whose batches liveness does not follow
+   */
+  batchIntervals: Record<string, number>
   /** Bytes anyone posted to the DA layer over the range, tracked project or not */
   used: number
   usedSevenDaysAgo: number
@@ -27,6 +35,16 @@ type PostedRecord = Pick<
   DataAvailabilityRecord,
   'projectId' | 'timestamp' | 'totalSize'
 >
+
+type LivenessAggregate = Pick<
+  AggregatedLivenessRecord,
+  'projectId' | 'subtype' | 'avg'
+>
+
+interface LivenessProject {
+  id: string
+  livenessConfig: ProjectLivenessConfig
+}
 
 export async function getDaFlows({
   daLayerId,
@@ -52,12 +70,27 @@ export async function getDaFlows({
     return getMockDaFlows(daLayerId, capacity, range)
   }
 
-  const records = await getDb().dataAvailability.getByDaLayersAndTimeRange(
-    [daLayerId],
-    [sevenDaysAgo[0], range[1]],
-  )
+  const db = getDb()
+  // Liveness follows transactions sent to Ethereum, so it tells how often a
+  // project posts only when Ethereum is where it posts
+  const hasLiveness = daLayerId === ProjectId.ETHEREUM
+  const [records, aggregates, livenessProjects] = await Promise.all([
+    db.dataAvailability.getByDaLayersAndTimeRange(
+      [daLayerId],
+      [sevenDaysAgo[0], range[1]],
+    ),
+    hasLiveness
+      ? // kept by the hour, and the repository takes the last one inclusive
+        db.aggregatedLiveness.getAggregatesByTimeRange([
+          range[0],
+          range[1] - UnixTime.HOUR,
+        ])
+      : [],
+    hasLiveness ? ps.getProjects({ select: ['livenessConfig'] }) : [],
+  ])
   return {
     posted: sumPostedByProject(records, daLayerId, range),
+    batchIntervals: getBatchIntervals(aggregates, livenessProjects),
     used: sumUsed(records, daLayerId, range),
     usedSevenDaysAgo: sumUsed(records, daLayerId, sevenDaysAgo),
     capacity,
@@ -92,6 +125,29 @@ export function sumUsed(
   return records
     .filter((r) => r.projectId === daLayerId && isInRange(r, range))
     .reduce((sum, r) => sum + Number(r.totalSize), 0)
+}
+
+/**
+ * How often each project submitted a batch. A project can have one kind of
+ * transaction stand for another, in which case the one it stands for is read.
+ */
+export function getBatchIntervals(
+  aggregates: LivenessAggregate[],
+  projects: LivenessProject[],
+): Record<string, number> {
+  const standIns = new Map(
+    projects
+      .filter((p) => p.livenessConfig.duplicateData.to === 'batchSubmissions')
+      .map((p) => [p.id, p.livenessConfig.duplicateData.from]),
+  )
+
+  const intervals: Record<string, number> = {}
+  for (const aggregate of aggregates) {
+    const subtype = standIns.get(aggregate.projectId) ?? 'batchSubmissions'
+    if (aggregate.subtype !== subtype || !(aggregate.avg > 0)) continue
+    intervals[aggregate.projectId] = aggregate.avg
+  }
+  return intervals
 }
 
 /**
@@ -139,6 +195,11 @@ async function getMockDaFlows(
   const used = Object.values(posted).reduce((sum, value) => sum + value, 0)
   return {
     posted,
+    // the larger the poster, the more often it posts. The last one is left
+    // without, as projects that liveness does not follow are
+    batchIntervals: Object.fromEntries(
+      posting.slice(0, -1).map((p, i) => [p.id, Math.round(45 * 1.6 ** i)]),
+    ),
     used,
     usedSevenDaysAgo: Math.round(used * 0.9),
     capacity,

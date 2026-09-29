@@ -1,4 +1,4 @@
-import { formatInteger } from '@l2beat/shared-pure'
+import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -6,14 +6,14 @@ import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParti
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import type { DaFlowsGraph } from './buildDaFlowsGraph'
+import { type DaFlowsUnit, TIME_SCALE } from './daFlowsUnit'
 import { formatPosted } from './formatPosted'
-
-const BYTES_UNIT = { label: 'data', format: formatPosted }
 
 interface Props {
   daLayerName: string
   graph: DaFlowsGraph | undefined
   bytesPerParticle: number | undefined
+  unit: DaFlowsUnit
   isLoading: boolean
 }
 
@@ -21,6 +21,7 @@ export function DaFlowsStats({
   daLayerName,
   graph,
   bytesPerParticle,
+  unit,
   isLoading,
 }: Props) {
   const top = graph?.posters[0]
@@ -75,8 +76,25 @@ export function DaFlowsStats({
         totalVolume={graph?.totalPosted ?? 0}
         dollarsPerParticle={bytesPerParticle}
         isLoading={isLoading}
-        unit={BYTES_UNIT}
+        unit={{
+          label: 'data',
+          format: formatPosted,
+          formatParticle: unit.format,
+        }}
       />
+      {!isLoading && (
+        <div className="mt-1 space-y-1 text-center font-medium text-label-value-14 text-secondary">
+          <div>
+            1 burst ≈ <span className="font-bold text-brand">1 batch</span>
+          </div>
+          <div>
+            1 second ≈{' '}
+            <span className="font-bold text-brand">
+              {formatSeconds(TIME_SCALE, { fullUnit: true })}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
