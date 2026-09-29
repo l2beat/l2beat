@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { getMarkdownAlternatePath } from '~/server/routers/MarkdownAlternatesRouter'
+import { LLMS_TXT_LINK } from '~/server/markdown/markdownAlternate'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 
 /**
  * Tells agents where the site's llms.txt is and, for pages that have one,
@@ -17,7 +18,7 @@ export function LlmsLinkHeaderMiddleware() {
 }
 
 export function getLinkHeader(path: string): string {
-  const links = [`<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`]
+  const links = [LLMS_TXT_LINK]
   const alternate = getMarkdownAlternatePath(path)
   if (alternate) {
     links.unshift(

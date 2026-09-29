@@ -5,9 +5,11 @@ import {
   AccordionTrigger,
 } from '~/components/core/Accordion'
 import { CustomLink } from '~/components/link/CustomLink'
+import { usePathname } from '~/hooks/usePathname'
 import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { parseCustom } from './parseCustom'
 import type { ProjectLink } from './types'
 
@@ -22,6 +24,7 @@ export function MobileProjectLinks({
   className,
   triggerClassName,
 }: Props) {
+  const markdownHref = getMarkdownAlternatePath(usePathname())
   return (
     <Accordion type="single" collapsible={true} className={className}>
       <AccordionItem value="links">
@@ -82,6 +85,18 @@ export function MobileProjectLinks({
                   </td>
                 </tr>
               ))}
+              {markdownHref && (
+                <tr className="border-divider border-t first:border-none">
+                  <th className="w-[110px] py-3 align-top font-medium text-secondary">
+                    Markdown
+                  </th>
+                  <td className="py-3">
+                    <CustomLink className="block truncate" href={markdownHref}>
+                      This page as markdown
+                    </CustomLink>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </AccordionContent>

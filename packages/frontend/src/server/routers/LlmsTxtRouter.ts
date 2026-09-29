@@ -1,8 +1,8 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
-  MARKDOWN_CONTENT_TYPE,
   type MarkdownAlternatePath,
   type MarkdownSection,
   renderMarkdown,
@@ -17,6 +17,7 @@ export function createLlmsTxtRouter() {
   const router = express.Router()
   const body = renderMarkdown(LLMS_TXT, [
     ...PAGE_SECTIONS,
+    MARKDOWN_PAGES_SECTION,
     API_SECTION,
     OPTIONAL_SECTION,
   ])
@@ -35,7 +36,7 @@ const LLMS_TXT = {
   notes: [
     'Important notes:',
     '',
-    '- Links ending in .md are markdown versions of the page, listing every tracked project with its page URL. The other links are HTML pages.',
+    '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
@@ -303,6 +304,18 @@ const PAGE_SECTIONS: MarkdownSection[] = [
     ],
   },
 ]
+
+const MARKDOWN_PAGES_SECTION: MarkdownSection = {
+  heading: 'Markdown pages',
+  links: [
+    {
+      name: 'Scaling project',
+      path: '/layer2s/projects/{slug}.md',
+      description:
+        'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
+    },
+  ],
+}
 
 /** To list a new endpoint, add one entry here; a test compares this with the public API router. */
 const API_SECTION: MarkdownSection = {
