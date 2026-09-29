@@ -850,9 +850,9 @@
     "starkex/StarkExchange_Frozen": "0x0136ed1863558a0fd0cd5283912fcd12ca49a1e78ee7595141def29b8e331ac1"
   },
   "usedBlockNumbers": { "ethereum": 25249836 },
-  "permissionsConfigHash": "0xf0dad0b6131a85c722ecb0b124c16f597d8bc6a95ab605b518b3c1c2e030552c",
+  "permissionsConfigHash": "0xb6b04a998a85fe4473e0f85ad0d0eacea029239b74274a16eb00e1b556f280b7",
   "modelledAgainst": {
-    "shared-sharp-verifier": "0xedbb05e5ad7dcdb7f8a130d8e366de52ebbb6c9f3785ea1da95bd467a3299966"
+    "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"
   },
   "permissions": {
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {

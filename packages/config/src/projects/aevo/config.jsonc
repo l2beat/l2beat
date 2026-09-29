@@ -4,6 +4,10 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
   "overrides": {
+    "eth:0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
     // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
     "eth:0x30381af09B7996065f02D089217117Bb1eaf35E2": {

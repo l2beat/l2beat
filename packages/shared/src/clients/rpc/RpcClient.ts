@@ -7,10 +7,7 @@ import {
 import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
-import {
-  ClientCore,
-  type ClientCoreDependencies as ClientCoreDependencies,
-} from '../ClientCore'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'

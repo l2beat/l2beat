@@ -13,7 +13,7 @@ export const DecodeEigenDACommitment = command({
     }),
     txHash: positional({ type: string, displayName: 'txHash' }),
   },
-  handler: ({ rpcUrl, txHash }) => {
-    decodeEigenDACommitment(rpcUrl, txHash)
+  handler: async ({ rpcUrl, txHash }) => {
+    await decodeEigenDACommitment(rpcUrl, txHash)
   },
 })

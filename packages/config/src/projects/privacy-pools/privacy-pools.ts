@@ -6,12 +6,14 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
@@ -25,10 +27,6 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
-const ETH_ANONYMITY_SET_MINIMUM_AMOUNTS = [
-  '100000000000000000',
-  '10000000000000000000',
-]
 
 interface PrivacyPoolsAssetConfig {
   minimumDepositAmount: string | number
@@ -73,6 +71,7 @@ export const privacyPools: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossification: getOssification('privacy-pools'),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -293,9 +292,7 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
       },
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
       feeConfig,
-      minimumAmounts: isNativeEth
-        ? ETH_ANONYMITY_SET_MINIMUM_AMOUNTS
-        : undefined,
+      minimumAmounts: PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol],
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }

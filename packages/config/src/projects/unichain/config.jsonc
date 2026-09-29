@@ -31,6 +31,133 @@
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
+    // Shared Karst upgrade tooling. Ignored so discovery does not follow it
+    // into bare implementations; the upgrade authority is the ProxyAdmin owner.
+    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": {
+      // OPContractsManagerContainer
+      "ignoreDiscovery": true
+    },
+    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": {
+      // OPContractsManagerMigrator
+      "ignoreDiscovery": true
+    },
+    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": {
+      // OPContractsManagerUtils
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      // OPContractsManagerV2
+      "ignoreDiscovery": true
+    },
+    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
+      // OPContractsManagerStandardValidator
+      "ignoreDiscovery": true
+    },
+    "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": {
+      // bare OptimismPortal2 implementation reached as a relative since the latest upgrade; every call on it reverts
+      "ignoreDiscovery": true
+    },
+    "eth:0x8098F676033A377b9Defe302e9fE6877cD63D575": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // SuperchainProxyAdmin: can upgrade the shared SuperchainConfig that holds Unichain's pause authority.
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // ProxyAdmin (L1): can upgrade every core Unichain contract (portal, bridges, DGF, SystemConfig).
+    "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4": {
+      "critical": true
+    },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // LivenessGuard of Unichain Multisig 1, which sits on the UnichainProxyAdminOwner
+    // (upgrade authority) path. Older guard version that does not match the shared
+    // gnosisSafeModules/LivenessGuard shape, so it is flagged here instead.
+    "eth:0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6": {
+      "critical": true
+    },
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
+      // Owner of both L1 proxy admins; its two members are the Upgrade Safe and Security Council.
+      "critical": { "sinceTimestamp": 1783362755 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
+      // Upgrade Safe: member of the proxy-admin owner Safe and fallback controller of the Security Council module.
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
+      // Security Council: member of the proxy-admin owner Safe and fallback owner of the Upgrade Safe.
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": {
+      // Unichain Multisig 2 can change SystemConfig settings on the canonical chain.
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC": {
+      // Retired Unichain Multisig 1 governed the upgrade path through its LivenessModule until the July 2026 migration.
+      "critical": { "untilTimestamp": 1783362755 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": {
+      // Guardian Safe controls the SuperchainConfig pause path, including the pause deputy module.
+      "critical": true,
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      // SaferSafes is enabled on the Upgrade Safe; its response window controls when the Security Council can take over.
+      "fields": {
+        "upgradeSafeLivenessResponsePeriod": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "livenessResponsePeriod"]
+        },
+        "upgradeSafeFallbackOwner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "fallbackOwner"]
+        }
+      }
+    },
     "unichain:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },

@@ -10,6 +10,9 @@ const mainPages: MainPage[] = [
     title: 'Home',
   },
   {
+    title: 'Tokens',
+  },
+  {
     type: 'layer2s',
     title: 'Summary',
   },

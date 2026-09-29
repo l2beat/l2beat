@@ -1,6 +1,7 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CROP_NOTES } from '../../common/crops'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -67,6 +68,7 @@ export const uniswapv3: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(0),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossification: getOssification('uniswapv3'),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -156,6 +158,12 @@ export const uniswapv3: BaseProject = {
   },
   defiInfo: {
     category: 'DEX',
+    tvl: {
+      source: 'defillama',
+      protocolSlug: 'uniswap-v3',
+      sinceTimestamp: UnixTime(1620172800),
+      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+    },
   },
   // Declared empty on purpose: v3 has no oracle, no bridge, no external
   // contract its operation depends on. The section renders an explicit

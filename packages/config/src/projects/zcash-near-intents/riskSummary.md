@@ -1,8 +1,8 @@
 ## Funds can be stolen if
 1. the custodial bridge operator's single mint key or its Ethereum treasury key is compromised.
 2. 4/5 NEAR Intents DAO council members upgrade the Verifier maliciously.
-3. 2/5 Rainbow Bridge DAO council members upgrade the Zcash connector, its token or the light client maliciously.
-4. 9/15 NEAR MPC nodes collude to sign Zcash transactions from bridge addresses.
+3. 3/5 Rainbow Bridge DAO council members upgrade the Zcash connector, its token or the light client maliciously.
+4. 11/17 NEAR MPC nodes collude to sign Zcash transactions from bridge addresses.
 <br>
 ## Funds can be frozen if
 1. the DAO or one of the two single-key account lockers freezes the user's account in the Verifier.

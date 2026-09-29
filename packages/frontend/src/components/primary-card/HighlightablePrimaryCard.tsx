@@ -23,6 +23,7 @@ function Content({ children, className, nested, ...props }: Props) {
   const isHighlighted = highlightedId && props.id === highlightedId
   return (
     <PrimaryCard
+      data-highlighted={isHighlighted || undefined}
       className={cn(
         'relative transition-shadow duration-300',
         isHighlighted &&

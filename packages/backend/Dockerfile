@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-ARG ARCH=x86_64
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
 
@@ -15,7 +14,6 @@ RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/backend
 
 FROM node:22.22.0 AS builder
-ARG ARCH
 ARG TURBO_TEAM
 ENV TURBO_TEAM=$TURBO_TEAM
 ARG COREPACK_VERSION
@@ -35,13 +33,6 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
 RUN rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --offline
 
-RUN mkdir /dist/ && \
-  cd /dist/ && \
-  wget -q https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \
-  tar -xf difft-$ARCH-unknown-linux-gnu.tar.gz && \
-  rm -f difft-$ARCH-unknown-linux-gnu.tar.gz
-
-
 FROM node:22.22.0-slim AS release
 
 # Install curl for healthcheck and create non-root user
@@ -53,7 +44,6 @@ RUN apt update && \
 
 WORKDIR /app/
 COPY --from=builder --chown=appuser:appgroup /src/ .
-COPY --from=builder --chown=appuser:appgroup /dist/difft /usr/local/bin/difft
 
 WORKDIR /app/packages/backend/
 USER appuser

@@ -48,8 +48,7 @@
     "lodash": "^4.17.21",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
-    "uuid": "^11.0.2",
-    "viem": "^2.21.36"
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
 import type { SsrData } from '~/pages/pageTypes'
-import { CLIENT_BASE_PATH, CLIENT_OUTPUT_DIR } from '../paths'
+import { CLIENT_BASE_PATH, CLIENT_OUTPUT_DIR } from '../paths.mjs'
 
 const VITE_MANIFEST_PATH = `${CLIENT_OUTPUT_DIR}/.vite/manifest.json`
 

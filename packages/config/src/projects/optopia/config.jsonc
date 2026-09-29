@@ -8,6 +8,10 @@
     "eth:0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c": "OptimismMintableERC20Factory"
   },
   "overrides": {
+    "eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c": {
       "ignoreDiscovery": true
     },

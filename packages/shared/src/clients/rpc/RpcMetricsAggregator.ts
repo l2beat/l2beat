@@ -95,7 +95,7 @@ export class RpcMetricsAggregator {
 
     const key = orderFields(
       sanitizeFields({
-        ...(getRpcMetricsContext() ?? {}),
+        ...getRpcMetricsContext(),
         ...staticFields,
         rpcMethod: metric.method,
       }),

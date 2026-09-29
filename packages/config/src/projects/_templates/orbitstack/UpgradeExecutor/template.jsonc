@@ -1,15 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UpgradeExecutor",
+  "critical": true,
   "category": "gov",
   "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    // Membership is identity: EXECUTOR_ROLE.members is the same list as
+    // `executors`, which is LOW. Role wiring (adminRole) would be HIGH but
+    // cannot be separated from members in this one field.
     "accessControl": {
       "handler": {
         "type": "accessControl"
       }
     },
     "executors": {
+      "severity": "LOW",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

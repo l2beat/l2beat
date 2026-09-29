@@ -1,0 +1,60 @@
+{
+  "events": [
+    {
+      "timestamp": 1786627967,
+      "type": "code",
+      "contract": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+      "updateId": "45d9aea3",
+      "transaction": "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
+      "reason": "Replaced the SuperchainConfig implementation (Conduit SuperchainConfig upgrade to v2.4.2 executed by the Conduit Multisig; the SuperchainConfig holds the pause/guardian authority over the bridge)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the DisputeGameFactory implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0x11dd2d9B5ec142dbAFBEFEA82a75985Eae4e12b0",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the L1CrossDomainMessenger implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the L1StandardBridge implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the OptimismPortal2 implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0xF51b386B0391B022604B95cD97DFce58A5c0cFB1",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the AnchorStateRegistry implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    },
+    {
+      "timestamp": 1786634567,
+      "type": "code",
+      "contract": "eth:0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
+      "updateId": "45d9aea3",
+      "transaction": "0x1330099c3563a77ae508685b7fbdd905521540991d096f11d9aaafd0bb4fd7ed",
+      "reason": "Replaced the SystemConfig implementation (OP Stack contracts upgrade executed by the Conduit Multisig in one transaction: OptimismPortal2 v5.6.1, SystemConfig v3.14.2, L1StandardBridge v2.8.2 etc.; also set the new dispute game implementations and DelayedWETH on the DisputeGameFactory)."
+    }
+  ]
+}

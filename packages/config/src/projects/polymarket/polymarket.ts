@@ -245,6 +245,7 @@ export const polymarket: BaseProject = {
   },
   defiInfo: {
     category: 'Prediction market',
+    tvl: { source: 'l2beat' },
   },
   externalDependencies: [
     {

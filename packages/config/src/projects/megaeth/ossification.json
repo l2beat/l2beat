@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1778248583,
+      "type": "state",
+      "contract": "eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563",
+      "transaction": "0xe1b9da0e8d85891d9e475341aa2454001d3bc4a2bdc20ea528ebace71f4cf806",
+      "updateId": "2683462e",
+      "reason": "Set a dispute game implementation on DisputeGameFactory (ImplementationSet 0x00000000000000000000000001853f268b170d4a15d0c3ae905757b5ec8375f3 0x00000000000)."
+    }
+  ]
+}

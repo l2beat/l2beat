@@ -4,5 +4,11 @@
     "address": "eth:0xE506249Ba5ede04A68b702b92704a0b88054f86A",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "E3RefundManagerV2": {
+    "hash": "0xd28721fb9cf579c4c833f3afdb1da2f3bc70caa34698f245340fc5f4e44376cf",
+    "address": "eth:0x7C85D6C39EdAfCE6398fF1299b2a1eaBa0645870",
+    "chain": "ethereum",
+    "blockNumber": 25998897
   }
 }

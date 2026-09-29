@@ -1,11 +1,11 @@
 import type { CropAttestation, CropAttestationLedger } from '@l2beat/config'
-import type { Hex } from 'viem'
 import {
   type CropPayload,
   decodePayload,
   isCurrentSchema,
   type OnchainAttestation,
 } from './eas'
+import type { Hex } from './easConfig'
 
 /** A live ledger entry to revoke, under the schema the chain says it was attested with. */
 export interface Revocation {

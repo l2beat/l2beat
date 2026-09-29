@@ -1,9 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Timelock",
+  "critical": true,
   "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}. Proposals that passed their minimum delay can be executed by anyone.",
   "category": "gov",
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "timelockAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -17,6 +21,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -68,8 +73,7 @@
           "type": "interact",
           "description": "execute transactions that are ready."
         }
-      ],
-      "severity": "HIGH"
+      ]
     }
   }
 }

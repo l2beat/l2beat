@@ -1,7 +1,9 @@
 import { SQLiteCache } from '@l2beat/discovery'
 import { formatSI } from '@l2beat/shared'
 import { formatSeconds } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { command, positional, string } from 'cmd-ts'
+import { createCliLogger } from '../implementations/common/CliLogger'
 
 export const FetchDiscoveryCache = command({
   name: 'fetch-discovery-cache',
@@ -15,8 +17,9 @@ export const FetchDiscoveryCache = command({
   },
   handler: async (args) => {
     const { createClient } = await import('redis')
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
     const client = createClient({ url: args.redisPath })
-    client.on('error', console.error)
+    client.on('error', (error) => cli.log(chalk.red(String(error))))
     const cache = new SQLiteCache()
 
     if (!client.isOpen) {
@@ -26,6 +29,8 @@ export const FetchDiscoveryCache = command({
     const SCAN_COUNT = 50_000
     let cursor = 0
     let rowsFetched = 0
+    const startedAtMs = Date.now()
+    const progress = cli.status()
     do {
       let scanElapsed = -performance.now()
       const result = await client.scan(cursor, { COUNT: SCAN_COUNT })
@@ -46,12 +51,16 @@ export const FetchDiscoveryCache = command({
 
       rowsFetched += result.keys.length
 
-      const timePerMillionRows = formatSeconds(
-        (((scanElapsed + getElapsed + dbElapsed) / values.length) * 1_000_000) /
-          1000,
-      )
+      const timePerMillionRows =
+        values.length === 0
+          ? '-'
+          : formatSeconds(
+              (((scanElapsed + getElapsed + dbElapsed) / values.length) *
+                1_000_000) /
+                1000,
+            )
 
-      console.log(
+      progress.update(
         `Progress: ${formatSI(rowsFetched, 'rows').padStart(13)} | ` +
           `Batch: ${result.keys.length.toLocaleString().padStart(6)} keys | ` +
           `KRead: ${scanElapsed.toFixed(2).padStart(7)}ms | ` +
@@ -60,5 +69,9 @@ export const FetchDiscoveryCache = command({
           `1MRow: ${timePerMillionRows.padStart(10)}`,
       )
     } while (cursor !== 0)
+    await client.quit()
+    progress.done(
+      `Fetched ${formatSI(rowsFetched, 'rows')} in ${formatSeconds((Date.now() - startedAtMs) / 1000)}`,
+    )
   },
 })

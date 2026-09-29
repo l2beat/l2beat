@@ -74,7 +74,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       e.type === 'blockscout'
         ? { type: e.type, url: e.url, unsupported: e.unsupported }
         : e.type === 'sourcify'
-          ? { type: e.type, chainId: chainConfig.chainId }
+          ? { type: e.type, chainId: chainConfig.chainId, url: e.url }
           : e.type === 'etherscan'
             ? {
                 type: e.type,

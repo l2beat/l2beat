@@ -1,4 +1,4 @@
-import type { Hex } from 'viem'
+import type { Hex } from '../implementations/crops/easConfig'
 
 /**
  * The attester key comes from the environment, never a flag, so it cannot

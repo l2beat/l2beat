@@ -2,5 +2,11 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "swan",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0xed7525946A09056C6AaE29941b8323017382050e"]
+  "initialAddresses": ["eth:0xed7525946A09056C6AaE29941b8323017382050e"],
+  "overrides": {
+    "eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

@@ -10,6 +10,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -143,6 +144,7 @@ const tppWallClockD = Math.round(
 )
 
 const chainId = 324
+const chainStart = UnixTime(1676384520)
 // https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
@@ -199,7 +201,7 @@ export const zksync2: ScalingProject = zkStackL2({
     name: 'zksync2',
     chainId,
     explorerUrl: 'https://explorer.zksync.io',
-    sinceTimestamp: UnixTime(1676384520),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         version: '3',
@@ -222,6 +224,7 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
+  ossification: getOssification('zksync2', chainStart),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

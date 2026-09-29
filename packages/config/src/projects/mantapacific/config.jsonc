@@ -3,5 +3,11 @@
   "name": "mantapacific",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5"],
+  "overrides": {
+    "eth:0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": { "eth:0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E": "MantaMultisig" }
 }

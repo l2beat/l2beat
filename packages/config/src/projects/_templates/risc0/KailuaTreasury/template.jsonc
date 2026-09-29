@@ -10,7 +10,14 @@
   ],
   "ignoreInWatchMode": ["lastResolved"],
   "fields": {
+    "vanguardAdvantage": {
+      "severity": "HIGH"
+    },
+    "participationBond": {
+      "severity": "HIGH"
+    },
     "participationBondFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function participationBond() view returns (uint256)",
@@ -19,6 +26,7 @@
       "edit": ["format", "Undecimal18"]
     },
     "vanguardAdvantageFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function vanguardAdvantage() view returns (uint256)",
@@ -27,6 +35,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "vanguard": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

@@ -1,9 +1,19 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2UpgradeExecutor",
+  "critical": true,
   "category": "gov",
   "description": "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
   "fields": {
+    "transactionFilteringPrecompile": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    // Membership is identity: EXECUTOR_ROLE.members is the same list as
+    // `executors`, which is LOW. Role wiring (adminRole) would be HIGH but
+    // cannot be separated from members in this one field.
     "accessControl": {
       "handler": {
         "type": "accessControl"

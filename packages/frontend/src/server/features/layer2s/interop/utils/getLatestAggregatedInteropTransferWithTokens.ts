@@ -17,11 +17,14 @@ export async function getLatestAggregatedInteropTransferWithTokens({
   types,
   protocolIds,
   anchorChain,
+  snapshotTimestamp,
 }: {
   selection: InteropSelectionInput
   types?: InteropBridgeType[]
   protocolIds?: string[]
   anchorChain?: string
+  /** Pass when already resolved to skip the lookup. */
+  snapshotTimestamp?: UnixTime
 }): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
@@ -35,21 +38,22 @@ export async function getLatestAggregatedInteropTransferWithTokens({
     return { records: [], snapshotTimestamp: undefined }
   }
 
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  if (!snapshotTimestamp) {
+  const resolvedSnapshotTimestamp =
+    snapshotTimestamp ?? (await getAggregatedInteropSnapshotTimestamp())
+  if (!resolvedSnapshotTimestamp) {
     return { records: [], snapshotTimestamp: undefined }
   }
 
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      snapshotTimestamp,
+      resolvedSnapshotTimestamp,
       selection.from,
       selection.to,
       types,
       protocolIds,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
-      snapshotTimestamp,
+      resolvedSnapshotTimestamp,
       selection.from,
       selection.to,
       types,
@@ -85,5 +89,5 @@ export async function getLatestAggregatedInteropTransferWithTokens({
       })),
   }))
 
-  return { records, snapshotTimestamp }
+  return { records, snapshotTimestamp: resolvedSnapshotTimestamp }
 }

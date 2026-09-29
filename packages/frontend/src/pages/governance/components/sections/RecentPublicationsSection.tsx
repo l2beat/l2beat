@@ -36,7 +36,9 @@ function ExploreAllButton({ className }: { className?: string }) {
   })
   return (
     <Button className={className} variant="outline" size="sm" asChild>
-      <a href={`/publications?filters=${filters}`}>Explore all publications</a>
+      <a href={`/publications?tab=updates&filters=${filters}`}>
+        Explore all publications
+      </a>
     </Button>
   )
 }

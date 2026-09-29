@@ -8,6 +8,7 @@ import { livenessRouter } from './routers/liveness'
 import { privacyRouter } from './routers/privacy'
 import { projectsRouter } from './routers/projects'
 import { searchBarRouter } from './routers/searchBar'
+import { tokensRouter } from './routers/tokens'
 import { tvsRouter } from './routers/tvs'
 
 /**
@@ -25,6 +26,7 @@ export const appRouter = router({
   searchBar: searchBarRouter,
   interop: interopRouter,
   privacy: privacyRouter,
+  tokens: tokensRouter,
   audits: auditsRouter,
 })
 

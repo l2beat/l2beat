@@ -33,6 +33,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_GARDEN_ENABLED: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
   CLIENT_SIDE_COMPARE_PROJECTS: featureFlag.default(false),
+  CLIENT_SIDE_TOKENS_PAGE: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)
@@ -118,8 +119,6 @@ function getRawEnv(): Record<
     return window.__ENV__
   }
 
-  // As NextJS bundler inlines the env variables, we need to do this manually
-  // https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
@@ -154,5 +153,6 @@ function getRawEnv(): Record<
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
     CLIENT_SIDE_COMPARE_PROJECTS: process.env.CLIENT_SIDE_COMPARE_PROJECTS,
+    CLIENT_SIDE_TOKENS_PAGE: process.env.CLIENT_SIDE_TOKENS_PAGE,
   }
 }

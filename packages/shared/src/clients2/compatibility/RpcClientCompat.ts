@@ -34,6 +34,7 @@ import { withRetries } from '../retries'
 const BLOCK_TIMESTAMP_BATCH_SIZE = 25
 
 export interface Receipt {
+  blockHash?: string
   logs: {
     topics: string[]
     data: string
@@ -213,6 +214,7 @@ export class RpcClientCompat implements IRpcClient {
       throw new Error(`Transaction ${txHash} not found`)
     }
     return {
+      blockHash: receipt.blockHash,
       logs: receipt.logs.map((log) => ({
         topics: log.topics,
         data: log.data,
@@ -372,6 +374,9 @@ export function toEVMBlock(
     timestamp: Number(block.timestamp),
     logsBloom: block.logsBloom,
     parentBeaconBlockRoot: block.parentBeaconBlockRoot,
+  }
+  if (block.settledHeight !== undefined) {
+    base.settledHeight = Number(block.settledHeight)
   }
   if (block.transactions) {
     return {

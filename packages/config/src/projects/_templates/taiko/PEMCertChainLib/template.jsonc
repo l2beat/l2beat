@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "PEMCertChainLib",
   "category": "spam",

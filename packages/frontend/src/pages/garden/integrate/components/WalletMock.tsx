@@ -56,7 +56,7 @@ export function WalletMock() {
                   className="h-10"
                   sentiment={SAMPLE[column.key].sentiment}
                   status={SAMPLE[column.key].status}
-                  delay={0.1 + index * 0.12}
+                  delay={0.1 + index * 0.05}
                 />
                 <span className="font-semibold text-[10px] text-secondary">
                   {column.letter}

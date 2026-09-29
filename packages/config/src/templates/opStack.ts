@@ -52,6 +52,7 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectOssification,
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
@@ -248,6 +249,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
+  ossification?: ProjectOssification
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
@@ -430,6 +432,7 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    ossification: templateVars.ossification,
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
@@ -724,10 +727,15 @@ function getProgramHashes(
       return prestate ? [PROGRAM_HASHES(prestate)] : []
     }
     case 'Kailua': {
-      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
-        'KailuaTreasury',
-        'FPVM_IMAGE_ID',
-      )
+      const kailuaProgramHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'KailuaTreasury',
+          'FPVM_IMAGE_ID',
+        ) ??
+        templateVars.discovery.getContractValue<string>(
+          'KailuaVerifier',
+          'FPVM_IMAGE_ID',
+        )
       const setBuilderProgramHash = templateVars.discovery.getContractValue<
         string[]
       >('RiscZeroSetVerifier', 'imageInfo')[0]

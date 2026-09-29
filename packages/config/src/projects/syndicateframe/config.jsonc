@@ -3,5 +3,11 @@
   "name": "syndicateframe",
   "archived": true,
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["base:0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"]
+  "initialAddresses": ["base:0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"],
+  "overrides": {
+    "base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

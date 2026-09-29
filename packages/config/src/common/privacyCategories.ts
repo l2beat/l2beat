@@ -1,16 +1,16 @@
 import type { PrivacyCategory } from '../types'
 
 /**
- * The mechanism a project deploys, read from its code, never from the
- * privacy it achieves. A project that fails to deliver its category's promise
- * keeps the category and gets red adversary cells instead.
+ * The mechanism a project deploys, read from its code.
+ * A project that fails to deliver its category's promise
+ * keeps the category and gets red adversary cells.
  */
 export const PRIVACY_CATEGORIES = {
   pool: {
     id: 'pool',
     label: 'Pool',
     description:
-      'Funds enter a shared pool and leave it later, with no transfers inside. Hides which deposit funds which withdrawal.',
+      'Funds enter a shared pool and leave it later, with no actions inside. Hides which deposit funds which withdrawal.',
   },
   shieldedLedger: {
     id: 'shieldedLedger',

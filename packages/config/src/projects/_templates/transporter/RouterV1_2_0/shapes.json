@@ -3,5 +3,11 @@
     "hash": "0x1e8e8f875d0575ef62e454568f565aea573ef5e086c95be2cc20920d2f8dd272",
     "address": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
     "blockNumber": 22188285
+  },
+  "DeprecatedRouter": {
+    "hash": "0x7194051726bebe186057b3e109f4a54e8fd634b1a564c87954f7e685c4e18214",
+    "address": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+    "chain": "ethereum",
+    "blockNumber": 22277106
   }
 }

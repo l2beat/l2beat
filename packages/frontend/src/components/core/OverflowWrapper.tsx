@@ -77,8 +77,11 @@ export const OverflowWrapper = ({
   useEffect(updateArrows, [])
 
   useEventListener('scroll', updateArrows, contentRef)
-  useEventListener('resize', updateArrows)
 
+  // ResizeObserver callbacks run after layout, so the scroll metrics below
+  // are free to read. A window resize listener read them mid-frame and
+  // forced a layout per wrapper on every resize event.
+  useResizeObserver({ ref: contentRef, onResize: updateArrows })
   useResizeObserver({ ref: childrenRef, onResize: updateArrows })
 
   return (

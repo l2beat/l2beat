@@ -4,7 +4,11 @@
   "category": "core",
   "description": "Policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.",
   "ignoreMethods": [
+    "accusationSubmissionDeadline",
     "getE3AccusationWindow",
+    "openCommitteeProposals",
+    "settlementCutoff",
+    "settlementOpen",
     "getE3Dependencies",
     "getPendingSlashRoute",
     "getSlashProposal"

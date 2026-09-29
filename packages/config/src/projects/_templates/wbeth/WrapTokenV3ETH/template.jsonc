@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "wBETH",
   "category": "core",
-  "description": "Liquid staking token ({{ symbol }}) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; {{ totalSupply }} is the live supply.",
+  "description": "Liquid staking token ({{ symbol }}) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance.",
   "ignoreInWatchMode": ["totalSupply", "exchangeRate"],
   "ignoreMethods": [
     "DOMAIN_SEPARATOR",
