@@ -15,7 +15,7 @@ export async function getPrivacyProjectData(
   cache: InMemoryCache,
   selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedPrivacyProjectPage(slug, manifest, cache)
+  const data = await getCachedPrivacyProjectPage(manifest, slug, cache)
   if (!data) return undefined
 
   return {
@@ -32,17 +32,17 @@ export async function getPrivacyProjectData(
 
 /** The markdown alternate of the page, built from the same cached entry as the HTML. */
 export async function getPrivacyProjectMarkdown(
-  slug: string,
   manifest: Manifest,
+  slug: string,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const data = await getCachedPrivacyProjectPage(slug, manifest, cache)
+  const data = await getCachedPrivacyProjectPage(manifest, slug, cache)
   return data && renderPrivacyProjectMarkdown(data.props.entry)
 }
 
 function getCachedPrivacyProjectPage(
-  slug: string,
   manifest: Manifest,
+  slug: string,
   cache: InMemoryCache,
 ) {
   return cache.get(

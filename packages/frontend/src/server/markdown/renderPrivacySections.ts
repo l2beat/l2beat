@@ -5,6 +5,7 @@ import type {
   PrivacyFieldInfo,
   PrivacySource,
 } from '@l2beat/config'
+import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
@@ -18,6 +19,7 @@ import {
 import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
+  PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
 import type { PrivacyDepositedValueUsd } from '~/server/features/privacy/types'
 import {
@@ -136,51 +138,79 @@ export function renderPrivacyAssetsBreakdown({
   assets,
   showTvl,
 }: Pick<PrivacyAssetsBreakdownSectionProps, 'assets' | 'showTvl'>) {
-  const showBuckets = assets.some((asset) => asset.bucketCount > 1)
-  const row = (
-    name: string,
-    bucketCount: number | undefined,
-    metrics: {
-      deposits: { last7d: number; last30d: number; total: number }
-      depositedValueUsd: PrivacyDepositedValueUsd
-      totalValueUsd: number | null
-    },
-  ) => [
-    name,
-    ...(showBuckets
-      ? [bucketCount === undefined ? '' : String(bucketCount)]
-      : []),
-    formatDeposits(metrics.deposits.last7d, metrics.depositedValueUsd.last7d),
-    formatDeposits(metrics.deposits.last30d, metrics.depositedValueUsd.last30d),
-    formatDeposits(metrics.deposits.total, metrics.depositedValueUsd.total),
-    ...(showTvl ? [formatValueLocked(metrics.totalValueUsd)] : []),
+  const columns = getAssetsBreakdownColumns({
+    showBuckets: assets.some((asset) => asset.bucketCount > 1),
+    showTvl,
+  })
+  const rows: AssetsBreakdownRow[] = [
+    ...assets.flatMap((asset) => [
+      { name: asset.symbol, bucketCount: asset.bucketCount, metrics: asset },
+      ...(asset.bucketCount > 1
+        ? asset.buckets.map((bucket) => ({
+            name: `${asset.symbol}: ${formatBucketLabel(bucket.label)}`,
+            metrics: bucket,
+          }))
+        : []),
+    ]),
+    { name: 'Total', metrics: getPrivacyAssetsTotals(assets) },
   ]
 
   return table(
-    [
-      'Asset',
-      ...(showBuckets ? ['Buckets'] : []),
-      'Deposits 7D',
-      'Deposits 30D',
-      'Deposits Total',
-      ...(showTvl ? ['Value Locked'] : []),
-    ],
-    [
-      ...assets.flatMap((asset) => [
-        row(asset.symbol, asset.bucketCount, asset),
-        ...(asset.bucketCount > 1
-          ? asset.buckets.map((bucket) =>
-              row(
-                `${asset.symbol}: ${formatBucketLabel(bucket.label)}`,
-                undefined,
-                bucket,
-              ),
-            )
-          : []),
-      ]),
-      row('Total', undefined, getPrivacyAssetsTotals(assets)),
-    ],
+    columns.map((column) => column.header),
+    rows.map((row) => columns.map((column) => column.cell(row))),
   )
+}
+
+interface AssetsBreakdownRow {
+  name: string
+  /** Only asset rows have one; bucket and total rows leave the cell empty, like the HTML. */
+  bucketCount?: number
+  metrics: {
+    deposits: { last7d: number; last30d: number; total: number }
+    depositedValueUsd: PrivacyDepositedValueUsd
+    totalValueUsd: number | null
+  }
+}
+
+interface AssetsBreakdownColumn {
+  header: string
+  cell: (row: AssetsBreakdownRow) => string
+}
+
+/** Same visibility rules as the HTML table. */
+function getAssetsBreakdownColumns(options: {
+  showBuckets: boolean
+  showTvl: boolean
+}): AssetsBreakdownColumn[] {
+  return compact([
+    { header: HEADERS.asset, cell: (row) => row.name },
+    options.showBuckets && {
+      header: HEADERS.buckets,
+      cell: (row) =>
+        row.bucketCount === undefined ? '' : String(row.bucketCount),
+    },
+    depositsColumn(HEADERS.deposits7d, 'last7d'),
+    depositsColumn(HEADERS.deposits30d, 'last30d'),
+    depositsColumn(HEADERS.depositsTotal, 'total'),
+    options.showTvl && {
+      header: HEADERS.valueLocked,
+      cell: (row) => formatValueLocked(row.metrics.totalValueUsd),
+    },
+  ])
+}
+
+function depositsColumn(
+  header: string,
+  period: 'last7d' | 'last30d' | 'total',
+): AssetsBreakdownColumn {
+  return {
+    header,
+    cell: ({ metrics }) =>
+      formatDeposits(
+        metrics.deposits[period],
+        metrics.depositedValueUsd[period],
+      ),
+  }
 }
 
 function formatDeposits(count: number, valueUsd: number) {

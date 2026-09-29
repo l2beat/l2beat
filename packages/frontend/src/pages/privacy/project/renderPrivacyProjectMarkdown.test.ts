@@ -61,13 +61,40 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(summary).not.toInclude('Deposits')
   })
 
+  it('marks value locked as not applicable when only flows are tracked', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({ ...ENTRY, hasTvl: false }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Total Value Locked: N/A',
+      '- Deposits 30D: 540',
+    )
+  })
+
+  it('leads the warnings with the under review banner', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        isUnderReview: true,
+        warnings: { ...ENTRY.warnings, yellow: 'The relayer list is curated.' },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toMatchRegex(
+      /^\n\*\*Warning:\*\* [^\n]*under review[^\n]*\n\n\*\*Warning:\*\* The relayer list is curated\./,
+    )
+  })
+
   it('explains each risk profile value after its sentiment', () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
       '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
       '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can fully use it if all centralized protocol participants disappear.',
-      '- Privacy: Link privacy (sentiment: good). Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
+      '- Privacy: Link privacy. Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
       '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.',
     )
   })

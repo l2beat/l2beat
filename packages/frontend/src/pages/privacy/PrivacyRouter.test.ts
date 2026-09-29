@@ -57,9 +57,9 @@ function createRouter() {
   return createPrivacyRouter(manifest, async () => '<html />', cache)
 }
 
-/** Only the heading is asserted: the renderer's own test covers the content. */
 const RISK = { value: 'Value', sentiment: 'good', description: '' } as const
 
+/** Only the heading is asserted: the renderer's own test covers the content. */
 const ENTRY: ProjectPrivacyEntry = {
   id: ProjectId('tornado-cash'),
   slug: 'tornado-cash',

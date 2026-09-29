@@ -10,10 +10,13 @@ import {
   formatUsd,
   withSentiment,
 } from '~/server/markdown/markdown'
-import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
-import { getPrivacyAdversariesTableValue } from '../adversaries/privacyAdversaryUi'
+import {
+  getProjectStatusWarnings,
+  renderProjectMarkdown,
+} from '~/server/markdown/renderProjectMarkdown'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
+import { PRIVACY_PROJECT_STATS_COPY as COPY } from './components/privacyProjectStatsCopy'
 import { RELAYER_STAT_COPY } from './components/relayerStatCopy'
 
 /** The markdown alternate of the privacy project page, from the entry the HTML page renders. */
@@ -26,11 +29,16 @@ export function renderPrivacyProjectMarkdown(
     // cited, whichever deployment rendered it.
     pageUrl: `${PRODUCTION_ORIGIN}/privacy/projects/${entry.slug}`,
     summary: {
-      warnings: compact([
-        entry.warnings.emergency,
-        entry.warnings.red?.text,
-        entry.warnings.yellow,
-      ]),
+      warnings: [
+        ...getProjectStatusWarnings({
+          underReviewStatus: entry.isUnderReview ? 'config' : undefined,
+        }),
+        ...compact([
+          entry.warnings.emergency,
+          entry.warnings.red?.text,
+          entry.warnings.yellow,
+        ]),
+      ],
       facts: getFacts(entry),
       risks: getRiskProfile(entry),
       description: entry.description,
@@ -40,52 +48,40 @@ export function renderPrivacyProjectMarkdown(
   })
 }
 
-/** Labels and the "not tracked" fallbacks follow the stats block at the top of the HTML page. */
+/** The stats block at the top of the HTML page, with its copy and its fallbacks. */
 function getFacts(entry: ProjectPrivacyEntry) {
   const { summary, hasTvl, bucketCount, assetsCount } = entry
   const hasFlowTracking = bucketCount > 0
   const relayerStat = summary.relayerStat
   return compact([
-    hasTvl && {
-      label: 'Total Value Locked',
-      value:
-        summary.totalValueLockedUsd === undefined
-          ? 'No data'
-          : compact([
-              formatUsd(summary.totalValueLockedUsd),
-              summary.totalValueLockedChange7d !== undefined &&
-                `(${formatChange(summary.totalValueLockedChange7d, '7D')})`,
-            ]).join(' '),
+    // Without flow tracking the HTML leaves the stat out instead of showing N/A.
+    (hasTvl || hasFlowTracking) && {
+      label: COPY.totalValueLocked,
+      value: formatTotalValueLocked(entry),
     },
     ...(hasFlowTracking
       ? [
-          { label: 'Assets tracked', value: formatCount(assetsCount) },
-          { label: 'Buckets tracked', value: formatCount(bucketCount) },
+          { label: COPY.assetsTracked, value: formatCount(assetsCount) },
+          { label: COPY.bucketsTracked, value: formatCount(bucketCount) },
           {
-            label: 'Deposits 7D',
+            label: COPY.deposits7d,
             value: `${formatCount(summary.deposits.last7d)} (${formatChange(summary.deposits.change7d, 'last7d')})`,
           },
           {
-            label: 'Deposits 30D',
+            label: COPY.deposits30d,
             value: formatCount(summary.deposits.last30d),
           },
           {
-            label: 'Deposits Total',
+            label: COPY.depositsTotal,
             value: formatCount(summary.deposits.total),
           },
         ]
       : [
-          hasTvl || relayerStat
-            ? {
-                label: 'Live asset metrics',
-                value:
-                  'Not tracked. Onchain asset monitoring is not available for this project.',
-              }
-            : {
-                label: 'Metrics',
-                value:
-                  'Not tracked. Data tracking is not available for this project.',
-              },
+          notTrackedFact(
+            hasTvl || relayerStat
+              ? COPY.untrackedAssetMetrics
+              : COPY.untrackedMetrics,
+          ),
         ]),
     relayerStat && {
       label: RELAYER_STAT_COPY[relayerStat.kind].title,
@@ -100,6 +96,24 @@ function getFacts(entry: ProjectPrivacyEntry) {
       value: entry.attributes.map((attribute) => attribute.label).join(', '),
     },
   ])
+}
+
+/** The text of the badges the HTML shows in place of the value. */
+function formatTotalValueLocked({ summary, hasTvl }: ProjectPrivacyEntry) {
+  if (!hasTvl) return 'N/A'
+  if (summary.totalValueLockedUsd === undefined) return 'No data'
+  return compact([
+    formatUsd(summary.totalValueLockedUsd),
+    summary.totalValueLockedChange7d !== undefined &&
+      `(${formatChange(summary.totalValueLockedChange7d, '7D')})`,
+  ]).join(' ')
+}
+
+function notTrackedFact(copy: { title: string; description: string }) {
+  return {
+    label: copy.title,
+    value: `${COPY.notTracked}. ${copy.description}`,
+  }
 }
 
 /**
@@ -138,17 +152,19 @@ function explainedRisk(
   }
 }
 
-/** The promise with its overall grade, then the grade against each adversary the HTML dots stand for. */
+/**
+ * The promise, then the grade against each adversary the HTML dots stand for.
+ * No overall grade: the page gives none, only the summary table sorts by one.
+ */
 function privacyRisk(
   adversaries: ReturnType<typeof toPrivacyAdversariesSummary>,
 ): RosetteValue {
-  const overall = getPrivacyAdversariesTableValue(adversaries)
   const perAdversary = adversaries.cells.map(
     (cell) => `${cell.label}: ${withSentiment(cell.value, cell.sentiment)}`,
   )
   return {
     name: PRIVACY_ASSESSMENT.title,
-    value: `${withSentiment(overall.value, overall.sentiment)}. ${perAdversary.join('; ')}.`,
+    value: `${adversaries.promiseLabel}. ${perAdversary.join('; ')}.`,
   }
 }
 

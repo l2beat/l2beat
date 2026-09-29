@@ -91,4 +91,10 @@ describe(table.name, () => {
       '| Asset | Value |\n| --- | --- |\n| A\\|B | $1 |',
     )
   })
+
+  it('joins the lines of a cell so it cannot split into two rows', () => {
+    expect(table(['Asset', 'Value'], [['A\nB', '$1']])).toEqual(
+      '| Asset | Value |\n| --- | --- |\n| A B | $1 |',
+    )
+  })
 })

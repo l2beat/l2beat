@@ -42,11 +42,15 @@ export function numberedList(items: string[], start = 1) {
 }
 
 export function table(header: string[], rows: string[][]) {
-  const line = (cells: string[]) =>
-    `| ${cells.map((cell) => cell.replaceAll('|', '\\|')).join(' | ')} |`
+  const line = (cells: string[]) => `| ${cells.map(tableCell).join(' | ')} |`
   return [line(header), line(header.map(() => '---')), ...rows.map(line)].join(
     '\n',
   )
+}
+
+/** A pipe would start a new column and a line break a new row. */
+function tableCell(text: string) {
+  return text.replaceAll('|', '\\|').replaceAll(/\s*\n\s*/g, ' ')
 }
 
 export function link(name: string, url: string) {

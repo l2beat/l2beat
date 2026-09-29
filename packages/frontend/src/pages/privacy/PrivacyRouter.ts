@@ -40,7 +40,7 @@ export function createPrivacyRouter(
   })
 
   const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getPrivacyProjectMarkdown(req.params.slug, manifest, cache)
+    getPrivacyProjectMarkdown(manifest, req.params.slug, cache)
 
   // Before `:slug`, which would otherwise take "tornado-cash.md" as the slug.
   router.get(
