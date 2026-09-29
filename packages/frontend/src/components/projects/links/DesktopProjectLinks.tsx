@@ -12,6 +12,7 @@ import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
 import { DiscoUiLink } from './DiscoUiLink'
+import { MarkdownLink } from './MarkdownLink'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
 import { parseCustom } from './parseCustom'
 import type { ProjectLink } from './types'
@@ -19,9 +20,14 @@ import type { ProjectLink } from './types'
 interface Props {
   projectLinks: ProjectLink[]
   discoUiHref?: string
+  markdownHref?: string
 }
 
-export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
+export function DesktopProjectLinks({
+  projectLinks,
+  discoUiHref,
+  markdownHref,
+}: Props) {
   return (
     <NavigationMenu asChild>
       <div>
@@ -29,6 +35,7 @@ export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
           {projectLinks.map((link) => (
             <ProjectLinkItem key={link.name} projectLink={link} />
           ))}
+          {markdownHref && <MarkdownLink href={markdownHref} />}
           {discoUiHref && <DiscoUiLink href={discoUiHref} />}
         </NavigationMenuList>
       </div>

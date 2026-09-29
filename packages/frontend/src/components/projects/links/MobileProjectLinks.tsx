@@ -13,12 +13,14 @@ import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]
+  markdownHref?: string
   className?: string
   triggerClassName?: string
 }
 
 export function MobileProjectLinks({
   projectLinks,
+  markdownHref,
   className,
   triggerClassName,
 }: Props) {
@@ -82,6 +84,18 @@ export function MobileProjectLinks({
                   </td>
                 </tr>
               ))}
+              {markdownHref && (
+                <tr className="border-divider border-t first:border-none">
+                  <th className="w-[110px] py-3 align-top font-medium text-secondary">
+                    Markdown
+                  </th>
+                  <td className="py-3">
+                    <CustomLink className="block truncate" href={markdownHref}>
+                      This page as markdown
+                    </CustomLink>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </AccordionContent>

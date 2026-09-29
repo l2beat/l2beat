@@ -34,9 +34,10 @@ import { ProjectL2Stats } from './L2ProjectStats'
 
 interface Props {
   project: ProjectL2Entry
+  markdownHref: string
 }
 
-export function ProjectL2Summary({ project }: Props) {
+export function ProjectL2Summary({ project, markdownHref }: Props) {
   const hasTokenWarnings =
     project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
 
@@ -245,7 +246,10 @@ export function ProjectL2Summary({ project }: Props) {
 
       <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-[calc(100%+2rem)] md:my-4" />
       <div className="md:hidden">
-        <MobileProjectLinks projectLinks={project.header.links} />
+        <MobileProjectLinks
+          projectLinks={project.header.links}
+          markdownHref={markdownHref}
+        />
       </div>
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
