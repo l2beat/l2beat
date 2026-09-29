@@ -12,7 +12,11 @@ import {
   makeEntryColorConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import {
@@ -39,6 +43,10 @@ export function loadOssificationInput(
     discovery.entries
       .filter((e) => !reachable.has(e.address))
       .map((e) => e.address.toLowerCase()),
+  )
+  assert(
+    outOfReach.size < discovery.entries.length,
+    `no entry of ${discovery.name} is reachable`,
   )
   const withinReach = (address: string) =>
     !outOfReach.has(address.toLowerCase())
