@@ -7,8 +7,8 @@ import { createL2Router } from './L2Router'
 
 // Method: mount the real scaling router with a page cache that already holds
 // one project entry (so no data is fetched) and a render function that marks
-// HTML, then request the project page the ways browsers and agents do, to
-// check the project page is wired to its markdown renderer.
+// HTML, then request the project page the ways browsers and agents do. This
+// pins the route order: `:slug` registered first would swallow "arbitrum.md".
 describe(createL2Router.name, () => {
   it('serves the project page as markdown on the .md URL', async () => {
     const response = await fetchFromRouter(

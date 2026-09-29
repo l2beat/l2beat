@@ -1,15 +1,12 @@
-import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import express from 'express'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
-import { registerPageWithMarkdown } from './markdownAlternate'
+import { serveMarkdown, serveMarkdownIfPreferred } from './markdownAlternate'
 
-// Method: register a page over a fake markdown source and a handler that
-// marks HTML, then make real HTTP requests with the Accept headers browsers
-// and agents send and check what comes back. Requesting the `.md` URL also
-// pins the route order: the page pattern registered first would take
-// "arbitrum.md" as the slug and answer HTML.
-describe(registerPageWithMarkdown.name, () => {
+// Method: mount both handlers the way a page router does (`:slug.md` next to
+// the HTML route) over a fake markdown source, then make real HTTP requests
+// with the Accept headers browsers and agents send and check what comes back.
+describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('serves the .md suffix as markdown', async () => {
     const response = await fetchFromRouter(
       createRouter(),
@@ -96,33 +93,20 @@ describe(registerPageWithMarkdown.name, () => {
       expect(response.headers.get('vary')).toEqual('Accept')
     }
   })
-
-  it('validates the query of the HTML page only', async () => {
-    const html = await fetchFromRouter(
-      createRouter(),
-      '/layer2s/projects/arbitrum?update=1&update=2',
-    )
-    const markdown = await fetchFromRouter(
-      createRouter(),
-      '/layer2s/projects/arbitrum.md?update=1&update=2',
-    )
-
-    expect(html.status).toEqual(400)
-    expect(markdown.status).toEqual(200)
-  })
 })
 
 function createRouter() {
+  const getMarkdown = async (req: express.Request<{ slug: string }>) =>
+    req.params.slug === 'unknown' ? undefined : `# ${req.params.slug}\n`
+
   const router = express.Router()
-  registerPageWithMarkdown(router, {
-    path: '/layer2s/projects/:slug',
-    params: v.object({ slug: v.string() }),
-    query: v.object({ update: v.string().optional() }),
-    getMarkdown: async ({ slug }) =>
-      slug === 'unknown' ? undefined : `# ${slug}\n`,
-    sendHtml: (_req, res) => {
+  router.get('/layer2s/projects/:slug.md', serveMarkdown(getMarkdown))
+  router.get(
+    '/layer2s/projects/:slug',
+    serveMarkdownIfPreferred(getMarkdown),
+    (_req, res) => {
       res.header('Content-Type', 'text/html; charset=utf-8').send('<html />')
     },
-  })
+  )
   return router
 }

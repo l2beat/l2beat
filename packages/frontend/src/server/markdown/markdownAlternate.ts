@@ -1,44 +1,38 @@
-import type { Parser } from '@l2beat/validate'
-import type {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response,
-  Router,
-} from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { PAGE_CACHE_CONTROL } from '~/server/middlewares/PageCacheMiddleware'
-import type { ProjectPageWithMarkdown } from '~/utils/getMarkdownAlternatePath'
-import { validateRoute } from '~/utils/validateRoute'
+
+/** Resolves to undefined when the page does not exist. */
+export type MarkdownSource<P> = (req: Request<P>) => Promise<string | undefined>
+
+/** Handles `GET {page}.md`: the page as markdown, for agents that cannot negotiate by header. */
+export function serveMarkdown<P>(getMarkdown: MarkdownSource<P>) {
+  return async (req: Request<P>, res: Response) => {
+    sendMarkdownDocument(res, await getMarkdown(req))
+  }
+}
 
 /**
- * Registers a page together with its markdown version: `{path}.md`, and the
- * page URL itself for requests whose Accept header prefers text/markdown.
- * Owns the route order, so page routers cannot get it wrong.
+ * Put before the HTML handler of a page: requests whose Accept header prefers
+ * text/markdown get the markdown, the rest fall through to the HTML.
  */
-export function registerPageWithMarkdown<P, Q>(
-  router: Router,
-  page: {
-    path: ProjectPageWithMarkdown
-    params: Parser<P>
-    query?: Parser<Q>
-    /** Resolves to undefined when the page does not exist. */
-    getMarkdown: MarkdownSource<P>
-    sendHtml: RequestHandler<P, unknown, unknown, Q>
-  },
-) {
-  // Before the page route, which would otherwise take "arbitrum.md" as the slug.
-  router.get(
-    `${page.path}.md`,
-    validateRoute({ params: page.params }),
-    serveMarkdownDocument(page.getMarkdown),
-  )
-  router.get(
-    page.path,
-    validateRoute({ params: page.params, query: page.query }),
-    serveMarkdownIfPreferred<P, Q>(page.getMarkdown),
-    page.sendHtml,
-  )
+export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
+  return async (req: Request<P>, res: Response, next: NextFunction) => {
+    res.vary('Accept')
+    if (!prefersMarkdown(req)) {
+      next()
+      return
+    }
+    const markdown = await getMarkdown(req)
+    // The page cache is keyed by URL alone (Cloudflare ignores Vary), so a
+    // cached markdown response would be served to browsers. The Link header
+    // is left as LlmsLinkHeaderMiddleware set it for the page URL.
+    res
+      .status(markdown === undefined ? 404 : 200)
+      .header('Cache-Control', 'private, no-store')
+      .header('Content-Type', MARKDOWN_CONTENT_TYPE)
+      .send(markdown ?? NOT_FOUND_MARKDOWN)
+  }
 }
 
 /**
@@ -68,40 +62,8 @@ export const MARKDOWN_CONTENT_TYPE = 'text/markdown; charset=utf-8'
 /** The link relation the llms.txt spec recommends for pointing at it. */
 export const LLMS_TXT_LINK = `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`
 
-type MarkdownSource<P> = (params: P) => Promise<string | undefined>
-
-function serveMarkdownDocument<P>(
-  getMarkdown: MarkdownSource<P>,
-): RequestHandler<P> {
-  return async (req, res) => {
-    sendMarkdownDocument(res, await getMarkdown(req.params))
-  }
-}
-
-/** Requests whose Accept header prefers text/markdown get the markdown, the rest fall through to the HTML. */
-function serveMarkdownIfPreferred<P, Q>(
-  getMarkdown: MarkdownSource<P>,
-): RequestHandler<P, unknown, unknown, Q> {
-  return async (req, res, next: NextFunction) => {
-    res.vary('Accept')
-    if (!prefersMarkdown(req)) {
-      next()
-      return
-    }
-    const markdown = await getMarkdown(req.params)
-    // The page cache is keyed by URL alone (Cloudflare ignores Vary), so a
-    // cached markdown response would be served to browsers. The Link header
-    // is left as LlmsLinkHeaderMiddleware set it for the page URL.
-    res
-      .status(markdown === undefined ? 404 : 200)
-      .header('Cache-Control', 'private, no-store')
-      .header('Content-Type', MARKDOWN_CONTENT_TYPE)
-      .send(markdown ?? NOT_FOUND_MARKDOWN)
-  }
-}
-
 /** Browsers and clients without a preference (wildcard or no Accept) get HTML, the first listed type. */
-function prefersMarkdown(req: Pick<Request, 'accepts'>) {
+function prefersMarkdown(req: Request<unknown>) {
   return req.accepts(['text/html', 'text/markdown']) === 'text/markdown'
 }
 
