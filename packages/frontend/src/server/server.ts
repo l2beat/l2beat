@@ -56,7 +56,18 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
   const pagePreloads = loadPagePreloads(!options.dev)
 
-  // Before every router so llms.txt, sitemaps and markdown lists are compressed too
+  // EXPERIMENT: markdown served uncompressed with Content-Length, to test whether
+  // ChatGPT's fetcher rejects compressed text/markdown. no-transform stops
+  // Cloudflare from compressing it at the edge.
+  app.use((req, res, next) => {
+    if (req.path === '/llms.txt' || req.path.endsWith('.md')) {
+      res.header('Cache-Control', 'no-transform')
+    }
+    next()
+  })
+  app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
+
   if (!options.dev) {
     app.use(compression())
   }
@@ -64,8 +75,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
-  app.use('/', createLlmsTxtRouter())
-  app.use('/', createMarkdownAlternatesRouter())
   app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
