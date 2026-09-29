@@ -15,6 +15,16 @@ The portal takes {{fpcFundingCut}} from every deposit and withdrawal to fund a f
 ### Tags
 Tags are registered on Ethereum together with the account's Aztec address and keys, so anyone who knows a tag can look up the account behind it. Payments to zk.money names from outside zk.money are resolved through ENS by a resolver operator that derives a deposit address for each payment.
 
+### Compliance
+The contracts on Ethereum and Aztec and the enclave check no address lists. They only enforce validity, the per-transaction cap and the deposit rate limit. The checks are in the wallet and in the services Aztec Labs runs:
+
+- **Wallet:** before a deposit from a connected wallet, a withdrawal, a payment-link claim to Ethereum or a deposit address recovery, the wallet sends the Ethereum address involved to Predicate through zk.money and stops if Predicate flags it or cannot be reached. Paying a deposit address by hand from another wallet skips this check.
+- **Relayer:** before it submits an L1 operation such as a sweep, a withdrawal or a refund, it simulates it and checks the target and every sender and receiver of a token transfer against the OFAC SDN list, and against Predicate if configured. A hit blocks the operation.
+- **Resolver:** before it announces a payment to a zk.money name, the closed-source resolver checks the deposit address and the addresses that funded it against the OFAC SDN list. A hit means the payment is never announced to the recipient nor swept.
+- **Names:** every tag needs a signature from the domain owner: zk.money's closed-source claim server. The fee-paying contract only sponsors accounts whose name the domain owner signed.
+
+A censored user can sweep a funded deposit address and finalize a proven withdrawal on Ethereum themselves, and the wallet offers both. A withdrawal still needs an enclave signature, but the enclave screens nothing. The wallet's checks apply per address, so another address or a modified desktop/network setup bypasses them. A payment the resolver blocked can only be recovered by the recipient with own tooling that re-derives the deposit address. A user refused a tag cannot transact from an account in the released wallet. The account contract can pay its own fees with Fee Juice, but the wallet does not offer this option.
+
 ### Hosted app and local setup
 Most users use the hosted web wallet at zk.money. Its code is loaded from zk.money on every visit, and the user's passkey only works on zk.money web pages. Whoever controls the zk.money domain or its web deployment can therefore serve code that reads all of a user's keys except the spending key and gets any operation signed, since the passkey prompt does not show what is being signed. By default the wallet uses an Aztec node run by Aztec Labs and an Ethereum RPC chosen by zk.money. Users can replace both, and the enclave, in the settings.
 

@@ -6,11 +6,7 @@
     "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449", // ZkMoneyPortal
     "eth:0xC2363b7155EE8391C5395B72C46a6d22BF49151c", // PlainWithdrawalExecutor
     "eth:0x03b21bba8e75a1bd0354c5ecbec078cf59c85343", // SwapEscrowFactory
-    "eth:0xc357e34d4c7520a83c9ec0a242ba52b4ecaba1fc", // SIPAFactory
-    "eth:0xF714D8Cf287F4A410b018514074A9371BC45461b", // DepositSIPA
-    "eth:0x0934F010d59b552949DBe44AcBE5AFf0e32C8C34", // RegistrationSIPA
-    "eth:0xa9863b8f573d62377d987ccb9af6e0000f99d14a", // NameRegistry
-    "eth:0x933000d02883639e92a81cb0091ff6626466fa70" // Resolver
+    "eth:0xc357e34d4c7520a83c9ec0a242ba52b4ecaba1fc" // SIPAFactory
   ],
   "names": {
     "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": "ZkMoneyPortal",
@@ -20,7 +16,7 @@
     "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451": "ResolverVerifier"
   },
   "overrides": {
-    "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70": {
+    "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": {
       "fields": {
         "ensNodeOwner": {
           "description": "Owner of zk.money in the ENS registry. zk.money is a DNS name imported into ENS, so the holder of the DNS domain can also reclaim it with a DNSSEC proof.",

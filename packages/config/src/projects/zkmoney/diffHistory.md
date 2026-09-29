@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x46dbf67d3948b4ec3d307cb693f14023e390e517
+Generated with discovered.json: 0x18fb4f3f6e31e7442546721170f01d2844456efc
 
-# Diff at Tue, 29 Sep 2026 06:28:51 GMT:
+# Diff at Tue, 29 Sep 2026 19:09:15 GMT:
 
 - id: 1225e8f9
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1790663261
+- current timestamp: 1790708883
 
 ## Description
 
@@ -50,14 +50,14 @@ Initial discovery of zk.money on the Aztec Network.
 
 ```diff
 +   Status: CREATED
-    contract UnprocessedDepositRefundVerifier (eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5) [zkmoney/HonkVerifier]
-    +++ description: UltraHonk verifier for a zk.money circuit with a hardcoded verification key.
+    contract Resolver (eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F) [zkmoney/Resolver]
+    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
 ```
 
 ```diff
 +   Status: CREATED
-    contract Resolver (eth:0x933000D02883639E92a81cB0091Ff6626466Fa70) [zkmoney/Resolver]
-    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
+    contract UnprocessedDepositRefundVerifier (eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5) [zkmoney/HonkVerifier]
+    +++ description: UltraHonk verifier for a zk.money circuit with a hardcoded verification key.
 ```
 
 ```diff

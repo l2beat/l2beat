@@ -1,7 +1,7 @@
 {
   "name": "zkmoney",
-  "timestamp": 1790663261,
-  "configHash": "0x5e0d5b556b39df17fec9f24384b934b9ac9c768858f9f31004ca14a6bd913f40",
+  "timestamp": 1790708883,
+  "configHash": "0xb0e63923e823eb618982a76660a077c0bb65937fa60e2dd539f7ee08b25b242c",
   "entries": [
     {
       "name": "NitroValidator",
@@ -181,14 +181,50 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "400000000000000000",
-          "bounty": 0
+          "balance": "29300000000000000000",
+          "bounty": "99620000000000000"
         }
       },
       "implementationNames": {
         "eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb": "FPCFunderDAI"
       },
       "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "Resolver",
+      "address": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F",
+      "type": "Contract",
+      "template": "zkmoney/Resolver",
+      "sourceHashes": [
+        "0x64efddde5fe10de67c4cf6ad16df862043e3ddfc4ffd8e5d9885ad2db0e6b145"
+      ],
+      "proxyType": "immutable",
+      "description": "ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790688071,
+      "sinceBlock": 26083386,
+      "values": {
+        "$immutable": true,
+        "ensNodeOwner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "ensResolver": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F",
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+        "SIPA_FACTORY": "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc",
+        "VERIFIER": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451"
+      },
+      "fieldMeta": {
+        "ensNodeOwner": {
+          "severity": "MEDIUM",
+          "description": "Owner of zk.money in the ENS registry. zk.money is a DNS name imported into ENS, so the holder of the DNS domain can also reclaim it with a DNSSEC proof."
+        },
+        "ensResolver": {
+          "severity": "HIGH",
+          "description": "Resolver set for zk.money in the ENS registry."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": "Resolver"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "UnprocessedDepositRefundVerifier",
@@ -219,42 +255,6 @@
       "address": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Resolver",
-      "address": "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70",
-      "type": "Contract",
-      "template": "zkmoney/Resolver",
-      "sourceHashes": [
-        "0xcad7c996f6ed594b4afe5b9ef6004f96d4ab51ce1f68e3afe501e1ed776d0d2f"
-      ],
-      "proxyType": "immutable",
-      "description": "ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.",
-      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-      "sinceTimestamp": 1790298527,
-      "sinceBlock": 26051088,
-      "values": {
-        "$immutable": true,
-        "ensNodeOwner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-        "ensResolver": "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70",
-        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
-        "SIPA_FACTORY": "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc",
-        "VERIFIER": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451"
-      },
-      "fieldMeta": {
-        "ensNodeOwner": {
-          "severity": "MEDIUM",
-          "description": "Owner of zk.money in the ENS registry. zk.money is a DNS name imported into ENS, so the holder of the DNS domain can also reclaim it with a DNSSEC proof."
-        },
-        "ensResolver": {
-          "severity": "HIGH",
-          "description": "Resolver set for zk.money in the ENS registry."
-        }
-      },
-      "implementationNames": {
-        "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70": "Resolver"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "FrozenDepositRefundVerifier",
@@ -304,7 +304,7 @@
         },
         "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
         "registrationController": "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23",
-        "resolver": "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70"
+        "resolver": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
       },
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
@@ -462,7 +462,7 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49989001665702150241958",
+        "_$cachedAvailable": "47424779301354264520494",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -470,7 +470,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1790626379,
+        "_$lastUpdatedTime": 1790708879,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -479,7 +479,7 @@
         "FPC_FUNDING_CUT": "100000000000000000",
         "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
-        "getCurrentAvailable": "50000000000000000000000",
+        "getCurrentAvailable": "47424779301354264520494",
         "GLOBAL_LIMIT": "50000000000000000000000",
         "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
         "L2_PORTAL": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
@@ -804,19 +804,7 @@
       "function quoteBalanceAndBounty() view returns (uint256 balance, uint256 bounty)",
       "function swapAndDepositAsFeeJuice() returns (bytes32 key, uint256 index)"
     ],
-    "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5": [
-      "error InvertOfZero()",
-      "error PointAtInfinity()",
-      "error ProofLengthWrongWithLogN(uint256 logN, uint256 actualLength, uint256 expectedLength)",
-      "error PublicInputsLengthWrong()",
-      "error ShpleminiFailed()",
-      "error SumcheckFailed()",
-      "error ValueGeFieldOrder()",
-      "error ValueGeGroupOrder()",
-      "error ValueGeLimbMax()",
-      "function verify(bytes proof, bytes32[] publicInputs) view returns (bool)"
-    ],
-    "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70": [
+    "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": [
       "constructor(address _nameRegistry, address _sipaFactory, address _verifier)",
       "error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)",
       "error Resolver__InvalidProof()",
@@ -835,6 +823,18 @@
       "function resolve(bytes name, bytes data) view returns (bytes)",
       "function resolveWithProof(bytes response, bytes extraData) view returns (bytes)",
       "function supportsInterface(bytes4 interfaceID) pure returns (bool)"
+    ],
+    "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5": [
+      "error InvertOfZero()",
+      "error PointAtInfinity()",
+      "error ProofLengthWrongWithLogN(uint256 logN, uint256 actualLength, uint256 expectedLength)",
+      "error PublicInputsLengthWrong()",
+      "error ShpleminiFailed()",
+      "error SumcheckFailed()",
+      "error ValueGeFieldOrder()",
+      "error ValueGeGroupOrder()",
+      "error ValueGeLimbMax()",
+      "function verify(bytes proof, bytes32[] publicInputs) view returns (bool)"
     ],
     "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe": [
       "error InvertOfZero()",
@@ -1222,8 +1222,8 @@
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
-  "usedBlockNumbers": { "ethereum": 26081326 },
-  "permissionsConfigHash": "0x8927dd38620cf5149eba862e83ac5e1880df5d15209aadbf7132a317809808ca",
+  "usedBlockNumbers": { "ethereum": 26085113 },
+  "permissionsConfigHash": "0xc7b0274d8c1ace1e3f3a3a0aadf54cb5bd3652aae73d9b3b51bfb47d5652b5d8",
   "permissions": {
     "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {
       "receivedPermissions": [
@@ -1239,7 +1239,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70",
+          "from": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F",
           "description": "replace this Resolver as the ENS resolver of zk.money names, which decides the addresses that payments to these names resolve to.",
           "role": ".ensNodeOwner"
         },
