@@ -37,7 +37,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(response.headers.get('link')).toEqual(
       '<https://l2beat.com/llms.txt>; rel="describedby"',

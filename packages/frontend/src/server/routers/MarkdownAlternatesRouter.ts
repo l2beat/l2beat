@@ -18,7 +18,7 @@ export function createMarkdownAlternatesRouter(
   for (const alternate of alternates) {
     router.get(alternate.path, async (_req, res) => {
       res
-        .header('Content-Type', 'text/markdown; charset=utf-8')
+        .header('Content-Type', MARKDOWN_CONTENT_TYPE)
         .header('Link', `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`)
         .send(renderMarkdown(alternate, await alternate.getSections()))
     })
@@ -26,6 +26,9 @@ export function createMarkdownAlternatesRouter(
 
   return router
 }
+
+// Not text/markdown: ChatGPT's fetcher answers 400 Unsupported content-type to ours.
+export const MARKDOWN_CONTENT_TYPE = 'text/plain; charset=utf-8'
 
 export type MarkdownAlternatePath = `${StaticPagePath}.md`
 
