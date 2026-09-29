@@ -1,9 +1,9 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
 import { createL2Router } from './L2Router'
-import { ENTRY } from './project/renderL2ProjectMarkdown.fixture'
 
 // Method: mount the real scaling router with a page cache that already holds
 // one project entry (so no data is fetched) and a render function that marks
@@ -54,4 +54,55 @@ function createRouter() {
     get: (async () => cachedPage) as InMemoryCache['get'],
   })
   return createL2Router(manifest, async () => '<html />', cache)
+}
+
+/** Only the name is asserted: the renderer's own test covers the content. */
+const RISK = { name: 'Risk', value: 'Value', sentiment: 'good' } as const
+
+const ENTRY: ProjectL2Entry = {
+  id: ProjectId('arbitrum'),
+  type: 'layer2',
+  name: 'Arbitrum One',
+  shortName: undefined,
+  slug: 'arbitrum',
+  icon: '/icons/arbitrum.png',
+  archivedAt: undefined,
+  isAppchain: false,
+  colors: undefined,
+  underReviewStatus: undefined,
+  header: {
+    description: 'Arbitrum One is a general-purpose optimistic rollup.',
+    recentUpdatesCount: 0,
+    links: [],
+    chainId: 42161,
+    category: 'Optimistic Rollup',
+    purposes: ['Universal'],
+    tvs: {
+      breakdown: {
+        total: 15_200_000_000,
+        native: 5_000_000_000,
+        canonical: 8_000_000_000,
+        external: 2_200_000_000,
+        totalChange: 0.0123,
+        totalChangePeriod: '7D',
+      },
+      additionalTrustAssumptionsPercentage: 0,
+      tokens: { warnings: [], associatedTokens: [] },
+    },
+    activity: {
+      lastDayUops: 25.3,
+      uopsWeeklyChange: -0.021,
+      uopsWeeklyChangePeriod: '7D',
+    },
+  },
+  rosette: { self: [RISK, RISK, RISK, RISK, RISK] },
+  sections: [],
+  hostChainName: 'Ethereum',
+  stageConfig: {
+    stage: 'Stage 1',
+    downgradePending: undefined,
+    message: undefined,
+    summary: [],
+  },
+  discoUiHref: undefined,
 }
