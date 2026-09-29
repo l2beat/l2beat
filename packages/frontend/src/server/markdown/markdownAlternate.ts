@@ -1,12 +1,17 @@
 import type { NextFunction, Request, Response } from 'express'
-import { MARKDOWN_AS_PLAIN_TEXT } from '~/server/routers/MarkdownAlternatesRouter'
 
 /** Resolves to undefined when the page does not exist. */
 export type MarkdownSource<P> = (req: Request<P>) => Promise<string | undefined>
 
 /** Handles `GET {page}.md`: the page as markdown, for agents that cannot negotiate by header. */
 export function serveMarkdown<P>(getMarkdown: MarkdownSource<P>) {
-  return sendMarkdownAs(MARKDOWN_AS_PLAIN_TEXT, getMarkdown)
+  return async (req: Request<P>, res: Response) => {
+    const markdown = await getMarkdown(req)
+    res
+      .status(markdown === undefined ? 404 : 200)
+      .header('Content-Type', 'text/markdown; charset=utf-8')
+      .send(markdown ?? NOT_FOUND_MARKDOWN)
+  }
 }
 
 /**
@@ -14,7 +19,7 @@ export function serveMarkdown<P>(getMarkdown: MarkdownSource<P>) {
  * text/markdown get the markdown, the rest fall through to the HTML.
  */
 export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
-  const sendMarkdown = sendMarkdownAs(NEGOTIATED_MARKDOWN, getMarkdown)
+  const sendMarkdown = serveMarkdown(getMarkdown)
   return async (req: Request<P>, res: Response, next: NextFunction) => {
     res.vary('Accept')
     if (!prefersMarkdown(req)) {
@@ -33,19 +38,4 @@ function prefersMarkdown(req: Request<unknown>) {
   return req.accepts(['text/html', 'text/markdown']) === 'text/markdown'
 }
 
-function sendMarkdownAs<P>(
-  contentType: string,
-  getMarkdown: MarkdownSource<P>,
-) {
-  return async (req: Request<P>, res: Response) => {
-    const markdown = await getMarkdown(req)
-    res
-      .status(markdown === undefined ? 404 : 200)
-      .header('Content-Type', contentType)
-      .send(markdown ?? NOT_FOUND_MARKDOWN)
-  }
-}
-
-// Safe to send only because the client asked for this type in Accept.
-const NEGOTIATED_MARKDOWN = 'text/markdown; charset=utf-8'
 const NOT_FOUND_MARKDOWN = '# Not found\n'
