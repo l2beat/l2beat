@@ -11,10 +11,6 @@
     "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": "Xlayer Multisig"
   },
   "overrides": {
-    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": {
-      "description": "Contract through which its owner can execute arbitrary calls and delegatecalls.",
-      "fields": { "owner": { "permissions": [{ "type": "act" }] } }
-    },
     "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9": {
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true

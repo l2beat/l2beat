@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Transactor",
+  "description": "A minimal contract that lets its owner send arbitrary calls and delegatecalls.",
+  "fields": {
+    "owner": {
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x80c4dc8b22eb28436e71ac8c0f009d70aaf3b55b
+Generated with discovered.json: 0xfb2fc1dd534a03f7af4fd200c24c172f961bdb58
 
-# Diff at Tue, 29 Sep 2026 15:21:42 GMT:
+# Diff at Tue, 29 Sep 2026 16:22:09 GMT:
 
 - id: 51a48b89
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -75,8 +75,8 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 ```
 
 ```diff
-    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Contract through which its owner can execute arbitrary calls and delegatecalls.
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
       directlyReceivedPermissions.1:
 -        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
@@ -121,14 +121,16 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Contract through which its owner can execute arbitrary calls and delegatecalls.
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
       receivedPermissions:
 -        [{"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"}]}]
       directlyReceivedPermissions.1:
 +        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      template:
++        "opstack/Transactor"
       description:
-+        "Contract through which its owner can execute arbitrary calls and delegatecalls."
++        "A minimal contract that lets its owner send arbitrary calls and delegatecalls."
     }
 ```
 
