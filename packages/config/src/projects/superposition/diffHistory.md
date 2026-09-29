@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0b78a8a13882aa61125f81d960611550746dee85
+Generated with discovered.json: 0x92a0d0b24b1b646d9f677f54acabc3db392885e6
 
-# Diff at Tue, 29 Sep 2026 16:45:08 GMT:
+# Diff at Tue, 29 Sep 2026 17:50:02 GMT:
 
 - id: af0aabac
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -48,6 +48,14 @@ discovery. Values are for block 1788816904 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.0:
 +        {"permission":"interact","from":"arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"arb1:0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43"}]}
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
     }
 ```
 

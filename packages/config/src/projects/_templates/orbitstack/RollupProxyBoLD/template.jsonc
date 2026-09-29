@@ -68,6 +68,7 @@
       }
     },
     "anyTrustFastConfirmer": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

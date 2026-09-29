@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe5e51b591e9d76cfa02bc6cf6b55d39ecb92f83a
+Generated with discovered.json: 0xc8d541c0d136149d0271fad1d2c1994ddad4be12
 
-# Diff at Tue, 29 Sep 2026 16:52:52 GMT:
+# Diff at Tue, 29 Sep 2026 17:50:01 GMT:
 
 - id: b5e390ee
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -16,6 +16,14 @@ Config-related: the shared BoLD RollupProxy template now models the `anyTrustFas
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+    }
+```
 
 ```diff
     contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {

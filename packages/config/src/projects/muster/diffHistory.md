@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf9aad95e81c125c199d26c745ecd77e624e2d662
+Generated with discovered.json: 0xd9a6220d7db33a9da20276f9afe76fba85c10baa
 
-# Diff at Tue, 29 Sep 2026 16:45:06 GMT:
+# Diff at Tue, 29 Sep 2026 17:49:58 GMT:
 
 - id: 1ed372c3
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -32,6 +32,14 @@ discovery. Values are for block 1779719548 (main branch discovery), not current.
       receivedPermissions.0.description:
 -        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
 +        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
     }
 ```
 
