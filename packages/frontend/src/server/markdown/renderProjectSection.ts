@@ -21,6 +21,11 @@ import {
   warning,
   withSentiment,
 } from './markdown'
+import {
+  renderProgramHashes,
+  renderTrustedSetups,
+  renderVerifiers,
+} from './zkSectionBodies'
 
 export interface SectionContext {
   /** Absolute URL of the HTML page, for sections markdown cannot express. */
@@ -265,12 +270,12 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   PrivacyAnonymitySetSection: linkToHtmlPage,
   PrivacyAssetsBreakdownSection: linkToHtmlPage,
   PrivacyFlowsSection: linkToHtmlPage,
-  ProgramHashesSection: linkToHtmlPage,
+  ProgramHashesSection: renderProgramHashes,
   ThroughputSection: linkToHtmlPage,
-  TrustedSetupSection: linkToHtmlPage,
+  TrustedSetupSection: renderTrustedSetups,
   TvsValueSection: linkToHtmlPage,
   UpdatesSection: linkToHtmlPage,
-  VerifiersSection: linkToHtmlPage,
+  VerifiersSection: renderVerifiers,
   ZkCatalogTvsSection: linkToHtmlPage,
 }
 

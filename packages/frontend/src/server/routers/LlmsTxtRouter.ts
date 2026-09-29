@@ -313,6 +313,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
+    {
+      name: 'ZK catalog project',
+      path: '/zk-catalog/{slug}.md',
+      description:
+        'One proving system as markdown: trusted setups and their risks, tech stack, verifiers with their IDs and deployments, program hashes and verification steps.',
+    },
   ],
 }
 
