@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { ExitWindowRisk, Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -19,8 +19,16 @@ export interface OssificationEntry extends OssificationStats {
   category: OssificationCategory
   /** Absent for DeFi projects while DeFi pages are disabled */
   href?: string
+  contractCount: number
+  /** Absent for DeFi, which has no exit window in config yet */
+  exitWindow?: OssificationExitWindow
   timeline: OssificationTimeline
 }
+
+export type OssificationExitWindow = Pick<
+  ExitWindowRisk,
+  'value' | 'sentiment' | 'description' | 'warning' | 'regular'
+>
 
 export interface OssificationTimeline {
   from: number
@@ -28,13 +36,20 @@ export interface OssificationTimeline {
   clockStart: number
   /** Perimeter resets inside the window, up to the clock start */
   resets: number[]
+  /** Critical updates dated inside the window */
+  criticalChanges: number
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
 }
 
 type OssificationEntryProject = Project<
   'ossification',
-  'scalingInfo' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
+  | 'scalingInfo'
+  | 'scalingRisks'
+  | 'privacyInfo'
+  | 'defiInfo'
+  | 'tvsConfig'
+  | 'discoveryUpdates'
 >
 
 const TIMELINE_WINDOW = 365 * UnixTime.DAY
@@ -42,7 +57,14 @@ const TIMELINE_WINDOW = 365 * UnixTime.DAY
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
     select: ['ossification'],
-    optional: ['scalingInfo', 'privacyInfo', 'defiInfo', 'tvsConfig'],
+    optional: [
+      'scalingInfo',
+      'scalingRisks',
+      'privacyInfo',
+      'defiInfo',
+      'tvsConfig',
+      'discoveryUpdates',
+    ],
     whereNot: ['archivedAt'],
   })
 
@@ -69,6 +91,8 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
         ...placement,
         ...getOssificationStats(ossification, series, now),
+        contractCount: ossification.contracts.length,
+        exitWindow: getExitWindow(project),
         timeline: {
           from,
           to: now,
@@ -77,6 +101,7 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
           resets: ossification.perimeterResets.filter(
             (reset) => reset >= from && reset <= clockStart,
           ),
+          criticalChanges: countCriticalChanges(project, from, now),
           values: series ? sampleTimeline(series.points, from, now) : null,
         },
       }
@@ -88,6 +113,34 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
     .sort(
       (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
     )
+}
+
+// Critical updates carry only the diffHistory id; the update has the date.
+function countCriticalChanges(
+  project: OssificationEntryProject,
+  from: number,
+  to: number,
+): number {
+  const timestamps = new Map(
+    project.discoveryUpdates?.map((update) => [update.id, update.timestamp]),
+  )
+  return project.ossification.criticalUpdates.filter(({ id }) => {
+    const timestamp = timestamps.get(id)
+    return timestamp != null && timestamp >= from && timestamp <= to
+  }).length
+}
+
+function getExitWindow(
+  project: OssificationEntryProject,
+): OssificationExitWindow | undefined {
+  const risk = project.scalingRisks
+    ? (project.scalingRisks.stacked ?? project.scalingRisks.self).exitWindow
+    : project.privacyInfo?.exitWindow
+  if (!risk) {
+    return undefined
+  }
+  const { value, sentiment, description, warning, regular } = risk
+  return { value, sentiment, description, warning, regular }
 }
 
 function getPlacement(

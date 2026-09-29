@@ -10,11 +10,10 @@ import {
 } from '~/components/core/Collapsible'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatCriticalChangesPerYear } from '~/components/ossification/formatCriticalChangesPerYear'
-import {
-  OSSIFICATION_VALUE_LABELS,
-  OssificationExposure,
-} from '~/components/ossification/OssificationExposure'
+import { OssificationExposure } from '~/components/ossification/OssificationExposure'
+import { OssificationScore } from '~/components/ossification/OssificationScore'
 import { OssificationUnverifiedBadge } from '~/components/ossification/OssificationUnverifiedBadge'
+import { OSSIFICATION_TOOLTIPS } from '~/components/ossification/ossificationTooltips'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
   OssificationContractView,
@@ -27,9 +26,6 @@ export function OssificationDetails({
 }: {
   ossification: ProjectOssificationView
 }) {
-  const valueLabel = ossification.valueSource
-    ? OSSIFICATION_VALUE_LABELS[ossification.valueSource]
-    : 'Value secured'
   return (
     <div
       id="ossification"
@@ -49,17 +45,16 @@ export function OssificationDetails({
       <ChartStats>
         <ChartStatsItem
           label="Ossification score"
-          tooltip="0 to 100. Gated to 0 while any critical contract is unverified."
+          tooltip={OSSIFICATION_TOOLTIPS.score}
         >
-          {ossification.isUnverified ? (
-            <OssificationUnverifiedBadge />
-          ) : (
-            ossification.score
-          )}
+          <OssificationScore
+            score={ossification.score}
+            isUnverified={ossification.isUnverified}
+          />
         </ChartStatsItem>
         <ChartStatsItem
           label="Battle-tested exposure"
-          tooltip={`${valueLabel} summed over the unchanged period, in USD·years.`}
+          tooltip={OSSIFICATION_TOOLTIPS.exposure}
         >
           <OssificationExposure
             exposure={ossification.exposure}
@@ -68,13 +63,13 @@ export function OssificationDetails({
         </ChartStatsItem>
         <ChartStatsItem
           label="Last change"
-          tooltip="Time since the last critical change, or since the newest deployment if there was none."
+          tooltip={OSSIFICATION_TOOLTIPS.lastChange}
         >
           {formatSeconds(ossification.lastChangeAgeSeconds)} ago
         </ChartStatsItem>
         <ChartStatsItem
           label="Critical changes per year"
-          tooltip="Changes within 24 hours count as one."
+          tooltip={OSSIFICATION_TOOLTIPS.criticalChangesPerYear}
         >
           {formatCriticalChangesPerYear(ossification)}
         </ChartStatsItem>

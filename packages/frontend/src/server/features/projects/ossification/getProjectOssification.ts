@@ -15,8 +15,6 @@ import {
 export interface OssificationStats {
   score: number
   isUnverified: boolean
-  projectAgeSeconds: number
-  lastChangeAgeSeconds: number
   criticalChangesPerYear: number
   clusteredEventCount: number
   /** USD·years; null without a value series */
@@ -25,6 +23,7 @@ export interface OssificationStats {
 }
 
 export interface ProjectOssificationView extends OssificationStats {
+  lastChangeAgeSeconds: number
   contracts: OssificationContractView[]
   criticalUpdates: ProjectOssificationCriticalUpdate[]
 }
@@ -58,6 +57,8 @@ export async function getProjectOssification(
 
   return {
     ...getOssificationStats(ossification, series, now),
+    lastChangeAgeSeconds:
+      now - (ossification.lastCriticalChange ?? ossification.projectClockStart),
     contracts: ossification.contracts.map(
       ({ ossifyingSince, ...contract }) => ({
         ...contract,
@@ -78,8 +79,6 @@ export function getOssificationStats(
   return {
     score: ossification.score,
     isUnverified,
-    projectAgeSeconds: now - clockStart,
-    lastChangeAgeSeconds: now - (ossification.lastCriticalChange ?? clockStart),
     criticalChangesPerYear: ossification.criticalChangesPerYear,
     clusteredEventCount: ossification.clusteredEventCount,
     exposure: isUnverified

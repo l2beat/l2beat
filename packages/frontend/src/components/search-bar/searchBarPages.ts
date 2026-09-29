@@ -168,6 +168,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Ossification',
+          href: '/ossification',
+          tags: ['pages', 'ossification', 'upgrades', 'security'],
+        },
+      ]
+    : []),
   {
     category: 'other',
     name: 'Donate',

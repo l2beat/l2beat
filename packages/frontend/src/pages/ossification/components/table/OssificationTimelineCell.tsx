@@ -1,0 +1,196 @@
+import { formatCurrency, formatSeconds, pluralize } from '@l2beat/shared-pure'
+import { useId } from 'react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/OssificationExposure'
+import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import { formatTimestamp } from '~/utils/dates'
+
+const WIDTH = 132
+const HEIGHT = 30
+const TOP = 2
+// The area sits above it, reset ticks and the arrow below.
+const BASELINE = 24
+const LINE_PROPS = {
+  strokeWidth: 1.5,
+  strokeLinejoin: 'round',
+  strokeLinecap: 'round',
+} as const
+const SCALE_NOTE = "Height is scaled to each project's own peak"
+const CRISP = { shapeRendering: 'crispEdges' } as const
+
+/** Centers a 1px line on a device pixel, so it is not blurred over two. */
+function snap(x: number) {
+  return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
+}
+
+type Props = Pick<OssificationEntry, 'timeline' | 'valueSource'>
+
+export function OssificationTimelineCell({ timeline, valueSource }: Props) {
+  const id = useId()
+  const { from, to, clockStart, resets, values } = timeline
+  const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
+  const clockBeforeWindow = clockStart < from
+  const clockX = clockBeforeWindow ? 0 : toX(clockStart)
+  const area = values ? getAreaPaths(values) : undefined
+  const description = getDescription({
+    timeline,
+    valueSource,
+    clockBeforeWindow,
+  })
+
+  return (
+    <Tooltip>
+      <TooltipTrigger className="ml-auto block">
+        <svg
+          width={WIDTH}
+          height={HEIGHT}
+          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+          role="img"
+          aria-label={[
+            `${description.title}, ${description.period}.`,
+            ...description.lines,
+            `${SCALE_NOTE}.`,
+          ].join(' ')}
+        >
+          <defs>
+            <clipPath id={`${id}-before`}>
+              <rect x={0} y={0} width={clockX} height={HEIGHT} />
+            </clipPath>
+            <clipPath id={`${id}-after`}>
+              <rect x={clockX} y={0} width={WIDTH - clockX} height={HEIGHT} />
+            </clipPath>
+          </defs>
+          <line
+            x1={0}
+            x2={WIDTH}
+            y1={BASELINE + 0.5}
+            y2={BASELINE + 0.5}
+            stroke="var(--divider)"
+            {...CRISP}
+          />
+          {area && (
+            <>
+              <g clipPath={`url(#${id}-before)`}>
+                <path
+                  d={area.fill}
+                  fill="var(--secondary)"
+                  fillOpacity={0.15}
+                />
+                <path
+                  d={area.line}
+                  fill="none"
+                  stroke="var(--secondary)"
+                  strokeOpacity={0.5}
+                  {...LINE_PROPS}
+                />
+              </g>
+              <g clipPath={`url(#${id}-after)`}>
+                <path
+                  d={area.fill}
+                  fill="var(--chart-pink)"
+                  fillOpacity={0.25}
+                />
+                <path
+                  d={area.line}
+                  fill="none"
+                  stroke="var(--chart-pink)"
+                  {...LINE_PROPS}
+                />
+              </g>
+            </>
+          )}
+          {resets.map((reset) => (
+            <line
+              key={reset}
+              x1={snap(toX(reset))}
+              x2={snap(toX(reset))}
+              y1={BASELINE + 2}
+              y2={HEIGHT}
+              stroke="var(--secondary)"
+              strokeOpacity={0.6}
+              {...CRISP}
+            />
+          ))}
+          {clockBeforeWindow ? (
+            <path
+              d={`M5 ${BASELINE + 1.5}L1 ${BASELINE + 3.5}L5 ${BASELINE + 5.5}Z`}
+              fill="var(--chart-pink)"
+            />
+          ) : (
+            <line
+              x1={snap(clockX)}
+              x2={snap(clockX)}
+              y1={0}
+              y2={HEIGHT}
+              stroke="var(--chart-pink)"
+              {...CRISP}
+            />
+          )}
+        </svg>
+      </TooltipTrigger>
+      <TooltipContent className="flex max-w-80 flex-col gap-1.5">
+        <div>
+          <div className="font-bold">{description.title}</div>
+          <div className="text-secondary">{description.period}</div>
+        </div>
+        {description.lines.map((line) => (
+          <span key={line}>{line}</span>
+        ))}
+        <span className="text-secondary">{SCALE_NOTE}.</span>
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+/** Area and line through the samples, from a zero baseline to the peak. */
+function getAreaPaths(values: (number | null)[]) {
+  const peak = Math.max(...values.map((value) => value ?? 0))
+  const step = WIDTH / (values.length - 1)
+  const points = values.flatMap((value, i) =>
+    value === null
+      ? []
+      : [
+          {
+            x: i * step,
+            y: BASELINE - (peak > 0 ? value / peak : 0) * (BASELINE - TOP),
+          },
+        ],
+  )
+  const first = points[0]
+  const last = points.at(-1)
+  if (!first || !last) {
+    return undefined
+  }
+  const line = `M${points.map((p) => `${p.x} ${p.y}`).join(' L')}`
+  return {
+    line,
+    fill: `${line} L${last.x} ${BASELINE} L${first.x} ${BASELINE} Z`,
+  }
+}
+
+function getDescription({
+  timeline,
+  valueSource,
+  clockBeforeWindow,
+}: Props & { clockBeforeWindow: boolean }) {
+  const { from, to, clockStart, criticalChanges, values } = timeline
+  const known = values?.filter((value) => value !== null) ?? []
+  const current = known.at(-1)
+  return {
+    title: `${valueSource === 'defillama' ? 'TVL' : 'TVS'} & critical changes`,
+    period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
+    lines: [
+      `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
+      criticalChanges === 0
+        ? 'No critical change in this window.'
+        : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')} in this window.`,
+      current !== undefined && valueSource
+        ? `${OSSIFICATION_VALUE_LABELS[valueSource]} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
+        : 'No value data.',
+    ],
+  }
+}

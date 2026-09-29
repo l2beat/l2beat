@@ -19,7 +19,8 @@ export function OssificationExposure({
   }
   return (
     <span>
-      {formatCurrency(exposure, 'usd')}·years
+      {formatCurrency(exposure, 'usd')}
+      <span className="font-normal text-secondary text-xs">·years</span>
       {valueSource === 'defillama' && (
         <span className="block font-normal text-2xs text-secondary">
           {OSSIFICATION_VALUE_LABELS.defillama}

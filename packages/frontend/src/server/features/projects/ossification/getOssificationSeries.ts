@@ -8,6 +8,10 @@ import type { ValuePoint } from './normalizeSeries'
 
 export type OssificationValueSource = 'tvs' | 'defillama'
 
+// Every real project has a series, so mock mode drops one to show the
+// no-data state.
+const MOCK_PROJECT_WITHOUT_SERIES = 'morph'
+
 export interface OssificationSeries {
   source: OssificationValueSource
   /** Unordered; consumers normalize them, see normalizeSeries */
@@ -35,7 +39,9 @@ export async function getOssificationSeries(
   }
 
   if (env.MOCK) {
-    return getMockOssificationSeries(source, since)
+    return project.id === MOCK_PROJECT_WITHOUT_SERIES
+      ? null
+      : getMockOssificationSeries(source, since)
   }
 
   const db = getDb()
