@@ -1,3 +1,4 @@
+import { env } from '~/env'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 
 /**
@@ -27,6 +28,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
   '/privacy/projects/:slug',
+  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/projects/:slug'] as const) : []),
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]

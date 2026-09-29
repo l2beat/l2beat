@@ -1,9 +1,11 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { env } from '~/env'
 import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
   type MarkdownAlternatePath,
+  type MarkdownLink,
   type MarkdownSection,
   renderMarkdown,
 } from './MarkdownAlternatesRouter'
@@ -305,6 +307,13 @@ const PAGE_SECTIONS: MarkdownSection[] = [
   },
 ]
 
+const DEFI_PROJECT_MARKDOWN_PAGE: MarkdownLink = {
+  name: 'DeFi project',
+  path: '/defi/projects/{slug}.md',
+  description:
+    'One DeFi protocol as markdown: warnings, description and external dependencies.',
+}
+
 const MARKDOWN_PAGES_SECTION: MarkdownSection = {
   heading: 'Markdown pages',
   links: [
@@ -320,6 +329,8 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
+    // Behind the same flag as the pages: listed while off, this would be a 404.
+    ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),
   ],
 }
 
