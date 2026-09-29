@@ -18,7 +18,7 @@ export function createMarkdownAlternatesRouter(
   for (const alternate of alternates) {
     router.get(alternate.path, async (_req, res) => {
       res
-        .header('Content-Type', 'text/markdown; charset=utf-8')
+        .header('Content-Type', MARKDOWN_AS_PLAIN_TEXT)
         .header('Link', `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`)
         .send(renderMarkdown(alternate, await alternate.getSections()))
     })
@@ -26,6 +26,9 @@ export function createMarkdownAlternatesRouter(
 
   return router
 }
+
+// Not text/markdown: some agent fetchers (ChatGPT's) reject that type outright.
+export const MARKDOWN_AS_PLAIN_TEXT = 'text/plain; charset=utf-8'
 
 export type MarkdownAlternatePath = `${StaticPagePath}.md`
 
