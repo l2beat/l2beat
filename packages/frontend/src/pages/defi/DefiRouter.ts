@@ -41,15 +41,15 @@ export function createDefiRouter(
     '/defi/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['defi', 'projects', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () => getDefiProjectData(manifest, req.params.slug, req.originalUrl),
+      const data = await getDefiProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+        cache,
+        req.query.update,
       )
 
       if (!data) {

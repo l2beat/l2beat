@@ -21,9 +21,15 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
   queryState: DehydratedState
+  selectedUpdateId?: string
 }
 
-export function DefiProjectPage({ entry, queryState, ...props }: Props) {
+export function DefiProjectPage({
+  entry,
+  queryState,
+  selectedUpdateId,
+  ...props
+}: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -97,7 +103,10 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
                       </div>
                     </PrimaryCard>
 
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      items={entry.sections}
+                      selectedUpdateId={selectedUpdateId}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
 

@@ -3,7 +3,11 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { env } from '~/env'
+import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -46,12 +50,19 @@ export interface ProjectDefiEntry {
 
 export async function getDefiProjectEntry(
   slug: string,
+  helpers: SsrHelpers,
 ): Promise<ProjectDefiEntry | undefined> {
   const project = await ps.getProject({
     slug,
-    where: ['defiInfo'],
-    select: ['display', 'statuses'],
-    optional: ['contracts', 'permissions', 'tvsConfig', 'externalDependencies'],
+    select: ['display', 'statuses', 'defiInfo'],
+    optional: [
+      'contracts',
+      'permissions',
+      'tvsConfig',
+      'externalDependencies',
+      'discoveryUpdates',
+      'ossification',
+    ],
   })
 
   if (!project) {
@@ -60,12 +71,23 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
-    await Promise.all([
-      getContractUtils(),
-      getProjectsChangeReport(),
-      getDefiDependencyProjectsById(project.externalDependencies),
-    ])
+  const [
+    contractUtils,
+    projectsChangeReport,
+    dependencyProjectsById,
+    ossification,
+  ] = await Promise.all([
+    getContractUtils(),
+    getProjectsChangeReport(),
+    getDefiDependencyProjectsById(project.externalDependencies),
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED
+      ? getProjectOssification(project)
+      : undefined,
+  ])
+  // DeFi pages get the Updates section together with ossification.
+  const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
+    ? (project.discoveryUpdates ?? [])
+    : []
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
@@ -148,6 +170,22 @@ export async function getDefiProjectEntry(
           project.externalDependencies,
           dependencyProjectsById,
         ),
+      },
+    })
+  }
+
+  if (ossification || discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        ...(await getUpdatesSectionProps(
+          helpers,
+          project.id,
+          discoveryUpdates,
+        )),
+        ossification,
       },
     })
   }

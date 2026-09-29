@@ -12,12 +12,14 @@ export async function getUpdatesSectionProps(
   projectId: ProjectId,
   updates: ProjectDiscoveryUpdate[],
 ): Promise<Pick<UpdatesSectionProps, 'projectId' | 'updates'>> {
-  await helpers.queryClient.prefetchQuery(
-    helpers.trpc.projects.discoveryUpdateSections.queryOptions({
-      projectId,
-      updateIds: updates.slice(0, UPDATES_PAGE_SIZE).map((u) => u.id),
-    }),
-  )
+  if (updates.length > 0) {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.projects.discoveryUpdateSections.queryOptions({
+        projectId,
+        updateIds: updates.slice(0, UPDATES_PAGE_SIZE).map((u) => u.id),
+      }),
+    )
+  }
   return {
     projectId,
     updates: updates.map(({ sections: _, ...summary }) => summary),

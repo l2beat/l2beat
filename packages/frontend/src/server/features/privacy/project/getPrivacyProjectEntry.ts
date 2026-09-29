@@ -278,7 +278,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
+  if (details.ossification || discoveryUpdates.length > 0) {
     sections.push({
       type: 'UpdatesSection',
       props: {
@@ -289,6 +289,7 @@ export async function getPrivacyProjectEntry(
           details.id,
           discoveryUpdates,
         )),
+        ossification: details.ossification,
       },
     })
   }

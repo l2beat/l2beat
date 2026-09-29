@@ -22,6 +22,10 @@ import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import {
+  getProjectOssification,
+  type ProjectOssificationView,
+} from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -50,6 +54,7 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
@@ -97,12 +102,19 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [{ totals, daily30d, tokenValues }, relayerStat, trackedOn] =
-    await Promise.all([
-      getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-      getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
-      getTrackedOn(project),
-    ])
+  const [
+    { totals, daily30d, tokenValues },
+    relayerStat,
+    trackedOn,
+    ossification,
+  ] = await Promise.all([
+    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+    getTrackedOn(project),
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED
+      ? getProjectOssification(project)
+      : undefined,
+  ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -264,6 +276,7 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
+    ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,

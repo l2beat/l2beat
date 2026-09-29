@@ -1,3 +1,4 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -10,11 +11,36 @@ export async function getDefiProjectData(
   manifest: Manifest,
   slug: string,
   url: string,
+  cache: InMemoryCache,
+  selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
+  const data = await cache.get(
+    {
+      key: ['defi', 'projects', slug],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getCachedData(manifest, slug, url),
+  )
+  if (!data) return undefined
+
+  return {
+    head: data.head,
+    ssr: {
+      page: 'DefiProjectPage',
+      props: {
+        ...data.props,
+        selectedUpdateId,
+      },
+    },
+  }
+}
+
+async function getCachedData(manifest: Manifest, slug: string, url: string) {
   const helpers = getSsrHelpers()
   const [appLayoutProps, entry] = await Promise.all([
     getAppLayoutProps(),
-    getDefiProjectEntry(slug),
+    getDefiProjectEntry(slug, helpers),
   ])
 
   if (!entry) {
@@ -38,13 +64,10 @@ export async function getDefiProjectData(
         },
       }),
     },
-    ssr: {
-      page: 'DefiProjectPage',
-      props: {
-        ...appLayoutProps,
-        entry,
-        queryState: helpers.dehydrate(),
-      },
+    props: {
+      ...appLayoutProps,
+      entry,
+      queryState: helpers.dehydrate(),
     },
   }
 }

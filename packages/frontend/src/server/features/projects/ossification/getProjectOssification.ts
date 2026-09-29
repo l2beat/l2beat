@@ -2,7 +2,7 @@ import type {
   ProjectOssification,
   ProjectOssificationCriticalUpdate,
 } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { calculateExposure } from './calculateExposure'
 import {
   getOssificationSeries,
@@ -31,7 +31,7 @@ export interface ProjectOssificationView extends OssificationStats {
 
 export interface OssificationContractView {
   name: string
-  address: string
+  address: ChainSpecificAddress
   isVerified: boolean
   ageSeconds: number
   codeChangeCount: number

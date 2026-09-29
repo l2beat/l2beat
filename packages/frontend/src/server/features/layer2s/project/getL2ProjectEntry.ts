@@ -23,6 +23,7 @@ import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChart
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -174,6 +175,7 @@ export async function getL2ProjectEntry(
     | 'discoveryUpdates'
     | 'daTrackingConfig'
     | 'crops'
+    | 'ossification'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -193,6 +195,7 @@ export async function getL2ProjectEntry(
     allProjectsWithContracts,
     allProjects,
     interopData,
+    ossification,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -221,6 +224,9 @@ export async function getL2ProjectEntry(
       ],
     }),
     getL2ProjectInteropData(project.id),
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED
+      ? getProjectOssification(project)
+      : undefined,
   ])
 
   const projectLiveness = liveness[project.id]
@@ -702,7 +708,7 @@ export async function getL2ProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
+  if (ossification || discoveryUpdates.length > 0) {
     sections.push({
       type: 'UpdatesSection',
       props: {
@@ -713,6 +719,7 @@ export async function getL2ProjectEntry(
           project.id,
           discoveryUpdates,
         )),
+        ossification,
       },
     })
   }
