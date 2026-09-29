@@ -80,7 +80,6 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
-        markdownAlternatePath: `/privacy/projects/${details.slug}.md`,
       }),
     },
     props: {

@@ -19,7 +19,7 @@ describe(createPrivacyRouter.name, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toMatchRegex(/^# Tornado Cash\n/)
   })
@@ -32,7 +32,7 @@ describe(createPrivacyRouter.name, () => {
     )
 
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toMatchRegex(/^# Tornado Cash\n/)
   })

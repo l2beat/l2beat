@@ -1,8 +1,9 @@
 import express from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
-import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
+import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
 import { ps } from '~/server/projects'
+import type { ListPageWithMarkdown } from '~/utils/getMarkdownAlternatePath'
 
 /**
  * Markdown versions of the pages that list what L2BEAT tracks, at the page
@@ -17,17 +18,17 @@ export function createMarkdownAlternatesRouter(
 
   for (const alternate of alternates) {
     router.get(alternate.path, async (_req, res) => {
-      res
-        .header('Content-Type', 'text/markdown; charset=utf-8')
-        .header('Link', `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`)
-        .send(renderMarkdown(alternate, await alternate.getSections()))
+      sendMarkdownDocument(
+        res,
+        renderMarkdown(alternate, await alternate.getSections()),
+      )
     })
   }
 
   return router
 }
 
-export type MarkdownAlternatePath = `${StaticPagePath}.md`
+export type MarkdownAlternatePath = `${ListPageWithMarkdown}.md`
 
 export interface MarkdownAlternate {
   path: MarkdownAlternatePath
@@ -45,8 +46,6 @@ export type MarkdownLink = { name: string; description: string } & (
   | { path: `/${string}` }
   | { url: string }
 )
-
-type StaticPagePath = (typeof STATIC_PAGE_PATHS)[number]
 
 export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
   {
@@ -78,14 +77,6 @@ export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
     getSections: getPrivacySections,
   },
 ]
-
-/** Express routing is neither strict nor case-sensitive, so `/Layer2s/Summary/` serves the same page. */
-export function getMarkdownAlternatePath(
-  pagePath: string,
-): MarkdownAlternatePath | undefined {
-  const routedPath = pagePath.replace(/\/+$/, '').toLowerCase()
-  return MARKDOWN_ALTERNATES.find((a) => a.path === `${routedPath}.md`)?.path
-}
 
 async function getScalingSections(): Promise<MarkdownSection[]> {
   const [scaling, ecosystems] = await Promise.all([

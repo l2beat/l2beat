@@ -1,7 +1,7 @@
 import type { Sentiment } from '@l2beat/config'
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
-  COMPARISON_PERIOD_LABELS,
+  COMPARED_TO_PERIOD,
   formatPercent,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
@@ -22,6 +22,15 @@ export function subsection(
   body: string | undefined,
 ) {
   return body ? joinBlocks([heading(level, title), body]) : ''
+}
+
+/** For config text, whose own headings must nest under the subsection heading. */
+export function textSubsection(
+  level: number,
+  title: string,
+  text: string | undefined,
+) {
+  return subsection(level, title, nestHeadings(text, level + 1))
 }
 
 export function bulletList(items: string[]) {
@@ -55,7 +64,7 @@ export function withSentiment(value: string, sentiment: Sentiment | undefined) {
 /** The percentage change as the HTML shows it, with the tooltip's period spelled out. */
 export function formatChange(change: number, period: PercentageChangePeriod) {
   const sign = change > 0 ? '+' : change < 0 ? '-' : ''
-  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARISON_PERIOD_LABELS[period]}`
+  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARED_TO_PERIOD[period]}`
 }
 
 /** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
@@ -73,25 +82,37 @@ export function formatCount(value: number) {
 
 /** Same marker placement as the HTML risk lists: before the closing punctuation. */
 export function markCritical(text: string, isCritical: boolean | undefined) {
-  return isCritical ? `${text.slice(0, -1)} (CRITICAL)${text.slice(-1)}` : text
+  if (!isCritical) return text
+  const [, body, punctuation] = text.match(/^(.*?)([.!?]?)$/s) ?? []
+  return `${body} (CRITICAL)${punctuation}`
+}
+
+/**
+ * Config text links site pages and images by path (e.g. "/images/x.png"),
+ * which only resolves on the site; the markdown is read elsewhere.
+ */
+export function absolutizeLinks(markdown: string, origin: string) {
+  return markdown.replaceAll(/\]\(\/(?!\/)/g, `](${origin}/`)
 }
 
 /**
  * Config text can carry its own headings (e.g. "## Architecture"). Shifted so
  * the shallowest one lands at `level`, they nest under the heading the text is
- * rendered below instead of breaking the page outline.
+ * rendered below instead of breaking the page outline. Optional config text
+ * that is absent renders as no block at all.
  */
-export function nestHeadings(content: string, level: number) {
+export function nestHeadings(content: string | undefined, level: number) {
+  if (content === undefined) return ''
   const lines = content.split('\n')
-  const headingDepths = findHeadingDepths(lines)
-  if (headingDepths.size === 0) return content
+  const headingDepthByLine = findHeadingDepthByLine(lines)
+  if (headingDepthByLine.size === 0) return content
 
-  const shift = level - Math.min(...headingDepths.values())
+  const shift = level - Math.min(...headingDepthByLine.values())
   if (shift <= 0) return content
 
   return lines
     .map((line, i) => {
-      const depth = headingDepths.get(i)
+      const depth = headingDepthByLine.get(i)
       if (depth === undefined) return line
       const nestedDepth = Math.min(depth + shift, MAX_HEADING_DEPTH)
       return `${'#'.repeat(nestedDepth)}${line.slice(depth)}`
@@ -101,8 +122,8 @@ export function nestHeadings(content: string, level: number) {
 
 const MAX_HEADING_DEPTH = 6
 
-/** Line index to depth of each ATX heading, skipping fenced code where `#` is literal. */
-function findHeadingDepths(lines: string[]) {
+/** Skips fenced code, where `#` is literal. */
+function findHeadingDepthByLine(lines: string[]) {
   const depths = new Map<number, number>()
   let inCodeFence = false
   for (const [i, line] of lines.entries()) {
