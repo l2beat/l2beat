@@ -37,7 +37,6 @@ interface DiscoveredEntry {
   name?: string
   address: string
   template?: string
-  critical?: boolean
   unverified?: boolean
 }
 
@@ -63,10 +62,20 @@ export function listDiscoveredProjects(projectsDir: string): string[] {
     .sort()
 }
 
+export interface ReadDeployedOptions {
+  allContracts?: boolean
+  /**
+   * Chain specific addresses of the project's critical contracts, from its
+   * ossification perimeter. Only these are read when given; every contract
+   * is read for projects without ossification.
+   */
+  criticalAddresses?: string[]
+}
+
 export function readDeployedProject(
   projectsDir: string,
   projectId: string,
-  options: { allContracts?: boolean } = {},
+  options: ReadDeployedOptions = {},
 ): DeployedProject {
   const projectDir = path.join(projectsDir, projectId)
   const discovered = readJsonc<DiscoveredJson>(
@@ -74,11 +83,14 @@ export function readDeployedProject(
   )
   const flatDir = path.join(projectDir, '.flat')
   const entries = discovered.entries.filter((e) => e.type === 'Contract')
-  const critical = entries.filter((e) => e.critical === true)
-  const selected =
-    options.allContracts || critical.length === 0 ? entries : critical
-  const contractSelection =
-    options.allContracts || critical.length === 0 ? 'all' : 'critical'
+  const critical =
+    options.allContracts || options.criticalAddresses === undefined
+      ? undefined
+      : new Set(options.criticalAddresses.map((a) => a.toLowerCase()))
+  const selected = critical
+    ? entries.filter((e) => critical.has(e.address.toLowerCase()))
+    : entries
+  const contractSelection = critical ? 'critical' : 'all'
 
   const contracts = selected.map((entry): DeployedContract => {
     const [chain, address] = splitAddress(entry.address)

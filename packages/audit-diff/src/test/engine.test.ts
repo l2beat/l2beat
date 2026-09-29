@@ -22,11 +22,6 @@ import {
   unitsCompatible,
 } from '../resolve/resolve.js'
 import { UnitStore } from '../store/store.js'
-import {
-  getZkSourceRequests,
-  parseGitHubUrl,
-  resolveRefFromNames,
-} from '../zk/fetch.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const FIXTURES = path.join(here, 'fixtures')
@@ -82,64 +77,22 @@ describe('deployed', () => {
     // EOAs are not contracts
     expect(project.contracts.length).toEqual(4)
   })
-})
 
-describe('zk sources', () => {
-  it('derives only program sources from project config', () => {
-    const requests = getZkSourceRequests({
-      contracts: {
-        programHashes: [
-          {
-            title: 'Range program',
-            programUrl: 'https://github.com/example/program/tree/v1.0.0/range',
-          },
-          { title: 'Unknown program' },
-        ],
-      },
+  it('reads only the critical contracts when given', () => {
+    const all = readDeployedProject(PROJECTS, 'forkchain')
+    const vault = all.contracts.find((c) => c.name === 'Vault')
+    const project = readDeployedProject(PROJECTS, 'forkchain', {
+      criticalAddresses: [vault?.chainSpecificAddress.toUpperCase() ?? ''],
     })
+    expect(project.contractSelection).toEqual('critical')
+    expect(project.contracts.map((c) => c.name)).toEqual(['Vault'])
 
-    expect(requests).toEqual([
-      {
-        type: 'program',
-        name: 'Range program',
-        link: 'https://github.com/example/program/tree/v1.0.0/range',
-      },
-    ])
-  })
-
-  it('ignores verifier declarations', () => {
-    const project = {
-      contracts: {
-        zkVerifiers: [{ toString: () => 'eth:0x1234' }],
-        programHashes: [],
-      },
-    }
-    const requests = getZkSourceRequests(project)
-
-    expect(requests).toEqual([])
-  })
-
-  it('parses blob anchors and resolves refs containing slashes', () => {
-    const blob = parseGitHubUrl(
-      'https://github.com/org/repo/blob/abcdef0123456789abcdef0123456789abcdef01/src/main.rs#L10',
-    )
-    expect(blob?.repoPath).toEqual('src/main.rs')
-    expect(blob?.kind).toEqual('blob')
-
-    const ambiguous = parseGitHubUrl(
-      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/range/eigenda',
-    )
-    expect(
-      ambiguous &&
-        resolveRefFromNames(ambiguous, ['main', 'celo/v2.1.0', 'celo/v2.0.0']),
-    ).toEqual({
-      repository: 'celo-org/op-succinct',
-      url: 'https://github.com/celo-org/op-succinct',
-      revision: 'celo/v2.1.0',
-      repoPath: 'programs/range/eigenda',
-      kind: 'tree',
-      tail: 'celo/v2.1.0/programs/range/eigenda',
+    const forced = readDeployedProject(PROJECTS, 'forkchain', {
+      allContracts: true,
+      criticalAddresses: [],
     })
+    expect(forced.contractSelection).toEqual('all')
+    expect(forced.contracts.length).toEqual(4)
   })
 })
 
@@ -360,7 +313,6 @@ describe(generateProject.name, () => {
     return generateProject({
       projectId: 'forkchain',
       projectsDir: PROJECTS,
-      zkCacheDir: path.join(cache, 'zk'),
       evidence: index,
       store,
       // A forge binary that does not exist: sources are used as they are.

@@ -35,17 +35,12 @@ interface Props {
  * One collapsible row per deployed contract, expanding to its source files
  * and their units. Filtering by status and unit name is local state.
  */
-/** A zk entry can share the address of its deployed verifier contract. */
 function rowKey(contract: AuditsContractEntry): string {
-  return contract.zk
-    ? `zk:${contract.name}`
-    : `${contract.chain}:${contract.address}`
+  return `${contract.chain}:${contract.address}`
 }
 
-function anchorOf(contract: AuditsContractEntry): string | undefined {
-  return contract.zk || !contract.address
-    ? undefined
-    : contractAnchorId(contract.chain, contract.address)
+function anchorOf(contract: AuditsContractEntry): string {
+  return contractAnchorId(contract.chain, contract.address)
 }
 
 export function ContractCoverageList({ contracts }: Props) {
@@ -227,11 +222,6 @@ export function ContractCoverageList({ contracts }: Props) {
                     <span className="truncate font-bold text-sm">
                       {contract.name}
                     </span>
-                    {contract.zk && (
-                      <span className="rounded border border-chart-stacked-blue px-1 font-medium text-[10px] text-chart-stacked-blue uppercase">
-                        zk {contract.zk.type}
-                      </span>
-                    )}
                     {contract.files.some((f) => f.role === 'proxy') && (
                       <span className="rounded border border-divider px-1 font-medium text-[10px] text-secondary uppercase">
                         proxy
@@ -265,9 +255,7 @@ export function ContractCoverageList({ contracts }: Props) {
                     )}
                   </div>
                   <div className="truncate font-mono text-secondary text-xs">
-                    {contract.address
-                      ? `${contract.chain}:${contract.address}`
-                      : contract.zk?.link}
+                    {contract.chain}:{contract.address}
                     {contract.template && (
                       <span className="ml-2 font-sans">
                         template {contract.template}
@@ -314,31 +302,10 @@ export function ContractCoverageList({ contracts }: Props) {
               {isOpen && (
                 <div className="border-divider border-t">
                   <div className="flex flex-wrap items-baseline gap-x-3 px-3 py-1.5 text-xs">
-                    {contract.address && (
-                      <>
-                        <span className="text-secondary">Address</span>
-                        <span className="select-all font-mono">
-                          {contract.chain}:{contract.address}
-                        </span>
-                      </>
-                    )}
-                    {contract.zk && (
-                      <span className="text-secondary">
-                        sources{' '}
-                        <a
-                          href={contract.zk.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-mono hover:text-primary hover:underline"
-                        >
-                          {contract.zk.link.replace('https://github.com/', '')}
-                        </a>{' '}
-                        @{' '}
-                        <span className="font-mono">
-                          {contract.zk.commit.slice(0, 8)}
-                        </span>
-                      </span>
-                    )}
+                    <span className="text-secondary">Address</span>
+                    <span className="select-all font-mono">
+                      {contract.chain}:{contract.address}
+                    </span>
                     {contract.template && (
                       <span className="text-secondary">
                         template{' '}
@@ -349,9 +316,7 @@ export function ContractCoverageList({ contracts }: Props) {
                   {visibleUnits === 0 && (
                     <p className="px-3 py-2 text-secondary text-xs">
                       {contract.noSource
-                        ? contract.zk
-                          ? 'No source files were fetched for this entry.'
-                          : 'No verified source for this contract.'
+                        ? 'No verified source for this contract.'
                         : 'No units match the current filter.'}
                     </p>
                   )}

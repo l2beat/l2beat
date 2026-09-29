@@ -117,19 +117,16 @@ export interface AuditsUnitEntry {
 
 export interface AuditsFileEntry {
   path: string
-  role: 'implementation' | 'proxy' | 'program'
+  role: 'implementation' | 'proxy'
   lines: number
   units: AuditsUnitEntry[]
 }
 
 export interface AuditsContractEntry {
   name: string
-  /** Empty for zk programs without an onchain deployment. */
   address: string
   chain: string
   template?: string
-  /** Set for zk verifier / program sources instead of a deployed contract. */
-  zk?: { type: 'verifier' | 'program'; link: string; commit: string }
   noSource: boolean
   coverage: AuditCoverageNumbers
   files: AuditsFileEntry[]

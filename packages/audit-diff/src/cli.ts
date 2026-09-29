@@ -2,17 +2,16 @@ import { execSync } from 'child_process'
 import path from 'path'
 import { packageDir, readConfig } from './config.js'
 import { readDataset } from './dataset/read.js'
+import { CriticalContracts } from './deployed/critical.js'
 import { Formatter } from './deployed/format.js'
 import { hasDiscovery, listDiscoveredProjects } from './deployed/read.js'
 import { EvidenceIndex } from './evidence/index.js'
 import { PreparedUnitCache } from './evidence/units.js'
 import { generateProject } from './generate.js'
 import { UnitStore } from './store/store.js'
-import { ZkSourceSync } from './zk/fetch.js'
 
 const USAGE = `Usage:
   audit-diff generate --dataset <path> --out <dir> (--project <id>... | --all) [--all-contracts] [--projects-dir <dir>]
-  audit-diff fetch-zk (--project <id>... | --all) [--projects-dir <dir>]
   audit-diff gc --out <dir>`
 
 async function main() {
@@ -20,7 +19,6 @@ async function main() {
   const args = parseArgs(rest)
   const log = (message: string) => console.log(message)
   const cacheDir = path.join(packageDir(), '.cache')
-  const zkCacheDir = path.join(cacheDir, 'zk')
   const projectsDir = path.resolve(
     args['projects-dir']?.[0] ??
       path.join(packageDir(), '..', 'config', 'src', 'projects'),
@@ -56,20 +54,20 @@ async function main() {
         path.join(cacheDir, 'formatted'),
         log,
       )
-      const zkSources = new ZkSourceSync({ projectsDir, zkCacheDir, log })
+      const critical = new CriticalContracts(projectsDir)
       for (const projectId of projectIds) {
         console.log(`\n== ${projectId}`)
-        await zkSources.sync(projectId)
+        const criticalAddresses = await critical.get(projectId)
         const report = generateProject({
           projectId,
           projectsDir,
-          zkCacheDir,
           evidence,
           store,
           formatter,
           collectionHints: config.collectionHints ?? {},
           config: config.projects?.[projectId],
           allContracts: Boolean(args['all-contracts']),
+          criticalAddresses,
           datasetRevision,
           datasetRepoUrl: config.datasetRepoUrl,
           log: projectLog,
@@ -77,7 +75,7 @@ async function main() {
         store.writeProject(report)
         const s = report.summary
         console.log(
-          `units: identical ${s.units.identical}, library ${s.units.library}, differs ${s.units.differs}, unaudited ${s.units.unaudited}; lines covered ${s.lines.covered}/${s.lines.total}`,
+          `contracts: ${report.contracts.length} (${report.contractSelection}); units: identical ${s.units.identical}, library ${s.units.library}, differs ${s.units.differs}, unaudited ${s.units.unaudited}; lines covered ${s.lines.covered}/${s.lines.total}`,
         )
       }
       store.flush(
@@ -88,14 +86,6 @@ async function main() {
         })),
       )
       console.log(`\nWrote ${projectIds.length} project(s) to ${outDir}`)
-      return
-    }
-    case 'fetch-zk': {
-      const projectIds = selectProjects(args, projectsDir)
-      const zkSources = new ZkSourceSync({ projectsDir, zkCacheDir, log })
-      for (const projectId of projectIds) {
-        await zkSources.sync(projectId, true)
-      }
       return
     }
     case 'gc': {

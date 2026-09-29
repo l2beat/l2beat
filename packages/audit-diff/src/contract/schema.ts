@@ -210,30 +210,19 @@ export const UnitRef = v.object({
 export type UnitRef = v.infer<typeof UnitRef>
 
 export const SourceFileCoverage = v.object({
-  /** Path relative to the l2beat config projects directory, or to the zk cache. */
+  /** Path relative to the l2beat config projects directory. */
   path: v.string(),
-  role: v.enum(['implementation', 'proxy', 'program']),
+  role: v.enum(['implementation', 'proxy']),
   lines: v.number(),
   units: v.array(UnitRef),
 })
 export type SourceFileCoverage = v.infer<typeof SourceFileCoverage>
 
-/** Present when the entry is a zk verifier / program rather than a deployed contract. */
-export const ZkSourceInfo = v.object({
-  type: v.enum(['verifier', 'program']),
-  /** GitHub link the sources were fetched from. */
-  link: v.string(),
-  commit: v.string(),
-})
-export type ZkSourceInfo = v.infer<typeof ZkSourceInfo>
-
 export const ContractCoverage = v.object({
   name: v.string(),
-  /** Empty for zk programs without an onchain deployment. */
   address: v.string(),
   chain: v.string(),
   template: v.string().optional(),
-  zk: ZkSourceInfo.optional(),
   noSource: v.boolean(),
   summary: CoverageSummary,
   files: v.array(SourceFileCoverage),

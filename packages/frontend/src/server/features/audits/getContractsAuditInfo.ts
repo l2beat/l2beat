@@ -31,7 +31,7 @@ export function getContractsAuditInfo(
   if (!report) return result
 
   for (const contract of report.contracts) {
-    if (contract.zk || !contract.address || contract.noSource) continue
+    if (!contract.address || contract.noSource) continue
     if (contract.summary.lines.total === 0) continue
     const key = contractKey(contract.chain, contract.address)
     if (result.has(key)) continue

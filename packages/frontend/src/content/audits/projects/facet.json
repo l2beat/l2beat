@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "facet",
   "slug": "facet",
-  "generatedAt": 1789730748,
-  "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
+  "generatedAt": 1790675722,
+  "datasetRevision": "546e6ed7055954eaf185d121d9e307b64ed77511-dirty",
   "discoveryTimestamp": 1780407005,
   "contractSelection": "all",
   "context": {
@@ -79,31 +79,30 @@
     ]
   },
   "summary": {
-    "contracts": 16,
+    "contracts": 14,
     "contractsWithoutSource": 2,
     "units": {
-      "identical": 19,
+      "identical": 20,
       "library": 35,
-      "differs": 28,
-      "unaudited": 32
-    },
-    "uniqueUnits": {
-      "identical": 16,
-      "library": 28,
-      "differs": 23,
+      "differs": 27,
       "unaudited": 23
     },
+    "uniqueUnits": {
+      "identical": 17,
+      "library": 28,
+      "differs": 22,
+      "unaudited": 14
+    },
     "lines": {
-      "total": 18599,
-      "covered": 10369,
-      "uncovered": 8230
+      "total": 18266,
+      "covered": 10375,
+      "uncovered": 7891
     }
   },
   "reportIds": [
     "bob/veridise-kailua-2025-02",
     "facet/cantina-facet-zk-fault-proof-rollup-2025-08-05",
     "facet/zellic-facet-bridge-2024-11-04",
-    "openzeppelin/contracts__audits__2023-05-v4.9",
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "openzeppelin/formal-verification__fv__reports__2022-05",
     "optimism/cantina-eip7702-2025-02",
@@ -117,7 +116,8 @@
     "solady/ackee-blockchain-solady-report",
     "solady/cantina-solady-report",
     "solady/cantina-spearbit-coinbase-solady-report",
-    "sp1/veridise-sp1-recursion-and-contracts-2024"
+    "sp1/veridise-sp1-recursion-and-contracts-2024",
+    "zksync2/code4rena-zksync-era-system-contracts-2023-03"
   ],
   "contracts": [
     {
@@ -331,7 +331,9 @@
                 "reviewPhase": "Initial audit",
                 "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
                 "majorFindings": 1,
-                "findingIds": ["5.2.3"],
+                "findingIds": [
+                  "5.2.3"
+                ],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 3
@@ -571,7 +573,9 @@
                 "reviewPhase": "Initial audit",
                 "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
                 "majorFindings": 1,
-                "findingIds": ["5.2.3"],
+                "findingIds": [
+                  "5.2.3"
+                ],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 3
@@ -706,7 +710,10 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": ["C02", "C04"],
+                "findingIds": [
+                  "C02",
+                  "C04"
+                ],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1626,7 +1633,10 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": ["C02", "C04"],
+                "findingIds": [
+                  "C02",
+                  "C04"
+                ],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1973,21 +1983,21 @@
         "contracts": 1,
         "contractsWithoutSource": 0,
         "units": {
-          "identical": 4,
+          "identical": 5,
           "library": 1,
-          "differs": 7,
+          "differs": 6,
           "unaudited": 1
         },
         "uniqueUnits": {
-          "identical": 4,
+          "identical": 5,
           "library": 1,
-          "differs": 7,
+          "differs": 6,
           "unaudited": 1
         },
         "lines": {
           "total": 2365,
-          "covered": 1796,
-          "uncovered": 569
+          "covered": 1802,
+          "uncovered": 563
         }
       },
       "files": [
@@ -2128,39 +2138,39 @@
               "startLine": 95,
               "endLine": 171,
               "lines": 77,
-              "status": "differs",
-              "coveredLines": 71,
+              "status": "identical",
+              "coveredLines": 77,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "other",
+                "collection": "zksync2",
                 "relation": {
-                  "type": "library"
+                  "type": "name"
                 },
-                "rank": 3,
-                "matchedBy": "name",
+                "rank": 4,
+                "matchedBy": "identity",
                 "auditedName": "SafeERC20",
-                "similarity": 0.851,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/utils/SafeERC20.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+                "similarity": 1,
+                "reportId": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+                "repository": "code-423n4/2023-03-zksync",
+                "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+                "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+                "commitTimestamp": "2023-03-10T20:57:33Z",
+                "url": "https://github.com/code-423n4/2023-03-zksync/blob/21d9a364a4a75adfa6f1e038232d8c0f39858a64/contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "contest audit",
+                "coverage": "One of the 40 contest-scope files (2,418 SLOC) listed in the contest repository README; code links in the report pin this commit.",
                 "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 10
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 6,
-                "removed": 15,
-                "ignoredAdded": 3,
-                "ignoredRemoved": 42,
-                "unchanged": 71,
-                "ignoredOnly": false
+                "added": 0,
+                "removed": 0,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
+                "unchanged": 77,
+                "ignoredOnly": true
               },
               "warnings": []
             },
@@ -4161,245 +4171,6 @@
                 "unchanged": 142,
                 "ignoredOnly": false
               },
-              "warnings": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Aggregation program of OP Succinct",
-      "address": "",
-      "chain": "",
-      "zk": {
-        "type": "program",
-        "link": "https://github.com/0xFacet/zk-fault-proofs/tree/ad0ef0488e714212cb420ae04c9b242d9ef26f24/programs/aggregation",
-        "commit": "ad0ef0488e714212cb420ae04c9b242d9ef26f24"
-      },
-      "noSource": false,
-      "summary": {
-        "contracts": 1,
-        "contractsWithoutSource": 0,
-        "units": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "uniqueUnits": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "lines": {
-          "total": 118,
-          "covered": 0,
-          "uncovered": 118
-        }
-      },
-      "files": [
-        {
-          "path": "facet/program-Aggregation_program_of_OP_Succinct-752ea9c2/Cargo.toml",
-          "role": "program",
-          "lines": 20,
-          "units": [
-            {
-              "unitHash": "8b9f6584e9a73531d0299949b64622696eece22ef64ee30958349b4f82fcf5c1",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 19,
-              "lines": 19,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Aggregation_program_of_OP_Succinct-752ea9c2/src/main.rs",
-          "role": "program",
-          "lines": 100,
-          "units": [
-            {
-              "unitHash": "2d006dcc09db3e82027239763d91383ff1cd2727603accdf71f6acc030a0f41f",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "main.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 99,
-              "lines": 99,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Range program of OP Succinct",
-      "address": "",
-      "chain": "",
-      "zk": {
-        "type": "program",
-        "link": "https://github.com/0xFacet/zk-fault-proofs/tree/ad0ef0488e714212cb420ae04c9b242d9ef26f24/programs/range",
-        "commit": "ad0ef0488e714212cb420ae04c9b242d9ef26f24"
-      },
-      "noSource": false,
-      "summary": {
-        "contracts": 1,
-        "contractsWithoutSource": 0,
-        "units": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 7
-        },
-        "uniqueUnits": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 7
-        },
-        "lines": {
-          "total": 215,
-          "covered": 0,
-          "uncovered": 215
-        }
-      },
-      "files": [
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/README.md",
-          "role": "program",
-          "lines": 4,
-          "units": [
-            {
-              "unitHash": "9b9b54a8df6a1a9828681a6140a3ea407d6672b180befba639477fc7a89d40ef",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "README.md",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 4,
-              "lines": 4,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/celestia/Cargo.toml",
-          "role": "program",
-          "lines": 31,
-          "units": [
-            {
-              "unitHash": "ed395516d71d7ebeb05008edf554b61e005d7f04d4debd351290e3f414faa88c",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 30,
-              "lines": 30,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/celestia/src/main.rs",
-          "role": "program",
-          "lines": 31,
-          "units": [
-            {
-              "unitHash": "43c3e435f6e1dad4de2fe9aa78fe046f77f0631ed26558303e8083ee4eeff9d3",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "main.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 30,
-              "lines": 30,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/ethereum/Cargo.toml",
-          "role": "program",
-          "lines": 30,
-          "units": [
-            {
-              "unitHash": "ca195a8bd2cbc33bacccaeabac4309f510edf6baae9723163d0514b91ad9e504",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 29,
-              "lines": 29,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/ethereum/src/main.rs",
-          "role": "program",
-          "lines": 31,
-          "units": [
-            {
-              "unitHash": "83297516802499cec7b4feac0bd97e7a9f914997f6f7c1a89b3f8e32d1addb68",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "main.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 30,
-              "lines": 30,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/utils/Cargo.toml",
-          "role": "program",
-          "lines": 30,
-          "units": [
-            {
-              "unitHash": "349798caaccbbfa8b2b1cdea6ec070ca08d98fa66aa89ab98163a74832bd306e",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 29,
-              "lines": 29,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "facet/program-Range_program_of_OP_Succinct-75609bb9/utils/src/lib.rs",
-          "role": "program",
-          "lines": 64,
-          "units": [
-            {
-              "unitHash": "40a620037d6ea563c2a4fe93a20bc53429f4f1bac3a4ea78498735c1002334be",
-              "contextKey": "1daaed8c8125f2b6",
-              "name": "lib.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 63,
-              "lines": 63,
-              "status": "unaudited",
-              "coveredLines": 0,
               "warnings": []
             }
           ]

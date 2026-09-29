@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "umbra",
   "slug": "umbra",
-  "generatedAt": 1789730749,
-  "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
+  "generatedAt": 1790675771,
+  "datasetRevision": "546e6ed7055954eaf185d121d9e307b64ed77511-dirty",
   "discoveryTimestamp": 1786959877,
   "contractSelection": "all",
   "context": {
@@ -71,29 +71,30 @@
     "contracts": 2,
     "contractsWithoutSource": 0,
     "units": {
-      "identical": 1,
+      "identical": 2,
       "library": 0,
-      "differs": 6,
+      "differs": 5,
       "unaudited": 2
     },
     "uniqueUnits": {
-      "identical": 1,
+      "identical": 2,
       "library": 0,
-      "differs": 6,
+      "differs": 5,
       "unaudited": 2
     },
     "lines": {
       "total": 1116,
-      "covered": 678,
-      "uncovered": 438
+      "covered": 686,
+      "uncovered": 430
     }
   },
   "reportIds": [
+    "arbitrum/consensys-arbitrum-core-token-bridge-2021-11",
     "bob/veridise-kailua-2025-02",
     "openzeppelin/contracts__audits__2018-10",
-    "openzeppelin/contracts__audits__2023-05-v4.9",
     "openzeppelin/contracts__audits__2023-10-v5.0",
-    "umbra/consensys-diligence-umbra-smart-contracts-2021-03"
+    "umbra/consensys-diligence-umbra-smart-contracts-2021-03",
+    "zksync2/code4rena-zksync-era-system-contracts-2023-03"
   ],
   "contracts": [
     {
@@ -153,21 +154,21 @@
         "contracts": 1,
         "contractsWithoutSource": 0,
         "units": {
-          "identical": 1,
+          "identical": 2,
           "library": 0,
-          "differs": 6,
+          "differs": 5,
           "unaudited": 1
         },
         "uniqueUnits": {
-          "identical": 1,
+          "identical": 2,
           "library": 0,
-          "differs": 6,
+          "differs": 5,
           "unaudited": 1
         },
         "lines": {
           "total": 923,
-          "covered": 678,
-          "uncovered": 245
+          "covered": 686,
+          "uncovered": 237
         }
       },
       "files": [
@@ -328,39 +329,31 @@
               "startLine": 522,
               "endLine": 591,
               "lines": 70,
-              "status": "differs",
-              "coveredLines": 66,
+              "status": "identical",
+              "coveredLines": 70,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "other",
+                "collection": "arbitrum",
                 "relation": {
-                  "type": "library"
+                  "type": "name"
                 },
-                "rank": 3,
-                "matchedBy": "name",
+                "rank": 4,
+                "matchedBy": "identity",
                 "auditedName": "IERC20",
-                "similarity": 0.739,
-                "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/IERC20.sol",
-                "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-                "commitTimestamp": "2023-06-06T04:08:31Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+                "similarity": 1,
+                "reportId": "arbitrum/consensys-arbitrum-core-token-bridge-2021-11",
+                "repository": "OffchainLabs/arbitrum-classic",
+                "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
+                "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
+                "commitTimestamp": "2021-10-03T02:13:15Z",
+                "url": "https://github.com/OffchainLabs/arbitrum-classic/blob/d730bc40932c24e239577d16b1737455ab75ee26/packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
                 "auditStatus": "audited_with_no_major_findings",
-                "reviewPhase": "audit",
-                "coverage": "Full review of the file at the Phase 1 audit commit.",
+                "reviewPhase": "initial audit",
+                "coverage": "Full manual review of the file as listed in Appendix 1 (Files in Scope) at the assessed commit.",
                 "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
                 "totalVersions": 3
-              },
-              "diffStats": {
-                "added": 4,
-                "removed": 4,
-                "ignoredAdded": 14,
-                "ignoredRemoved": 14,
-                "unchanged": 66,
-                "ignoredOnly": false
               },
               "warnings": []
             },
@@ -373,37 +366,37 @@
               "endLine": 662,
               "lines": 61,
               "status": "differs",
-              "coveredLines": 53,
+              "coveredLines": 57,
               "match": {
-                "origin": "library",
-                "collection": "openzeppelin",
+                "origin": "other",
+                "collection": "zksync2",
                 "relation": {
-                  "type": "library"
+                  "type": "name"
                 },
-                "rank": 3,
+                "rank": 4,
                 "matchedBy": "name",
                 "auditedName": "SafeERC20",
-                "similarity": 0.607,
-                "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
-                "repository": "OpenZeppelin/openzeppelin-contracts",
-                "path": "contracts/token/ERC20/utils/SafeERC20.sol",
-                "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
-                "commitTimestamp": "2023-04-21T11:35:07Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/token/ERC20/utils/SafeERC20.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "initial audit",
-                "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+                "similarity": 0.779,
+                "reportId": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+                "repository": "code-423n4/2023-03-zksync",
+                "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+                "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+                "commitTimestamp": "2023-03-10T20:57:33Z",
+                "url": "https://github.com/code-423n4/2023-03-zksync/blob/21d9a364a4a75adfa6f1e038232d8c0f39858a64/contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "contest audit",
+                "coverage": "One of the 40 contest-scope files (2,418 SLOC) listed in the contest repository README; code links in the report pin this commit.",
                 "majorFindings": 0,
-                "isLatestVersion": false,
-                "laterAuditedVersionExists": true,
-                "totalVersions": 10
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 8,
-                "removed": 34,
-                "ignoredAdded": 5,
-                "ignoredRemoved": 43,
-                "unchanged": 53,
+                "added": 4,
+                "removed": 21,
+                "ignoredAdded": 4,
+                "ignoredRemoved": 3,
+                "unchanged": 57,
                 "ignoredOnly": false
               },
               "warnings": []

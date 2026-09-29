@@ -37,7 +37,6 @@ export async function getAuditsProjectDetails(
       address: contract.address,
       chain: contract.chain,
       template: contract.template,
-      zk: contract.zk,
       noSource: contract.noSource,
       coverage: toCoverageNumbers(contract.summary),
       files: contract.files.map((file) => ({

@@ -17,7 +17,6 @@ import type { Collection } from './dataset/read.js'
 import type { AuditReport } from './dataset/types.js'
 import type { Formatter } from './deployed/format.js'
 import { readDeployedProject } from './deployed/read.js'
-import { listZkSourceFiles, readZkSources } from './deployed/zk.js'
 import { buildUnitDiff } from './diffing/diff.js'
 import { countLines } from './diffing/normalize.js'
 import type { EvidenceIndex } from './evidence/index.js'
@@ -30,14 +29,14 @@ export interface GenerateOptions {
   projectId: string
   /** `packages/config/src/projects`. */
   projectsDir: string
-  /** `.cache/zk`, synchronized from project config by the CLI. */
-  zkCacheDir: string
   evidence: EvidenceIndex
   store: UnitStore
   formatter: Formatter
   collectionHints: Record<string, string | string[]>
   config?: ProjectConfig
   allContracts?: boolean
+  /** Ossification perimeter; every contract is read when absent. */
+  criticalAddresses?: string[]
   datasetRevision?: string
   /** Base URL of the dataset repository, used to link audit report files. */
   datasetRepoUrl?: string
@@ -51,6 +50,7 @@ export function generateProject(
   const { evidence, store } = options
   const deployed = readDeployedProject(options.projectsDir, options.projectId, {
     allContracts: options.allContracts,
+    criticalAddresses: options.criticalAddresses,
   })
   const context = buildContext(evidence, {
     projectId: options.projectId,
@@ -75,7 +75,6 @@ export function generateProject(
   function resolvePrepared(
     unit: PreparedUnit,
     ownerName: string,
-    repoPath?: string,
   ): UnitResolution {
     const cacheKey = `${unit.unitHash}|${context.key}`
     let resolution = resolvedInRun.get(cacheKey)
@@ -84,7 +83,7 @@ export function generateProject(
       if (!resolution) {
         resolution = classify(
           unit,
-          resolveUnit(unit, evidence, context, repoPath),
+          resolveUnit(unit, evidence, context),
           context,
           evidence,
         )
@@ -189,43 +188,6 @@ export function generateProject(
       files,
     }
   })
-
-  // zk programs synchronized from config; one whole-file unit per source,
-  // matched by identity or by repository path suffix.
-  for (const entry of readZkSources(options.zkCacheDir, options.projectId)) {
-    const [chain, address] = entry.address?.includes(':')
-      ? (entry.address.split(':') as [string, string])
-      : ['', entry.address ?? '']
-    const files: SourceFileCoverage[] = listZkSourceFiles(
-      options.zkCacheDir,
-      options.projectId,
-      entry,
-    ).map((file) => {
-      const content = readFileSync(file.file, 'utf8')
-      const units = prepareFile(path.basename(file.file), content)
-      return {
-        path: file.relativePath,
-        role: 'program' as const,
-        lines: countLines(content),
-        units: units.map((unit) =>
-          toRef(unit, resolvePrepared(unit, entry.name, file.repoPath)),
-        ),
-      }
-    })
-    contracts.push({
-      name: entry.name,
-      address,
-      chain,
-      zk: { type: entry.type, link: entry.link, commit: entry.commit },
-      noSource: files.length === 0,
-      summary: summarize(
-        files.flatMap((f) => f.units),
-        1,
-        files.length === 0 ? 1 : 0,
-      ),
-      files,
-    })
-  }
 
   const allUnits = contracts.flatMap((c) => c.files.flatMap((f) => f.units))
   return {

@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "ethscriptions",
   "slug": "ethscriptions",
-  "generatedAt": 1789730748,
-  "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
+  "generatedAt": 1790675698,
+  "datasetRevision": "546e6ed7055954eaf185d121d9e307b64ed77511-dirty",
   "discoveryTimestamp": 1769601454,
   "contractSelection": "all",
   "context": {
@@ -88,24 +88,24 @@
     ]
   },
   "summary": {
-    "contracts": 10,
+    "contracts": 8,
     "contractsWithoutSource": 0,
     "units": {
       "identical": 2,
       "library": 46,
       "differs": 15,
-      "unaudited": 44
+      "unaudited": 40
     },
     "uniqueUnits": {
       "identical": 2,
       "library": 37,
       "differs": 10,
-      "unaudited": 26
+      "unaudited": 22
     },
     "lines": {
-      "total": 16932,
+      "total": 16755,
       "covered": 7855,
-      "uncovered": 9077
+      "uncovered": 8900
     }
   },
   "reportIds": [
@@ -812,7 +812,10 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": ["C02", "C04"],
+                "findingIds": [
+                  "C02",
+                  "C04"
+                ],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1103,7 +1106,9 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": ["kind-mismatch"]
+              "warnings": [
+                "kind-mismatch"
+              ]
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",
@@ -3415,150 +3420,6 @@
                 "unchanged": 134,
                 "ignoredOnly": false
               },
-              "warnings": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Aggregation program of Ethscriptions ZK Fault Proofs",
-      "address": "",
-      "chain": "",
-      "zk": {
-        "type": "program",
-        "link": "https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/aggregation",
-        "commit": "251c5248cf92b544a3e6b1b4c0b98b0146dab1c6"
-      },
-      "noSource": false,
-      "summary": {
-        "contracts": 1,
-        "contractsWithoutSource": 0,
-        "units": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "uniqueUnits": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "lines": {
-          "total": 118,
-          "covered": 0,
-          "uncovered": 118
-        }
-      },
-      "files": [
-        {
-          "path": "ethscriptions/program-Aggregation_program_of_Ethscriptions_ZK_Fault_Proofs-5cc8989a/Cargo.toml",
-          "role": "program",
-          "lines": 20,
-          "units": [
-            {
-              "unitHash": "8b9f6584e9a73531d0299949b64622696eece22ef64ee30958349b4f82fcf5c1",
-              "contextKey": "eea968a44e5d263a",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 19,
-              "lines": 19,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "ethscriptions/program-Aggregation_program_of_Ethscriptions_ZK_Fault_Proofs-5cc8989a/src/main.rs",
-          "role": "program",
-          "lines": 100,
-          "units": [
-            {
-              "unitHash": "2d006dcc09db3e82027239763d91383ff1cd2727603accdf71f6acc030a0f41f",
-              "contextKey": "eea968a44e5d263a",
-              "name": "main.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 99,
-              "lines": 99,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Range program of Ethscriptions ZK Fault Proofs",
-      "address": "",
-      "chain": "",
-      "zk": {
-        "type": "program",
-        "link": "https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/range/ethereum",
-        "commit": "251c5248cf92b544a3e6b1b4c0b98b0146dab1c6"
-      },
-      "noSource": false,
-      "summary": {
-        "contracts": 1,
-        "contractsWithoutSource": 0,
-        "units": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "uniqueUnits": {
-          "identical": 0,
-          "library": 0,
-          "differs": 0,
-          "unaudited": 2
-        },
-        "lines": {
-          "total": 59,
-          "covered": 0,
-          "uncovered": 59
-        }
-      },
-      "files": [
-        {
-          "path": "ethscriptions/program-Range_program_of_Ethscriptions_ZK_Fault_Proofs-30b7b884/Cargo.toml",
-          "role": "program",
-          "lines": 30,
-          "units": [
-            {
-              "unitHash": "ca195a8bd2cbc33bacccaeabac4309f510edf6baae9723163d0514b91ad9e504",
-              "contextKey": "eea968a44e5d263a",
-              "name": "Cargo.toml",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 29,
-              "lines": 29,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
-            }
-          ]
-        },
-        {
-          "path": "ethscriptions/program-Range_program_of_Ethscriptions_ZK_Fault_Proofs-30b7b884/src/main.rs",
-          "role": "program",
-          "lines": 31,
-          "units": [
-            {
-              "unitHash": "83297516802499cec7b4feac0bd97e7a9f914997f6f7c1a89b3f8e32d1addb68",
-              "contextKey": "eea968a44e5d263a",
-              "name": "main.rs",
-              "kind": "program",
-              "startLine": 1,
-              "endLine": 30,
-              "lines": 30,
-              "status": "unaudited",
-              "coveredLines": 0,
               "warnings": []
             }
           ]

@@ -19,11 +19,10 @@ pnpm --filter @l2beat/audit-diff generate --dataset ~/Documents/repos/audit-data
 pnpm --filter @l2beat/audit-diff cli gc --out <dir>
 ```
 
-`generate` reads each project's ZK program declarations from the config
-database and caches their source trees automatically. Verifier sources are
-temporarily excluded from this prototype. Run `fetch-zk`
-explicitly only to force-refresh cached trees whose configured GitHub URL has
-not changed.
+Contract selection follows the config database (`pnpm --filter @l2beat/config build`): for
+projects with ossification configured only the contracts of the current critical perimeter are
+compared (`contractSelection: "critical"`), every other project compares all its contracts.
+`--all-contracts` forces all contracts. ZK programs and verifiers are not compared.
 
 Requires Foundry (`forge fmt`) to format deployed sources with the dataset's `foundry.toml`;
 without it the comparison still works but diffs may show style differences.

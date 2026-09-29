@@ -1,6 +1,33 @@
 {
   "schemaVersion": 2,
   "reports": {
+    "arbitrum/consensys-arbitrum-core-token-bridge-2021-11": {
+      "id": "arbitrum/consensys-arbitrum-core-token-bridge-2021-11",
+      "collection": "arbitrum",
+      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
+      "auditor": "ConsenSys Diligence",
+      "reportDate": "2021-11-05",
+      "reportFile": "2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
+    },
+    "arbitrum/trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03": {
+      "id": "arbitrum/trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03",
+      "collection": "arbitrum",
+      "title": "Offchain Labs Custom Fee ERC-20 Bridge Upgrade and EIP-7702 Fixes Summary Report (Trail of Bits, March 2025)",
+      "auditor": "Trail of Bits",
+      "reportDate": "2025-03-31",
+      "reportFile": "2025-03-offchain-custom-fee-erc20-bridge-securityreview.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/arbitrum/reports/2025-03-offchain-custom-fee-erc20-bridge-securityreview.pdf"
+    },
+    "arbitrum/trailofbits-custom-fee-token-2024-08": {
+      "id": "arbitrum/trailofbits-custom-fee-token-2024-08",
+      "collection": "arbitrum",
+      "title": "Offchain Labs Custom Fee Token Security Assessment Summary Report (Trail of Bits, 2023)",
+      "auditor": "Trail of Bits",
+      "reportDate": "2024-08-01",
+      "reportFile": "2024-08-offchain-labs-custom-fee-token-securityreview.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/arbitrum/reports/2024-08-offchain-labs-custom-fee-token-securityreview.pdf"
+    },
     "aztecnetwork/cantina-coinissuer-2025-11-12": {
       "id": "aztecnetwork/cantina-coinissuer-2025-11-12",
       "collection": "aztecnetwork",
@@ -1161,6 +1188,33 @@
       "reportDate": "2021-03-12",
       "reportFile": "audit.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/uniswapv3/reports/audit.pdf"
+    },
+    "zksync2/code4rena-zksync-era-2023-10": {
+      "id": "zksync2/code4rena-zksync-era-2023-10",
+      "collection": "zksync2",
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "reportDate": "2024-02-29",
+      "reportFile": "2023_10-code4rena-zksync-era.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "zksync2/code4rena-zksync-era-system-contracts-2023-03": {
+      "id": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+      "collection": "zksync2",
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "reportDate": "2023-06-14",
+      "reportFile": "2023_03-code4rena-zksync-era-system-contracts.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
+    "zksync2/codehawks-zksync-era-2024-10": {
+      "id": "zksync2/codehawks-zksync-era-2024-10",
+      "collection": "zksync2",
+      "title": "ZKsync Era CodeHawks Competitive Audit Report",
+      "auditor": "CodeHawks",
+      "reportDate": "2024-12-02",
+      "reportFile": "2024_10-codehawks-zksync-era.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/zksync2/reports/2024_10-codehawks-zksync-era.html"
     }
   }
 }

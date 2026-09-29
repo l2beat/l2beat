@@ -1,9 +1,19 @@
 {
   "schemaVersion": 2,
   "collections": {
+    "arbitrum": {
+      "id": "arbitrum",
+      "name": "arbitrum",
+      "kind": "project"
+    },
     "aztecnetwork": {
       "id": "aztecnetwork",
       "name": "aztecnetwork",
+      "kind": "project"
+    },
+    "base": {
+      "id": "base",
+      "name": "base",
       "kind": "project"
     },
     "bob": {
@@ -99,6 +109,11 @@
     "uniswapv3": {
       "id": "uniswapv3",
       "name": "uniswapv3",
+      "kind": "project"
+    },
+    "zksync2": {
+      "id": "zksync2",
+      "name": "zksync2",
       "kind": "project"
     }
   }
