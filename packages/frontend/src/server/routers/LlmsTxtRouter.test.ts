@@ -53,7 +53,7 @@ describe(createLlmsTxtRouter.name, () => {
   it('links every markdown alternate the site serves, and no other', async () => {
     const urls = getAllLinks(await getLlmsTxt())
       .map((l) => l.url)
-      .filter((url) => url.endsWith('.md') && !url.includes('{slug}'))
+      .filter((url) => url.endsWith('.md') && !isUrlTemplate(url))
 
     const registered = getRegisteredPaths(createMarkdownAlternatesRouter()).map(
       (path) => `https://l2beat.com${path}`,
@@ -66,7 +66,10 @@ describe(createLlmsTxtRouter.name, () => {
       (l) => l.url,
     )
 
-    expect(urls).toEqual(['https://l2beat.com/layer2s/projects/{slug}.md'])
+    expect(urls).toEqual([
+      'https://l2beat.com/layer2s/projects/{slug}.md',
+      'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
+    ])
   })
 
   it('stays small enough to fit in context, with project lists behind links', async () => {
@@ -146,6 +149,11 @@ function parseLink(line: string) {
   const match = line.match(/^- \[(.+?)\]\((.+?)\): (.*)$/)
   expect(match).not.toEqual(null)
   return { url: match?.[2] ?? '', description: match?.[3] ?? '' }
+}
+
+/** Paths like /layer2s/projects/{slug}.md stand for many pages, not one route. */
+function isUrlTemplate(url: string) {
+  return /\{\w+\}/.test(url)
 }
 
 function getRegisteredPaths(router: express.Router) {

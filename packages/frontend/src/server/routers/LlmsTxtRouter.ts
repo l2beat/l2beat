@@ -313,6 +313,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
+    {
+      name: 'Data availability project',
+      path: '/data-availability/projects/{layer}/{bridge}.md',
+      description:
+        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. Every valid {layer}/{bridge} pair is listed in /data-availability/summary.md.',
+    },
   ],
 }
 

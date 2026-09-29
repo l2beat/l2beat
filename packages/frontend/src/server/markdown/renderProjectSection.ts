@@ -3,11 +3,14 @@ import type {
   TechnologyContract,
   TechnologyContractAddress,
 } from '~/components/projects/sections/ContractEntry'
+import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
+import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import type {
   ProjectDetailsSection,
   ProjectSectionId,
 } from '~/components/projects/sections/types'
+import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { RosetteValue } from '~/components/rosette/types'
 import {
   bulletList,
@@ -67,17 +70,40 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   RiskSummarySection: (props, level) =>
     joinBlocks([
       renderWarnings(props.redWarning?.text, props.warning),
-      ...props.riskGroups.map((group) =>
-        subsection(
-          level,
-          group.name,
-          numberedList(
-            group.items.map((item) => markCritical(item.text, item.isCritical)),
-            group.start,
-          ),
-        ),
-      ),
+      renderRiskGroups(props.riskGroups, level),
     ]),
+  DaRiskSummarySection: (props, level) => {
+    const { layer, bridge } = props
+    const bridgeTitle = `${bridge.name}${bridge.name === layer.name ? ' bridge' : ''} risks`
+    return joinBlocks([
+      renderWarnings(
+        props.isVerified === false
+          ? 'This project includes unverified contracts.'
+          : undefined,
+        props.redWarning?.text,
+        props.warning,
+      ),
+      subsection(
+        level,
+        `${layer.name} risks`,
+        renderRiskGroups(layer.risks, level + 1),
+      ),
+      bridge.risks.length > 0
+        ? subsection(
+            level,
+            bridgeTitle,
+            joinBlocks([
+              renderWarnings(
+                bridge.isVerified
+                  ? undefined
+                  : 'This bridge includes unverified contracts.',
+              ),
+              renderRiskGroups(bridge.risks, level + 1),
+            ]),
+          )
+        : '',
+    ])
+  },
   RiskAnalysisSection: (props, level) =>
     joinBlocks([
       renderWarnings(props.redWarning?.text, props.warning),
@@ -97,6 +123,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       nestHeadings(props.description ?? '', level),
       renderRiskValues(props.layerGrissiniValues ?? [], level),
       renderRiskValues(props.bridgeGrissiniValues ?? [], level),
+      props.isNoBridge ? renderRiskValues([NO_BRIDGE_RISK], level) : '',
     ]),
   Group: (props, level, context) =>
     joinBlocks([
@@ -200,9 +227,10 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
         ]),
       ),
     ),
-  PermissionsSection: ({ permissionsByChain }, level) =>
-    joinBlocks(
-      Object.entries(permissionsByChain).map(([chain, permissions]) =>
+  PermissionsSection: ({ permissionsByChain, permissionedEntities }, level) =>
+    joinBlocks([
+      renderCommitteeMembers(permissionedEntities ?? []),
+      ...Object.entries(permissionsByChain).map(([chain, permissions]) =>
         subsection(
           level,
           chain,
@@ -228,7 +256,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ]),
         ),
       ),
-    ),
+    ]),
   ContractsSection: (props, level) =>
     joinBlocks([
       ...Object.entries(props.contracts).map(([chain, contracts]) =>
@@ -247,7 +275,6 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     ]),
   ActivitySection: linkToHtmlPage,
   CostsSection: linkToHtmlPage,
-  DaRiskSummarySection: linkToHtmlPage,
   DataPostedSection: linkToHtmlPage,
   ExternalDependenciesSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
@@ -308,6 +335,21 @@ function renderContractAddress(address: TechnologyContractAddress) {
   return `${link(address.address, address.href)}${suffix}`
 }
 
+function renderRiskGroups(groups: RiskGroup[], level: number) {
+  return joinBlocks(
+    groups.map((group) =>
+      subsection(
+        level,
+        group.name,
+        numberedList(
+          group.items.map((item) => markCritical(item.text, item.isCritical)),
+          group.start,
+        ),
+      ),
+    ),
+  )
+}
+
 function renderRiskValues(values: RosetteValue[], level: number) {
   return joinBlocks(
     values.map((risk) =>
@@ -318,6 +360,24 @@ function renderRiskValues(values: RosetteValue[], level: number) {
       ]),
     ),
   )
+}
+
+type PermissionedEntity = NonNullable<
+  PermissionsSectionProps['permissionedEntities']
+>[number]
+
+/** Known DA committee members, which the HTML page lists above the permissions. */
+function renderCommitteeMembers(members: PermissionedEntity[]) {
+  if (members.length === 0) return ''
+  return joinBlocks([
+    'The DA committee has the following members:',
+    bulletList(
+      members.map((member) => {
+        const key = member.key ? ` (key: ${member.key})` : ''
+        return `${link(member.name, member.href)}${key}`
+      }),
+    ),
+  ])
 }
 
 function renderMilestone(milestone: Milestone) {
