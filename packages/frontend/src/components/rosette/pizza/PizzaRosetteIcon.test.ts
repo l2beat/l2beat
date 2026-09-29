@@ -58,6 +58,20 @@ describe(PizzaRosetteIcon.name, () => {
     expect(html).toInclude('Sequencer failure: Self sequence, under review;')
     expect(html).toInclude('Exit window: None, under review;')
   })
+
+  it('labels slice links as under review when the rosette is greyed out', () => {
+    const [first, ...rest] = VALUES
+    const html = renderToStaticMarkup(
+      createElement(PizzaRosetteIcon, {
+        values: [{ ...first!, href: '#sequencer' }, ...rest],
+        isUnderReview: true,
+      }),
+    )
+
+    expect(html).toInclude(
+      'aria-label="Sequencer failure: Self sequence, under review"',
+    )
+  })
 })
 
 function getAttribute(html: string, name: string): string {

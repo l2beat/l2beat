@@ -5,11 +5,13 @@ export function PizzaElementLink({
   elementValue,
   children,
   disableSectionLinking,
-  label = describeRisks([elementValue]),
+  isUnderReview,
+  label = describeRisks([elementValue], isUnderReview),
 }: {
   elementValue: RosetteValue
   children: React.ReactNode
   disableSectionLinking?: boolean
+  isUnderReview?: boolean
   label?: string
 }) {
   if (disableSectionLinking || !elementValue.href) return children

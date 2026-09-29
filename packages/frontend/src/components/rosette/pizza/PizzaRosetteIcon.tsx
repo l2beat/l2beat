@@ -88,6 +88,7 @@ export function PizzaRosetteIcon({
           <PizzaElementLink
             elementValue={first}
             disableSectionLinking={disableSectionLinking}
+            isUnderReview={isUnderReview}
           >
             <path
               d="M80.12 98.19c2.588-.81 5.216 1.134 5.196 3.846l-.462 64.729c-.016 2.36-2.054 4.166-4.38 3.764-7.945-1.375-25.223-5.332-38.594-15.226-14.548-10.764-22.781-25.635-26.054-32.574-.978-2.071.16-4.429 2.346-5.114z"
@@ -107,6 +108,7 @@ export function PizzaRosetteIcon({
           <PizzaElementLink
             elementValue={second}
             disableSectionLinking={disableSectionLinking}
+            isUnderReview={isUnderReview}
           >
             <path
               d="M79.696 83.036c1.552 2.224.487 5.316-2.105 6.113l-62.438 19.198c-2.256.693-4.59-.708-4.907-3.047-1.087-8.039-2.532-25.874 2.934-41.748 5.947-17.271 17.77-29.704 23.44-34.94 1.681-1.555 4.274-1.179 5.584.7z"
@@ -126,6 +128,7 @@ export function PizzaRosetteIcon({
           <PizzaElementLink
             elementValue={third}
             disableSectionLinking={disableSectionLinking}
+            isUnderReview={isUnderReview}
           >
             <path
               d="M93.348 76.656c-1.598 2.192-4.867 2.192-6.465 0l-38.13-52.307c-1.391-1.908-.828-4.571 1.281-5.631C57.24 15.097 73.481 8 90.115 8c18.097 0 33.561 7.056 40.32 10.687 2.017 1.084 2.505 3.657 1.156 5.507z"
@@ -145,6 +148,7 @@ export function PizzaRosetteIcon({
           <PizzaElementLink
             elementValue={fourth}
             disableSectionLinking={disableSectionLinking}
+            isUnderReview={isUnderReview}
           >
             <path
               d="M102.815 89.056c-2.563-.887-3.519-4.014-1.89-6.182l38.873-51.758c1.418-1.888 4.13-2.128 5.76-.42 5.57 5.83 17.105 19.288 21.968 35.195 5.291 17.307 3.064 34.158 1.568 41.683-.446 2.246-2.764 3.465-4.928 2.716z"
@@ -164,6 +168,7 @@ export function PizzaRosetteIcon({
           <PizzaElementLink
             elementValue={fifth}
             disableSectionLinking={disableSectionLinking}
+            isUnderReview={isUnderReview}
           >
             <path
               d="M95.889 101.938c.028-2.712 2.69-4.61 5.262-3.754l61.419 20.441c2.239.746 3.327 3.241 2.226 5.329-3.763 7.132-12.865 22.341-26.407 32.001-14.733 10.509-31.42 13.744-39.03 14.713-2.273.289-4.164-1.522-4.14-3.812z"
