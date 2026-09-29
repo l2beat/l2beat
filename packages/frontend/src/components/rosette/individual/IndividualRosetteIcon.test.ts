@@ -26,6 +26,22 @@ describe(IndividualPizzaRosetteIcon.name, () => {
     )
     expect(html).toInclude('Proposer failure: Self propose, bad</desc>')
   })
+
+  it('names both rings in each slice link', () => {
+    const l3Risks = risks('bad')
+    l3Risks[0] = { ...l3Risks[0], href: '#sequencer' }
+    const html = renderToStaticMarkup(
+      createElement(IndividualPizzaRosetteIcon, {
+        l2: { name: 'Base', risks: risks('good') },
+        l3: { name: 'Degen', risks: l3Risks },
+      }),
+    )
+
+    expect(html).toInclude(
+      'aria-label="Base: Sequencer failure: Self sequence, good; ' +
+        'Degen: Sequencer failure: Self sequence, bad"',
+    )
+  })
 })
 
 function risks(sentiment: RosetteValue['sentiment']): RosetteValueTuple {

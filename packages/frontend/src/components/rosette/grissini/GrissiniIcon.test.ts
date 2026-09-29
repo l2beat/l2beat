@@ -33,4 +33,12 @@ describe(GrissiniIcon.name, () => {
     expect(html).toInclude('<span class="sr-only">No bridge</span>')
     expect(html).not.toInclude('under review')
   })
+
+  it('prefixes the summary with the group label', () => {
+    const html = renderToStaticMarkup(
+      createElement(GrissiniIcon, { values: [], label: 'DA bridge' }),
+    )
+
+    expect(html).toInclude('<span class="sr-only">DA bridge: No bridge</span>')
+  })
 })

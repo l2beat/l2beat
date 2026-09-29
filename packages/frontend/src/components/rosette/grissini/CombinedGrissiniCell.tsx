@@ -18,8 +18,8 @@ export function CombinedGrissiniCell({ daLayerRisks, daBridgeRisks }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex size-full items-center justify-center gap-2">
-        <GrissiniIcon values={daLayerRisks} />
-        <GrissiniIcon values={daBridgeRisks} />
+        <GrissiniIcon values={daLayerRisks} label="DA layer" />
+        <GrissiniIcon values={daBridgeRisks} label="DA bridge" />
       </TooltipTrigger>
       <TooltipContent className="space-y-4">
         <p className="font-bold">DA Risks</p>

@@ -69,6 +69,11 @@ export function IndividualPizzaRosetteIcon({
   useOnClickOutside(svgRef, () => setContent?.(undefined))
   useEventListener('scroll', () => setContent?.(undefined))
 
+  // Each slice link covers the L2 and the L3 ring, so it names both risks.
+  const describeSlice = (inner: RosetteValue, outer: RosetteValue) =>
+    `${l2.name}: ${describeRisks([inner], isUnderReview)}; ` +
+    `${l3.name}: ${describeRisks([outer], isUnderReview)}`
+
   const selectRisk = (
     inner: RosetteValue,
     outer: RosetteValue,
@@ -128,6 +133,7 @@ export function IndividualPizzaRosetteIcon({
         <g clipPath="url(#inner-clip)">
           <PizzaElementLink
             elementValue={outerSequencerFailure}
+            label={describeSlice(innerSequencerFailure, outerSequencerFailure)}
             disableSectionLinking={disableSectionLinking}
           >
             <g
@@ -179,6 +185,7 @@ export function IndividualPizzaRosetteIcon({
 
           <PizzaElementLink
             elementValue={outerProposeFailure}
+            label={describeSlice(innerProposeFailure, outerProposeFailure)}
             disableSectionLinking={disableSectionLinking}
           >
             <g
@@ -222,6 +229,7 @@ export function IndividualPizzaRosetteIcon({
 
           <PizzaElementLink
             elementValue={outerExitWindow}
+            label={describeSlice(innerExitWindow, outerExitWindow)}
             disableSectionLinking={disableSectionLinking}
           >
             <g
@@ -262,6 +270,7 @@ export function IndividualPizzaRosetteIcon({
 
           <PizzaElementLink
             elementValue={outerDataAvailability}
+            label={describeSlice(innerDataAvailability, outerDataAvailability)}
             disableSectionLinking={disableSectionLinking}
           >
             <g
@@ -306,6 +315,7 @@ export function IndividualPizzaRosetteIcon({
 
           <PizzaElementLink
             elementValue={outerStateValidation}
+            label={describeSlice(innerStateValidation, outerStateValidation)}
             disableSectionLinking={disableSectionLinking}
           >
             <g

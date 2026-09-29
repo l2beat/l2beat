@@ -6,12 +6,14 @@ import { GrissiniStick } from './GrissiniStick'
 interface Props {
   values: RosetteValue[]
   className?: string
+  /** Names the risk group when several icons share one trigger. */
+  label?: string
 }
 
 const EMPTY: RosetteValue = { name: '', value: '' }
 const EMPTY_GRISSINI = [EMPTY, EMPTY, EMPTY]
 
-export function GrissiniIcon({ values, className }: Props) {
+export function GrissiniIcon({ values, className, label }: Props) {
   const hasNoBridge = values.length === 0
   const display = hasNoBridge ? EMPTY_GRISSINI : values
 
@@ -31,6 +33,7 @@ export function GrissiniIcon({ values, className }: Props) {
         />
       ))}
       <span className="sr-only">
+        {label && `${label}: `}
         {hasNoBridge ? 'No bridge' : describeRisks(values)}
       </span>
       {hasNoBridge && (
