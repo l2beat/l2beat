@@ -91,7 +91,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
+              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2."
             }
           ]
         }

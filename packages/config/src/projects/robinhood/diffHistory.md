@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xcfdcc7d3550444ce1b67937088ab534aef728509
+
+# Diff at Tue, 29 Sep 2026 16:19:36 GMT:
+
+- id: 195ac3de
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790671700
+- current timestamp: 1790698707
+
+## Description
+
+Config: chain-owner permission description no longer hardcodes a delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    EOA (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      directlyReceivedPermissions.2.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [orbitstack/layer2/ResourceConstraintManager] {
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    EOA (robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
 Generated with discovered.json: 0xc9e6bbc805a39054c1a1cd82732f1a47f655d41f
 
 # Diff at Tue, 29 Sep 2026 09:01:45 GMT:

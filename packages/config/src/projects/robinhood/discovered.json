@@ -1,6 +1,6 @@
 {
   "name": "robinhood",
-  "timestamp": 1790671700,
+  "timestamp": 1790698707,
   "configHash": "0x2bc7641a43c2ca72886d36455a7798e7513549df46582894d44d2bf4af11b818",
   "entries": [
     {
@@ -216,7 +216,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x49ffad5df95b6c30e34aea084c2783e9934455d703284ed2bae7b309c705eb3f",
+        "latestConfirmed": "0xeff0259be812709fb7849430330878790febab43e28d7081dae667102a1c15af",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -751,7 +751,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 289210,
+        "batchCount": 290286,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -790,7 +790,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 332062,
+        "totalDelayedMessagesRead": 333220,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -871,7 +871,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2056213109158101210345235"
+        "totalSupply": "2051403679307868404272302"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -978,7 +978,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 332081,
+        "delayedMessageCount": 333254,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -986,8 +986,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 289210,
-        "sequencerReportedSubMessageCount": 75524663
+        "sequencerMessageCount": 290286,
+        "sequencerReportedSubMessageCount": 75793445
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -2808,8 +2808,8 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "ethereum": 26082026, "robinhood": 75525166 },
-  "permissionsConfigHash": "0xf7d5f55d682ca279c750019a5eff1c489dad2440f7c62b653023dac928e85859",
+  "usedBlockNumbers": { "ethereum": 26084271, "robinhood": 75793717 },
+  "permissionsConfigHash": "0x2ed26f67a6b46948e4e34ae069b33400620c0c93588baabe74a2dece00640a6d",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
       "directlyReceivedPermissions": [
@@ -3234,7 +3234,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2.",
           "role": ".chainOwners",
           "via": [
             {
@@ -3338,7 +3338,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2.",
           "role": ".chainOwners"
         },
         {
@@ -3395,7 +3395,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2.",
           "role": ".chainOwners"
         }
       ]
@@ -3405,7 +3405,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2.",
           "role": ".chainOwners",
           "via": [
             {
@@ -3473,7 +3473,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2.",
           "role": ".chainOwners",
           "via": [
             {
