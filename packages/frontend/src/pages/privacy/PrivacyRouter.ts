@@ -1,11 +1,18 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import { getPrivacyProjectData } from './project/getPrivacyProjectData'
+import {
+  getPrivacyProjectData,
+  getPrivacyProjectMarkdown,
+} from './project/getPrivacyProjectData'
 import { getPrivacySummaryData } from './summary/getPrivacySummaryData'
 
 export function createPrivacyRouter(
@@ -32,17 +39,27 @@ export function createPrivacyRouter(
     res.status(200).send(html)
   })
 
+  const getProjectMarkdown = (req: Request<{ slug: string }>) =>
+    getPrivacyProjectMarkdown(req.params.slug, manifest, cache)
+
+  // Before `:slug`, which would otherwise take "tornado-cash.md" as the slug.
+  router.get(
+    '/privacy/projects/:slug.md',
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdown(getProjectMarkdown),
+  )
+
   router.get(
     '/privacy/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
+    serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
       const data = await getPrivacyProjectData(
         manifest,
         req.params.slug,
-        req.originalUrl,
         cache,
         req.query.update,
       )

@@ -21,6 +21,10 @@ import {
   warning,
   withSentiment,
 } from './markdown'
+import {
+  renderPrivacyAdversaries,
+  renderPrivacyAssetsBreakdown,
+} from './renderPrivacySections'
 
 export interface SectionContext {
   /** Absolute URL of the HTML page, for sections markdown cannot express. */
@@ -261,9 +265,9 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   InteropVolumeSection: linkToHtmlPage,
   L2TvsSection: linkToHtmlPage,
   LivenessSection: linkToHtmlPage,
-  PrivacyAdversariesSection: linkToHtmlPage,
+  PrivacyAdversariesSection: renderPrivacyAdversaries,
   PrivacyAnonymitySetSection: linkToHtmlPage,
-  PrivacyAssetsBreakdownSection: linkToHtmlPage,
+  PrivacyAssetsBreakdownSection: renderPrivacyAssetsBreakdown,
   PrivacyFlowsSection: linkToHtmlPage,
   ProgramHashesSection: linkToHtmlPage,
   ThroughputSection: linkToHtmlPage,

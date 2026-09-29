@@ -1,4 +1,10 @@
 import type { Sentiment } from '@l2beat/config'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import {
+  COMPARISON_PERIOD_LABELS,
+  formatPercent,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 
 /** Separates blocks with a blank line and drops empty ones, so an optional part is just '' when absent. */
 export function joinBlocks(blocks: string[]) {
@@ -26,6 +32,14 @@ export function numberedList(items: string[], start = 1) {
   return items.map((item, i) => `${start + i}. ${item}`).join('\n')
 }
 
+export function table(header: string[], rows: string[][]) {
+  const line = (cells: string[]) =>
+    `| ${cells.map((cell) => cell.replaceAll('|', '\\|')).join(' | ')} |`
+  return [line(header), line(header.map(() => '---')), ...rows.map(line)].join(
+    '\n',
+  )
+}
+
 export function link(name: string, url: string) {
   return `[${name}](${url})`
 }
@@ -36,6 +50,25 @@ export function warning(text: string) {
 
 export function withSentiment(value: string, sentiment: Sentiment | undefined) {
   return sentiment ? `${value} (sentiment: ${sentiment})` : value
+}
+
+/** The percentage change as the HTML shows it, with the tooltip's period spelled out. */
+export function formatChange(change: number, period: PercentageChangePeriod) {
+  const sign = change > 0 ? '+' : change < 0 ? '-' : ''
+  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARISON_PERIOD_LABELS[period]}`
+}
+
+/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
+function withRegularSpaces(text: string) {
+  return text.replaceAll('\u200A', ' ')
+}
+
+export function formatUsd(value: number) {
+  return withRegularSpaces(formatCurrency(value, 'usd'))
+}
+
+export function formatCount(value: number) {
+  return withRegularSpaces(formatInteger(value))
 }
 
 /** Same marker placement as the HTML risk lists: before the closing punctuation. */

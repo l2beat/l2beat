@@ -1,17 +1,9 @@
-import {
-  formatActivityCount,
-  formatCurrency,
-  pluralize,
-} from '@l2beat/shared-pure'
+import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import { formatChange, formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
-import {
-  COMPARISON_PERIOD_LABELS,
-  formatPercent,
-  type PercentageChangePeriod,
-} from '~/utils/calculatePercentageChange'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
@@ -80,14 +72,4 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
       value: String(header.chainId),
     },
   ])
-}
-
-function formatChange(change: number, period: PercentageChangePeriod) {
-  const sign = change > 0 ? '+' : change < 0 ? '-' : ''
-  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARISON_PERIOD_LABELS[period]}`
-}
-
-/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function formatUsd(value: number) {
-  return formatCurrency(value, 'usd').replaceAll('\u200A', ' ')
 }

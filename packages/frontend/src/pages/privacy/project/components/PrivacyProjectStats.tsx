@@ -5,22 +5,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-
-const RELAYER_STAT_COPY: Record<
-  PrivacyRelayerStat['kind'],
-  { title: string; tooltip: string }
-> = {
-  activeRelayers: {
-    title: 'Active Relayers 30D',
-    tooltip:
-      'The number of unique relayer addresses observed in relayed withdrawals over the past 30 days.',
-  },
-  avgDailyRelayers: {
-    title: 'Avg. Relayers 30D',
-    tooltip:
-      'The average number of unique relayers seen advertising their services in daily network observations over the past 30 days.',
-  },
-}
+import { RELAYER_STAT_COPY } from './relayerStatCopy'
 
 interface Props {
   totalValueLockedUsd: number | undefined
