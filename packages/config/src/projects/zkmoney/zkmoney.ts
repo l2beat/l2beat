@@ -213,7 +213,7 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Every withdrawal and every refund needs a signature from a live enclave running the one approved image. Aztec Labs publishes that image, so anyone with an AWS account can run and register an enclave, but its build is not published. Exits depend on an AWS Nitro TEE, which is not freely available.',
+          'Every withdrawal and every refund needs a signature from a live enclave running the one approved image. Aztec Labs publishes that image, so anyone with an AWS account can run and register an enclave, but its build is not published. Exits depend on an AWS Nitro TEE, which is not freely available. Both released wallets also stop working without zk.money services, so users would need a modified desktop build.',
       },
     },
     // TODO: needs a published, reproducible build of the TEE image that matches
