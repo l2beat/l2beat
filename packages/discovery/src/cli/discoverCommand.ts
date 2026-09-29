@@ -91,25 +91,23 @@ export const DiscoverCommandArgs = {
 export const DiscoverCommand = command({
   name: 'discover',
   args: DiscoverCommandArgs,
-  handler: (args) => {
+  handler: async (args) => {
     const chainConfigs = getChainConfigs()
 
     const config: DiscoveryModuleConfig = { ...args }
 
-    discover(config, chainConfigs)
+    await discover(config, chainConfigs)
   },
 })
 
 export async function discover(
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[] = getChainConfigs(),
-  logger: Logger = Logger.DEBUG,
+  logger: Logger = configureLogger(Logger.DEBUG),
 ): Promise<void> {
   const http = new HttpClient()
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-
-  logger = configureLogger(logger)
 
   if (config.dryRun) {
     logger = logger.for('DryRun')

@@ -8,5 +8,11 @@
     "hash": "0xf39ce0e3dee7adb6cac97682bd2c0404b9b5ff3404e76be3a52cee40371f8c32",
     "address": "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63",
     "blockNumber": 24848194
+  },
+  "ZkEvmVerifierV1_v6_1_0": {
+    "hash": "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259",
+    "address": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692",
+    "chain": "ethereum",
+    "blockNumber": 25881038
   }
 }

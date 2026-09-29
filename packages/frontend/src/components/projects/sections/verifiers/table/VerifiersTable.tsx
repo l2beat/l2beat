@@ -20,7 +20,7 @@ interface Props {
   collapsible?: boolean
 }
 export function VerifiersTable({ entries, collapsible = true }: Props) {
-  const table = useTable({
+  const table = useTable('VerifiersTable', {
     data: entries,
     columns: collapsible ? verifiersColumns : verifiersColumnsWithoutActions,
     getCoreRowModel: getCoreRowModel(),

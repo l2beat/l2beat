@@ -1,6 +1,9 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
+  // Immutable, but its isSenderAllowed() runs on every L1 -> L2 enqueue, including
+  // forced transactions, so it sits on the censorship escape hatch.
+  "critical": true,
   "fields": {
     "whitelisted": {
       "handler": {

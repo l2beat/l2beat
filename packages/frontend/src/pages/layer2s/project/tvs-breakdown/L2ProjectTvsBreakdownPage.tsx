@@ -27,7 +27,6 @@ export function L2ProjectTvsBreakdownPage({
   project,
   dataTimestamp,
   entries,
-  project7dData,
   milestones,
   defaultRange,
   ...props

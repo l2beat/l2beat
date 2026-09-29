@@ -35,7 +35,7 @@ export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
     [ecosystemId],
   )
 
-  const table = useTable({
+  const table = useTable('EcosystemProjectsTable', {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),

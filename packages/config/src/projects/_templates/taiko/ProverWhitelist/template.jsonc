@@ -1,10 +1,20 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.",
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": ["whitelisted"],
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "resolver": {
+      "severity": "HIGH"
+    },
     "proverManager": {
       "handler": {
         "type": "hardcoded",

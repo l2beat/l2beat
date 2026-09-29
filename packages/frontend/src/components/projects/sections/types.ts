@@ -22,6 +22,8 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversariesSection'
+import type { PrivacyAnonymitySetSectionProps } from './privacy/PrivacyAnonymitySetSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
@@ -41,7 +43,7 @@ import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
-type SectionId =
+export type SectionId =
   | 'tvs'
   | 'activity'
   | 'onchain-costs'
@@ -76,10 +78,11 @@ type SectionId =
   | 'interop-protocols'
   | 'onchain-deployments'
   | 'privacy-tvl'
+  | 'privacy-anonymity-set'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'privacy-adversaries'
   | 'external-dependencies'
-  | 'note-discovery'
   | 'crops'
 
 type GroupId = 'da-layer' | 'da-bridge'
@@ -288,6 +291,16 @@ interface ProjectDetailsPrivacyFlowsSection {
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
 }
 
+interface ProjectDetailsPrivacyAnonymitySetSection {
+  type: 'PrivacyAnonymitySetSection'
+  props: ProjectDetailsProps<PrivacyAnonymitySetSectionProps>
+}
+
+interface ProjectDetailsPrivacyAdversariesSection {
+  type: 'PrivacyAdversariesSection'
+  props: ProjectDetailsProps<PrivacyAdversariesSectionProps>
+}
+
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
   type: 'PrivacyAssetsBreakdownSection'
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
@@ -341,6 +354,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
+  | ProjectDetailsPrivacyAdversariesSection
   | ProjectDetailsExternalDependenciesSection
 )

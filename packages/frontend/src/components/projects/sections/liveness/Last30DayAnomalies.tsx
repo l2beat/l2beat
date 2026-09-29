@@ -11,6 +11,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
+import { SubsectionHeading } from '../Subsection'
 
 const ANOMALIES_PER_PAGE = 5
 
@@ -40,9 +41,9 @@ export function Last30DayAnomalies({
 
   return (
     <div>
-      <h3 className="font-bold text-heading-20 md:text-heading-24">
+      <SubsectionHeading className="font-bold text-heading-20 md:text-heading-24">
         Last 30 day anomalies
-      </h3>
+      </SubsectionHeading>
       <p className="mt-4 text-paragraph-15 md:text-paragraph-16">
         All liveness anomalies detected for this project in the last 30 days,
         helping you review recent downtime and availability issues.

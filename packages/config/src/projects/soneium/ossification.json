@@ -1,0 +1,68 @@
+{
+  "events": [
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x4890928941e62e273dA359374b105F803329F473",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of AnchorStateRegistry (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of DisputeGameFactory (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x67B4de6FfA66EF201Ea6099A89cA397D56622E31",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of ETHLockbox (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of SystemConfig (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x88e529A6ccd302c948689Cd5156C83D4614FAE92",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of OptimismPortal2 (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of SuperchainConfig (Upgraded event)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of L1CrossDomainMessenger through the AddressManager (AddressSet)."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "128d1cfd",
+      "reason": "Upgraded the implementation of L1StandardBridge (EIP-1967 slot, impl 61525eaacddb97d9184afc205827e6a4fd0bf62a -> b37a11aadf167b2f0b8dd85372de4bc66cd4a891)."
+    }
+  ]
+}

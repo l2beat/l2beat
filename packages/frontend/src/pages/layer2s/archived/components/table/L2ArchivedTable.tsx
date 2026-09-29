@@ -13,7 +13,7 @@ interface Props {
 export function L2ArchivedTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
-  const table = useTable({
+  const table = useTable('L2ArchivedTable', {
     data: entries,
     columns: l2ArchivedColumns,
     getCoreRowModel: getCoreRowModel(),

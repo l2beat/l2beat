@@ -33,12 +33,27 @@ export const DiscoveryCategory = v.object({
   priority: v.number(),
 })
 
+export type CriticalWindow = v.infer<typeof CriticalWindow>
+export const CriticalWindow = v.union([
+  v.strictObject({
+    sinceTimestamp: v.number(),
+    untilTimestamp: v.number().optional(),
+  }),
+  v.strictObject({
+    sinceTimestamp: v.number().optional(),
+    untilTimestamp: v.number(),
+  }),
+])
+
+export type CriticalFlag = v.infer<typeof CriticalFlag>
+export const CriticalFlag = v.union([v.literal(true), CriticalWindow])
+
 export type ColorContract = v.infer<typeof ColorContract>
 export const _ColorContract = {
   displayName: v.string().optional(),
   categories: v.record(v.string(), DiscoveryCategory).optional(),
   category: v.string().optional(),
-  critical: v.boolean().optional(),
+  critical: CriticalFlag.optional(),
   description: v.string().optional(),
   references: v.array(ExternalReference).optional(),
   fields: v.record(v.string(), ColorContractField).default({}),

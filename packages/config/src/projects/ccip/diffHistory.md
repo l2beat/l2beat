@@ -1,3 +1,3536 @@
+Generated with discovered.json: 0x7b3c7c151f59ce193afa9dec703513cfd296d155
+
+# Diff at Mon, 28 Sep 2026 17:48:01 GMT:
+
+- id: 39cc542e
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788159443
+- current timestamp: 1790609268
+
+## Description
+
+- CCIP 2.0 cutover on Ethereum: the MainRouter now selects the shared EthereumOnRamp_v2_0 for 47 destinations (7 before), moving 40 per-lane and v1.6 routes (Optimism, Polygon PoS, Arbitrum, Avalanche, BNB, Base, Gnosis, Linea, Scroll, World Chain and others). EthereumOnRamp_v2_0, EthereumOffRamp_v2_0, the Executor and the CommitteeVerifier were configured for about 52 new remote chains. The CommitteeVerifier now holds 65 source-chain signature configs (13 before), all with a threshold of 9 out of 14 to 16 signers.
+- USDCTokenPoolProxy switched USDC transfers to Optimism, Arbitrum, Unichain, Polygon PoS, Avalanche and Base from CCTP v1 to the CCTP-through-CCV path.
+- Ownership of CCTPVerifier_v2_1 and USDCCCTPVerifierResolver moved from an EOA (0x062f) to ARMTimelock (3h delay). The resolver dropped CCTPVerifier_v2_0 as an inbound implementation.
+- EthereumOnRamp_v1_6 now sends fees to a new FeeAggregatorTimelock instead of the same EOA. The timelock has no delay; its proposer and bypasser are 2-of-4 ManyChainMultiSigs and its canceller a 1-of-4 one, all sharing the same four new EOA signers. It runs the same code as ARMTimelock and only receives fee tokens; it holds no CCIP permissions.
+- The DeprecatedRouter (a second Router 1.2.0 deployment) is wired to the v2.0 ramps for the 18 lanes the MainRouter has not moved to v2.0 yet (6 before), and EthereumOffRamp_v2_0 was registered on it for 52 more sources. It delivered no messages in the last week, so production traffic on those lanes still goes through the MainRouter and the v1.6 ramps. The CommitteeVerifier uses it only to check the calling OnRamp on outbound messages; inbound verification relies on committee signatures alone. USDCTokenPoolProxy authenticates OffRamps against its immutable MainRouter, so this Router cannot release USDC. Its owner is still the EOA 0x062f, which can add or replace its ramps without delay. It now uses the RouterV1_2_0 template (same Router logic as the MainRouter) with its owner crawled, so this permission is modelled; its stale "used by BSC" description was dropped.
+- One CommitteeVerifier signer (0x89A4) was replaced by 0xD173 in the arc, cronos, ab and robinhood signature configs; thresholds are unchanged.
+- RMN added an EOA (0x2acE, already a signer on the three RMN curse multisigs) as an authorized caller, so it can place global or route-specific curses alone. It cannot uncurse.
+- New lanes: Gravity (chain selector `2988178761202034333`, now labeled in the selector map) to and from Ethereum, arc to Base and Polygon PoS, and tempo to Polygon PoS. Routine OCR execution digest rotations on Ethereum, Base, BNB, Solana, Sonic and others, CCTP source pool updates in the token data observers, and FeeQuoter limit and fee changes.
+- No contract implementation, proxy or ABI changed for existing contracts. The five new contracts share source hashes with already-tracked ones (RBACTimelock, ManyChainMultiSig, CallProxy).
+
+## Watched changes
+
+```diff
+    contract BaseOffRamp_v1_6 (base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Base.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000a1586098c118e958e7f01aab659630899ac1e0217fe21fece4fd83e367ca4"
++        "0x000a6187a27684e9e56a160c969f6862b81067c7b49360374c13716d3be2c1dc"
+      values.sourceChainConfigs.arc:
++        {"router":"base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000051665f2455116e929b9972c36d23070f5054ce0"}
+    }
+```
+
+```diff
+    contract BscOffRamp_v1_6 (bnb:0xA27056438FfA1f286AB197488808692F0db93F8B) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on BNB Chain.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000a769ad9740987a6ff34237bb806219d1348bca8eb6d84b6f5a85a7a0a35d2"
++        "0x000ae5c9a2e8e67f09914ebd8f13320252d438c2efc183a68d3704a00bb77c4a"
+    }
+```
+
+```diff
+    contract CapabilitiesRegistry (eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83) [ccip/CapabilitiesRegistry] {
+    +++ description: Keystone CapabilitiesRegistry used by CCIP to manage node operators, nodes, capabilities, and DONs. When a DON includes the registered CCIP capability, updating it forwards the DON membership and configuration to CCIPHome, where the payload can set, revoke, or promote an OCR configuration.
+      values.getNextDONId:
+-        58
++        59
+    }
+```
+
+```diff
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor] {
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.0:
++        {"destChainSelector":"0g","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.4:
++        {"destChainSelector":"andromeda","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.5:
++        {"destChainSelector":"apechain","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.8:
++        {"destChainSelector":"astar","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.9:
++        {"destChainSelector":"avalanche","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.10:
++        {"destChainSelector":"base","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.11:
++        {"destChainSelector":"berachain","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.12:
++        {"destChainSelector":"bitlayer","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.13:
++        {"destChainSelector":"bittensor","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.14:
++        {"destChainSelector":"bob","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.15:
++        {"destChainSelector":"bsc","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.16:
++        {"destChainSelector":"bsquared","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.17:
++        {"destChainSelector":"celo","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.18:
++        {"destChainSelector":"core","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.19:
++        {"destChainSelector":"creditcoin","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.21:
++        {"destChainSelector":"etherlink","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.22:
++        {"destChainSelector":"fraxtal","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.23:
++        {"destChainSelector":"hashkey","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.24:
++        {"destChainSelector":"hedera","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.25:
++        {"destChainSelector":"hemi","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.26:
++        {"destChainSelector":"henesys","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.27:
++        {"destChainSelector":"hyperliquid","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.29:
++        {"destChainSelector":"jovay","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.30:
++        {"destChainSelector":"katana","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.31:
++        {"destChainSelector":"lens","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.32:
++        {"destChainSelector":"linea","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.35:
++        {"destChainSelector":"megaeth","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.36:
++        {"destChainSelector":"mode","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.37:
++        {"destChainSelector":"monad","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.38:
++        {"destChainSelector":"morph","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.39:
++        {"destChainSelector":"neox","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.40:
++        {"destChainSelector":"opbnb","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.42:
++        {"destChainSelector":"pharos","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.43:
++        {"destChainSelector":"plasma","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.46:
++        {"destChainSelector":"ronin","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.47:
++        {"destChainSelector":"rootstock","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.48:
++        {"destChainSelector":"scroll","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.49:
++        {"destChainSelector":"sei","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.50:
++        {"destChainSelector":"shibarium","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.51:
++        {"destChainSelector":"soneium","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.52:
++        {"destChainSelector":"sonic","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.53:
++        {"destChainSelector":"stable","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.54:
++        {"destChainSelector":"taiko","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.55:
++        {"destChainSelector":"tempo","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.56:
++        {"destChainSelector":"unichain","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.57:
++        {"destChainSelector":"wemix","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.58:
++        {"destChainSelector":"worldchain","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.59:
++        {"destChainSelector":"xdai","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.60:
++        {"destChainSelector":"xdc","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.61:
++        {"destChainSelector":"xlayer","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.62:
++        {"destChainSelector":"zircuit","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.63:
++        {"destChainSelector":"zksync","config":{"usdCentsFee":0,"enabled":true}}
+    }
+```
+
+```diff
+    EOA (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner"}
+      receivedPermissions.8:
+-        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner"}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner"}
+    }
+```
+
+```diff
+    contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
+    +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
++++ description: Accounts authorized to add global or route-specific curses. Authorized callers cannot uncurse subjects or change this caller list.
+      values.getAllAuthorizedCallers.1:
++        "eth:0x2acE0735C229a2cD12C86C734bE48007578E1200"
+    }
+```
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.105:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.106:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+    }
+```
+
+```diff
+    contract CCTPVerifier_v2_1 (eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af) [ccip/CCTPVerifier] {
+    +++ description: USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.
+      values.owner:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v1_6 (eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5) [transporter/OfframpV3] {
+    +++ description: OffRamp used to receive messages on its local chain from other chains. It stores the list and threshold of OCR signers that authorize crosschain message commitments and the transmitters that can relay those reports. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed messages are usually executed by permissioned execution transmitters. After 1h, anyone can execute them.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000af66e2f2df6e0052f83cc8924e5245e4d099a9916fd5ea170b9bf0ea9691c"
++        "0x000ad4b45bed04ec1260f75e49d6af627e8ee06ba21d6a7b5f533fde4eccf76d"
+      values.sourceChainConfigs.gravity:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"}
+    }
+```
+
+```diff
+    EOA (eth:0x2acE0735C229a2cD12C86C734bE48007578E1200) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0B047953451A207743fB62541B21199b95190602","description":"add global or route-specific curses, halting the affected CCIP paths; they cannot uncurse subjects.","role":".getAllAuthorizedCallers"}]
+    }
+```
+
+```diff
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.0:
++        {"destChainSelector":"0g","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.4:
++        {"destChainSelector":"andromeda","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.5:
++        {"destChainSelector":"apechain","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.8:
++        {"destChainSelector":"astar","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.9:
++        {"destChainSelector":"avalanche","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.10:
++        {"destChainSelector":"base","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.11:
++        {"destChainSelector":"berachain","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.12:
++        {"destChainSelector":"bitlayer","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.13:
++        {"destChainSelector":"bittensor","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.14:
++        {"destChainSelector":"bob","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.15:
++        {"destChainSelector":"bsc","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.16:
++        {"destChainSelector":"bsquared","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.18:
++        {"destChainSelector":"celo","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.19:
++        {"destChainSelector":"core","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.20:
++        {"destChainSelector":"creditcoin","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.22:
++        {"destChainSelector":"etherlink","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.23:
++        {"destChainSelector":"fraxtal","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.24:
++        {"destChainSelector":"hashkey","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.25:
++        {"destChainSelector":"hedera","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.26:
++        {"destChainSelector":"hemi","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.27:
++        {"destChainSelector":"henesys","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.28:
++        {"destChainSelector":"hyperliquid","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.30:
++        {"destChainSelector":"jovay","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.31:
++        {"destChainSelector":"katana","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.32:
++        {"destChainSelector":"lens","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.33:
++        {"destChainSelector":"linea","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.36:
++        {"destChainSelector":"megaeth","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.37:
++        {"destChainSelector":"mode","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.38:
++        {"destChainSelector":"monad","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.39:
++        {"destChainSelector":"morph","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.40:
++        {"destChainSelector":"neox","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.41:
++        {"destChainSelector":"opbnb","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.43:
++        {"destChainSelector":"pharos","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.44:
++        {"destChainSelector":"plasma","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.47:
++        {"destChainSelector":"ronin","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.48:
++        {"destChainSelector":"rootstock","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.49:
++        {"destChainSelector":"scroll","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.50:
++        {"destChainSelector":"sei","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.51:
++        {"destChainSelector":"shibarium","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.52:
++        {"destChainSelector":"soneium","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.53:
++        {"destChainSelector":"sonic","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.54:
++        {"destChainSelector":"stable","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.55:
++        {"destChainSelector":"taiko","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.56:
++        {"destChainSelector":"tempo","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.57:
++        {"destChainSelector":"unichain","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.58:
++        {"destChainSelector":"wemix","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.59:
++        {"destChainSelector":"worldchain","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.60:
++        {"destChainSelector":"xdai","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.61:
++        {"destChainSelector":"xdc","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.62:
++        {"destChainSelector":"xlayer","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.63:
++        {"destChainSelector":"zircuit","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.64:
++        {"destChainSelector":"zksync","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.getOffRamps.17:
++        {"sourceChainSelector":"14894068710063348487","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.18:
++        {"sourceChainSelector":"465944652040885897","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.19:
++        {"sourceChainSelector":"5406759801798337480","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.20:
++        {"sourceChainSelector":"1346049177634351622","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.21:
++        {"sourceChainSelector":"1224752112135636129","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.22:
++        {"sourceChainSelector":"18240105181246962294","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.23:
++        {"sourceChainSelector":"7613811247471741961","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.24:
++        {"sourceChainSelector":"4627098889531055414","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.25:
++        {"sourceChainSelector":"8805746078405598895","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.26:
++        {"sourceChainSelector":"7264351850409363825","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.27:
++        {"sourceChainSelector":"13204309965629103672","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.28:
++        {"sourceChainSelector":"16468599424800719238","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.29:
++        {"sourceChainSelector":"2049429975587534727","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.30:
++        {"sourceChainSelector":"17198166215261833993","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.31:
++        {"sourceChainSelector":"1462016016387883143","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.32:
++        {"sourceChainSelector":"3229138320728879060","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.33:
++        {"sourceChainSelector":"1804312132722180201","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.34:
++        {"sourceChainSelector":"5608378062013572713","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.35:
++        {"sourceChainSelector":"18164309074156128038","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.36:
++        {"sourceChainSelector":"12657445206920369324","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.37:
++        {"sourceChainSelector":"6422105447186081193","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.38:
++        {"sourceChainSelector":"11964252391146578476","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.39:
++        {"sourceChainSelector":"9027416829622342829","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.40:
++        {"sourceChainSelector":"3993510008929295315","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.41:
++        {"sourceChainSelector":"12505351618335765396","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.42:
++        {"sourceChainSelector":"1562403441176082196","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.43:
++        {"sourceChainSelector":"17673274061779414707","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.44:
++        {"sourceChainSelector":"7281642695469137430","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.45:
++        {"sourceChainSelector":"1523760397290643893","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.46:
++        {"sourceChainSelector":"2135107236357186872","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.47:
++        {"sourceChainSelector":"4426351306075016396","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.48:
++        {"sourceChainSelector":"1923510103922296319","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.49:
++        {"sourceChainSelector":"3016212468291539606","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.50:
++        {"sourceChainSelector":"465200170687744372","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.51:
++        {"sourceChainSelector":"9335212494177455608","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.52:
++        {"sourceChainSelector":"7801139999541420232","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.53:
++        {"sourceChainSelector":"6916147374840168594","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.54:
++        {"sourceChainSelector":"2442541497099098535","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.55:
++        {"sourceChainSelector":"3849287863852499584","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.56:
++        {"sourceChainSelector":"5142893604156789321","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.57:
++        {"sourceChainSelector":"7222032299962346917","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.58:
++        {"sourceChainSelector":"7937294810946806131","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.59:
++        {"sourceChainSelector":"1673871237479749969","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.60:
++        {"sourceChainSelector":"2459028469735686113","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.61:
++        {"sourceChainSelector":"6433500567565415381","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.62:
++        {"sourceChainSelector":"8481857512324358265","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.63:
++        {"sourceChainSelector":"11344663589394136015","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.64:
++        {"sourceChainSelector":"13624601974233774587","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.65:
++        {"sourceChainSelector":"6093540873831549674","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.66:
++        {"sourceChainSelector":"16978377838628290997","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.67:
++        {"sourceChainSelector":"1294465214383781161","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.68:
++        {"sourceChainSelector":"15971525489660198786","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.onRamps.bsc:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.base:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hedera:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.apechain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.opbnb:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bsquared:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.celo:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.core:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.creditcoin:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hashkey:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.linea:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.andromeda:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.mode:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.scroll:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.taiko:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.worldchain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.zircuit:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.fraxtal:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hemi:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.lens:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.morph:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.henesys:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.astar:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.rootstock:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sei:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.shibarium:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.soneium:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.zksync:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdc:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.tempo:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.jovay:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bittensor:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.0g:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.unichain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xlayer:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdai:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.plasma:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.pharos:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.ronin:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hyperliquid:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bob:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.wemix:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.neox:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bitlayer:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sonic:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.katana:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.avalanche:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.monad:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.etherlink:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.megaeth:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.stable:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.berachain:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+      values.sourceChainConfigs.abstract.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.adi.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.optimism.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.arbitrum.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.matic.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.apechain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000008d8aab1ef7047c1bbc6d17202cb39eca43263cfc"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.opbnb:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000030e23e9f786294c543251f06915b18d17e0f9dfd"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.bsquared:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000008e2f5e915687919691c591c552f3ea37ede499aa"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.celo:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000005060de90b723a7eb705742ff1a22a908b1d8b626"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.core:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000000dc94d4e45031f87b7df9e9b749dbb88f67bcd78"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.creditcoin:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000e3657564c57c81e19466c2dd4397f1b61e98b87b"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.hashkey:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000d21d5a4e3fa0ebacc3dabb5258d9c1f4d24dc894"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.linea:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000005060de90b723a7eb705742ff1a22a908b1d8b626"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.andromeda:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000050ea62f44f44c17d48390cc9fd235dac8e5e127a"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.mode:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000008d8aab1ef7047c1bbc6d17202cb39eca43263cfc"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.scroll:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000d072940492b5cbe546eeddb17481b256e0b6a21a"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.taiko:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x00000000000000000000000027da8ab83ec4d72fd744748b273f6bf9b5bdb121"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.worldchain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000102423a5371944ab99aad7185052f969904c6d65"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.zircuit:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000929056cc3dbd2905e8c6f115654f14baa2eb5e09"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.fraxtal:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000003fd9ad7dc98e98c5e3fab8d20f8aaee5f7809933"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.hedera:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000032823650e278d57c657ceee0d1dd1692eae977ed"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.hemi:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000008459bb2b1a7555e16754587f7986907a68b3a47e"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.lens:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000422ed094571374d656a7d8b5397724166acd6630"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.morph:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000009d830c485364b714030406e0f7e11791ee13378f"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.henesys:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000985fb0821eef0056ec26dd8b33dc61b9415b7f4b"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.astar:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x00000000000000000000000091d1fb5a397947b7418ae78d3fbf789eb6556dca"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.rootstock:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000000198f9087ced2d60c08caa711917141964e32a96"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.sei:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000a5b1ff748eba9ebe7c9051817cab9cb94fe14b90"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.shibarium:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000e4590e340c51303074874ddb80883b31e72f7de7"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.soneium:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000001f4b7011ee3d53969bb67f59428a9ec0477856e9"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.zksync:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000f9410a08fd57e629c66e1f37a5ae8f0a757d9ad9"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.xdc:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000e01d7893fb01a512e6ee980bff15cdd91ce4c5cb"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.tempo:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000a482828c5f78a44b905c46a87ff392f2ea2fdc73"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.jovay:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000005aa05e14ac7faf23f1757d46429e6ca7e3fc1274"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.bittensor:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000005aa05e14ac7faf23f1757d46429e6ca7e3fc1274"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.0g:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000e274394930b6de984acddffea11dd555209a82aa"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.unichain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000d77f77b792d4e4bdb93d7a48ac04e3a37a28d734"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.xlayer:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000036744019abe00d0858e50e541f03c1c09d3628ad"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.xdai:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000007fcd7604e66ad383b82cd899aa2aa6b1cf41448b"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.plasma:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000eaf5b8241d843439994725cfb21b98d726d21d8e"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.pharos:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000daa69d2140e218543da0121c327b2d9f8e30dd9d"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.ronin:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000e01d7893fb01a512e6ee980bff15cdd91ce4c5cb"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.bob:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000091d1fb5a397947b7418ae78d3fbf789eb6556dca"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.wemix:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000050056397cf6ccf50d1748e95c32ec361951ee6f9"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.neox:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000bf5d2a9e48c51c5945a7975c2b294a8a3e5330f2"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.bitlayer:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000b7feabf544d8ee041645148c8fbae782b2557aef"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.sonic:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000000dd6b1ff9bd60b596094c44260d45d2d3f318332"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.katana:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x00000000000000000000000039029575a666aa543d43274e48feff9773203108"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.avalanche:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000a556c22b7f73a15963813a9a0fdba50f44fe5cf9"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.monad:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000026f997167d936acd054f2132f03e1cea18044397"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.bsc:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000084a0797b31ac0d3e1d06157663dd4b18cffda188"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.etherlink:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000402430ca607c52a99aa82ab4c726001d4203c9e7"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.megaeth:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x00000000000000000000000069439715ec6a4d79d2d793bbcc88513a575ab808"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.stable:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000008c761ffc81a86edeb218e2e11e51996ce092fa00"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.berachain:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000073d9cb00585f94c343fa306d3afd8dee7c00e98"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.base:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x000000000000000000000000f75bf16b03aae98677926f0987f195a2153996b9"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.hyperliquid:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x00000000000000000000000087ed1cdc9de0063e4714398f8f1951d7339c5997"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+    }
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Role based timelock used to administer CCIP contracts.
+      directlyReceivedPermissions.16:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner"}
+      directlyReceivedPermissions.17:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner"}
+      directlyReceivedPermissions.103:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner"}
+      directlyReceivedPermissions.104:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner"}
+    }
+```
+
+```diff
+    contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
+    +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
+      values.chainConfigurations.gravity:
++        {"readers":["0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459","0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb","0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991","0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c","0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20","0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf","0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b","0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9","0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef","0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4","0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e","0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2","0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b","0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023","0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510","0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02"],"fChain":5,"config":"{\"gasPriceDeviationPPB\":\"4000000000\",\"daGasPriceDeviationPPB\":\"4000000000\",\"optimisticConfirmations\":1,\"chainFeeDeviationDisabled\":false}"}
+      values.commitConfigs.gravity:
++        {"configDigest":"0x000acb40917de9b7b683df82ab07216de543fcad1d551df9a0ea45ab21c8f392","version":377,"config":{"FRoleDON":5,"offchainConfigVersion":30,"rmnHomeAddress":"eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae","nodes":[{"p2pId":"0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2","signerKey":"eth:0xc4940a913488e924820A66dAbcd0CF33830B8C1d","transmitterKey":"eth:0x796B4511588C4956955A55327c26d4641FEc7069"},{"p2pId":"0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20","signerKey":"eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468","transmitterKey":"eth:0x5EA24f1870a78d56204a5E1476D3f582a5301434"},{"p2pId":"0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4","signerKey":"eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61","transmitterKey":"eth:0xa03010CAB087995FD262857754Ab445A0a1BF28d"},{"p2pId":"0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb","signerKey":"eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26","transmitterKey":"eth:0x737A9Bc037e3c680af4ef33f6bB9405c2BCB91f9"},{"p2pId":"0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02","signerKey":"eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F","transmitterKey":"eth:0x4467f038d3211c25AA0e917CE5c1563Cb3fBCFAd"},{"p2pId":"0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023","signerKey":"eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0","transmitterKey":"eth:0xD3b6FFC2e27aBaD283fe8A7Befc049d6E7b3eB03"},{"p2pId":"0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991","signerKey":"eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB","transmitterKey":"eth:0x2C4aafFCAC59B7829ee7A75b3314b30Fce3dA22C"},{"p2pId":"0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459","signerKey":"eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B","transmitterKey":"eth:0x283f10f465B8485E280452A0DFBA58AE3F013E43"},{"p2pId":"0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9","signerKey":"eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF","transmitterKey":"eth:0xa25850DA9c9f6Dcdcc6F9eDc29d38fE55AD70838"},{"p2pId":"0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e","signerKey":"eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB","transmitterKey":"eth:0x1F1E6D494E11383142B055381509F8Cd6Ff7A2D7"},{"p2pId":"0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b","signerKey":"eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7","transmitterKey":"eth:0xDFa16b199cE911C9DEc99aBfB905f2E3B724381A"},{"p2pId":"0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef","signerKey":"eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83","transmitterKey":"eth:0x2957ba94c1f5a496B3103dCe1B6B858514F60Fc8"},{"p2pId":"0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510","signerKey":"eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D","transmitterKey":"eth:0x22418fEA76bE38585B53AfC9406d5971bd2E95cc"},{"p2pId":"0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c","signerKey":"eth:0x2D2251fAC6871Df405450337E327683822baFc52","transmitterKey":"eth:0x596f2565737920463D70e9aA19A1E4E77537e5D2"},{"p2pId":"0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b","signerKey":"eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF","transmitterKey":"eth:0x372aD7eDB50b163F052Db93c6b990D4065652DE4"},{"p2pId":"0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf","signerKey":"eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0","transmitterKey":"eth:0x6dF1BC1C7706Eb57e0FecfC25AB6Cd7eb97DeCF2"}],"offchainConfig":{"deltaProgressNanoseconds":120000000000,"deltaResendNanoseconds":30000000000,"deltaRoundNanoseconds":2000000000,"deltaGraceNanoseconds":5000000000,"deltaStageNanoseconds":25000000000,"rMax":3,"s":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"offchainPublicKeys":["0x496ecc2fe5c03906b6e6ea0307d491da2cd88463815c9341a7b2258debe48d53","0x4dc995d3a736c77557b9cc5eb16d10f9ebf51699409d6e57b464996679fe2393","0x79b98157c2962b92f4610855b3d701648ac4698639e2f6042b816644aa29465e","0x63ab8cf8928f35c08ab49266a4588d4fe02d9df8ebcdc21e9c1c5fa29c216a42","0x05aa24287761d1a6044f550ed526075004cd1cbdb3ffd1e40aeedd3e90ac141e","0xff9c481a65fd49be3872db125fd897219d69e9e1a5e202c53592ebf8b6819bf8","0xf21a5d2d71882bf899430247d0340adb465fa7e36554faab6a075a4e50487c1e","0x78eec62158a6e6c1fa7f936e1a647fdad4645fa87456bda7362f92d696377bbf","0xf9d1281b5ec0703e693c03b611290c0642abb360664112dbf2b53f375e017f22","0xd1e6773db69bacbbcef71e2cf1500c83556f6f175c33d738e8889c3c2e4b60dd","0x709be8aee3b1336ce6b4b16051ee818346f3b72ac53d279c19761530c5d51fb2","0x76bdfb7c4822aad961a19dafde8869b452ee6cb0585bdd0cb66f83c1bdbfc786","0x3e87a2707f38db40091a647312c3f9a061537c88afff6a05606604ec35803d44","0xa6e4256f6d96b5ba086672bbe49c28d0e58dff9a94bebb7a8f029833768e5557","0x73a8bb8649abfa883a198898026fe5d0b24c656931c3fd73d040013ae3cf1b50","0x6e2e6fab11695df75fb299404b3fe79a222e63d5059215586b4b046080eac75d"],"peerIds":["12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd","12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7","12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys","12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA","12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM","12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e","12D3KooWHHhYKS4dUFfJUzQeXXmieBkjynyoEqpV38xdCUQYBsnx","12D3KooWJF8knyvb1ZSWYaV1w3naL1wER8p3QKYGEHaUWU1KEFXn","12D3KooWKSVjgYJBbNgxMqS35C4NpK5Rxg6TrjTDYDXQAH93bW4x","12D3KooWMd1VxrBAPpaACezvnJ3GCdK7rYmeFGqUzdz7rwpcVC9s","12D3KooWNTVa4ZMdqWHiaMmjpWqfeYgZ31s3fEX1fYZXdBu2mYfc","12D3KooWNfgbVn1NjxktX3FEqhpFXBpXdnAu7YPRWBZiZvmzozZk","12D3KooWNtEhNF2MySxPYimnDPtFxZJLU6QGjUUhfCCrC3Fdh5nF","12D3KooWQZ8sVd2NdAe9bs5cFdZfAmnaUEbs6286YuJRGsci1fsZ","12D3KooWS3DiGs5ZLn5pJP9GEgWuoH6EKVeMNs1Cy3Z6pThSNrRG","12D3KooWSCxMW2pZDe7mxjA3qLaU18AKuYQtjSDu4MzKj5sgZBfk"],"reportingPluginConfig":{"remoteGasPriceBatchWriteFrequency":"20m0s","tokenPriceBatchWriteFrequency":"2h0m0s","tokenInfo":{"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40":{"aggregatorAddress":"eth:0x86E53CF1B870786351Da77A57575e79CB55812CB","deviationPPB":"1000000000","decimals":18},"eth:0xBB859E225ac8Fb6BE1C7e38D87b767e95Fef0EbD":{"aggregatorAddress":"eth:0x70E48a135F76bA31B47FE944e769E052A8FeB849","deviationPPB":"1000000000","decimals":18}},"tokenPriceChainSelector":4949039107694360000,"newMsgScanBatchSize":256,"maxReportTransmissionCheckAttempts":10,"rmnSignaturesTimeout":6900000000,"rmnEnabled":false,"maxTreeSize":256,"signObservationPrefix":"chainlink ccip 1.6 rmn observation","transmissionDelayMultiplier":15000000000,"inflightPriceCheckRetries":10,"merkleRootAsyncObserverDisabled":false,"merkleRootAsyncObserverSyncFreq":4000000000,"merkleRootAsyncObserverSyncTimeout":12000000000,"chainFeeAsyncObserverDisabled":true,"chainFeeAsyncObserverSyncFreq":0,"chainFeeAsyncObserverSyncTimeout":0,"tokenPriceAsyncObserverDisabled":true,"tokenPriceAsyncObserverSyncFreq":"0s","tokenPriceAsyncObserverSyncTimeout":"0s","donBreakingChangesVersion":1,"maxRootsPerReport":0,"maxPricesPerReport":0,"multipleReports":false,"populateTxHashEnabled":false,"evmGasLimit":0},"maxDurationQueryNanoseconds":7000000000,"maxDurationObservationNanoseconds":13000000000,"maxDurationShouldAcceptAttestedReportNanoseconds":5000000000,"maxDurationShouldTransmitAcceptedReportNanoseconds":10000000000,"sharedSecretEncryptions":{"diffieHellmanPoint":"0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560","sharedSecretHash":"0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6","encryptions":["0xe52376990b2712aa09158e606b6a91d2","0x1fe7c9164c229d8dad451e05d6c9f859","0x4bad67c26322b0414416e843062ed20b","0xc7dcb07e2fda28b5d6bbea214b9871a2","0x59f96b270a1d400bdc84bb78339267d9","0x473df7cbbcc53314b527b09195b89dcc","0xcb53721e3a28715fee62264d57e5226d","0x4a9a907de304b93d7bb955a7828745b4","0xc4fa5dacd383bf2107fccb332e07f37c","0x056a10df3fee7c11e2efb2014fffbfd1","0xfeea77c7d9e905223247796ffe12b0fd","0xb2a949cf820920ba4721369e42fc5116","0x6378e80b4f00b9b2f21b9b634387d456","0x5fe7d069a37fa27c67252c70ed9c20c7","0x5f8e6a62a590461acb19fe87f64464da","0xae7ff26bfc5647cac859d199eee1d6cd"]},"deltaInitialNanoseconds":20000000000,"deltaCertifiedCommitRequestNanoseconds":10000000000}}}
+      values.executionConfigs.ethereum.configDigest:
+-        "0x000af66e2f2df6e0052f83cc8924e5245e4d099a9916fd5ea170b9bf0ea9691c"
++        "0x000ad4b45bed04ec1260f75e49d6af627e8ee06ba21d6a7b5f533fde4eccf76d"
+      values.executionConfigs.ethereum.version:
+-        357
++        374
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.bsc.configDigest:
+-        "0x000a769ad9740987a6ff34237bb806219d1348bca8eb6d84b6f5a85a7a0a35d2"
++        "0x000ae5c9a2e8e67f09914ebd8f13320252d438c2efc183a68d3704a00bb77c4a"
+      values.executionConfigs.bsc.version:
+-        360
++        376
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.base.configDigest:
+-        "0x000a1586098c118e958e7f01aab659630899ac1e0217fe21fece4fd83e367ca4"
++        "0x000a6187a27684e9e56a160c969f6862b81067c7b49360374c13716d3be2c1dc"
+      values.executionConfigs.base.version:
+-        355
++        365
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.solana.configDigest:
+-        "0x000aa1e6903226598a3e84a04f40c38f9ab9803824465300483f664b02631e9a"
++        "0x000a24caabf3d780d18119748604873101a9ff08d31e71be9f6364b65a74ebe7"
+      values.executionConfigs.solana.version:
+-        350
++        373
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.sonic.configDigest:
+-        "0x000a3edbdb69c20851c180d7caeaed3ef7c5db4255b3b8ecddbab8e30116c44b"
++        "0x000a28de5c26cd74f0806295eea97c5b9628d4a2a2d8f9f44b8935d5568885b2"
+      values.executionConfigs.sonic.version:
+-        356
++        368
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.etherlink.configDigest:
+-        "0x000a9f6dd3a7fe411e49c1758b1bf08a09d00c3c56378ccdc632fd0cf18e7d95"
++        "0x000a0f48607241bdc333e227c2a2d64dff84fd535ebb480a9a9b82a449fb9ae5"
+      values.executionConfigs.etherlink.version:
+-        354
++        364
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.avalanche.configDigest:
+-        "0x000adb8998e9a7d8e9e8d54d54936fdd452eb219ee891ea473fcba4919ea0920"
++        "0x000a4da729158f96cd48d224b8811e430843da7b62bce68e86e018ebc11ff62e"
+      values.executionConfigs.avalanche.version:
+-        362
++        366
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.2.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.katana.configDigest:
+-        "0x000a751bccbb4599b157d4e5de552c891c0a4dac6c54cc3a938caf0ca0984aaf"
++        "0x000a4d47eaeca968178ab48b78b8603522b7af62a42a8c5d2c71c132cedf1645"
+      values.executionConfigs.katana.version:
+-        351
++        375
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.berachain.configDigest:
+-        "0x000a19d7a26571a42b14480b2f874be4ef87c6d9c8db167cb1dadb439ee8550b"
++        "0x000ac79ae88c974e8e2c92b9a9d8a68b38b7b01298b769bd6f4b24b2333af885"
+      values.executionConfigs.berachain.version:
+-        353
++        367
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.tac.configDigest:
+-        "0x000a476acc68cebe30350398fa0ad23624f6f1a5616a71132b981ba3f752c587"
++        "0x000aa1d826499b8b9b9a9fe5e8550e6c3cebb0fd03ebfc41578c0c1bf21d60d5"
+      values.executionConfigs.tac.version:
+-        358
++        372
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.monad.configDigest:
+-        "0x000aa31dc38d8c9b5f6e456779c37e8b822bcbd6733894899b0e7d50f9616059"
++        "0x000a607f78f25d07842bf858f2fe91077d641bec71263ee6d305890f0c2eb5bb"
+      values.executionConfigs.monad.version:
+-        352
++        371
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.stable.configDigest:
+-        "0x000aa9aafbcc77f10770e3090d525209f5022c375b91869a55862aed56518954"
++        "0x000a0827a08b2d1a2abb37694e57da9c0bea7e62bec2862bb064a4aab8e7eb1d"
+      values.executionConfigs.stable.version:
+-        361
++        369
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.megaeth.configDigest:
+-        "0x000a098e2f32f617a0afc330243f0b2a667f05e40bf1865dc570abbe464c1296"
++        "0x000a8ea52b47c13b1f319ea7dccfe7c000a82e33c9bca74ad1d7ee1139506e3b"
+      values.executionConfigs.megaeth.version:
+-        359
++        370
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xD9527ffE58CbEcC9A64511Fc559e0C0825Df940a"
++        "eth:0xdBa5238aF3644c64D3A2f2bEd4577Dd487bEed44"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5936861837188149645:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1FB92ABC4958FBfFa87f60b1470d47a8D23cb6c8"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
++        "eth:0x626BdEe51E85A127eb6A08ed79c68a4b7AC80b4A"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xE4B5166b1D60C2208A934176522461c470A37d56"
++        "eth:0xBb92c89608cFAbdAb47aAFb0954D98f13576AD68"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xD7F069e67345ED91AC699e7EcFDc211782495888"
++        "eth:0xbf891A3ABB4E96f686ecAf338B23ca60A37B13D3"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1673871237479749969:
+-        "eth:0x775C438b07d5667aEFa3DE493A7cc2Df3a199E99"
++        "eth:0xb635E62Ab22e0869e0D3770c017E781e3fA38263"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.15971525489660198786:
+-        "eth:0x2A70CbF60a9252Ff312719885088283f930750BA"
++        "eth:0xcFEAc622BC6464acC759ACd9741a6D78F8b0d3Cd"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.13624601974233774587:
+-        "eth:0x9Ef2919f333Cdf13Fb609C0341bE0c852f691788"
++        "eth:0x0AD276a2b14Eb450897aCD100fe530e88D656f02"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.1294465214383781161:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x80a896645b74eCF4B42C448BfB3B267417EC572b"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.8481857512324358265:
+-        "eth:0xAe5E2940Fc01C0f8076D36749509C75E43da0C70"
++        "eth:0x1d4c47B1968291d07ed90352DEE2618D1D8A0009"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0x67927d7eA19F9A1053f4f5BBdf827Ed9870F1a1B"
++        "eth:0xaBb9629eAE3fa0992d98B95217d49F7DDC4C4517"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6093540873831549674:
+-        "eth:0xa9FC147f45239b56781D09ec748df194d54A7913"
++        "eth:0xAF771d0Fc6bd49ededaa2e09fd431b0d98FdAeec"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.5009297550715157269:
+-        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
++        "eth:0xD7012F3Fda127e45022175b2C92933823A1868ea"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.2459028469735686113:
+-        "eth:0xf1fc1bE000Db6fa2193aB75E461a5603400d031F"
++        "eth:0x5E35B194e8895A8B078399f90276c78039c915f1"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.16978377838628290997:
+-        "eth:0xc6c22D4Be6Cc50E6D01BD6325b6cD715A52f8154"
++        "eth:0x19F07cC899f86f78D204cC039cA3412e9a80BB77"
+      values.executionConfigs.gravity:
++        {"configDigest":"0x000a4af73ad70a6ed592c3a35a570b2262f24cbfe5b907f4f50b780c7967b86d","version":378,"config":{"FRoleDON":5,"offchainConfigVersion":30,"rmnHomeAddress":"eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae","nodes":[{"p2pId":"0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2","signerKey":"eth:0xc4940a913488e924820A66dAbcd0CF33830B8C1d","transmitterKey":"eth:0x796B4511588C4956955A55327c26d4641FEc7069"},{"p2pId":"0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20","signerKey":"eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468","transmitterKey":"eth:0x5EA24f1870a78d56204a5E1476D3f582a5301434"},{"p2pId":"0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4","signerKey":"eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61","transmitterKey":"eth:0xa03010CAB087995FD262857754Ab445A0a1BF28d"},{"p2pId":"0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb","signerKey":"eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26","transmitterKey":"eth:0x737A9Bc037e3c680af4ef33f6bB9405c2BCB91f9"},{"p2pId":"0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02","signerKey":"eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F","transmitterKey":"eth:0x4467f038d3211c25AA0e917CE5c1563Cb3fBCFAd"},{"p2pId":"0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023","signerKey":"eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0","transmitterKey":"eth:0xD3b6FFC2e27aBaD283fe8A7Befc049d6E7b3eB03"},{"p2pId":"0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991","signerKey":"eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB","transmitterKey":"eth:0x2C4aafFCAC59B7829ee7A75b3314b30Fce3dA22C"},{"p2pId":"0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459","signerKey":"eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B","transmitterKey":"eth:0x283f10f465B8485E280452A0DFBA58AE3F013E43"},{"p2pId":"0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9","signerKey":"eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF","transmitterKey":"eth:0xa25850DA9c9f6Dcdcc6F9eDc29d38fE55AD70838"},{"p2pId":"0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e","signerKey":"eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB","transmitterKey":"eth:0x1F1E6D494E11383142B055381509F8Cd6Ff7A2D7"},{"p2pId":"0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b","signerKey":"eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7","transmitterKey":"eth:0xDFa16b199cE911C9DEc99aBfB905f2E3B724381A"},{"p2pId":"0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef","signerKey":"eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83","transmitterKey":"eth:0x2957ba94c1f5a496B3103dCe1B6B858514F60Fc8"},{"p2pId":"0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510","signerKey":"eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D","transmitterKey":"eth:0x22418fEA76bE38585B53AfC9406d5971bd2E95cc"},{"p2pId":"0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c","signerKey":"eth:0x2D2251fAC6871Df405450337E327683822baFc52","transmitterKey":"eth:0x596f2565737920463D70e9aA19A1E4E77537e5D2"},{"p2pId":"0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b","signerKey":"eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF","transmitterKey":"eth:0x372aD7eDB50b163F052Db93c6b990D4065652DE4"},{"p2pId":"0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf","signerKey":"eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0","transmitterKey":"eth:0x6dF1BC1C7706Eb57e0FecfC25AB6Cd7eb97DeCF2"}],"offchainConfig":{"deltaProgressNanoseconds":120000000000,"deltaResendNanoseconds":30000000000,"deltaRoundNanoseconds":2000000000,"deltaGraceNanoseconds":5000000000,"deltaStageNanoseconds":25000000000,"rMax":3,"s":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"offchainPublicKeys":["0x496ecc2fe5c03906b6e6ea0307d491da2cd88463815c9341a7b2258debe48d53","0x4dc995d3a736c77557b9cc5eb16d10f9ebf51699409d6e57b464996679fe2393","0x79b98157c2962b92f4610855b3d701648ac4698639e2f6042b816644aa29465e","0x63ab8cf8928f35c08ab49266a4588d4fe02d9df8ebcdc21e9c1c5fa29c216a42","0x05aa24287761d1a6044f550ed526075004cd1cbdb3ffd1e40aeedd3e90ac141e","0xff9c481a65fd49be3872db125fd897219d69e9e1a5e202c53592ebf8b6819bf8","0xf21a5d2d71882bf899430247d0340adb465fa7e36554faab6a075a4e50487c1e","0x78eec62158a6e6c1fa7f936e1a647fdad4645fa87456bda7362f92d696377bbf","0xf9d1281b5ec0703e693c03b611290c0642abb360664112dbf2b53f375e017f22","0xd1e6773db69bacbbcef71e2cf1500c83556f6f175c33d738e8889c3c2e4b60dd","0x709be8aee3b1336ce6b4b16051ee818346f3b72ac53d279c19761530c5d51fb2","0x76bdfb7c4822aad961a19dafde8869b452ee6cb0585bdd0cb66f83c1bdbfc786","0x3e87a2707f38db40091a647312c3f9a061537c88afff6a05606604ec35803d44","0xa6e4256f6d96b5ba086672bbe49c28d0e58dff9a94bebb7a8f029833768e5557","0x73a8bb8649abfa883a198898026fe5d0b24c656931c3fd73d040013ae3cf1b50","0x6e2e6fab11695df75fb299404b3fe79a222e63d5059215586b4b046080eac75d"],"peerIds":["12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd","12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7","12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys","12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA","12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM","12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e","12D3KooWHHhYKS4dUFfJUzQeXXmieBkjynyoEqpV38xdCUQYBsnx","12D3KooWJF8knyvb1ZSWYaV1w3naL1wER8p3QKYGEHaUWU1KEFXn","12D3KooWKSVjgYJBbNgxMqS35C4NpK5Rxg6TrjTDYDXQAH93bW4x","12D3KooWMd1VxrBAPpaACezvnJ3GCdK7rYmeFGqUzdz7rwpcVC9s","12D3KooWNTVa4ZMdqWHiaMmjpWqfeYgZ31s3fEX1fYZXdBu2mYfc","12D3KooWNfgbVn1NjxktX3FEqhpFXBpXdnAu7YPRWBZiZvmzozZk","12D3KooWNtEhNF2MySxPYimnDPtFxZJLU6QGjUUhfCCrC3Fdh5nF","12D3KooWQZ8sVd2NdAe9bs5cFdZfAmnaUEbs6286YuJRGsci1fsZ","12D3KooWS3DiGs5ZLn5pJP9GEgWuoH6EKVeMNs1Cy3Z6pThSNrRG","12D3KooWSCxMW2pZDe7mxjA3qLaU18AKuYQtjSDu4MzKj5sgZBfk"],"reportingPluginConfig":{"batchGasLimit":6500000,"inflightCacheExpiry":"1m0s","rootSnoozeTime":"5m0s","messageVisibilityInterval":"8h0m0s","batchingStrategyID":0,"transmissionDelayMultiplier":15000000000,"maxReportMessages":0,"maxSingleChainReports":0,"maxCommitReportsToFetch":250,"multipleReports":false,"populateTxHashEnabled":false},"maxDurationQueryNanoseconds":100000000,"maxDurationObservationNanoseconds":13000000000,"maxDurationShouldAcceptAttestedReportNanoseconds":5000000000,"maxDurationShouldTransmitAcceptedReportNanoseconds":10000000000,"sharedSecretEncryptions":{"diffieHellmanPoint":"0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560","sharedSecretHash":"0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6","encryptions":["0xe52376990b2712aa09158e606b6a91d2","0x1fe7c9164c229d8dad451e05d6c9f859","0x4bad67c26322b0414416e843062ed20b","0xc7dcb07e2fda28b5d6bbea214b9871a2","0x59f96b270a1d400bdc84bb78339267d9","0x473df7cbbcc53314b527b09195b89dcc","0xcb53721e3a28715fee62264d57e5226d","0x4a9a907de304b93d7bb955a7828745b4","0xc4fa5dacd383bf2107fccb332e07f37c","0x056a10df3fee7c11e2efb2014fffbfd1","0xfeea77c7d9e905223247796ffe12b0fd","0xb2a949cf820920ba4721369e42fc5116","0x6378e80b4f00b9b2f21b9b634387d456","0x5fe7d069a37fa27c67252c70ed9c20c7","0x5f8e6a62a590461acb19fe87f64464da","0xae7ff26bfc5647cac859d199eee1d6cd"]},"deltaInitialNanoseconds":20000000000,"deltaCertifiedCommitRequestNanoseconds":10000000000}}}
+      values.getNumChainConfigurations:
+-        58
++        59
+    }
+```
+
+```diff
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier] {
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.0:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"0g","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
+      values.remoteChainConfigs.1.remoteChainConfig.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.4:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"andromeda","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.5:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"apechain","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.8:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"astar","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.9:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"avalanche","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.10:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"base","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.11:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"berachain","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.12:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"bitlayer","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.13:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"bittensor","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.14:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"bob","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.15:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"bsc","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.16:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"bsquared","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.18:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"celo","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.19:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"core","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.20:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"creditcoin","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.22:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"etherlink","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.23:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"fraxtal","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.24:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"hashkey","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.25:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"hedera","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.26:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"hemi","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.27:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"henesys","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.28:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"hyperliquid","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.30:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"jovay","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.31:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"katana","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.32:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"lens","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.33:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"linea","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.36:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"megaeth","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.37:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"mode","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.38:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"monad","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.39:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"morph","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.40:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"neox","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.41:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"opbnb","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.43:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"pharos","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.44:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"plasma","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.47:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"ronin","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.48:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"rootstock","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.49:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"scroll","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.50:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"sei","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.51:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"shibarium","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.52:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"soneium","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.53:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"sonic","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.54:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"stable","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.55:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"taiko","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.56:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"tempo","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.57:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"unichain","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.58:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"wemix","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.59:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"worldchain","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.60:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"xdai","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.61:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"xdc","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.62:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"xlayer","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.63:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"zircuit","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.64:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"zksync","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.13:
++        "14894068710063348487"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.14:
++        "465944652040885897"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.15:
++        "5406759801798337480"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.16:
++        "1346049177634351622"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.17:
++        "1224752112135636129"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.18:
++        "18240105181246962294"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.19:
++        "7613811247471741961"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.20:
++        "4627098889531055414"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.21:
++        "8805746078405598895"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.22:
++        "7264351850409363825"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.23:
++        "13204309965629103672"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.24:
++        "16468599424800719238"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.25:
++        "2049429975587534727"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.26:
++        "17198166215261833993"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.27:
++        "1462016016387883143"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.28:
++        "3229138320728879060"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.29:
++        "1804312132722180201"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.30:
++        "5608378062013572713"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.31:
++        "18164309074156128038"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.32:
++        "12657445206920369324"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.33:
++        "6422105447186081193"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.34:
++        "11964252391146578476"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.35:
++        "9027416829622342829"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.36:
++        "3993510008929295315"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.37:
++        "12505351618335765396"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.38:
++        "1562403441176082196"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.39:
++        "17673274061779414707"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.40:
++        "7281642695469137430"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.41:
++        "1523760397290643893"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.42:
++        "2135107236357186872"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.43:
++        "4426351306075016396"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.44:
++        "1923510103922296319"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.45:
++        "3016212468291539606"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.46:
++        "465200170687744372"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.47:
++        "9335212494177455608"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.48:
++        "7801139999541420232"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.49:
++        "6916147374840168594"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.50:
++        "7222032299962346917"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.51:
++        "7937294810946806131"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.52:
++        "3849287863852499584"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.53:
++        "5142893604156789321"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.54:
++        "1673871237479749969"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.55:
++        "6433500567565415381"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.56:
++        "8481857512324358265"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.57:
++        "16978377838628290997"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.58:
++        "2459028469735686113"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.59:
++        "6093540873831549674"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.60:
++        "11344663589394136015"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.61:
++        "15971525489660198786"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.62:
++        "13624601974233774587"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.63:
++        "1294465214383781161"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.64:
++        "2442541497099098535"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.0:
++        {"remoteChainSelector":"0g","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
+      values.routeRouters.1.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.4:
++        {"remoteChainSelector":"andromeda","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.5:
++        {"remoteChainSelector":"apechain","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.8:
++        {"remoteChainSelector":"astar","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.9:
++        {"remoteChainSelector":"avalanche","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.10:
++        {"remoteChainSelector":"base","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.11:
++        {"remoteChainSelector":"berachain","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.12:
++        {"remoteChainSelector":"bitlayer","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.13:
++        {"remoteChainSelector":"bittensor","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.14:
++        {"remoteChainSelector":"bob","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.15:
++        {"remoteChainSelector":"bsc","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.16:
++        {"remoteChainSelector":"bsquared","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.18:
++        {"remoteChainSelector":"celo","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.19:
++        {"remoteChainSelector":"core","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.20:
++        {"remoteChainSelector":"creditcoin","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.22:
++        {"remoteChainSelector":"etherlink","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.23:
++        {"remoteChainSelector":"fraxtal","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.24:
++        {"remoteChainSelector":"hashkey","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.25:
++        {"remoteChainSelector":"hedera","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.26:
++        {"remoteChainSelector":"hemi","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.27:
++        {"remoteChainSelector":"henesys","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.28:
++        {"remoteChainSelector":"hyperliquid","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.30:
++        {"remoteChainSelector":"jovay","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.31:
++        {"remoteChainSelector":"katana","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.32:
++        {"remoteChainSelector":"lens","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.33:
++        {"remoteChainSelector":"linea","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.36:
++        {"remoteChainSelector":"megaeth","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.37:
++        {"remoteChainSelector":"mode","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.38:
++        {"remoteChainSelector":"monad","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.39:
++        {"remoteChainSelector":"morph","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.40:
++        {"remoteChainSelector":"neox","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.41:
++        {"remoteChainSelector":"opbnb","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.43:
++        {"remoteChainSelector":"pharos","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.44:
++        {"remoteChainSelector":"plasma","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.47:
++        {"remoteChainSelector":"ronin","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.48:
++        {"remoteChainSelector":"rootstock","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.49:
++        {"remoteChainSelector":"scroll","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.50:
++        {"remoteChainSelector":"sei","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.51:
++        {"remoteChainSelector":"shibarium","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.52:
++        {"remoteChainSelector":"soneium","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.53:
++        {"remoteChainSelector":"sonic","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.54:
++        {"remoteChainSelector":"stable","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.55:
++        {"remoteChainSelector":"taiko","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.56:
++        {"remoteChainSelector":"tempo","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.57:
++        {"remoteChainSelector":"unichain","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.58:
++        {"remoteChainSelector":"wemix","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.59:
++        {"remoteChainSelector":"worldchain","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.60:
++        {"remoteChainSelector":"xdai","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.61:
++        {"remoteChainSelector":"xdc","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.62:
++        {"remoteChainSelector":"xlayer","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.63:
++        {"remoteChainSelector":"zircuit","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.64:
++        {"remoteChainSelector":"zksync","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
+      values.signatureConfigs.arc.signers.9:
+-        "eth:0x89A4C013FB39C88A3d0C4bb9BC5537e236373309"
+      values.signatureConfigs.arc.signers.10:
++        "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D"
+      values.signatureConfigs.cronos.signers.9:
+-        "eth:0x89A4C013FB39C88A3d0C4bb9BC5537e236373309"
+      values.signatureConfigs.cronos.signers.11:
++        "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D"
+      values.signatureConfigs.ab.signers.7:
+-        "eth:0x89A4C013FB39C88A3d0C4bb9BC5537e236373309"
+      values.signatureConfigs.ab.signers.9:
++        "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D"
+      values.signatureConfigs.robinhood.signers.8:
+-        "eth:0x89A4C013FB39C88A3d0C4bb9BC5537e236373309"
+      values.signatureConfigs.robinhood.signers.10:
++        "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D"
+      values.signatureConfigs.apechain:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.opbnb:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.bsquared:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.celo:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.core:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.creditcoin:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.hashkey:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.linea:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.andromeda:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.mode:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.scroll:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.taiko:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.worldchain:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.zircuit:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.fraxtal:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.hedera:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.hemi:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.lens:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.morph:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.henesys:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.astar:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.rootstock:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.sei:
++        {"threshold":9,"signers":["eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.shibarium:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.soneium:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.zksync:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.xdc:
++        {"threshold":9,"signers":["eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.tempo:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.jovay:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.bittensor:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.0g:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.unichain:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.xlayer:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.xdai:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.plasma:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.pharos:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.ronin:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.bob:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.wemix:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.neox:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.bitlayer:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.berachain:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.sonic:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.avalanche:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.monad:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.stable:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.katana:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.megaeth:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+      values.signatureConfigs.bsc:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.base:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.etherlink:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.hyperliquid:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
++++ description: Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here.
+      values.arbitrumOffRamps.3:
++        "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
++++ description: Ethereum-to-Arbitrum OnRamp selected by the Router when users call ccipSend() for the Arbitrum chain selector.
+      values.arbitrumOnRamp:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.optimism:
+-        "eth:0x3455D8E039736944e66e19eAc77a42e8077B07bf"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.matic:
+-        "eth:0x15a9D79d6b3485F70bF82bC49dDD1fcB37A7149c"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.arbitrum:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.avalanche:
+-        "eth:0xaFd31C0C78785aDF53E4c185670bfd5376249d8A"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bsc:
+-        "eth:0x948306C220Ac325fa9392A6E601042A3CD0b480d"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.base:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.wemix:
+-        "eth:0xdEFeADd30D5BFD403d86245b43e39a73d76423cC"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdai:
+-        "eth:0xf50B9A46C394bD98491ce163d420222d8030F6F0"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.celo:
+-        "eth:0x741599d9a5a1bfC40A22f530fbCd85E2718e9F90"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.mode:
+-        "eth:0xeA6d4a24B262aB3e61a8A62f018A30beCD086f82"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.andromeda:
+-        "eth:0x75d536eED32f4c8Bb39F4B0c992163f5BA49B84e"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.linea:
+-        "eth:0x626189C882A80fF0D036d8D9f6447555e81F78E9"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.scroll:
+-        "eth:0x362A221C3cfd7F992DFE221687323F0BA9BA8187"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xlayer:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.zircuit:
+-        "eth:0x4Cc3D95d9384D3287724B83099f01BC3025702c0"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.ronin:
+-        "eth:0xdC5b578ff3AFcC4A4a6E149892b9472390b50844"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.worldchain:
+-        "eth:0xdB6ebB3ea15595E516dEf4a9875479573a4F19b6"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bob:
+-        "eth:0x1B960560324c03db5565545B353198fdd07A195d"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.shibarium:
+-        "eth:0x3Ac0D8fe5b4e8d0a95C507CCd83F6A8d73A8c6b1"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.soneium:
+-        "eth:0x093844Bd4b26792791cD4038e94Bec70f88CaD63"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hashkey:
+-        "eth:0x61B4B85364a2609177D2C498ff864E01a63148a5"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sei:
+-        "eth:0x5739E5376702AAc79a53B375ca160EE3C12025E0"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.fraxtal:
+-        "eth:0x31ee106a4585a796caacC645172B9F7e9c2f8D37"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.unichain:
+-        "eth:0x5E7397CA539C94185BBD950706F0Dd8628587E04"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.core:
+-        "eth:0xa6D806e4EB8726542cf536518fC47f39d68cCb48"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hedera:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.apechain:
+-        "eth:0x48F836a7697c0082B2Ecb4B2639f6da79de21980"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hyperliquid:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.hemi:
+-        "eth:0x7d7C4933f17B414f50C97d1a8862A1ace82557B3"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.opbnb:
+-        "eth:0xffbEC42C001f0E54924078C6D36412128bBC4330"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.neox:
+-        "eth:0x4109D281EB5C768556dFF78ba400cE2E3564d5B0"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.monad:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.plasma:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.0g:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bittensor:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.pharos:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.adi:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.tempo:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.creditcoin:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.canton:
+-        "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.gravity:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6] {
+    +++ description: OnRamp used to send messages from its local chain to other chains. It stores each destination route's authorized Router and optional sender allowlist, prices messages through the configured FeeQuoter, and advances outbound nonces through the NonceManager.
+      values.destChainConfigs.gravity:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","allowlistEnabled":false}
+      values.getDynamicConfig.feeAggregator:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178"
+    }
+```
+
+```diff
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2] {
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+      values.destChainConfigs.pharos.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.pharos.maxPerMsgGasLimit:
+-        7000000
++        8000000
+      values.destChainConfigs.pharos.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.pharos.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.creditcoin.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.creditcoin.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.creditcoin.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.creditcoin.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.tempo.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.tempo.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.tempo.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.tempo.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.0g.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.0g.maxPerMsgGasLimit:
+-        3000000
++        15000000
+      values.destChainConfigs.0g.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.0g.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.bittensor.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.bittensor.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.bittensor.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.bittensor.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.monad.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.monad.maxPerMsgGasLimit:
+-        7000000
++        8000000
+      values.destChainConfigs.monad.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.monad.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.hyperliquid.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.hyperliquid.maxPerMsgGasLimit:
+-        7000000
++        15000000
+      values.destChainConfigs.hyperliquid.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.hyperliquid.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.adi.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.adi.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.adi.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.adi.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.xlayer.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.xlayer.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.xlayer.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.xlayer.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.plasma.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.plasma.maxPerMsgGasLimit:
+-        3000000
++        15000000
+      values.destChainConfigs.plasma.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.plasma.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.neox.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.neox.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.neox.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.neox.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.opbnb.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.opbnb.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.opbnb.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.opbnb.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.ronin.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.ronin.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.ronin.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.ronin.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.linea.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.linea.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.linea.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.linea.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.hedera.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.hedera.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.hedera.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.hedera.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.andromeda.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.andromeda.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.andromeda.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.andromeda.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.worldchain.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.worldchain.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.worldchain.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.worldchain.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.wemix.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.wemix.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.wemix.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.wemix.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.bob.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.bob.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.bob.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.bob.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.avalanche.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.avalanche.maxPerMsgGasLimit:
+-        3000000
++        15000000
+      values.destChainConfigs.avalanche.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.avalanche.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.unichain.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.unichain.maxPerMsgGasLimit:
+-        3000000
++        6000000
+      values.destChainConfigs.unichain.destGasPerPayloadByteBase:
+-        16
++        255
+      values.destChainConfigs.unichain.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.scroll.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.scroll.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.scroll.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.scroll.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.hashkey.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.hashkey.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.hashkey.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.hashkey.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.apechain.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.apechain.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.apechain.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.apechain.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.celo.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.celo.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.celo.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.celo.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.fraxtal.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.fraxtal.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.fraxtal.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.fraxtal.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.optimism.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.optimism.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.optimism.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.optimism.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.xdai.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.xdai.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.xdai.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.xdai.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.sei.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.sei.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.sei.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.sei.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.zircuit.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.zircuit.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.zircuit.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.zircuit.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.mode.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.mode.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.mode.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.mode.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.hemi.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.hemi.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.hemi.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.hemi.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.soneium.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.soneium.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.soneium.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.soneium.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.matic.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.matic.maxPerMsgGasLimit:
+-        3000000
++        15000000
+      values.destChainConfigs.matic.destGasPerPayloadByteBase:
+-        16
++        100
+      values.destChainConfigs.matic.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.arbitrum.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.arbitrum.maxPerMsgGasLimit:
+-        7000000
++        15000000
+      values.destChainConfigs.arbitrum.destGasPerPayloadByteBase:
+-        16
++        100
+      values.destChainConfigs.arbitrum.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.core.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.core.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.core.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.core.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.bsc.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.bsc.maxPerMsgGasLimit:
+-        3000000
++        15000000
+      values.destChainConfigs.bsc.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.bsc.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.shibarium.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.shibarium.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.shibarium.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.shibarium.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.base.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.base.maxPerMsgGasLimit:
+-        7000000
++        15000000
+      values.destChainConfigs.base.destGasPerPayloadByteBase:
+-        16
++        100
+      values.destChainConfigs.base.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.gravity:
++        {"isEnabled":true,"maxDataBytes":30000,"maxPerMsgGasLimit":3000000,"destGasOverhead":300000,"destGasPerPayloadByteBase":16,"chainFamilySelector":"EVM","defaultTokenFeeUSDCents":50,"defaultTokenDestGasOverhead":90000,"defaultTxGasLimit":200000,"networkFeeUSDCents":50,"linkFeeMultiplierPercent":90}
+      values.tokenTransferFeeConfig.arc:
++        [{"token":"eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b","tokenTransferFeeConfig":{"feeUSDCents":50,"destGasOverhead":175000,"destBytesOverhead":32,"isEnabled":true}}]
+    }
+```
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC] {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.27:
++        "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.28:
++        "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.29:
++        "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.30:
++        "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+    }
+```
+
+```diff
+    contract USDCCCTPVerifierResolver (eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for each inbound verifier-result version tag.
+      values.getAllInboundImplementations.0:
+-        {"version":"0x35a25838","verifier":"eth:0xa22606F055146f0eac2FBEd49253E779b781355D"}
+      values.owner:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v2_0 (eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7) [ccip/OnRampV2_0] {
+    +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
+      values.destChainConfigs.abstract.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.adi.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.optimism.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.arbitrum.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.matic.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.apechain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xc33af712B68B2BdFD79B241C1de190706C651ef2"}
+      values.destChainConfigs.opbnb:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x26adFa2F46F5efDD5dFDF5b2f9849fD97b8390cc"}
+      values.destChainConfigs.bsquared:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x2b094d93fDbCf05e9b6c6130a880ea2B6209e42F"}
+      values.destChainConfigs.celo:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x614B367841ec854994706f06AAB4aA2C80Fe06D9"}
+      values.destChainConfigs.core:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x16F18A1dbe0Aa84dB8a96f111f458fcA81EE993F"}
+      values.destChainConfigs.creditcoin:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x63D678c01E1017c37250D735B30F6909ffc52d21"}
+      values.destChainConfigs.hashkey:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xe4590E340c51303074874ddb80883b31E72f7de7"}
+      values.destChainConfigs.linea:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x614B367841ec854994706f06AAB4aA2C80Fe06D9"}
+      values.destChainConfigs.andromeda:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xA8CfE463372136f754Dc5Ed50d575393cb8b74bB"}
+      values.destChainConfigs.mode:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xc33af712B68B2BdFD79B241C1de190706C651ef2"}
+      values.destChainConfigs.scroll:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x5Ad69372a0DFA94188191aB13dF0034cb4454ee1"}
+      values.destChainConfigs.taiko:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x647e26A8D4aE569691C6D48d7b2D98a65fCB4281"}
+      values.destChainConfigs.worldchain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xe3657564C57c81E19466c2Dd4397F1b61e98b87B"}
+      values.destChainConfigs.zircuit:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x0198F9087cED2D60C08caa711917141964e32a96"}
+      values.destChainConfigs.fraxtal:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xD21D5a4e3fA0eBACC3DaBB5258d9C1F4d24dc894"}
+      values.destChainConfigs.hedera:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xbb1E3552baDC3498638D20D0b6903aFc432c7253"}
+      values.destChainConfigs.hemi:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xd4B3957f026e28BF39b2B27810780980cD6f01C4"}
+      values.destChainConfigs.lens:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x4156883C9aaAdBF08ff7C50138af72dbeAd73d0a"}
+      values.destChainConfigs.morph:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x35D59e7Bd6e607F28a62bf93524663F504B04A3C"}
+      values.destChainConfigs.henesys:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x4D3457B8Cf083113F7d4BeC82DE6F44A8c5A1535"}
+      values.destChainConfigs.astar:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC"}
+      values.destChainConfigs.rootstock:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xa3361ff0d9cA1cBA31335a3280eECe47f1a08F43"}
+      values.destChainConfigs.sei:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.destChainConfigs.shibarium:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x48bc5Ab224B818300041956f0da2e675bf676D27"}
+      values.destChainConfigs.soneium:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x197b356FfC1abda68f38AF6Ad28aaEBA5f089419"}
+      values.destChainConfigs.zksync:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xd072940492b5cbE546EedDb17481b256E0B6A21a"}
+      values.destChainConfigs.xdc:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xAfEBaEe519286Dc4230C577E9dca813f4BA70a5b"}
+      values.destChainConfigs.tempo:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xD7f1eB70a6A471548a2fab5e0Af5Eb8CB289D547"}
+      values.destChainConfigs.jovay:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xc596056254CBb7900bf2f857a172C4dBb97c0dF5"}
+      values.destChainConfigs.bittensor:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xF9410A08FD57e629c66E1f37a5Ae8f0a757d9AD9"}
+      values.destChainConfigs.0g:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xA7D08c8252FCc5D6B4889eD8E80Ecd5BA37498C4"}
+      values.destChainConfigs.unichain:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b"}
+      values.destChainConfigs.xlayer:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x28D9FDfc7A5c17183dB1599bd80399F4746D9C57"}
+      values.destChainConfigs.xdai:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xF9410A08FD57e629c66E1f37a5Ae8f0a757d9AD9"}
+      values.destChainConfigs.plasma:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xff94c954556E572b0E96241AA499494D80237eF3"}
+      values.destChainConfigs.pharos:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x02c31871Caee4676C43ca73fFB6787eaD616f1Ea"}
+      values.destChainConfigs.ronin:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xAfEBaEe519286Dc4230C577E9dca813f4BA70a5b"}
+      values.destChainConfigs.bob:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC"}
+      values.destChainConfigs.wemix:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xdf26208d8e2d7EAD3ef4e9a5a3Cad8A3c9143934"}
+      values.destChainConfigs.neox:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x3f160A0c4A2Fd54855B62E7501FadfE1c03B567e"}
+      values.destChainConfigs.bitlayer:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xECFF67559c0583027A5fbd85136E33bC4D66eeA0"}
+      values.destChainConfigs.sonic:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x5A07E1CdaBF6e1b5a917f5b67a1Fe9a42c130F4B"}
+      values.destChainConfigs.katana:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x0F822109476cCd465d14a78868911D304E4Bf714"}
+      values.destChainConfigs.avalanche:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x65D04D8dA1405b50d3508aaF94e1B6F5f1A3895C"}
+      values.destChainConfigs.monad:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xa315658c5E11b0Ca99dE255F07F10E6C584E4e01"}
+      values.destChainConfigs.bsc:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x4914044f8d787bd5DC7528f00775D850dC54477e"}
+      values.destChainConfigs.etherlink:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xCEC185eB182c47d1bA1EFc84e6959e18cd620Be4"}
+      values.destChainConfigs.megaeth:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x5A07E1CdaBF6e1b5a917f5b67a1Fe9a42c130F4B"}
+      values.destChainConfigs.stable:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x4eA35565147A7A6BfDAF7e605BDCdA4BD039A540"}
+      values.destChainConfigs.berachain:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x303f55ab6b48DB4619C27802EA4c47f9F4E779dD"}
+      values.destChainConfigs.base:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x16E577f1724AE2598F9b43a52C19E6f67eE13808"}
+      values.destChainConfigs.hyperliquid:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x99bF17A320a981710F9b53C0c0b27219c1121d8d"}
+      values.routeRouters.abstract:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.adi:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.optimism:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.arbitrum:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.matic:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.apechain:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.opbnb:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bsquared:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.celo:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.core:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.creditcoin:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.hashkey:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.linea:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.andromeda:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.mode:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.scroll:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.taiko:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.worldchain:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.zircuit:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.fraxtal:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.hedera:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.hemi:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.lens:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.morph:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.henesys:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.astar:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.rootstock:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.sei:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.shibarium:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.soneium:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.zksync:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.xdc:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.tempo:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.jovay:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.bittensor:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.0g:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.unichain:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.xlayer:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.xdai:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.plasma:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.pharos:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.ronin:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bob:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.wemix:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.neox:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bitlayer:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.sonic:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.katana:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.avalanche:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.monad:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bsc:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.etherlink:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.megaeth:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.stable:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.berachain:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+      values.routeRouters.base:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.hyperliquid:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+    }
+```
+
+```diff
+    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.105:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.106:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.105:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.106:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.105:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.106:
++        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.37:
++        "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.38:
++        "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.39:
++        "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.40:
++        "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+    }
+```
+
+```diff
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy] {
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+      values.lockOrBurnMechanisms.optimism:
+-        "CCTP_V1"
++        "CCV"
+      values.lockOrBurnMechanisms.arbitrum:
+-        "CCTP_V1"
++        "CCV"
+      values.lockOrBurnMechanisms.unichain:
+-        "CCTP_V1"
++        "CCV"
+      values.lockOrBurnMechanisms.matic:
+-        "CCTP_V1"
++        "CCV"
+      values.lockOrBurnMechanisms.avalanche:
+-        "CCTP_V1"
++        "CCV"
+      values.lockOrBurnMechanisms.base:
+-        "CCTP_V1"
++        "CCV"
+    }
+```
+
+```diff
+    contract PolygonPosOffRamp_v1_6 (matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Polygon PoS.
+      values.sourceChainConfigs.arc:
++        {"router":"matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000051665f2455116e929b9972c36d23070f5054ce0"}
+      values.sourceChainConfigs.tempo:
++        {"router":"matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x00000000000000000000000021d66d23fe27bb4175c866d4d3ee9bc12c4824e3"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeAggregatorTimelock (eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178) [transporter/RBACTimelock]
+    +++ description: Role-based timelock that CCIP uses as a fee aggregator, collecting fee tokens withdrawn from its ramps.
+```
+
+```diff
++   Status: CREATED
+    contract FeeAggregator_ProposerMultisig (eth:0x3d54fF2Fd088bFB8aad30cC408273Ed641ABDA91) [transporter/ManyChainMultiSig]
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 2-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+```
+
+```diff
++   Status: CREATED
+    contract FeeAggregator_BypasserMultisig (eth:0x75FDCe0C6fABcaAa2B392010CE1C711dCf8AfADD) [transporter/ManyChainMultiSig]
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 2-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+```
+
+```diff
++   Status: CREATED
+    contract FeeAggregatorCallProxy (eth:0x981c2b5C5B3B479A6088a7B20A043373B2d69EA9) [transporter/CallProxyWithTargetSet]
+    +++ description: Anyone can call this contract to execute scheduled transactions that have passed the delay.
+```
+
+```diff
++   Status: CREATED
+    contract FeeAggregator_CancellerMultisig (eth:0xB747c1486D8aCa1d13018B574701F325F497D198) [transporter/ManyChainMultiSig]
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-4 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+```
+
+## Source code changes
+
+```diff
+.../projects/ccip/.flat/FeeAggregatorCallProxy.sol |   38 +
+ .../projects/ccip/.flat/FeeAggregatorTimelock.sol  | 1865 ++++++++++++++++++++
+ .../ccip/.flat/FeeAggregator_BypasserMultisig.sol  | 1632 +++++++++++++++++
+ .../ccip/.flat/FeeAggregator_CancellerMultisig.sol | 1632 +++++++++++++++++
+ .../ccip/.flat/FeeAggregator_ProposerMultisig.sol  | 1632 +++++++++++++++++
+ 5 files changed, 6799 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788159443 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumOffRamp_v1_6 (arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Arbitrum One.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract BaseOffRamp_v1_6 (base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Base.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract BscOffRamp_v1_6 (bnb:0xA27056438FfA1f286AB197488808692F0db93F8B) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on BNB Chain.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor] {
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    EOA (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"add, remove, or replace OnRamps and OffRamps used by the Router.","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"change the wrapped native token used for native-fee payments.","role":".owner"}
+    }
+```
+
+```diff
+    contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
+    +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract CCTPVerifier_v2_1 (eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af) [ccip/CCTPVerifier] {
+    +++ description: USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v1_6 (eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5) [transporter/OfframpV3] {
+    +++ description: OffRamp used to receive messages on its local chain from other chains. It stores the list and threshold of OCR signers that authorize crosschain message commitments and the transmitters that can relay those reports. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed messages are usually executed by permissioned execution transmitters. After 1h, anyone can execute them.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      description:
+-        "Deprecated router used by BSC."
++        "CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain."
++++ description: All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route.
+      values.onRamps:
++        {"bsc":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","base":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","arbitrum":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","solana":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","mantle":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","ink":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","plume":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","hedera":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","arc":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","cronos":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","ab":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","abstract":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","robinhood":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","adi":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","optimism":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","matic":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"}
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"},{"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}]
+      template:
++        "transporter/RouterV1_2_0"
+      fieldMeta:
++        {"onRamps":{"description":"All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"4426351306075016396":"0g","4829375610284793157":"ab","3577778157919314504":"abstract","4059281736450291836":"adi","14894068710063348487":"apechain","4741433654826277614":"aptos","6433500567565415381":"avalanche","1294465214383781161":"berachain","465944652040885897":"opbnb","7937294810946806131":"bitlayer","3849287863852499584":"bob","4560701533377838164":"botanix","5406759801798337480":"bsquared","241851231317828981":"bitcoin-merlin","2135107236357186872":"bittensor","11344663589394136015":"bsc","2308837218439511688":"canton","1346049177634351622":"celo","1224752112135636129":"core","9043146809313071210":"corn","18240105181246962294":"creditcoin","1456215246176062136":"cronos","8788096068760390840":"cronos-zkevm","6325494908023253251":"edge","8805746078405598895":"andromeda","4949039107694359620":"arbitrum","15971525489660198786":"base","7613811247471741961":"hashkey","3461204551265785888":"ink","4627098889531055414":"linea","1556008542357238666":"mantle","7264351850409363825":"mode","3734403246176062136":"optimism","13204309965629103672":"scroll","16468599424800719238":"taiko","1923510103922296319":"unichain","2049429975587534727":"worldchain","3016212468291539606":"xlayer","17198166215261833993":"zircuit","1562403441176082196":"zksync","13624601974233774587":"etherlink","1462016016387883143":"fraxtal","3229138320728879060":"hedera","1804312132722180201":"hemi","2442541497099098535":"hyperliquid","1523760397290643893":"jovay","9813823125703490621":"kaia","5608378062013572713":"lens","15293031020466096408":"lisk","5009297550715157269":"ethereum","4051577828743386545":"matic","6093540873831549674":"megaeth","13447077090413146373":"metal","11690709103138290329":"mind","17164792800244661392":"mint","8481857512324358265":"monad","18164309074156128038":"morph","4215185756725900654":"mova","12657445206920369324":"henesys","7801139999541420232":"pharos","9335212494177455608":"plasma","17912061998839310979":"plume","6422105447186081193":"astar","2459028469735686113":"katana","6180753054346818345":"robinhood","6370580034781731079":"arc","2988178761202034333":"gravity","6916147374840168594":"ronin","11964252391146578476":"rootstock","9027416829622342829":"sei","3993510008929295315":"shibarium","124615329519749607":"solana","12505351618335765396":"soneium","1673871237479749969":"sonic","16978377838628290997":"stable","470401360549526817":"superseed","5936861837188149645":"tac","7281642695469137430":"tempo","16448340667252469081":"ton","5142893604156789321":"wemix","465200170687744372":"xdai","17673274061779414707":"xdc","3555797439612589184":"zora","17529533435026248318":"sui","9762610643973837292":"sui-testnet","6473245816409426016":"memento","9723842205701363942":"everclear","1546563616611573946":"tron","4348158687435793198":"polygonzkevm","4411394078118774322":"blast","5214452172935136222":"treasure","7222032299962346917":"neox"}}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"},{"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}]
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) [transporter/ARMProxy] {
+    +++ description: Call-forwarding proxy for the active ARM/RMN implementation. It transparently forwards curse checks, the legacy isBlessed() compatibility check and other supported ARM/RMN interface calls; their semantics depend on the selected implementation.
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","description":"block routed messages when ARM/RMN reports the relevant subject as cursed.","role":".getArmProxy"}
+    }
+```
+
+```diff
+    contract RMN_CurseBypasserMultisig (eth:0x42e83F35E8f32056884311C07CB195547785Efa9) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
+    +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract RMN_Multisig1 (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-40 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract RMN_CurseProposerMultisig (eth:0x7a07a474D8c33E25327b4BEb659B9be65012e852) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier] {
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract CCTPThroughCCVTokenPool (eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2) [ccip/CCTPThroughCCVTokenPool] {
+    +++ description: CCIP 2.0 USDC pool for transfers that use CCTP through a CCV. The CCTP verifier burns and mints the USDC, while this pool validates the configured route, RMN state, finality, rate limits, transfer fees, and authorized caller.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract RMN_Multisig2 (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract RMN_Multisig3 (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 5 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-40 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6] {
+    +++ description: OnRamp used to send messages from its local chain to other chains. It stores each destination route's authorized Router and optional sender allowlist, prices messages through the configured FeeQuoter, and advances outbound nonces through the NonceManager.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2] {
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+      usedTypes.1.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract RMN_CurseCancellerMultisig (eth:0x95176427A9555fCa942828F3d22b665bE36b718B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 1 signatures across 7 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 1-of-7 multisig and is strictly more constrained. Root: 1-of-7, signers=7. [click for per-group breakdown: ]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Flat 1-of-7 multisig: every signer belongs directly to the root group. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "Flat 1-of-7 multisig: every signer belongs directly to the root group."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract CCTPVerifier_v2_0 (eth:0xa22606F055146f0eac2FBEd49253E779b781355D) [N/A] {
+    +++ description: None
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract ARM_Multisig3 (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract USDCCCTPVerifierResolver (eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: Token accepted as fee token for sending outgoing messages.
+```
+
+```diff
+    contract EthereumOnRamp_v2_0 (eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7) [ccip/OnRampV2_0] {
+    +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
+      values.config.quorumSummary:
++        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
++        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
+      fieldMeta.$threshold.description:
+-        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading."
++        "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). When the root has sub-groups the badge is only a lower bound, because the signatures must also satisfy the group quorums; the entry description states the full rule."
+      fieldMeta.minSigs.description:
+-        "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected."
++        "Recursively computed minimum signature count to satisfy the root quorum. With sub-groups this is a lower bound: a set of this many signers is accepted only if it also satisfies the group quorums."
+      fieldMeta.memberCount.description:
+-        "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule."
++        "Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule."
+      fieldMeta.quorumSummary:
++        {"description":"Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description."}
+    }
+```
+
+```diff
+    contract SiloedUSDCTokenPool (eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D) [ccip/SiloedUSDCTokenPool] {
+    +++ description: CCIP 2.0 USDC lock/release pool. Each configured remote chain has a separate USDC lockbox, and authorized callers move liquidity into or out of that chain's lockbox. It also supports a staged migration of a lane from lock/release liquidity to canonical Circle CCTP.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract ReUSDTokenPool (eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465) [ccip/BurnWithFromMintTokenPool] {
+    +++ description: CCIP 2.0 burn/mint pool for tokens whose issuer supports burning from the pool and minting to recipients. It enforces configured routes, RMN status, finality, rate limits, and fees, and can use AdvancedPoolHooks for additional checks or verifier requirements.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract USDCTokenPoolCCTPV1 (eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1) [ccip/USDCTokenPool] {
+    +++ description: USDC pool that burns outgoing USDC through a fixed Circle TokenMessenger and forwards incoming Circle attestations through a fixed message-transmitter proxy. Its caller allowlist lets a routing proxy invoke it, and separate deployments handle Circle CCTP v1 and CCTP v2 messages.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy] {
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+      usedTypes.1.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract PolygonPosOffRamp_v1_6 (matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Polygon PoS.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
+```diff
+    contract OptimismOffRamp_v1_6 (oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on OP Mainnet.
+      usedTypes.0.arg.2988178761202034333:
++        "gravity"
+    }
+```
+
 Generated with discovered.json: 0x92e420bea06741303efed68bd3bb5484690b2901
 
 # Diff at Tue, 01 Sep 2026 15:45:16 GMT:

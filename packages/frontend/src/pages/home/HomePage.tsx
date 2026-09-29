@@ -10,7 +10,6 @@ import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/livenes
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
@@ -30,6 +29,7 @@ import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { HomeWhatsNewCard } from './components/HomeWhatsNewCard'
 import type { HomeRecentProject } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
+import type { HomeTopZkProver } from './toHomeTopZkProver'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -37,7 +37,7 @@ interface Props extends AppLayoutProps {
   topChains: L2SummaryEntry[]
   topChainsTvsData: TvsTableData
   topPrivacyProtocols: PrivacySummaryEntry[]
-  topZkProvers: ZkCatalogEntry[]
+  topZkProvers: HomeTopZkProver[]
   l2Charts: HomeL2Charts
   ethereumCharts: HomeEthereumCharts
   ethereumEconomicSecurity: number | undefined

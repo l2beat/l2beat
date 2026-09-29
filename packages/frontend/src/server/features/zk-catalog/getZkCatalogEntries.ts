@@ -101,13 +101,11 @@ function getZkCatalogEntry(
     techStack: project.zkCatalogInfo.techStack,
     trustedSetupsByProofSystem,
     filterable: [
-      ...[
-        ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
-        ...(project.zkCatalogInfo.techStack.zkVM ?? []),
-      ].map((techStack) => ({
-        id: techStack.type,
-        value: techStack.name,
-      })),
-    ],
+      ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
+      ...(project.zkCatalogInfo.techStack.zkVM ?? []),
+    ].map((techStack) => ({
+      id: techStack.type,
+      value: techStack.name,
+    })),
   }
 }

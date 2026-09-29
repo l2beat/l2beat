@@ -1657,7 +1657,7 @@
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
   "usedBlockNumbers": { "ethereum": 25796469, "scroll": 34702306 },
-  "permissionsConfigHash": "0xd758ce54f002993c1e3392e6d153bfd182ac74b52bd11ed1d2b83b56be672e1c",
+  "permissionsConfigHash": "0x26d93d95b28b06fa31f1c53175afe54dbf953f83b862f1c0c986162c4b1145cf",
   "permissions": {
     "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E": {
       "directlyReceivedPermissions": [

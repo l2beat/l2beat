@@ -7,5 +7,11 @@
     "eth:0xd2726bde3D07645faf5aD7cCF15C94817B3556D6",
     "eth:0xd1fe2EEb5637b0F78BfcEd9186ebE716aC73DEb6"
   ],
+  "overrides": {
+    "eth:0xCD749A3e59543B31658b725136Ef3616bE7001bc": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": { "eth:0xf040a7A04e914E1b4383C04359D03Ab5F12E7828": "GmMultisig" }
 }

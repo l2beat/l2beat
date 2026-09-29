@@ -1,3 +1,1238 @@
+Generated with discovered.json: 0xf8dc802dfb21e1b06d3ebb9b1f308704e62cbaad
+
+# Diff at Mon, 28 Sep 2026 13:21:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d37f2e4fe0294b1155e49a05f47089330e10fe87 block: 1789727053
+- current timestamp: 1790601621
+
+## Description
+
+Timeboost is replaced by Priority Gas Auctions ([Constitutional AIP](https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942)). Tips are paid to the network fee account (L2SurplusFee). The TipCollectionToggler is immutable and can only call `setCollectTips`.
+
+Config related: the ArbOS chain owners are now discovered via `ArbOwnerPublic.getAllChainOwners()` on the L2UpgradeExecutor. This adds the time-limited, single-purpose chain owner contracts TipCollectionToggler, BaseFeeManager and ResourceConstraintManager with new templates, and their manager multisig.
+
+## Watched changes
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
++++ severity: HIGH
+      values.chainOwners.2:
++        "arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63"
+    }
+```
+
+```diff
+    contract Arbitrum L2 Multisig 1 (arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63","description":"toggle the collection of priority fees (tips).","role":".tipCollectionManagers"}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.144:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"","function":"0x481f8dbf","inputs":[{"name":"calldata","value":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63"}],"address":"arb1:0x0000000000000000000000000000000000000070","calldata":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a630000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.145:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"TipCollectionToggler","function":"activate","inputs":[],"address":"arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63","calldata":"0x0f15f4c0","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000084bca8c7b50000000000000000000000004323dab775cc15e386fdac591a39420db6226a63000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000040f15f4c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TipCollectionToggler (arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63) [orbitstack/layer2/TipCollectionToggler]
+    +++ description: ArbOS chain owner that can only toggle the collection of priority fees (tips), which enables PGA transaction ordering. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+## Source code changes
+
+```diff
+.../arbitrum/.flat/TipCollectionToggler.sol        | 1411 ++++++++++++++++++++
+ 1 file changed, 1411 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. It also receives the priority fees (tips) collected while ArbOS tip collection is enabled. They are withdrawable to a configurable set of recipients.
+      description:
+-        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. It also receives the priority fees (tips) collected while ArbOS tip collection is enabled. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
++++ severity: HIGH
+      values.chainOwners:
++        ["arb1:0x8F59C7A53b883563B34cbBb6fF021B03973e823a","arb1:0x6e031B6e9f667Ed6953E627276fBbEfa4c28529A"]
+      fieldMeta.chainOwners:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeManager (arb1:0x6e031B6e9f667Ed6953E627276fBbEfa4c28529A) [orbitstack/layer2/BaseFeeManager]
+    +++ description: ArbOS chain owner that can only set the L2 base fee and minimum base fee within 0.01-0.1 gwei. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (arb1:0x8F59C7A53b883563B34cbBb6fF021B03973e823a) [orbitstack/layer2/ResourceConstraintManager]
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum L2 Multisig 1 (arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x52f70e4fd9209964854c891a2adc7b8e6d25fa94
+
+# Diff at Wed, 23 Sep 2026 05:45:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789727053
+- current timestamp: 1789727053
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x1c5d1d848ab70e442d957dfd893339e979a72372
+
+# Diff at Mon, 21 Sep 2026 11:23:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789727053
+- current timestamp: 1789727053
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      fieldMeta:
++        {"cloneableProxyHash":{"severity":"HIGH"},"beaconProxyFactory":{"severity":"HIGH"},"router":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) [orbitstack/layer2/L2Timelock] {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract StandardArbERC20 (arb1:0x3f770Ac673856F105b586bb393d122721265aD46) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"l1Address":{"severity":"HIGH"},"l2Gateway":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"cloneableProxyHash":{"severity":"HIGH"},"beacon":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
+    +++ description: Token governance contract for the Security Council member elections.
+      fieldMeta:
++        {"fullWeightDuration":{"severity":"HIGH"},"nomineeElectionGovernor":{"severity":"HIGH"},"securityCouncilManager":{"severity":"HIGH"},"votingPeriod":{"severity":"HIGH"},"votingDelay":{"severity":"HIGH"},"proposalThreshold":{"severity":"HIGH"},"token":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.counterpartGateway:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      fieldMeta:
++        {"l2Weth":{"severity":"HIGH"},"l1Weth":{"severity":"HIGH"},"router":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) [orbitstack/layer2/SecurityCouncilMemberRemovalGovernor] {
+    +++ description: Token governance contract for the Security Council member removals.
+      fieldMeta:
++        {"VOTE_SUCCESS_DENOMINATOR":{"severity":"HIGH"},"voteSuccessNumerator":{"severity":"HIGH"},"proposalExpirationBlocks":{"severity":"HIGH"},"lateQuorumVoteExtension":{"severity":"HIGH"},"securityCouncilManager":{"severity":"HIGH"},"quorumDenominator":{"severity":"HIGH"},"quorumNumerator":{"severity":"HIGH"},"votingPeriod":{"severity":"HIGH"},"votingDelay":{"severity":"HIGH"},"proposalThreshold":{"severity":"HIGH"},"token":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) [orbitstack/layer2/UpgradeExecRouteBuilder] {
+    +++ description: None
+      fieldMeta:
++        {"l1TimelockMinDelay":{"severity":"HIGH"},"l1TimelockAddr":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2WETH (arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1) [N/A] {
+    +++ description: Canonical upgradeable WETH token burned by L2WethGateway when withdrawing against the L1 WETH escrow.
+      fieldMeta:
++        {"l1Address":{"severity":"HIGH"},"l2Gateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      fieldMeta:
++        {"ROTATION_CUT_OFF_BLOCKS":{"severity":"HIGH"},"firstNominationStartDate":{"severity":"HIGH"},"cadenceInMonths":{"severity":"HIGH"},"nomineeVettingDuration":{"severity":"HIGH"},"nomineeVetter":{"severity":"HIGH"},"securityCouncilMemberElectionGovernor":{"severity":"HIGH"},"securityCouncilManager":{"severity":"HIGH"},"quorumDenominator":{"severity":"HIGH"},"quorumNumerator":{"severity":"HIGH"},"votingPeriod":{"severity":"HIGH"},"votingDelay":{"severity":"HIGH"},"proposalThreshold":{"severity":"HIGH"},"token":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      fieldMeta.mintCapPerYer.severity:
++        "HIGH"
+      fieldMeta.l1Address:
++        {"severity":"HIGH"}
+      fieldMeta.MIN_MINT_INTERVAL:
++        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_DENOMINATOR:
++        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_NUMERATOR:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) [orbitstack/layer2/L2ARBGateway] {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      fieldMeta:
++        {"router":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      fieldMeta.transactionFilteringPrecompile:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      fieldMeta.getSecondCohort:
++        {"severity":"LOW"}
+      fieldMeta.getFirstCohort:
++        {"severity":"LOW"}
+      fieldMeta.l2CoreGovTimelock:
++        {"severity":"HIGH"}
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.securityCouncils:
++        {"severity":"HIGH"}
+      fieldMeta.minRotationPeriod:
++        {"severity":"HIGH"}
+      fieldMeta.cohortSize:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.cohortReplacerAC:
++        {"severity":"HIGH"}
+      fieldMeta.memberAdderAC:
++        {"severity":"HIGH"}
+      fieldMeta.memberReplacerAC:
++        {"severity":"HIGH"}
+      fieldMeta.memberRotatorAC:
++        {"severity":"HIGH"}
+      fieldMeta.memberRemoverAC:
++        {"severity":"HIGH"}
+      fieldMeta.minRotationPeriodSetterAC:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      fieldMeta.lateQuorumVoteExtension:
++        {"severity":"HIGH"}
+      fieldMeta.quorumDenominator:
++        {"severity":"HIGH"}
+      fieldMeta.quorumNumerator:
++        {"severity":"HIGH"}
+      fieldMeta.votingPeriod:
++        {"severity":"HIGH"}
+      fieldMeta.votingDelay:
++        {"severity":"HIGH"}
+      fieldMeta.proposalThreshold:
++        {"severity":"HIGH"}
+      fieldMeta.token:
++        {"severity":"HIGH"}
+      fieldMeta.timelock:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Outbox (eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
++        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
++        {"severity":"HIGH"}
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager:
++        {"severity":"HIGH"}
+      fieldMeta.bufferConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.minimumAssertionPeriod.severity:
++        "HIGH"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.rollupEventInbox:
++        {"severity":"HIGH"}
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.outbox:
++        {"severity":"HIGH"}
+      fieldMeta.inbox:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.loserStakeEscrow:
++        {"severity":"HIGH"}
+      fieldMeta.stakeToken:
++        {"severity":"HIGH"}
+      fieldMeta.baseStake:
++        {"severity":"HIGH"}
+      fieldMeta.validatorAfkBlocks:
++        {"severity":"HIGH"}
+      fieldMeta.challengeGracePeriodBlocks:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OutboxV0 (eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"beacon":{"severity":"HIGH"},"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta.whitelist:
++        {"severity":"HIGH"}
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.inbox:
++        {"severity":"HIGH"}
+      fieldMeta.counterpartGateway:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OutboxV1 (eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) [orbitstack/ERC20Gateway2] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      fieldMeta:
++        {"cloneableProxyHash":{"severity":"HIGH"},"l2BeaconProxyFactory":{"severity":"HIGH"},"router":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      fieldMeta:
++        {"excessStakeReceiver":{"severity":"HIGH"},"stakeToken":{"severity":"HIGH"},"stakeAmounts":{"severity":"HIGH"},"challengePeriodBlocks":{"severity":"HIGH"},"oneStepProofEntry":{"severity":"HIGH"},"assertionChain":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1ARBGateway (eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27) [N/A] {
+    +++ description: Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.
+      fieldMeta:
++        {"whitelist":{"severity":"HIGH"},"router":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db) [N/A] {
+    +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
+      fieldMeta:
++        {"l2Weth":{"severity":"HIGH"},"l1Weth":{"severity":"HIGH"},"router":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      fieldMeta.governanceChainInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.l2Timelock:
++        {"severity":"HIGH"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xc00bfc4ade7c7c58d487fb8260fb536ecaa05d35
+
+# Diff at Fri, 18 Sep 2026 17:35:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6eca6e945b1a287f385087f86e711c3126587332 block: 1788818926
+- current timestamp: 1789727053
+
+## Description
+
+arbitrum: critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788818926 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) [orbitstack/layer2/L2Timelock] {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH","description":"Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract StandardArbERC20 (arb1:0x3f770Ac673856F105b586bb393d122721265aD46) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
+    +++ description: Token governance contract for the Security Council member elections.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      critical:
++        true
+      fieldMeta:
++        {"defaultGateway":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) [orbitstack/layer2/SecurityCouncilMemberRemovalGovernor] {
+    +++ description: Token governance contract for the Security Council member removals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) [orbitstack/layer2/UpgradeExecRouteBuilder] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) [orbitstack/layer2/SecurityCouncilMemberSyncAction] {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) [orbitstack/layer2/L2ARBGateway] {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin"}
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) [N/A] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      fieldMeta.l2CoreQuorumPercent.severity:
++        "HIGH"
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      critical:
++        true
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract Outbox (eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      critical:
++        true
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) [N/A] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
+      fieldMeta.batchPosters:
++        {"severity":"LOW"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.confirmPeriodBlocks.severity:
++        "HIGH"
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.getValidators:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.challengeManager:
++        {"severity":"HIGH"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      fieldMeta.validatorWhitelistDisabled:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin"}
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OutboxV0 (eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      critical:
++        true
+      fieldMeta:
++        {"defaultGateway":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OutboxV1 (eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin"}
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) [orbitstack/ERC20Gateway2] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OutboxEntry (eth:0xc4940069140142236D4065b866018f7b2BeC77fD) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH","description":"Minimum timelock delay in seconds before a scheduled governance action can execute on L1."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2WETH (arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1) [N/A]
+    +++ description: Canonical upgradeable WETH token burned by L2WethGateway when withdrawing against the L1 WETH escrow.
+```
+
+```diff
++   Status: CREATED
+    contract L1ARBGateway (eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27) [N/A]
+    +++ description: Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.
+```
+
+```diff
++   Status: CREATED
+    contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db) [N/A]
+    +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
+```
+
+Generated with discovered.json: 0x628931c1ac69577f30047718cf928f585bd6e318
+
+# Diff at Mon, 07 Sep 2026 22:08:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787840339
+- current timestamp: 1788818926
+
+## Description
+
+Security Council Election Process Improvements AIP, executed 2026-08-31 20:52 UTC
+(L1Timelock scheduled tx #143 → `SecurityCouncilUpgradeAction.perform()`). Both
+governance contracts were upgraded:
+
+- `SecurityCouncilManager`: adds member self-rotation and a minimum 44-day
+  rotation period, gated by a new `MIN_ROTATION_PERIOD_SETTER` role held by the
+  L2UpgradeExecutor.
+- `SecurityCouncilNomineeElectionGovernor`: election cadence set to 12 months,
+  qualification quorum lowered from 0.2% to 0.1%.
+- `ConstitutionHash` updated.
+
+## Watched changes
+
+```diff
+    contract ConstitutionHash (arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417) [orbitstack/layer2/ConstitutionHash] {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      values.constitutionHash:
+-        "0x263080bed3962d0476fa84fbb32ab81dfff1244e2b145f9864da24353b2f3b05"
++        "0x310d1c0495cf8ff7b5e89c26fbca91b230ce6dd2b9b8bde8c1a8605545f25063"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      sourceHashes.1:
+-        "0x467a6d321abaf3adf3783b74c4ab2cb9712f8c21a21696fde01fc236733df050"
++        "0x2c28a185d54c18615d4892e1c62fd8df740411c245e0a4b2adc39bc22365a4d5"
+      values.$implementation:
+-        "arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
++        "arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482"
+      values.$pastUpgrades.2:
++        ["2026-08-31T20:52:09.000Z","0x48468a996d2e64c1b0f067518eb050e1863eb04e59da19d4652910835d00fe26",["arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.firstNominationStartDate.year:
+-        2023
++        2021
+      values.firstNominationStartDate.month:
+-        9
++        3
+      values.quorumNumerator:
+-        20
++        10
+      values.cadenceInMonths:
++        12
+      values.ROTATION_CUT_OFF_BLOCKS:
++        21600
+      implementationNames.arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C:
+-        "SecurityCouncilNomineeElectionGovernor"
+      implementationNames.arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482:
++        "SecurityCouncilNomineeElectionGovernor"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC"}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      sourceHashes.1:
+-        "0xf2eeba703974bbc2cb02cd7d24845f71be941a764f033493e85fba52b3d6de28"
++        "0x91ac856c76d1dece40ddd75f96a4c2f01abea4b57cea64f43b24149466105b4f"
+      values.$implementation:
+-        "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
++        "arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928"
+      values.$pastUpgrades.1:
++        ["2026-08-31T20:52:09.000Z","0x48468a996d2e64c1b0f067518eb050e1863eb04e59da19d4652910835d00fe26",["arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.DOMAIN_TYPE_HASH:
++        "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f"
+      values.MIN_ROTATION_PERIOD_SETTER_ROLE:
++        "0xdca740b6747d464c97988ea224a1c2afa5d593dea6c130c887834cb139bbe3cd"
+      values.minRotationPeriod:
++        3801600
+      values.minRotationPeriodSetterAC:
++        ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+      values.NAME_HASH:
++        "0xf935788d54266c928db40f457ef3948e98c56fe8d272b38ba9d240bf19b3fcf5"
+      values.ROTATE_MEMBER_TYPE_HASH:
++        "0x680519cfd93b36ad1cb2f56839eef9e22266c5109fac35adee21f6f49b248260"
+      values.VERSION_HASH:
++        "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6"
+      errors:
+-        {"minRotationPeriodSetterAC":"Processing error occurred."}
+      implementationNames.arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64:
+-        "SecurityCouncilManager"
+      implementationNames.arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928:
++        "SecurityCouncilManager"
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.143:
++        {"id":"0xbf93fbef0a1274cf00bfcbdff101bdc83b9924f9711879d284d6495728356e85","decoded":{"chain":"arbitrum","contractName":"SecurityCouncilUpgradeAction","function":"perform","inputs":[],"address":"arb1:0xeF98Fc7A7F08De47Ed01f3F11f07319c22106445","calldata":"0xb147f40c","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000ef98fc7a7f08de47ed01f3f11f07319c2210644500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SecurityCouncilManager.sol                     | 1323 +++++++++++++++-----
+ .../SecurityCouncilNomineeElectionGovernor.sol     |  606 ++++++---
+ 2 files changed, 1455 insertions(+), 474 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787840339 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      errors:
++        {"minRotationPeriodSetterAC":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xc21c7b9cf5f8edd643f933075148c22fd18b8280
 
 # Diff at Thu, 27 Aug 2026 14:20:06 GMT:

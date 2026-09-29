@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ResourceConstraintManager",
+  "description": "ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "resourceConstraintManagers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the gas pricing constraints of the L2 base fee model within hardcoded bounds."
+        }
+      ]
+    }
+  }
+}

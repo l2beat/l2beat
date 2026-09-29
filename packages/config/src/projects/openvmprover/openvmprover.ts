@@ -78,10 +78,30 @@ export const openvmprover: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x00dfb6855747412fa70b8a75aaa4950f1deafaace9d2a4e9923ad2e1a3589928',
+        name: 'OpenVM v2.0.0 PostFeynman',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v2.0.0',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x0d2A59fd7060460F07c30C2817b4E79576da01C6',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        verificationSteps: readProjectMarkdown(
+          'openvmprover',
+          'verificationSteps-0x00dfb685',
+        ),
+        description:
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      },
+      {
         hash: '0x6a74f16c472ea2698ee461daf35ffb62faaef6280d40390961daa181bc805663',
         name: 'OpenVM v1.6.0 PostFeynman',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.6.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -103,8 +123,7 @@ export const openvmprover: BaseProject = {
       {
         hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',
         name: 'OpenVM Feynman',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/v0.5.0/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.2.1-rc.1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -126,8 +145,7 @@ export const openvmprover: BaseProject = {
       {
         hash: '0xf86ce35d4f5b1478f21194d9c6fc825f8d8afc0468425c981dc017149f0cac5e',
         name: 'OpenVM Galileo',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.0/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.4.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {

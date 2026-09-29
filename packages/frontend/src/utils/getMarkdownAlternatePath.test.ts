@@ -1,0 +1,41 @@
+import { expect } from 'earl'
+import { getMarkdownAlternatePath } from './getMarkdownAlternatePath'
+
+// Method: resolve page paths the way the Link header, the <head> link and
+// the project links bar do, for both kinds of registered pages (a fixed list
+// page and a project page pattern) and for paths that must not resolve.
+describe(getMarkdownAlternatePath.name, () => {
+  it('resolves a list page to its .md URL', () => {
+    expect(getMarkdownAlternatePath('/layer2s/summary')).toEqual(
+      '/layer2s/summary.md',
+    )
+  })
+
+  it('resolves any project of a registered page kind', () => {
+    expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
+      '/layer2s/projects/arbitrum.md',
+    )
+  })
+
+  it('resolves every path Express routes to the page', () => {
+    expect(getMarkdownAlternatePath('/Layer2s/Projects/Arbitrum/')).toEqual(
+      '/layer2s/projects/arbitrum.md',
+    )
+  })
+
+  it('has no alternate for pages without a markdown version', () => {
+    for (const path of [
+      '/faq',
+      '/layer2s/projects',
+      '/layer2s/projects/arbitrum/tvs-breakdown',
+    ]) {
+      expect(getMarkdownAlternatePath(path)).toEqual(undefined)
+    }
+  })
+
+  it('has no alternate for the markdown version itself', () => {
+    expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum.md')).toEqual(
+      undefined,
+    )
+  })
+})

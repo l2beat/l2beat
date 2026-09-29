@@ -129,23 +129,17 @@ export const nova: ScalingProject = orbitStackL2({
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro',
   stage1Principle: false,
-  daAttestedByIndependentParty: true,
-  daVerifierSecureOnL1: true,
-  daVerifier7DayExitWindow: true,
-  daCommitteeDecentralized: true,
-  daVerifier30DayExitWindow: false,
-  daMechanismEconomicSecurity: false,
   securityCouncilReference:
     'https://docs.arbitrum.foundation/security-council-members',
   stage1PrincipleDescription:
-    'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise or sequencer+DAC collusion.',
+    'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise.',
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
     headerWarning:
       'The Arbitrum DAO voted to minimize Arbitrum Nova and transition it to maintenance state. Developers and users are encouraged to migrate to Arbitrum One. See the [Minimizing Arbitrum Nova FAQs](https://forum.arbitrum.foundation/t/minimizing-arbitrum-nova-faqs/30955) for details.',
     description:
-      'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+      'Arbitrum Nova is an Optimistic Rollup that posts transaction data to Ethereum in blobs. It previously operated as an AnyTrust Optimium relying on a Data Availability Committee.',
     links: {
       websites: [
         'https://nova.arbitrum.io/',
@@ -284,6 +278,14 @@ export const nova: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Nova stops using its Data Availability Committee',
+      url: 'https://etherscan.io/tx/0x7b7d15c0458651b00e689bf7e5444a3504098ff4fefadf71811d2963dfe3ff26',
+      date: '2026-08-31T00:00:00Z',
+      description:
+        'All batches now post to Ethereum as blobs; Nova moves from Optimium to Optimistic Rollup.',
+      type: 'general',
+    },
     {
       title: 'Bold deployed with a whitelist',
       url: 'https://x.com/arbitrum/status/1889710151332245837',

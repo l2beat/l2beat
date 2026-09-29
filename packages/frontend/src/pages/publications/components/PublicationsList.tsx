@@ -1,7 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
+import { CountBadge } from '~/components/badge/CountBadge'
+import {
+  DirectoryTabs,
+  DirectoryTabsContent,
+  DirectoryTabsList,
+  DirectoryTabsTrigger,
+} from '~/components/core/DirectoryTabs'
 import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { externalLinks } from '~/consts/externalLinks'
@@ -17,10 +23,13 @@ export function PublicationsList({
 }) {
   const filterPublications = useFilterEntries()
 
-  const filteredPublications = useMemo(
-    () => publications.filter(filterPublications),
-    [publications, filterPublications],
-  )
+  const { research, updates } = useMemo(() => {
+    const filtered = publications.filter(filterPublications)
+    return {
+      research: filtered.filter((p) => p.tag === 'Research'),
+      updates: filtered.filter((p) => p.tag !== 'Research'),
+    }
+  }, [publications, filterPublications])
 
   return (
     <>
@@ -28,34 +37,67 @@ export function PublicationsList({
         entries={publications}
         className="max-md:mt-4 max-md:px-4"
       />
-      <PrimaryCard className="mt-4 grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 md:p-8 lg:grid-cols-3">
-        <div
-          className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
-          style={{ backgroundImage: `url(${newsletterBgUrl})` }}
-        >
-          <div className="space-y-3">
-            <div className="font-bold text-heading-24">
-              Want to get notified about new publications?
-            </div>
-            <div className="font-normal text-paragraph-14">
-              Get the latest insights - covering Ethereum Layer 2 ecosystem
-              updates, in-depth research and transparency reports, governance
-              proposals, and more.
-            </div>
-          </div>
-          <a
-            className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
-            href={externalLinks.substackSubscribe}
-            target="_blank"
-          >
-            Subscribe to our newsletter
-          </a>
-        </div>
-        {filteredPublications.map((publication) => (
-          <PublicationCard publication={publication} key={publication.id} />
-        ))}
-      </PrimaryCard>
+      <DirectoryTabs defaultValue="research">
+        <DirectoryTabsList>
+          <DirectoryTabsTrigger value="research">
+            Research <CountBadge>{research.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="updates">
+            Updates <CountBadge>{updates.length}</CountBadge>
+          </DirectoryTabsTrigger>
+        </DirectoryTabsList>
+        <DirectoryTabsContent value="research" className="md:p-8">
+          <PublicationsGrid
+            publications={research}
+            newsletterBgUrl={newsletterBgUrl}
+          />
+        </DirectoryTabsContent>
+        <DirectoryTabsContent value="updates" className="md:p-8">
+          <PublicationsGrid
+            publications={updates}
+            newsletterBgUrl={newsletterBgUrl}
+          />
+        </DirectoryTabsContent>
+      </DirectoryTabs>
     </>
+  )
+}
+
+function PublicationsGrid({
+  publications,
+  newsletterBgUrl,
+}: {
+  publications: PublicationEntry[]
+  newsletterBgUrl: string
+}) {
+  return (
+    <div className="grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
+        style={{ backgroundImage: `url(${newsletterBgUrl})` }}
+      >
+        <div className="space-y-3">
+          <div className="font-bold text-heading-24">
+            Want to get notified about new publications?
+          </div>
+          <div className="font-normal text-paragraph-14">
+            Get the latest insights - covering Ethereum Layer 2 ecosystem
+            updates, in-depth research and transparency reports, governance
+            proposals, and more.
+          </div>
+        </div>
+        <a
+          className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
+          href={externalLinks.substackSubscribe}
+          target="_blank"
+        >
+          Subscribe to our newsletter
+        </a>
+      </div>
+      {publications.map((publication) => (
+        <PublicationCard publication={publication} key={publication.id} />
+      ))}
+    </div>
   )
 }
 

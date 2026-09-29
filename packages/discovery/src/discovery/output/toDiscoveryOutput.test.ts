@@ -1,10 +1,11 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { processAnalysis } from './structureOutput'
-import { sortByKeys } from './toDiscoveryOutput'
+import { combineStructureAndColor, sortByKeys } from './toDiscoveryOutput'
+import type { DiscoveryOutput } from './types'
 
 const emptyOutputMeta = {
   type: 'EOA',
@@ -254,5 +255,91 @@ describe(sortByKeys.name, () => {
 
     expect(JSON.stringify(obj)).toEqual('{"foo":"foo","bar":"bar"}')
     expect(JSON.stringify(sortByKeys(obj))).toEqual('{"bar":"bar","foo":"foo"}')
+  })
+})
+
+describe(combineStructureAndColor.name, () => {
+  it('drops fieldMeta the new color config no longer names when recolorizing', () => {
+    const previouslyColorized: DiscoveryOutput = {
+      name: 'kinto',
+      timestamp: 0,
+      abis: {},
+      configHash: Hash256.random(),
+      usedTemplates: {},
+      usedBlockNumbers: {},
+      modelledAgainst: {},
+      entries: [
+        {
+          type: 'Contract',
+          address: ChainSpecificAddress(
+            'eth:0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+          ),
+          name: 'UpgradeExecutor',
+          template: 'orbitstack/UpgradeExecutor',
+          fieldMeta: {
+            executors: { severity: 'LOW' },
+            accessControl: { severity: 'HIGH' },
+          },
+        },
+      ],
+    }
+
+    const colorWithoutAccessControl = {
+      entries: [
+        {
+          name: 'UpgradeExecutor',
+          fieldMeta: { executors: { severity: 'LOW' as const } },
+        },
+      ],
+    }
+
+    const result = combineStructureAndColor(
+      previouslyColorized,
+      colorWithoutAccessControl,
+    )
+
+    expect(result.entries[0]?.fieldMeta).toEqual({
+      executors: { severity: 'LOW' },
+    })
+  })
+
+  it('replaces references instead of merging them by index', () => {
+    const previouslyColorized: DiscoveryOutput = {
+      name: 'project',
+      timestamp: 0,
+      abis: {},
+      configHash: Hash256.random(),
+      usedTemplates: {},
+      usedBlockNumbers: {},
+      modelledAgainst: {},
+      entries: [
+        {
+          type: 'Contract',
+          address: ChainSpecificAddress(
+            'eth:0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+          ),
+          name: 'A',
+          references: [
+            { text: 'Docs', href: 'https://a.example/docs' },
+            { text: 'Audit', href: 'https://a.example/audit' },
+          ],
+        },
+      ],
+    }
+
+    const color = {
+      entries: [
+        {
+          name: 'A',
+          references: [{ text: 'Docs', href: 'https://a.example/docs' }],
+        },
+      ],
+    }
+
+    const result = combineStructureAndColor(previouslyColorized, color)
+
+    expect(result.entries[0]?.references).toEqual([
+      { text: 'Docs', href: 'https://a.example/docs' },
+    ])
   })
 })

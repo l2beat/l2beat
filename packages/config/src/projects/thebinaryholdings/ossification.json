@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1734092819,
+      "type": "state",
+      "contract": "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
+      "transaction": "0x3f290927c9d4cf5f5a9d5ef5ddff99a7c7b582bc013a30789d57feeb28c1caaf",
+      "updateId": "ee3fc781",
+      "reason": "Transferred SystemConfig ownership (OwnershipTransferred) to 0x25a6\u2026; the Safe/EOA holding it is outside the perimeter."
+    }
+  ]
+}

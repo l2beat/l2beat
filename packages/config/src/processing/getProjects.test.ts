@@ -392,9 +392,58 @@ describe('getProjects', () => {
     }
   })
 
+  describe('DeFi TVL sources', () => {
+    for (const project of projects) {
+      const tvl = project.defiInfo?.tvl
+      if (!tvl) continue
+
+      if (tvl.source === 'l2beat') {
+        it(`${project.id} has TVS config for its L2BEAT TVL source`, () => {
+          expect(project.tvsConfig).not.toEqual(undefined)
+        })
+      } else {
+        it(`${project.id} has a complete external TVL scope`, () => {
+          expect(project.tvsConfig).toEqual(undefined)
+          expect(tvl.protocolSlug.length).toBeGreaterThan(0)
+          expect(tvl.sinceTimestamp).toBeGreaterThan(0)
+          expect(tvl.chains.length).toBeGreaterThan(0)
+          expect(new Set(tvl.chains.map((chain) => chain.chain)).size).toEqual(
+            tvl.chains.length,
+          )
+          expect(
+            new Set(tvl.chains.map((chain) => chain.providerChain)).size,
+          ).toEqual(tvl.chains.length)
+        })
+      }
+    }
+  })
+
   describe('privacy projects', () => {
+    const chainNames = new Set(
+      projects.flatMap((p) => (p.chainConfig ? [p.chainConfig.name] : [])),
+    )
+
     for (const project of projects) {
       if (!project.privacyInfo) continue
+
+      const trackedOn = project.privacyInfo.trackedOn
+
+      it(`${project.id} is tracked on at least one chain`, () => {
+        expect(trackedOn.length).toBeGreaterThan(0)
+      })
+
+      it(`${project.id} has no duplicate trackedOn chains`, () => {
+        expect(new Set(trackedOn).size).toEqual(trackedOn.length)
+      })
+
+      it(`${project.id} trackedOn chains all have a chainConfig`, () => {
+        for (const chain of trackedOn) {
+          assert(
+            chainNames.has(chain),
+            `${project.id} privacyInfo.trackedOn: no project has chainConfig.name "${chain}"`,
+          )
+        }
+      })
 
       it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
         expect(
@@ -431,6 +480,30 @@ describe('getProjects', () => {
           expect(configuredBuckets).toEqual(0)
         }
       })
+
+      const adversaries = project.privacyInfo.adversaries
+      if (adversaries) {
+        const baseline = adversaries.cells.publicObserver
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          it(`${project.id} ${adversaryId} has an interior map iff the baseline has one`, () => {
+            expect(cell.interior !== undefined).toEqual(
+              baseline.interior !== undefined,
+            )
+          })
+
+          for (const source of cell.sources ?? []) {
+            if (!('contract' in source)) continue
+            it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {
+              expect(contractNames.has(source.contract)).toEqual(true)
+            })
+          }
+        }
+      }
     }
   })
 
@@ -574,7 +647,7 @@ describe('getProjects', () => {
     it('every api url uses https', () => {
       for (const chain of chains) {
         for (const api of chain.apis) {
-          if ('url' in api) {
+          if ('url' in api && api.url !== undefined) {
             expect(api.url).toMatchRegex(/^https:\/\//)
           }
         }

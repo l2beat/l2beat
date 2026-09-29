@@ -15,6 +15,10 @@
       "description": "Contract through which its owner can execute arbitrary calls and delegatecalls.",
       "fields": { "owner": { "permissions": [{ "type": "act" }] } }
     },
+    "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
       "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.",
       "types": {

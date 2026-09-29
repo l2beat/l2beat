@@ -1,6 +1,6 @@
 {
   "name": "cartesi-prt-honeypot-v2",
-  "timestamp": 1765380759,
+  "timestamp": 1790592527,
   "configHash": "0xa3ae62a88751f3b190a18934950a9e6f0d202e2b6217ad823ba98a8c629b1115",
   "entries": [
     {
@@ -109,19 +109,17 @@
       "name": "Cartesi Multisig",
       "address": "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
       "type": "Contract",
-      "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x77eBA70fe27aC8BA1f292bDa9108555e9a065e3b",
       "sinceTimestamp": 1634112168,
       "sinceBlock": 13408863,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
         "$members": [
           "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
           "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
@@ -132,15 +130,23 @@
         ],
         "$threshold": 3,
         "domainSeparator": "0x5da08fdea0dbcc8c2e5ff2167841877be4e4105aceec36114c391bed58448056",
-        "getChainId": 1,
+        "getOwners": [
+          "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
+          "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
+          "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
+          "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
+          "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
+          "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"
+        ],
+        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 328,
-        "VERSION": "1.3.0"
+        "nonce": 335,
+        "VERSION": "1.5.0"
       },
       "implementationNames": {
         "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": "Proxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
       }
     },
     {
@@ -357,15 +363,15 @@
         "$immutable": true,
         "canSettle": {
           "isFinished": false,
-          "epochNumber": 4,
+          "epochNumber": 45,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getApplicationContract": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
         "getCurrentSealedEpoch": {
-          "epochNumber": 4,
-          "inputIndexLowerBound": 1,
-          "inputIndexUpperBound": 1,
-          "tournament": "eth:0x3fd36d25c4515B8bE331DE689A5e65D2318DdeA3"
+          "epochNumber": 45,
+          "inputIndexLowerBound": 3,
+          "inputIndexUpperBound": 3,
+          "tournament": "eth:0x4cAF49588c80c88689A810A94E1C791Db7cbdb07"
         },
         "getDeploymentBlockNumber": 23751050,
         "getInputBox": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac",
@@ -650,55 +656,6 @@
       "constructor(uint64 matchEffort, uint64 maxAllowance)",
       "function tournamentParameters(uint64 level) view returns (tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance))"
     ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962": [
       "error BothClocksHaveNotTimedOut()",
       "error ChildTournamentCannotBeEliminated()",
@@ -813,6 +770,56 @@
       "error FailedDeployment()",
       "error InsufficientBalance(uint256 balance, uint256 needed)",
       "function instantiate(bytes32 initialHash, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address tournamentFactory) returns (address)"
+    ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -829,11 +836,10 @@
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/TopTournament": "0xbd083fb1c65455271f875f433e772fdecce43eb614fc3d12775dc903854e6905",
     "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
-    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
   },
-  "usedBlockNumbers": { "ethereum": 23983224 },
-  "permissionsConfigHash": "0x305efb18c03ae288833b78d2b03375c0d5b5c58661ad72fd0f3cdb6150f0db89",
+  "usedBlockNumbers": { "ethereum": 26075457 },
+  "permissionsConfigHash": "0x3efca5324131b231b36b4a890bd76784daec3a887b916450264f8bb63544af18",
   "permissions": {
     "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
       "receivedPermissions": [

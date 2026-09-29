@@ -22,7 +22,11 @@ export {
   TemplateService,
 } from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
-export type { ColorContract } from './discovery/config/ColorConfig'
+export type {
+  ColorConfig,
+  ColorContract,
+  CriticalFlag,
+} from './discovery/config/ColorConfig'
 export {
   ConfigHealthService,
   type HealthHint,
@@ -83,13 +87,16 @@ export {
   type DiffHistorySection,
   type DiffHistorySectionKind,
 } from './discovery/output/DiffHistoryParser'
-export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
   entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
+export {
+  type DiffHistoryChange,
+  getDiffHistoryChanges,
+} from './discovery/output/diffHistoryChanges'
 export {
   countDiffChanges,
   type DiffBlockSpan,
@@ -117,6 +124,10 @@ export type {
   ReceivedPermission,
   ResolvedPermissionPath,
 } from './discovery/output/types'
+export {
+  parsePastUpgrades,
+  type Upgrade,
+} from './discovery/output/upgradeHistory'
 export { AllProviders } from './discovery/provider/AllProviders'
 export type {
   DebugTransactionCall,

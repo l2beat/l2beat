@@ -12,6 +12,10 @@
     "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c": "SystemConfig"
   },
   "overrides": {
+    "eth:0x8173904703995c6BbA59a42B8bBf8405F978758a": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c": {
       "ignoreRelatives": ["disputeGameFactory", "gasPayingToken"]
     }

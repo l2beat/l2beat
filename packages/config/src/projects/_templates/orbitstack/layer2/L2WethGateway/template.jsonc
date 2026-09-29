@@ -1,8 +1,26 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2WethGateway",
+  "critical": true,
   "category": "bridge-canonical",
   "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
   "ignoreRelatives": ["l1Weth", "l2Weth"],
-  "ignoreMethods": ["exitNum"]
+  "ignoreMethods": ["exitNum"],
+  "fields": {
+    "l2Weth": {
+      "severity": "HIGH"
+    },
+    "l1Weth": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "counterpartGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

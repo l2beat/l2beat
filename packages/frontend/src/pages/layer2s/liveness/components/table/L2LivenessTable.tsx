@@ -25,7 +25,7 @@ export function L2LivenessTable({ entries, hideType }: Props) {
 
   const columns = useMemo(() => getL2LivenessColumns(hideType), [hideType])
 
-  const table = useTable({
+  const table = useTable('L2LivenessTable', {
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),

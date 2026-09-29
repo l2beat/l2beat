@@ -1,10 +1,19 @@
 ## Getting Started
 
-Run the development server:
+Run the development server (Express API + Vite with HMR on a single port, `PORT` defaults to 3000):
 
 ```bash
 pnpm dev
 ```
+
+Production:
+
+```bash
+pnpm build   # client -> dist/client, server -> dist/server
+pnpm start   # must run from this directory, db.json is resolved from cwd
+```
+
+Analytics are enabled by setting `VITE_OPENPANEL_CLIENT_ID` at build time.
 ## How to add new chain to UOPS explorer?
 
 1. Navigate to `packages/uops-dashboard/src/chains.ts`

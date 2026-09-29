@@ -1,0 +1,14 @@
+{
+  "CRISPProgram": {
+    "hash": "0x3649deb6f04282f42e1920d5db900615f2452d03163421de0763f9849233a388",
+    "address": "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f",
+    "chain": "ethereum",
+    "blockNumber": 25812209
+  },
+  "CRISPProgramV2": {
+    "hash": "0x5e9765e225722280111e7bb95e846592c661d927f741b63b1e1872e8e6a37db9",
+    "address": "eth:0x53FCdb21E73A461CfE6c64B19855204384B91BA3",
+    "chain": "ethereum",
+    "blockNumber": 25998868
+  }
+}

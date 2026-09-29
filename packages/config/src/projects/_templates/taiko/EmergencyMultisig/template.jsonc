@@ -1,11 +1,11 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
     "proposalCount": {
-      "description": "total count of encrypted emergency proposals created.",
-      "severity": "HIGH"
+      "description": "total count of encrypted emergency proposals created."
     },
     "multisigSettings": {
       "severity": "HIGH",
@@ -20,6 +20,7 @@
       ]
     },
     "minApprovals": {
+      "severity": "HIGH",
       "copy": "multisigSettings",
       "edit": ["get", "minApprovals"]
     }

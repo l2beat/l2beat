@@ -30,7 +30,7 @@ export function PrivacyAssetsBreakdownTable({
   const showBucketsColumn = assets.some((asset) => asset.bucketCount > 1)
   const totals = useMemo(() => getTotals(assets), [assets])
 
-  const table = useTable({
+  const table = useTable('PrivacyAssetsBreakdownTable', {
     data: assets,
     columns: privacyAssetsBreakdownColumns,
     getRowId: (row) => row.symbol,

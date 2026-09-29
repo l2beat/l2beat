@@ -11,6 +11,10 @@
     "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087": "PermissionedDisputeGame"
   },
   "overrides": {
+    "eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": {
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "fields": {

@@ -3,5 +3,6 @@
   "displayName": "EtherFiRestaker",
   "category": "core",
   "description": "Routes protocol ETH/LSTs into EigenLayer restaking and Lido withdrawals. EigenLayer and Lido contracts are external dependencies.",
+  "ignoreInWatchMode": ["getTotalPooledEther"],
   "ignoreMethods": ["proxiableUUID"]
 }

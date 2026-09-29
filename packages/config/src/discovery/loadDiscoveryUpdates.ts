@@ -6,7 +6,6 @@ import {
   getDiscoveryPaths,
   isHighSeverityDiffBody,
 } from '@l2beat/discovery'
-import { hashJson } from '@l2beat/shared'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
@@ -58,7 +57,7 @@ function toDiscoveryUpdate(
 ): ProjectDiscoveryUpdate {
   const bodies = sections.map((section) => section.body)
   return {
-    id: getUpdateId(entry),
+    id: entry.id,
     date: entry.date,
     timestamp: entry.timestamp,
     description: entry.description,
@@ -66,18 +65,6 @@ function toDiscoveryUpdate(
     changeCount: bodies.reduce((sum, body) => sum + countDiffChanges(body), 0),
     sections,
   }
-}
-
-function getUpdateId(entry: DiffHistoryEntry): string {
-  const fingerprint = hashJson([
-    entry.date,
-    entry.discoveryHash,
-    entry.current?.kind ?? null,
-    entry.current?.value ?? null,
-    entry.description,
-    entry.sections.flatMap((section) => [section.kind, section.body]),
-  ])
-  return fingerprint.slice(2, 10)
 }
 
 function getPublicSections(

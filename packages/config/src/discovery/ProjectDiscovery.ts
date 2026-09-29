@@ -16,20 +16,26 @@ import {
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
+import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
+import { loadOssificationInput } from '../ossification/loadOssificationInput'
+import { measureOssification } from '../ossification/measureOssification'
+import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
+import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
   ProjectEscrow,
+  ProjectOssification,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -48,6 +54,7 @@ import {
 } from './utils'
 
 const paths = getDiscoveryPaths()
+const buildTime = UnixTime.now()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -57,7 +64,14 @@ interface ProjectDiscoveryOptions {
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
+  private readonly entries: EntryParameters[]
+  private readonly contracts: EntryParameters[]
+  private readonly eoas: EntryParameters[]
+  private readonly entryByAddress: Map<ChainSpecificAddress, EntryParameters>
+  private readonly entriesByName: Map<string, EntryParameters[]>
+  private readonly safeNamesByMember: Record<string, (string | undefined)[]>
   private readonly reachableEntries: EntryParameters[]
+  private readonly reachableAddresses: Set<ChainSpecificAddress>
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
 
@@ -66,12 +80,7 @@ export class ProjectDiscovery {
     public readonly configReader = new ConfigReader(paths.discovery),
     public readonly options?: ProjectDiscoveryOptions,
   ) {
-    // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests
-    try {
-      this.discoveries = configReader.readDiscoveryWithReferences(projectName)
-    } catch {
-      this.discoveries = []
-    }
+    this.discoveries = configReader.readDiscoveryWithReferences(projectName)
 
     // always the base discovery
     const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
@@ -90,6 +99,13 @@ export class ProjectDiscovery {
     // references to entrypoints to make it cleaner
     this.discoveries.forEach((d) => removeReferences(d))
 
+    this.entries = this.discoveries.flatMap((discovery) => discovery.entries)
+    this.contracts = this.entries.filter((e) => e.type === 'Contract')
+    this.eoas = this.entries.filter((e) => e.type === 'EOA')
+    this.entryByAddress = indexByAddress(this.entries)
+    this.entriesByName = indexByName(this.entries)
+    this.safeNamesByMember = indexSafeNamesByMember(this.entries)
+
     // A reference points at one specific deployment inside a shared module, it
     // does not adopt everything else that module discovered: a project linking
     // the Ethereum deployment must not inherit the Arbitrum one.
@@ -104,11 +120,14 @@ export class ProjectDiscovery {
     // `resolveEntryOwnership` already applies in the discovery UI.
     this.reachableEntries = uniqBy(
       getReachableEntries(
-        this.discoveries.flatMap((discovery) => discovery.entries),
+        this.entries,
         entrypoints,
         this.options?.reachableEntries?.maxDepth,
       ),
       (entry) => entry.address,
+    )
+    this.reachableAddresses = new Set(
+      this.reachableEntries.map((e) => e.address),
     )
     assert(
       (this.discoveries.at(0)?.entries ?? []).every((entry) =>
@@ -243,9 +262,7 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: ChainSpecificAddress): boolean {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.entries)
-    const entry = eoas.find((x) => x.address.toString() === address.toString())
-    return entry?.type === 'EOA'
+    return this.entryByAddress.get(address)?.type === 'EOA'
   }
 
   getMultisigDescription(identifier: string): string[] {
@@ -335,11 +352,11 @@ export class ProjectDiscovery {
   }
 
   getContract(identifier: string): EntryParameters {
-    try {
-      identifier = identifier.includes(':')
-        ? identifier
-        : utils.getAddress(identifier)
-    } catch {
+    const address = identifier.includes(':')
+      ? identifier
+      : EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const contracts = this.getContractByName(identifier)
 
       assert(
@@ -354,35 +371,35 @@ export class ProjectDiscovery {
       return contracts[0]
     }
 
-    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(address))
     assert(
       contract,
-      `No contract of ${identifier} address found (${this.projectName})`,
+      `No contract of ${address} address found (${this.projectName})`,
     )
 
     return contract
   }
 
   isReachable(address: ChainSpecificAddress): boolean {
-    return this.reachableEntries.some((e) => e.address === address)
+    return this.reachableAddresses.has(address)
   }
 
   hasContract(identifier: string): boolean {
-    try {
-      identifier = utils.getAddress(identifier)
-    } catch {
+    const address = EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const contracts = this.getContractByName(identifier)
       return contracts.length === 1
     }
 
-    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(address))
     return contract !== undefined
   }
 
   getEOA(identifier: string): EntryParameters {
-    try {
-      identifier = utils.getAddress(identifier)
-    } catch {
+    const address = EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const eoas = this.getEOAByName(identifier)
 
       assert(
@@ -397,8 +414,8 @@ export class ProjectDiscovery {
       return eoas[0]
     }
 
-    const eoa = this.getEOAByAddress(identifier)
-    assert(eoa, `No eoa of ${identifier} address found (${this.projectName})`)
+    const eoa = this.getEOAByAddress(address)
+    assert(eoa, `No eoa of ${address} address found (${this.projectName})`)
 
     return eoa
   }
@@ -673,47 +690,43 @@ export class ProjectDiscovery {
   getContractByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
-    const contracts = this.getContracts()
-    return contracts.find((contract) => contract.address === address)
+    const entry = this.entryByAddress.get(address)
+    return entry?.type === 'Contract' ? entry : undefined
   }
 
   getEOAByAddress(
     address: string | ChainSpecificAddress,
   ): EntryParameters | undefined {
-    const eoas = this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((e) => e.type === 'EOA')
-    return eoas.find(
-      (contract) =>
-        contract.address === ChainSpecificAddress(address.toString()),
+    const entry = this.entryByAddress.get(
+      ChainSpecificAddress(address.toString()),
     )
+    return entry?.type === 'EOA' ? entry : undefined
   }
 
   getEntryByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
-    return this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .find((entry) => entry.address === address)
+    return this.entryByAddress.get(address)
   }
 
   private getContractByName(name: string): EntryParameters[] {
-    const contracts = this.discoveries.flatMap((discovery) =>
-      discovery.entries.filter((e) => e.type === 'Contract'),
-    )
-    return contracts.filter((contract) => contract.name === name)
+    return this.getEntriesByName(name, 'Contract')
   }
 
   private getEOAByName(name: string): EntryParameters[] {
-    const eoas = this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((e) => e.type === 'EOA')
+    return this.getEntriesByName(name, 'EOA')
+  }
 
-    return eoas.filter((eoa) => eoa.name === name)
+  private getEntriesByName(
+    name: string,
+    type: EntryParameters['type'],
+  ): EntryParameters[] {
+    const named = this.entriesByName.get(name) ?? []
+    return named.filter((entry) => entry.type === type)
   }
 
   getEntries(): EntryParameters[] {
-    return this.discoveries.flatMap((discovery) => discovery.entries)
+    return this.entries
   }
 
   getReachableEntries(): EntryParameters[] {
@@ -725,26 +738,17 @@ export class ProjectDiscovery {
   } {
     const result: { [chainSpecificAddress: string]: EntryParameters } = {}
 
-    this.discoveries.forEach((discovery) => {
-      discovery.entries.forEach((e) => {
-        if (e.type === 'Contract') {
-          const chainSpecificAddress = e.address
-          if (result[chainSpecificAddress] !== undefined) {
-            throw new Error(
-              `Duplicate contract address entry: ${chainSpecificAddress}`,
-            )
-          }
-          result[chainSpecificAddress] = e
-        }
-      })
+    this.contracts.forEach((contract) => {
+      if (result[contract.address] !== undefined) {
+        throw new Error(`Duplicate contract address entry: ${contract.address}`)
+      }
+      result[contract.address] = contract
     })
     return result
   }
 
   getContracts(): EntryParameters[] {
-    return this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((e) => e.type === 'Contract')
+    return this.contracts
   }
 
   getReachableContracts(): EntryParameters[] {
@@ -752,9 +756,7 @@ export class ProjectDiscovery {
   }
 
   getEoas(): EntryParameters[] {
-    return this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((e) => e.type === 'EOA')
+    return this.eoas
   }
 
   getReachableEoas(): EntryParameters[] {
@@ -779,15 +781,8 @@ export class ProjectDiscovery {
   describeGnosisSafeMembership(
     contractOrEoa: EntryParameters,
   ): string | undefined {
-    const safesWithThisMember = this.discoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((contract) => isMultisigLike(contract))
-      .filter((contract) =>
-        toAddressArray(contract.values?.$members).includes(
-          contractOrEoa.address,
-        ),
-      )
-      .map((contract) => contract.name)
+    const safesWithThisMember =
+      this.safeNamesByMember[contractOrEoa.address] ?? []
     return safesWithThisMember.length === 0
       ? undefined
       : `Member of ${safesWithThisMember.join(', ')}.`
@@ -1100,11 +1095,85 @@ export class ProjectDiscovery {
     return result
   }
 
+  getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
+    const input = this.getOssificationInput(buildTime, projectStart)
+    return input === undefined ? undefined : measureOssification(input)
+  }
+
+  getOssificationInput(
+    now: UnixTime,
+    projectStart?: UnixTime,
+  ): OssificationInput | undefined {
+    return mergeOssificationInputs(
+      this.discoveries
+        .map((discovery) =>
+          loadOssificationInput(
+            discovery,
+            this.reachableAddresses,
+            this.configReader,
+            now,
+            projectStart,
+          ),
+        )
+        .filter(notUndefined),
+    )
+  }
+
   hasEoaWithUpgradePermissions(): boolean {
     return this.reachableEntries.some(
       (entry) => entry.eoaWithUpgradePermissions === true,
     )
   }
+}
+
+function indexByAddress(
+  entries: EntryParameters[],
+): Map<ChainSpecificAddress, EntryParameters> {
+  const index = new Map<ChainSpecificAddress, EntryParameters>()
+  for (const entry of entries) {
+    const existing = index.get(entry.address)
+    if (existing === undefined) {
+      index.set(entry.address, entry)
+      continue
+    }
+    assert(
+      existing.type === entry.type,
+      `Address ${entry.address} is both a ${existing.type} and a ${entry.type}`,
+    )
+  }
+  return index
+}
+
+function indexByName(
+  entries: EntryParameters[],
+): Map<string, EntryParameters[]> {
+  const index = new Map<string, EntryParameters[]>()
+  for (const entry of entries) {
+    if (entry.name === undefined) {
+      continue
+    }
+    const named = index.get(entry.name)
+    if (named === undefined) {
+      index.set(entry.name, [entry])
+    } else {
+      named.push(entry)
+    }
+  }
+  return index
+}
+
+function indexSafeNamesByMember(
+  entries: EntryParameters[],
+): Record<string, (string | undefined)[]> {
+  const memberships = entries
+    .filter(isMultisigLike)
+    .flatMap((safe) =>
+      toAddressArray(safe.values?.$members).map((member) => ({ member, safe })),
+    )
+  return mapValues(
+    groupBy(memberships, (membership) => membership.member),
+    (group) => group.map((membership) => membership.safe.name),
+  )
 }
 
 function getUpgradeability(

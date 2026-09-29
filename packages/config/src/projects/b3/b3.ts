@@ -6,9 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { CELESTIA_DA_PROVIDER, opStackL3 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('b3')
+const archivedAt = UnixTime(1790410928) // 2026-09-26T08:22:08Z
 
 export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),
+  archivedAt,
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Base],
   daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   hostChain: 'base',
@@ -42,6 +44,7 @@ export const b3: ScalingProject = opStackL3({
     name: 'b3',
     chainId: 8333,
     explorerUrl: 'https://explorer.b3.fun',
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',

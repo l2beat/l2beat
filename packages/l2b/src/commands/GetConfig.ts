@@ -40,6 +40,7 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'daTrackingConfig',
   'ecosystemInfo',
   'ecosystemConfig',
+  'ossification',
   'zkCatalogInfo',
   'permissions',
   'contracts',
