@@ -1,7 +1,7 @@
 {
   "name": "lighter",
-  "timestamp": 1789464683,
-  "configHash": "0x36b0856e7e96a22b55750bb85e9fb086c12d7ed3d08041b93b337ad509c38243",
+  "timestamp": 1790600976,
+  "configHash": "0x5efcc823cd489dbac97355d6777ada06a44ffa1b5683f304cfe34ad893a6b3a9",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
@@ -54,10 +54,11 @@
       "template": "lighter/ZkLighterWithSpot",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0x2c7c54c7dbae18fe5dd08d3aa5ccf1890e97148735d1d4a7768fe8fe9a67d6a3"
+        "0x41c035cf563a98a2dd11b60eb884c9bdc6c8db0b6edd02e2fa546f5711cfea4d"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+      "critical": true,
       "ignoreInWatchMode": [
         "committedBatchesCount",
         "committedPriorityRequestCount",
@@ -82,7 +83,7 @@
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "$implementation": [
-          "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e",
+          "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E",
           "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4"
         ],
         "additionalZkLighter": "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4",
@@ -102,8 +103,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 233468,
-        "committedPriorityRequestCount": 1934736,
+        "committedBatchesCount": 240271,
+        "committedPriorityRequestCount": 1944737,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -231,7 +232,9 @@
           "SHEIN",
           "PONS",
           "AI",
-          "RAY"
+          "RAY",
+          "STONK",
+          "OURA"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -289,17 +292,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 233465,
-        "executedOnChainBatchesCount": 142901,
-        "executedPriorityRequestCount": 1934732,
+        "executedBatchesCount": 240265,
+        "executedOnChainBatchesCount": 145591,
+        "executedPriorityRequestCount": 1944734,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e",
+        "getTarget": "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 747091,
-        "lastVerifiedEndBlockNumber": 332666541,
-        "lastVerifiedStateRoot": "0xbece6e849fabd483d2e5629dd8652ff9728ffe656bfe1a59e4f826198983b3cb",
-        "lastVerifiedValidiumRoot": "0x709237526b9b267985fdac51e0694c6d532c852e86b7e37a0dd70af7ae42c67c",
+        "lastAccountIndex": 750365,
+        "lastVerifiedEndBlockNumber": 343543534,
+        "lastVerifiedStateRoot": "0x2e703ce11b2655c12f5b4dd9b2404dc1483b3ce75ea88401f14c2e0e93d5d897",
+        "lastVerifiedValidiumRoot": "0x7f3de389816f09a5b8065d41e781436fbf58b43e54003fe611f15e8f9bc788eb",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -323,8 +326,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 9,
-        "pendingOnChainBatchesCount": 1,
+        "openPriorityRequestCount": 8,
+        "pendingOnChainBatchesCount": 4,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -376,23 +379,38 @@
             "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
           }
         ],
-        "stateRoot": "0x7ea6b7bd2f0cd36e9ae4700def9142e9311fcb00d53d003bffe5935a5b4ead53",
+        "stateRoot": "0x2e703ce11b2655c12f5b4dd9b2404dc1483b3ce75ea88401f14c2e0e93d5d897",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x125ab1e440b1055e18195fb9a187e562548dfc43bfd9c6b0565b035e9ffeb080",
-        "verifiedBatchesCount": 233466,
-        "verifiedPriorityRequestCount": 1934734,
+        "validiumRoot": "0x7f3de389816f09a5b8065d41e781436fbf58b43e54003fe611f15e8f9bc788eb",
+        "verifiedBatchesCount": 240265,
+        "verifiedPriorityRequestCount": 1944734,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
-        "verifier": { "severity": "HIGH" },
-        "desertVerifier": { "severity": "HIGH" },
-        "desertMode": { "severity": "HIGH" }
+        "stateRootUpgradeVerifier": {
+          "severity": "HIGH",
+          "description": "If set to a non-zero address, a governor can replace the current state root with any new one accompanied by a proof this verifier accepts (the pointer self-clears after one use)."
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the treasury account (accountIndex 0) that collects trading fees on L2."
+        },
+        "insuranceFundOperator": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the insurance fund account that backstops trading losses on L2."
+        },
+        "desertMode": {
+          "severity": "MEDIUM",
+          "description": "One-way escape-hatch state: once activated (after an expired, uncensorable priority request), normal operation halts permanently and users exit via desert-mode proofs."
+        },
+        "assetConfigUSDC": { "severity": "MEDIUM" },
+        "assetConfigETH": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
-        "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e": "ZkLighter",
+        "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E": "ZkLighter",
         "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4": "AdditionalZkLighter"
       }
     },
@@ -464,6 +482,8 @@
         "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
       ],
       "proxyType": "immutable",
+      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1784379467,
       "sinceBlock": 25559735,
@@ -513,7 +533,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -530,7 +550,8 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -549,13 +570,21 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 71,
+        "versionId": 72,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
-        "getMaster": { "severity": "HIGH" },
+        "approvedUpgradeNoticePeriod": {
+          "severity": "HIGH",
+          "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
+        },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+          "severity": "HIGH",
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
+        },
+        "managedContracts": {
+          "severity": "HIGH",
+          "description": "The proxies whose implementations this gatekeeper can upgrade."
         }
       },
       "implementationNames": {
@@ -591,7 +620,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 202,
+        "nonce": 213,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -652,6 +681,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -684,7 +714,6 @@
           "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C"
         ]
       },
-      "fieldMeta": { "networkGovernor": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": "Proxy",
         "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08": "Governance"
@@ -697,24 +726,25 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xb7e4318fc7163594c3382febfcafc104afdbd2e77905ca0c7b2d26c8ff527538"
+        "0xead67b34c39541947e19fe58d5e31758b4495fe958df8ee8580885c8db169ed5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE",
+        "$implementation": "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"
+        "getTarget": "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE": "ZkLighterVerifier"
+        "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046": "ZkLighterVerifier"
       }
     },
     {
@@ -857,11 +887,6 @@
       "function verifiedBatchesCount() view returns (uint64)",
       "function verifiedPriorityRequestCount() view returns (uint64)",
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
-    ],
-    "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": [
       "constructor(address target, bytes targetInitializationParameters)",
@@ -1009,65 +1034,7 @@
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
       "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
-    "eth:0x866418061d4C1168e1c8E8f6facE79675395E008": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
-    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": [
-      "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
-      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
-      "event NoticePeriodChange(uint256 newNoticePeriod)",
-      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
-      "event PreparationStart(uint256 indexed versionId)",
-      "event UpgradeCancel(uint256 indexed versionId)",
-      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
-      "function addUpgradeable(address addr)",
-      "function approvedUpgradeNoticePeriod() view returns (uint256)",
-      "function cancelUpgrade()",
-      "function cutUpgradeNoticePeriod(uint256 _upgradeStartTimestamp)",
-      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
-      "function getMaster() view returns (address master)",
-      "function managedContracts(uint256) view returns (address)",
-      "function nextTargets(uint256) view returns (address)",
-      "function noticePeriodFinishTimestamp() view returns (uint256)",
-      "function securityCouncilAddress() view returns (address)",
-      "function startPreparation() returns (bool)",
-      "function startUpgrade(address[] newTargets)",
-      "function transferMastership(address _newMaster)",
-      "function upgradeStartTimestamp() view returns (uint256)",
-      "function upgradeStatus() view returns (uint8)",
-      "function versionId() view returns (uint256)",
-      "function zkLighterProxy() view returns (address)"
-    ],
-    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
-      "constructor(address target, bytes targetInitializationParameters)",
-      "function getMaster() view returns (address master)",
-      "function getTarget() view returns (address target)",
-      "function initialize(bytes) pure",
-      "function transferMastership(address _newMaster)",
-      "function upgrade(bytes) pure",
-      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": [
-      "constructor(address target, bytes targetInitializationParameters)",
-      "function getMaster() view returns (address master)",
-      "function getTarget() view returns (address target)",
-      "function initialize(bytes) pure",
-      "function transferMastership(address _newMaster)",
-      "function upgrade(bytes) pure",
-      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e": [
+    "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E": [
       "constructor()",
       "error ZkLighter_BatchNotInOnChainQueue()",
       "error ZkLighter_CannotBeInitialisedByImpl()",
@@ -1206,17 +1173,80 @@
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)",
       "function withdrawPendingBalance(address _owner, uint16 _assetIndex, uint128 _baseAmount)",
       "function withdrawPendingBalanceLegacy(address _owner, uint128 _baseAmount)"
+    ],
+    "eth:0x866418061d4C1168e1c8E8f6facE79675395E008": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
+    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": [
+      "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodChange(uint256 newNoticePeriod)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event PreparationStart(uint256 indexed versionId)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function approvedUpgradeNoticePeriod() view returns (uint256)",
+      "function cancelUpgrade()",
+      "function cutUpgradeNoticePeriod(uint256 _upgradeStartTimestamp)",
+      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
+      "function getMaster() view returns (address master)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function securityCouncilAddress() view returns (address)",
+      "function startPreparation() returns (bool)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStartTimestamp() view returns (uint256)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)",
+      "function zkLighterProxy() view returns (address)"
+    ],
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
-    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
+    "lighter/UpgradeGatekeeper": "0x510c4667b3a31f0719ea9fac40e598ae3d96880abc579c8f901e03d153b19bdb",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
+    "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 25981986 },
-  "permissionsConfigHash": "0x325b42a02b378a6f0d10ff2e466b2acb07e8ffcefdb6f7417613621f941e8d6f",
+  "usedBlockNumbers": { "ethereum": 26076160 },
+  "permissionsConfigHash": "0xe4104b5d1a81bfe04ec74c8746c5b3ca1a41a20f836900738df7880abae37e6d",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [

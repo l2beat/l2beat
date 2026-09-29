@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PermissionedDisputeGame",
+  "critical": true,
   "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
   "ignoreMethods": [
     "getNumToResolve",
@@ -9,7 +10,7 @@
   ],
   "fields": {
     "absolutePrestateDecoded": {
-      "description": "Prestate tag for known prestates.",
+      "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there).",
       "handler": {
         "type": "call",
         "method": "absolutePrestate",

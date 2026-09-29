@@ -5,6 +5,7 @@ import type {
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -58,6 +59,7 @@ export interface ProjectPrivacyEntry {
   assetsCount: number
   hasTvl: boolean
   attributes: PrivacyAttribute[]
+  trackedOn: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
@@ -183,6 +185,18 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (details.hasAnonymitySet) {
+    sections.push({
+      type: 'PrivacyAnonymitySetSection',
+      props: {
+        id: 'privacy-anonymity-set',
+        title: 'Anonymity sets',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+  }
+
   if (hasTrackedAssets) {
     sections.push({
       type: 'PrivacyFlowsSection',
@@ -214,7 +228,7 @@ export async function getPrivacyProjectEntry(
         title: 'Risk summary',
         content: details.riskSummary,
         mdClassName:
-          '[&_h2]:mb-0 [&_h2]:font-bold [&_h2]:text-red-300 [&_h2]:text-paragraph-15 md:[&_h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
+          '[&_.mdc-h2]:mb-0 [&_.mdc-h2]:font-bold [&_.mdc-h2]:text-red-300 [&_.mdc-h2]:text-paragraph-15 md:[&_.mdc-h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
       },
     })
   }
@@ -307,7 +321,7 @@ export async function getPrivacyProjectEntry(
     type: 'PrivacyAdversariesSection',
     props: {
       id: 'privacy-adversaries',
-      title: 'Privacy against adversaries',
+      title: 'Privacy',
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },
   })
@@ -331,6 +345,7 @@ export async function getPrivacyProjectEntry(
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
     attributes: details.attributes,
+    trackedOn: details.trackedOn,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),

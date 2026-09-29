@@ -58,6 +58,13 @@ describe(ProjectDiscovery.name, () => {
     })
   })
 
+  describe(ProjectDiscovery.prototype.hasContract.name, () => {
+    it('answers false for names inherited from Object.prototype', () => {
+      expect(discovery.hasContract('constructor')).toEqual(false)
+      expect(discovery.hasContract('__proto__')).toEqual(false)
+    })
+  })
+
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
       assert(contractStub.name !== undefined)

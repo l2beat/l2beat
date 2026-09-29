@@ -3,5 +3,11 @@
   "name": "river",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x2d51D580Cae0a644a5328E665c768C2A4c0E4a03"],
+  "overrides": {
+    "eth:0xA80349b0D79bf3154ae54066410d20eb7B8697Ac": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": { "eth:0x2876c43B17A5750CBea5E2A3C42718374E21D5a2": "RiverMultisig" }
 }

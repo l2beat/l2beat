@@ -4,7 +4,7 @@ import type {
   RevokedCropAttestation,
 } from '@l2beat/config'
 import { expect } from 'earl'
-import { encodePacked, type Hex, keccak256 } from 'viem'
+import { utils } from 'ethers'
 import { assertAnonymous, findIdentifyingStrings } from './anonymity'
 import {
   decodePayload,
@@ -18,6 +18,7 @@ import {
   ATTESTATION_SCHEMA_RESOLVER,
   ATTESTATION_SCHEMA_REVOCABLE,
   ATTESTATION_SCHEMA_UID,
+  type Hex,
 } from './easConfig'
 import { ledgerFor, sorted, withAttested, withRevoked } from './ledger'
 import { diffSet, findLedgerDrift, planAttestation, setMatches } from './plan'
@@ -85,15 +86,13 @@ const NOTHING_COMMITTED: CropAttestationLedger = {
 describe('crop attestations', () => {
   describe('schema uid', () => {
     it('is keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it', () => {
-      const computed = keccak256(
-        encodePacked(
-          ['string', 'address', 'bool'],
-          [
-            ATTESTATION_SCHEMA,
-            ATTESTATION_SCHEMA_RESOLVER,
-            ATTESTATION_SCHEMA_REVOCABLE,
-          ],
-        ),
+      const computed = utils.solidityKeccak256(
+        ['string', 'address', 'bool'],
+        [
+          ATTESTATION_SCHEMA,
+          ATTESTATION_SCHEMA_RESOLVER,
+          ATTESTATION_SCHEMA_REVOCABLE,
+        ],
       )
       expect(computed).toEqual(ATTESTATION_SCHEMA_UID)
     })

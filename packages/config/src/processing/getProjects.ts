@@ -7,7 +7,7 @@ import {
   type TrackedTxSharpSubmissionConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -23,7 +23,6 @@ import type {
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
-import { loadOssification } from '../ossification/loadOssification'
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
@@ -53,9 +52,19 @@ import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 
 const daBridges = refactored.filter((p) => p.daBridge)
+
+// Reading every tvs.json, diffHistory.md and discovered.json takes ~800ms, and
+// runConfigAdjustments is already one-shot, so a second call can only return
+// the same projects.
+let projects: BaseProject[] | undefined
+
 export function getProjects(): BaseProject[] {
+  projects ??= buildProjects()
+  return projects
+}
+
+function buildProjects(): BaseProject[] {
   runConfigAdjustments()
-  const now = UnixTime.now()
 
   return refactored
     .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
@@ -63,21 +72,11 @@ export function getProjects(): BaseProject[] {
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
-    .map((project) => withOssification(project, now))
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
   const discoveryUpdates = loadDiscoveryUpdates(project.id)
   return discoveryUpdates ? { ...project, discoveryUpdates } : project
-}
-
-function withOssification(project: BaseProject, now: UnixTime): BaseProject {
-  const ossification = loadOssification(
-    project.id,
-    now,
-    project.chainConfig?.sinceTimestamp,
-  )
-  return ossification ? { ...project, ossification } : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
@@ -179,6 +178,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
     chainConfig: p.chainConfig,
+    ossification: p.ossification,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,

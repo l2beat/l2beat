@@ -1,4 +1,4 @@
-import { type Difference, diff } from '@l2beat/discovery'
+import { type Difference, diff } from '@l2beat/shared'
 import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 
 type InteropConfigDiffMuteCallback = (entry: Difference) => boolean

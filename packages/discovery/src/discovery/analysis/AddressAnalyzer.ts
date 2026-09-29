@@ -185,7 +185,7 @@ export class AddressAnalyzer {
 
     const mergedValues = {
       ...proxy.values,
-      ...(values ?? {}),
+      ...values,
     }
 
     if (libraries.length > 0) {

@@ -84,24 +84,22 @@ export function getPermissionsSection(
     : undefined
   const getAddressAnchor = createAddressAnchors('permissions')
 
-  const permissionsByChain = {
-    ...Object.fromEntries(
-      Object.entries(projectParams.permissions ?? {}).map(
-        ([slug, permissions]) => {
-          return [
-            contractUtils.getChainName(slug),
-            getGroupedTechnologyContracts(
-              projectParams,
-              permissions,
-              contractUtils,
-              projectChangeReport,
-              getAddressAnchor,
-            ),
-          ]
-        },
-      ),
+  const permissionsByChain = Object.fromEntries(
+    Object.entries(projectParams.permissions ?? {}).map(
+      ([slug, permissions]) => {
+        return [
+          contractUtils.getChainName(slug),
+          getGroupedTechnologyContracts(
+            projectParams,
+            permissions,
+            contractUtils,
+            projectChangeReport,
+            getAddressAnchor,
+          ),
+        ]
+      },
     ),
-  }
+  )
 
   return {
     ...section,

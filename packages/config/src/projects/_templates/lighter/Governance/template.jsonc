@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Manages the list of validators and the network governor.",
+  "critical": true,
   "ignoreRelatives": ["usdc"],
   "fields": {
     "networkGovernor": {
@@ -9,8 +10,7 @@
           "type": "interact",
           "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets."
         }
-      ],
-      "severity": "HIGH"
+      ]
     },
     "validators": {
       "handler": {

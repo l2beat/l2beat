@@ -1,12 +1,21 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Starknet",
+  "critical": true,
   "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
   "category": "core",
   "fields": {
+    "isFrozen": {
+      "severity": "MEDIUM"
+    },
+    "messageCancellationDelay": {
+      // governance can change this live (setMessageCancellationDelay is
+      // notFinalized onlyGovernance and the contract is not finalized); it
+      // gates the L1->L2 deposit-cancellation escape hatch.
+      "severity": "HIGH"
+    },
     "$admin": {
       "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks.",
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "upgrade",
@@ -24,7 +33,6 @@
     },
     "programHashHistory": {
       "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE",
       "handler": {
         "type": "event",
@@ -34,7 +42,6 @@
     },
     "aggregatorProgramHashHistory": {
       "description": "Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE",
       "handler": {
         "type": "event",
@@ -44,7 +51,6 @@
     },
     "configHashHistory": {
       "description": "Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE",
       "handler": {
         "type": "event",
@@ -54,7 +60,6 @@
     },
     "verifier": {
       "description": "SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE",
       "handler": {
         "type": "starkWareNamedStorage",
@@ -79,7 +84,6 @@
     },
     "feeCollector": {
       "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "programHash": {
@@ -98,6 +102,7 @@
       "type": "CODE_CHANGE"
     },
     "programHashMapped": {
+      "severity": "HIGH",
       "description": "Human-readable label for the current Starknet OS program hash.",
       "handler": {
         "type": "call",
@@ -107,6 +112,7 @@
       "edit": ["format", "StarknetProgramHash"]
     },
     "aggregatorHashMapped": {
+      "severity": "HIGH",
       "description": "Human-readable label for the current Starknet aggregator program hash.",
       "handler": {
         "type": "call",

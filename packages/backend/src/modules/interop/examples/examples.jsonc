@@ -1432,6 +1432,201 @@
       ]
     }
   },
+  "ccip-v2-gho-arbitrum": {
+    "description": "CCIP 2.0 GHO transfer from Ethereum to Arbitrum, delivered through the v2.0 OffRamp",
+    "loadConfigs": ["ccip"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe5e8903165e67f61b29793c265ac5bebf97b03453f65c76838477066aa11e7af"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa8a68ea56c83f55cb19d0d83224d78e40e745463afa79d313e61992a884acedc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0xcf6671a87b3768684e1e42a489e771aca8d5cdaa6e3a11ce02030cef4eb1c6d9",
+            "$dstChain": "arbitrum",
+            "token": "0x00000000000000000000000040d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f",
+            "amount": "10000000000000000000",
+            "index": 0,
+            "wasBurned": false
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "messageId": "0xcf6671a87b3768684e1e42a489e771aca8d5cdaa6e3a11ce02030cef4eb1c6d9",
+            "state": 2,
+            "$srcChain": "ethereum",
+            "dstTokens": [
+              {
+                "address": "0x0000000000000000000000007dff72693f6a4149b17e7c6314655f6a9f7c8b33",
+                "amount": "10000000000000000000",
+                "wasMinted": true
+              }
+            ]
+          }
+        }
+      ],
+      "messages": [{ "type": "ccip.Message", "app": "CCIP Token Transfer" }],
+      "transfers": [
+        {
+          "type": "ccip.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "wasBurned": false, "financials": { "symbol": "GHO" } },
+          "dst": { "wasMinted": true, "financials": { "symbol": "GHO" } }
+        }
+      ]
+    }
+  },
+  "ccip-v2-usdc-ccv": {
+    "description": "CCIP 2.0 USDC over the CCTP-through-CCV path: the CCTP plugin owns the transfer, CCIP only the message",
+    "loadConfigs": ["ccip", "cctp-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x77df5f4b1c6e510f5f1f37810919dbdb117c2903ea106c94318e161301b4df22"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf75f2d936234409085526376baa9d02d35bd5e631b0982a6a3109a86b929debb"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0x686adb0b20a13fd51d7491e4f6ea15c05e665afcb3395b3596ddcb0c611ce339",
+            "$dstChain": "base",
+            "isCctpBacked": true
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "base" },
+          "args": {
+            "messageId": "0x686adb0b20a13fd51d7491e4f6ea15c05e665afcb3395b3596ddcb0c611ce339",
+            "$srcChain": "ethereum",
+            "dstTokens": [
+              {
+                "address": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "isCctpBacked": true
+              }
+            ]
+          }
+        },
+        "cctp-v2.MessageSent",
+        "cctp-v2.MessageReceived"
+      ],
+      "messages": [
+        { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+        "cctp-v2.SlowMessage"
+      ],
+      // The USDC transfer is counted once, by the CCTP plugin.
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
+        }
+      ]
+    }
+  },
+  "ccip-multi-message-tx": {
+    "description": "One Ethereum transaction sending three CCIP messages to Arbitrum, each delivered separately",
+    "loadConfigs": ["ccip"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x0875e71509218754a7e52a01e479261d031540f9600eebb23959d7cee416048e"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0a26617c51a5a028395fc719f77f9e2fc98abb3cf17c5c884421ede21a6584f7"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x886301feafb89cc51c8725697d5a095a8201472c6f537c39c5ef604fcb488d78"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb16aff52e3b0e16b1a0f05ceb265f8259d482c78271f0ab4667b50f8f1d98948"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "ccip.CCIPSendRequested",
+          "args": {
+            "messageId": "0x64cb17cd69f62ab628a081d30355346b9c53ffc915afe80c78bf6a1b917b935d"
+          }
+        },
+        {
+          "type": "ccip.CCIPSendRequested",
+          "args": {
+            "messageId": "0xe3bc649f3b73392c5e7d73aad4c33d2597458447b88933b9136dce737105203d"
+          }
+        },
+        {
+          "type": "ccip.CCIPSendRequested",
+          "args": {
+            "messageId": "0xf93c0df86158c1e984c10cc89bf13c984532bab52a76f6ecc4457acb8c4cf3a0"
+          }
+        },
+        "ccip.ExecutionStateChanged",
+        "ccip.ExecutionStateChanged",
+        "ccip.ExecutionStateChanged"
+      ],
+      "messages": [
+        { "type": "ccip.Message", "app": "unknown" },
+        { "type": "ccip.Message", "app": "unknown" },
+        { "type": "ccip.Message", "app": "unknown" }
+      ],
+      "transfers": []
+    }
+  },
+  "ccip-router-only-offramp": {
+    "description": "Late BSC to Base delivery through a v1.5 OffRamp that the Base Router still accepts but the docs no longer list",
+    "loadConfigs": ["ccip"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xacaa7c5e8e42ef6b4f7040dce04540579527e96e2d8bec145aa2d56d23968b8f"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "base" },
+          "args": {
+            "messageId": "0xbf897c7cebbcb0a7af96f6b41bcb47ee733484e31449d22919bd5ab9fc50f220",
+            "state": 2,
+            "$srcChain": "bsc",
+            "dstTokens": [
+              {
+                "address": "0x0000000000000000000000003e31966d4f81c72d2a55310a6365a56a4393e98d",
+                "amount": "263348905",
+                "wasMinted": true
+              }
+            ]
+          }
+        }
+      ],
+      "messages": [],
+      "transfers": []
+    }
+  },
   "ccip-partial-adi": {
     "loadConfigs": ["ccip"],
     "txs": [
@@ -3545,80 +3740,112 @@
       }
     ]
   },
-  "stargatev2bus-gnosis": {
-    "description": "Stargate bus maps Gnosis WETH to native ETH on Base",
+  "stargatev2-eurc": {
+    "description": "Stargate EURC between the Ethereum pool and the Tempo Hydra OFT",
     "loadConfigs": ["layerzero-v2"],
+    // 1. taxi from Ethereum to Tempo
+    // 2. taxi from Tempo to Ethereum
     "txs": [
       {
-        "chain": "gnosis",
-        "tx": "0xf72cf180885f3807d1104c2ec710cab1fd01c702b0722c1e6d9986e16b93c7b5"
+        "chain": "ethereum",
+        "tx": "0x410c75143951aa2168987ed6f088081bee5917fa8a78dc11acccc682f18eda4b"
       },
       {
-        "chain": "gnosis",
-        "tx": "0x6191fb41ce33580616bb9cf2d94e1996d32d5bcb49cc5f708e498ce0c424fcfa"
+        "chain": "tempo",
+        "tx": "0xad8574a633a59dbe7dddb8a7dbb45d3146d6e2d0f68de2689683a719da4c3dd7"
       },
       {
-        "chain": "base",
-        "tx": "0x2c0f5bd84720034214710b0054808b7752bc97493663dd33298b3df749a1824a"
+        "chain": "tempo",
+        "tx": "0x1e9b127ba95d39aed3df10335ab643a817196aa7c6cf56c840cb3f9884b9ebf3"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa06a86322a887e9108b3bc296f30c699e5ed4de70c2fa4b58a21f8bc835461da"
       }
     ],
     "expects": {
-      "events": [
+      "transfers": [
         {
-          "type": "stargate-v2.OFTSentBus",
-          "ctx": { "chain": "gnosis" },
-          "args": {
-            "token": "ETH",
-            "ticketId": 6252,
-            "$dstChain": "base"
+          "type": "stargate-v2-taxi.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000001abaea1f7c830bd89acc67ec4af516284b1bc33c",
+            "tokenAmount": "422130620000",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "ethereum" } }
+          },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000020c0000000000000000000001621e21f71cf12fb",
+            "tokenAmount": "422130620000",
+            "wasMinted": true,
+            "event": { "ctx": { "chain": "tempo" } }
           }
         },
         {
-          "type": "stargate-v2.BusDriven",
-          "ctx": { "chain": "gnosis" },
-          "args": {
-            "startTicketId": 6252,
-            "numPassengers": 1,
-            "$dstChain": "base"
-          }
-        },
-        {
-          "type": "stargate-v2.OFTReceived",
-          "ctx": { "chain": "base" },
-          "args": {
-            "token": "ETH",
-            "$srcChain": "gnosis"
+          "type": "stargate-v2-taxi.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000020c0000000000000000000001621e21f71cf12fb",
+            "tokenAmount": "126585550000",
+            "wasBurned": true,
+            "event": { "ctx": { "chain": "tempo" } }
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000001abaea1f7c830bd89acc67ec4af516284b1bc33c",
+            "tokenAmount": "126585550000",
+            "wasMinted": false,
+            "event": { "ctx": { "chain": "ethereum" } }
           }
         }
-      ],
+      ]
+    }
+  },
+  "stargatev2bus-tempo": {
+    "description": "Stargate bus from the Base USDC pool to the Tempo USDC.e Hydra OFT",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2e4e141b4f7f3b813fc2fe17cc00b1a5976811a83d1736ccc230e0cc49dd5805"
+      },
+      {
+        "chain": "base",
+        "tx": "0xad84318789d05480a0500666fdb9d4872a6174e6228a17af5d77cb2c859009cd"
+      },
+      {
+        "chain": "tempo",
+        "tx": "0x6698cdbef4229bea9b37b6c21bf575d0881495b1a9012d2588bf0236ea65debf"
+      }
+    ],
+    "expects": {
       "messages": [
         {
           "type": "layerzero-v2.Message",
           "app": "stargate-v2-bus",
-          "src": { "ctx": { "chain": "gnosis" } },
-          "dst": { "ctx": { "chain": "base" } }
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "tempo" } }
         }
       ],
       "transfers": [
         {
           "type": "stargate-v2-bus.Transfer",
-          "bridgeType": "nonMinting",
+          "bridgeType": "lockAndMint",
           "src": {
-            "tokenAddress": "0x0000000000000000000000006a023ccd1ff6f2045c3309768ead9e68f978f6e1",
-            "tokenAmount": "2964000000000000",
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "tokenAmount": "4900000",
             "wasBurned": false,
             "event": {
               "type": "stargate-v2.OFTSentBus",
-              "ctx": { "chain": "gnosis" }
+              "ctx": { "chain": "base" }
             }
           },
           "dst": {
-            "tokenAddress": "native",
-            "tokenAmount": "2962000000000000",
-            "wasMinted": false,
+            "tokenAddress": "0x00000000000000000000000020c000000000000000000000b9537d11c60e8b50",
+            "tokenAmount": "4900000",
+            "wasMinted": true,
             "event": {
               "type": "stargate-v2.OFTReceived",
-              "ctx": { "chain": "base" }
+              "ctx": { "chain": "tempo" }
             }
           }
         }

@@ -23,5 +23,19 @@
     "scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
     "scr:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig"
   },
-  "overrides": {}
+  "overrides": {
+    // Ethereum gateway and every currently active verifier are in Taiko's proof path.
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "critical": true
+    },
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "critical": true
+    },
+    "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": {
+      "critical": true
+    },
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": {
+      "critical": true
+    }
+  }
 }

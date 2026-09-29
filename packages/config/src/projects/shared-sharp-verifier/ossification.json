@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1788425939,
+      "type": "state",
+      "contract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "transaction": "0x5c6ae4e99f7e72fc47cd5c94e78e8eb40ec955ef770ce1fac14d0d8126bfa006",
+      "updateId": "770edbe2",
+      "reason": "Set a caller-specific fallback route in the SHARPVerifierCallProxy (CustomReferenceSet: operator eth:0x159eb6910E36AB09dF3798f174b9DB00f327B06c -> eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6). The target is the current default SHARPVerifier, so the route does not change the effective verifier for that caller, but the route table is a HIGH field."
+    }
+  ]
+}

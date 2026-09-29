@@ -459,4 +459,161 @@ describe(Decoder.name, () => {
     assert(argument?.decoded?.type === 'bytes')
     expect(argument.decoded.value).toEqual(payload)
   })
+
+  it('decodes Taiko DelegateController onMessageInvocation payload', async () => {
+    const delegateController: Address =
+      'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    const resolver: Address = 'eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+    const bridge: Address = 'eth:0xcccccccccccccccccccccccccccccccccccccccc'
+
+    const onMessageInvocationAbi = 'function onMessageInvocation(bytes _data)'
+    const registerAddressAbi =
+      'function registerAddress(uint256 chainId, bytes32 name, address addr)'
+
+    addressService
+      .setAbi(delegateController, [onMessageInvocationAbi])
+      .setAbi(resolver, [registerAddressAbi])
+      .setName(resolver, 'DefaultResolver')
+      .setName(bridge, 'Bridge')
+
+    const onMessageInvocationSelector = signatureService.addOne(
+      onMessageInvocationAbi,
+    )
+    const registerAddressSelector = signatureService.addOne(registerAddressAbi)
+
+    const registerAddressData = encodeFunctionData({
+      abi: parseAbi([registerAddressAbi]),
+      functionName: 'registerAddress',
+      args: [
+        167000n,
+        '0x6272696467650000000000000000000000000000000000000000000000000000',
+        bridge.split(':')[1] as `0x${string}`,
+      ],
+    })
+
+    const actionsBytes = encodeAbiParameters(
+      [
+        {
+          name: 'actions',
+          type: 'tuple[]',
+          components: [
+            { name: 'target', type: 'address' },
+            { name: 'value', type: 'uint256' },
+            { name: 'data', type: 'bytes' },
+          ],
+        },
+      ],
+      [
+        [
+          {
+            target: resolver.split(':')[1] as `0x${string}`,
+            value: 0n,
+            data: registerAddressData,
+          },
+        ],
+      ],
+    )
+
+    // DelegateController: _data = bytes8(executionId) ++ abi.encode(Action[])
+    const executionId = '0x0000000000000007'
+    const payload: `0x${string}` = `${executionId}${actionsBytes.slice(2)}`
+
+    const data = encodeFunctionData({
+      abi: parseAbi([onMessageInvocationAbi]),
+      functionName: 'onMessageInvocation',
+      args: [payload],
+    })
+
+    const result = await decoder.decode({
+      to: delegateController,
+      data,
+      chain: ethereum,
+    })
+
+    assert(result.data.decoded?.type === 'call')
+    expect(result.data.decoded.selector).toEqual(onMessageInvocationSelector)
+
+    const payloadArg = result.data.decoded.arguments[0]
+    assert(payloadArg?.decoded?.type === 'array')
+    expect(payloadArg.abi).toEqual(
+      '(uint64 executionId, (address, uint256, bytes)[] actions)',
+    )
+
+    const [executionIdValue, actionsValue] = payloadArg.decoded.values
+    expect(executionIdValue?.name).toEqual('executionId')
+    expect(executionIdValue?.decoded).toEqual({ type: 'number', value: '7' })
+
+    assert(actionsValue?.decoded?.type === 'array')
+    expect(actionsValue.name).toEqual('actions')
+    expect(actionsValue.encoded).toEqual(actionsBytes)
+    expect(actionsValue.decoded.values.length).toEqual(1)
+
+    const action = actionsValue.decoded.values[0]
+    assert(action?.decoded?.type === 'array')
+    const [target, value, actionData] = action.decoded.values
+    assert(target?.decoded?.type === 'address')
+    assert(value?.decoded?.type === 'amount')
+    assert(actionData?.decoded?.type === 'call')
+
+    expect(target.decoded.value).toEqual(resolver)
+    expect(target.decoded.name).toEqual('DefaultResolver')
+    expect(value.decoded.value).toEqual('0')
+    expect(value.decoded.currency).toEqual('ETH')
+
+    expect(actionData.decoded.selector).toEqual(registerAddressSelector)
+    const [chainIdArg, nameArg, addrArg] = actionData.decoded.arguments
+    expect(chainIdArg?.decoded).toEqual({ type: 'number', value: '167000' })
+    assert(nameArg?.decoded?.type === 'bytes')
+    expect(nameArg.decoded.value).toEqual(
+      '0x6272696467650000000000000000000000000000000000000000000000000000',
+    )
+    assert(addrArg?.decoded?.type === 'address')
+    expect(addrArg.decoded.value).toEqual(bridge)
+    expect(addrArg.decoded.name).toEqual('Bridge')
+  })
+
+  it('leaves non-DelegateController onMessageInvocation payloads untouched', async () => {
+    const vault: Address = 'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    const onMessageInvocationAbi = 'function onMessageInvocation(bytes _data)'
+    addressService.setAbi(vault, [onMessageInvocationAbi])
+    const onMessageInvocationSelector = signatureService.addOne(
+      onMessageInvocationAbi,
+    )
+
+    // ERC20Vault-style payload: abi.encode(BridgeTransferOp) (no execution id)
+    const payload = encodeAbiParameters(
+      [
+        { name: 'token', type: 'address' },
+        { name: 'from', type: 'address' },
+        { name: 'to', type: 'address' },
+        { name: 'amount', type: 'uint256' },
+      ],
+      [
+        '0x1111111111111111111111111111111111111111',
+        '0x2222222222222222222222222222222222222222',
+        '0x3333333333333333333333333333333333333333',
+        1000n,
+      ],
+    )
+
+    const data = encodeFunctionData({
+      abi: parseAbi([onMessageInvocationAbi]),
+      functionName: 'onMessageInvocation',
+      args: [payload],
+    })
+
+    const result = await decoder.decode({
+      to: vault,
+      data,
+      chain: ethereum,
+    })
+
+    assert(result.data.decoded?.type === 'call')
+    expect(result.data.decoded.selector).toEqual(onMessageInvocationSelector)
+
+    const argument = result.data.decoded.arguments[0]
+    assert(argument?.decoded?.type === 'bytes')
+    expect(argument.decoded.value).toEqual(payload)
+  })
 })

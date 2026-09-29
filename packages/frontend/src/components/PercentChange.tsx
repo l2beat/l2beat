@@ -1,26 +1,24 @@
 import { EM_DASH } from '~/consts/characters'
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
 import {
+  COMPARED_TO_PERIOD,
   formatPercent,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
-
-const COMPARISON_PERIOD_LABELS: Record<PercentageChangePeriod, string> = {
-  '1D': 'one day ago',
-  '7D': 'seven days ago',
-  last24h: 'the previous 24 hours',
-  last7d: 'the previous seven days',
-  last30d: 'the previous 30 days',
-}
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './core/tooltip/Tooltip'
 
 export function PercentageChangeTooltipContent({
   period,
 }: {
   period: PercentageChangePeriod
 }) {
-  return <>Percentage change compared to {COMPARISON_PERIOD_LABELS[period]}.</>
+  return <>Percentage change compared to {COMPARED_TO_PERIOD[period]}.</>
 }
 
 interface Props {
@@ -77,9 +75,11 @@ export function PercentChange({
       <TooltipTrigger asChild disabledOnMobile={disabledOnMobile}>
         {content}
       </TooltipTrigger>
-      <TooltipContent>
-        <PercentageChangeTooltipContent period={period} />
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent>
+          <PercentageChangeTooltipContent period={period} />
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

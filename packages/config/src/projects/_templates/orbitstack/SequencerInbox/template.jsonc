@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SequencerInbox",
+  "critical": true,
   "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],
   "ignoreInWatchMode": [
@@ -12,7 +13,23 @@
   "ignoreRelatives": ["reader4844"],
   "category": "core",
   "fields": {
+    "isUsingFeeToken": {
+      "severity": "HIGH"
+    },
+    "isDelayBufferable": {
+      "severity": "HIGH"
+    },
+    "rollup": {
+      "severity": "HIGH"
+    },
+    "bridge": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "maxTimeVariation": {
+      "severity": "HIGH",
       "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
       "edit": [
         "shape",
@@ -33,6 +50,7 @@
       }
     },
     "batchPosterManager": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -41,6 +59,7 @@
       ]
     },
     "batchPosters": {
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",
@@ -65,6 +84,7 @@
       }
     },
     "dacKeyset": {
+      "severity": "HIGH",
       "handler": {
         "type": "arbitrumDACKeyset"
       }

@@ -87,7 +87,7 @@ export function getCollectionEntry<T extends CollectionKey>(
       default:
         assertUnreachable(collection)
     }
-  } catch (_) {
+  } catch {
     return undefined
   }
 }

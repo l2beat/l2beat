@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "TaikoDAO",
   "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
@@ -7,6 +8,7 @@
   "ignoreRelatives": ["permsGranted", "permsRevoked"],
   "fields": {
     "permsGranted": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "who",
@@ -17,6 +19,7 @@
       "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
     },
     "permsRevoked": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "who",

@@ -44,6 +44,12 @@ export interface CCIPNetwork {
   // Flattened historical union used by selector-bearing per-chain signatures.
   // Optional for backwards compatibility with persisted configs and sealed snapshots.
   onRamps?: EthereumAddress[]
+  // All documented and Router-registered OffRamps seen for each source chain.
+  // Retained across refreshes so deliveries through an OffRamp that was dropped
+  // from the docs (in-flight messages, historical resyncs) are still captured.
+  offRampsBySource?: Record<string, EthereumAddress[]>
+  // Flattened historical union of every known OffRamp on this chain.
+  offRamps?: EthereumAddress[]
 }
 
 export interface CCIPConfigData {
@@ -61,6 +67,7 @@ const LANES_URL =
 
 const ROUTER_ABI = parseAbi([
   'function getOnRamp(uint64 destChainSelector) view returns (address)',
+  'function getOffRamps() view returns ((uint64 sourceChainSelector, address offRamp)[])',
 ])
 
 // Map Chainlink's chain names to L2Beat chain names
@@ -303,8 +310,9 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           (candidate) => candidate.chain === network.chain,
         )
         const rpc = this.rpcs.get(network.chain)
-        if (rpc === undefined || network.router === undefined) {
-          return withOnRampHistory(network, previous, {})
+        const router = network.router
+        if (rpc === undefined || router === undefined) {
+          return withRampHistory(network, previous, {}, {})
         }
 
         const routes = [...(routerRoutes.get(network.chain) ?? [])]
@@ -314,20 +322,32 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           }))
           .sort((a, b) => a.destinationChain.localeCompare(b.destinationChain))
 
-        try {
-          const currentRouterOnRamps = await getRouterOnRampRoutes(
-            rpc,
-            network.router,
-            routes,
-          )
-          return withOnRampHistory(network, previous, currentRouterOnRamps)
-        } catch (error) {
-          this.logger.debug('Failed to resolve CCIP ramps from Router', {
-            chain: network.chain,
-            error,
-          })
-          return withOnRampHistory(network, previous, {})
-        }
+        const [currentRouterOnRamps, currentRouterOffRamps] = await Promise.all(
+          [
+            getRouterOnRampRoutes(rpc, router, routes).catch((error) => {
+              this.logger.debug('Failed to resolve CCIP OnRamps from Router', {
+                chain: network.chain,
+                error,
+              })
+              return {}
+            }),
+            getRouterOffRamps(rpc, router, chainSelectorToName).catch(
+              (error) => {
+                this.logger.debug(
+                  'Failed to resolve CCIP OffRamps from Router',
+                  { chain: network.chain, error },
+                )
+                return {}
+              },
+            ),
+          ],
+        )
+        return withRampHistory(
+          network,
+          previous,
+          currentRouterOnRamps,
+          currentRouterOffRamps,
+        )
       }),
     )
 
@@ -386,6 +406,41 @@ async function getRouterOnRampRoutes(
   return onRamps
 }
 
+// The Router accepts routeMessage() only from these OffRamps, so this is the
+// authoritative inbound set. It also still lists OffRamps kept registered
+// during a version migration after the docs have moved on.
+async function getRouterOffRamps(
+  rpc: Pick<IRpcClient, 'call' | 'getLatestBlockNumber'>,
+  router: EthereumAddress,
+  chainSelectorToName: Record<string, string>,
+): Promise<Record<string, EthereumAddress[]>> {
+  const latestBlockNumber = await rpc.getLatestBlockNumber()
+  const data = await rpc.call(
+    {
+      to: router,
+      input: Bytes.fromHex(
+        encodeFunctionData({ abi: ROUTER_ABI, functionName: 'getOffRamps' }),
+      ),
+    },
+    latestBlockNumber,
+  )
+  const offRamps = decodeFunctionResult({
+    abi: ROUTER_ABI,
+    functionName: 'getOffRamps',
+    data: data.toString() as Hex,
+  })
+
+  const bySource: Record<string, EthereumAddress[]> = {}
+  for (const { sourceChainSelector, offRamp } of offRamps) {
+    const selector = sourceChainSelector.toString()
+    const sourceChain = chainSelectorToName[selector] ?? `Unknown_${selector}`
+    const addresses = bySource[sourceChain] ?? []
+    addresses.push(EthereumAddress(offRamp))
+    bySource[sourceChain] = addresses
+  }
+  return bySource
+}
+
 async function callRouter(
   rpc: Pick<IRpcClient, 'call' | 'isMulticallDeployed' | 'multicall'>,
   calls: CallParameters[],
@@ -423,88 +478,99 @@ function sortUnique(addresses: EthereumAddress[]): EthereumAddress[] {
   return [...new Set(addresses)].sort()
 }
 
-function withOnRampHistory(
+function withRampHistory(
   network: CCIPNetwork,
   previous: CCIPNetwork | undefined,
   currentRouterOnRamps: Record<string, EthereumAddress>,
+  currentRouterOffRamps: Record<string, EthereumAddress[]>,
 ): CCIPNetwork {
-  const onRampsByDestination = mergeOnRampRoutes(
-    previous,
+  const onRampsByDestination = mergeRoutes([
+    previous?.onRampsByDestination,
+    previous?.outboundLanes,
     network.outboundLanes,
     currentRouterOnRamps,
-  )
+  ])
   const onRamps = sortUnique([
-    ...[network.onRamp, network.onRampV2].filter(
-      (address) => address !== undefined,
-    ),
-    ...[previous?.onRamp, previous?.onRampV2].filter(
-      (address) => address !== undefined,
-    ),
+    ...definedAddresses(network.onRamp, network.onRampV2),
+    ...definedAddresses(previous?.onRamp, previous?.onRampV2),
     ...(previous?.onRamps ?? []),
     ...Object.values(onRampsByDestination).flat(),
+  ])
+
+  const offRampsBySource = mergeRoutes([
+    previous?.offRampsBySource,
+    previous?.inboundLanes,
+    network.inboundLanes,
+    currentRouterOffRamps,
+  ])
+  const offRamps = sortUnique([
+    ...definedAddresses(network.offRamp, network.offRampV2),
+    ...definedAddresses(previous?.offRamp, previous?.offRampV2),
+    ...(previous?.offRamps ?? []),
+    ...Object.values(offRampsBySource).flat(),
   ])
 
   return {
     ...network,
     onRampsByDestination,
     onRamps,
+    offRampsBySource,
+    offRamps,
   }
 }
 
-function mergeOnRampRoutes(
-  previous: CCIPNetwork | undefined,
-  documentedOnRamps: Record<string, EthereumAddress>,
-  currentRouterOnRamps: Record<string, EthereumAddress>,
+function definedAddresses(
+  ...addresses: (EthereumAddress | undefined)[]
+): EthereumAddress[] {
+  return addresses.filter((address) => address !== undefined)
+}
+
+function mergeRoutes(
+  sources: (Record<string, EthereumAddress | EthereumAddress[]> | undefined)[],
 ): Record<string, EthereumAddress[]> {
   const routes = new Map<string, Set<EthereumAddress>>()
 
-  const add = (destinationChain: string, address: EthereumAddress) => {
-    const addresses = routes.get(destinationChain) ?? new Set()
-    addresses.add(address)
-    routes.set(destinationChain, addresses)
-  }
-
-  for (const [destinationChain, addresses] of Object.entries(
-    previous?.onRampsByDestination ?? {},
-  )) {
-    for (const address of addresses) add(destinationChain, address)
-  }
-  for (const [destinationChain, address] of Object.entries(
-    previous?.outboundLanes ?? {},
-  )) {
-    add(destinationChain, address)
-  }
-  for (const [destinationChain, address] of Object.entries(documentedOnRamps)) {
-    add(destinationChain, address)
-  }
-  for (const [destinationChain, address] of Object.entries(
-    currentRouterOnRamps,
-  )) {
-    add(destinationChain, address)
+  for (const source of sources) {
+    for (const [chain, value] of Object.entries(source ?? {})) {
+      const addresses = routes.get(chain) ?? new Set()
+      for (const address of Array.isArray(value) ? value : [value]) {
+        addresses.add(address)
+      }
+      routes.set(chain, addresses)
+    }
   }
 
   return Object.fromEntries(
     [...routes.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([destinationChain, addresses]) => [
-        destinationChain,
-        sortUnique([...addresses]),
-      ]),
+      .map(([chain, addresses]) => [chain, sortUnique([...addresses])]),
   )
 }
 
 export function getOnRampsByDestination(
   network: CCIPNetwork,
 ): Record<string, EthereumAddress[]> {
-  return mergeOnRampRoutes(network, network.outboundLanes, {})
+  return mergeRoutes([network.onRampsByDestination, network.outboundLanes])
 }
 
 export function getKnownOnRamps(network: CCIPNetwork): EthereumAddress[] {
   return sortUnique([
     ...(network.onRamps ?? []),
-    ...[network.onRamp, network.onRampV2].filter(
-      (address) => address !== undefined,
-    ),
+    ...definedAddresses(network.onRamp, network.onRampV2),
     ...Object.values(getOnRampsByDestination(network)).flat(),
+  ])
+}
+
+export function getOffRampsBySource(
+  network: CCIPNetwork,
+): Record<string, EthereumAddress[]> {
+  return mergeRoutes([network.offRampsBySource, network.inboundLanes])
+}
+
+export function getKnownOffRamps(network: CCIPNetwork): EthereumAddress[] {
+  return sortUnique([
+    ...(network.offRamps ?? []),
+    ...definedAddresses(network.offRamp, network.offRampV2),
+    ...Object.values(getOffRampsBySource(network)).flat(),
   ])
 }

@@ -4,6 +4,10 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"],
   "overrides": {
+    "eth:0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (shared Karst upgrade tooling). Ignored so discovery
     // doesn't follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {

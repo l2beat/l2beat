@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CrispVoting",
+  "category": "gov",
+  "description": "Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.",
+  "ignoreRelatives": ["interfoldFeeToken"],
+  "ignoreMethods": [
+    "canExecute",
+    "proposalPayer",
+    "getProposal",
+    "getTally",
+    "getWinningOption",
+    "hasSucceeded",
+    "proposalCount",
+    "proxiableUUID",
+    "quoteProposalFee",
+    "quoteProposalFeeForDuration",
+    "totalVotingPower"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager controls the plugin's settings, target and upgrades."
+    },
+    "interfold": {
+      "description": "E3 coordinator that runs the encrypted tally."
+    },
+    "interfoldFeeToken": {
+      "description": "ERC-20 in which E3 request fees for each vote are paid to Interfold. Its own protocol is outside this discovery perimeter."
+    },
+    "getVotingToken": {
+      "description": "IVotes source used for proposal snapshots and vote weights."
+    },
+    "getE3Settings": {
+      "description": "Committee size class, BFV parameter set and program parameters requested for each vote's E3.",
+      "type": "RISK_PARAMETER"
+    },
+    "supportThreshold": {
+      "description": "Required yes-vote share for a proposal to pass, in the plugin's ratio base.",
+      "type": "RISK_PARAMETER"
+    },
+    "minParticipation": {
+      "description": "Minimum participating voting power relative to the snapshotted total supply, in the plugin's ratio base.",
+      "type": "RISK_PARAMETER"
+    },
+    "minDuration": {
+      "description": "Minimum voting duration in seconds.",
+      "type": "RISK_PARAMETER"
+    },
+    "minProposerVotingPower": {
+      "description": "Minimum voting power the creator must hold at the proposal snapshot.",
+      "type": "RISK_PARAMETER"
+    },
+    "minVoterVotingPower": {
+      "description": "Minimum voting power required to cast a ballot.",
+      "type": "RISK_PARAMETER"
+    },
+    "availabilityFinalizationWindow": {
+      "description": "Time after voting ends reserved for finalizing ballot data availability before the tally.",
+      "type": "RISK_PARAMETER"
+    },
+    "getTargetConfig": {
+      "description": "Execution target and call operation for passed votes.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

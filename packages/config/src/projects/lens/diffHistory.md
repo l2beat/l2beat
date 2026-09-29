@@ -1,3 +1,227 @@
+Generated with discovered.json: 0x6223e0ba7b9e4cb214a61820c208694acb268ec2
+
+# Diff at Wed, 23 Sep 2026 05:47:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789917638
+- current timestamp: 1789917638
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917638 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getPendingAdmin:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x4e9ab1a8ed367f5338933ffae5f2dc9ebc75e56f
+
+# Diff at Sun, 20 Sep 2026 18:10:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1789917638
+- current timestamp: 1789917638
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917638 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      fieldMeta.executionDelay:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getL2EvmEmulatorBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2DefaultAccountBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2BootloaderBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getPriorityTxMaxGasLimit:
++        {"severity":"HIGH"}
+      fieldMeta.getRollupDAManager:
++        {"severity":"HIGH"}
+      fieldMeta.getChainTypeManager:
++        {"severity":"HIGH"}
+      fieldMeta.getBridgehub:
++        {"severity":"HIGH"}
+      fieldMeta.getVerifier:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+      fieldMeta.verificationKeyHash.severity:
++        "HIGH"
+      fieldMeta.PLONK_VERIFIER:
++        {"severity":"HIGH"}
+      fieldMeta.FFLONK_VERIFIER:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x2f6d6ded467ab2122ac6b7c1ca068ba585f650cb
+
+# Diff at Sun, 20 Sep 2026 15:22:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1786966184
+- current timestamp: 1789917638
+
+## Description
+
+critical contracts and severities for the ossification perimeter (re-run after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966184 (main branch discovery), not current.
+
+```diff
+    contract EraVerifierPlonk (eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+      fieldMeta:
++        {"executionDelay_fmt":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraVerifierFflonk (eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) [shared-zk-stack/AvailL1DAValidator] {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1USDCBridge (eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) [shared-zk-stack/L1USDCBridge] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+Generated with discovered.json: 0x332e7a991faacb5628d8adc38cde1d7abaacb47f
+
+# Diff at Thu, 17 Sep 2026 15:00:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1786966184
+- current timestamp: 1786966184
+
+## Description
+
+Permissions remodelled against vector: the Vector relayer was rotated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966184 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
 Generated with discovered.json: 0xfa4399f8147f062353087d2d70e8cb75992b2fc0
 
 # Diff at Mon, 07 Sep 2026 08:37:51 GMT:

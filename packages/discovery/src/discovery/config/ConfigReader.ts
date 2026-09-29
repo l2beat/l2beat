@@ -2,68 +2,61 @@ import {
   assert,
   formatAsciiBorder,
   Hash160,
-  type json,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
 import { existsSync, readdirSync, readFileSync } from 'fs'
-import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
+import { ConfigLayer, mergeConfigLayer } from './ConfigLayer'
 import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
-type JustImport = v.infer<typeof JustImport>
 const JustImport = v.object({ import: v.array(v.string()).optional() })
 
+type ParsedLayer = { imports: string[]; layer: ConfigLayer }
+
+function parseLayer(contents: unknown, label: string): ParsedLayer {
+  const importResult = JustImport.safeValidate(contents)
+  if (!importResult.success) {
+    console.log(formatAsciiBorder([importResult.message, label]))
+    throw new Error(`Cannot parse file ${label}`)
+  }
+  const layerResult = ConfigLayer.safeParse(contents)
+  if (!layerResult.success) {
+    console.log(formatAsciiBorder([layerResult.message, label]))
+    throw new Error(`Cannot parse file ${label}`)
+  }
+  return { imports: importResult.data.import ?? [], layer: layerResult.data }
+}
+
 export class ConfigReader {
-  private importedCache = new Map<string, JustImport>()
+  private importedCache = new Map<string, ParsedLayer>()
 
   constructor(private rootPath: string) {}
 
   readConfig(name: string): ConfigRegistry {
-    const rawConfig = this.readRawConfig(name)
-
-    const rawConfigForChain = {
-      ...rawConfig,
-      ...(rawConfig.archived ? { archived: true } : {}),
-    }
-
-    const config = new ConfigRegistry(rawConfigForChain)
-
-    return config
+    const layers = this.readConfigLayers(name)
+    const merged = layers.reduce((base, layer) => mergeConfigLayer(base, layer))
+    return new ConfigRegistry(merged)
   }
 
-  readRawConfig(name: string) {
+  readConfigLayers(name: string): ConfigLayer[] {
     const basePath = this.resolveProjectPath(name)
     assert(
       fileExistsCaseSensitive(basePath),
       'Project not found, check if case matches',
     )
 
-    const contents = readJsonc(path.join(basePath, 'config.jsonc'))
-    const parseResult = JustImport.safeValidate(contents)
-    if (!parseResult.success) {
-      console.log(formatAsciiBorder([parseResult.message, 'config.jsonc']))
-
-      throw new Error(`Cannot parse file ${name}/config.jsonc`)
-    }
-
-    // biome-ignore lint/suspicious/noExplicitAny: hack that we are aware of
-    let rawConfig = parseResult.data as any
-    if (rawConfig.import !== undefined) {
-      const visited = new Set<string>()
-      rawConfig = merge(
-        this.resolveImports(basePath, rawConfig.import, visited),
-        rawConfig,
-      )
-    }
-    return rawConfig
+    const rawConfig = readJsonc(path.join(basePath, 'config.jsonc'))
+    const { imports, layer } = parseLayer(rawConfig, `${name}/config.jsonc`)
+    const visited = new Set<string>()
+    return [...this.resolveImports(basePath, imports, visited), layer]
   }
 
   readRawConfigAsText(name: string): string {
@@ -206,8 +199,8 @@ export class ConfigReader {
     basePath: string,
     imports: string[],
     visited: Set<string>,
-  ): json {
-    let result: json = {}
+  ): ConfigLayer[] {
+    const layers: ConfigLayer[] = []
     for (const importPath of imports) {
       const resolvedPath = path.resolve(basePath, importPath)
       if (visited.has(resolvedPath)) {
@@ -215,29 +208,19 @@ export class ConfigReader {
       }
       visited.add(resolvedPath)
 
-      let rawConfig = this.importedCache.get(resolvedPath)
-      if (rawConfig === undefined) {
-        const contents = readJsonc(resolvedPath)
-        const parseResult = JustImport.safeValidate(contents)
-        if (!parseResult.success) {
-          console.log(formatAsciiBorder([parseResult.message, importPath]))
-
-          throw new Error(`Cannot parse file ${importPath}`)
-        }
-        rawConfig = parseResult.data
-        this.importedCache.set(resolvedPath, rawConfig)
+      let parsed = this.importedCache.get(resolvedPath)
+      if (parsed === undefined) {
+        parsed = parseLayer(readJsonc(resolvedPath), importPath)
+        this.importedCache.set(resolvedPath, parsed)
       }
 
-      if (rawConfig.import !== undefined) {
-        const importBasePath = path.dirname(resolvedPath)
-        result = merge(
-          this.resolveImports(importBasePath, rawConfig.import, visited),
-          result,
-        )
-      }
-      result = merge(result, rawConfig)
+      const importBasePath = path.dirname(resolvedPath)
+      layers.push(
+        ...this.resolveImports(importBasePath, parsed.imports, visited),
+        parsed.layer,
+      )
     }
-    return result
+    return layers
   }
 
   projectConfigExists(project: string): boolean {

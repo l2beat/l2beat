@@ -10,6 +10,10 @@
     "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": "Megaeth Multisig"
   },
   "overrides": {
+    "eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x910b159F79288DD706789ec7768E979d4D88C057": {
       "fields": {
         "verifier": {

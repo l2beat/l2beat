@@ -12,6 +12,7 @@
   ],
   "fields": {
     "currentQuorum": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "quorum",
@@ -27,6 +28,7 @@
       "edit": ["format", "Undecimal24"]
     },
     "proposalThreshold_MTokens": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "proposalThreshold",
@@ -39,6 +41,9 @@
         "type": "accessControl"
       }
     },
+    "votingDelay": { "severity": "HIGH" },
+    "votingPeriod": { "severity": "HIGH" },
+    "lateQuorumVoteExtension": { "severity": "HIGH" },
     "proposalCreatedCount": {
       "handler": {
         "type": "eventCount",

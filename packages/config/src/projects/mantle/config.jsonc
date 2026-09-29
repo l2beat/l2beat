@@ -10,10 +10,99 @@
     "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig"
   },
   "overrides": {
+    "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // MNT is the gas token of the L2 and canonically escrowed in the
+    // OptimismPortal: a malicious upgrade of the token contract can reassign
+    // escrowed balances, so the token and its upgrade path are critical.
     "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": {
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
+      "critical": true,
       "ignoreMethods": ["getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can mint new MNT (up to 2% of supply per year as set by mintCapNumerator) and transfer token ownership."
+            }
+          ]
+        },
+        "mintCapNumerator": {
+          "severity": "HIGH",
+          "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
+        }
+      }
+    },
+    // ProxyAdmin (L1): can upgrade the core Mantle contracts (Portal, L2OutputOracle, SystemConfig, L1StandardBridge, L1CrossDomainMessenger via AddressManager).
+    "eth:0xca35F8338054739D138884685e08b39EE2217794": {
+      "critical": true,
+      "fields": {
+        "addressManager": {
+          "severity": "HIGH",
+          "description": "AddressManager whose mappings this ProxyAdmin can update, including the L1CrossDomainMessenger implementation."
+        },
+        "l1CrossDomainMessengerProxyType": {
+          "severity": "HIGH",
+          "description": "Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy).",
+          "handler": {
+            "type": "call",
+            "method": "proxyType",
+            "args": ["0x676A795fe6E43C17c668de16730c3F690FEB7120"]
+          }
+        },
+        "l1CrossDomainMessengerImplementationName": {
+          "severity": "HIGH",
+          "description": "AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger.",
+          "handler": {
+            "type": "call",
+            "method": "implementationName",
+            "args": ["0x676A795fe6E43C17c668de16730c3F690FEB7120"]
+          }
+        },
+        "l1StandardBridgeProxyType": {
+          "severity": "HIGH",
+          "description": "Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy).",
+          "handler": {
+            "type": "call",
+            "method": "proxyType",
+            "args": ["0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"]
+          }
+        }
+      }
+    },
+    // Upgrade authority path of the MNT token: TimelockController (1d delay) owns the MantleTokenProxyAdmin.
+    "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": {
+      "critical": true
+    },
+    "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
+      "critical": true
+    },
+    // This Safe has controlled the MNT token since its initialization and now
+    // controls the core ProxyAdmin, SystemConfig and OP Succinct owner role.
+    "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": {
+      "critical": { "sinceTimestamp": 1687241795 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // This Safe became the withdrawal guardian and output-oracle challenger
+    // when Mantle's current portal/oracle architecture was activated.
+    "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": {
+      "critical": { "sinceTimestamp": 1710490775 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": {
+      "fields": {
+        "paused": { "severity": "MEDIUM" }
+      }
     }
   }
 }

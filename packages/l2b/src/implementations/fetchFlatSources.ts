@@ -1,98 +1,101 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { formatSI, HttpClient } from '@l2beat/shared'
-import { FlatSourcesApiResponse, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  FlatSourcesApiResponse,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
+import type { CliLogger } from './common/CliLogger'
 import {
   type ProgressEvent,
   trackDownloadProgress,
 } from './common/trackDownloadProgress'
-import { colorMap } from './compare-flat-sources/output'
 
 const ENDPOINT = '/api/flat-sources'
 
 export async function fetchFlatSources(
-  logger: Logger,
+  cli: CliLogger,
   backendUrl: string,
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
+  const download = cli.status()
+  let last: ProgressEvent | undefined
   const response = trackDownloadProgress(
     await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, { timeout: 0 }),
-    (progress) => printProgress(logger, progress),
+    (progress) => {
+      last = progress
+      download.update(formatDownloadProgress(progress))
+    },
   )
-  return FlatSourcesApiResponse.parse(await response.json())
+  const flat = FlatSourcesApiResponse.parse(await response.json())
+  assert(last !== undefined)
+  download.done(
+    `Downloaded ${formatSI(last.done, 'B')} in ${formatSeconds(last.elapsed)}`,
+  )
+  return flat
 }
 
-function printProgress(logger: Logger, progress: ProgressEvent) {
+function formatDownloadProgress(progress: ProgressEvent): string {
   const done = formatSI(progress.done, 'B')
   const rate = chalk.magenta(formatSI(progress.rate, 'B/s'))
-
-  if (progress.total === 0) {
-    logger.info('lineDownloaded', `Downloaded ${done} [${rate}]`)
-    return
-  }
-
-  const prog = colorMap(progress.progress * 100, 100)
-  const total = formatSI(progress.total, 'B')
-  const eta = formatSeconds(progress.eta)
-  logger.info(
-    'lineDownloaded',
-    `Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`,
-  )
+  const elapsed = formatSeconds(progress.elapsed)
+  return `Downloaded ${done} (${rate}, ${elapsed})`
 }
 
 export function saveIntoDirectory(
-  logger: Logger,
+  cli: CliLogger,
   flat: FlatSourcesApiResponse,
   outputDirectory: string,
 ) {
-  logger.info(
-    [chalk.green('Saving into directory'), chalk.magenta(outputDirectory)].join(
-      ' ',
-    ),
-  )
-
-  for (const project of flat) {
+  const saving = cli.status()
+  let filesTotal = 0
+  for (let i = 0; i < flat.length; i++) {
+    const project = flat[i]
+    saving.update(`Saving ${i + 1}/${flat.length} ${project.projectId}`)
     const outputPath = path.join(outputDirectory, project.projectId)
-    mkdirSync(outputPath, { recursive: true })
-
-    for (const filePath of Object.keys(project.flat)) {
-      const dir = path.dirname(filePath)
-      const fileOutputDirectory = path.join(outputPath, dir)
-      if (fileOutputDirectory !== outputPath) {
-        mkdirSync(fileOutputDirectory, { recursive: true })
-      }
-
-      const fileOutputPath = path.join(outputPath, filePath)
-      writeFileSync(fileOutputPath, project.flat[filePath])
-    }
+    filesTotal += writeFlatFiles(outputPath, project.flat)
   }
+  saving.done(
+    `Saved ${flat.length} projects (${filesTotal} files) into ${chalk.magenta(outputDirectory)}`,
+  )
 }
 
 export function saveIntoDiscovery(
-  logger: Logger,
+  cli: CliLogger,
   flat: FlatSourcesApiResponse,
   discoveryPath: string,
 ) {
-  logger.info(chalk.green('Saving into discovery...'))
-
-  for (const project of flat) {
+  const saving = cli.status()
+  let filesTotal = 0
+  for (let i = 0; i < flat.length; i++) {
+    const project = flat[i]
+    saving.update(`Saving ${i + 1}/${flat.length} ${project.projectId}`)
     const outputPath = path.join(discoveryPath, project.projectId, '.flat')
     if (existsSync(outputPath)) {
       rmSync(outputPath, { recursive: true })
     }
-    mkdirSync(outputPath, { recursive: true })
-
-    for (const filePath in project.flat) {
-      const dir = path.dirname(filePath)
-      const fileOutputDirectory = path.join(outputPath, dir)
-      if (fileOutputDirectory !== outputPath) {
-        mkdirSync(fileOutputDirectory, { recursive: true })
-      }
-
-      const fileOutputPath = path.join(outputPath, filePath)
-      writeFileSync(fileOutputPath, project.flat[filePath])
-    }
+    filesTotal += writeFlatFiles(outputPath, project.flat)
   }
+  saving.done(
+    `Saved ${flat.length} projects (${filesTotal} files) into ${chalk.magenta(discoveryPath)}`,
+  )
+}
+
+function writeFlatFiles(
+  outputPath: string,
+  files: Record<string, string>,
+): number {
+  mkdirSync(outputPath, { recursive: true })
+  let count = 0
+  for (const filePath in files) {
+    const fileOutputDirectory = path.join(outputPath, path.dirname(filePath))
+    if (fileOutputDirectory !== outputPath) {
+      mkdirSync(fileOutputDirectory, { recursive: true })
+    }
+    writeFileSync(path.join(outputPath, filePath), files[filePath])
+    count += 1
+  }
+  return count
 }

@@ -56,6 +56,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747357991,
       "sinceBlock": 22492297,
@@ -66,7 +67,10 @@
         "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
       },
       "fieldMeta": {
+        "PLONK_VERIFIER": { "severity": "HIGH" },
+        "FFLONK_VERIFIER": { "severity": "HIGH" },
         "verificationKeyHash": {
+          "severity": "HIGH",
           "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
         }
       },
@@ -84,6 +88,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747357979,
       "sinceBlock": 22492296,
@@ -111,6 +116,7 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "critical": true,
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
@@ -143,6 +149,7 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
@@ -175,6 +182,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
@@ -194,6 +202,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it.",
+      "critical": true,
       "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1739513579,
       "sinceBlock": 21842838,
@@ -209,6 +218,8 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -246,6 +257,7 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -477,6 +489,18 @@
         ]
       },
       "fieldMeta": {
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" },
+        "getSettlementLayer": {
+          "severity": "HIGH",
+          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+        },
         "getAdmin": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
@@ -494,7 +518,6 @@
           "severity": "HIGH",
           "description": "l1da, l2da"
         },
-        "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
           "description": "0 - Rollup, 1 - Validium"
@@ -541,6 +564,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747323275,
       "sinceBlock": 22489437,
@@ -1019,9 +1043,9 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x813b3fa5711f1f34ae5abab8df6fe20dfe53396a89437d830505fd9dad0331ee",
+  "permissionsConfigHash": "0x75221be1f030a48407be5eee56c7269639bb5218b1ac234e7a11004d05279149",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {

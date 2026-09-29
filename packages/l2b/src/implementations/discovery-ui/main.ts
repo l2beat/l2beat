@@ -10,7 +10,7 @@ import {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import { config as dotenv } from 'dotenv'
-import express from 'express'
+import express, { type Express } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
@@ -108,8 +108,22 @@ const diffHistoryQuerySchema = z.object({
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   dotenv()
-  const app = express()
   const port = process.env.PORT ?? 2021
+  const app = createDiscoveryUiApp({ readonly })
+
+  const server = app.listen(port, () => {
+    console.log(`Discovery UI live on http://localhost:${port}/ui`)
+  })
+
+  attachGracefulShutdown(server)
+}
+
+export function createDiscoveryUiApp({
+  readonly,
+}: {
+  readonly: boolean
+}): Express {
+  const app = express()
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
 
@@ -418,11 +432,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
   })
 
-  const server = app.listen(port, () => {
-    console.log(`Discovery UI live on http://localhost:${port}/ui`)
-  })
-
-  attachGracefulShutdown(server)
+  return app
 }
 
 function shutdown(server: Server) {

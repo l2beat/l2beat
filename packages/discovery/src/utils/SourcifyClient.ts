@@ -10,7 +10,7 @@ import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
 
-const URL = 'https://sourcify.dev/server'
+const DEFAULT_URL = 'https://sourcify.dev/server'
 
 class SourcifyError extends Error {}
 
@@ -30,6 +30,7 @@ export class SourcifyClient implements IEtherscanClient {
   constructor(
     protected readonly httpClient: HttpClient,
     protected readonly chainId: number,
+    protected readonly url = DEFAULT_URL,
     protected readonly logger = Logger.SILENT,
   ) {
     this.callWithRetries = this.rateLimiter.wrap(
@@ -129,7 +130,7 @@ export class SourcifyClient implements IEtherscanClient {
       'creationBytecode',
       'deployment',
     ]
-    const url = `${URL}/v2/contract/${this.chainId}/${address}?fields=${fields.join(',')}`
+    const url = `${this.url}/v2/contract/${this.chainId}/${address}?fields=${fields.join(',')}`
 
     const response = await this.httpClient.fetchRaw(url, {
       timeout: this.timeoutMs,

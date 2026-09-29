@@ -108,11 +108,10 @@ export const tornadoCash: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-04-15')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
-    redWarning: {
-      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. See Secure frontend section below.',
-    },
+    redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
     unverifiedContracts: [],
@@ -184,6 +183,7 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

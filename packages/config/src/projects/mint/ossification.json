@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "timestamp": 1765214783,
+      "type": "state",
+      "contract": "eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a",
+      "transaction": "0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",
+      "updateId": "dd80d5e5",
+      "reason": "DelayedWETH: owner changed (owner; 0x0000000000000000000000004a4962275df8c60a80d3a25faec5aa7de116a746 0x000000000000000000000)."
+    },
+    {
+      "timestamp": 1765214783,
+      "type": "state",
+      "contract": "eth:0xC975862927797812371A9Fb631f83F8f5e2240D5",
+      "transaction": "0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",
+      "updateId": "dd80d5e5",
+      "reason": "SystemConfig: owner changed (owner; 0x0000000000000000000000004a4962275df8c60a80d3a25faec5aa7de116a746 0x000000000000000000000)."
+    },
+    {
+      "timestamp": 1765214783,
+      "type": "state",
+      "contract": "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662",
+      "transaction": "0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",
+      "updateId": "dd80d5e5",
+      "reason": "DisputeGameFactory: dispute game implementation set (gameImpls; 0x000000000000000000000000c7ab73ae577650565ce7337b09704570c3e379b7 0x000000000000000000000)."
+    }
+  ]
+}

@@ -25,4 +25,7 @@ async function main() {
   console.log(JSON.stringify(result, null, 2))
 }
 
-main()
+main().catch((error: unknown) => {
+  console.error(error)
+  process.exitCode = 1
+})

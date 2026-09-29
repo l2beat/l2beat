@@ -1,10 +1,11 @@
-Generated with discovered.json: 0xaf502a062591e8ce11521b47f55700561edddc8a
+Generated with discovered.json: 0x66a1c0cfb62e43a4cd4abc31c556ab1916df9f7d
 
-# Diff at Fri, 18 Sep 2026 07:28:04 GMT:
+# Diff at Tue, 29 Sep 2026 15:53:19 GMT:
 
+- id: be94796b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789044680
-- current timestamp: 1789716416
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044680
+- current timestamp: 1790697130
 
 ## Description
 
@@ -13,6 +14,8 @@ Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v
 ProxyAdmin replaced by another ProxyAdmin with an AddressManager, owner unchanged (Conduit Multisig 1). New DelayedWETH deployed. PermissionedDisputeGame, MIPS (v1.9.0 to v1.10.1) and PreimageOracle (v1.1.4 to v1.1.5) replaced; proposer, challenger and absolute prestate unchanged.
 
 L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1BlockValuesJovian()` and `daFootprintGasScalar` (`400`). Implementation marked as manually verified.
+
+L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged. The `upgradePredeploys` call of the same batch reverted, so the other predeploys were not upgraded. Implementation marked as manually verified.
 
 ## Watched changes
 
@@ -99,11 +102,18 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 -        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
       values.wethFromGame:
 -        "eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162"
++++ severity: HIGH
+      values.blacklistedGames:
++        []
       values.getStartingAnchorRoot:
 +        {"root":"0xdead000000000000000000000000000000000000000000000000000000000000","l2SequenceNumber":0}
-      fieldMeta.retirementTimestamp:
-+        {"severity":"HIGH"}
-      fieldMeta.disputeGameFinalityDelaySeconds:
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.blacklistedGames:
 +        {"severity":"HIGH"}
       implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
 -        "AnchorStateRegistry"
@@ -345,6 +355,9 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 -        ["eth:0x0000000000000000000000000000000000000000","eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
       values.initBonds:
 -        [0,0,0,0,0]
+      values.permissionedGameArgs:
+-        "0x"
++        "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfa2613d77ffbe105ca861d526061dc3ef191e1705164555e021b913963e2d17de97efcc2723d3ec037000000000000000000000000000000000000000000000000000000000000bf042d14057c3ad6b04a480b06da2356adcdf5ed97ee4a4962275df8c60a80d3a25faec5aa7de116a746"
       values.permissionedGameVm:
 -        "UNRESOLVED"
 +        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
@@ -357,9 +370,19 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
       values.version:
 -        "1.3.0"
 +        "1.6.1"
++++ severity: HIGH
       values.wethFromDGF:
 -        "UNRESOLVED"
 +        "eth:0x64555e021B913963e2D17de97efCc2723D3ec037"
++++ severity: HIGH
+      values.absolutePrestateFromDGF:
++        "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6"
++++ severity: HIGH
+      values.anchorStateRegistryFromDGF:
++        "eth:0x2613d77fFBE105CA861D526061dC3ef191E17051"
++++ severity: HIGH
+      values.chainIdFromDGF:
++        48900
 +++ severity: HIGH
       values.game0:
 +        "eth:0x0000000000000000000000000000000000000000"
@@ -372,9 +395,22 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 +++ severity: HIGH
       values.game8:
 +        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game8AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8AnchorStateRegistry:
++        "UNRESOLVED"
       values.game8Args:
 +        "0x"
++++ severity: HIGH
+      values.game8ChainId:
++        "UNRESOLVED"
++++ severity: HIGH
       values.game8Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Weth:
 +        "UNRESOLVED"
       values.initBondGame0:
 +        0
@@ -384,6 +420,13 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 +        0
       values.initBondGame8:
 +        0
++++ severity: HIGH
+      values.vmFromDGF:
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
       fieldMeta.gameImpls:
 -        {"severity":"HIGH"}
       fieldMeta.game2000:
@@ -396,12 +439,42 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 +        {"severity":"HIGH"}
       fieldMeta.game8:
 +        {"severity":"HIGH"}
+      fieldMeta.absolutePrestateFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.vmFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.game8AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game8Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game8AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game8Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game8ChainId:
++        {"severity":"HIGH"}
+      fieldMeta.anchorStateRegistryFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.chainIdFromDGF:
++        {"severity":"HIGH"}
       implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
 -        "DisputeGameFactory"
       implementationNames.eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b:
 +        "DisputeGameFactory"
       usedTypes.0:
++        {"typeCaster":"SliceBytes32","arg":{"offset":0}}
+      usedTypes.1:
 +        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.2:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.3:
++        {"typeCaster":"SliceAddress","arg":{"offset":52}}
+      usedTypes.4:
++        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+      usedTypes.5:
++        {"typeCaster":"SliceUint256","arg":{"offset":92}}
+      usedTypes.2:
+-        {"typeCaster":"SliceAddress","arg":{"offset":72}}
     }
 ```
 
@@ -513,6 +586,40 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
 ```
 
 ```diff
+    contract L2ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      template:
+-        "global/ProxyAdmin"
+      sourceHashes.1:
+-        "0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8"
++        "0xcea31b58ff65b06189e9917b722bbf62c64be3d73b484e1bc79bc4be1c972b3e"
+      values.$implementation:
+-        "zircuit:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"
++        "zircuit:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0x48aa8d6a9d281bf0eaa204e895acdfe0ba38640c34f6d133b2f4ecb879f5c72c",["zircuit:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"]]
+      values.$upgradeCount:
+-        0
++        1
++++ severity: HIGH
+      values.addressManager:
++        "zircuit:0x0000000000000000000000000000000000000000"
+      values.isUpgrading:
++        false
+      values.version:
++        "1.0.0"
+      errors:
+-        {"addressManager":"Processing error occurred.","isUpgrading":"Processing error occurred.","version":"Processing error occurred."}
+      implementationNames.zircuit:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        "ProxyAdmin"
+      implementationNames.zircuit:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F:
++        ""
+      references:
++        [{"text":"Source Code","href":"https://github.com/ethereum-optimism/optimism/blob/op-contracts/v7.0.0/packages/contracts-bedrock/src/L2/L2ProxyAdmin.sol"}]
+    }
+```
+
+```diff
 +   Status: CREATED
     contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [opstack/PreimageOracle]
     +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
@@ -559,6 +666,7 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
  .../L1CrossDomainMessenger.sol                     | 1619 +++-----
  .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 +-
  .../L1StandardBridge/L1StandardBridge.sol          |  212 +-
+ .../L2ProxyAdmin/ProxyAdmin.sol => /dev/null       |  238 --
  .../zircuit/{.flat@1789044680 => .flat}/MIPS.sol   |   43 +-
  .../OptimismMintableERC20Factory.sol               |  341 +-
  .../OptimismPortal2/OptimismPortal2.sol            | 1522 ++-----
@@ -567,7 +675,7 @@ L1Block upgraded from v1.6.1 to v1.7.0 (Jovian network upgrade): adds `setL1Bloc
  ...:0x3A317fCEE068868BE7628eFb233170df2DD5B71d.sol |  427 ++
  .../dev/null                                       |  238 --
  .../SystemConfig/SystemConfig.sol                  | 1615 ++------
- 16 files changed, 5029 insertions(+), 7376 deletions(-)
+ 17 files changed, 5029 insertions(+), 7614 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -607,6 +715,556 @@ discovery. Values are for block 1789044680 (main branch discovery), not current.
     +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
       errors:
 +        {"daFootprintGasScalar":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      description:
++        "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction."
+      critical:
++        true
+      errors:
++        {"addressManager":"Processing error occurred.","isUpgrading":"Processing error occurred.","version":"Processing error occurred."}
+      fieldMeta:
++        {"addressManager":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x5b4a9036417bf6618dd0bd44f0cfb09315be5c6d
+
+# Diff at Wed, 23 Sep 2026 05:50:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789044680
+- current timestamp: 1789044680
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044680 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.8.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.4.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x9ff24ca677bbd7c55919885972e948a586558a56
+
+# Diff at Mon, 21 Sep 2026 11:24:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789044680
+- current timestamp: 1789044680
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044680 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
++        {"severity":"HIGH"}
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.anchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.ethLockbox:
++        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.retirementTimestamp:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
++        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
++        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
++        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
++        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
++        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta.delay:
++        {"severity":"HIGH"}
+      fieldMeta.config:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xa3fb490fb113f0c5affc5edb47107645ea0ee765
+
+# Diff at Fri, 18 Sep 2026 10:24:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789044680
+- current timestamp: 1789044680
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044680 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

@@ -1,3 +1,166 @@
+Generated with discovered.json: 0x30bf02573172bd77e3dd9f1a83d6de3a8060481a
+
+# Diff at Wed, 23 Sep 2026 05:50:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789917678
+- current timestamp: 1789917678
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917678 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xdc886b192feb75216ed0c73505c94d4887484275
+
+# Diff at Sun, 20 Sep 2026 18:21:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1789917678
+- current timestamp: 1789917678
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917678 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xaf02bf3d2575f1c1313ba167a4855c2c06e1f94f
+
+# Diff at Sun, 20 Sep 2026 15:22:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789656330
+- current timestamp: 1789917678
+
+## Description
+
+critical contracts and severities for the ossification perimeter (re-run after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789656330 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta:
++        {"getMinDelayFormatted":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x0d4a96ae95ccf2b285fb5ed2e59f563367be1bf9
+
+# Diff at Thu, 17 Sep 2026 14:46:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1786359830
+- current timestamp: 1789656330
+
+## Description
+
+Vector: `DEFAULT_ADMIN_ROLE` revoked from the deployer EOA; Avail Multisig 1 is the only remaining holder.
+
+Relayer rotated: the previous relayer was de-approved and a new EOA approved. Config: the template now tracks the new relayer.
+
+## Watched changes
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      values.isRelayerApproved:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359830 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        true
++        false
+      values.relayers.0:
+-        "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"
++        "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"
+    }
+```
+
 Generated with discovered.json: 0x513a006c332d9d6bdd24b3cdc0093eba144136af
 
 # Diff at Mon, 07 Sep 2026 08:38:03 GMT:

@@ -6,8 +6,8 @@ import type {
 import { CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
+import { constants } from 'ethers'
 import { keyInYN } from 'readline-sync'
-import { zeroHash } from 'viem'
 import { assertAnonymous } from '../implementations/crops/anonymity'
 import {
   createReader,
@@ -27,6 +27,7 @@ import {
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA_UID,
   type AttestationNetworkConfig,
+  type Hex,
 } from '../implementations/crops/easConfig'
 import {
   assertLedgerCommitted,
@@ -106,7 +107,7 @@ export const CropsAttest = command({
         plan.payload.projectIds.join(' '),
       )
     }
-    console.log(`\nattester ${signer.account.address} on ${network.name}`)
+    console.log(`\nattester ${signer.address} on ${network.name}`)
     if (network.isTestnet) {
       console.log(
         chalk.dim(
@@ -120,7 +121,7 @@ export const CropsAttest = command({
 
     // The ledger is written after every transaction, so a run that dies
     // halfway leaves a file that matches the chain and a rerun picks up.
-    let next = { ...ledger, attester: signer.account.address }
+    let next = { ...ledger, attester: signer.address as Hex }
     const save = (updated: CropAttestationLedger) => {
       next = updated
       writeLedger(next)
@@ -128,7 +129,7 @@ export const CropsAttest = command({
 
     if (plan.kind === 'attest' && !schemaRegistered) {
       const txHash = await registerSchema(signer, network)
-      await signer.waitForTransactionReceipt({ hash: txHash })
+      await signer.provider.waitForTransaction(txHash)
       console.log(chalk.green('registered'), txHash)
     }
     if (plan.revoke.length > 0) {
@@ -155,7 +156,7 @@ async function revoke(
     network,
     revocations.map((x) => ({ uid: x.entry.uid, schema: x.schema })),
   )
-  const receipt = await signer.waitForTransactionReceipt({ hash: txHash })
+  const receipt = await signer.provider.waitForTransaction(txHash)
   console.log(
     chalk.green('revoked'),
     txHash,
@@ -179,11 +180,11 @@ async function attest(
   const txHash = await multiAttest(signer, network, [
     {
       // Chains it to the one it replaces, so the history is walkable onchain.
-      refUID: plan.revoke[0]?.entry.uid ?? zeroHash,
+      refUID: plan.revoke[0]?.entry.uid ?? (constants.HashZero as Hex),
       data: encodePayload(plan.payload),
     },
   ])
-  const receipt = await signer.waitForTransactionReceipt({ hash: txHash })
+  const receipt = await signer.provider.waitForTransaction(txHash)
   const [uid, ...extra] = readAttestedUids([...receipt.logs])
   if (!uid || extra.length > 0) {
     throw new Error(

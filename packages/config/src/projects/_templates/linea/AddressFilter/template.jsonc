@@ -1,6 +1,30 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.",
+  "critical": true,
   "fields": {
+    "filteredAddresses": {
+      // The blocklist itself: adding an address removes its ability to force
+      // transactions from L1, i.e. it changes the conditions under which users
+      // can exit without the sequencer. Immutable contract, so this list is
+      // the only security-relevant state.
+      "severity": "HIGH",
+      "description": "Addresses barred from sending forced transactions from L1 through the LineaRollup.",
+      "handler": {
+        "type": "event",
+        "select": "filteredAddresses",
+        "flatten": true,
+        "ignoreRelative": true,
+        "add": {
+          "event": "FilteredStatusesSet",
+          "where": ["=", "#isFiltered", true]
+        },
+        "remove": {
+          "event": "FilteredStatusesSet",
+          "where": ["!=", "#isFiltered", true]
+        }
+      }
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl"

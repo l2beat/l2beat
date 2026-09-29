@@ -36,9 +36,9 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
         const dstLayout = layout.get(b)
         if (!srcLayout || !dstLayout) continue
 
-        const highlighted =
-          highlightedChains.length === 0 ||
-          highlightedChains.every((chain) => chain === a || chain === b)
+        const highlighted = highlightedChains.every(
+          (chain) => chain === a || chain === b,
+        )
 
         const elements = [
           getConnectionPath(
