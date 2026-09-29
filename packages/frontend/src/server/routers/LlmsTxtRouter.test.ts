@@ -1,23 +1,26 @@
 import { expect } from 'earl'
 import type express from 'express'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
+import {
+  LIST_PAGES_WITH_MARKDOWN,
+  PROJECT_PAGES_WITH_MARKDOWN,
+} from '~/utils/getMarkdownAlternatePath'
 import { createLlmsTxtRouter } from './LlmsTxtRouter'
-import { createMarkdownAlternatesRouter } from './MarkdownAlternatesRouter'
 import { createPublicApiRouter } from './PublicApiRouter'
 
 // Method: request /llms.txt over HTTP and check it against the llms.txt spec
 // (H1 title, blockquote summary, H2 sections of `- [name](url): notes` links,
 // small enough to fit in context). The API list is compared with the routes
-// the public API router registers and the .md links with the routes the
-// markdown alternates router registers, so a new or removed route fails here
-// until llms.txt is updated.
+// the public API router registers and the .md links with the pages registered
+// as having a markdown version, so a new or removed one fails here until
+// llms.txt is updated.
 describe(createLlmsTxtRouter.name, () => {
-  it('serves markdown', async () => {
+  it('serves markdown as plain text', async () => {
     const response = await fetchFromRouter(createLlmsTxtRouter(), '/llms.txt')
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
   })
 
@@ -55,10 +58,19 @@ describe(createLlmsTxtRouter.name, () => {
       .map((l) => l.url)
       .filter((url) => url.endsWith('.md'))
 
-    const registered = getRegisteredPaths(createMarkdownAlternatesRouter()).map(
-      (path) => `https://l2beat.com${path}`,
-    )
+    const registered = [
+      ...LIST_PAGES_WITH_MARKDOWN,
+      ...PROJECT_PAGES_WITH_MARKDOWN,
+    ].map((page) => `https://l2beat.com${toUrlTemplate(page)}.md`)
     expect(urls.toSorted()).toEqual(registered.toSorted())
+  })
+
+  it('documents the markdown version of project pages', async () => {
+    const urls = getLinks(await getLlmsTxt(), 'Markdown pages').map(
+      (l) => l.url,
+    )
+
+    expect(urls).toEqual(['https://l2beat.com/layer2s/projects/{slug}.md'])
   })
 
   it('stays small enough to fit in context, with project lists behind links', async () => {
@@ -96,7 +108,7 @@ describe(createLlmsTxtRouter.name, () => {
       .filter((url) => url.startsWith('https://l2beat.com/api/'))
 
     const registered = getRegisteredPaths(createPublicApiRouter()).map(
-      (path) => `https://l2beat.com${path.replaceAll(/:(\w+)/g, '{$1}')}`,
+      (path) => `https://l2beat.com${toUrlTemplate(path)}`,
     )
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })
@@ -138,6 +150,11 @@ function parseLink(line: string) {
   const match = line.match(/^- \[(.+?)\]\((.+?)\): (.*)$/)
   expect(match).not.toEqual(null)
   return { url: match?.[2] ?? '', description: match?.[3] ?? '' }
+}
+
+/** Express writes a path parameter as `:slug`, llms.txt as `{slug}`. */
+function toUrlTemplate(routePath: string) {
+  return routePath.replaceAll(/:(\w+)/g, '{$1}')
 }
 
 function getRegisteredPaths(router: express.Router) {

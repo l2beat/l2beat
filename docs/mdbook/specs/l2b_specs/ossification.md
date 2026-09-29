@@ -41,6 +41,19 @@ The override remains valid when discovery does not find the contract any more.
 Set `untilTimestamp` on the override to keep the history of a contract that
 left the project.
 
+**Shared modules.** The perimeter of a project includes the critical
+contracts of every shared module it references that the project can reach.
+These are the discoveries `ProjectDiscovery` loads with the project, and the
+reachability is the one it uses for contracts and permissions. A module
+contract the project cannot reach is left out together with its overrides and
+reviewed events. A retired contract known only from a module's
+`diffHistory.md` counts for every project that references it. Each module's
+contracts are judged by the module's own `config.jsonc`, templates,
+`diffHistory.md` and `ossification.json`. The project start also bounds the
+changes of the module. A module whose critical contracts have all retired
+still adds its changes and resets. A contract that two discoveries both
+contain must have the same row in both, and has one row.
+
 **Critical code change.** A change of the implementation of a critical
 contract.
 
@@ -67,7 +80,7 @@ aggregates. The input is four tables:
 - `contracts`: one row per contract that is critical today, with its name,
   address, verification status, `ossifyingSince` (the last reset of its
   clock: deployment, initialization or change) and its own change counts.
-  A critical contract with no known age gives no input at all.
+  Every critical contract must have a known age.
 - `changes`: every critical change made while its contract was critical,
   for current and retired contracts, ascending. A retired contract exists
   only here. A reviewed change from `ossification.json` is always here.
@@ -116,7 +129,8 @@ lists the update in `acceptedIntervals`.
 
 `ossification.json` contains manual corrections. `OssificationPatch.ts`
 validates the file. The file does not define the perimeter. The perimeter is
-in the discovery configuration.
+in the discovery configuration. A file corrects only the contracts of its own
+discovery, so the corrections for a shared module are in the module's file.
 
 - `events`: reviewed changes anchored to their transaction, each on a
   perimeter contract (a change on an excluded Safe is attributed to the
@@ -146,8 +160,10 @@ in the discovery configuration.
   `ColorConfig.ts` is the shape of `critical`.
 - `packages/config/src/ossification/` (this folder): `getOssificationInput`
   calculates the input. `measureOssification` calculates the result.
-  `getOssification` reads the files. A project opts in by setting
-  `ossification: getOssification('<id>', chainStart)` in its config, so
+  `loadOssificationInput` reads the files. `ProjectDiscovery` exposes both
+  steps as `getOssificationInput` and `getOssification`. A project opts in by
+  setting `ossification: discovery.getOssification(chainStart)` in its config,
+  so
   ossification can be switched off per project without touching the discovery
   data. All calls share one `now` value. The build stores the result in the
   `ossification` column of the SQLite database. The clocks are timestamps. The

@@ -3,7 +3,6 @@ import { DERIVATION } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
@@ -98,5 +97,5 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  ossification: getOssification('bob', chainStart),
+  ossification: discovery.getOssification(chainStart),
 })

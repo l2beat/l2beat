@@ -82,9 +82,6 @@ export function getOssificationInput(
   const contracts = [...members.values()]
     .filter((member) => member.until === undefined)
     .map((member) => toRow(member, events, perimeteredChanges))
-  if (contracts.length === 0 || !contracts.every(notUndefined)) {
-    return undefined
-  }
 
   return {
     now: sources.now,
@@ -113,13 +110,16 @@ function toRow(
   member: Member,
   events: MemberEvent[],
   perimetered: MemberEvent[],
-): ProjectOssificationContract | undefined {
+): ProjectOssificationContract {
   const own = (event: MemberEvent) => event.contract === key(member.address)
   const ossifyingSince = latest(
     member.deployedAt,
     ...events.filter(own).map((event) => event.timestamp),
   )
-  if (ossifyingSince === undefined) return undefined
+  assert(
+    ossifyingSince !== undefined,
+    `${member.address} is critical but has no known age`,
+  )
   const counted = perimetered.filter(own)
   return {
     name: member.name,

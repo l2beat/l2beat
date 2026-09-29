@@ -27,10 +27,15 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
+import { loadOssificationInput } from '../ossification/loadOssificationInput'
+import { measureOssification } from '../ossification/measureOssification'
+import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
+import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
   ProjectEscrow,
+  ProjectOssification,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -49,6 +54,7 @@ import {
 } from './utils'
 
 const paths = getDiscoveryPaths()
+const buildTime = UnixTime.now()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -1087,6 +1093,30 @@ export class ProjectDiscovery {
       delete result[chainToRemove]
     }
     return result
+  }
+
+  getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
+    const input = this.getOssificationInput(buildTime, projectStart)
+    return input === undefined ? undefined : measureOssification(input)
+  }
+
+  getOssificationInput(
+    now: UnixTime,
+    projectStart?: UnixTime,
+  ): OssificationInput | undefined {
+    return mergeOssificationInputs(
+      this.discoveries
+        .map((discovery) =>
+          loadOssificationInput(
+            discovery,
+            this.reachableAddresses,
+            this.configReader,
+            now,
+            projectStart,
+          ),
+        )
+        .filter(notUndefined),
+    )
   }
 
   hasEoaWithUpgradePermissions(): boolean {

@@ -1,7 +1,6 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CROP_NOTES } from '../../common/crops'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -68,7 +67,7 @@ export const uniswapv3: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(0),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: getOssification('uniswapv3'),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
