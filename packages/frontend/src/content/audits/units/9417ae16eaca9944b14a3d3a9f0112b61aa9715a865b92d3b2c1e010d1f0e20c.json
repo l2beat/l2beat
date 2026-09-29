@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9417ae16eaca9944b14a3d3a9f0112b61aa9715a865b92d3b2c1e010d1f0e20c",
+  "name": "NoDelegateCall",
+  "kind": "abstract",
+  "lines": 22,
+  "source": "abstract contract NoDelegateCall {\n    /// @dev The original address of this contract\n    address private immutable original;\n\n    constructor() {\n        // Immutables are computed in the init code of the contract, and then inlined into the deployed bytecode.\n        // In other words, this variable won't change when it's checked at runtime.\n        original = address(this);\n    }\n\n    /// @dev Private method is used instead of inlining into modifier because modifiers are copied into each method,\n    ///     and the use of immutable means the address bytes are copied in every place the modifier is used.\n    function checkNotDelegateCall() private view {\n        require(address(this) == original);\n    }\n\n    /// @notice Prevents delegatecall into the modified method\n    modifier noDelegateCall() {\n        checkNotDelegateCall();\n        _;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 22,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "NoDelegateCall",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/NoDelegateCall.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/NoDelegateCall.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

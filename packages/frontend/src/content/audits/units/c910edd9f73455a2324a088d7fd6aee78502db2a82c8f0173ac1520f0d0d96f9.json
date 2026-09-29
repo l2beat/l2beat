@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c910edd9f73455a2324a088d7fd6aee78502db2a82c8f0173ac1520f0d0d96f9",
+  "name": "Ownable",
+  "kind": "contract",
+  "lines": 51,
+  "source": "contract Ownable {\n    // Owner of the contract\n    address private _owner;\n\n    /**\n     * @dev Event to show ownership has been transferred\n     * @param previousOwner representing the address of the previous owner\n     * @param newOwner representing the address of the new owner\n     */\n    event OwnershipTransferred(address previousOwner, address newOwner);\n\n    /**\n     * @dev The constructor sets the original owner of the contract to the sender account.\n     */\n    constructor() public {\n        setOwner(msg.sender);\n    }\n\n    /**\n     * @dev Tells the address of the owner\n     * @return the address of the owner\n     */\n    function owner() external view returns (address) {\n        return _owner;\n    }\n\n    /**\n     * @dev Sets a new owner address\n     */\n    function setOwner(address newOwner) internal {\n        _owner = newOwner;\n    }\n\n    /**\n     * @dev Throws if called by any account other than the owner.\n     */\n    modifier onlyOwner() {\n        require(msg.sender == _owner, \"Ownable: caller is not the owner\");\n        _;\n    }\n\n    /**\n     * @dev Allows the current owner to transfer control of the contract to a newOwner.\n     * @param newOwner The address to transfer ownership to.\n     */\n    function transferOwnership(address newOwner) external onlyOwner {\n        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n        emit OwnershipTransferred(_owner, newOwner);\n        setOwner(newOwner);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

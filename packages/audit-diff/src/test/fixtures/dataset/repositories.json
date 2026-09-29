@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "repositories": {
+    "acme/core": {
+      "url": "https://github.com/acme/core"
+    },
+    "forker/core": {
+      "url": "https://github.com/forker/core",
+      "fork_of": "acme/core"
+    },
+    "vendor/lib": {
+      "url": "https://github.com/vendor/lib"
+    }
+  }
+}

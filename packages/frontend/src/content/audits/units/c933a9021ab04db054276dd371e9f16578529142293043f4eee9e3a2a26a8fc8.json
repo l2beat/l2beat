@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c933a9021ab04db054276dd371e9f16578529142293043f4eee9e3a2a26a8fc8",
+  "name": "IScrollStandardERC20Factory",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface IScrollStandardERC20Factory {\n    /// @notice Emitted when a l2 token is deployed.\n    /// @param _l1Token The address of the l1 token.\n    /// @param _l2Token The address of the l2 token.\n    event DeployToken(address indexed _l1Token, address indexed _l2Token);\n\n    /// @notice Compute the corresponding l2 token address given l1 token address.\n    /// @param _gateway The address of gateway contract.\n    /// @param _l1Token The address of l1 token.\n    function computeL2TokenAddress(address _gateway, address _l1Token) external view returns (address);\n\n    /// @notice Deploy the corresponding l2 token address given l1 token address.\n    /// @param _gateway The address of gateway contract.\n    /// @param _l1Token The address of l1 token.\n    function deployL2Token(address _gateway, address _l1Token) external returns (address);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollStandardERC20Factory",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollStandardERC20Factory.sol",
+        "commit": "baa48b7018b2b4ca4ec39a94bbdfae82fabf74f5",
+        "commitTimestamp": "2023-07-07T04:22:12Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/baa48b7018b2b4ca4ec39a94bbdfae82fabf74f5/contracts/src/libraries/token/IScrollStandardERC20Factory.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #623 fix of L-07 (events on sensitive actions). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 16,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IScrollStandardERC20Factory {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Emitted when a l2 token is deployed."
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param _l1Token The address of l1 token.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @param _l2Token The address of l2 token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param _l1Token The address of the l1 token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param _l2Token The address of the l2 token.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    event DeployToken(address indexed _l1Token, address indexed _l2Token);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @notice Compute the corresponding l2 token address given l1 token address."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

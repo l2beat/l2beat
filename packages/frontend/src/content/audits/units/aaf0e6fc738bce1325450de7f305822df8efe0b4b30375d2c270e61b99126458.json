@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "aaf0e6fc738bce1325450de7f305822df8efe0b4b30375d2c270e61b99126458",
+  "name": "TransparentUpgradeableProxy",
+  "kind": "contract",
+  "lines": 57,
+  "source": "contract TransparentUpgradeableProxy is ERC1967Proxy {\n    // An immutable address for the admin to avoid unnecessary SLOADs before each call\n    // at the expense of removing the ability to change the admin once it's set.\n    // This is acceptable if the admin is always a ProxyAdmin instance or similar contract\n    // with its own ability to transfer the permissions to another account.\n    address private immutable _admin;\n\n    /**\n     * @dev The proxy caller is the current admin, and can't fallback to the proxy target.\n     */\n    error ProxyDeniedAdminAccess();\n\n    /**\n     * @dev Initializes an upgradeable proxy managed by an instance of a {ProxyAdmin} with an `initialOwner`,\n     * backed by the implementation at `_logic`, and optionally initialized with `_data` as explained in\n     * {ERC1967Proxy-constructor}.\n     */\n    constructor(address _logic, address initialOwner, bytes memory _data) payable ERC1967Proxy(_logic, _data) {\n        _admin = address(new ProxyAdmin(initialOwner));\n        // Set the storage value and emit an event for ERC-1967 compatibility\n        ERC1967Utils.changeAdmin(_proxyAdmin());\n    }\n\n    /**\n     * @dev Returns the admin of this proxy.\n     */\n    function _proxyAdmin() internal virtual returns (address) {\n        return _admin;\n    }\n\n    /**\n     * @dev If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior.\n     */\n    function _fallback() internal virtual override {\n        if (msg.sender == _proxyAdmin()) {\n            if (msg.sig != ITransparentUpgradeableProxy.upgradeToAndCall.selector) {\n                revert ProxyDeniedAdminAccess();\n            } else {\n                _dispatchUpgradeToAndCall();\n            }\n        } else {\n            super._fallback();\n        }\n    }\n\n    /**\n     * @dev Upgrade the implementation of the proxy. See {ERC1967Utils-upgradeToAndCall}.\n     *\n     * Requirements:\n     *\n     * - If `data` is empty, `msg.value` must be zero.\n     */\n    function _dispatchUpgradeToAndCall() private {\n        (address newImplementation, bytes memory data) = abi.decode(msg.data[4:], (address, bytes));\n        ERC1967Utils.upgradeToAndCall(newImplementation, data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 57,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    }
+  }
+}

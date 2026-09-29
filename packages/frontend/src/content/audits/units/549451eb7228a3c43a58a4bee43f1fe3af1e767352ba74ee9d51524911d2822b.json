@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "549451eb7228a3c43a58a4bee43f1fe3af1e767352ba74ee9d51524911d2822b",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 15,
+  "source": "enum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\ntype Claim is bytes32;\ntype GameType is uint32;\ntype Hash is bytes32;\nstruct Proposal {\n    Hash root;\n    uint256 l2SequenceNumber;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

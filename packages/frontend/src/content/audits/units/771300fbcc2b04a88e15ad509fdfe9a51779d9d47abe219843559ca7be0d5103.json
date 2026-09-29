@@ -1,0 +1,1418 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "771300fbcc2b04a88e15ad509fdfe9a51779d9d47abe219843559ca7be0d5103",
+  "name": "SlashingProposer",
+  "kind": "contract",
+  "lines": 1155,
+  "source": "contract SlashingProposer is EIP712 {\n    using SignatureLib for Signature;\n    using CompressedTimeMath for CompressedSlot;\n    using CompressedTimeMath for Slot;\n    using CompressedSlashRoundMath for CompressedSlashRound;\n    using CompressedSlashRoundMath for SlashRound;\n    using Clones for address;\n    using SlashPayloadLib for address[];\n\n    /**\n     * @notice Contains metadata about a slashing round stored in uncompressed format\n     * @dev Used for in-memory operations and as the return type for getRoundData()\n     * @param roundNumber The actual round number (used to detect stale data in circular storage)\n     * @param voteCount Number of votes collected in this round so far\n     * @param lastVoteSlot The most recent slot in which a vote was cast for this round\n     * @param executed Whether this round has been executed and slashing has occurred\n     */\n    struct RoundData {\n        SlashRound roundNumber;\n        uint256 voteCount;\n        Slot lastVoteSlot;\n        bool executed;\n    }\n\n    /**\n     * @notice Compressed version of RoundData optimized for storage efficiency (fits in 32 bytes)\n     * @dev Used in the circular storage buffer to minimize gas costs for storage operations\n     * @param roundNumber Compressed round number for staleness detection\n     * @param lastVoteSlot Compressed slot number of the last vote\n     * @param voteCount Number of votes (max 65535, must fit MAX_ROUND_SIZE constraint)\n     * @param executed Whether this round has been executed\n     */\n    struct CompressedRoundData {\n        CompressedSlashRound roundNumber;\n        CompressedSlot lastVoteSlot;\n        uint16 voteCount;\n        bool executed;\n    }\n\n    /**\n     * @notice Contains all vote data for a single round\n     * @dev Stores up to MAX_ROUND_SIZE votes as fixed-size arrays. Each vote encodes slash amounts\n     *      for all validators in the round using 2 bits per validator.\n     * @param votes Array of encoded vote data, one entry per proposer vote in the round\n     *         Each vote is stored as fixed-size bytes32 chunks, to avoid the overhead of an extra SLOAD/SSTORE operation\n     *         just to load/write the length of the array, which we already know.\n     *         Vote size = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4 bytes\n     *         Number of bytes32 slots needed = ceil(voteSize / 32)\n     *         Note that we check the vote size in the constructor to avoid issues\n     */\n    struct RoundVotes {\n        bytes32[4][1024] votes; // Assuming max 4 slots (128 bytes) per vote\n    }\n\n    /**\n     * @notice Represents a slashing action to be executed against a specific validator\n     * @dev Used to package slashing decisions for execution by the Slasher contract\n     * @param validator The address of the validator to be slashed\n     * @param slashAmount The amount of stake to slash from the validator (in wei)\n     */\n    struct SlashAction {\n        address validator;\n        uint256 slashAmount;\n    }\n\n    /**\n     * @notice EIP-712 type hash for the Vote struct used in signature verification\n     * @dev Defines the structure: Vote(bytes votes,uint256 slot) for EIP-712 signing\n     */\n    bytes32 public constant VOTE_TYPEHASH = keccak256(\"Vote(bytes votes,uint256 slot)\");\n\n    /**\n     * @notice Size of the circular storage buffer for round data\n     * @dev Determines how many recent rounds can be kept in storage simultaneously.\n     *      Older rounds are overwritten as new rounds are created. Must be larger than\n     *      LIFETIME_IN_ROUNDS to prevent data corruption.\n     */\n    uint256 public constant ROUNDABOUT_SIZE = 128;\n\n    /**\n     * @notice Maximum number of votes that can be cast in a single round\n     * @dev Hard limit to prevent excessive gas usage and storage requirements.\n     *      Also serves as the maximum number of slots per round.\n     */\n    uint256 public constant MAX_ROUND_SIZE = 1024;\n\n    /**\n     * @notice Address of the main rollup contract that this slashing proposer integrates with\n     * @dev Used to query current proposers, committee data, and slot information\n     */\n    address public immutable INSTANCE;\n\n    /**\n     * @notice The slasher contract that executes actual slashing operations\n     * @dev Receives SlashPayload contracts from this proposer to perform validator punishment\n     */\n    ISlasher public immutable SLASHER;\n\n    /**\n     * @notice The implementation contract for SlashPayload clones\n     * @dev Single instance deployed once and used as template for all slash payload clones\n     */\n    address public immutable SLASH_PAYLOAD_IMPLEMENTATION;\n\n    /**\n     * @notice Base amount of stake to slash per slashing unit (in wei)\n     * @dev Validators can be voted to be slashed by 1-3 units, multiplied by this base amount\n     * @notice Small slash amount for 1 unit votes (in wei)\n     */\n    uint256 public immutable SLASH_AMOUNT_SMALL;\n\n    /**\n     * @notice Medium slash amount for 2 unit votes (in wei)\n     */\n    uint256 public immutable SLASH_AMOUNT_MEDIUM;\n\n    /**\n     * @notice Large slash amount for 3 unit votes (in wei)\n     */\n    uint256 public immutable SLASH_AMOUNT_LARGE;\n\n    /**\n     * @notice Minimum number of votes required to slash a validator\n     * @dev Must be greater than ROUND_SIZE/2 to ensure majority agreement\n     */\n    uint256 public immutable QUORUM;\n\n    /**\n     * @notice Number of slots per slashing round\n     * @dev Determines the duration of voting periods and must be a multiple of epoch duration\n     */\n    uint256 public immutable ROUND_SIZE;\n\n    /**\n     * @notice Number of validators per committee\n     * @dev Used to determine vote encoding length and validator indexing\n     */\n    uint256 public immutable COMMITTEE_SIZE;\n\n    /**\n     * @notice Number of epochs per slashing round\n     * @dev Calculated as ROUND_SIZE / epoch duration, determines how many committees are voted on per round\n     */\n    uint256 public immutable ROUND_SIZE_IN_EPOCHS;\n\n    /**\n     * @notice Maximum age in rounds for which a round can still be executed\n     * @dev Prevents execution of very old rounds that may no longer be relevant\n     */\n    uint256 public immutable LIFETIME_IN_ROUNDS;\n\n    /**\n     * @notice Number of rounds to wait after a round ends before it can be executed\n     * @dev Provides time for review and potential challenges before slashing occurs\n     */\n    uint256 public immutable EXECUTION_DELAY_IN_ROUNDS;\n\n    /**\n     * @notice How many rounds in the past to look when determining which validators to slash\n     * @dev During round N, we cannot slash the validators from the epochs of the same round, since the round is not over,\n     * and besides we would be asking the current validators to vote to slash themselves. So during round N we look at the\n     * epochs spanned during round N - SLASH_OFFSET_IN_ROUNDS. This offset means that the epochs we slash are complete,\n     * and also gives nodes time to detect any misbehavior (eg slashing for prunes requires the proof submission window to\n     * pass).\n     */\n    uint256 public immutable SLASH_OFFSET_IN_ROUNDS;\n\n    // Circular mappings of round number to round data and votes\n    CompressedRoundData[ROUNDABOUT_SIZE] private roundDatas;\n    RoundVotes[ROUNDABOUT_SIZE] private roundVotes;\n\n    /**\n     * @notice Emitted when a proposer casts a vote in a slashing round\n     * @param round The round number in which the vote was cast\n     * @param proposer The address of the proposer who cast the vote\n     */\n    event VoteCast(SlashRound indexed round, Slot indexed slot, address indexed proposer);\n\n    /**\n     * @notice Emitted when a slashing round is executed and validators are slashed\n     * @param round The round number that was executed\n     * @param slashCount The number of validators that were slashed in this round\n     */\n    event RoundExecuted(SlashRound indexed round, uint256 slashCount);\n\n    /**\n     * @notice Initializes the SlashingProposer with configuration parameters\n     * @dev Sets up all the voting and slashing parameters and validates their correctness.\n     *      The constructor enforces several important invariants to ensure the system operates correctly.\n     *\n     * @param _instance The address of the rollup contract that this slashing proposer will interact with\n     * @param _slasher The slasher contract that will execute the actual slashing operations\n     * @param _quorum The minimum number of votes required to slash a validator (must be > ROUND_SIZE/2 and <= ROUND_SIZE)\n     * @param _roundSize The number of slots in each voting round (must be > 1 and < MAX_ROUND_SIZE)\n     * @param _lifetimeInRounds The maximum age in rounds for which a round can still be executed (must be >\n     * _executionDelayInRounds and < ROUNDABOUT_SIZE)\n     * @param _executionDelayInRounds The number of rounds to wait after a round ends before it can be executed (provides\n     * time for review)\n     * @param _slashAmounts Array of 3 slash amounts [small, medium, large] for 1, 2, 3 unit votes (all must be > 0)\n     * @param _committeeSize The number of validators in each committee (must be > 0)\n     * @param _epochDuration The number of slots in each epoch (used to calculate ROUND_SIZE_IN_EPOCHS)\n     * @param _slashOffsetInRounds How many rounds in the past to look when determining which validators to slash (must be\n     * > 0)\n     */\n    constructor(\n        address _instance,\n        ISlasher _slasher,\n        uint256 _quorum,\n        uint256 _roundSize,\n        uint256 _lifetimeInRounds,\n        uint256 _executionDelayInRounds,\n        uint256[3] memory _slashAmounts,\n        uint256 _committeeSize,\n        uint256 _epochDuration,\n        uint256 _slashOffsetInRounds\n    ) EIP712(\"SlashingProposer\", \"1\") {\n        INSTANCE = _instance;\n        SLASHER = _slasher;\n        SLASH_AMOUNT_SMALL = _slashAmounts[0];\n        SLASH_AMOUNT_MEDIUM = _slashAmounts[1];\n        SLASH_AMOUNT_LARGE = _slashAmounts[2];\n        QUORUM = _quorum;\n        ROUND_SIZE = _roundSize;\n        ROUND_SIZE_IN_EPOCHS = _roundSize / _epochDuration;\n        COMMITTEE_SIZE = _committeeSize;\n        LIFETIME_IN_ROUNDS = _lifetimeInRounds;\n        EXECUTION_DELAY_IN_ROUNDS = _executionDelayInRounds;\n        SLASH_OFFSET_IN_ROUNDS = _slashOffsetInRounds;\n\n        // Deploy the SlashPayloadCloneable implementation contract once\n        SLASH_PAYLOAD_IMPLEMENTATION =\n            address(new SlashPayloadCloneable{salt: bytes32(bytes20(uint160(address(this))))}());\n\n        require(\n            SLASH_OFFSET_IN_ROUNDS > 0,\n            Errors_1.SlashingProposer__SlashOffsetMustBeGreaterThanZero(SLASH_OFFSET_IN_ROUNDS)\n        );\n        require(\n            ROUND_SIZE_IN_EPOCHS * _epochDuration == ROUND_SIZE,\n            Errors_1.SlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(ROUND_SIZE, _epochDuration)\n        );\n        require(QUORUM > 0, Errors_1.SlashingProposer__QuorumMustBeGreaterThanZero());\n        require(ROUND_SIZE > 1, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));\n        require(QUORUM > ROUND_SIZE / 2, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));\n        require(QUORUM <= ROUND_SIZE, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));\n        require(_slashAmounts[0] <= _slashAmounts[1], Errors_1.SlashingProposer__InvalidSlashAmounts(_slashAmounts));\n        require(_slashAmounts[1] <= _slashAmounts[2], Errors_1.SlashingProposer__InvalidSlashAmounts(_slashAmounts));\n        require(\n            LIFETIME_IN_ROUNDS > EXECUTION_DELAY_IN_ROUNDS,\n            Errors_1.SlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(\n                LIFETIME_IN_ROUNDS, EXECUTION_DELAY_IN_ROUNDS\n            )\n        );\n        require(\n            LIFETIME_IN_ROUNDS < ROUNDABOUT_SIZE,\n            Errors_1.SlashingProposer__LifetimeMustBeLessThanRoundabout(LIFETIME_IN_ROUNDS, ROUNDABOUT_SIZE)\n        );\n        require(\n            ROUND_SIZE_IN_EPOCHS > 0,\n            Errors_1.SlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(ROUND_SIZE_IN_EPOCHS)\n        );\n        require(ROUND_SIZE <= MAX_ROUND_SIZE, Errors_1.SlashingProposer__RoundSizeTooLarge(ROUND_SIZE, MAX_ROUND_SIZE));\n        require(COMMITTEE_SIZE > 0, Errors_1.SlashingProposer__CommitteeSizeMustBeGreaterThanZero(COMMITTEE_SIZE));\n\n        // Validate that vote size doesn't exceed our fixed 4 bytes32 allocation\n        // Each vote requires COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4 bytes\n        // We have allocated 4 bytes32 slots = 128 bytes maximum\n        uint256 voteSize = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;\n        require(voteSize <= 128, Errors_1.SlashingProposer__VoteSizeTooBig(voteSize, 128));\n\n        require(\n            COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS % 4 == 0,\n            Errors_1.SlashingProposer__VotesMustBeMultipleOf4(COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS)\n        );\n\n        // Defense in depth: the ordering constraints (small <= medium <= large) above mean that\n        // if medium or large is zero, small must also be zero, so the small check would fire first.\n        // We keep all three checks explicitly for clarity and to guard against future refactors\n        // that might remove or reorder the sorting constraints.\n        require(SLASH_AMOUNT_SMALL > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"small\"));\n        require(SLASH_AMOUNT_MEDIUM > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"medium\"));\n        require(SLASH_AMOUNT_LARGE > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"large\"));\n    }\n\n    /**\n     * @notice Submit a vote for slashing validators from SLASH_OFFSET_IN_ROUNDS rounds ago\n     * @dev Only the current checkpoint proposer can submit votes, enforced via EIP-712 signature verification.\n     *      Each byte in the votes encodes slash amounts for 4 validators using 2 bits each (0-3 units each).\n     *      The vote includes the current slot number to prevent replay attacks.\n     *\n     * @param _votes Encoded voting data where each byte represents slash amounts for 4 validators.\n     *               Bits 0-1 for first validator, bits 2-3 for second, bits 4-5 for third, bits 6-7 for fourth.\n     *               Length must equal (COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS) / 4 bytes.\n     * @param _sig EIP-712 signature from the current proposer proving authorization to vote.\n     *             Signature covers the vote data and current slot number.\n     *\n     * Emits:\n     * - VoteCast: When the vote is successfully recorded\n     *\n     * Reverts with:\n     * - SlashingProposer__VotingNotOpen: If current round is less than SLASH_OFFSET_IN_ROUNDS\n     * - SlashingProposer__InvalidSignature: If signature verification fails\n     * - SlashingProposer__InvalidVoteLength: If vote data length is incorrect\n     * - SlashingProposer__VoteAlreadyCastInCurrentSlot: If proposer already voted in this slot\n     */\n    function vote(bytes calldata _votes, Signature calldata _sig) external {\n        Slot slot = _getCurrentSlot();\n        SlashRound round = _computeRound(slot);\n\n        // We vote for slashing validators for epochs from SLASH_OFFSET_IN_ROUNDS ago, so in early rounds there is no one to\n        // be slashed.\n        require(round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors_1.SlashingProposer__VotingNotOpen(round));\n\n        // Get the current proposer from the rollup - only they can submit votes\n        address proposer = _getCurrentProposer();\n\n        // Verify EIP-712 signature (which includes slot to prevent replay attacks)\n        bytes32 digest = getVoteSignatureDigest(_votes, slot);\n        require(_sig.verify(proposer, digest), Errors_1.SlashingProposer__InvalidSignature());\n\n        // Each byte encodes 4 validators (2 bits each), so each validator is represented as 2 bits in the byte array.\n        uint256 expectedLength = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;\n        require(\n            _votes.length == expectedLength, Errors_1.SlashingProposer__InvalidVoteLength(expectedLength, _votes.length)\n        );\n\n        // Get the round data for the current round\n        RoundData memory roundData = _getRoundData(round, round);\n\n        // Check if a vote has already been cast in the current slot\n        require(roundData.lastVoteSlot < slot, Errors_1.SlashingProposer__VoteAlreadyCastInCurrentSlot(slot));\n\n        // Store the vote for this round\n        uint256 voteCount = roundData.voteCount;\n        _storeVoteData(round, voteCount, _votes);\n\n        // Increment the vote count for this round (all other fields remain unchanged)\n        _setRoundData(round, slot, voteCount + 1, roundData.executed);\n\n        emit VoteCast(round, slot, proposer);\n    }\n\n    /**\n     * @notice Execute the slashing round by tallying votes and executing slashes for validators that reached quorum\n     * @dev Can be called by anyone once a round has passed its execution delay but is still within its lifetime.\n     *      The function tallies all votes cast during the round, identifies validators that reached the quorum threshold,\n     *      and executes slashing by deploying a SlashPayload contract and calling the Slasher.\n     *\n     * @param _round The round number to execute (must be ready for execution based on timing constraints)\n     * @param _committees Array of validator committees slashed for each epoch in the round being executed.\n     *                   Must contain exactly ROUND_SIZE_IN_EPOCHS committees. Only committees with slashed\n     *                   validators will have their commitments verified against onchain data.\n     *\n     * Emits:\n     * - RoundExecuted: When the round execution completes, regardless of whether any slashing occurred\n     *\n     * Reverts with:\n     * - SlashingProposer__RoundAlreadyExecuted: If the round has already been executed\n     * - SlashingProposer__RoundNotComplete: If the round is not yet ready for execution or has expired\n     * - SlashingProposer__InvalidCommitteeCommitment: If any committee commitment doesn't match onchain data\n     * - SlashingProposer__InvalidNumberOfCommittees: If the number of committees doesn't match\n     * ROUND_SIZE_IN_EPOCHS\n     */\n    function executeRound(SlashRound _round, address[][] calldata _committees) external {\n        // Get round data to check if already executed\n        SlashRound currentRound = getCurrentRound();\n        RoundData memory roundData = _getRoundData(_round, currentRound);\n        require(!roundData.executed, Errors_1.SlashingProposer__RoundAlreadyExecuted(_round));\n\n        // Ensure enough time has passed (execution delay) but not too much (lifetime)\n        require(_isRoundReadyToExecute(_round, currentRound), Errors_1.SlashingProposer__RoundNotComplete(_round));\n\n        // Get the slash actions by tallying votes and which committees have slashes\n        (SlashAction[] memory actions, bool[] memory committeesWithSlashes) = _tally(roundData, _committees);\n\n        // Only verify committees that have slashed validators\n        unchecked {\n            uint256 length = committeesWithSlashes.length;\n            for (uint256 i; i < length; ++i) {\n                if (!committeesWithSlashes[i]) {\n                    continue;\n                }\n\n                // Check committee commitments against the stored onchain data\n                bytes32 commitment = _computeCommitteeCommitment(_committees[i]);\n                Epoch epochNumber = getSlashTargetEpoch(_round, i);\n                require(\n                    commitment == _getCommitteeCommitment(epochNumber),\n                    Errors_1.SlashingProposer__InvalidCommitteeCommitment()\n                );\n            }\n        }\n\n        // Mark round as executed to prevent re-execution\n        // We set this flag before actually slashing to avoid re-entrancy issues\n        _setRoundData(\n            _round,\n            roundData.lastVoteSlot,\n            roundData.voteCount,\n            /*executed=*/\n            true\n        );\n\n        // Execute slashes if any were determined\n        if (actions.length > 0) {\n            // Deploy payload contract and execute slashes\n            IPayload slashPayload = _deploySlashPayload(_round, actions);\n            SLASHER.slash(slashPayload);\n        }\n\n        emit RoundExecuted(_round, actions.length);\n    }\n\n    /**\n     * @notice Load committees for all epochs to be potentially slashed in a round from the rollup instance\n     * @dev This is an expensive call. It is not marked as view since `getEpochCommittee` may modify rollup state.\n     *      If `getEpochCommittee` throws (eg committee not yet formed), an empty committee is returned for that epoch.\n     * @param _round The round number to load committees for\n     * @return committees Array of committees, one for each epoch in the round (may contain empty arrays for early epochs)\n     */\n    function getSlashTargetCommittees(SlashRound _round) external returns (address[][] memory committees) {\n        committees = new address[][](ROUND_SIZE_IN_EPOCHS);\n\n        IValidatorSelection rollup = IValidatorSelection(INSTANCE);\n        unchecked {\n            for (uint256 epochIndex; epochIndex < ROUND_SIZE_IN_EPOCHS; ++epochIndex) {\n                Epoch epoch = getSlashTargetEpoch(_round, epochIndex);\n                try rollup.getEpochCommittee(epoch) returns (address[] memory committee) {\n                    committees[epochIndex] = committee;\n                } catch {\n                    committees[epochIndex] = new address[](0);\n                }\n            }\n        }\n\n        return committees;\n    }\n\n    /**\n     * @notice Get the tally results for a specific round, showing which validators would be slashed\n     * @dev This function is intended for offchain querying and analysis of voting results.\n     *      It uses transient storage when calling getEpochCommittee on the rollup contract.\n     *      Returns the same slash actions that would be executed if executeRound() were called for this round.\n     *\n     * @param _round The round number to analyze and return tally results for\n     * @param _committees The list of committees to consider for the tally (get them via `getSlashTargetCommittees`)\n     * @return actions Array of SlashAction structs containing validator addresses and slash amounts\n     *                for all validators that reached the quorum threshold in this round\n     */\n    function getTally(SlashRound _round, address[][] calldata _committees)\n        external\n        view\n        returns (SlashAction[] memory)\n    {\n        // Get the round data for the specified round\n        RoundData memory roundData = _getRoundData(_round, getCurrentRound());\n\n        // Tally votes and return slash actions\n        (SlashAction[] memory actions,) = _tally(roundData, _committees);\n        return actions;\n    }\n\n    /**\n     * @notice Get the deterministic address where a slash payload would be deployed for given actions\n     * @dev Uses CREATE2 to predict the deployment address based on the round number and slash actions.\n     *      Returns zero address if no actions are provided. The address is deterministic and will be\n     *      the same across multiple calls with identical parameters.\n     *\n     * @param _round The round number that will be mixed into the CREATE2 salt\n     * @param _actions Array of SlashAction structs containing validator addresses and slash amounts\n     * @return The predicted deployment address of the SlashPayload contract, or zero address if no actions\n     */\n    function getPayloadAddress(SlashRound _round, SlashAction[] memory _actions) external view returns (address) {\n        // Return zero address if no actions\n        if (_actions.length == 0) {\n            return address(0);\n        }\n        (,,, address predictedAddress) = _preparePayloadDataAndAddress(_round, _actions);\n        return predictedAddress;\n    }\n\n    /**\n     * @notice Get information about a specific slashing round's status and voting data\n     * @param _round The round number to retrieve information for\n     * @return isExecuted True if the round has already been executed and slashing has occurred\n     * @return voteCount The total number of votes that have been cast in this round by proposers\n     */\n    function getRound(SlashRound _round) external view returns (bool isExecuted, uint256 voteCount) {\n        // Load round data from the circular storage\n        RoundData memory roundData = _getRoundData(_round, getCurrentRound());\n        return (roundData.executed, roundData.voteCount);\n    }\n\n    /**\n     * @notice Check if a specific slashing round is ready for execution\n     * @param _round The round number to check\n     * @param _slot The slot number at which to evaluate readiness (typically current or slot)\n     */\n    function isRoundReadyToExecute(SlashRound _round, Slot _slot) external view returns (bool) {\n        SlashRound currentRound = _computeRound(_slot);\n        return _isRoundReadyToExecute(_round, currentRound);\n    }\n\n    /**\n     * @notice Get the votes for a specific `_round` at a specific `_index`\n     * @param _round The round number to retrieve votes for\n     * @param _index The index to retrieve votes for\n     * @return The votes retrieved\n     */\n    function getVotes(SlashRound _round, uint256 _index) external view returns (bytes memory) {\n        uint256 expectedLength = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;\n\n        // _getRoundData reverts if _round is out of the roundabout range and\n        // returns empty metadata if this circular slot still contains round data\n        // from an older round number.\n        SlashRound currentRound = getCurrentRound();\n        RoundData memory roundData = _getRoundData(_round, currentRound);\n\n        // Vote storage is not cleared when a circular slot is reused. If this\n        // round has fewer votes than a previous one that shared the same slot,\n        // indices >= voteCount would otherwise return stale vote bytes.\n        if (_index >= roundData.voteCount) {\n            return new bytes(expectedLength);\n        }\n\n        bytes32[4] storage voteSlots = _getRoundVotes(_round).votes[_index];\n        return _loadVoteDataFromStorage(voteSlots, expectedLength);\n    }\n\n    /**\n     * @notice Get the current round number based on the current slot from the rollup\n     * @dev Calculates the current round by dividing the current slot number by ROUND_SIZE.\n     *      This determines which voting round is currently active.\n     * @return The current SlashRound number\n     */\n    function getCurrentRound() public view returns (SlashRound) {\n        // Get current slot from the rollup instance\n        IValidatorSelection rollup = IValidatorSelection(INSTANCE);\n        Slot currentSlot = rollup.getCurrentSlot();\n        // Divide slot by round size to get round number\n        return SlashRound.wrap(Slot.unwrap(currentSlot) / ROUND_SIZE);\n    }\n\n    /**\n     * @notice Get the epoch number that will be slashed during a specific round at a given epoch index\n     * @dev Calculates which epoch's validators are being voted on for slashing in a given round.\n     *      The epoch is determined by looking back SLASH_OFFSET_IN_ROUNDS rounds from the voting round\n     *      and then adding the epoch index within that round.\n     *\n     * @param _round The round number during which voting is taking place\n     * @param _epochIndex The index of the epoch within the round (must be 0 to ROUND_SIZE_IN_EPOCHS-1)\n     * @return epochNumber The epoch number whose validators will be considered for slashing\n     *\n     * Reverts with:\n     * - SlashingProposer__VotingNotOpen: If the round is less than SLASH_OFFSET_IN_ROUNDS\n     */\n    function getSlashTargetEpoch(SlashRound _round, uint256 _epochIndex) public view returns (Epoch epochNumber) {\n        require(_round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors_1.SlashingProposer__VotingNotOpen(_round));\n        require(\n            _epochIndex < ROUND_SIZE_IN_EPOCHS,\n            Errors_1.SlashingProposer__InvalidEpochIndex(_epochIndex, ROUND_SIZE_IN_EPOCHS)\n        );\n        return Epoch.wrap((SlashRound.unwrap(_round) - SLASH_OFFSET_IN_ROUNDS) * ROUND_SIZE_IN_EPOCHS + _epochIndex);\n    }\n\n    /**\n     * @notice Generate the EIP-712 signature digest for a vote to prevent replay attacks\n     * @dev Creates a typed data hash according to EIP-712 standard that includes both the vote data\n     *      and the slot number. The slot number inclusion prevents votes from being replayed in\n     *      different slots, ensuring each vote is tied to a specific time.\n     *\n     * @param _votes The encoded vote data that will be signed by the proposer\n     * @param _slot The slot number when the vote is being cast (prevents replay attacks)\n     * @return The EIP-712 compliant signature digest that should be signed by the proposer\n     */\n    function getVoteSignatureDigest(bytes calldata _votes, Slot _slot) public view returns (bytes32) {\n        return _hashTypedDataV4(keccak256(abi.encode(VOTE_TYPEHASH, keccak256(_votes), Slot.unwrap(_slot))));\n    }\n\n    /**\n     * @notice Get the address of the validator who is authorized to propose in the current slot\n     * @dev Queries the rollup contract to determine which validator has proposing rights.\n     *      This is used to verify that vote signatures come from the authorized proposer.\n     * @return The address of the current slot's designated proposer\n     */\n    function _getCurrentProposer() internal returns (address) {\n        // Query the rollup for who is allowed to propose in the current slot\n        IValidatorSelection rollup = IValidatorSelection(INSTANCE);\n        return rollup.getCurrentProposer();\n    }\n\n    /**\n     * @notice Get the committee commitment from the Rollup.\n     * @param _epoch The epoch number\n     */\n    function _getCommitteeCommitment(Epoch _epoch) internal returns (bytes32) {\n        IValidatorSelection rollup = IValidatorSelection(INSTANCE);\n        (bytes32 commitment,) = rollup.getEpochCommitteeCommitment(_epoch);\n        return commitment;\n    }\n\n    /**\n     * @notice Deploy a slash payload contract with the given actions\n     * @dev Deploys a SlashPayload contract using CREATE2 for deterministic addresses\n     * @param _round The round number (mixed into the salt)\n     * @param _actions Array of slash actions to encode in the payload\n     */\n    function _deploySlashPayload(SlashRound _round, SlashAction[] memory _actions) internal returns (IPayload) {\n        // Prepare arrays for the SlashPayload constructor and get the predicted address\n        (address[] memory validators, uint96[] memory amounts, bytes32 salt, address predictedAddress) =\n            _preparePayloadDataAndAddress(_round, _actions);\n        // Return existing payload if already deployed\n        if (predictedAddress.code.length > 0) {\n            return IPayload(predictedAddress);\n        }\n\n        // Deploy clone of SlashPayload using EIP-1167 minimal proxy with immutable args\n        // Encode the immutable arguments for the clone\n        bytes memory immutableArgs = SlashPayloadLib.encodeImmutableArgs(INSTANCE, validators, amounts);\n\n        // Deploy the clone with deterministic address\n        address clone = Clones.cloneDeterministicWithImmutableArgs(SLASH_PAYLOAD_IMPLEMENTATION, immutableArgs, salt);\n\n        return IPayload(clone);\n    }\n\n    /**\n     * @notice Store vote data in fixed-size format\n     * @param roundNumber The round to store the vote for\n     * @param voteIndex The index of the vote within the round\n     * @param voteData The vote data to store\n     */\n    function _storeVoteData(SlashRound roundNumber, uint256 voteIndex, bytes calldata voteData) internal {\n        bytes32[4] storage voteSlots = _getRoundVotes(roundNumber).votes[voteIndex];\n        uint256 dataLength = voteData.length;\n\n        // Ensure we don't exceed maximum size\n        require(dataLength <= 128, Errors_1.SlashingProposer__VoteSizeTooBig(dataLength, 128));\n\n        unchecked {\n            assembly {\n                let offset := voteData.offset\n\n                // Store chunk 0 (bytes 0-31)\n                if dataLength {\n                    let chunk := calldataload(offset)\n                    // For partial chunks, we need to keep data left-aligned in the slot\n                    // No masking needed since unused bytes are already zero in calldata\n                    sstore(voteSlots.slot, chunk)\n                }\n\n                // Store chunk 1 (bytes 32-63)\n                if gt(dataLength, 32) {\n                    let chunk := calldataload(add(offset, 32))\n                    sstore(add(voteSlots.slot, 1), chunk)\n                }\n\n                // Store chunk 2 (bytes 64-95)\n                if gt(dataLength, 64) {\n                    let chunk := calldataload(add(offset, 64))\n                    sstore(add(voteSlots.slot, 2), chunk)\n                }\n\n                // Store chunk 3 (bytes 96-127)\n                if gt(dataLength, 96) {\n                    let chunk := calldataload(add(offset, 96))\n                    sstore(add(voteSlots.slot, 3), chunk)\n                }\n            }\n        }\n    }\n\n    /**\n     * @notice Set round data in the circular storage\n     * This function DOES NOT check for round validity or range within the roundabout\n     * @param roundNumber The round number to set\n     * @param lastVoteSlot The last slot for which a vote was received\n     * @param voteCount The number of votes collected so far in this round\n     * @param executed Whether this round has been executed\n     * @dev This is an internal function that should only be called after verifying the round is valid and within range\n     * @dev It updates the round data in the circular storage buffer\n     */\n    function _setRoundData(SlashRound roundNumber, Slot lastVoteSlot, uint256 voteCount, bool executed) internal {\n        roundDatas[SlashRound.unwrap(roundNumber) % ROUNDABOUT_SIZE] = CompressedRoundData({\n            roundNumber: roundNumber.compress(),\n            lastVoteSlot: lastVoteSlot.compress(),\n            voteCount: SafeCast.toUint16(voteCount), // Ensure voteCount fits in uint16\n            executed: executed\n        });\n    }\n\n    /**\n     * @notice Tally votes for a specific round and return the slash actions to execute\n     * @param _roundData The round data containing votes to tally\n     * @param _committees The committees for each epoch in the round\n     * @return slashActions Array of slash actions that reached quorum\n     * @return committeesWithSlashes Boolean array indicating which committees have at least one slashed validator\n     */\n    function _tally(RoundData memory _roundData, address[][] calldata _committees)\n        internal\n        view\n        returns (SlashAction[] memory slashActions, bool[] memory committeesWithSlashes)\n    {\n        // Must have one committee per epoch in the round\n        require(\n            _committees.length == ROUND_SIZE_IN_EPOCHS,\n            Errors_1.SlashingProposer__InvalidNumberOfCommittees(ROUND_SIZE_IN_EPOCHS, _committees.length)\n        );\n\n        uint256 voteCount = _roundData.voteCount;\n\n        // No votes cast, return empty array\n        if (voteCount == 0) {\n            return (new SlashAction[](0), new bool[](ROUND_SIZE_IN_EPOCHS));\n        }\n\n        // Pre-calculate total validators to optimize memory allocation\n        uint256 totalValidators = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS;\n\n        // Create a voting tally array where each uint256 packs all vote counts for a validator\n        // Layout: [0-63: votes for 1 unit][64-127: votes for 2 units][128-191: votes for 3 units][192-255: unused]\n        // Each 64-bit segment can store up to 2^64-1 votes\n        // Overflow protection: With MAX_ROUND_SIZE=1024, maximum possible votes per validator is 1024,\n        // which is well below 2^64-1, preventing any overflow in the packed counters\n        uint256[] memory tallyMatrix = new uint256[](totalValidators);\n\n        // Process all votes cast during this round to populate the tally matrix\n        _processVotes(_roundData, tallyMatrix, voteCount);\n\n        // Determine which validators reached quorum and return slash actions, applying escape hatch at tally time\n        bool[] memory escapeHatchEpochs = _getEscapeHatchEpochFlags(_roundData.roundNumber);\n        return _determineSlashActions(tallyMatrix, _committees, totalValidators, escapeHatchEpochs);\n    }\n\n    /**\n     * @notice Process all votes and populate the tally matrix\n     */\n    function _processVotes(RoundData memory _roundData, uint256[] memory tallyMatrix, uint256 voteCount)\n        internal\n        view\n    {\n        SlashRound roundNumber = _roundData.roundNumber;\n        uint256 voteLength = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;\n\n        // Cache the RoundVotes storage reference to avoid repeated calls\n        RoundVotes storage targetRoundVotes = _getRoundVotes(roundNumber);\n\n        unchecked {\n            for (uint256 i; i < voteCount; ++i) {\n                // Load the i-th votes from this round from storage into memory\n                bytes memory currentVote = _loadVoteDataFromStorage(targetRoundVotes.votes[i], voteLength);\n\n                // Process votes 32 bytes at a time\n                uint256 j;\n                for (; j + 31 < voteLength; j += 32) {\n                    // Process 32 bytes at once (128 validators)\n                    _process32BytesVotes(tallyMatrix, currentVote, j);\n                }\n\n                // Process remaining bytes one at a time (inlined)\n                for (; j < voteLength; ++j) {\n                    uint256 baseIndex = j << 2; // j * 4 using bit shift\n                    uint8 currentByte;\n\n                    assembly {\n                        currentByte := byte(0, mload(add(add(currentVote, 0x20), j)))\n                    }\n\n                    // Next byte if this one is empty\n                    if (currentByte == 0) {\n                        continue;\n                    }\n\n                    // Extract 2 bits for each of the 4 validators in this byte,\n                    // and increment vote count for the given slash amount\n                    // Extract validator 0 vote: bits 0-1 (mask with 0x03 = 0b00000011)\n                    uint8 validatorSlash0 = currentByte & 0x03;\n                    if (validatorSlash0 != 0) {\n                        // Increment vote count at position (slashAmount-1) * 64 bits in packed uint256\n                        // Layout: [0-63: votes for 1 unit][64-127: votes for 2 units][128-191: votes for 3 units]\n                        tallyMatrix[baseIndex] += uint256(1) << ((validatorSlash0 - 1) << 6);\n                    }\n\n                    // Extract validator 1 vote: bits 2-3 (shift right 2, then mask with 0x03)\n                    uint8 validatorSlash1 = (currentByte >> 2) & 0x03;\n                    if (validatorSlash1 != 0) {\n                        tallyMatrix[baseIndex + 1] += uint256(1) << ((validatorSlash1 - 1) << 6);\n                    }\n\n                    // Extract validator 2 vote: bits 4-5 (shift right 4, then mask with 0x03)\n                    uint8 validatorSlash2 = (currentByte >> 4) & 0x03;\n                    if (validatorSlash2 != 0) {\n                        tallyMatrix[baseIndex + 2] += uint256(1) << ((validatorSlash2 - 1) << 6);\n                    }\n\n                    // Extract validator 3 vote: bits 6-7 (shift right 6, no mask needed as top 2 bits)\n                    uint8 validatorSlash3 = currentByte >> 6;\n                    if (validatorSlash3 != 0) {\n                        tallyMatrix[baseIndex + 3] += uint256(1) << ((validatorSlash3 - 1) << 6);\n                    }\n                }\n            }\n        }\n    }\n\n    /**\n     * @notice Determine which validators reached quorum and should be slashed\n     */\n    function _determineSlashActions(\n        uint256[] memory tallyMatrix,\n        address[][] calldata _committees,\n        uint256 totalValidators,\n        bool[] memory escapeHatchEpochs\n    ) internal view returns (SlashAction[] memory actions, bool[] memory committeesWithSlashes) {\n        actions = new SlashAction[](totalValidators);\n        uint256 actionCount;\n        committeesWithSlashes = new bool[](ROUND_SIZE_IN_EPOCHS);\n\n        unchecked {\n            for (uint256 i; i < totalValidators; ++i) {\n                uint256 epochIndex = i / COMMITTEE_SIZE;\n\n                // Skip validators that belong to escape-hatch epochs\n                if (escapeHatchEpochs[epochIndex]) {\n                    continue;\n                }\n                uint256 packedVotes = tallyMatrix[i];\n\n                // Skip if no votes for this validator\n                if (packedVotes == 0) {\n                    continue;\n                }\n\n                uint256 voteCountForValidator;\n\n                // Check slash amounts from highest (3 units) to lowest (1 unit)\n                // Cumulative voting: votes for N units also count for N-1, N-2, etc.\n                for (uint256 j = 3; j > 0;) {\n                    // Extract vote count for this slash amount from packed data\n                    // Shift right by (slashAmount-1) * 64 bits, then mask to get 64-bit segment\n                    // Layout: [0-63: votes for 1 unit][64-127: votes for 2 units][128-191: votes for 3 units]\n                    uint256 votesForAmount = (packedVotes >> ((j - 1) << 6)) & 0xFFFFFFFFFFFFFFFF;\n                    voteCountForValidator += votesForAmount;\n\n                    // Check if this slash amount has reached quorum\n                    if (voteCountForValidator >= QUORUM) {\n                        // Convert units to actual slash amount\n                        uint256 slashAmount;\n                        if (j == 1) {\n                            slashAmount = SLASH_AMOUNT_SMALL;\n                        } else if (j == 2) {\n                            slashAmount = SLASH_AMOUNT_MEDIUM;\n                        } else if (j == 3) {\n                            slashAmount = SLASH_AMOUNT_LARGE;\n                        }\n\n                        // Record the slashing action\n                        actions[actionCount] = SlashAction({\n                            validator: _committees[epochIndex][i % COMMITTEE_SIZE],\n                            slashAmount: slashAmount\n                        });\n                        ++actionCount;\n\n                        // Mark this committee as having at least one slashed validator\n                        committeesWithSlashes[epochIndex] = true;\n\n                        // Only slash each validator once at the highest amount that reached quorum\n                        break;\n                    }\n\n                    --j;\n                }\n            }\n        }\n\n        // Resize actions array to the actual number of actions using assembly\n        assembly {\n            mstore(actions, actionCount)\n        }\n\n        return (actions, committeesWithSlashes);\n    }\n\n    /**\n     * @notice Load vote data from fixed-size format (optimized with unrolled loop)\n     * @param voteSlots The storage reference to the vote slots\n     * @param expectedLength The expected length of the vote data\n     * @return voteData The reconstructed vote data as bytes\n     */\n    function _loadVoteDataFromStorage(bytes32[4] storage voteSlots, uint256 expectedLength)\n        internal\n        view\n        returns (bytes memory voteData)\n    {\n        // Allocate memory for full chunks\n        // This avoids complex masking by over-allocating slightly\n        voteData = new bytes(4 * 32);\n\n        unchecked {\n            // Load full chunks without masking\n            assembly {\n                let dataPtr := add(voteData, 0x20)\n\n                // Chunk 0 (bytes 0-31)\n                if expectedLength {\n                    let chunk := sload(voteSlots.slot)\n                    mstore(dataPtr, chunk)\n                }\n\n                // Chunk 1 (bytes 32-63)\n                if gt(expectedLength, 32) {\n                    let chunk := sload(add(voteSlots.slot, 1))\n                    mstore(add(dataPtr, 32), chunk)\n                }\n\n                // Chunk 2 (bytes 64-95)\n                if gt(expectedLength, 64) {\n                    let chunk := sload(add(voteSlots.slot, 2))\n                    mstore(add(dataPtr, 64), chunk)\n                }\n\n                // Chunk 3 (bytes 96-127)\n                if gt(expectedLength, 96) {\n                    let chunk := sload(add(voteSlots.slot, 3))\n                    mstore(add(dataPtr, 96), chunk)\n                }\n\n                // Adjust the array length to the expected length\n                // This ensures the bytes array reports the correct length\n                // even though we allocated extra memory\n                mstore(voteData, expectedLength)\n            }\n        }\n    }\n\n    /**\n     * @notice Get the current slot number from the rollup contract\n     * @dev Retrieves the current time-based slot number which determines the active round and proposer.\n     * @return The current Slot number\n     */\n    function _getCurrentSlot() internal view returns (Slot) {\n        IValidatorSelection rollup = IValidatorSelection(INSTANCE);\n        return rollup.getCurrentSlot();\n    }\n\n    /**\n     * @notice Determine which epochs targeted by a round are in escape-hatch mode\n     * @param _round The round number to check for\n     * @return escapeHatchEpochs A bool array for escape hatch status of the epochs in the round\n     */\n    function _getEscapeHatchEpochFlags(SlashRound _round) internal view returns (bool[] memory escapeHatchEpochs) {\n        escapeHatchEpochs = new bool[](ROUND_SIZE_IN_EPOCHS);\n\n        for (uint256 epochIndex; epochIndex < ROUND_SIZE_IN_EPOCHS; epochIndex++) {\n            Epoch epoch = getSlashTargetEpoch(_round, epochIndex);\n            IEscapeHatch escapeHatch = IValidatorSelection(INSTANCE).getEscapeHatchForEpoch(epoch);\n            if (address(escapeHatch) == address(0)) {\n                continue;\n            }\n            (bool isOpen,) = escapeHatch.isHatchOpen(epoch);\n            escapeHatchEpochs[epochIndex] = isOpen;\n        }\n    }\n\n    /**\n     * @notice Check if a round is ready for execution based on timing constraints\n     * @dev A round is ready for execution when:\n     *      1. Enough time has passed (current round > round + execution delay)\n     *      2. Not too much time has passed (current round <= round + lifetime)\n     *      This ensures there's time for review before execution while preventing stale executions.\n     *\n     * @param _round The round number to check readiness for\n     * @param _currentRound The current round number for comparison\n     * @return True if the round is ready for execution, false otherwise\n     */\n    function _isRoundReadyToExecute(SlashRound _round, SlashRound _currentRound) internal view returns (bool) {\n        // Round must have passed execution delay but not exceeded lifetime\n        // This gives time for review before execution and prevents stale executions\n        return SlashRound.unwrap(_currentRound) > SlashRound.unwrap(_round) + EXECUTION_DELAY_IN_ROUNDS\n            && SlashRound.unwrap(_currentRound) <= SlashRound.unwrap(_round) + LIFETIME_IN_ROUNDS;\n    }\n\n    /**\n     * @notice Internal function to prepare payload data and compute address from slash actions\n     * @param _round The round number (mixed into the salt)\n     * @param _actions Array of slash actions\n     * @return validators Array of validator addresses\n     * @return amounts Array of slash amounts as uint96\n     * @return salt The computed salt for CREATE2 deployment\n     * @return predictedAddress The predicted address where the payload would be deployed\n     */\n    function _preparePayloadDataAndAddress(SlashRound _round, SlashAction[] memory _actions)\n        internal\n        view\n        returns (address[] memory validators, uint96[] memory amounts, bytes32 salt, address predictedAddress)\n    {\n        uint256 actionCount = _actions.length;\n        validators = new address[](actionCount);\n        amounts = new uint96[](actionCount);\n\n        // Extract validators and amounts from actions\n        unchecked {\n            for (uint256 i; i < actionCount; ++i) {\n                validators[i] = _actions[i].validator;\n                // Convert uint256 to uint96, checking for overflow\n                require(_actions[i].slashAmount <= type(uint96).max, Errors_1.SlashingProposer__SlashAmountTooLarge());\n                amounts[i] = uint96(_actions[i].slashAmount);\n            }\n        }\n\n        // Compute salt for CREATE2 deployment, including round number\n        salt = keccak256(abi.encodePacked(SlashRound.unwrap(_round), validators, amounts));\n\n        // Compute predicted address using clone deterministic address prediction\n        bytes memory immutableArgs = SlashPayloadLib.encodeImmutableArgs(INSTANCE, validators, amounts);\n        predictedAddress = Clones.predictDeterministicAddressWithImmutableArgs(\n            SLASH_PAYLOAD_IMPLEMENTATION, immutableArgs, salt, address(this)\n        );\n\n        return (validators, amounts, salt, predictedAddress);\n    }\n\n    /**\n     * @notice Returns a storage reference to the round votes for a specific round from the circular storage buffer\n     * @dev Uses modulo arithmetic to map round numbers to storage slots in the circular buffer.\n     *      IMPORTANT: This function DOES NOT validate that the round is within the valid range or that\n     *      the data hasn't been overwritten by newer rounds. Always call getRoundData() first to ensure\n     *      the round data is valid before using this function.\n     *\n     * @param _round The round number to get votes for\n     * @return A storage reference to the RoundVotes struct containing the vote data for this round\n     */\n    function _getRoundVotes(SlashRound _round) internal view returns (RoundVotes storage) {\n        // Map round number to circular storage index using modulo\n        // This allows reuse of storage slots as older rounds become irrelevant\n        return roundVotes[SlashRound.unwrap(_round) % ROUNDABOUT_SIZE];\n    }\n\n    /**\n     * @notice Get round data for a specific round, loading from circular storage and decompressing it\n     * @param _round The round number to retrieve data for\n     * @param _currentRound The current round number, so we dont try loading data outside the valid roundabout range.\n     * Required as a parameter to avoid having to recompute it on every call to this function.\n     * @return RoundData struct containing the round's data\n     */\n    function _getRoundData(SlashRound _round, SlashRound _currentRound) internal view returns (RoundData memory) {\n        // Check if the requested round is within the valid roundabout range\n        if (\n            SlashRound.unwrap(_round) > SlashRound.unwrap(_currentRound)\n                || SlashRound.unwrap(_round) + ROUNDABOUT_SIZE <= SlashRound.unwrap(_currentRound)\n        ) {\n            revert Errors_1.SlashingProposer__RoundOutOfRange((_round), (_currentRound));\n        }\n\n        // Load round data from the circular storage into memory in a single SLOAD\n        CompressedRoundData memory roundData = roundDatas[SlashRound.unwrap(_round) % ROUNDABOUT_SIZE];\n\n        // If we find in storage round data for an older round since we've gone around the roundabout, return an empty one\n        if (roundData.roundNumber.decompress() != _round) {\n            return RoundData({roundNumber: _round, lastVoteSlot: Slot.wrap(0), voteCount: 0, executed: false});\n        }\n\n        return RoundData({\n            roundNumber: _round,\n            lastVoteSlot: roundData.lastVoteSlot.decompress(),\n            voteCount: roundData.voteCount,\n            executed: roundData.executed\n        });\n    }\n\n    /**\n     * @notice Computes the round at the given slot\n     * @param _slot - The slot to compute round for\n     * @return The round number\n     */\n    function _computeRound(Slot _slot) internal view returns (SlashRound) {\n        return SlashRound.wrap(Slot.unwrap(_slot) / ROUND_SIZE);\n    }\n\n    /**\n     * @notice Process 32 bytes of vote data at once\n     * @dev Processes a full word for maximum efficiency with early exit for zero words\n     */\n    function _process32BytesVotes(uint256[] memory tallyMatrix, bytes memory currentVote, uint256 startJ)\n        internal\n        pure\n    {\n        unchecked {\n            // Load 32 bytes as a single word\n            uint256 word;\n            assembly {\n                word := mload(add(add(currentVote, 0x20), startJ))\n            }\n\n            // Early exit if entire word is zero (no votes)\n            if (word == 0) {\n                return;\n            }\n\n            // Process the 32-byte word byte by byte, maintaining big-endian order\n            uint256 baseIndex = startJ << 2; // Convert byte index to validator index: startJ * 4\n\n            for (uint256 i; i < 32; ++i) {\n                // Early exit if remaining word is zero\n                if (word == 0) {\n                    break;\n                }\n\n                // Extract most significant byte from word (big-endian order)\n                // Shift right 248 bits (31 bytes) to get the leftmost byte\n                uint8 currentByte = uint8(word >> 248);\n\n                // Shift word left by 8 bits for next iteration, removing processed byte\n                word <<= 8;\n\n                if (currentByte != 0) {\n                    uint256 idx = baseIndex + (i << 2); // Convert byte index to validator index: baseIndex + i * 4\n\n                    // Extract validator 0 vote: bits 0-1 (mask with 0x03 = 0b00000011)\n                    uint8 v0 = currentByte & 0x03;\n                    if (v0 != 0) {\n                        tallyMatrix[idx] += uint256(1) << ((v0 - 1) << 6);\n                    }\n\n                    // Extract validator 1 vote: bits 2-3 (shift right 2, then mask with 0x03)\n                    uint8 v1 = (currentByte >> 2) & 0x03;\n                    if (v1 != 0) {\n                        tallyMatrix[idx + 1] += uint256(1) << ((v1 - 1) << 6);\n                    }\n\n                    // Extract validator 2 vote: bits 4-5 (shift right 4, then mask with 0x03)\n                    uint8 v2 = (currentByte >> 4) & 0x03;\n                    if (v2 != 0) {\n                        tallyMatrix[idx + 2] += uint256(1) << ((v2 - 1) << 6);\n                    }\n\n                    // Extract validator 3 vote: bits 6-7 (shift right 6, no mask needed)\n                    uint8 v3 = currentByte >> 6;\n                    if (v3 != 0) {\n                        tallyMatrix[idx + 3] += uint256(1) << ((v3 - 1) << 6);\n                    }\n                }\n            }\n        }\n    }\n\n    /**\n     * @notice Reconstruct committee commitment from addresses\n     */\n    function _computeCommitteeCommitment(address[] calldata _committee) internal pure returns (bytes32) {\n        // Hash the committee addresses to create a commitment for verification\n        // Duplicated from ValidatorSelectionLib.sol\n        return keccak256(abi.encode(_committee));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 1122,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "TallySlashingProposer",
+        "similarity": 0.946,
+        "reportId": "aztecnetwork/cantina-payload-2026-03-05",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/slashing/TallySlashingProposer.sol",
+        "commit": "b2742ee480de17eb6683413811251123c54c1d43",
+        "commitTimestamp": "2026-03-01T11:42:45Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/b2742ee480de17eb6683413811251123c54c1d43/l1-contracts/src/core/slashing/TallySlashingProposer.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified fail-closed remediation from PR 20987 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 33,
+        "removed": 39,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 14,
+        "unchanged": 1122,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract TallySlashingProposer is EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SlashingProposer is EIP712 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SignatureLib for Signature;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using CompressedTimeMath for CompressedSlot;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    using CompressedTimeMath for Slot;"
+              }
+            ]
+          },
+          {
+            "oldStart": 70,
+            "oldLines": 11,
+            "newStart": 70,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "    bytes32 public constant VOTE_TYPEHASH = keccak256(\"Vote(bytes votes,uint256 slot)\");"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 71, "text": "" },
+              { "type": " ", "oldLine": 72, "newLine": 72, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     * @notice Type of slashing proposer (either Tally or Empire)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    SlasherFlavor public constant SLASHING_PROPOSER_TYPE = SlasherFlavor.TALLY;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 76, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 73,
+                "text": "     * @notice Size of the circular storage buffer for round data"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 74,
+                "text": "     * @dev Determines how many recent rounds can be kept in storage simultaneously."
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 75,
+                "text": "     *      Older rounds are overwritten as new rounds are created. Must be larger than"
+              }
+            ]
+          },
+          {
+            "oldStart": 189,
+            "oldLines": 7,
+            "newStart": 184,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 184,
+                "text": "    event RoundExecuted(SlashRound indexed round, uint256 slashCount);"
+              },
+              { "type": " ", "oldLine": 190, "newLine": 185, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 186,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "     * @notice Initializes the TallySlashingProposer with configuration parameters",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "     * @notice Initializes the SlashingProposer with configuration parameters",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 188,
+                "text": "     * @dev Sets up all the voting and slashing parameters and validates their correctness."
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 189,
+                "text": "     *      The constructor enforces several important invariants to ensure the system operates correctly."
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 218,
+            "oldLines": 7,
+            "newStart": 213,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 213,
+                "text": "        uint256 _committeeSize,"
+              },
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 214,
+                "text": "        uint256 _epochDuration,"
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 215,
+                "text": "        uint256 _slashOffsetInRounds"
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "    ) EIP712(\"TallySlashingProposer\", \"1\") {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "    ) EIP712(\"SlashingProposer\", \"1\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 217,
+                "text": "        INSTANCE = _instance;"
+              },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 218,
+                "text": "        SLASHER = _slasher;"
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 219,
+                "text": "        SLASH_AMOUNT_SMALL = _slashAmounts[0];"
+              }
+            ]
+          },
+          {
+            "oldStart": 238,
+            "oldLines": 55,
+            "newStart": 233,
+            "newLines": 53,
+            "lines": [
+              { "type": " ", "oldLine": 238, "newLine": 233, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 234,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 235,
+                "text": "            SLASH_OFFSET_IN_ROUNDS > 0,"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "            Errors.TallySlashingProposer__SlashOffsetMustBeGreaterThanZero(SLASH_OFFSET_IN_ROUNDS)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "            Errors_1.SlashingProposer__SlashOffsetMustBeGreaterThanZero(SLASH_OFFSET_IN_ROUNDS)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 237,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 238,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 239,
+                "text": "            ROUND_SIZE_IN_EPOCHS * _epochDuration == ROUND_SIZE,"
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "            Errors.TallySlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(ROUND_SIZE, _epochDuration)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "            Errors_1.SlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(ROUND_SIZE, _epochDuration)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 241,
+                "text": "        );"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "        require(QUORUM > 0, Errors.TallySlashingProposer__QuorumMustBeGreaterThanZero());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "        require(ROUND_SIZE > 1, Errors.TallySlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "        require(QUORUM > ROUND_SIZE / 2, Errors.TallySlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "        require(QUORUM <= ROUND_SIZE, Errors.TallySlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "        require(_slashAmounts[0] <= _slashAmounts[1], Errors.TallySlashingProposer__InvalidSlashAmounts(_slashAmounts));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "        require(_slashAmounts[1] <= _slashAmounts[2], Errors.TallySlashingProposer__InvalidSlashAmounts(_slashAmounts));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "        require(QUORUM > 0, Errors_1.SlashingProposer__QuorumMustBeGreaterThanZero());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "        require(ROUND_SIZE > 1, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "        require(QUORUM > ROUND_SIZE / 2, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "        require(QUORUM <= ROUND_SIZE, Errors_1.SlashingProposer__InvalidQuorumAndRoundSize(QUORUM, ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "        require(_slashAmounts[0] <= _slashAmounts[1], Errors_1.SlashingProposer__InvalidSlashAmounts(_slashAmounts));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        require(_slashAmounts[1] <= _slashAmounts[2], Errors_1.SlashingProposer__InvalidSlashAmounts(_slashAmounts));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 248,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 249,
+                "text": "            LIFETIME_IN_ROUNDS > EXECUTION_DELAY_IN_ROUNDS,"
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "            Errors.TallySlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 250,
+                "text": "            Errors_1.SlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 251,
+                "text": "                LIFETIME_IN_ROUNDS, EXECUTION_DELAY_IN_ROUNDS"
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 252,
+                "text": "            )"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 253,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 254,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 255,
+                "text": "            LIFETIME_IN_ROUNDS < ROUNDABOUT_SIZE,"
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            Errors.TallySlashingProposer__LifetimeMustBeLessThanRoundabout(LIFETIME_IN_ROUNDS, ROUNDABOUT_SIZE)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "            Errors_1.SlashingProposer__LifetimeMustBeLessThanRoundabout(LIFETIME_IN_ROUNDS, ROUNDABOUT_SIZE)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 257,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 258,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 259,
+                "text": "            ROUND_SIZE_IN_EPOCHS > 0,"
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "            Errors.TallySlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "            Errors_1.SlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 261,
+                "text": "        );"
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "            ROUND_SIZE <= MAX_ROUND_SIZE, Errors.TallySlashingProposer__RoundSizeTooLarge(ROUND_SIZE, MAX_ROUND_SIZE)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "        require(COMMITTEE_SIZE > 0, Errors.TallySlashingProposer__CommitteeSizeMustBeGreaterThanZero(COMMITTEE_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "        require(ROUND_SIZE <= MAX_ROUND_SIZE, Errors_1.SlashingProposer__RoundSizeTooLarge(ROUND_SIZE, MAX_ROUND_SIZE));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "        require(COMMITTEE_SIZE > 0, Errors_1.SlashingProposer__CommitteeSizeMustBeGreaterThanZero(COMMITTEE_SIZE));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 271, "newLine": 264, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 265,
+                "text": "        // Validate that vote size doesn't exceed our fixed 4 bytes32 allocation"
+              },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 266,
+                "text": "        // Each vote requires COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4 bytes"
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 267,
+                "text": "        // We have allocated 4 bytes32 slots = 128 bytes maximum"
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 268,
+                "text": "        uint256 voteSize = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;"
+              },
+              {
+                "type": "-",
+                "oldLine": 276,
+                "text": "        require(voteSize <= 128, Errors.TallySlashingProposer__VoteSizeTooBig(voteSize, 128));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "        require(voteSize <= 128, Errors_1.SlashingProposer__VoteSizeTooBig(voteSize, 128));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 277, "newLine": 270, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 278,
+                "newLine": 271,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 279,
+                "newLine": 272,
+                "text": "            COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS % 4 == 0,"
+              },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "            Errors.TallySlashingProposer__VotesMustBeMultipleOf4(COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "            Errors_1.SlashingProposer__VotesMustBeMultipleOf4(COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 274,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 275, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 276,
+                "text": "        // Defense in depth: the ordering constraints (small <= medium <= large) above mean that"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 277,
+                "text": "        // if medium or large is zero, small must also be zero, so the small check would fire first."
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 278,
+                "text": "        // We keep all three checks explicitly for clarity and to guard against future refactors"
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 279,
+                "text": "        // that might remove or reorder the sorting constraints."
+              },
+              {
+                "type": "-",
+                "oldLine": 287,
+                "text": "        require(SLASH_AMOUNT_SMALL > 0, Errors.TallySlashingProposer__SlashAmountMustBeGtZero(\"small\"));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "        require(SLASH_AMOUNT_MEDIUM > 0, Errors.TallySlashingProposer__SlashAmountMustBeGtZero(\"medium\"));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "        require(SLASH_AMOUNT_LARGE > 0, Errors.TallySlashingProposer__SlashAmountMustBeGtZero(\"large\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "        require(SLASH_AMOUNT_SMALL > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"small\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "        require(SLASH_AMOUNT_MEDIUM > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"medium\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "        require(SLASH_AMOUNT_LARGE > 0, Errors_1.SlashingProposer__SlashAmountMustBeGtZero(\"large\"));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 290, "newLine": 283, "text": "    }" },
+              { "type": " ", "oldLine": 291, "newLine": 284, "text": "" },
+              { "type": " ", "oldLine": 292, "newLine": 285, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 305,
+            "oldLines": 10,
+            "newStart": 298,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 298,
+                "text": "     * - VoteCast: When the vote is successfully recorded"
+              },
+              { "type": " ", "oldLine": 306, "newLine": 299, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 307,
+                "newLine": 300,
+                "text": "     * Reverts with:"
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "     * - TallySlashingProposer__VotingNotOpen: If current round is less than SLASH_OFFSET_IN_ROUNDS",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "     * - TallySlashingProposer__InvalidSignature: If signature verification fails",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "     * - TallySlashingProposer__InvalidVoteLength: If vote data length is incorrect",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 311,
+                "text": "     * - TallySlashingProposer__VoteAlreadyCastInCurrentSlot: If proposer already voted in this slot",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "     * - SlashingProposer__VotingNotOpen: If current round is less than SLASH_OFFSET_IN_ROUNDS",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "     * - SlashingProposer__InvalidSignature: If signature verification fails",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "     * - SlashingProposer__InvalidVoteLength: If vote data length is incorrect",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "     * - SlashingProposer__VoteAlreadyCastInCurrentSlot: If proposer already voted in this slot",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 312,
+                "newLine": 305,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 313,
+                "newLine": 306,
+                "text": "    function vote(bytes calldata _votes, Signature calldata _sig) external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 314,
+                "newLine": 307,
+                "text": "        Slot slot = _getCurrentSlot();"
+              }
+            ]
+          },
+          {
+            "oldStart": 316,
+            "oldLines": 27,
+            "newStart": 309,
+            "newLines": 26,
+            "lines": [
+              { "type": " ", "oldLine": 316, "newLine": 309, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 317,
+                "newLine": 310,
+                "text": "        // We vote for slashing validators for epochs from SLASH_OFFSET_IN_ROUNDS ago, so in early rounds there is no one to"
+              },
+              {
+                "type": " ",
+                "oldLine": 318,
+                "newLine": 311,
+                "text": "        // be slashed."
+              },
+              {
+                "type": "-",
+                "oldLine": 319,
+                "text": "        require(round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors.TallySlashingProposer__VotingNotOpen(round));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "        require(round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors_1.SlashingProposer__VotingNotOpen(round));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 320, "newLine": 313, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 314,
+                "text": "        // Get the current proposer from the rollup - only they can submit votes"
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 315,
+                "text": "        address proposer = _getCurrentProposer();"
+              },
+              { "type": " ", "oldLine": 323, "newLine": 316, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 324,
+                "newLine": 317,
+                "text": "        // Verify EIP-712 signature (which includes slot to prevent replay attacks)"
+              },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 318,
+                "text": "        bytes32 digest = getVoteSignatureDigest(_votes, slot);"
+              },
+              {
+                "type": "-",
+                "oldLine": 326,
+                "text": "        require(_sig.verify(proposer, digest), Errors.TallySlashingProposer__InvalidSignature());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "        require(_sig.verify(proposer, digest), Errors_1.SlashingProposer__InvalidSignature());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 327, "newLine": 320, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 321,
+                "text": "        // Each byte encodes 4 validators (2 bits each), so each validator is represented as 2 bits in the byte array."
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 322,
+                "text": "        uint256 expectedLength = COMMITTEE_SIZE * ROUND_SIZE_IN_EPOCHS / 4;"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 323,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 331,
+                "text": "            _votes.length == expectedLength,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 332,
+                "text": "            Errors.TallySlashingProposer__InvalidVoteLength(expectedLength, _votes.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "            _votes.length == expectedLength, Errors_1.SlashingProposer__InvalidVoteLength(expectedLength, _votes.length)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 333,
+                "newLine": 325,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 334, "newLine": 326, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 335,
+                "newLine": 327,
+                "text": "        // Get the round data for the current round"
+              },
+              {
+                "type": " ",
+                "oldLine": 336,
+                "newLine": 328,
+                "text": "        RoundData memory roundData = _getRoundData(round, round);"
+              },
+              { "type": " ", "oldLine": 337, "newLine": 329, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 330,
+                "text": "        // Check if a vote has already been cast in the current slot"
+              },
+              {
+                "type": "-",
+                "oldLine": 339,
+                "text": "        require(roundData.lastVoteSlot < slot, Errors.TallySlashingProposer__VoteAlreadyCastInCurrentSlot(slot));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "        require(roundData.lastVoteSlot < slot, Errors_1.SlashingProposer__VoteAlreadyCastInCurrentSlot(slot));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 340, "newLine": 332, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 341,
+                "newLine": 333,
+                "text": "        // Store the vote for this round"
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 334,
+                "text": "        uint256 voteCount = roundData.voteCount;"
+              }
+            ]
+          },
+          {
+            "oldStart": 363,
+            "oldLines": 20,
+            "newStart": 355,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 363,
+                "newLine": 355,
+                "text": "     * - RoundExecuted: When the round execution completes, regardless of whether any slashing occurred"
+              },
+              { "type": " ", "oldLine": 364, "newLine": 356, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 365,
+                "newLine": 357,
+                "text": "     * Reverts with:"
+              },
+              {
+                "type": "-",
+                "oldLine": 366,
+                "text": "     * - TallySlashingProposer__RoundAlreadyExecuted: If the round has already been executed",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 367,
+                "text": "     * - TallySlashingProposer__RoundNotComplete: If the round is not yet ready for execution or has expired",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 368,
+                "text": "     * - TallySlashingProposer__InvalidCommitteeCommitment: If any committee commitment doesn't match onchain data",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 369,
+                "text": "     * - TallySlashingProposer__InvalidNumberOfCommittees: If the number of committees doesn't match",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "     * - SlashingProposer__RoundAlreadyExecuted: If the round has already been executed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "     * - SlashingProposer__RoundNotComplete: If the round is not yet ready for execution or has expired",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "     * - SlashingProposer__InvalidCommitteeCommitment: If any committee commitment doesn't match onchain data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "     * - SlashingProposer__InvalidNumberOfCommittees: If the number of committees doesn't match",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 362,
+                "text": "     * ROUND_SIZE_IN_EPOCHS"
+              },
+              {
+                "type": " ",
+                "oldLine": 371,
+                "newLine": 363,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 364,
+                "text": "    function executeRound(SlashRound _round, address[][] calldata _committees) external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 373,
+                "newLine": 365,
+                "text": "        // Get round data to check if already executed"
+              },
+              {
+                "type": " ",
+                "oldLine": 374,
+                "newLine": 366,
+                "text": "        SlashRound currentRound = getCurrentRound();"
+              },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 367,
+                "text": "        RoundData memory roundData = _getRoundData(_round, currentRound);"
+              },
+              {
+                "type": "-",
+                "oldLine": 376,
+                "text": "        require(!roundData.executed, Errors.TallySlashingProposer__RoundAlreadyExecuted(_round));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "        require(!roundData.executed, Errors_1.SlashingProposer__RoundAlreadyExecuted(_round));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 377, "newLine": 369, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 370,
+                "text": "        // Ensure enough time has passed (execution delay) but not too much (lifetime)"
+              },
+              {
+                "type": "-",
+                "oldLine": 379,
+                "text": "        require(_isRoundReadyToExecute(_round, currentRound), Errors.TallySlashingProposer__RoundNotComplete(_round));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "        require(_isRoundReadyToExecute(_round, currentRound), Errors_1.SlashingProposer__RoundNotComplete(_round));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 380, "newLine": 372, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 381,
+                "newLine": 373,
+                "text": "        // Get the slash actions by tallying votes and which committees have slashes"
+              },
+              {
+                "type": " ",
+                "oldLine": 382,
+                "newLine": 374,
+                "text": "        (SlashAction[] memory actions, bool[] memory committeesWithSlashes) = _tally(roundData, _committees);"
+              }
+            ]
+          },
+          {
+            "oldStart": 394,
+            "oldLines": 7,
+            "newStart": 386,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 394,
+                "newLine": 386,
+                "text": "                Epoch epochNumber = getSlashTargetEpoch(_round, i);"
+              },
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 387,
+                "text": "                require("
+              },
+              {
+                "type": " ",
+                "oldLine": 396,
+                "newLine": 388,
+                "text": "                    commitment == _getCommitteeCommitment(epochNumber),"
+              },
+              {
+                "type": "-",
+                "oldLine": 397,
+                "text": "                    Errors.TallySlashingProposer__InvalidCommitteeCommitment()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 389,
+                "text": "                    Errors_1.SlashingProposer__InvalidCommitteeCommitment()",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 398,
+                "newLine": 390,
+                "text": "                );"
+              },
+              {
+                "type": " ",
+                "oldLine": 399,
+                "newLine": 391,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 392,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 560,
+            "oldLines": 13,
+            "newStart": 552,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 560,
+                "newLine": 552,
+                "text": "     * @return epochNumber The epoch number whose validators will be considered for slashing"
+              },
+              { "type": " ", "oldLine": 561, "newLine": 553, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 562,
+                "newLine": 554,
+                "text": "     * Reverts with:"
+              },
+              {
+                "type": "-",
+                "oldLine": 563,
+                "text": "     * - TallySlashingProposer__VotingNotOpen: If the round is less than SLASH_OFFSET_IN_ROUNDS",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 555,
+                "text": "     * - SlashingProposer__VotingNotOpen: If the round is less than SLASH_OFFSET_IN_ROUNDS",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 564,
+                "newLine": 556,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 565,
+                "newLine": 557,
+                "text": "    function getSlashTargetEpoch(SlashRound _round, uint256 _epochIndex) public view returns (Epoch epochNumber) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 566,
+                "text": "        require(_round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors.TallySlashingProposer__VotingNotOpen(_round));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 558,
+                "text": "        require(_round >= SlashRound.wrap(SLASH_OFFSET_IN_ROUNDS), Errors_1.SlashingProposer__VotingNotOpen(_round));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 567,
+                "newLine": 559,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 568,
+                "newLine": 560,
+                "text": "            _epochIndex < ROUND_SIZE_IN_EPOCHS,"
+              },
+              {
+                "type": "-",
+                "oldLine": 569,
+                "text": "            Errors.TallySlashingProposer__InvalidEpochIndex(_epochIndex, ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 561,
+                "text": "            Errors_1.SlashingProposer__InvalidEpochIndex(_epochIndex, ROUND_SIZE_IN_EPOCHS)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 570,
+                "newLine": 562,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 571,
+                "newLine": 563,
+                "text": "        return Epoch.wrap((SlashRound.unwrap(_round) - SLASH_OFFSET_IN_ROUNDS) * ROUND_SIZE_IN_EPOCHS + _epochIndex);"
+              },
+              { "type": " ", "oldLine": 572, "newLine": 564, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 643,
+            "oldLines": 7,
+            "newStart": 635,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 643,
+                "newLine": 635,
+                "text": "        uint256 dataLength = voteData.length;"
+              },
+              { "type": " ", "oldLine": 644, "newLine": 636, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 645,
+                "newLine": 637,
+                "text": "        // Ensure we don't exceed maximum size"
+              },
+              {
+                "type": "-",
+                "oldLine": 646,
+                "text": "        require(dataLength <= 128, Errors.TallySlashingProposer__VoteSizeTooBig(dataLength, 128));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 638,
+                "text": "        require(dataLength <= 128, Errors_1.SlashingProposer__VoteSizeTooBig(dataLength, 128));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 647, "newLine": 639, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 648,
+                "newLine": 640,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 649,
+                "newLine": 641,
+                "text": "            assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 712,
+            "oldLines": 7,
+            "newStart": 704,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 712,
+                "newLine": 704,
+                "text": "        // Must have one committee per epoch in the round"
+              },
+              {
+                "type": " ",
+                "oldLine": 713,
+                "newLine": 705,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 714,
+                "newLine": 706,
+                "text": "            _committees.length == ROUND_SIZE_IN_EPOCHS,"
+              },
+              {
+                "type": "-",
+                "oldLine": 715,
+                "text": "            Errors.TallySlashingProposer__InvalidNumberOfCommittees(ROUND_SIZE_IN_EPOCHS, _committees.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 707,
+                "text": "            Errors_1.SlashingProposer__InvalidNumberOfCommittees(ROUND_SIZE_IN_EPOCHS, _committees.length)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 716,
+                "newLine": 708,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 717, "newLine": 709, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 718,
+                "newLine": 710,
+                "text": "        uint256 voteCount = _roundData.voteCount;"
+              }
+            ]
+          },
+          {
+            "oldStart": 1011,
+            "oldLines": 9,
+            "newStart": 1003,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1011,
+                "newLine": 1003,
+                "text": "            for (uint256 i; i < actionCount; ++i) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 1012,
+                "newLine": 1004,
+                "text": "                validators[i] = _actions[i].validator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 1013,
+                "newLine": 1005,
+                "text": "                // Convert uint256 to uint96, checking for overflow"
+              },
+              {
+                "type": "-",
+                "oldLine": 1014,
+                "text": "                require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1015,
+                "text": "                    _actions[i].slashAmount <= type(uint96).max, Errors.TallySlashingProposer__SlashAmountTooLarge()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1016,
+                "text": "                );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1006,
+                "text": "                require(_actions[i].slashAmount <= type(uint96).max, Errors_1.SlashingProposer__SlashAmountTooLarge());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1017,
+                "newLine": 1007,
+                "text": "                amounts[i] = uint96(_actions[i].slashAmount);"
+              },
+              {
+                "type": " ",
+                "oldLine": 1018,
+                "newLine": 1008,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 1019,
+                "newLine": 1009,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 1059,
+            "oldLines": 7,
+            "newStart": 1049,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1059,
+                "newLine": 1049,
+                "text": "            SlashRound.unwrap(_round) > SlashRound.unwrap(_currentRound)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1060,
+                "newLine": 1050,
+                "text": "                || SlashRound.unwrap(_round) + ROUNDABOUT_SIZE <= SlashRound.unwrap(_currentRound)"
+              },
+              {
+                "type": " ",
+                "oldLine": 1061,
+                "newLine": 1051,
+                "text": "        ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 1062,
+                "text": "            revert Errors.TallySlashingProposer__RoundOutOfRange((_round), (_currentRound));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1052,
+                "text": "            revert Errors_1.SlashingProposer__RoundOutOfRange((_round), (_currentRound));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 1063,
+                "newLine": 1053,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 1064, "newLine": 1054, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 1065,
+                "newLine": 1055,
+                "text": "        // Load round data from the circular storage into memory in a single SLOAD"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

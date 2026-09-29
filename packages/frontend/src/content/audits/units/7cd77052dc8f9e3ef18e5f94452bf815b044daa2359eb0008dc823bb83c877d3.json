@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7cd77052dc8f9e3ef18e5f94452bf815b044daa2359eb0008dc823bb83c877d3",
+  "name": "ETHLockbox",
+  "kind": "contract",
+  "lines": 219,
+  "source": "contract ETHLockbox is ProxyAdminOwnedBase, Initializable, ReinitializableBase, ISemver {\n    /// @notice Thrown when the lockbox is paused.\n    error ETHLockbox_Paused();\n\n    /// @notice Thrown when the caller is not authorized.\n    error ETHLockbox_Unauthorized();\n\n    /// @notice Thrown when the value to unlock is greater than the balance of the lockbox.\n    error ETHLockbox_InsufficientBalance();\n\n    /// @notice Thrown when attempting to unlock ETH from the lockbox through a withdrawal transaction.\n    error ETHLockbox_NoWithdrawalTransactions();\n\n    /// @notice Thrown when any authorized portal has a different SuperchainConfig.\n    error ETHLockbox_DifferentSuperchainConfig();\n\n    /// @notice Emitted when ETH is locked in the lockbox by an authorized portal.\n    /// @param portal The address of the portal that locked the ETH.\n    /// @param amount The amount of ETH locked.\n    event ETHLocked(IOptimismPortal indexed portal, uint256 amount);\n\n    /// @notice Emitted when ETH is unlocked from the lockbox by an authorized portal.\n    /// @param portal The address of the portal that unlocked the ETH.\n    /// @param amount The amount of ETH unlocked.\n    event ETHUnlocked(IOptimismPortal indexed portal, uint256 amount);\n\n    /// @notice Emitted when a portal is authorized to lock and unlock ETH.\n    /// @param portal The address of the portal that was authorized.\n    event PortalAuthorized(IOptimismPortal indexed portal);\n\n    /// @notice Emitted when an ETH lockbox is authorized to migrate its liquidity to the current ETH lockbox.\n    /// @param lockbox The address of the ETH lockbox that was authorized.\n    event LockboxAuthorized(IETHLockbox indexed lockbox);\n\n    /// @notice Emitted when ETH liquidity is migrated from the current ETH lockbox to another.\n    /// @param lockbox The address of the ETH lockbox that was migrated.\n    event LiquidityMigrated(IETHLockbox indexed lockbox, uint256 amount);\n\n    /// @notice Emitted when ETH liquidity is received during an authorized lockbox migration.\n    /// @param lockbox The address of the ETH lockbox that received the liquidity.\n    /// @param amount The amount of ETH received.\n    event LiquidityReceived(IETHLockbox indexed lockbox, uint256 amount);\n\n    /// @notice The address of the SystemConfig contract.\n    ISystemConfig public systemConfig;\n\n    /// @notice Mapping of authorized portals.\n    mapping(IOptimismPortal => bool) public authorizedPortals;\n\n    /// @notice Mapping of authorized lockboxes.\n    mapping(IETHLockbox => bool) public authorizedLockboxes;\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.2.0\n    function version() public view virtual returns (string memory) {\n        return \"1.2.0\";\n    }\n\n    /// @notice Constructs the ETHLockbox contract.\n    constructor() ReinitializableBase(1) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializer.\n    /// @param _systemConfig The address of the SystemConfig contract.\n    /// @param _portals The addresses of the portals to authorize.\n    /// @dev Note: Multiple chains can share an ETHLockbox contract. In this case, all SystemConfig\n    ///      contracts will point to the same pause identifier (the lockbox itself). Therefore, it\n    ///      doesn't matter which SystemConfig is used here as long as it belongs to one of the\n    ///      chains that share the lockbox.\n    function initialize(ISystemConfig _systemConfig, IOptimismPortal[] calldata _portals)\n        external\n        reinitializer(initVersion())\n    {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        systemConfig = _systemConfig;\n        for (uint256 i; i < _portals.length; i++) {\n            _authorizePortal(_portals[i]);\n        }\n    }\n\n    /// @notice Getter for the current paused status.\n    function paused() public view returns (bool) {\n        return systemConfig.paused();\n    }\n\n    /// @notice Returns the SuperchainConfig contract.\n    /// @return ISuperchainConfig The SuperchainConfig contract.\n    function superchainConfig() public view returns (ISuperchainConfig) {\n        return systemConfig.superchainConfig();\n    }\n\n    /// @notice Authorizes a portal to lock and unlock ETH.\n    /// @param _portal The address of the portal to authorize.\n    function authorizePortal(IOptimismPortal _portal) external {\n        // Check that this transaction is coming from the ProxyAdmin owner.\n        _assertOnlyProxyAdminOwner();\n\n        // Authorize the portal.\n        _authorizePortal(_portal);\n    }\n\n    /// @notice Receives the ETH liquidity migrated from an authorized lockbox.\n    function receiveLiquidity() external payable {\n        // Check that the sender is authorized to trigger this function.\n        IETHLockbox sender = IETHLockbox(payable(msg.sender));\n        if (!authorizedLockboxes[sender]) {\n            revert ETHLockbox_Unauthorized();\n        }\n\n        // Emit the event.\n        emit LiquidityReceived(sender, msg.value);\n    }\n\n    /// @notice Locks ETH in the lockbox.\n    ///         Called by an authorized portal on a deposit to lock the ETH value.\n    function lockETH() external payable {\n        // Check that the sender is authorized to trigger this function.\n        IOptimismPortal sender = IOptimismPortal(payable(msg.sender));\n        if (!authorizedPortals[sender]) {\n            revert ETHLockbox_Unauthorized();\n        }\n\n        // Emit the event.\n        emit ETHLocked(sender, msg.value);\n    }\n\n    /// @notice Unlocks ETH from the lockbox.\n    ///         Called by an authorized portal when finalizing a withdrawal that requires ETH.\n    ///         Cannot be called if the lockbox is paused.\n    /// @param _value The amount of ETH to unlock.\n    function unlockETH(uint256 _value) external {\n        // Unlocks are blocked when paused, locks are not.\n        if (paused()) {\n            revert ETHLockbox_Paused();\n        }\n\n        // Check that the sender is authorized to trigger this function.\n        IOptimismPortal sender = IOptimismPortal(payable(msg.sender));\n        if (!authorizedPortals[sender]) {\n            revert ETHLockbox_Unauthorized();\n        }\n\n        // Check that we have enough balance to process the unlock.\n        if (_value > address(this).balance) {\n            revert ETHLockbox_InsufficientBalance();\n        }\n\n        // Check that the sender is not executing a withdrawal transaction.\n        if (sender.l2Sender() != Constants.DEFAULT_L2_SENDER) {\n            revert ETHLockbox_NoWithdrawalTransactions();\n        }\n\n        // Using donateETH to avoid triggering a deposit.\n        sender.donateETH{value: _value}();\n\n        // Emit the event.\n        emit ETHUnlocked(sender, _value);\n    }\n\n    /// @notice Authorizes an ETH lockbox to migrate its liquidity to the current ETH lockbox. We\n    ///         allow this function to be called more than once for the same lockbox. A lockbox\n    ///         cannot be removed from the authorized list once added.\n    /// @param _lockbox The address of the ETH lockbox to authorize.\n    function authorizeLockbox(IETHLockbox _lockbox) external {\n        // Check that this transaction is coming from the ProxyAdmin owner.\n        _assertOnlyProxyAdminOwner();\n\n        // Check that the lockbox has the same proxy admin owner.\n        _assertSharedProxyAdminOwner(address(_lockbox));\n\n        // Authorize the lockbox.\n        authorizedLockboxes[_lockbox] = true;\n\n        // Emit the event.\n        emit LockboxAuthorized(_lockbox);\n    }\n\n    /// @notice Migrates liquidity from the current ETH lockbox to another.\n    /// @dev    Must be called atomically with `OptimismPortal.migrateToSuperRoots()` in the same\n    ///         transaction batch, or otherwise the OptimismPortal may not be able to unlock ETH\n    ///         from the ETHLockbox on finalized withdrawals.\n    /// @param _lockbox The address of the ETH lockbox to migrate liquidity to.\n    function migrateLiquidity(IETHLockbox _lockbox) external {\n        // Check that this transaction is coming from the ProxyAdmin owner.\n        _assertOnlyProxyAdminOwner();\n\n        // Check that the lockbox has the same proxy admin owner.\n        _assertSharedProxyAdminOwner(address(_lockbox));\n\n        // Receive the liquidity.\n        uint256 balance = address(this).balance;\n        IETHLockbox(_lockbox).receiveLiquidity{value: balance}();\n\n        // Emit the event.\n        emit LiquidityMigrated(_lockbox, balance);\n    }\n\n    /// @notice Authorizes a portal to lock and unlock ETH.\n    /// @param _portal The address of the portal to authorize.\n    function _authorizePortal(IOptimismPortal _portal) internal {\n        // Check that the portal has the same proxy admin owner.\n        _assertSharedProxyAdminOwner(address(_portal));\n\n        // Check that the portal has the same superchain config.\n        if (_portal.superchainConfig() != superchainConfig()) {\n            revert ETHLockbox_DifferentSuperchainConfig();\n        }\n\n        // Authorize the portal.\n        authorizedPortals[_portal] = true;\n\n        // Emit the event.\n        emit PortalAuthorized(_portal);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 219,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ETHLockbox",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ETHLockbox.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/L1/ETHLockbox.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 219,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ETHLockbox",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ETHLockbox.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/L1/ETHLockbox.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ecefea051ae3423957ce1bd74a59aecb5a21e6837cc233d53bd648d1c8748de0",
+  "name": "WithdrawTrieVerifier",
+  "kind": "library",
+  "lines": 47,
+  "source": "library WithdrawTrieVerifier {\n    /// @dev Verify the merkle proof given root, leaf node and proof.\n    ///\n    /// Vulnerability:\n    ///   The initially provided message hash can be hashed with the first hash of the proof,\n    ///   thereby giving an intermediate node of the trie. This can then be used with a shortened\n    ///   proof to pass the verification, which may lead to replayability.\n    ///\n    ///   However, it is designed to verify the withdraw trie in `L2MessageQueue`. The `_hash` given\n    ///   in the parameter is always a leaf node. So we assume the length of proof is correct and\n    ///   cannot be shortened.\n    /// @param _root The expected root node hash of the withdraw trie.\n    /// @param _hash The leaf node hash of the withdraw trie.\n    /// @param _nonce The index of the leaf node from left to right, starting from 0.\n    /// @param _proof The concatenated merkle proof verified the leaf node.\n    function verifyMerkleProof(bytes32 _root, bytes32 _hash, uint256 _nonce, bytes memory _proof)\n        internal\n        pure\n        returns (bool)\n    {\n        require(_proof.length % 32 == 0, \"Invalid proof\");\n        uint256 _length = _proof.length / 32;\n\n        for (uint256 i = 0; i < _length; i++) {\n            bytes32 item;\n            assembly {\n                item := mload(add(add(_proof, 0x20), mul(i, 0x20)))\n            }\n            if (_nonce % 2 == 0) {\n                _hash = _efficientHash(_hash, item);\n            } else {\n                _hash = _efficientHash(item, _hash);\n            }\n            _nonce /= 2;\n        }\n        return _hash == _root;\n    }\n\n    function _efficientHash(bytes32 a, bytes32 b) private pure returns (bytes32 value) {\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            mstore(0x00, a)\n            mstore(0x20, b)\n            value := keccak256(0x00, 0x40)\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 47,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "WithdrawTrieVerifier",
+        "similarity": 1,
+        "reportId": "scroll/zellic-scroll-bridge-rollup-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/verifier/WithdrawTrieVerifier.sol",
+        "commit": "2323dd0daa117bc9ce1f0e4a1c1c3bba4d661947",
+        "commitTimestamp": "2023-07-10T17:02:58Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2323dd0daa117bc9ce1f0e4a1c1c3bba4d661947/contracts/src/libraries/verifier/WithdrawTrieVerifier.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "re-audit (diff review)",
+        "coverage": "Review focused on changes since the May 2023 assessment commit cb6a609366e5f6b808dfd9bba01a1c7c6e07f6fa; threat model for unchanged parts is in the previous report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 0,
+        "unchanged": 47,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library WithdrawTrieVerifier {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @dev Verify the merkle proof given root, leaf node and proof.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 3, "text": "    ///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// Vulnerability:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    ///   The initially provided message hash can be hashed with the first hash of the proof,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    ///   thereby giving an intermediate node of the trie. This can then be used with a shortened",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    ///   proof to pass the verification, which may lead to replayability.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "    ///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    ///   However, it is designed to verify the withdraw trie in `L2MessageQueue`. The `_hash` given",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    ///   in the parameter is always a leaf node. So we assume the length of proof is correct and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    ///   cannot be shortened.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param _root The expected root node hash of the withdraw trie.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @param _hash The leaf node hash of the withdraw trie.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @param _nonce The index of the leaf node from left to right, starting from 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @param _proof The concatenated merkle proof verified the leaf node.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 16,
+                "text": "    function verifyMerkleProof(bytes32 _root, bytes32 _hash, uint256 _nonce, bytes memory _proof)"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 17,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 18,
+                "text": "        pure"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

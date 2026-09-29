@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ce010e1462abd797cb131beca3bbb4e94b2d8aba667630f056e1002648d20772",
+  "name": "L2GovToken",
+  "kind": "contract",
+  "lines": 47,
+  "source": "contract L2GovToken is AccessControlUpgradeable, ERC20VotesPartialDelegationUpgradeable {\n    bytes32 public constant MINTER_ROLE = keccak256(\"MINTER_ROLE\");\n    bytes32 public constant BURNER_ROLE = keccak256(\"BURNER_ROLE\");\n\n    /// @custom:oz-upgrades-unsafe-allow constructor\n    constructor() {\n        _disableInitializers();\n    }\n\n    /**\n     * @notice Initializes the contract with the provided admin and token name/symbol. Should be called during deployment.\n     * @param _admin The admin address.\n     * @param _name The name of the token.\n     * @param _symbol The symbol of the token.\n     * @dev Reverts if the provided admin address is zero.\n     */\n    function initialize(address _admin, string calldata _name, string calldata _symbol) public initializer {\n        __ERC20_init(_name, _symbol);\n        __EIP712_init(_name, \"1\");\n        __ERC20Permit_init(_name);\n        __AccessControl_init();\n        if (_admin == address(0)) {\n            revert InvalidAddressZero();\n        }\n        _grantRole(DEFAULT_ADMIN_ROLE, _admin);\n    }\n\n    /**\n     * @notice Mints `_amount` of tokens to `_account`.\n     * @param _account The account to mint tokens to.\n     * @param _amount The amount of tokens to mint.\n     * @dev Reverts if the caller does not have the MINTER_ROLE.\n     */\n    function mint(address _account, uint256 _amount) public onlyRole(MINTER_ROLE) {\n        _mint(_account, _amount);\n    }\n\n    /**\n     * @notice Burns `_value` of tokens from `_account`.\n     * @param _account The account to burn tokens from.\n     * @param _value The amount of tokens to burn.\n     * @dev Reverts if the caller does not have the BURNER_ROLE.\n     */\n    function burn(address _account, uint256 _value) public onlyRole(BURNER_ROLE) {\n        _burn(_account, _value);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

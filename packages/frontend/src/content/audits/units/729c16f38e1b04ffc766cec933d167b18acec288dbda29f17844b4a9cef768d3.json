@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "729c16f38e1b04ffc766cec933d167b18acec288dbda29f17844b4a9cef768d3",
+  "name": "PrivacyPoolSimple",
+  "kind": "contract",
+  "lines": 32,
+  "source": "contract PrivacyPoolSimple is PrivacyPool, IPrivacyPoolSimple {\n    // @notice Initializes the state addresses\n    constructor(address _entrypoint, address _withdrawalVerifier, address _ragequitVerifier)\n        PrivacyPool(_entrypoint, _withdrawalVerifier, _ragequitVerifier, Constants.NATIVE_ASSET)\n    {}\n\n    /**\n     * @notice Handle receiving native asset asset\n     * @param _amount The amount of asset receiving\n     * @inheritdoc PrivacyPool\n     */\n    function _pull(address, uint256 _amount) internal override(PrivacyPool) {\n        // Check the amount matches the value sent\n        if (msg.value != _amount) {\n            revert InsufficientValue();\n        }\n    }\n\n    /**\n     * @notice Handle sending native asset\n     * @param _recipient The address of the user receiving the asset\n     * @param _amount The amount of native asset being sent\n     * @inheritdoc PrivacyPool\n     */\n    function _push(address _recipient, uint256 _amount) internal override(PrivacyPool) {\n        /// Try to send native asset to recipient\n        (bool _success,) = _recipient.call{value: _amount}(\"\");\n        if (!_success) {\n            revert FailedToSendNativeAsset();\n        }\n    }\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "identical",
+      "coveredLines": 32,
+      "match": {
+        "origin": "own",
+        "collection": "privacy-pools",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "PrivacyPoolSimple",
+        "similarity": 1,
+        "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/contracts/implementations/PrivacyPoolSimple.sol",
+        "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+        "commitTimestamp": "2025-03-14T12:57:01Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/implementations/PrivacyPoolSimple.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final commit",
+        "coverage": "Final audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

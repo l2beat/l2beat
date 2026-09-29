@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e2cc9d431bfa4c945cefa6830c229fc1cf0229e819763e81f4d8863cc1d1c6a6",
+  "name": "IUniswapV3FlashCallback",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IUniswapV3FlashCallback {\n    /// @notice Called to `msg.sender` after transferring to the recipient from IUniswapV3Pool#flash.\n    /// @dev In the implementation you must repay the pool the tokens sent by flash plus the computed fee amounts.\n    /// The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.\n    /// @param fee0 The fee amount in token0 due to the pool by the end of the flash\n    /// @param fee1 The fee amount in token1 due to the pool by the end of the flash\n    /// @param data Any data passed through by the caller via the IUniswapV3PoolActions#flash call\n    function uniswapV3FlashCallback(uint256 fee0, uint256 fee1, bytes calldata data) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 9,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3FlashCallback",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/callback/IUniswapV3FlashCallback.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/interfaces/callback/IUniswapV3FlashCallback.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

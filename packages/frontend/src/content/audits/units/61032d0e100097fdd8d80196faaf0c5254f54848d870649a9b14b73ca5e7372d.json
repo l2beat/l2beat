@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "61032d0e100097fdd8d80196faaf0c5254f54848d870649a9b14b73ca5e7372d",
+  "name": "BallotLib",
+  "kind": "library",
+  "lines": 47,
+  "source": "library BallotLib {\n    using SafeCast for uint256;\n\n    uint256 internal constant YEA_MASK = 0xffffffffffffffffffffffffffffffff00000000000000000000000000000000;\n    uint256 internal constant NAY_MASK = 0xffffffffffffffffffffffffffffffff;\n\n    function getYea(CompressedBallot _compressedBallot) internal pure returns (uint256) {\n        return CompressedBallot.unwrap(_compressedBallot) >> 128;\n    }\n\n    function getNay(CompressedBallot _compressedBallot) internal pure returns (uint256) {\n        return CompressedBallot.unwrap(_compressedBallot) & NAY_MASK;\n    }\n\n    function updateYea(CompressedBallot _compressedBallot, uint256 _yea) internal pure returns (CompressedBallot) {\n        uint256 value = CompressedBallot.unwrap(_compressedBallot) & ~YEA_MASK;\n        return CompressedBallot.wrap(value | (_yea << 128));\n    }\n\n    function updateNay(CompressedBallot _compressedBallot, uint256 _nay) internal pure returns (CompressedBallot) {\n        uint256 value = CompressedBallot.unwrap(_compressedBallot) & ~NAY_MASK;\n        return CompressedBallot.wrap(value | _nay);\n    }\n\n    function addYea(CompressedBallot _compressedBallot, uint256 _amount) internal pure returns (CompressedBallot) {\n        uint256 currentYea = getYea(_compressedBallot);\n        uint256 newYea = currentYea + _amount;\n        return updateYea(_compressedBallot, newYea.toUint128());\n    }\n\n    function addNay(CompressedBallot _compressedBallot, uint256 _amount) internal pure returns (CompressedBallot) {\n        uint256 currentNay = getNay(_compressedBallot);\n        uint256 newNay = currentNay + _amount;\n        return updateNay(_compressedBallot, newNay.toUint128());\n    }\n\n    function compress(Ballot memory _ballot) internal pure returns (CompressedBallot) {\n        // We are doing cast to uint128 but inside a uint256 to not wreck the shifting.\n        uint256 yea = _ballot.yea.toUint128();\n        uint256 nay = _ballot.nay.toUint128();\n        return CompressedBallot.wrap((yea << 128) | nay);\n    }\n\n    function decompress(CompressedBallot _compressedBallot) internal pure returns (Ballot memory) {\n        return Ballot({yea: getYea(_compressedBallot), nay: getNay(_compressedBallot)});\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

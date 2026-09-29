@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6c20065868b5b39ce7acc0bce7cc0b90c8fe47eaa56f28407a05452879b98e81",
+  "name": "FixedPoint96",
+  "kind": "library",
+  "lines": 4,
+  "source": "library FixedPoint96 {\n    uint8 internal constant RESOLUTION = 96;\n    uint256 internal constant Q96 = 0x1000000000000000000000000;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 4,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "FixedPoint96",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/FixedPoint96.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/libraries/FixedPoint96.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

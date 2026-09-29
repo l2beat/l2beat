@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "09380d40e6cd99eef05d9bec5549ae00f6c1c008c8260791ca4dd4a2680df03d",
+  "name": "IScrollMessenger",
+  "kind": "interface",
+  "lines": 72,
+  "source": "interface IScrollMessenger {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a cross domain message is sent.\n    /// @param sender The address of the sender who initiates the message.\n    /// @param target The address of target contract to call.\n    /// @param value The amount of value passed to the target contract.\n    /// @param messageNonce The nonce of the message.\n    /// @param gasLimit The optional gas limit passed to L1 or L2.\n    /// @param message The calldata passed to the target contract.\n    event SentMessage(\n        address indexed sender,\n        address indexed target,\n        uint256 value,\n        uint256 messageNonce,\n        uint256 gasLimit,\n        bytes message\n    );\n\n    /// @notice Emitted when a cross domain message is relayed successfully.\n    /// @param messageHash The hash of the message.\n    event RelayedMessage(bytes32 indexed messageHash);\n\n    /// @notice Emitted when a cross domain message is failed to relay.\n    /// @param messageHash The hash of the message.\n    event FailedRelayedMessage(bytes32 indexed messageHash);\n\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when the given address is `address(0)`.\n    error ErrorZeroAddress();\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the sender of a cross domain message.\n    function xDomainMessageSender() external view returns (address);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Send cross chain message from L1 to L2 or L2 to L1.\n    /// @param target The address of account who receive the message.\n    /// @param value The amount of ether passed when call target contract.\n    /// @param message The content of the message.\n    /// @param gasLimit Gas limit required to complete the message relay on corresponding chain.\n    function sendMessage(address target, uint256 value, bytes calldata message, uint256 gasLimit) external payable;\n\n    /// @notice Send cross chain message from L1 to L2 or L2 to L1.\n    /// @param target The address of account who receive the message.\n    /// @param value The amount of ether passed when call target contract.\n    /// @param message The content of the message.\n    /// @param gasLimit Gas limit required to complete the message relay on corresponding chain.\n    /// @param refundAddress The address of account who will receive the refunded fee.\n    function sendMessage(address target, uint256 value, bytes calldata message, uint256 gasLimit, address refundAddress)\n        external\n        payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 72,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollMessenger",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/IScrollMessenger.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/libraries/IScrollMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

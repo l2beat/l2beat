@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "da93f6fea4c3e765ada6c7103fff18a093288a2110f30e695995c27aa071c890",
+  "name": "FieldLib",
+  "kind": "library",
+  "lines": 6,
+  "source": "library FieldLib {\n    /// @notice Reverts with `Rollup__FieldElementOutOfRange` unless `_value` is a valid field element (`< Constants.P`).\n    function requireValidFieldElement(bytes32 _value) internal pure {\n        require(uint256(_value) < Constants.P, Errors.Rollup__FieldElementOutOfRange(_value));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

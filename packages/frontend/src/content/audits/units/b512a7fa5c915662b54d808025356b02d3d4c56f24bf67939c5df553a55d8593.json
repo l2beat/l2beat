@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b512a7fa5c915662b54d808025356b02d3d4c56f24bf67939c5df553a55d8593",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 70,
+  "source": "function addTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {\n    return Timestamp.wrap(Timestamp.unwrap(_a) + Timestamp.unwrap(_b));\n}\nfunction subTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {\n    return Timestamp.wrap(Timestamp.unwrap(_a) - Timestamp.unwrap(_b));\n}\nfunction ltTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) < Timestamp.unwrap(_b);\n}\nfunction gtTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) > Timestamp.unwrap(_b);\n}\nfunction lteTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) <= Timestamp.unwrap(_b);\n}\nfunction gteTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) >= Timestamp.unwrap(_b);\n}\nfunction neqTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) != Timestamp.unwrap(_b);\n}\nfunction eqTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) == Timestamp.unwrap(_b);\n}\nusing {\n    addTimestamp as +,\n    subTimestamp as -,\n    ltTimestamp as <,\n    gtTimestamp as >,\n    lteTimestamp as <=,\n    gteTimestamp as >=,\n    neqTimestamp as !=,\n    eqTimestamp as ==\n} for Timestamp global;\ntype Timestamp is uint256;\nfunction eqSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) == Slot.unwrap(_b);\n}\nfunction neqSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) != Slot.unwrap(_b);\n}\nfunction gteSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) >= Slot.unwrap(_b);\n}\nfunction gtSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) > Slot.unwrap(_b);\n}\nfunction lteSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) <= Slot.unwrap(_b);\n}\nfunction ltSlot(Slot _a, Slot _b) pure returns (bool) {\n    return Slot.unwrap(_a) < Slot.unwrap(_b);\n}\nfunction addSlot(Slot _a, Slot _b) pure returns (Slot) {\n    return Slot.wrap(Slot.unwrap(_a) + Slot.unwrap(_b));\n}\nfunction subSlot(Slot _a, Slot _b) pure returns (Slot) {\n    return Slot.wrap(Slot.unwrap(_a) - Slot.unwrap(_b));\n}\nusing {\n    eqSlot as ==,\n    neqSlot as !=,\n    gteSlot as >=,\n    gtSlot as >,\n    lteSlot as <=,\n    ltSlot as <,\n    addSlot as +,\n    subSlot as -\n} for Slot global;\ntype Slot is uint256;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

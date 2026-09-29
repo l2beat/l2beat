@@ -1,0 +1,739 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "641b2503cc7c0806abce0a6ecaef14a754d7e489eccdbe4998accdc54678d836",
+  "name": "IScrollChain",
+  "kind": "interface",
+  "lines": 125,
+  "source": "interface IScrollChain {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a new batch is committed.\n    /// @param batchIndex The index of the batch.\n    /// @param batchHash The hash of the batch.\n    event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash);\n\n    /// @notice revert a pending batch.\n    /// @param batchIndex The index of the batch.\n    /// @param batchHash The hash of the batch\n    event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash);\n\n    /// @notice revert a range of batches.\n    /// @param startBatchIndex The start batch index of the range (inclusive).\n    /// @param finishBatchIndex The finish batch index of the range (inclusive).\n    event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex);\n\n    /// @notice Emitted when a batch is finalized.\n    /// @param batchIndex The index of the batch.\n    /// @param batchHash The hash of the batch\n    /// @param stateRoot The state root on layer 2 after this batch.\n    /// @param withdrawRoot The merkle root on layer2 after this batch.\n    event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot);\n\n    /// @notice Emitted when owner updates the status of sequencer.\n    /// @param account The address of account updated.\n    /// @param status The status of the account updated.\n    event UpdateSequencer(address indexed account, bool status);\n\n    /// @notice Emitted when owner updates the status of prover.\n    /// @param account The address of account updated.\n    /// @param status The status of the account updated.\n    event UpdateProver(address indexed account, bool status);\n\n    /// @notice Emitted when we enter or exit enforced batch mode.\n    /// @param enabled True if we are entering enforced batch mode, false otherwise.\n    /// @param lastCommittedBatchIndex The index of the last committed batch.\n    event UpdateEnforcedBatchMode(bool enabled, uint256 lastCommittedBatchIndex);\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @return The latest finalized batch index.\n    function lastFinalizedBatchIndex() external view returns (uint256);\n\n    /// @param batchIndex The index of the batch.\n    /// @return The batch hash of a committed batch.\n    function committedBatches(uint256 batchIndex) external view returns (bytes32);\n\n    /// @param batchIndex The index of the batch.\n    /// @return The state root of a committed batch.\n    function finalizedStateRoots(uint256 batchIndex) external view returns (bytes32);\n\n    /// @param batchIndex The index of the batch.\n    /// @return The message root of a committed batch.\n    function withdrawRoots(uint256 batchIndex) external view returns (bytes32);\n\n    /// @param batchIndex The index of the batch.\n    /// @return Whether the batch is finalized by batch index.\n    function isBatchFinalized(uint256 batchIndex) external view returns (bool);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Commit one or more batches after the EuclidV2 upgrade.\n    /// @param version The version of the committed batches.\n    /// @param parentBatchHash The hash of parent batch.\n    /// @param lastBatchHash The hash of the last committed batch after this call.\n    /// @dev The batch payload is stored in the blobs.\n    function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash) external;\n\n    /// @notice Revert pending batches.\n    /// @dev one can only revert unfinalized batches.\n    /// @param batchHeader The header of the last batch we want to keep.\n    function revertBatch(bytes calldata batchHeader) external;\n\n    /// @notice Finalize a list of committed batches (i.e. bundle) on layer 1 after the EuclidV2 upgrade.\n    /// @param batchHeader The header of the last batch in this bundle.\n    /// @param totalL1MessagesPoppedOverall The number of messages processed after this bundle.\n    /// @param postStateRoot The state root after this bundle.\n    /// @param withdrawRoot The withdraw trie root after this bundle.\n    /// @param aggrProof The bundle proof for this bundle.\n    /// @dev See `BatchHeaderV7Codec` for the batch header encoding.\n    function finalizeBundlePostEuclidV2(\n        bytes calldata batchHeader,\n        uint256 totalL1MessagesPoppedOverall,\n        bytes32 postStateRoot,\n        bytes32 withdrawRoot,\n        bytes calldata aggrProof\n    ) external;\n\n    /// @notice The struct for permissionless batch finalization.\n    /// @param batchHeader The header of this batch.\n    /// @param totalL1MessagesPoppedOverall The number of messages processed after this bundle.\n    /// @param postStateRoot The state root after this batch.\n    /// @param withdrawRoot The withdraw trie root after this batch.\n    /// @param zkProof The bundle proof for this batch (single-batch bundle).\n    /// @dev See `BatchHeaderV7Codec` for the batch header encoding.\n    struct FinalizeStruct {\n        bytes batchHeader;\n        uint256 totalL1MessagesPoppedOverall;\n        bytes32 postStateRoot;\n        bytes32 withdrawRoot;\n        bytes zkProof;\n    }\n\n    /// @notice Commit and finalize a batch in permissionless mode.\n    /// @param version The version of current batch.\n    /// @param parentBatchHash The hash of parent batch.\n    /// @param finalizeStruct The data needed to finalize this batch.\n    /// @dev The batch payload is stored in the blob.\n    function commitAndFinalizeBatch(uint8 version, bytes32 parentBatchHash, FinalizeStruct calldata finalizeStruct)\n        external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 110,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IScrollChain",
+        "similarity": 0.593,
+        "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/rollup/IScrollChain.sol",
+        "commit": "5425ce725cc60d154e112610ee380d05e23689e5",
+        "commitTimestamp": "2024-04-10T03:56:26Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/5425ce725cc60d154e112610ee380d05e23689e5/contracts/src/L1/rollup/IScrollChain.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-02, L-03, N-02 and N-06 (docstrings, visibility, comments) in pull request #1256 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 15,
+        "removed": 18,
+        "ignoredAdded": 34,
+        "ignoredRemoved": 31,
+        "unchanged": 110,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 6,
+            "newStart": 15,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    /// @param batchHash The hash of the batch"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash);"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @notice revert a range of batches.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param startBatchIndex The start batch index of the range (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param finishBatchIndex The finish batch index of the range (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 22, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 23,
+                "text": "    /// @notice Emitted when a batch is finalized."
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 24,
+                "text": "    /// @param batchIndex The index of the batch."
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 25,
+                "text": "    /// @param batchHash The hash of the batch"
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 10,
+            "newStart": 37,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 37,
+                "text": "    /// @param status The status of the account updated."
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 38,
+                "text": "    event UpdateProver(address indexed account, bool status);"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @notice Emitted when the value of `maxNumTxInChunk` is updated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @param oldMaxNumTxInChunk The old value of `maxNumTxInChunk`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @param newMaxNumTxInChunk The new value of `maxNumTxInChunk`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    event UpdateMaxNumTxInChunk(uint256 oldMaxNumTxInChunk, uint256 newMaxNumTxInChunk);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @notice Emitted when we enter or exit enforced batch mode.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @param enabled True if we are entering enforced batch mode, false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @param lastCommittedBatchIndex The index of the last committed batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    event UpdateEnforcedBatchMode(bool enabled, uint256 lastCommittedBatchIndex);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 39, "newLine": 44, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 45, "text": "    /**" },
+              { "type": " ", "oldLine": 41, "newLine": 46, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 58,
+            "newStart": 73,
+            "newLines": 53,
+            "lines": [
+              { "type": " ", "oldLine": 68, "newLine": 73, "text": "     *" },
+              { "type": " ", "oldLine": 69, "newLine": 74, "text": "     */" },
+              { "type": " ", "oldLine": 70, "newLine": 75, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /// @notice Commit a batch of transactions on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /// @param version The version of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @param parentBatchHeader The header of parent batch, see the comments of `BatchHeaderV0Codec`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// @param chunks The list of encoded chunks, see the comments of `ChunkCodec`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    /// @param skippedL1MessageBitmap The bitmap indicates whether each L1 message is skipped or not.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    function commitBatch(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        uint8 version,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        bytes calldata parentBatchHeader,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        bytes[] memory chunks,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        bytes calldata skippedL1MessageBitmap",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    ) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    /// @notice Commit one or more batches after the EuclidV2 upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "    /// @param version The version of the committed batches.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /// @param parentBatchHash The hash of parent batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /// @param lastBatchHash The hash of the last committed batch after this call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    /// @dev The batch payload is stored in the blobs.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 83, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// @notice Revert a pending batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Revert pending batches.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 84,
+                "text": "    /// @dev one can only revert unfinalized batches."
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// @param count The number of subsequent batches to revert, including current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    function revertBatch(bytes calldata batchHeader, uint256 count) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// @param batchHeader The header of the last batch we want to keep.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    function revertBatch(bytes calldata batchHeader) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 89, "newLine": 87, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /// @notice Finalize a committed batch on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// @param prevStateRoot The state root of parent batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /// @param postStateRoot The state root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @param withdrawRoot The withdraw trie root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @param aggrProof The aggregation proof for current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    function finalizeBatchWithProof(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /// @notice Finalize a list of committed batches (i.e. bundle) on layer 1 after the EuclidV2 upgrade.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @param batchHeader The header of the last batch in this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param totalL1MessagesPoppedOverall The number of messages processed after this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param postStateRoot The state root after this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @param withdrawRoot The withdraw trie root after this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    /// @param aggrProof The bundle proof for this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    /// @dev See `BatchHeaderV7Codec` for the batch header encoding.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    function finalizeBundlePostEuclidV2(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 96,
+                "text": "        bytes calldata batchHeader,"
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        bytes32 prevStateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        uint256 totalL1MessagesPoppedOverall,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 98,
+                "text": "        bytes32 postStateRoot,"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 99,
+                "text": "        bytes32 withdrawRoot,"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 100,
+                "text": "        bytes calldata aggrProof"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 101,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 103, "newLine": 102, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "    /// @notice Finalize a committed batch (with blob) on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /// @dev Memory layout of `blobDataProof`:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "    /// |    z    |    y    | kzg_commitment | kzg_proof |",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /// |---------|---------|----------------|-----------|",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    /// | bytes32 | bytes32 |    bytes48     |  bytes48  |",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @param batchHeader The header of current batch, see the encoding in comments of `commitBatch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /// @param prevStateRoot The state root of parent batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    /// @param postStateRoot The state root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    /// @param withdrawRoot The withdraw trie root of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    /// @param blobDataProof The proof for blob data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    /// @param aggrProof The aggregation proof for current batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    function finalizeBatchWithProof4844(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        bytes calldata batchHeader,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        bytes32 prevStateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        bytes32 postStateRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "        bytes32 withdrawRoot,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        bytes calldata blobDataProof,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        bytes calldata aggrProof",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    ) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    /// @notice The struct for permissionless batch finalization.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// @param batchHeader The header of this batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @param totalL1MessagesPoppedOverall The number of messages processed after this bundle.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /// @param postStateRoot The state root after this batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @param withdrawRoot The withdraw trie root after this batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param zkProof The bundle proof for this batch (single-batch bundle).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @dev See `BatchHeaderV7Codec` for the batch header encoding.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    struct FinalizeStruct {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "        bytes batchHeader;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        uint256 totalL1MessagesPoppedOverall;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        bytes32 postStateRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        bytes32 withdrawRoot;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        bytes zkProof;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 117, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    /// @notice Commit and finalize a batch in permissionless mode.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    /// @param version The version of current batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    /// @param parentBatchHash The hash of parent batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    /// @param finalizeStruct The data needed to finalize this batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    /// @dev The batch payload is stored in the blob.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    function commitAndFinalizeBatch(uint8 version, bytes32 parentBatchHash, FinalizeStruct calldata finalizeStruct)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 125, "newLine": 125, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

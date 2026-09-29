@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "21471f96a7f5f2565b84b89cb6c5f16831b74668aacca00c574c19181e534c93",
+  "name": "IUmbraHookReceiver",
+  "kind": "interface",
+  "lines": 21,
+  "source": "interface IUmbraHookReceiver {\n    /**\n     * @notice Method called after a user completes an Umbra token withdrawal\n     * @param _amount The amount of the token withdrawn _after_ subtracting the sponsor fee\n     * @param _stealthAddr The stealth address whose token balance was withdrawn\n     * @param _acceptor Address where withdrawn funds were sent; can be this contract\n     * @param _tokenAddr Address of the ERC20 token that was withdrawn\n     * @param _sponsor Address which was compensated for submitting the withdrawal tx\n     * @param _sponsorFee Amount of the token that was paid to the sponsor\n     * @param _data Arbitrary data passed to this hook by the withdrawer\n     */\n    function tokensWithdrawn(\n        uint256 _amount,\n        address _stealthAddr,\n        address _acceptor,\n        address _tokenAddr,\n        address _sponsor,\n        uint256 _sponsorFee,\n        bytes memory _data\n    ) external;\n}",
+  "resolutions": {
+    "43889a0aeb1d556f": {
+      "status": "identical",
+      "coveredLines": 21,
+      "match": {
+        "origin": "own",
+        "collection": "umbra",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUmbraHookReceiver",
+        "similarity": 1,
+        "reportId": "umbra/consensys-diligence-umbra-smart-contracts-2021-03",
+        "repository": "ScopeLift/umbra-protocol",
+        "path": "contracts/contracts/IUmbraHookReceiver.sol",
+        "commit": "fa2e17367d66a85f20c77299ded5942d9ab64fe0",
+        "commitTimestamp": "2021-03-19T22:37:10Z",
+        "url": "https://github.com/ScopeLift/umbra-protocol/blob/fa2e17367d66a85f20c77299ded5942d9ab64fe0/contracts/contracts/IUmbraHookReceiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "smart contract review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f76b8aaafe827e981c63407d8bb798e500d9c42e7abc1926498934b4c8d01093",
+  "name": "IInstance",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface IInstance is IStaking, IValidatorSelection, IRollup {}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

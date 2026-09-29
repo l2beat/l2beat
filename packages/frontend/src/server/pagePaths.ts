@@ -6,6 +6,7 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
+import { auditCoverageSource } from '~/server/features/audits/AuditCoverageSource'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
@@ -47,6 +48,7 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
+  '/audits/summary',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -77,6 +79,9 @@ export async function getPages(): Promise<Page[]> {
   }
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
+  }
+  for (const project of auditCoverageSource.listProjects()) {
+    paths.push(`/audits/projects/${project.slug}`)
   }
   return [...paths.map((path) => ({ path })), ...(await getDynamicPages())]
 }

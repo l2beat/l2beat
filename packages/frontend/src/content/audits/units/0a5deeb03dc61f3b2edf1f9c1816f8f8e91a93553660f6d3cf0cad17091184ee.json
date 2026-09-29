@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0a5deeb03dc61f3b2edf1f9c1816f8f8e91a93553660f6d3cf0cad17091184ee",
+  "name": "IScrollGatewayCallback",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IScrollGatewayCallback {\n    function onScrollGatewayCallback(bytes memory data) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 3,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollGatewayCallback",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/callbacks/IScrollGatewayCallback.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/callbacks/IScrollGatewayCallback.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

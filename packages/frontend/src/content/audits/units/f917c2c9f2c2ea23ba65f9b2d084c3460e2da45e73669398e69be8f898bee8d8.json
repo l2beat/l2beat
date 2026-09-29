@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f917c2c9f2c2ea23ba65f9b2d084c3460e2da45e73669398e69be8f898bee8d8",
+  "name": "L1USDCGateway",
+  "kind": "contract",
+  "lines": 174,
+  "source": "contract L1USDCGateway is L1ERC20Gateway, IUSDCBurnableSourceBridge {\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of L1 USDC address.\n    // solhint-disable-next-line var-name-mixedcase\n    address public immutable l1USDC;\n\n    /// @notice The address of L2 USDC address.\n    address public immutable l2USDC;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice The address of caller from Circle.\n    address public circleCaller;\n\n    /// @notice The flag indicates whether USDC deposit is paused.\n    bool public depositPaused;\n\n    /// @notice The flag indicates whether USDC withdrawal is paused.\n    /// @dev This is not necessary to be set `true` since we will set `L2USDCGateway.withdrawPaused` first.\n    ///      This is kept just in case and will be set after all pending messages are relayed.\n    bool public withdrawPaused;\n\n    /// @notice The total amount of bridged USDC in this contract.\n    /// @dev Only deposited USDC will count. Accidentally transferred USDC will be ignored.\n    uint256 public totalBridgedUSDC;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1USDCGateway` implementation contract.\n    ///\n    /// @param _l1USDC The address of USDC in L1.\n    /// @param _l2USDC The address of USDC in L2.\n    /// @param _counterpart The address of `L2USDCGateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract in L1.\n    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.\n    constructor(address _l1USDC, address _l2USDC, address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_l1USDC == address(0) || _l2USDC == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        l1USDC = _l1USDC;\n        l2USDC = _l2USDC;\n    }\n\n    /// @notice Initialize the storage of L1USDCGateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of L2USDCGateway in L2.\n    /// @param _router The address of L1GatewayRouter in L1.\n    /// @param _messenger The address of L1ScrollMessenger in L1.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC20Gateway\n    function getL2ERC20Address(address) public view override returns (address) {\n        return l2USDC;\n    }\n\n    /**\n     *\n     * Public Restricted Functions *\n     *\n     */\n\n    /// @inheritdoc IUSDCBurnableSourceBridge\n    function burnAllLockedUSDC() external override {\n        require(_msgSender() == circleCaller, \"only circle caller\");\n\n        // @note Only bridged USDC will be burned. We may refund the rest if possible.\n        uint256 _balance = totalBridgedUSDC;\n        totalBridgedUSDC = 0;\n\n        IFiatToken(l1USDC).burn(_balance);\n    }\n\n    /// @notice Update the Circle EOA address.\n    /// @param _caller The address to update.\n    function updateCircleCaller(address _caller) external onlyOwner {\n        circleCaller = _caller;\n    }\n\n    /// @notice Change the deposit pause status of this contract.\n    /// @param _paused The new status, `true` means paused and `false` means not paused.\n    function pauseDeposit(bool _paused) external onlyOwner {\n        depositPaused = _paused;\n    }\n\n    /// @notice Change the withdraw pause status of this contract.\n    /// @param _paused The new status, `true` means paused and `false` means not paused.\n    function pauseWithdraw(bool _paused) external onlyOwner {\n        withdrawPaused = _paused;\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeFinalizeWithdrawERC20(\n        address _l1Token,\n        address _l2Token,\n        address,\n        address,\n        uint256 _amount,\n        bytes calldata\n    ) internal virtual override {\n        require(msg.value == 0, \"nonzero msg.value\");\n        require(_l1Token == l1USDC, \"l1 token not USDC\");\n        require(_l2Token == l2USDC, \"l2 token not USDC\");\n        require(!withdrawPaused, \"withdraw paused\");\n\n        totalBridgedUSDC -= _amount;\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeDropMessage(address, address, uint256 _amount) internal virtual override {\n        require(msg.value == 0, \"nonzero msg.value\");\n        totalBridgedUSDC -= _amount;\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _deposit(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        require(_amount > 0, \"deposit zero amount\");\n        require(_token == l1USDC, \"only USDC is allowed\");\n        require(!depositPaused, \"deposit paused\");\n\n        // 1. Transfer token into this contract.\n        address _from;\n        (_from, _amount, _data) = _transferERC20In(_token, _amount, _data);\n        require(_data.length == 0, \"call is not allowed\");\n        totalBridgedUSDC += _amount;\n\n        // 2. Generate message passed to L2USDCGateway.\n        bytes memory _message =\n            abi.encodeCall(IL2ERC20Gateway.finalizeDepositERC20, (_token, l2USDC, _from, _to, _amount, _data));\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit, _from);\n\n        emit DepositERC20(_token, l2USDC, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 174,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L1USDCGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/usdc/L1USDCGateway.sol",
+        "commit": "a8addd896717b663bc8053744f794f721ed87cdd",
+        "commitTimestamp": "2024-02-01T06:39:19Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/a8addd896717b663bc8053744f794f721ed87cdd/contracts/src/L1/gateways/usdc/L1USDCGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of N-07 (documentation consistency) in pull request #1098 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

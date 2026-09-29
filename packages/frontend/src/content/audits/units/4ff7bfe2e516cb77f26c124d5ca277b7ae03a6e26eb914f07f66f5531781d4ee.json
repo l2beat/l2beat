@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4ff7bfe2e516cb77f26c124d5ca277b7ae03a6e26eb914f07f66f5531781d4ee",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 18,
+  "source": "type StakerVersion is uint256;\ntype MilestoneId is uint96;\nenum MilestoneStatus {\n    Pending,\n    Failed,\n    Succeeded\n}\nstruct LockParams {\n    uint256 startTime;\n    uint256 cliffDuration;\n    uint256 lockDuration;\n}\nstruct Lock {\n    uint256 startTime;\n    uint256 cliff;\n    uint256 endTime;\n    uint256 allocation;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

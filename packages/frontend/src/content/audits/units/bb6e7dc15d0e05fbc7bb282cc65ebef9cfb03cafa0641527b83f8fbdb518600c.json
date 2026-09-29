@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bb6e7dc15d0e05fbc7bb282cc65ebef9cfb03cafa0641527b83f8fbdb518600c",
+  "name": "ZkEvmVerifierPostEuclid",
+  "kind": "contract",
+  "lines": 91,
+  "source": "contract ZkEvmVerifierPostEuclid is IZkEvmVerifierV2 {\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when bundle recursion zk proof verification is failed.\n    error VerificationFailed();\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of highly optimized plonk verifier contract.\n    address public immutable plonkVerifier;\n\n    /// @notice A predetermined digest for the `plonkVerifier`.\n    bytes32 public immutable verifierDigest1;\n\n    /// @notice A predetermined digest for the `plonkVerifier`.\n    bytes32 public immutable verifierDigest2;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2) {\n        plonkVerifier = _verifier;\n        verifierDigest1 = _verifierDigest1;\n        verifierDigest2 = _verifierDigest2;\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IZkEvmVerifierV2\n    ///\n    /// @dev Encoding for `publicInput`. And this is exactly the same as `ZkEvmVerifierV2`.\n    /// ```text\n    /// | layer2ChainId | numBatches | prevStateRoot | prevBatchHash | postStateRoot | batchHash | withdrawRoot |\n    /// |    8 bytes    |  4  bytes  |   32  bytes   |   32  bytes   |   32  bytes   | 32  bytes |   32 bytes   |\n    /// ```\n    function verify(bytes calldata bundleProof, bytes calldata publicInput) external view override {\n        address _verifier = plonkVerifier;\n        bytes32 _verifierDigest1 = verifierDigest1;\n        bytes32 _verifierDigest2 = verifierDigest2;\n        bytes32 publicInputHash = keccak256(publicInput);\n        bool success;\n\n        // 1. the first 12 * 32 (0x180) bytes of `bundleProof` is `accumulator`\n        // 2. the rest bytes of `bundleProof` is the actual `bundle_proof`\n        // 3. Inserted between `accumulator` and `bundle_proof` are\n        //    32 * 34 (0x440) bytes, such that:\n        //    | start         | end           | field                   |\n        //    |---------------|---------------|-------------------------|\n        //    | 0x00          | 0x180         | bundleProof[0x00:0x180] |\n        //    | 0x180         | 0x180 + 0x20  | verifierDigest1         |\n        //    | 0x180 + 0x20  | 0x180 + 0x40  | verifierDigest2         |\n        //    | 0x180 + 0x40  | 0x180 + 0x60  | publicInputHash[0]      |\n        //    | 0x180 + 0x60  | 0x180 + 0x80  | publicInputHash[1]      |\n        //    ...\n        //    | 0x180 + 0x420 | 0x180 + 0x440 | publicInputHash[31]     |\n        //    | 0x180 + 0x440 | dynamic       | bundleProof[0x180:]     |\n        assembly {\n            let p := mload(0x40)\n            // 1. copy the accumulator's 0x180 bytes\n            calldatacopy(p, bundleProof.offset, 0x180)\n            // 2. insert the public input's 0x440 bytes\n            mstore(add(p, 0x180), _verifierDigest1) // verifierDigest1\n            mstore(add(p, 0x1a0), _verifierDigest2) // verifierDigest2\n            for { let i := 0 } lt(i, 0x400) { i := add(i, 0x20) } {\n                mstore(add(p, sub(0x5a0, i)), and(publicInputHash, 0xff))\n                publicInputHash := shr(8, publicInputHash)\n            }\n            // 3. copy all remaining bytes from bundleProof\n            calldatacopy(add(p, 0x5c0), add(bundleProof.offset, 0x180), sub(bundleProof.length, 0x180))\n            // 4. call plonk verifier\n            success := staticcall(gas(), _verifier, p, add(bundleProof.length, 0x440), 0x00, 0x00)\n        }\n        if (!success) {\n            revert VerificationFailed();\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 91,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ZkEvmVerifierPostEuclid",
+        "similarity": 1,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/scroll-contracts",
+        "path": "src/libraries/verifier/ZkEvmVerifierPostEuclid.sol",
+        "commit": "c382953479f9a919e850e56115924e5711810dfd",
+        "commitTimestamp": "2025-02-14T11:39:08Z",
+        "url": "https://github.com/scroll-tech/scroll-contracts/blob/c382953479f9a919e850e56115924e5711810dfd/src/libraries/verifier/ZkEvmVerifierPostEuclid.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "OpenVM (bundle proof) verifier integration and public-input memory layout; file not named in the report, identified as the OpenVM verifier contract at this commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

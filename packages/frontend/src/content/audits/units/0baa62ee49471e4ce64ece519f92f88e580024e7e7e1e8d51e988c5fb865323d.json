@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0baa62ee49471e4ce64ece519f92f88e580024e7e7e1e8d51e988c5fb865323d",
+  "name": "ERC165Upgradeable",
+  "kind": "abstract",
+  "lines": 19,
+  "source": "abstract contract ERC165Upgradeable is Initializable, IERC165Upgradeable {\n    function __ERC165_init() internal onlyInitializing {}\n\n    function __ERC165_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IERC165Upgradeable).interfaceId;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

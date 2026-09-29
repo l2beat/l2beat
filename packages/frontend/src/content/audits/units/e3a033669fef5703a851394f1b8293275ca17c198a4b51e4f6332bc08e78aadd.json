@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e3a033669fef5703a851394f1b8293275ca17c198a4b51e4f6332bc08e78aadd",
+  "name": "Create2",
+  "kind": "library",
+  "lines": 80,
+  "source": "library Create2 {\n    /**\n     * @dev There's no code to deploy.\n     */\n    error Create2EmptyBytecode();\n\n    /**\n     * @dev Deploys a contract using `CREATE2`. The address where the contract\n     * will be deployed can be known in advance via {computeAddress}.\n     *\n     * The bytecode for a contract can be obtained from Solidity with\n     * `type(contractName).creationCode`.\n     *\n     * Requirements:\n     *\n     * - `bytecode` must not be empty.\n     * - `salt` must have not been used for `bytecode` already.\n     * - the factory must have a balance of at least `amount`.\n     * - if `amount` is non-zero, `bytecode` must have a `payable` constructor.\n     */\n    function deploy(uint256 amount, bytes32 salt, bytes memory bytecode) internal returns (address addr) {\n        if (address(this).balance < amount) {\n            revert Errors_2.InsufficientBalance(address(this).balance, amount);\n        }\n        if (bytecode.length == 0) {\n            revert Create2EmptyBytecode();\n        }\n        assembly (\"memory-safe\") {\n            addr := create2(amount, add(bytecode, 0x20), mload(bytecode), salt)\n            // if no address was created, and returndata is not empty, bubble revert\n            if and(iszero(addr), not(iszero(returndatasize()))) {\n                let p := mload(0x40)\n                returndatacopy(p, 0, returndatasize())\n                revert(p, returndatasize())\n            }\n        }\n        if (addr == address(0)) {\n            revert Errors_2.FailedDeployment();\n        }\n    }\n\n    /**\n     * @dev Returns the address where a contract will be stored if deployed via {deploy}. Any change in the\n     * `bytecodeHash` or `salt` will result in a new destination address.\n     */\n    function computeAddress(bytes32 salt, bytes32 bytecodeHash) internal view returns (address) {\n        return computeAddress(salt, bytecodeHash, address(this));\n    }\n\n    /**\n     * @dev Returns the address where a contract will be stored if deployed via {deploy} from a contract located at\n     * `deployer`. If `deployer` is this contract's address, returns the same value as {computeAddress}.\n     */\n    function computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer)\n        internal\n        pure\n        returns (address addr)\n    {\n        assembly (\"memory-safe\") {\n            let ptr := mload(0x40) // Get free memory pointer\n\n            // |                   | ↓ ptr ...  ↓ ptr + 0x0B (start) ...  ↓ ptr + 0x20 ...  ↓ ptr + 0x40 ...   |\n            // |-------------------|---------------------------------------------------------------------------|\n            // | bytecodeHash      |                                                        CCCCCCCCCCCCC...CC |\n            // | salt              |                                      BBBBBBBBBBBBB...BB                   |\n            // | deployer          | 000000...0000AAAAAAAAAAAAAAAAAAA...AA                                     |\n            // | 0xFF              |            FF                                                             |\n            // |-------------------|---------------------------------------------------------------------------|\n            // | memory            | 000000...00FFAAAAAAAAAAAAAAAAAAA...AABBBBBBBBBBBBB...BBCCCCCCCCCCCCC...CC |\n            // | keccak(start, 85) |            ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ |\n\n            mstore(add(ptr, 0x40), bytecodeHash)\n            mstore(add(ptr, 0x20), salt)\n            mstore(ptr, deployer) // Right-aligned with 12 preceding garbage bytes\n            let start := add(ptr, 0x0b) // The hashed data starts at the final garbage byte which we will set to 0xff\n            mstore8(start, 0xff)\n            addr := and(keccak256(start, 85), 0xffffffffffffffffffffffffffffffffffffffff)\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 78,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Create2",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Create2.sol",
+        "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
+        "commitTimestamp": "2024-08-29T16:00:08Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/04e0df30aaf341bed5398012e3a8740bddeb6e04/contracts/utils/Create2.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5172 (resolving N-09, N-13); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 78,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    function deploy(uint256 amount, bytes32 salt, bytes memory bytecode) internal returns (address addr) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        if (address(this).balance < amount) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            revert Errors.InsufficientBalance(address(this).balance, amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            revert Errors_2.InsufficientBalance(address(this).balance, amount);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        if (bytecode.length == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            revert Create2EmptyBytecode();"
+              }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 7,
+            "newStart": 35,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        if (addr == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            revert Errors.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "            revert Errors_2.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9ff346715d4c4333c591bb42bbaff18554d3455c4099ac14eaf3f4774a4f97ac",
+  "name": "INonfungibleTokenPositionDescriptor",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface INonfungibleTokenPositionDescriptor {\n    /// @notice Emitted when a token is given a new priority order in the displayed price ratio\n    /// @param token The token being given priority order\n    /// @param priority Represents priority in ratio - higher integers get numerator priority\n    event UpdateTokenRatioPriority(address token, int256 priority);\n\n    /// @notice Produces the URI describing a particular token ID for a position manager\n    /// @dev Note this URI may be a data: URI with the JSON contents directly inlined\n    /// @param positionManager The position manager for which to describe the token\n    /// @param tokenId The ID of the token for which to produce a description, which may not be valid\n    /// @return The URI of the ERC721-compliant metadata\n    function tokenURI(INonfungiblePositionManager positionManager, uint256 tokenId)\n        external\n        view\n        returns (string memory);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ceb89370fdc5a48fc81852d0b0543323843a5d4220d9863ca084c5d223161ce6",
+  "name": "IPausable",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IPausable {\n    /// @notice Returns true if the contract is paused, and false otherwise.\n    function paused() external view returns (bool);\n\n    /// @notice Pause or unpause this contract.\n    /// @param _status Pause this contract if it is true, otherwise unpause this contract.\n    function setPause(bool _status) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

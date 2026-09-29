@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ec08850188ee6640f37084f2420b253627964262968d11b197d8beb0dbadd97a",
+  "name": "OwnableBase",
+  "kind": "abstract",
+  "lines": 69,
+  "source": "abstract contract OwnableBase {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when owner is changed by current owner.\n    /// @param _oldOwner The address of previous owner.\n    /// @param _newOwner The address of new owner.\n    event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice The address of the current owner.\n    address public owner;\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n\n    /// @dev Throws if called by any account other than the owner.\n    modifier onlyOwner() {\n        require(owner == msg.sender, \"caller is not the owner\");\n        _;\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Leaves the contract without owner. It will not be possible to call\n    /// `onlyOwner` functions anymore. Can only be called by the current owner.\n    ///\n    /// @dev Renouncing ownership will leave the contract without an owner,\n    /// thereby removing any functionality that is only available to the owner.\n    function renounceOwnership() public onlyOwner {\n        _transferOwnership(address(0));\n    }\n\n    /// @notice Transfers ownership of the contract to a new account (`newOwner`).\n    /// Can only be called by the current owner.\n    function transferOwnership(address _newOwner) public onlyOwner {\n        require(_newOwner != address(0), \"new owner is the zero address\");\n        _transferOwnership(_newOwner);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Transfers ownership of the contract to a new account (`newOwner`).\n    /// Internal function without access restriction.\n    function _transferOwnership(address _newOwner) internal {\n        address _oldOwner = owner;\n        owner = _newOwner;\n        emit OwnershipTransferred(_oldOwner, _newOwner);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 69,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "OwnableBase",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/common/OwnableBase.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/common/OwnableBase.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

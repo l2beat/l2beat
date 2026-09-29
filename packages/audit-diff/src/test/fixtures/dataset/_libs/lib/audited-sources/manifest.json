@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.1.0",
+  "project": "Lib",
+  "sources": [
+    {
+      "repository": "vendor/lib",
+      "repository_url": "https://github.com/vendor/lib",
+      "source_path": "src/Ownable.sol",
+      "path_kind": "file",
+      "commit": "cccc000000000000000000000000000000000000",
+      "files": [
+        {
+          "file": "vendor/lib/src/Ownable.sol/cccc000000000000000000000000000000000000/Ownable.sol",
+          "git_object": "0000000000000000000000000000000000000000",
+          "git_mode": "100644",
+          "sha256": "6d9468c1e447eea012c61e563fa5e7372b0d0ae92e3bd9c0e4401dbaaa203e13",
+          "units": ["Ownable"]
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "unavailable": []
+}

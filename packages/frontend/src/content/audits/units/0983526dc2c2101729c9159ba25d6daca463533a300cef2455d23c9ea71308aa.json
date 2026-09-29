@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0983526dc2c2101729c9159ba25d6daca463533a300cef2455d23c9ea71308aa",
+  "name": "IBaseStaker",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IBaseStaker {\n    function initialize(address _atp) external;\n\n    function getATP() external view returns (address);\n    function getOperator() external view returns (address);\n    function getImplementation() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

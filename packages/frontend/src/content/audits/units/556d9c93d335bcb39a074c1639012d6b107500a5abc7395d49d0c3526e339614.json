@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "556d9c93d335bcb39a074c1639012d6b107500a5abc7395d49d0c3526e339614",
+  "name": "IScrollGateway",
+  "kind": "interface",
+  "lines": 34,
+  "source": "interface IScrollGateway {\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when the given address is `address(0)`.\n    error ErrorZeroAddress();\n\n    /// @dev Thrown when the caller is not corresponding `L1ScrollMessenger` or `L2ScrollMessenger`.\n    error ErrorCallerIsNotMessenger();\n\n    /// @dev Thrown when the cross chain sender is not the counterpart gateway contract.\n    error ErrorCallerIsNotCounterpartGateway();\n\n    /// @dev Thrown when ScrollMessenger is not dropping message.\n    error ErrorNotInDropMessageContext();\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice The address of corresponding L1/L2 Gateway contract.\n    function counterpart() external view returns (address);\n\n    /// @notice The address of L1GatewayRouter/L2GatewayRouter contract.\n    function router() external view returns (address);\n\n    /// @notice The address of corresponding L1ScrollMessenger/L2ScrollMessenger contract.\n    function messenger() external view returns (address);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 34,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/gateway/IScrollGateway.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/libraries/gateway/IScrollGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

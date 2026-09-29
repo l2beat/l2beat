@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cc1be5d06dd362245302a2b8067a4613ce9ccfec5081272479f06da17bd070b5",
+  "name": "IInbox",
+  "kind": "interface",
+  "lines": 60,
+  "source": "interface IInbox {\n    struct InboxState {\n        // Rolling hash of all messages inserted into the inbox.\n        // Used by clients to check for consistency.\n        bytes16 rollingHash;\n        // This value is not used much by the contract, but it is useful for synching the node faster\n        // as it can more easily figure out if it can just skip looking for events for a time period.\n        uint64 totalMessagesInserted;\n        // Number of a tree which is currently being filled\n        uint64 inProgress;\n    }\n\n    /**\n     * @notice Emitted when a message is sent\n     * @param checkpointNumber - The checkpoint number in which the message is included\n     * @param index - The index of the message in the L1 to L2 messages tree\n     * @param hash - The hash of the message\n     * @param rollingHash - The rolling hash of all messages inserted into the inbox\n     */\n    event MessageSent(uint256 indexed checkpointNumber, uint256 index, bytes32 indexed hash, bytes16 rollingHash);\n\n    // docs:start:send_l1_to_l2_message\n    /**\n     * @notice Inserts a new message into the Inbox\n     * @dev Emits `MessageSent` with data for easy access by the sequencer\n     * @param _recipient - The recipient of the message\n     * @param _content - The content of the message (application specific)\n     * @param _secretHash - The secret hash of the message (make it possible to hide when a specific message is consumed\n     * on L2)\n     * @return The key of the message in the set and its leaf index in the tree\n     */\n    function sendL2Message(DataStructures.L2Actor memory _recipient, bytes32 _content, bytes32 _secretHash)\n        external\n        returns (bytes32, uint256);\n    // docs:end:send_l1_to_l2_message\n\n    // docs:start:consume\n    /**\n     * @notice Consumes the current tree, and starts a new one if needed\n     * @dev Only callable by the rollup contract\n     * @dev In the first iteration we return empty tree root because first checkpoint's messages tree is always\n     * empty because there has to be a 1 checkpoint lag to prevent sequencer DOS attacks\n     *\n     * @param _toConsume - The checkpoint number to consume\n     *\n     * @return The root of the consumed tree\n     */\n    function consume(uint256 _toConsume) external returns (bytes32);\n    // docs:end:consume\n\n    function getFeeAssetPortal() external view returns (address);\n\n    function getRoot(uint256 _checkpointNumber) external view returns (bytes32);\n\n    function getState() external view returns (InboxState memory);\n\n    function getTotalMessagesInserted() external view returns (uint64);\n\n    function getInProgress() external view returns (uint64);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

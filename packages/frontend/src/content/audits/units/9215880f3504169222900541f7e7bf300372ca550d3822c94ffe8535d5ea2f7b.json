@@ -1,0 +1,694 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9215880f3504169222900541f7e7bf300372ca550d3822c94ffe8535d5ea2f7b",
+  "name": "IL1MessageQueueV1",
+  "kind": "interface",
+  "lines": 174,
+  "source": "interface IL1MessageQueueV1 {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a new L1 => L2 transaction is appended to the queue.\n    /// @param sender The address of account who initiates the transaction.\n    /// @param target The address of account who will receive the transaction.\n    /// @param value The value passed with the transaction.\n    /// @param queueIndex The index of this transaction in the queue.\n    /// @param gasLimit Gas limit required to complete the message relay on L2.\n    /// @param data The calldata of the transaction.\n    event QueueTransaction(\n        address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data\n    );\n\n    /// @notice Emitted when some L1 => L2 transactions are included in L1.\n    /// @param startIndex The start index of messages popped.\n    /// @param count The number of messages popped.\n    /// @param skippedBitmap A bitmap indicates whether a message is skipped.\n    event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap);\n\n    /// @notice Emitted when dequeued transactions are reset.\n    /// @param startIndex The start index of messages.\n    event ResetDequeuedTransaction(uint256 startIndex);\n\n    /// @notice Emitted when some L1 => L2 transactions are finalized in L1.\n    /// @param finalizedIndex The last index of messages finalized.\n    event FinalizedDequeuedTransaction(uint256 finalizedIndex);\n\n    /// @notice Emitted when a message is dropped from L1.\n    /// @param index The index of message dropped.\n    event DropTransaction(uint256 index);\n\n    /// @notice Emitted when owner updates gas oracle contract.\n    /// @param _oldGasOracle The address of old gas oracle contract.\n    /// @param _newGasOracle The address of new gas oracle contract.\n    event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle);\n\n    /// @notice Emitted when owner updates max gas limit.\n    /// @param _oldMaxGasLimit The old max gas limit.\n    /// @param _newMaxGasLimit The new max gas limit.\n    event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit);\n\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when the given address is `address(0)`.\n    error ErrorZeroAddress();\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice The start index of all pending inclusion messages.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.pendingQueueIndex` instead.\n    function pendingQueueIndex() external view returns (uint256);\n\n    /// @notice The start index of all unfinalized messages.\n    /// @dev All messages from `nextUnfinalizedQueueIndex` to `pendingQueueIndex-1` are committed but not finalized.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.nextUnfinalizedQueueIndex` instead.\n    function nextUnfinalizedQueueIndex() external view returns (uint256);\n\n    /// @notice Return the index of next appended message.\n    /// @dev Also the total number of appended messages.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.nextCrossDomainMessageIndex` instead.\n    function nextCrossDomainMessageIndex() external view returns (uint256);\n\n    /// @notice Return the message of in `queueIndex`.\n    /// @param queueIndex The index to query.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.getCrossDomainMessage` instead.\n    function getCrossDomainMessage(uint256 queueIndex) external view returns (bytes32);\n\n    /// @notice Return the amount of ETH should pay for cross domain message.\n    /// @param gasLimit Gas limit required to complete the message relay on L2.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.estimateCrossDomainMessageFee` instead.\n    function estimateCrossDomainMessageFee(uint256 gasLimit) external view returns (uint256);\n\n    /// @notice Return the amount of intrinsic gas fee should pay for cross domain message.\n    /// @param _calldata The calldata of L1-initiated transaction.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.calculateIntrinsicGasFee` instead.\n    function calculateIntrinsicGasFee(bytes calldata _calldata) external view returns (uint256);\n\n    /// @notice Return the hash of a L1 message.\n    /// @param sender The address of sender.\n    /// @param queueIndex The queue index of this message.\n    /// @param value The amount of Ether transfer to target.\n    /// @param target The address of target.\n    /// @param gasLimit The gas limit provided.\n    /// @param data The calldata passed to target address.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.computeTransactionHash` instead.\n    function computeTransactionHash(\n        address sender,\n        uint256 queueIndex,\n        uint256 value,\n        address target,\n        uint256 gasLimit,\n        bytes calldata data\n    ) external view returns (bytes32);\n\n    /// @notice Return whether the message is skipped.\n    /// @param queueIndex The queue index of the message to check.\n    /// @custom:deprecated\n    function isMessageSkipped(uint256 queueIndex) external view returns (bool);\n\n    /// @notice Return whether the message is dropped.\n    /// @param queueIndex The queue index of the message to check.\n    /// @custom:deprecated\n    function isMessageDropped(uint256 queueIndex) external view returns (bool);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Append a L1 to L2 message into this contract.\n    /// @param target The address of target contract to call in L2.\n    /// @param gasLimit The maximum gas should be used for relay this message in L2.\n    /// @param data The calldata passed to target contract.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.appendCrossDomainMessage` instead.\n    function appendCrossDomainMessage(address target, uint256 gasLimit, bytes calldata data) external;\n\n    /// @notice Append an enforced transaction to this contract.\n    /// @dev The address of sender should be an EOA.\n    /// @param sender The address of sender who will initiate this transaction in L2.\n    /// @param target The address of target contract to call in L2.\n    /// @param value The value passed\n    /// @param gasLimit The maximum gas should be used for this transaction in L2.\n    /// @param data The calldata passed to target contract.\n    /// @custom:deprecated Please use `IL1MessageQueueV2.appendEnforcedTransaction` instead.\n    function appendEnforcedTransaction(\n        address sender,\n        address target,\n        uint256 value,\n        uint256 gasLimit,\n        bytes calldata data\n    ) external;\n\n    /// @notice Pop messages from queue.\n    ///\n    /// @dev We can pop at most 256 messages each time. And if the message is not skipped,\n    ///      the corresponding entry will be cleared.\n    ///\n    /// @param startIndex The start index to pop.\n    /// @param count The number of messages to pop.\n    /// @param skippedBitmap A bitmap indicates whether a message is skipped.\n    /// @custom:deprecated\n    function popCrossDomainMessage(uint256 startIndex, uint256 count, uint256 skippedBitmap) external;\n\n    /// @notice Reset status of popped messages.\n    ///\n    /// @dev We can only reset unfinalized popped messages.\n    ///\n    /// @param startIndex The start index to reset.\n    /// @custom:deprecated\n    function resetPoppedCrossDomainMessage(uint256 startIndex) external;\n\n    /// @notice Finalize status of popped messages.\n    /// @param newFinalizedQueueIndexPlusOne The index of message to finalize plus one.\n    /// @custom:deprecated\n    function finalizePoppedCrossDomainMessage(uint256 newFinalizedQueueIndexPlusOne) external;\n\n    /// @notice Drop a skipped message from the queue.\n    /// @custom:deprecated\n    function dropCrossDomainMessage(uint256 index) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 168,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "IL1MessageQueue",
+        "similarity": 0.878,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
+        "commit": "747f35433cc5a92fb81999d395f3d14dec071854",
+        "commitTimestamp": "2024-01-29T04:59:18Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/747f35433cc5a92fb81999d395f3d14dec071854/contracts/src/L1/rollup/IL1MessageQueue.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of N-03 (interface/implementation consistency) in pull request #1097 only; partially resolved.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 6,
+        "removed": 1,
+        "ignoredAdded": 34,
+        "ignoredRemoved": 1,
+        "unchanged": 168,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IL1MessageQueue {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IL1MessageQueueV1 {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Events *"
+              }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 6,
+            "newStart": 22,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    /// @param skippedBitmap A bitmap indicates whether a message is skipped."
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap);"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @notice Emitted when dequeued transactions are reset.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @param startIndex The start index of messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    event ResetDequeuedTransaction(uint256 startIndex);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 28, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @notice Emitted when some L1 => L2 transactions are finalized in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /// @param finalizedIndex The last index of messages finalized.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    event FinalizedDequeuedTransaction(uint256 finalizedIndex);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 32, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 33,
+                "text": "    /// @notice Emitted when a message is dropped from L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 34,
+                "text": "    /// @param index The index of message dropped."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 35,
+                "text": "    event DropTransaction(uint256 index);"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 22,
+            "newStart": 60,
+            "newLines": 32,
+            "lines": [
+              { "type": " ", "oldLine": 52, "newLine": 60, "text": "     */" },
+              { "type": " ", "oldLine": 53, "newLine": 61, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "    /// @notice The start index of all pending inclusion messages."
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.pendingQueueIndex` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 64,
+                "text": "    function pendingQueueIndex() external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 65, "text": "" },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /// @notice The start index of all unfinalized messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /// @dev All messages from `nextUnfinalizedQueueIndex` to `pendingQueueIndex-1` are committed but not finalized.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.nextUnfinalizedQueueIndex` instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function nextUnfinalizedQueueIndex() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 70, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 71,
+                "text": "    /// @notice Return the index of next appended message."
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 72,
+                "text": "    /// @dev Also the total number of appended messages."
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.nextCrossDomainMessageIndex` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 74,
+                "text": "    function nextCrossDomainMessageIndex() external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 75, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 76,
+                "text": "    /// @notice Return the message of in `queueIndex`."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 77,
+                "text": "    /// @param queueIndex The index to query."
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.getCrossDomainMessage` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 79,
+                "text": "    function getCrossDomainMessage(uint256 queueIndex) external view returns (bytes32);"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 80, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 81,
+                "text": "    /// @notice Return the amount of ETH should pay for cross domain message."
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 82,
+                "text": "    /// @param gasLimit Gas limit required to complete the message relay on L2."
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.estimateCrossDomainMessageFee` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 84,
+                "text": "    function estimateCrossDomainMessageFee(uint256 gasLimit) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 85, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 86,
+                "text": "    /// @notice Return the amount of intrinsic gas fee should pay for cross domain message."
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 87,
+                "text": "    /// @param _calldata The calldata of L1-initiated transaction."
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.calculateIntrinsicGasFee` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 89,
+                "text": "    function calculateIntrinsicGasFee(bytes calldata _calldata) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 90, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 91,
+                "text": "    /// @notice Return the hash of a L1 message."
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 6,
+            "newStart": 95,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 95,
+                "text": "    /// @param target The address of target."
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 96,
+                "text": "    /// @param gasLimit The gas limit provided."
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 97,
+                "text": "    /// @param data The calldata passed to target address."
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.computeTransactionHash` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 99,
+                "text": "    function computeTransactionHash("
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 100,
+                "text": "        address sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 101,
+                "text": "        uint256 queueIndex,"
+              }
+            ]
+          },
+          {
+            "oldStart": 88,
+            "oldLines": 10,
+            "newStart": 107,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 88, "newLine": 107, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 108,
+                "text": "    /// @notice Return whether the message is skipped."
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 109,
+                "text": "    /// @param queueIndex The queue index of the message to check."
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 111,
+                "text": "    function isMessageSkipped(uint256 queueIndex) external view returns (bool);"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 112, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 113,
+                "text": "    /// @notice Return whether the message is dropped."
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 114,
+                "text": "    /// @param queueIndex The queue index of the message to check."
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 116,
+                "text": "    function isMessageDropped(uint256 queueIndex) external view returns (bool);"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 117, "text": "" },
+              { "type": " ", "oldLine": 97, "newLine": 118, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 104,
+            "oldLines": 6,
+            "newStart": 125,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 125,
+                "text": "    /// @param target The address of target contract to call in L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 126,
+                "text": "    /// @param gasLimit The maximum gas should be used for relay this message in L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 127,
+                "text": "    /// @param data The calldata passed to target contract."
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.appendCrossDomainMessage` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 129,
+                "text": "    function appendCrossDomainMessage(address target, uint256 gasLimit, bytes calldata data) external;"
+              },
+              { "type": " ", "oldLine": 108, "newLine": 130, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 131,
+                "text": "    /// @notice Append an enforced transaction to this contract."
+              }
+            ]
+          },
+          {
+            "oldStart": 113,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 135,
+                "text": "    /// @param value The value passed"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 136,
+                "text": "    /// @param gasLimit The maximum gas should be used for this transaction in L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 137,
+                "text": "    /// @param data The calldata passed to target contract."
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    /// @custom:deprecated Please use `IL1MessageQueueV2.appendEnforcedTransaction` instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 139,
+                "text": "    function appendEnforcedTransaction("
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 140,
+                "text": "        address sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 141,
+                "text": "        address target,"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 7,
+            "newStart": 144,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 144,
+                "text": "        bytes calldata data"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 145,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 123, "newLine": 146, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// @notice Pop finalized messages from queue.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "    /// @notice Pop messages from queue.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 148,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 149,
+                "text": "    /// @dev We can pop at most 256 messages each time. And if the message is not skipped,"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 150,
+                "text": "    ///      the corresponding entry will be cleared."
+              }
+            ]
+          },
+          {
+            "oldStart": 129,
+            "oldLines": 8,
+            "newStart": 152,
+            "newLines": 23,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 152,
+                "text": "    /// @param startIndex The start index to pop."
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 153,
+                "text": "    /// @param count The number of messages to pop."
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 154,
+                "text": "    /// @param skippedBitmap A bitmap indicates whether a message is skipped."
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 156,
+                "text": "    function popCrossDomainMessage(uint256 startIndex, uint256 count, uint256 skippedBitmap) external;"
+              },
+              { "type": " ", "oldLine": 133, "newLine": 157, "text": "" },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "    /// @notice Reset status of popped messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    /// @dev We can only reset unfinalized popped messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    /// @param startIndex The start index to reset.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "    function resetPoppedCrossDomainMessage(uint256 startIndex) external;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 165, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "    /// @notice Finalize status of popped messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "    /// @param newFinalizedQueueIndexPlusOne The index of message to finalize plus one.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    function finalizePoppedCrossDomainMessage(uint256 newFinalizedQueueIndexPlusOne) external;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 170, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 171,
+                "text": "    /// @notice Drop a skipped message from the queue."
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "    /// @custom:deprecated",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 173,
+                "text": "    function dropCrossDomainMessage(uint256 index) external;"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 174, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

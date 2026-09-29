@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "95f9679ab5cdbf3b7011116b82d8d798bb27179da4407d53f2a040cd01004966",
+  "name": "STFLib",
+  "kind": "library",
+  "lines": 325,
+  "source": "library STFLib {\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using TimeLib for Timestamp;\n    using CompressedTimeMath for CompressedSlot;\n    using ChainTipsLib for CompressedChainTips;\n    using CompressedTempCheckpointLogLib for CompressedTempCheckpointLog;\n    using CompressedTempCheckpointLogLib for TempCheckpointLog;\n    using CompressedTimeMath for Slot;\n    using CompressedTimeMath for CompressedSlot;\n    using FeeHeaderLib for CompressedFeeHeader;\n\n    // @note  This is also used in the cheatcodes, so if updating, please also update the cheatcode.\n    bytes32 private constant STF_STORAGE_POSITION = keccak256(\"aztec.stf.storage\");\n\n    /**\n     * @notice Initializes the rollup state with genesis configuration\n     * @dev Sets up the initial state of the rollup including verification keys and the genesis archive root.\n     *      This function should only be called once during rollup deployment.\n     *\n     * @param _genesisState The initial state configuration containing:\n     *        - vkTreeRoot: Root of the verification key tree for circuit verification\n     *        - protocolContractsHash: Root containing protocol contract addresses and configurations\n     *        - genesisArchiveRoot: Initial archive root representing the genesis state\n     */\n    function initialize(GenesisState memory _genesisState) internal {\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        rollupStore.config.vkTreeRoot = _genesisState.vkTreeRoot;\n        rollupStore.config.protocolContractsHash = _genesisState.protocolContractsHash;\n\n        // The genesis archive root is decoded as an Fr off chain and propagates into the first header's lastArchiveRoot,\n        // so it must be a valid field element.\n        FieldLib.requireValidFieldElement(_genesisState.genesisArchiveRoot);\n        rollupStore.archives[0] = _genesisState.genesisArchiveRoot;\n    }\n\n    /**\n     * @notice Writes the genesis fee header at checkpoint 0\n     * @dev This sets the initial ethPerFeeAsset value that will be used as the starting point\n     *      for the fee asset price oracle. Must be called during rollup initialization.\n     * @param _initialEthPerFeeAsset The initial ETH per fee asset price (with 1e12 precision)\n     */\n    function writeGenesisFeeHeader(uint256 _initialEthPerFeeAsset) internal {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        // Write to checkpoint 0's slot in the circular buffer\n        rollupStore.tempCheckpointLogs[0] = TempCheckpointLog({\n            headerHash: bytes32(0),\n            blobCommitmentsHash: bytes32(0),\n            outHash: bytes32(0),\n            attestationsHash: bytes32(0),\n            payloadDigest: bytes32(0),\n            slotNumber: Slot.wrap(0),\n            feeHeader: FeeHeader({\n                excessMana: 0,\n                manaUsed: 0,\n                ethPerFeeAsset: _initialEthPerFeeAsset,\n                congestionCost: 0,\n                proverCost: 0\n            })\n        }).compress();\n    }\n\n    /**\n     * @notice Stores a temporary checkpoint log in the circular storage buffer\n     * @dev Compresses and stores checkpoint data at the appropriate index in the circular buffer.\n     *      The storage index is calculated as (pending checkpoint % roundaboutSize) to implement\n     *      the circular storage pattern.\n     *      Don't need to check if storage is stale as always writing to freshest.\n     *\n     * @param _tempCheckpointLog The temporary checkpoint log containing header hash, attestations,\n     *        blob commitments, payload digest, slot number, and fee information\n     */\n    function addTempCheckpointLog(TempCheckpointLog memory _tempCheckpointLog) internal {\n        uint256 checkpointNumber = STFLib.getStorage().tips.getPending();\n        uint256 size = roundaboutSize();\n        getStorage().tempCheckpointLogs[checkpointNumber % size] = _tempCheckpointLog.compress();\n    }\n\n    /**\n     * @notice Removes unproven checkpoints from the pending chain when proof submission window expires\n     * @dev This function implements the pruning mechanism that maintains rollup liveness by removing\n     *      checkpoints that cannot be proven within the configured time window. When called:\n     *\n     *      1. Identifies the gap between pending and proven checkpoint numbers\n     *      2. Resets the pending chain tip to match the last proven checkpoint\n     *      3. Effectively removes all unproven checkpoints from the pending chain\n     *\n     *      The pruning does not delete checkpoint data from storage but makes it inaccessible by\n     *      updating the chain tips.\n     *\n     *      Pruning should only occur when the proof submission window has expired for pending\n     *      checkpoints, which is validated by the calling function (typically through canPruneAtTime).\n     *\n     *      Emits PrunedPending event with the proven and previously pending checkpoint numbers.\n     */\n    function prune() internal {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        CompressedChainTips tips = rollupStore.tips;\n        uint256 pending = tips.getPending();\n\n        // @note  We are not deleting the checkpoints, but we are \"winding back\" the pendingTip to the last checkpoint that\n        //        was proven.\n        //        We can do because any new checkpoint proposed will overwrite a previous checkpoint in the checkpoint log,\n        //        so no values should \"survive\".\n        //        People must therefore read the chain using the pendingTip as a boundary.\n        uint256 proven = tips.getProven();\n        rollupStore.tips = tips.updatePending(proven);\n\n        emit IRollupCore.PrunedPending(proven, pending);\n    }\n\n    /**\n     * @notice Calculates the size of the circular storage buffer for temporary checkpoint logs\n     * @dev The roundabout size determines how many checkpoints can be stored in the circular buffer\n     *      before older entries are overwritten. The size is calculated as:\n     *\n     *      roundaboutSize = maxPrunableCheckpoints() + 1\n     *\n     *      Where maxPrunableCheckpoints() = epochDuration * (proofSubmissionEpochs + 1)\n     *\n     *      This ensures that:\n     *      - All checkpoints within the proof submission window remain accessible\n     *      - At least the last proven checkpoint is available as a trusted anchor\n     *\n     * @return The number of slots in the circular storage buffer\n     */\n    function roundaboutSize() internal view returns (uint256) {\n        // Must be ensured to contain at least the last proven checkpoint even after a prune.\n        return TimeLib.maxPrunableCheckpoints() + 1;\n    }\n\n    /**\n     * @notice Returns a storage reference to a compressed temporary checkpoint log\n     * @dev Provides direct access to the compressed checkpoint log in storage without decompression.\n     *      Reverts if the checkpoint number is stale (no longer accessible in circular storage) or if\n     *      the checkpoint have not happened yet.\n     *\n     * @dev A temporary checkpoint log is stale if it can no longer be accessed in the circular storage buffer.\n     *      The staleness is determined by the relationship between the checkpoint number, current pending\n     *      checkpoint, and the buffer size.\n     *\n     *      Example with roundabout size 5 and pending checkpoint 7:\n     *      Circular buffer state: [checkpoint5, checkpoint6, checkpoint7, checkpoint3, checkpoint4]\n     *\n     *      A checkpoint is available if:\n     *      - checkpointNumber <= pending  (it is not in the future)\n     *      - pending < checkpointNumber + size (the override is in the future)\n     *      Together as a span:\n     *      - checkpointNumber <= pending < checkpointNumber + size\n     *\n     *      For example, checkpoint 2 is unavailable since the override has happened:\n     *      - 2 <= 7 (true) && 7 < 2 + 5 (false)\n     *      But checkpoint 3 is available as it in the past, but not overridden yet\n     *      - 3 <= 7 (true) && 7 < 3 + 5 (true)\n     *\n     *      This ensures that only checkpoints within the current \"window\" of the circular buffer\n     *      are considered valid and accessible.\n     *\n     * @param _checkpointNumber The checkpoint number to get the storage reference for\n     * @return A storage reference to the compressed temporary checkpoint log\n     */\n    function getStorageTempCheckpointLog(uint256 _checkpointNumber)\n        internal\n        view\n        returns (CompressedTempCheckpointLog storage)\n    {\n        uint256 pending = getStorage().tips.getPending();\n        uint256 size = roundaboutSize();\n\n        uint256 upperLimit = _checkpointNumber + size;\n        bool available = _checkpointNumber <= pending && pending < upperLimit;\n        require(available, Errors_1.Rollup__UnavailableTempCheckpointLog(_checkpointNumber, pending, upperLimit));\n\n        return getStorage().tempCheckpointLogs[_checkpointNumber % size];\n    }\n\n    /**\n     * @notice Retrieves and decompresses a temporary checkpoint log from circular storage\n     * @dev Fetches the compressed checkpoint log from the circular buffer and decompresses it.\n     *      Reverts if the checkpoint number is stale and no longer accessible.\n     * @param _checkpointNumber The checkpoint number to retrieve the log for\n     * @return The decompressed temporary checkpoint log containing all checkpoint metadata\n     */\n    function getTempCheckpointLog(uint256 _checkpointNumber) internal view returns (TempCheckpointLog memory) {\n        return getStorageTempCheckpointLog(_checkpointNumber).decompress();\n    }\n\n    /**\n     * @notice Retrieves the header hash for a specific checkpoint number\n     * @dev Gas-efficient accessor that returns only the header hash without decompressing\n     *      the entire checkpoint log. Reverts if the checkpoint number is stale.\n     * @param _checkpointNumber The checkpoint number to get the header hash for\n     * @return The header hash of the specified checkpoint\n     */\n    function getHeaderHash(uint256 _checkpointNumber) internal view returns (bytes32) {\n        return getStorageTempCheckpointLog(_checkpointNumber).headerHash;\n    }\n\n    /**\n     * @notice Retrieves the compressed fee header for a specific checkpoint number\n     * @dev Returns the fee information including base fee components and mana costs.\n     *      The data remains in compressed format for gas efficiency. Reverts if the checkpoint is stale.\n     * @param _checkpointNumber The checkpoint number to get the fee header for\n     * @return The compressed fee header containing fee-related data\n     */\n    function getFeeHeader(uint256 _checkpointNumber) internal view returns (CompressedFeeHeader) {\n        return getStorageTempCheckpointLog(_checkpointNumber).feeHeader;\n    }\n\n    /**\n     * @notice Retrieves the blob commitments hash for a specific checkpoint number\n     * @dev Returns the hash of all blob commitments for the checkpoint, used for data availability\n     *      verification. Reverts if the checkpoint number is stale.\n     * @param _checkpointNumber The checkpoint number to get the blob commitments hash for\n     * @return The hash of blob commitments for the specified checkpoint\n     */\n    function getBlobCommitmentsHash(uint256 _checkpointNumber) internal view returns (bytes32) {\n        return getStorageTempCheckpointLog(_checkpointNumber).blobCommitmentsHash;\n    }\n\n    /**\n     * @notice Retrieves the slot number for a specific checkpoint number\n     * @dev Returns the decompressed slot number indicating when the checkpoint was proposed.\n     *      Reverts if the checkpoint number is stale.\n     * @param _checkpointNumber The checkpoint number to get the slot number for\n     * @return The slot number when the checkpoint was proposed\n     */\n    function getSlotNumber(uint256 _checkpointNumber) internal view returns (Slot) {\n        return getStorageTempCheckpointLog(_checkpointNumber).slotNumber.decompress();\n    }\n\n    /**\n     * @notice Gets the effective pending checkpoint number based on pruning eligibility\n     * @dev Returns either the pending checkpoint number or proven checkpoint number depending on\n     *      whether pruning is allowed at the given timestamp. This is used to determine\n     *      the effective chain tip for operations that should respect pruning windows.\n     *\n     *      If pruning is allowed: returns proven checkpoint number (chain should be pruned)\n     *      If pruning is not allowed: returns pending checkpoint number (normal operation)\n     * @param _timestamp The timestamp to evaluate pruning eligibility against\n     * @return The effective checkpoint number that should be considered as the chain tip\n     */\n    function getEffectivePendingCheckpointNumber(Timestamp _timestamp) internal view returns (uint256) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        CompressedChainTips tips = rollupStore.tips;\n        return STFLib.canPruneAtTime(_timestamp) ? tips.getProven() : tips.getPending();\n    }\n\n    /**\n     * @notice Determines which epoch a checkpoint belongs to\n     * @dev Calculates the epoch for a given checkpoint number by retrieving the checkpoint's slot\n     *      and converting it to an epoch. Reverts if the checkpoint number exceeds the pending tip.\n     * @param _checkpointNumber The checkpoint number to get the epoch for\n     * @return The epoch containing the specified checkpoint\n     */\n    function getEpochForCheckpoint(uint256 _checkpointNumber) internal view returns (Epoch) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        require(\n            _checkpointNumber <= rollupStore.tips.getPending(),\n            Errors_1.Rollup__InvalidCheckpointNumber(rollupStore.tips.getPending(), _checkpointNumber)\n        );\n        return getSlotNumber(_checkpointNumber).epochFromSlot();\n    }\n\n    /**\n     * @notice Determines if the chain can be pruned at a given timestamp\n     * @dev Checks whether the proof submission window has expired for the oldest pending checkpoints.\n     *      Pruning is allowed when:\n     *\n     *      1. There are unproven checkpoints (pending > proven)\n     *      2. The oldest pending epoch is no longer accepting proofs at the epoch at _ts\n     *\n     *      The proof submission window is defined by the aztecProofSubmissionEpochs configuration,\n     *      which specifies how many epochs after an epoch ends that proofs are still accepted.\n     *\n     *      Example timeline:\n     *      - Checkpoint proposed in epoch N\n     *      - Proof submission window = 1 epochs\n     *      - Proof deadline epoch = N + Proof submission window + 1\n     *          The deadline is the point in time where it is no longer acceptable, (if you touch the line you die)\n     *      - If epoch(_ts) >= epoch N + Proof submission window + 1, pruning is allowed\n     *\n     *      This mechanism ensures rollup liveness by preventing indefinite stalling on unprovable checkpoints (e.g due to\n     *      the committee failing to disseminate the data) while providing sufficient time for proof generation and\n     *      submission.\n     *\n     * @param _ts The current timestamp to check against\n     * @return True if pruning is allowed at the given timestamp, false otherwise\n     */\n    function canPruneAtTime(Timestamp _ts) internal view returns (bool) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        CompressedChainTips tips = rollupStore.tips;\n\n        if (tips.getPending() == tips.getProven()) {\n            return false;\n        }\n\n        Epoch oldestPendingEpoch = getEpochForCheckpoint(tips.getProven() + 1);\n        Epoch currentEpoch = _ts.epochFromTimestamp();\n\n        return !oldestPendingEpoch.isAcceptingProofsAtEpoch(currentEpoch);\n    }\n\n    /**\n     * @notice Retrieves the namespaced storage for the STFLib using EIP-7201 pattern\n     * @dev Uses inline assembly to access storage at a specific slot calculated from the\n     *      keccak256 hash of \"aztec.stf.storage\". This ensures storage isolation and\n     *      prevents collisions with other contracts or libraries.\n     *\n     *      The storage contains:\n     *      - Chain tips (pending and proven checkpoint numbers)\n     *      - Archives mapping (permanent checkpoint archive storage)\n     *      - TempCheckpointLogs mapping (circular buffer for temporary checkpoint data)\n     *      - Rollup configuration\n     * @return storageStruct A storage pointer to the RollupStore struct\n     */\n    function getStorage() internal pure returns (RollupStore storage storageStruct) {\n        bytes32 position = STF_STORAGE_POSITION;\n        assembly {\n            storageStruct.slot := position\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 304,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "STFLib",
+        "similarity": 0.897,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/STFLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "not in the declared scope list; reviewed in passing (genesis fee header findings); exact snapshot for these findings is not stated",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 21,
+        "removed": 2,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 0,
+        "unchanged": 304,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 29,
+            "oldLines": 10,
+            "newStart": 29,
+            "newLines": 39,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        rollupStore.config.vkTreeRoot = _genesisState.vkTreeRoot;"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "        rollupStore.config.protocolContractsHash = _genesisState.protocolContractsHash;"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "" },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        // The genesis archive root is decoded as an Fr off chain and propagates into the first header's lastArchiveRoot,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        // so it must be a valid field element.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        FieldLib.requireValidFieldElement(_genesisState.genesisArchiveRoot);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 35,
+                "text": "        rollupStore.archives[0] = _genesisState.genesisArchiveRoot;"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 36, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 37, "text": "" },
+              { "type": " ", "oldLine": 35, "newLine": 38, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @notice Writes the genesis fee header at checkpoint 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * @dev This sets the initial ethPerFeeAsset value that will be used as the starting point",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     *      for the fee asset price oracle. Must be called during rollup initialization.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @param _initialEthPerFeeAsset The initial ETH per fee asset price (with 1e12 precision)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    function writeGenesisFeeHeader(uint256 _initialEthPerFeeAsset) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        // Write to checkpoint 0's slot in the circular buffer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        rollupStore.tempCheckpointLogs[0] = TempCheckpointLog({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "            headerHash: bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "            blobCommitmentsHash: bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "            outHash: bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "            attestationsHash: bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "            payloadDigest: bytes32(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            slotNumber: Slot.wrap(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "            feeHeader: FeeHeader({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "                excessMana: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "                manaUsed: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "                ethPerFeeAsset: _initialEthPerFeeAsset,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "                congestionCost: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "                proverCost: 0",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        }).compress();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 62, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 63, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 65,
+                "text": "     * @notice Stores a temporary checkpoint log in the circular storage buffer"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 66,
+                "text": "     * @dev Compresses and stores checkpoint data at the appropriate index in the circular buffer."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 67,
+                "text": "     *      The storage index is calculated as (pending checkpoint % roundaboutSize) to implement"
+              }
+            ]
+          },
+          {
+            "oldStart": 141,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 141, "newLine": 170, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 171,
+                "text": "        uint256 upperLimit = _checkpointNumber + size;"
+              },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 172,
+                "text": "        bool available = _checkpointNumber <= pending && pending < upperLimit;"
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "        require(available, Errors.Rollup__UnavailableTempCheckpointLog(_checkpointNumber, pending, upperLimit));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        require(available, Errors_1.Rollup__UnavailableTempCheckpointLog(_checkpointNumber, pending, upperLimit));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 145, "newLine": 174, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 175,
+                "text": "        return getStorage().tempCheckpointLogs[_checkpointNumber % size];"
+              },
+              { "type": " ", "oldLine": 147, "newLine": 176, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 229,
+            "oldLines": 7,
+            "newStart": 258,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 258,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 259,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 260,
+                "text": "            _checkpointNumber <= rollupStore.tips.getPending(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "            Errors.Rollup__InvalidCheckpointNumber(rollupStore.tips.getPending(), _checkpointNumber)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "            Errors_1.Rollup__InvalidCheckpointNumber(rollupStore.tips.getPending(), _checkpointNumber)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 262,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 263,
+                "text": "        return getSlotNumber(_checkpointNumber).epochFromSlot();"
+              },
+              { "type": " ", "oldLine": 235, "newLine": 264, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

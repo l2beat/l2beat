@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.1.0",
+  "project": "upstream",
+  "sources": [
+    {
+      "repository": "acme/core",
+      "repository_url": "https://github.com/acme/core",
+      "source_path": "src/Vault.sol",
+      "path_kind": "file",
+      "commit": "aaaa000000000000000000000000000000000000",
+      "files": [
+        {
+          "file": "acme/core/src/Vault.sol/aaaa000000000000000000000000000000000000/Vault.sol",
+          "git_object": "0000000000000000000000000000000000000000",
+          "git_mode": "100644",
+          "sha256": "70f7d1a42afb9970cbb5f7d54f14a1daf84dce862d0b062112999650819a17dc",
+          "units": ["Vault"]
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "unavailable": []
+}

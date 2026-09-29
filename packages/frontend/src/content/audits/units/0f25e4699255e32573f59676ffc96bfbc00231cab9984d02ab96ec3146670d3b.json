@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0f25e4699255e32573f59676ffc96bfbc00231cab9984d02ab96ec3146670d3b",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 4,
+  "source": "struct VerifierRoute {\n    address verifier;\n    bool frozen;\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

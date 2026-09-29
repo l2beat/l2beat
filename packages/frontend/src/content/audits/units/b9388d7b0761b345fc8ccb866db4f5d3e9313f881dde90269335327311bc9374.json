@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b9388d7b0761b345fc8ccb866db4f5d3e9313f881dde90269335327311bc9374",
+  "name": "IERC6372",
+  "kind": "interface",
+  "lines": 12,
+  "source": "interface IERC6372 {\n    /**\n     * @dev Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting).\n     */\n    function clock() external view returns (uint48);\n\n    /**\n     * @dev Description of the clock\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function CLOCK_MODE() external view returns (string memory);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

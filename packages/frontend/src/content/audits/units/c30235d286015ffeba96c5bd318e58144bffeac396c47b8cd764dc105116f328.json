@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c30235d286015ffeba96c5bd318e58144bffeac396c47b8cd764dc105116f328",
+  "name": "DataStructures",
+  "kind": "library",
+  "lines": 62,
+  "source": "library DataStructures {\n    // docs:start:l1_actor\n    /**\n     * @notice Actor on L1.\n     * @param actor - The address of the actor\n     * @param chainId - The chainId of the actor\n     */\n    struct L1Actor {\n        address actor;\n        uint256 chainId;\n    }\n\n    // docs:end:l1_actor\n\n    // docs:start:l2_actor\n    /**\n     * @notice Actor on L2.\n     * @param actor - The aztec address of the actor\n     * @param version - Ahe Aztec instance the actor is on\n     */\n    struct L2Actor {\n        bytes32 actor;\n        uint256 version;\n    }\n\n    // docs:end:l2_actor\n\n    // docs:start:l1_to_l2_msg\n    /**\n     * @notice Struct containing a message from L1 to L2\n     * @param sender - The sender of the message\n     * @param recipient - The recipient of the message\n     * @param content - The content of the message (application specific) padded to bytes32 or hashed if larger.\n     * @param secretHash - The secret hash of the message (make it possible to hide when a specific message is consumed on\n     * L2).\n     * @param index - Global leaf index on the L1 to L2 messages tree.\n     */\n    struct L1ToL2Msg {\n        L1Actor sender;\n        L2Actor recipient;\n        bytes32 content;\n        bytes32 secretHash;\n        uint256 index;\n    }\n\n    // docs:end:l1_to_l2_msg\n\n    // docs:start:l2_to_l1_msg\n    /**\n     * @notice Struct containing a message from L2 to L1\n     * @param sender - The sender of the message\n     * @param recipient - The recipient of the message\n     * @param content - The content of the message (application specific) padded to bytes32 or hashed if larger.\n     * @dev Not to be confused with L2ToL1Message in Noir circuits\n     */\n    struct L2ToL1Msg {\n        DataStructures.L2Actor sender;\n        DataStructures.L1Actor recipient;\n        bytes32 content;\n    }\n    // docs:end:l2_to_l1_msg\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

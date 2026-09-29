@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "15dea94ae2fc464032902983d9d6dda70b7feebe135ac089d938e64259bac16c",
+  "name": "TickBitmap",
+  "kind": "library",
+  "lines": 68,
+  "source": "library TickBitmap {\n    /// @notice Computes the position in the mapping where the initialized bit for a tick lives\n    /// @param tick The tick for which to compute the position\n    /// @return wordPos The key in the mapping containing the word in which the bit is stored\n    /// @return bitPos The bit position in the word where the flag is stored\n    function position(int24 tick) private pure returns (int16 wordPos, uint8 bitPos) {\n        wordPos = int16(tick >> 8);\n        bitPos = uint8(tick % 256);\n    }\n\n    /// @notice Flips the initialized state for a given tick from false to true, or vice versa\n    /// @param self The mapping in which to flip the tick\n    /// @param tick The tick to flip\n    /// @param tickSpacing The spacing between usable ticks\n    function flipTick(mapping(int16 => uint256) storage self, int24 tick, int24 tickSpacing) internal {\n        require(tick % tickSpacing == 0); // ensure that the tick is spaced\n        (int16 wordPos, uint8 bitPos) = position(tick / tickSpacing);\n        uint256 mask = 1 << bitPos;\n        self[wordPos] ^= mask;\n    }\n\n    /// @notice Returns the next initialized tick contained in the same word (or adjacent word) as the tick that is either\n    /// to the left (less than or equal to) or right (greater than) of the given tick\n    /// @param self The mapping in which to compute the next initialized tick\n    /// @param tick The starting tick\n    /// @param tickSpacing The spacing between usable ticks\n    /// @param lte Whether to search for the next initialized tick to the left (less than or equal to the starting tick)\n    /// @return next The next initialized or uninitialized tick up to 256 ticks away from the current tick\n    /// @return initialized Whether the next tick is initialized, as the function only searches within up to 256 ticks\n    function nextInitializedTickWithinOneWord(\n        mapping(int16 => uint256) storage self,\n        int24 tick,\n        int24 tickSpacing,\n        bool lte\n    ) internal view returns (int24 next, bool initialized) {\n        int24 compressed = tick / tickSpacing;\n        if (tick < 0 && tick % tickSpacing != 0) {\n            compressed--;\n        } // round towards negative infinity\n\n        if (lte) {\n            (int16 wordPos, uint8 bitPos) = position(compressed);\n            // all the 1s at or to the right of the current bitPos\n            uint256 mask = (1 << bitPos) - 1 + (1 << bitPos);\n            uint256 masked = self[wordPos] & mask;\n\n            // if there are no initialized ticks to the right of or at the current tick, return rightmost in the word\n            initialized = masked != 0;\n            // overflow/underflow is possible, but prevented externally by limiting both tickSpacing and tick\n            next = initialized\n                ? (compressed - int24(bitPos - BitMath.mostSignificantBit(masked))) * tickSpacing\n                : (compressed - int24(bitPos)) * tickSpacing;\n        } else {\n            // start from the word of the next tick, since the current tick state doesn't matter\n            (int16 wordPos, uint8 bitPos) = position(compressed + 1);\n            // all the 1s at or to the left of the bitPos\n            uint256 mask = ~((1 << bitPos) - 1);\n            uint256 masked = self[wordPos] & mask;\n\n            // if there are no initialized ticks to the left of the current tick, return leftmost in the word\n            initialized = masked != 0;\n            // overflow/underflow is possible, but prevented externally by limiting both tickSpacing and tick\n            next = initialized\n                ? (compressed + 1 + int24(BitMath.leastSignificantBit(masked) - bitPos)) * tickSpacing\n                : (compressed + 1 + int24(type(uint8).max - bitPos)) * tickSpacing;\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 68,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "TickBitmap",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/TickBitmap.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/TickBitmap.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "manual review of position/flip logic and Echidna testing; nextInitializedTickWithinOneWord not explored",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

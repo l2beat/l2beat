@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "41c5088091a8cdfb00b1e37df44280eb5ee4af41dc5279a13fc74b99f8c2f736",
+  "name": "SignatureLib",
+  "kind": "library",
+  "lines": 18,
+  "source": "library SignatureLib {\n    /**\n     * @notice Verifies a signature, throws if the signature is invalid or empty\n     *\n     * @param _signature - The signature to verify\n     * @param _signer - The expected signer of the signature\n     * @param _digest - The digest that was signed\n     */\n    function verify(Signature memory _signature, address _signer, bytes32 _digest) internal pure returns (bool) {\n        address recovered = ECDSA.recover(_digest, _signature.v, _signature.r, _signature.s);\n        require(_signer == recovered, SignatureLib__InvalidSignature(_signer, recovered));\n        return true;\n    }\n\n    function isEmpty(Signature memory _signature) internal pure returns (bool) {\n        return _signature.v == 0;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 18,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "SignatureLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/shared/libraries/SignatureLib.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/shared/libraries/SignatureLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

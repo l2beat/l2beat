@@ -1,0 +1,911 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bdb76f40955f14e97ca6adbd4737526f177f145ba8cf4ed0717d7827be21a32c",
+  "name": "IL1MessageQueueV2",
+  "kind": "interface",
+  "lines": 109,
+  "source": "interface IL1MessageQueueV2 {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a new L1 => L2 transaction is appended to the queue.\n    /// @param sender The address of the sender account on L2.\n    /// @param target The address of the target account on L2.\n    /// @param value The ETH value transferred to the target account on L2.\n    /// @param queueIndex The index of this transaction in the message queue.\n    /// @param gasLimit The gas limit used on L2.\n    /// @param data The calldata passed to the target account on L2.\n    event QueueTransaction(\n        address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data\n    );\n\n    /// @notice Emitted when some L1 => L2 transactions are finalized on L1.\n    /// @param finalizedIndex The index of the last message finalized.\n    event FinalizedDequeuedTransaction(uint256 finalizedIndex);\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Return the start index of all messages in this contract.\n    function firstCrossDomainMessageIndex() external view returns (uint256);\n\n    /// @notice Return the start index of all unfinalized messages.\n    function nextUnfinalizedQueueIndex() external view returns (uint256);\n\n    /// @notice Return the index to be used for the next message.\n    /// @dev Also the total number of appended messages, including messages in `L1MessageQueueV1`.\n    function nextCrossDomainMessageIndex() external view returns (uint256);\n\n    /// @notice Return the message rolling hash of `queueIndex`.\n    /// @param queueIndex The index to query.\n    function getMessageRollingHash(uint256 queueIndex) external view returns (bytes32);\n\n    /// @notice Return the message enqueue timestamp of `queueIndex`.\n    /// @param queueIndex The index to query.\n    function getMessageEnqueueTimestamp(uint256 queueIndex) external view returns (uint256);\n\n    /// @notice Return the first unfinalized message enqueue timestamp.\n    function getFirstUnfinalizedMessageEnqueueTime() external view returns (uint256);\n\n    /// @notice Return the amount of ETH that should be paid for a cross-domain message.\n    /// @param gasLimit The gas limit required to complete the message relay on L2.\n    function estimateCrossDomainMessageFee(uint256 gasLimit) external view returns (uint256);\n\n    /// @notice Return the estimated base fee on L2.\n    function estimateL2BaseFee() external view returns (uint256);\n\n    /// @notice Return the intrinsic gas required by the provided cross-domain message.\n    /// @param data The calldata of the cross-domain message.\n    function calculateIntrinsicGasFee(bytes calldata data) external view returns (uint256);\n\n    /// @notice Compute the transaction hash of an L1 message.\n    /// @param sender The address of the sender account.\n    /// @param queueIndex The index of this transaction in the message queue.\n    /// @param value The ETH value transferred to the target account.\n    /// @param target The address of the target account.\n    /// @param gasLimit The gas limit provided.\n    /// @param data The calldata passed to the target account.\n    function computeTransactionHash(\n        address sender,\n        uint256 queueIndex,\n        uint256 value,\n        address target,\n        uint256 gasLimit,\n        bytes calldata data\n    ) external view returns (bytes32);\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Append a L1 => L2 cross-domain message to the message queue.\n    /// @param target The address of the target account on L2.\n    /// @param gasLimit The gas limit used on L2.\n    /// @param data The calldata passed to the target account on L2.\n    /// @dev This function can only be called by `L1ScrollMessenger`.\n    function appendCrossDomainMessage(address target, uint256 gasLimit, bytes calldata data) external;\n\n    /// @notice Append an enforced transaction to the message queue.\n    /// @param sender The address of the sender account on L2.\n    /// @param target The address of the target account on L2.\n    /// @param value The ETH value transferred to the target account on L2.\n    /// @param gasLimit The gas limit used on L2.\n    /// @param data The calldata passed to the target account on L2.\n    /// @dev This function can only be called by `EnforcedTxGateway`.\n    function appendEnforcedTransaction(\n        address sender,\n        address target,\n        uint256 value,\n        uint256 gasLimit,\n        bytes calldata data\n    ) external;\n\n    /// @notice Mark cross-domain messages as finalized.\n    /// @param nextUnfinalizedQueueIndex The index of the first unfinalized message after this call.\n    /// @dev This function can only be called by `ScrollChain`.\n    function finalizePoppedCrossDomainMessage(uint256 nextUnfinalizedQueueIndex) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 99,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "IL1MessageQueue",
+        "similarity": 0.658,
+        "reportId": "scroll/openzeppelin-scroll-diff-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
+        "commit": "f8b9da0fbabd9915b869f274aabc4d5dc0c28fa6",
+        "commitTimestamp": "2023-09-01T09:16:02Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/f8b9da0fbabd9915b869f274aabc4d5dc0c28fa6/contracts/src/L1/rollup/IL1MessageQueue.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff audit of pull request #893 (bitmap tracking of skipped/dropped messages) at its reviewed commit; only PR changes reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 46,
+        "ignoredRemoved": 54,
+        "unchanged": 99,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IL1MessageQueue {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IL1MessageQueueV2 {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Events *"
+              }
+            ]
+          },
+          {
+            "oldStart": 6,
+            "oldLines": 58,
+            "newStart": 6,
+            "newLines": 65,
+            "lines": [
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @notice Emitted when a new L1 => L2 transaction is appended to the queue."
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param sender The address of account who initiates the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param target The address of account who will receive the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @param value The value passed with the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @param queueIndex The index of this transaction in the queue.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @param gasLimit Gas limit required to complete the message relay on L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @param data The calldata of the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param sender The address of the sender account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param target The address of the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param value The ETH value transferred to the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param queueIndex The index of this transaction in the message queue.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @param gasLimit The gas limit used on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @param data The calldata passed to the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    event QueueTransaction("
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    );" },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @notice Emitted when some L1 => L2 transactions are included in L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @param startIndex The start index of messages popped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @param count The number of messages popped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @param skippedBitmap A bitmap indicates whether a message is skipped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @notice Emitted when some L1 => L2 transactions are finalized on L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param finalizedIndex The index of the last message finalized.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    event FinalizedDequeuedTransaction(uint256 finalizedIndex);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @notice Emitted when a message is dropped from L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param index The index of message dropped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    event DropTransaction(uint256 index);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 28, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 29, "newLine": 23, "text": "    /**" },
+              { "type": " ", "oldLine": 30, "newLine": 24, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "     * Public View Functions *"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "     *" },
+              { "type": " ", "oldLine": 33, "newLine": 27, "text": "     */" },
+              { "type": " ", "oldLine": 34, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @notice The start index of all pending inclusion messages.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    function pendingQueueIndex() external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @notice Return the start index of all messages in this contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function firstCrossDomainMessageIndex() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @notice Return the index of next appended message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @dev Also the total number of appended messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @notice Return the start index of all unfinalized messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function nextUnfinalizedQueueIndex() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @notice Return the index to be used for the next message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @dev Also the total number of appended messages, including messages in `L1MessageQueueV1`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 37,
+                "text": "    function nextCrossDomainMessageIndex() external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 38, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @notice Return the message of in `queueIndex`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @notice Return the message rolling hash of `queueIndex`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 40,
+                "text": "    /// @param queueIndex The index to query."
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function getCrossDomainMessage(uint256 queueIndex) external view returns (bytes32);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function getMessageRollingHash(uint256 queueIndex) external view returns (bytes32);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @notice Return the amount of ETH should pay for cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// @param gasLimit Gas limit required to complete the message relay on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @notice Return the message enqueue timestamp of `queueIndex`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    /// @param queueIndex The index to query.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    function getMessageEnqueueTimestamp(uint256 queueIndex) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Return the first unfinalized message enqueue timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    function getFirstUnfinalizedMessageEnqueueTime() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /// @notice Return the amount of ETH that should be paid for a cross-domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    /// @param gasLimit The gas limit required to complete the message relay on L2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 52,
+                "text": "    function estimateCrossDomainMessageFee(uint256 gasLimit) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 53, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @notice Return the amount of intrinsic gas fee should pay for cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @param _calldata The calldata of L1-initiated transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    function calculateIntrinsicGasFee(bytes memory _calldata) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @notice Return the estimated base fee on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function estimateL2BaseFee() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /// @notice Return the hash of a L1 message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// @param sender The address of sender.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @param queueIndex The queue index of this message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @param value The amount of Ether transfer to target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @param target The address of target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @notice Return the intrinsic gas required by the provided cross-domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    /// @param data The calldata of the cross-domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    function calculateIntrinsicGasFee(bytes calldata data) external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @notice Compute the transaction hash of an L1 message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param sender The address of the sender account.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @param queueIndex The index of this transaction in the message queue.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    /// @param value The ETH value transferred to the target account.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @param target The address of the target account.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 66,
+                "text": "    /// @param gasLimit The gas limit provided."
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /// @param data The calldata passed to target address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /// @param data The calldata passed to the target account.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 68,
+                "text": "    function computeTransactionHash("
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 69,
+                "text": "        address sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 70,
+                "text": "        uint256 queueIndex,"
+              }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 33,
+            "newStart": 74,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 74,
+                "text": "        bytes calldata data"
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 75,
+                "text": "    ) external view returns (bytes32);"
+              },
+              { "type": " ", "oldLine": 69, "newLine": 76, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    /// @notice Return whether the message is skipped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /// @param queueIndex The queue index of the message to check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    function isMessageSkipped(uint256 queueIndex) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 73, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @notice Return whether the message is dropped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// @param queueIndex The queue index of the message to check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    function isMessageDropped(uint256 queueIndex) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 78, "newLine": 77, "text": "    /**" },
+              { "type": " ", "oldLine": 79, "newLine": 78, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "     * Public Mutating Functions *"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 80, "text": "     *" },
+              { "type": " ", "oldLine": 82, "newLine": 81, "text": "     */" },
+              { "type": " ", "oldLine": 83, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// @notice Append a L1 to L2 message into this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    /// @param target The address of target contract to call in L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @param gasLimit The maximum gas should be used for relay this message in L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// @param data The calldata passed to target contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Append a L1 => L2 cross-domain message to the message queue.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @param target The address of the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// @param gasLimit The gas limit used on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @param data The calldata passed to the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    /// @dev This function can only be called by `L1ScrollMessenger`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 88,
+                "text": "    function appendCrossDomainMessage(address target, uint256 gasLimit, bytes calldata data) external;"
+              },
+              { "type": " ", "oldLine": 89, "newLine": 89, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /// @notice Append an enforced transaction to this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// @dev The address of sender should be an EOA.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// @param sender The address of sender who will initiate this transaction in L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /// @param target The address of target contract to call in L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @param value The value passed",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @param gasLimit The maximum gas should be used for this transaction in L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    /// @param data The calldata passed to target contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @notice Append an enforced transaction to the message queue.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param sender The address of the sender account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @param target The address of the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    /// @param value The ETH value transferred to the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    /// @param gasLimit The gas limit used on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    /// @param data The calldata passed to the target account on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    /// @dev This function can only be called by `EnforcedTxGateway`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 97,
+                "text": "    function appendEnforcedTransaction("
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 98,
+                "text": "        address sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "        address target,"
+              }
+            ]
+          },
+          {
+            "oldStart": 102,
+            "oldLines": 16,
+            "newStart": 102,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "        bytes calldata data"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 104, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// @notice Pop finalized messages from queue.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "    /// @dev We can pop at most 256 messages each time. And if the message is not skipped,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    ///      the corresponding entry will be cleared.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    /// @param startIndex The start index to pop.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @param count The number of messages to pop.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    /// @param skippedBitmap A bitmap indicates whether a message is skipped.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    function popCrossDomainMessage(uint256 startIndex, uint256 count, uint256 skippedBitmap) external;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 114, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    /// @notice Drop a skipped message from the queue.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    function dropCrossDomainMessage(uint256 index) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @notice Mark cross-domain messages as finalized.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /// @param nextUnfinalizedQueueIndex The index of the first unfinalized message after this call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @dev This function can only be called by `ScrollChain`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    function finalizePoppedCrossDomainMessage(uint256 nextUnfinalizedQueueIndex) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 117, "newLine": 109, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

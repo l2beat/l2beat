@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3c004351e9f3aad3ecfbc23cb7256773cb66d515fa70e2245845516a1ef8aa24",
+  "name": "AbstractFiatTokenV2",
+  "kind": "abstract",
+  "lines": 5,
+  "source": "abstract contract AbstractFiatTokenV2 is AbstractFiatTokenV1 {\n    function _increaseAllowance(address owner, address spender, uint256 increment) internal virtual;\n\n    function _decreaseAllowance(address owner, address spender, uint256 decrement) internal virtual;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

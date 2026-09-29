@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "88f861fffbbbb170b03aa83039b57d8f1cf4e305ead2e0f4bc3d5a36287e5cac",
+  "name": "GovernorBravoEvents",
+  "kind": "contract",
+  "lines": 49,
+  "source": "contract GovernorBravoEvents {\n    /// @notice An event emitted when a new proposal is created\n    event ProposalCreated(\n        uint256 id,\n        address proposer,\n        address[] targets,\n        uint256[] values,\n        string[] signatures,\n        bytes[] calldatas,\n        uint256 startBlock,\n        uint256 endBlock,\n        string description\n    );\n\n    /// @notice An event emitted when a vote has been cast on a proposal\n    /// @param voter The address which casted a vote\n    /// @param proposalId The proposal id which was voted on\n    /// @param support Support value for the vote. 0=against, 1=for, 2=abstain\n    /// @param votes Number of votes which were cast by the voter\n    /// @param reason The reason given for the vote by the voter\n    event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 votes, string reason);\n\n    /// @notice An event emitted when a proposal has been canceled\n    event ProposalCanceled(uint256 id);\n\n    /// @notice An event emitted when a proposal has been queued in the Timelock\n    event ProposalQueued(uint256 id, uint256 eta);\n\n    /// @notice An event emitted when a proposal has been executed in the Timelock\n    event ProposalExecuted(uint256 id);\n\n    /// @notice An event emitted when the voting delay is set\n    event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay);\n\n    /// @notice An event emitted when the voting period is set\n    event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod);\n\n    /// @notice Emitted when implementation is changed\n    event NewImplementation(address oldImplementation, address newImplementation);\n\n    /// @notice Emitted when proposal threshold is set\n    event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold);\n\n    /// @notice Emitted when pendingAdmin is changed\n    event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin);\n\n    /// @notice Emitted when pendingAdmin is accepted, which means admin is updated\n    event NewAdmin(address oldAdmin, address newAdmin);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

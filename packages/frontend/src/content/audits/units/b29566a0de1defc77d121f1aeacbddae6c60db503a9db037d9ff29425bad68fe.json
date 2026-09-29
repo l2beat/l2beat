@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b29566a0de1defc77d121f1aeacbddae6c60db503a9db037d9ff29425bad68fe",
+  "name": "ISP1VerifierGatewayEvents",
+  "kind": "interface",
+  "lines": 11,
+  "source": "interface ISP1VerifierGatewayEvents {\n    /// @notice Emitted when a verifier route is added.\n    /// @param selector The verifier selector that was added.\n    /// @param verifier The address of the verifier contract.\n    event RouteAdded(bytes4 selector, address verifier);\n\n    /// @notice Emitted when a verifier route is frozen.\n    /// @param selector The verifier selector that was frozen.\n    /// @param verifier The address of the verifier contract.\n    event RouteFrozen(bytes4 selector, address verifier);\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISP1VerifierGatewayEvents",
+        "similarity": 1,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/ISP1VerifierGateway.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/ISP1VerifierGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ISP1VerifierGatewayEvents",
+        "similarity": 1,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/ISP1VerifierGateway.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/ISP1VerifierGateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

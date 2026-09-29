@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5fe1c6d486d725514d8ef34270f2d5b13c4547e01f607e1fd602db98214c0e79",
+  "name": "Controller",
+  "kind": "contract",
+  "lines": 53,
+  "source": "contract Controller is Ownable {\n    /**\n     * @notice A controller manages a single worker address.\n     * controllers[controller] = worker\n     */\n    mapping(address => address) internal controllers;\n\n    event ControllerConfigured(address indexed _controller, address indexed _worker);\n    event ControllerRemoved(address indexed _controller);\n\n    /**\n     * @notice Ensures that caller is the controller of a non-zero worker\n     * address.\n     */\n    modifier onlyController() {\n        require(controllers[msg.sender] != address(0), \"The value of controllers[msg.sender] must be non-zero\");\n        _;\n    }\n\n    /**\n     * @notice Gets the worker at address _controller.\n     */\n    function getWorker(address _controller) external view returns (address) {\n        return controllers[_controller];\n    }\n\n    // onlyOwner functions\n\n    /**\n     * @notice Configure a controller with the given worker.\n     * @param _controller The controller to be configured with a worker.\n     * @param _worker The worker to be set for the newly configured controller.\n     * _worker must not be a non-zero address. To disable a worker,\n     * use removeController instead.\n     */\n    function configureController(address _controller, address _worker) public onlyOwner {\n        require(_controller != address(0), \"Controller must be a non-zero address\");\n        require(_worker != address(0), \"Worker must be a non-zero address\");\n        controllers[_controller] = _worker;\n        emit ControllerConfigured(_controller, _worker);\n    }\n\n    /**\n     * @notice disables a controller by setting its worker to address(0).\n     * @param _controller The controller to disable.\n     */\n    function removeController(address _controller) public onlyOwner {\n        require(_controller != address(0), \"Controller must be a non-zero address\");\n        require(controllers[_controller] != address(0), \"Worker must be a non-zero address\");\n        controllers[_controller] = address(0);\n        emit ControllerRemoved(_controller);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

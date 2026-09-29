@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c59b7285cdaaf02c1f143a80eeeb724a59f792549c5ba52155730672933acecc",
+  "name": "GovernorBravoDelegator",
+  "kind": "contract",
+  "lines": 78,
+  "source": "contract GovernorBravoDelegator is GovernorBravoDelegatorStorage, GovernorBravoEvents {\n    constructor(\n        address timelock_,\n        address uni_,\n        address admin_,\n        address implementation_,\n        uint256 votingPeriod_,\n        uint256 votingDelay_,\n        uint256 proposalThreshold_\n    ) public {\n        // Admin set to msg.sender for initialization\n        admin = msg.sender;\n\n        delegateTo(\n            implementation_,\n            abi.encodeWithSignature(\n                \"initialize(address,address,uint256,uint256,uint256)\",\n                timelock_,\n                uni_,\n                votingPeriod_,\n                votingDelay_,\n                proposalThreshold_\n            )\n        );\n\n        _setImplementation(implementation_);\n\n        admin = admin_;\n    }\n\n    /**\n     * @notice Called by the admin to update the implementation of the delegator\n     * @param implementation_ The address of the new implementation for delegation\n     */\n    function _setImplementation(address implementation_) public {\n        require(msg.sender == admin, \"GovernorBravoDelegator::_setImplementation: admin only\");\n        require(\n            implementation_ != address(0), \"GovernorBravoDelegator::_setImplementation: invalid implementation address\"\n        );\n\n        address oldImplementation = implementation;\n        implementation = implementation_;\n\n        emit NewImplementation(oldImplementation, implementation);\n    }\n\n    /**\n     * @notice Internal method to delegate execution to another contract\n     * @dev It returns to the external caller whatever the implementation returns or forwards reverts\n     * @param callee The contract to delegatecall\n     * @param data The raw data to delegatecall\n     */\n    function delegateTo(address callee, bytes memory data) internal {\n        (bool success, bytes memory returnData) = callee.delegatecall(data);\n        assembly {\n            if eq(success, 0) { revert(add(returnData, 0x20), returndatasize) }\n        }\n    }\n\n    /**\n     * @dev Delegates execution to an implementation contract.\n     * It returns to the external caller whatever the implementation returns\n     * or forwards reverts.\n     */\n    function() external payable {\n        // delegate all other functions to current implementation\n        (bool success,) = implementation.delegatecall(msg.data);\n\n        assembly {\n            let free_mem_ptr := mload(0x40)\n            returndatacopy(free_mem_ptr, 0, returndatasize)\n\n            switch success\n            case 0 { revert(free_mem_ptr, returndatasize) }\n            default { return(free_mem_ptr, returndatasize) }\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b074b0a2fe5601d33e5afbc410658d615c74e2d6f4c132b60555212cdec511fc",
+  "name": "GSECore",
+  "kind": "contract",
+  "lines": 539,
+  "source": "contract GSECore is IGSECore, Ownable {\n    using AddressSnapshotLib for SnapshottedAddressSet;\n    using SafeCast for uint256;\n    using SafeCast for uint224;\n    using Checkpoints for Checkpoints.Trace224;\n    using DepositDelegationLib for DepositAndDelegationAccounting;\n    using SafeERC20 for IERC20;\n\n    /**\n     * Create a special \"bonus\" address for use by the latest rollup.\n     * This is a convenience mechanism to allow attesters to always be staked on the latest rollup.\n     *\n     * As far as terminology, the GSE tracks deposits and voting/delegation data for \"instances\",\n     * and an \"instance\" is either the address of a \"true\" rollup contract which was added via `addRollup`,\n     * or (ONLY IN THIS CONTRACT) this special \"bonus\" address, which has its own accounting.\n     *\n     * NB: in every other context, \"instance\" refers broadly to a specific instance of an aztec rollup contract\n     * (possibly inclusive of its family of related contracts e.g. Inbox, Outbox, etc.)\n     *\n     * Thus, this bonus address appears in `delegation` and `instances`, and from the perspective of the GSE,\n     * it is an instance (though it can never be in the list of rollups).\n     *\n     * Lower in the code, we use \"rollup\" if we know we're talking about a rollup (often msg.sender),\n     * and \"instance\" if we are talking about about either a rollup instance or the bonus instance.\n     *\n     * The latest rollup according to `rollups` may use the attesters and voting power\n     * from the BONUS_INSTANCE_ADDRESS as a \"bonus\" to their own.\n     *\n     * One invariant of the GSE is that the attesters available to any rollup instance must form a set.\n     * i.e. there must be no duplicates.\n     *\n     * Thus, for the latest rollup, there are two \"buckets\" of attesters available:\n     * - the attesters that are associated with the rollup's address\n     * - the attesters that are associated with the BONUS_INSTANCE_ADDRESS\n     *\n     * The GSE ensures that:\n     * - each bucket individually is a set\n     * - when you add these two buckets together, it is a set.\n     *\n     * For a rollup that is no longer the latest, the attesters available to it are the attesters that are\n     * associated with the rollup's address. In effect, when a rollup goes from being the latest to not being\n     * the latest, it loses all attesters that were associated with the bonus instance.\n     *\n     * In this way, the \"effective\" attesters/balance/etc for a rollup (at a point in time) is:\n     * - the rollup's bucket and the bonus bucket if the rollup was the latest at that point in time\n     * - only the rollup's bucket if the rollup was not the latest at that point in time\n     *\n     * Note further, that operations like deposit and withdraw are initiated by a rollup,\n     * but the \"affected instance\" address will be either the rollup's address or the BONUS_INSTANCE_ADDRESS;\n     * we will typically need to look at both instances to know what to do.\n     *\n     * NB: in a large way, the BONUS_INSTANCE_ADDRESS is the entire point of the GSE,\n     * otherwise the rollups would've managed their own attesters/delegation/etc.\n     */\n    address public constant BONUS_INSTANCE_ADDRESS = address(uint160(uint256(keccak256(\"bonus-instance\"))));\n\n    // External wrapper of the BN254 library to more easily allow gas limits.\n    Bn254LibWrapper internal immutable BN254_LIB_WRAPPER = new Bn254LibWrapper();\n\n    // The amount of ASSET needed to add an attester to the set\n    uint256 public immutable ACTIVATION_THRESHOLD;\n\n    // The amount of ASSET needed to keep an attester in the set, if the attester balance fall below this threshold\n    // the attester will be ejected from the set.\n    uint256 public immutable EJECTION_THRESHOLD;\n\n    // The asset used for sybil resistance and power in governance. Must match the ASSET in `Governance` to work as\n    // intended.\n    IERC20 public immutable ASSET;\n\n    // The GSE's history of rollups.\n    Checkpoints.Trace224 internal rollups;\n    // Mapping from instance address to its historical attester information.\n    mapping(address instanceAddress => InstanceAttesterRegistry instance) internal instances;\n\n    // Global attester information\n    mapping(address attester => AttesterConfig config) internal configOf;\n    // Mapping from the hashed public key in G1 of BN254 to the keys are registered.\n    mapping(bytes32 hashedPK1 => bool isRegistered) public ownedPKs;\n\n    /**\n     * Contains state for:\n     * checkpointed total supply\n     * instance => {\n     *   checkpointed supply\n     *   attester => { balance, delegatee }\n     * }\n     * delegatee => {\n     *   checkpointed voting power\n     *   proposal ID => { power used }\n     * }\n     */\n    DepositAndDelegationAccounting internal delegation;\n    Governance internal governance;\n\n    // Gas limit for proof of possession validation.\n    //\n    // Must exceed the happy path gas consumption to ensure deposits succeed.\n    // Acts as a cap on unhappy path gas usage to prevent excessive consumption.\n    //\n    // - Happy path average: 150K gas\n    // - Buffer for loop: 50K gas\n    // - Buffer for opcode cost changes: 50K gas\n    //\n    // WARNING: If set below happy path requirements, all deposits will fail.\n    // Governance can adjust this value via proposal.\n    uint64 public proofOfPossessionGasLimit = 250_000;\n\n    /**\n     * @dev enforces that the caller is a registered rollup.\n     */\n    modifier onlyRollup() {\n        require(isRollupRegistered(msg.sender), Errors.GSE__NotRollup(msg.sender));\n        _;\n    }\n\n    /**\n     * @param __owner - The owner of the GSE.\n     *                  Initially a deployer to allow adding an initial rollup, then handed over to governance.\n     * @param _asset - The ERC20 token asset used in governance and for sybil resistance.\n     *                 This token is deposited by attesters to gain voting power in governance\n     *                 (ratio of voting power to staked amount is 1:1).\n     * @param _activationThreshold - The amount of asset required to deposit an attester on the rollup.\n     * @param _ejectionThreshold - The minimum amount of asset required to be in the set to be considered an attester.\n     *                        If the balance falls below this threshold, the attester is ejected from the set.\n     */\n    constructor(address __owner, IERC20 _asset, uint256 _activationThreshold, uint256 _ejectionThreshold)\n        Ownable(__owner)\n    {\n        ASSET = _asset;\n        ACTIVATION_THRESHOLD = _activationThreshold;\n        EJECTION_THRESHOLD = _ejectionThreshold;\n        instances[BONUS_INSTANCE_ADDRESS].exists = true;\n    }\n\n    function setGovernance(Governance _governance) external override(IGSECore) onlyOwner {\n        require(address(governance) == address(0), Errors.GSE__GovernanceAlreadySet());\n        governance = _governance;\n    }\n\n    function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit) external override(IGSECore) onlyOwner {\n        proofOfPossessionGasLimit = _proofOfPossessionGasLimit;\n    }\n\n    /**\n     * @notice  Adds another rollup to the instances, which is the new latest rollup.\n     *          Only callable by the owner (usually governance) and only when the rollup is not already in the set\n     *\n     * @dev rollups only have access to the \"bonus instance\" while they are the most recent rollup.\n     *\n     * @dev The GSE only supports adding rollups, not removing them. If a rollup becomes compromised, governance can\n     * simply add a new rollup and the bonus instance mechanism ensures a smooth transition by allowing the new rollup\n     * to immediately inherit attesters.\n     *\n     * @dev Beware that multiple calls to `addRollup` at the same `block.timestamp` will override each other and only\n     * the last will be in the `rollups`.\n     *\n     * @param _rollup - The address of the rollup to add\n     */\n    function addRollup(address _rollup) external override(IGSECore) onlyOwner {\n        require(_rollup != address(0), Errors.GSE__InvalidRollupAddress(_rollup));\n        require(!instances[_rollup].exists, Errors.GSE__RollupAlreadyRegistered(_rollup));\n        instances[_rollup].exists = true;\n        rollups.push(block.timestamp.toUint32(), uint224(uint160(_rollup)));\n    }\n\n    /**\n     * @notice Deposits a new attester\n     *\n     * @dev msg.sender must be a registered rollup.\n     *\n     * @dev Transfers ASSET from msg.sender to the GSE, and then into Governance.\n     *\n     * @dev if _moveWithLatestRollup is true, then msg.sender must be the latest rollup.\n     *\n     * @dev An attester configuration is registered globally to avoid BLS troubles when moving stake.\n     *\n     * Suppose the registered rollups are A, then B, then C, so C's effective attesters are\n     * those associated with C and the bonus address.\n     *\n     * Alice may come along now and deposit on A or B, with _moveWithLatestRollup=false in either case.\n     *\n     * For depositing into C, she can deposit *either* with _moveWithLatestRollup = true OR false.\n     * If she deposits with _moveWithLatestRollup = false, then she is associated with C's address.\n     * If she deposits with _moveWithLatestRollup = true, then she is associated with the bonus address.\n     *\n     * Suppose she deposits with _moveWithLatestRollup = true, and a new rollup D is added to the rollups.\n     * Then her stake moves to D, and she is in the effective attesters of D.\n     *\n     * @param _attester     - The attester address on behalf of which the deposit is made.\n     * @param _withdrawer   - Address which the user wish to use to initiate a withdraw for the `_attester` and\n     *                        to update delegation with. The withdrawals are enforced by the rollup to which it is\n     *                        controlled, so it is practically a value for the rollup to use, meaning dishonest rollup\n     *                        can reject withdrawal attempts.\n     * @param _publicKeyInG1 - BLS public key for the attester in G1\n     * @param _publicKeyInG2 - BLS public key for the attester in G2\n     * @param _proofOfPossession - A proof of possessions for the private key corresponding _publicKey in G1 and G2\n     * @param _moveWithLatestRollup - Whether to deposit into the specific instance, or the bonus instance\n     */\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) external override(IGSECore) onlyRollup {\n        bool isMsgSenderLatestRollup = getLatestRollup() == msg.sender;\n\n        // If _moveWithLatestRollup is true, then msg.sender must be the latest rollup.\n        if (_moveWithLatestRollup) {\n            require(isMsgSenderLatestRollup, Errors.GSE__NotLatestRollup(msg.sender));\n        }\n\n        // Ensure that we are not already attesting on the rollup\n        require(!isRegistered(msg.sender, _attester), Errors.GSE__AlreadyRegistered(msg.sender, _attester));\n\n        // Ensure that if we are the latest rollup, we are not already attesting on the bonus instance.\n        if (isMsgSenderLatestRollup) {\n            require(\n                !isRegistered(BONUS_INSTANCE_ADDRESS, _attester),\n                Errors.GSE__AlreadyRegistered(BONUS_INSTANCE_ADDRESS, _attester)\n            );\n        }\n\n        // Set the recipient instance address, i.e. the one that will receive the attester.\n        // From above, we know that if we are here, and _moveWithLatestRollup is true,\n        // then msg.sender is the latest instance,\n        // but the user is targeting the bonus address.\n        // Otherwise, we use the msg.sender, which we know is a registered rollup\n        // thanks to the modifier.\n        address recipientInstance = _moveWithLatestRollup ? BONUS_INSTANCE_ADDRESS : msg.sender;\n\n        // Add the attester to the instance's checkpointed set of attesters.\n        require(\n            instances[recipientInstance].attesters.add(_attester),\n            Errors.GSE__AlreadyRegistered(recipientInstance, _attester)\n        );\n\n        _checkProofOfPossession(_attester, _publicKeyInG1, _publicKeyInG2, _proofOfPossession);\n\n        // This is the ONLY place where we set the configuration for an attester.\n        // This means that their withdrawer and public keys are set once, globally.\n        // If they exit, they must re-deposit with a new key.\n        configOf[_attester] = AttesterConfig({withdrawer: _withdrawer, publicKey: _publicKeyInG1});\n\n        delegation.delegate(recipientInstance, _attester, recipientInstance);\n        delegation.increaseBalance(recipientInstance, _attester, ACTIVATION_THRESHOLD);\n\n        ASSET.safeTransferFrom(msg.sender, address(this), ACTIVATION_THRESHOLD);\n\n        Governance gov = getGovernance();\n        ASSET.approve(address(gov), ACTIVATION_THRESHOLD);\n        gov.deposit(address(this), ACTIVATION_THRESHOLD);\n\n        emit Deposit(recipientInstance, _attester, _withdrawer);\n    }\n\n    /**\n     * @notice  Withdraws at least the amount specified.\n     *          If the leftover balance is less than the minimum deposit, the entire balance is withdrawn.\n     *\n     * @dev     To be used by a rollup to withdraw funds from the GSE. For example if slashing or\n     *          just withdrawing events happen, a rollup can use this function to withdraw the funds.\n     *          It looks in both the rollup instance and the bonus address for the attester.\n     *\n     * @dev     Note that all funds are returned to the rollup, so for slashing the rollup itself must\n     *          address the problem of \"what to do\" with the funds. And it must look at the returned amount\n     *          withdrawn and the bool.\n     *\n     * @param _attester - The attester to withdraw from.\n     * @param _amount   - The amount of staking asset to withdraw. Has 1:1 ratio with voting power.\n     *\n     * @return The actual amount withdrawn.\n     * @return True if attester is removed from set, false otherwise\n     * @return The id of the withdrawal at the governance\n     */\n    function withdraw(address _attester, uint256 _amount)\n        external\n        override(IGSECore)\n        onlyRollup\n        returns (uint256, bool, uint256)\n    {\n        // We need to figure out where the attester is effectively located\n        // we start by looking at the instance that is withdrawing the attester\n        address withdrawingInstance = msg.sender;\n        InstanceAttesterRegistry storage attesterRegistry = instances[msg.sender];\n        bool foundAttester = attesterRegistry.attesters.contains(_attester);\n\n        // If we haven't found the attester in the rollup instance, and we are latest rollup, go look in the \"bonus\"\n        // instance.\n        if (\n            !foundAttester && getLatestRollup() == msg.sender\n                && instances[BONUS_INSTANCE_ADDRESS].attesters.contains(_attester)\n        ) {\n            withdrawingInstance = BONUS_INSTANCE_ADDRESS;\n            attesterRegistry = instances[BONUS_INSTANCE_ADDRESS];\n            foundAttester = true;\n        }\n\n        require(foundAttester, Errors.GSE__NothingToExit(_attester));\n\n        uint256 balance = delegation.getBalanceOf(withdrawingInstance, _attester);\n        require(balance >= _amount, Errors.GSE__InsufficientBalance(balance, _amount));\n\n        // First assume we are only withdrawing the amount specified.\n        uint256 amountWithdrawn = _amount;\n        // If the balance after withdrawal is less than the ejection threshold,\n        // we will remove the attester from the instance.\n        bool isRemoved = balance - _amount < EJECTION_THRESHOLD;\n\n        // Note that the current implementation of the rollup does not allow for partial withdrawals,\n        // via `initiateWithdraw`, so a \"normal\" withdrawal will always remove the attester from the instance.\n        // However, if the attester is slashed, we might just reduce the balance.\n        if (isRemoved) {\n            require(attesterRegistry.attesters.remove(_attester), Errors.GSE__FailedToRemove(_attester));\n            amountWithdrawn = balance;\n\n            // When removing the user, remove the delegating as well.\n            delegation.undelegate(withdrawingInstance, _attester);\n\n            // NOTE\n            // We intentionally did not remove the attester config.\n            // Attester config is set ONCE when the attester is first seen by the GSE,\n            // and is shared across all instances.\n        }\n\n        // Decrease the balance of the attester in the instance.\n        // Move voting power from the attester's delegatee to address(0) (unless the delegatee is already address(0))\n        // Reduce the supply of the instance and the total supply.\n        delegation.decreaseBalance(withdrawingInstance, _attester, amountWithdrawn);\n\n        // The withdrawal contains a pending amount that may be claimed using the withdrawal ID when a delay enforced by\n        // the Governance contract has passed.\n        // Note that the rollup is the one that receives the funds when the withdrawal is claimed.\n        uint256 withdrawalId = getGovernance().initiateWithdraw(msg.sender, amountWithdrawn);\n\n        return (amountWithdrawn, isRemoved, withdrawalId);\n    }\n\n    /**\n     * @notice  A helper function to make it easy for users of the GSE to finalize\n     *          a pending exit in the governance.\n     *\n     *          Kept in here since it is already connected to Governance:\n     *          we don't want the rollup to have to deal with links to gov etc.\n     *\n     * @dev     Will be a no operation if the withdrawal is already collected.\n     *\n     * @param _withdrawalId - The id of the withdrawal\n     */\n    function finalizeWithdraw(uint256 _withdrawalId) external override(IGSECore) {\n        Governance gov = getGovernance();\n        if (!gov.getWithdrawal(_withdrawalId).claimed) {\n            gov.finalizeWithdraw(_withdrawalId);\n        }\n    }\n\n    /**\n     * @notice Make a proposal to Governance via `Governance.proposeWithLock`\n     *\n     * @dev It is required to expose this on the GSE, since it is assumed that only the GSE can hold\n     * power in Governance (see the comment at the top of Governance.sol).\n     *\n     * @dev Transfers governance's configured `lockAmount` of ASSET from msg.sender to the GSE,\n     * and then into Governance.\n     *\n     * @dev Immediately creates a withdrawal from Governance for the `lockAmount`.\n     *\n     * @dev The delay until the withdrawal may be finalized is equal to the current `lockDelay` in Governance.\n     *\n     * @param _payload - The IPayload address, which is a contract that contains the proposed actions to be executed by\n     * the governance.\n     * @param _to - The address that will receive the withdrawn funds when the withdrawal is finalized (see\n     * `finalizeWithdraw`)\n     *\n     * @return The id of the proposal\n     */\n    function proposeWithLock(IPayload _payload, address _to) external override(IGSECore) returns (uint256) {\n        Governance gov = getGovernance();\n        uint256 amount = gov.getConfiguration().proposeConfig.lockAmount;\n\n        ASSET.safeTransferFrom(msg.sender, address(this), amount);\n        ASSET.approve(address(gov), amount);\n\n        gov.deposit(address(this), amount);\n\n        return gov.proposeWithLock(_payload, _to);\n    }\n\n    /**\n     * @notice  Delegates the voting power of `_attester` at `_instance` to `_delegatee`\n     *\n     *          Only callable by the `withdrawer` for the given `_attester` at the given\n     *          `_instance`. This is to ensure that the depositor in poor mans delegation;\n     *          listing another entity as the `attester`, still controls his voting power,\n     *          even if someone else is running the node. Separately, it makes it simpler\n     *          to use cold-storage for more impactful actions.\n     *\n     * @dev The delegatee may use this voting power to vote on proposals in Governance.\n     *\n     * Note that voting power for a delegatee is timestamped. The delegatee must have this\n     * power before a proposal becomes \"active\" in order to use it.\n     * See `Governance.getProposalState` for more details.\n     *\n     * @param _instance   - The address of the rollup instance (or bonus instance address)\n     *                      to which the `_attester` deposit is pledged.\n     * @param _attester   - The address of the attester to delegate on behalf of\n     * @param _delegatee  - The delegatee that should receive the power\n     */\n    function delegate(address _instance, address _attester, address _delegatee) external override(IGSECore) {\n        require(isRollupRegistered(_instance), Errors.GSE__InstanceDoesNotExist(_instance));\n        address withdrawer = configOf[_attester].withdrawer;\n        require(msg.sender == withdrawer, Errors.GSE__NotWithdrawer(withdrawer, msg.sender));\n        delegation.delegate(_instance, _attester, _delegatee);\n    }\n\n    /**\n     * @notice  Votes at the governance using the power delegated to `msg.sender`\n     *\n     * @param _proposalId - The id of the proposal in the governance to vote on\n     * @param _amount     - The amount of voting power to use in the vote\n     *                      In the gov, it is possible to do a vote with partial power\n     * @param _support    - True if supporting the proposal, false otherwise.\n     */\n    function vote(uint256 _proposalId, uint256 _amount, bool _support) external override(IGSECore) {\n        _vote(msg.sender, _proposalId, _amount, _support);\n    }\n\n    /**\n     * @notice  Votes at the governance using the power delegated to the bonus instance.\n     *          Only callable by the rollup that was the latest rollup at the time of the proposal.\n     *\n     * @param _proposalId - The id of the proposal in the governance to vote on\n     * @param _amount     - The amount of voting power to use in the vote\n     *                      In the gov, it is possible to do a vote with partial power\n     */\n    function voteWithBonus(uint256 _proposalId, uint256 _amount, bool _support) external override(IGSECore) {\n        Timestamp ts = _pendingThrough(_proposalId);\n        require(msg.sender == getLatestRollupAt(ts), Errors.GSE__NotLatestRollup(msg.sender));\n        _vote(BONUS_INSTANCE_ADDRESS, _proposalId, _amount, _support);\n    }\n\n    function isRollupRegistered(address _instance) public view override(IGSECore) returns (bool) {\n        return instances[_instance].exists;\n    }\n\n    /**\n     * @notice  Lookup if the `_attester` is in the `_instance` attester set\n     *\n     * @param _instance   - The instance to look at\n     * @param _attester   - The attester to lookup\n     *\n     * @return  True if the `_attester` is in the set of `_instance`, false otherwise\n     */\n    function isRegistered(address _instance, address _attester) public view override(IGSECore) returns (bool) {\n        return instances[_instance].attesters.contains(_attester);\n    }\n\n    /**\n     * @notice  Get the address of latest instance\n     *\n     * @return  The address of the latest instance\n     */\n    function getLatestRollup() public view override(IGSECore) returns (address) {\n        return address(rollups.latest().toUint160());\n    }\n\n    /**\n     * @notice  Get the address of the instance that was latest at time `_timestamp`\n     *\n     * @param _timestamp  - The timestamp to lookup\n     *\n     * @return  The address of the latest instance at the time of lookup\n     */\n    function getLatestRollupAt(Timestamp _timestamp) public view override(IGSECore) returns (address) {\n        return address(rollups.upperLookup(Timestamp.unwrap(_timestamp).toUint32()).toUint160());\n    }\n\n    function getGovernance() public view override(IGSECore) returns (Governance) {\n        return governance;\n    }\n\n    /**\n     * @notice  Inner logic for the vote\n     *\n     * @dev     Fetches the timestamp where proposal becomes active, and use it for the voting power\n     *          of the `_voter`\n     *\n     * @param _voter      - The voter\n     * @param _proposalId - The proposal to vote on\n     * @param _amount     - The amount of power to use\n     * @param _support    - True to support the proposal, false otherwise\n     */\n    function _vote(address _voter, uint256 _proposalId, uint256 _amount, bool _support) internal {\n        Timestamp ts = _pendingThrough(_proposalId);\n        // Mark the power as spent within our delegation accounting.\n        delegation.usePower(_voter, _proposalId, ts, _amount);\n        // Vote on the proposal\n        getGovernance().vote(_proposalId, _amount, _support);\n    }\n\n    function _checkProofOfPossession(\n        address _attester,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession\n    ) internal virtual {\n        // Make sure the attester has not registered before\n        G1Point memory previouslyRegisteredPoint = configOf[_attester].publicKey;\n        require(\n            (previouslyRegisteredPoint.x == 0 && previouslyRegisteredPoint.y == 0),\n            Errors.GSE__CannotChangePublicKeys(previouslyRegisteredPoint.x, previouslyRegisteredPoint.y)\n        );\n\n        // Make sure the incoming point has not been seen before\n        // NOTE: we only need to check for the existence of Pk1, and not also for Pk2,\n        // as the Pk2 will be constrained to have the same underlying secret key as part of the proofOfPossession,\n        // so existence/correctness of Pk2 is implied by existence/correctness of Pk1.\n        bytes32 hashedIncomingPoint = keccak256(abi.encodePacked(_publicKeyInG1.x, _publicKeyInG1.y));\n        require((!ownedPKs[hashedIncomingPoint]), Errors.GSE__ProofOfPossessionAlreadySeen(hashedIncomingPoint));\n        ownedPKs[hashedIncomingPoint] = true;\n\n        // We validate the proof of possession using an external contract to limit gas potentially \"sacrificed\"\n        // in case of failure.\n        require(\n            BN254_LIB_WRAPPER.proofOfPossession{gas: proofOfPossessionGasLimit}(\n                _publicKeyInG1, _publicKeyInG2, _proofOfPossession\n            ),\n            Errors.GSE__InvalidProofOfPossession()\n        );\n    }\n\n    function _pendingThrough(uint256 _proposalId) internal view returns (Timestamp) {\n        // Directly compute pendingThrough for memory proposal\n        Proposal memory proposal = getGovernance().getProposal(_proposalId);\n        return proposal.creation + proposal.config.votingDelay;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 530,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GSECore",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/GSE.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/GSE.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 9,
+        "removed": 2,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 0,
+        "unchanged": 530,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 54,
+            "oldLines": 6,
+            "newStart": 54,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "    address public constant BONUS_INSTANCE_ADDRESS = address(uint160(uint256(keccak256(\"bonus-instance\"))));"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "" },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    // External wrapper of the BN254 library to more easily allow gas limits.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    Bn254LibWrapper internal immutable BN254_LIB_WRAPPER = new Bn254LibWrapper();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 60,
+                "text": "    // The amount of ASSET needed to add an attester to the set"
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 61,
+                "text": "    uint256 public immutable ACTIVATION_THRESHOLD;"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 62, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 73,
+            "oldLines": 7,
+            "newStart": 76,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 76,
+                "text": "    // Global attester information"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    mapping(address attester => AttesterConfig config) internal configOf;"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    // Mapping from the hashed public key in G1 of BN254 to the keys are registered."
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    mapping(bytes32 hashedPK1 => bool isRegistered) internal ownedPKs;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    mapping(bytes32 hashedPK1 => bool isRegistered) public ownedPKs;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 77, "newLine": 80, "text": "" },
+              { "type": " ", "oldLine": 78, "newLine": 81, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 82,
+                "text": "     * Contains state for:"
+              }
+            ]
+          },
+          {
+            "oldStart": 90,
+            "oldLines": 6,
+            "newStart": 93,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 93,
+                "text": "    DepositAndDelegationAccounting internal delegation;"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 94,
+                "text": "    Governance internal governance;"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 95, "text": "" },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    // Gas limit for proof of possession validation.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 97, "text": "    //", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    // Must exceed the happy path gas consumption to ensure deposits succeed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    // Acts as a cap on unhappy path gas usage to prevent excessive consumption.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    //",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    // - Happy path average: 150K gas",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    // - Buffer for loop: 50K gas",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    // - Buffer for opcode cost changes: 50K gas",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    //",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    // WARNING: If set below happy path requirements, all deposits will fail.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    // Governance can adjust this value via proposal.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    uint64 public proofOfPossessionGasLimit = 250_000;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 108, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 93, "newLine": 109, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 110,
+                "text": "     * @dev enforces that the caller is a registered rollup."
+              },
+              { "type": " ", "oldLine": 95, "newLine": 111, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 122,
+            "oldLines": 6,
+            "newStart": 138,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 138,
+                "text": "        governance = _governance;"
+              },
+              { "type": " ", "oldLine": 123, "newLine": 139, "text": "    }" },
+              { "type": " ", "oldLine": 124, "newLine": 140, "text": "" },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "    function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit) external override(IGSECore) onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        proofOfPossessionGasLimit = _proofOfPossessionGasLimit;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 144, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 145,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 146,
+                "text": "     * @notice  Adds another rollup to the instances, which is the new latest rollup."
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 147,
+                "text": "     *          Only callable by the owner (usually governance) and only when the rollup is not already in the set"
+              }
+            ]
+          },
+          {
+            "oldStart": 501,
+            "oldLines": 8,
+            "newStart": 521,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 501,
+                "newLine": 521,
+                "text": "        require((!ownedPKs[hashedIncomingPoint]), Errors.GSE__ProofOfPossessionAlreadySeen(hashedIncomingPoint));"
+              },
+              {
+                "type": " ",
+                "oldLine": 502,
+                "newLine": 522,
+                "text": "        ownedPKs[hashedIncomingPoint] = true;"
+              },
+              { "type": " ", "oldLine": 503, "newLine": 523, "text": "" },
+              {
+                "type": "+",
+                "newLine": 524,
+                "text": "        // We validate the proof of possession using an external contract to limit gas potentially \"sacrificed\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 525,
+                "text": "        // in case of failure.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 526,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 505,
+                "text": "            BN254Lib.proofOfPossession(_publicKeyInG1, _publicKeyInG2, _proofOfPossession),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 527,
+                "text": "            BN254_LIB_WRAPPER.proofOfPossession{gas: proofOfPossessionGasLimit}(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 528,
+                "text": "                _publicKeyInG1, _publicKeyInG2, _proofOfPossession",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 529,
+                "text": "            ),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 506,
+                "newLine": 530,
+                "text": "            Errors.GSE__InvalidProofOfPossession()"
+              },
+              {
+                "type": " ",
+                "oldLine": 507,
+                "newLine": 531,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 508, "newLine": 532, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

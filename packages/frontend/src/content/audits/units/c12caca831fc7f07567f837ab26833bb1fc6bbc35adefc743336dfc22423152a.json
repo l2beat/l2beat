@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c12caca831fc7f07567f837ab26833bb1fc6bbc35adefc743336dfc22423152a",
+  "name": "IScrollERC20Upgradeable",
+  "kind": "interface",
+  "lines": 24,
+  "source": "interface IScrollERC20Upgradeable is IERC20Upgradeable, IERC20PermitUpgradeable {\n    /// @notice Return the address of Gateway the token belongs to.\n    function gateway() external view returns (address);\n\n    /// @notice Return the address of counterpart token.\n    function counterpart() external view returns (address);\n\n    /// @dev ERC677 Standard, see https://github.com/ethereum/EIPs/issues/677\n    /// Defi can use this method to transfer L1/L2 token to L2/L1,\n    /// and deposit to L2/L1 contract in one transaction\n    function transferAndCall(address receiver, uint256 amount, bytes calldata data) external returns (bool success);\n\n    /// @notice Mint some token to recipient's account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _to The address of recipient.\n    /// @param _amount The amount of token to mint.\n    function mint(address _to, uint256 _amount) external;\n\n    /// @notice Mint some token from account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _from The address of account to burn token.\n    /// @param _amount The amount of token to mint.\n    function burn(address _from, uint256 _amount) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 24,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollERC20Upgradeable",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollERC20Upgradeable.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/token/IScrollERC20Upgradeable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f14dc4a467e1fc181fcdd472dfef8320de453a0f27b0baf071c93c4d9a67146a",
+  "name": "ECDSA",
+  "kind": "library",
+  "lines": 169,
+  "source": "library ECDSA {\n    enum RecoverError {\n        NoError,\n        InvalidSignature,\n        InvalidSignatureLength,\n        InvalidSignatureS\n    }\n\n    /**\n     * @dev The signature derives the `address(0)`.\n     */\n    error ECDSAInvalidSignature();\n\n    /**\n     * @dev The signature has an invalid length.\n     */\n    error ECDSAInvalidSignatureLength(uint256 length);\n\n    /**\n     * @dev The signature has an S value that is in the upper half order.\n     */\n    error ECDSAInvalidSignatureS(bytes32 s);\n\n    /**\n     * @dev Returns the address that signed a hashed message (`hash`) with `signature` or an error. This will not\n     * return address(0) without also returning an error description. Errors are documented using an enum (error type)\n     * and a bytes32 providing additional information about the error.\n     *\n     * If no error is returned, then the address can be used for verification purposes.\n     *\n     * The `ecrecover` EVM precompile allows for malleable (non-unique) signatures:\n     * this function rejects them by requiring the `s` value to be in the lower\n     * half order, and the `v` value to be either 27 or 28.\n     *\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\n     * verification to be secure: it is possible to craft signatures that\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\n     * this is by receiving a hash of the original message (which may otherwise\n     * be too long), and then calling {MessageHashUtils-toEthSignedMessageHash} on it.\n     *\n     * Documentation for signature generation:\n     * - with https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign[Web3.js]\n     * - with https://docs.ethers.io/v5/api/signer/#Signer-signMessage[ethers]\n     */\n    function tryRecover(bytes32 hash, bytes memory signature)\n        internal\n        pure\n        returns (address recovered, RecoverError err, bytes32 errArg)\n    {\n        if (signature.length == 65) {\n            bytes32 r;\n            bytes32 s;\n            uint8 v;\n            // ecrecover takes the signature parameters, and the only way to get them\n            // currently is to use assembly.\n            assembly (\"memory-safe\") {\n                r := mload(add(signature, 0x20))\n                s := mload(add(signature, 0x40))\n                v := byte(0, mload(add(signature, 0x60)))\n            }\n            return tryRecover(hash, v, r, s);\n        } else {\n            return (address(0), RecoverError.InvalidSignatureLength, bytes32(signature.length));\n        }\n    }\n\n    /**\n     * @dev Returns the address that signed a hashed message (`hash`) with\n     * `signature`. This address can then be used for verification purposes.\n     *\n     * The `ecrecover` EVM precompile allows for malleable (non-unique) signatures:\n     * this function rejects them by requiring the `s` value to be in the lower\n     * half order, and the `v` value to be either 27 or 28.\n     *\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\n     * verification to be secure: it is possible to craft signatures that\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\n     * this is by receiving a hash of the original message (which may otherwise\n     * be too long), and then calling {MessageHashUtils-toEthSignedMessageHash} on it.\n     */\n    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {\n        (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);\n        _throwError(error, errorArg);\n        return recovered;\n    }\n\n    /**\n     * @dev Overload of {ECDSA-tryRecover} that receives the `r` and `vs` short-signature fields separately.\n     *\n     * See https://eips.ethereum.org/EIPS/eip-2098[ERC-2098 short signatures]\n     */\n    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs)\n        internal\n        pure\n        returns (address recovered, RecoverError err, bytes32 errArg)\n    {\n        unchecked {\n            bytes32 s = vs & bytes32(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);\n            // We do not check for an overflow here since the shift operation results in 0 or 1.\n            uint8 v = uint8((uint256(vs) >> 255) + 27);\n            return tryRecover(hash, v, r, s);\n        }\n    }\n\n    /**\n     * @dev Overload of {ECDSA-recover} that receives the `r and `vs` short-signature fields separately.\n     */\n    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal pure returns (address) {\n        (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);\n        _throwError(error, errorArg);\n        return recovered;\n    }\n\n    /**\n     * @dev Overload of {ECDSA-tryRecover} that receives the `v`,\n     * `r` and `s` signature fields separately.\n     */\n    function tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s)\n        internal\n        pure\n        returns (address recovered, RecoverError err, bytes32 errArg)\n    {\n        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature\n        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines\n        // the valid range for s in (301): 0 < s < secp256k1n ÷ 2 + 1, and for v in (302): v ∈ {27, 28}. Most\n        // signatures from current libraries generate a unique signature with an s-value in the lower half order.\n        //\n        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value\n        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or\n        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept\n        // these malleable signatures as well.\n        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {\n            return (address(0), RecoverError.InvalidSignatureS, s);\n        }\n\n        // If the signature is valid (and not malleable), return the signer address\n        address signer = ecrecover(hash, v, r, s);\n        if (signer == address(0)) {\n            return (address(0), RecoverError.InvalidSignature, bytes32(0));\n        }\n\n        return (signer, RecoverError.NoError, bytes32(0));\n    }\n\n    /**\n     * @dev Overload of {ECDSA-recover} that receives the `v`,\n     * `r` and `s` signature fields separately.\n     */\n    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {\n        (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);\n        _throwError(error, errorArg);\n        return recovered;\n    }\n\n    /**\n     * @dev Optionally reverts with the corresponding custom error according to the `error` argument provided.\n     */\n    function _throwError(RecoverError error, bytes32 errorArg) private pure {\n        if (error == RecoverError.NoError) {\n            return; // no error: do nothing\n        } else if (error == RecoverError.InvalidSignature) {\n            revert ECDSAInvalidSignature();\n        } else if (error == RecoverError.InvalidSignatureLength) {\n            revert ECDSAInvalidSignatureLength(uint256(errorArg));\n        } else if (error == RecoverError.InvalidSignatureS) {\n            revert ECDSAInvalidSignatureS(errorArg);\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 157,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ECDSA",
+        "similarity": 0.946,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 12,
+        "removed": 4,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 2,
+        "unchanged": 157,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 42,
+            "oldLines": 15,
+            "newStart": 42,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "     * - with https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign[Web3.js]"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     * - with https://docs.ethers.io/v5/api/signer/#Signer-signMessage[ethers]"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 44, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError, bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    function tryRecover(bytes32 hash, bytes memory signature)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        returns (address recovered, RecoverError err, bytes32 errArg)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 49, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 50,
+                "text": "        if (signature.length == 65) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 51,
+                "text": "            bytes32 r;"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 52,
+                "text": "            bytes32 s;"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 53,
+                "text": "            uint8 v;"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 54,
+                "text": "            // ecrecover takes the signature parameters, and the only way to get them"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 55,
+                "text": "            // currently is to use assembly."
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "            assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "            assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 57,
+                "text": "                r := mload(add(signature, 0x20))"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 58,
+                "text": "                s := mload(add(signature, 0x40))"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 59,
+                "text": "                v := byte(0, mload(add(signature, 0x60)))"
+              }
+            ]
+          },
+          {
+            "oldStart": 84,
+            "oldLines": 9,
+            "newStart": 87,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 84, "newLine": 87, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 88,
+                "text": "     * @dev Overload of {ECDSA-tryRecover} that receives the `r` and `vs` short-signature fields separately."
+              },
+              { "type": " ", "oldLine": 86, "newLine": 89, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "     * See https://eips.ethereum.org/EIPS/eip-2098[EIP-2098 short signatures]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "     * See https://eips.ethereum.org/EIPS/eip-2098[ERC-2098 short signatures]",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 88, "newLine": 91, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs) internal pure returns (address, RecoverError, bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        returns (address recovered, RecoverError err, bytes32 errArg)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 96, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 97,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 98,
+                "text": "            bytes32 s = vs & bytes32(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 99,
+                "text": "            // We do not check for an overflow here since the shift operation results in 0 or 1."
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 118,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 118,
+                "text": "    function tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s)"
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 119,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 120,
+                "text": "        pure"
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        returns (address, RecoverError, bytes32)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        returns (address recovered, RecoverError err, bytes32 errArg)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 115, "newLine": 122, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 123,
+                "text": "        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 124,
+                "text": "        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

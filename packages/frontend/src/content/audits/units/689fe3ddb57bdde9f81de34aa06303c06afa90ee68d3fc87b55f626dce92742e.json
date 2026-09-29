@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "689fe3ddb57bdde9f81de34aa06303c06afa90ee68d3fc87b55f626dce92742e",
+  "name": "ScrollGatewayBase",
+  "kind": "abstract",
+  "lines": 103,
+  "source": "abstract contract ScrollGatewayBase is ReentrancyGuardUpgradeable, OwnableUpgradeable, IScrollGateway {\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @inheritdoc IScrollGateway\n    address public immutable override counterpart;\n\n    /// @inheritdoc IScrollGateway\n    address public immutable override router;\n\n    /// @inheritdoc IScrollGateway\n    address public immutable override messenger;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @dev The storage slot used as counterpart gateway contract, which is deprecated now.\n    address private __counterpart;\n\n    /// @dev The storage slot used as gateway router contract, which is deprecated now.\n    address private __router;\n\n    /// @dev The storage slot used as scroll messenger contract, which is deprecated now.\n    address private __messenger;\n\n    /// @dev The storage slot used as token rate limiter contract, which is deprecated now.\n    address private __rateLimiter;\n\n    /// @dev The storage slots for future usage.\n    uint256[46] private __gap;\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n    modifier onlyCallByCounterpart() {\n        // check caller is messenger\n        if (_msgSender() != messenger) {\n            revert ErrorCallerIsNotMessenger();\n        }\n\n        // check cross domain caller is counterpart gateway\n        if (counterpart != IScrollMessenger(messenger).xDomainMessageSender()) {\n            revert ErrorCallerIsNotCounterpartGateway();\n        }\n        _;\n    }\n\n    modifier onlyInDropContext() {\n        // check caller is messenger\n        if (_msgSender() != messenger) {\n            revert ErrorCallerIsNotMessenger();\n        }\n\n        // check we are dropping message in ScrollMessenger.\n        if (ScrollConstants.DROP_XDOMAIN_MESSAGE_SENDER != IScrollMessenger(messenger).xDomainMessageSender()) {\n            revert ErrorNotInDropMessageContext();\n        }\n        _;\n    }\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _counterpart, address _router, address _messenger) {\n        if (_counterpart == address(0) || _messenger == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        counterpart = _counterpart;\n        router = _router;\n        messenger = _messenger;\n    }\n\n    function _initialize(address, address, address) internal {\n        ReentrancyGuardUpgradeable.__ReentrancyGuard_init();\n        OwnableUpgradeable.__Ownable_init();\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to forward calldata to target contract.\n    /// @param _to The address of contract to call.\n    /// @param _data The calldata passed to the contract.\n    function _doCallback(address _to, bytes memory _data) internal {\n        if (_data.length > 0 && _to.code.length > 0) {\n            IScrollGatewayCallback(_to).onScrollGatewayCallback(_data);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 103,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ScrollGatewayBase",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/gateway/ScrollGatewayBase.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/libraries/gateway/ScrollGatewayBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    }
+  }
+}

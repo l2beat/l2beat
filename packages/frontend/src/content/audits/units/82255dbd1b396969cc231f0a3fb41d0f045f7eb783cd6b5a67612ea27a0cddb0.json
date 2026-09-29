@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "82255dbd1b396969cc231f0a3fb41d0f045f7eb783cd6b5a67612ea27a0cddb0",
+  "name": "SelfPermit",
+  "kind": "abstract",
+  "lines": 41,
+  "source": "abstract contract SelfPermit is ISelfPermit {\n    /// @inheritdoc ISelfPermit\n    function selfPermit(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        public\n        payable\n        override\n    {\n        IERC20Permit(token).permit(msg.sender, address(this), value, deadline, v, r, s);\n    }\n\n    /// @inheritdoc ISelfPermit\n    function selfPermitIfNecessary(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        external\n        payable\n        override\n    {\n        if (IERC20(token).allowance(msg.sender, address(this)) < value) {\n            selfPermit(token, value, deadline, v, r, s);\n        }\n    }\n\n    /// @inheritdoc ISelfPermit\n    function selfPermitAllowed(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)\n        public\n        payable\n        override\n    {\n        IERC20PermitAllowed(token).permit(msg.sender, address(this), nonce, expiry, true, v, r, s);\n    }\n\n    /// @inheritdoc ISelfPermit\n    function selfPermitAllowedIfNecessary(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)\n        external\n        payable\n        override\n    {\n        if (IERC20(token).allowance(msg.sender, address(this)) < type(uint256).max) {\n            selfPermitAllowed(token, nonce, expiry, v, r, s);\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

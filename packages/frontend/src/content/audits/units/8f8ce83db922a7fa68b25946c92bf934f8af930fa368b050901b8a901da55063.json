@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f8ce83db922a7fa68b25946c92bf934f8af930fa368b050901b8a901da55063",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 8,
+  "source": "struct PartialDelegation {\n    address _delegatee;\n    uint96 _numerator;\n}\nstruct DelegationAdjustment {\n    address _delegatee;\n    uint208 _amount;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

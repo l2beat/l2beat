@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84e515a2da3e7029558cd0fe7695d93d763a1e27e0a46ab79a4c2e29830403ff",
+  "name": "LibFacet",
+  "kind": "library",
+  "lines": 58,
+  "source": "library LibFacet {\n    using LibRLP for LibRLP.List;\n\n    address constant facetInboxAddress = 0x00000000000000000000000000000000000FacE7;\n    bytes32 constant facetEventSignature = 0x00000000000000000000000000000000000000000000000000000000000face7;\n    uint8 constant facetTxType = 0x46;\n\n    function sendFacetTransaction(uint256 gasLimit, bytes memory data) internal {\n        sendFacetTransaction({to: bytes(\"\"), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});\n    }\n\n    function sendFacetTransaction(address to, uint256 gasLimit, bytes memory data) internal {\n        sendFacetTransaction({to: abi.encodePacked(to), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});\n    }\n\n    function prepareFacetTransaction(\n        bytes memory to,\n        uint256 value,\n        uint256 gasLimit,\n        bytes memory data,\n        bytes memory mineBoost\n    ) internal view returns (bytes memory) {\n        uint256 chainId;\n\n        if (block.chainid == 1) {\n            chainId = 0xface7;\n        } else if (block.chainid == 11155111) {\n            chainId = 0xface7a;\n        } else {\n            revert(\"Unsupported chainId\");\n        }\n\n        LibRLP.List memory list;\n\n        list.p(chainId);\n        list.p(to);\n        list.p(value);\n        list.p(gasLimit);\n        list.p(data);\n        list.p(mineBoost);\n        return abi.encodePacked(facetTxType, list.encode());\n    }\n\n    function sendFacetTransaction(\n        bytes memory to,\n        uint256 value,\n        uint256 gasLimit,\n        bytes memory data,\n        bytes memory mineBoost\n    ) internal {\n        bytes memory payload =\n            prepareFacetTransaction({to: to, value: value, gasLimit: gasLimit, data: data, mineBoost: mineBoost});\n\n        assembly {\n            log1(add(payload, 32), mload(payload), facetEventSignature)\n        }\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 49,
+      "match": {
+        "origin": "own",
+        "collection": "facet",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "LibFacet",
+        "similarity": 0.768,
+        "reportId": "facet/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/libraries/LibFacet.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/LibFacet.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 9,
+        "removed": 8,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 49,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 19,
+            "newStart": 6,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    uint8 constant facetTxType = 0x46;"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function sendFacetTransaction(uint256 gasLimit, bytes memory data) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        sendFacetTransaction({to: bytes(\"\"), value: 0, maxFeePerGas: 0, gasLimit: gasLimit, data: data});",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        sendFacetTransaction({to: bytes(\"\"), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    function sendFacetTransaction(address to, uint256 gasLimit, bytes memory data) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "        sendFacetTransaction({to: abi.encodePacked(to), value: 0, maxFeePerGas: 0, gasLimit: gasLimit, data: data});",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        sendFacetTransaction({to: abi.encodePacked(to), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "    }" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    function prepareFacetTransaction("
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        bytes memory to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        uint256 value,"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        uint256 maxFeePerGas,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        uint256 gasLimit,"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        bytes memory data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "        bytes memory data,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        bytes memory mineBoost",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    ) internal view returns (bytes memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        uint256 chainId;"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 21,
+            "newStart": 35,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        list.p(chainId);"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "        list.p(to);"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        list.p(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        list.p(maxFeePerGas);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 38,
+                "text": "        list.p(gasLimit);"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 39,
+                "text": "        list.p(data);"
+              },
+              { "type": "-", "oldLine": 41, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        list.p(mineBoost);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 41,
+                "text": "        return abi.encodePacked(facetTxType, list.encode());"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 44, "newLine": 43, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 44,
+                "text": "    function sendFacetTransaction("
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 45,
+                "text": "        bytes memory to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 46,
+                "text": "        uint256 value,"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        uint256 maxFeePerGas,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 47,
+                "text": "        uint256 gasLimit,"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        bytes memory data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        bytes memory data,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        bytes memory mineBoost",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 50,
+                "text": "    ) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        bytes memory payload = prepareFacetTransaction(to, value, maxFeePerGas, gasLimit, data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        bytes memory payload =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "            prepareFacetTransaction({to: to, value: value, gasLimit: gasLimit, data: data, mineBoost: mineBoost});",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "            log1(add(payload, 32), mload(payload), facetEventSignature)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

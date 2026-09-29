@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "750f180cf08e060ecca47607892647865aa8577f20ee018069bf507b06d5c609",
+  "name": "SwapMath",
+  "kind": "library",
+  "lines": 79,
+  "source": "library SwapMath {\n    /// @notice Computes the result of swapping some amount in, or amount out, given the parameters of the swap\n    /// @dev The fee, plus the amount in, will never exceed the amount remaining if the swap's `amountSpecified` is positive\n    /// @param sqrtRatioCurrentX96 The current sqrt price of the pool\n    /// @param sqrtRatioTargetX96 The price that cannot be exceeded, from which the direction of the swap is inferred\n    /// @param liquidity The usable liquidity\n    /// @param amountRemaining How much input or output amount is remaining to be swapped in/out\n    /// @param feePips The fee taken from the input amount, expressed in hundredths of a bip\n    /// @return sqrtRatioNextX96 The price after swapping the amount in/out, not to exceed the price target\n    /// @return amountIn The amount to be swapped in, of either token0 or token1, based on the direction of the swap\n    /// @return amountOut The amount to be received, of either token0 or token1, based on the direction of the swap\n    /// @return feeAmount The amount of input that will be taken as a fee\n    function computeSwapStep(\n        uint160 sqrtRatioCurrentX96,\n        uint160 sqrtRatioTargetX96,\n        uint128 liquidity,\n        int256 amountRemaining,\n        uint24 feePips\n    ) internal pure returns (uint160 sqrtRatioNextX96, uint256 amountIn, uint256 amountOut, uint256 feeAmount) {\n        bool zeroForOne = sqrtRatioCurrentX96 >= sqrtRatioTargetX96;\n        bool exactIn = amountRemaining >= 0;\n\n        if (exactIn) {\n            uint256 amountRemainingLessFee = FullMath.mulDiv(uint256(amountRemaining), 1e6 - feePips, 1e6);\n            amountIn = zeroForOne\n                ? SqrtPriceMath.getAmount0Delta(sqrtRatioTargetX96, sqrtRatioCurrentX96, liquidity, true)\n                : SqrtPriceMath.getAmount1Delta(sqrtRatioCurrentX96, sqrtRatioTargetX96, liquidity, true);\n            if (amountRemainingLessFee >= amountIn) {\n                sqrtRatioNextX96 = sqrtRatioTargetX96;\n            } else {\n                sqrtRatioNextX96 = SqrtPriceMath.getNextSqrtPriceFromInput(\n                    sqrtRatioCurrentX96, liquidity, amountRemainingLessFee, zeroForOne\n                );\n            }\n        } else {\n            amountOut = zeroForOne\n                ? SqrtPriceMath.getAmount1Delta(sqrtRatioTargetX96, sqrtRatioCurrentX96, liquidity, false)\n                : SqrtPriceMath.getAmount0Delta(sqrtRatioCurrentX96, sqrtRatioTargetX96, liquidity, false);\n            if (uint256(-amountRemaining) >= amountOut) {\n                sqrtRatioNextX96 = sqrtRatioTargetX96;\n            } else {\n                sqrtRatioNextX96 = SqrtPriceMath.getNextSqrtPriceFromOutput(\n                    sqrtRatioCurrentX96, liquidity, uint256(-amountRemaining), zeroForOne\n                );\n            }\n        }\n\n        bool max = sqrtRatioTargetX96 == sqrtRatioNextX96;\n\n        // get the input/output amounts\n        if (zeroForOne) {\n            amountIn = max && exactIn\n                ? amountIn\n                : SqrtPriceMath.getAmount0Delta(sqrtRatioNextX96, sqrtRatioCurrentX96, liquidity, true);\n            amountOut = max && !exactIn\n                ? amountOut\n                : SqrtPriceMath.getAmount1Delta(sqrtRatioNextX96, sqrtRatioCurrentX96, liquidity, false);\n        } else {\n            amountIn = max && exactIn\n                ? amountIn\n                : SqrtPriceMath.getAmount1Delta(sqrtRatioCurrentX96, sqrtRatioNextX96, liquidity, true);\n            amountOut = max && !exactIn\n                ? amountOut\n                : SqrtPriceMath.getAmount0Delta(sqrtRatioCurrentX96, sqrtRatioNextX96, liquidity, false);\n        }\n\n        // cap the output amount to not exceed the remaining output amount\n        if (!exactIn && amountOut > uint256(-amountRemaining)) {\n            amountOut = uint256(-amountRemaining);\n        }\n\n        if (exactIn && sqrtRatioNextX96 != sqrtRatioTargetX96) {\n            // we didn't reach the target, so take the remainder of the maximum input as fee\n            feeAmount = uint256(amountRemaining) - amountIn;\n        } else {\n            feeAmount = FullMath.mulDivRoundingUp(amountIn, feePips, 1e6 - feePips);\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 79,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "SwapMath",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/SwapMath.sol",
+        "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+        "commitTimestamp": "2021-03-16T19:28:04Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/7445e61f17a7c1233bcabcdc920f0473793f6d78/contracts/libraries/SwapMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "client-reported fix for Minor findings; auditor status left as Info (not marked verified)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

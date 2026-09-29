@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "061b3c9953de67e623b7901deb66d52f1b04641e9f5bdbc6c965c29bd340930d",
+  "name": "Bn254LibWrapper",
+  "kind": "contract",
+  "lines": 13,
+  "source": "contract Bn254LibWrapper is IBn254LibWrapper {\n    function proofOfPossession(\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession\n    ) external view override(IBn254LibWrapper) returns (bool) {\n        return BN254Lib.proofOfPossession(_publicKeyInG1, _publicKeyInG2, _proofOfPossession);\n    }\n\n    function g1ToDigestPoint(G1Point memory pk1) external view override(IBn254LibWrapper) returns (G1Point memory) {\n        return BN254Lib.g1ToDigestPoint(pk1);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

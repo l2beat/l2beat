@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5c799cc6723e5b5ddba9ee538a499585ec57c6b6f01488b9646b2ecdc59bc145",
+  "name": "FrontierLib",
+  "kind": "library",
+  "lines": 80,
+  "source": "library FrontierLib {\n    struct Forest {\n        mapping(uint256 index => bytes32 zero) zeros;\n    }\n\n    struct Tree {\n        uint256 nextIndex;\n        mapping(uint256 => bytes32) frontier;\n    }\n\n    function initialize(Forest storage _self, uint256 _height) internal {\n        _self.zeros[0] = bytes32(0);\n        for (uint256 i = 1; i <= _height; i++) {\n            _self.zeros[i] = Hash.sha256ToField(bytes.concat(_self.zeros[i - 1], _self.zeros[i - 1]));\n        }\n    }\n\n    function insertLeaf(Tree storage _self, bytes32 _leaf) internal returns (uint256) {\n        uint256 index = _self.nextIndex;\n        uint256 level = computeLevel(index);\n        bytes32 right = _leaf;\n        for (uint256 i = 0; i < level; i++) {\n            right = Hash.sha256ToField(bytes.concat(_self.frontier[i], right));\n        }\n        _self.frontier[level] = right;\n\n        _self.nextIndex++;\n\n        return index;\n    }\n\n    function root(Tree storage _self, Forest storage _forest, uint256 _height, uint256 _size)\n        internal\n        view\n        returns (bytes32)\n    {\n        uint256 next = _self.nextIndex;\n        if (next == 0) {\n            return _forest.zeros[_height];\n        }\n        if (next == _size) {\n            return _self.frontier[_height];\n        }\n\n        uint256 index = next - 1;\n        uint256 level = computeLevel(index);\n\n        // We should start at the highest frontier level with a left leaf\n        bytes32 temp = _self.frontier[level];\n\n        uint256 bits = index >> level;\n        for (uint256 i = level; i < _height; i++) {\n            bool isRight = bits & 1 == 1;\n            if (isRight) {\n                temp = Hash.sha256ToField(bytes.concat(_self.frontier[i], temp));\n            } else {\n                temp = Hash.sha256ToField(bytes.concat(temp, _forest.zeros[i]));\n            }\n            bits >>= 1;\n        }\n\n        return temp;\n    }\n\n    function isFull(Tree storage _self, uint256 _size) internal view returns (bool) {\n        return _self.nextIndex == _size;\n    }\n\n    function computeLevel(uint256 _leafIndex) internal pure returns (uint256) {\n        // The number of trailing ones is how many times in a row we are the right child.\n        // e.g., each time this happens we go another layer up to update the parent.\n        uint256 count = 0;\n        uint256 index = _leafIndex;\n        while (index & 1 == 1) {\n            count++;\n            index >>= 1;\n        }\n        return count;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

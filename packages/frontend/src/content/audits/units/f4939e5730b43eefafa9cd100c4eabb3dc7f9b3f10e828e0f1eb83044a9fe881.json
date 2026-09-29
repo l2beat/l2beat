@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f4939e5730b43eefafa9cd100c4eabb3dc7f9b3f10e828e0f1eb83044a9fe881",
+  "name": "ERC20VotesPartialDelegationUpgradeable",
+  "kind": "abstract",
+  "lines": 76,
+  "source": "abstract contract ERC20VotesPartialDelegationUpgradeable is\n    Initializable,\n    ERC20PermitUpgradeable,\n    VotesPartialDelegationUpgradeable\n{\n    /**\n     * @dev Total supply cap has been exceeded, introducing a risk of votes overflowing.\n     */\n    error ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap);\n\n    function __ERC20VotesPartialDelegation_init() internal onlyInitializing {}\n\n    function __ERC20VotesPartialDelegation_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev Maximum token supply. Defaults to `type(uint208).max` (2^208^ - 1).\n     *\n     * This maximum is enforced in {_update}. It limits the total supply of the token, which is otherwise a uint256,\n     * so that checkpoints can be stored in the Trace208 structure used by {{Votes}}. Increasing this value will not\n     * remove the underlying limitation, and will cause {_update} to fail because of a math overflow in\n     * {_transferVotingUnits}. An override could be used to further restrict the total supply (to a lower value) if\n     * additional logic requires it. When resolving override conflicts on this function, the minimum should be\n     * returned.\n     */\n\n    function _maxSupply() internal view virtual returns (uint256) {\n        return type(uint208).max;\n    }\n\n    /**\n     * @dev Move voting power when tokens are transferred.\n     *\n     * Emits one or more {IVotes-DelegateVotesChanged} events.\n     */\n    function _update(address from, address to, uint256 value) internal virtual override {\n        super._update(from, to, value);\n        if (from == address(0)) {\n            uint256 supply = totalSupply();\n            uint256 cap = _maxSupply();\n            if (supply > cap) {\n                revert ERC20ExceededSafeSupply(supply, cap);\n            }\n        }\n        _transferVotingUnits(from, to, value);\n    }\n\n    /**\n     * @dev Returns the voting units of an `account`.\n     *\n     * WARNING: Overriding this function may compromise the internal vote accounting.\n     * `ERC20Votes` assumes tokens map to voting units 1:1 and this is not easy to change.\n     */\n    function _getVotingUnits(address account) internal view virtual override returns (uint256) {\n        return balanceOf(account);\n    }\n\n    /**\n     * @dev Get number of checkpoints for `account`.\n     */\n    function numCheckpoints(address account) public view virtual returns (uint32) {\n        return _numCheckpoints(account);\n    }\n\n    /**\n     * @dev Get the `pos`-th checkpoint for `account`.\n     */\n    function checkpoints(address account, uint32 pos) public view virtual returns (Checkpoints.Checkpoint208 memory) {\n        return _checkpoints(account, pos);\n    }\n\n    /**\n     * @inheritdoc NoncesUpgradeable\n     */\n    function nonces(address owner) public view override(ERC20PermitUpgradeable, NoncesUpgradeable) returns (uint256) {\n        return NoncesUpgradeable.nonces(owner);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 66,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ERC20Votes",
+        "similarity": 0.726,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/ERC20Votes.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/extensions/ERC20Votes.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 10,
+        "removed": 1,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 3,
+        "unchanged": 66,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC20Votes is ERC20, Votes {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC20VotesPartialDelegationUpgradeable is",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    Initializable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ERC20PermitUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    VotesPartialDelegationUpgradeable",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "{", "ignored": false },
+              { "type": " ", "oldLine": 2, "newLine": 6, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 7,
+                "text": "     * @dev Total supply cap has been exceeded, introducing a risk of votes overflowing."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 8, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 9,
+                "text": "    error ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 10, "text": "" },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function __ERC20VotesPartialDelegation_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    function __ERC20VotesPartialDelegation_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 14, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 15,
+                "text": "     * @dev Maximum token supply. Defaults to `type(uint208).max` (2^208^ - 1)."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 16, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 17,
+                "text": "     * This maximum is enforced in {_update}. It limits the total supply of the token, which is otherwise a uint256,"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * so that checkpoints can be stored in the Trace208 structure used by {Votes}. Increasing this value will not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * so that checkpoints can be stored in the Trace208 structure used by {{Votes}}. Increasing this value will not",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 19,
+                "text": "     * remove the underlying limitation, and will cause {_update} to fail because of a math overflow in"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * {Votes-_transferVotingUnits}. An override could be used to further restrict the total supply (to a lower value) if",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * {_transferVotingUnits}. An override could be used to further restrict the total supply (to a lower value) if",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 21,
+                "text": "     * additional logic requires it. When resolving override conflicts on this function, the minimum should be"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 22,
+                "text": "     * returned."
+              },
+              { "type": " ", "oldLine": 16, "newLine": 23, "text": "     */" },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 25,
+                "text": "    function _maxSupply() internal view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 26,
+                "text": "        return type(uint208).max;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 27, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 21,
+            "oldLines": 7,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 21, "newLine": 29, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 30,
+                "text": "     * @dev Move voting power when tokens are transferred."
+              },
+              { "type": " ", "oldLine": 23, "newLine": 31, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * Emits a {IVotes-DelegateVotesChanged} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * Emits one or more {IVotes-DelegateVotesChanged} events.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 25, "newLine": 33, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 34,
+                "text": "    function _update(address from, address to, uint256 value) internal virtual override {"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 35,
+                "text": "        super._update(from, to, value);"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 4,
+            "newStart": 66,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 66,
+                "text": "    function checkpoints(address account, uint32 pos) public view virtual returns (Checkpoints.Checkpoint208 memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 67,
+                "text": "        return _checkpoints(account, pos);"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 68, "text": "    }" },
+              { "type": "+", "newLine": 69, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     * @inheritdoc NoncesUpgradeable",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    function nonces(address owner) public view override(ERC20PermitUpgradeable, NoncesUpgradeable) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        return NoncesUpgradeable.nonces(owner);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 75, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 61, "newLine": 76, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

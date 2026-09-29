@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1b4f3b7e9d11854c3240022f1de0ab5bd304e20f2ae8ff2705f6454b96440dae",
+  "name": "ERC20",
+  "kind": "abstract",
+  "lines": 283,
+  "source": "abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {\n    mapping(address account => uint256) private _balances;\n\n    mapping(address account => mapping(address spender => uint256)) private _allowances;\n\n    uint256 private _totalSupply;\n\n    string private _name;\n    string private _symbol;\n\n    /**\n     * @dev Sets the values for {name} and {symbol}.\n     *\n     * Both values are immutable: they can only be set once during construction.\n     */\n    constructor(string memory name_, string memory symbol_) {\n        _name = name_;\n        _symbol = symbol_;\n    }\n\n    /**\n     * @dev Returns the name of the token.\n     */\n    function name() public view virtual returns (string memory) {\n        return _name;\n    }\n\n    /**\n     * @dev Returns the symbol of the token, usually a shorter version of the\n     * name.\n     */\n    function symbol() public view virtual returns (string memory) {\n        return _symbol;\n    }\n\n    /**\n     * @dev Returns the number of decimals used to get its user representation.\n     * For example, if `decimals` equals `2`, a balance of `505` tokens should\n     * be displayed to a user as `5.05` (`505 / 10 ** 2`).\n     *\n     * Tokens usually opt for a value of 18, imitating the relationship between\n     * Ether and Wei. This is the default value returned by this function, unless\n     * it's overridden.\n     *\n     * NOTE: This information is only used for _display_ purposes: it in\n     * no way affects any of the arithmetic of the contract, including\n     * {IERC20-balanceOf} and {IERC20-transfer}.\n     */\n    function decimals() public view virtual returns (uint8) {\n        return 18;\n    }\n\n    /**\n     * @dev See {IERC20-totalSupply}.\n     */\n    function totalSupply() public view virtual returns (uint256) {\n        return _totalSupply;\n    }\n\n    /**\n     * @dev See {IERC20-balanceOf}.\n     */\n    function balanceOf(address account) public view virtual returns (uint256) {\n        return _balances[account];\n    }\n\n    /**\n     * @dev See {IERC20-transfer}.\n     *\n     * Requirements:\n     *\n     * - `to` cannot be the zero address.\n     * - the caller must have a balance of at least `value`.\n     */\n    function transfer(address to, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _transfer(owner, to, value);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-allowance}.\n     */\n    function allowance(address owner, address spender) public view virtual returns (uint256) {\n        return _allowances[owner][spender];\n    }\n\n    /**\n     * @dev See {IERC20-approve}.\n     *\n     * NOTE: If `value` is the maximum `uint256`, the allowance is not updated on\n     * `transferFrom`. This is semantically equivalent to an infinite approval.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     */\n    function approve(address spender, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _approve(owner, spender, value);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-transferFrom}.\n     *\n     * Skips emitting an {Approval} event indicating an allowance update. This is not\n     * required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve].\n     *\n     * NOTE: Does not update the allowance if the current allowance\n     * is the maximum `uint256`.\n     *\n     * Requirements:\n     *\n     * - `from` and `to` cannot be the zero address.\n     * - `from` must have a balance of at least `value`.\n     * - the caller must have allowance for ``from``'s tokens of at least\n     * `value`.\n     */\n    function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {\n        address spender = _msgSender();\n        _spendAllowance(from, spender, value);\n        _transfer(from, to, value);\n        return true;\n    }\n\n    /**\n     * @dev Moves a `value` amount of tokens from `from` to `to`.\n     *\n     * This internal function is equivalent to {transfer}, and can be used to\n     * e.g. implement automatic token fees, slashing mechanisms, etc.\n     *\n     * Emits a {Transfer} event.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _transfer(address from, address to, uint256 value) internal {\n        if (from == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        if (to == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(from, to, value);\n    }\n\n    /**\n     * @dev Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`\n     * (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding\n     * this function.\n     *\n     * Emits a {Transfer} event.\n     */\n    function _update(address from, address to, uint256 value) internal virtual {\n        if (from == address(0)) {\n            // Overflow check required: The rest of the code assumes that totalSupply never overflows\n            _totalSupply += value;\n        } else {\n            uint256 fromBalance = _balances[from];\n            if (fromBalance < value) {\n                revert ERC20InsufficientBalance(from, fromBalance, value);\n            }\n            unchecked {\n                // Overflow not possible: value <= fromBalance <= totalSupply.\n                _balances[from] = fromBalance - value;\n            }\n        }\n\n        if (to == address(0)) {\n            unchecked {\n                // Overflow not possible: value <= totalSupply or value <= fromBalance <= totalSupply.\n                _totalSupply -= value;\n            }\n        } else {\n            unchecked {\n                // Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256.\n                _balances[to] += value;\n            }\n        }\n\n        emit Transfer(from, to, value);\n    }\n\n    /**\n     * @dev Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).\n     * Relies on the `_update` mechanism\n     *\n     * Emits a {Transfer} event with `from` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _mint(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(address(0), account, value);\n    }\n\n    /**\n     * @dev Destroys a `value` amount of tokens from `account`, lowering the total supply.\n     * Relies on the `_update` mechanism.\n     *\n     * Emits a {Transfer} event with `to` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead\n     */\n    function _burn(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        _update(account, address(0), value);\n    }\n\n    /**\n     * @dev Sets `value` as the allowance of `spender` over the `owner`'s tokens.\n     *\n     * This internal function is equivalent to `approve`, and can be used to\n     * e.g. set automatic allowances for certain subsystems, etc.\n     *\n     * Emits an {Approval} event.\n     *\n     * Requirements:\n     *\n     * - `owner` cannot be the zero address.\n     * - `spender` cannot be the zero address.\n     *\n     * Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.\n     */\n    function _approve(address owner, address spender, uint256 value) internal {\n        _approve(owner, spender, value, true);\n    }\n\n    /**\n     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event.\n     *\n     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by\n     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any\n     * `Approval` event during `transferFrom` operations.\n     *\n     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to\n     * true using the following override:\n     *\n     * ```solidity\n     * function _approve(address owner, address spender, uint256 value, bool) internal virtual override {\n     *     super._approve(owner, spender, value, true);\n     * }\n     * ```\n     *\n     * Requirements are the same as {_approve}.\n     */\n    function _approve(address owner, address spender, uint256 value, bool emitEvent) internal virtual {\n        if (owner == address(0)) {\n            revert ERC20InvalidApprover(address(0));\n        }\n        if (spender == address(0)) {\n            revert ERC20InvalidSpender(address(0));\n        }\n        _allowances[owner][spender] = value;\n        if (emitEvent) {\n            emit Approval(owner, spender, value);\n        }\n    }\n\n    /**\n     * @dev Updates `owner`'s allowance for `spender` based on spent `value`.\n     *\n     * Does not update the allowance value in case of infinite allowance.\n     * Revert if not enough allowance is available.\n     *\n     * Does not emit an {Approval} event.\n     */\n    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {\n        uint256 currentAllowance = allowance(owner, spender);\n        if (currentAllowance < type(uint256).max) {\n            if (currentAllowance < value) {\n                revert ERC20InsufficientAllowance(spender, currentAllowance, value);\n            }\n            unchecked {\n                _approve(owner, spender, currentAllowance - value, false);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 283,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "ERC20",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/ERC20.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/ERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 5,
+        "unchanged": 283,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 12,
+            "newStart": 50,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        return 18;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * @dev See {IERC20-totalSupply}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 56,
+                "text": "    function totalSupply() public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 57,
+                "text": "        return _totalSupply;"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 59, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * @dev See {IERC20-balanceOf}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 63,
+                "text": "    function balanceOf(address account) public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 64,
+                "text": "        return _balances[account];"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 65, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 78,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @dev See {IERC20-allowance}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 84,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 85,
+                "text": "        return _allowances[owner][spender];"
+              },
+              { "type": " ", "oldLine": 80, "newLine": 86, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 10,
+            "newStart": 234,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 234,
+                "text": "     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 235, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 236,
+                "text": "     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation sets the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 238,
+                "text": "     * `Approval` event during `transferFrom` operations."
+              },
+              { "type": " ", "oldLine": 233, "newLine": 239, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the `transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 241,
+                "text": "     * true using the following override:"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 242, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 243,
+                "text": "     * ```solidity"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

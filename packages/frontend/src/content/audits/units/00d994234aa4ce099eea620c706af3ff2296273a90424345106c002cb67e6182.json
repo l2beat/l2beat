@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "00d994234aa4ce099eea620c706af3ff2296273a90424345106c002cb67e6182",
+  "name": "L2ScrollMessenger",
+  "kind": "contract",
+  "lines": 149,
+  "source": "contract L2ScrollMessenger is ScrollMessengerBase, IL2ScrollMessenger {\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of L2MessageQueue.\n    address public immutable messageQueue;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from L2 message hash to the timestamp when the message is sent.\n    mapping(bytes32 => uint256) public messageSendTimestamp;\n\n    /// @notice Mapping from L1 message hash to a boolean value indicating if the message has been successfully executed.\n    mapping(bytes32 => bool) public isL1MessageExecuted;\n\n    /// @dev The storage slots used by previous versions of this contract.\n    uint256[2] private __used;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _counterpart, address _messageQueue) ScrollMessengerBase(_counterpart) {\n        if (_messageQueue == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        messageQueue = _messageQueue;\n    }\n\n    function initialize(address) external initializer {\n        ScrollMessengerBase.__ScrollMessengerBase_init(address(0), address(0));\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IScrollMessenger\n    function sendMessage(address _to, uint256 _value, bytes memory _message, uint256 _gasLimit)\n        external\n        payable\n        override\n        whenNotPaused\n    {\n        _sendMessage(_to, _value, _message, _gasLimit);\n    }\n\n    /// @inheritdoc IScrollMessenger\n    function sendMessage(address _to, uint256 _value, bytes calldata _message, uint256 _gasLimit, address)\n        external\n        payable\n        override\n        whenNotPaused\n    {\n        _sendMessage(_to, _value, _message, _gasLimit);\n    }\n\n    /// @inheritdoc IL2ScrollMessenger\n    function relayMessage(address _from, address _to, uint256 _value, uint256 _nonce, bytes memory _message)\n        external\n        override\n        whenNotPaused\n    {\n        // It is impossible to deploy a contract with the same address, reentrance is prevented in nature.\n        require(AddressAliasHelper.undoL1ToL2Alias(_msgSender()) == counterpart, \"Caller is not L1ScrollMessenger\");\n\n        bytes32 _xDomainCalldataHash = keccak256(_encodeXDomainCalldata(_from, _to, _value, _nonce, _message));\n\n        require(!isL1MessageExecuted[_xDomainCalldataHash], \"Message was already successfully executed\");\n\n        _executeMessage(_from, _to, _value, _message, _xDomainCalldataHash);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to send cross domain message.\n    /// @param _to The address of account who receive the message.\n    /// @param _value The amount of ether passed when call target contract.\n    /// @param _message The content of the message.\n    /// @param _gasLimit Optional gas limit to complete the message relay on corresponding chain.\n    function _sendMessage(address _to, uint256 _value, bytes memory _message, uint256 _gasLimit)\n        internal\n        nonReentrant\n    {\n        require(msg.value == _value, \"msg.value mismatch\");\n\n        uint256 _nonce = L2MessageQueue(messageQueue).nextMessageIndex();\n        bytes32 _xDomainCalldataHash = keccak256(_encodeXDomainCalldata(_msgSender(), _to, _value, _nonce, _message));\n\n        // normally this won't happen, since each message has different nonce, but just in case.\n        require(messageSendTimestamp[_xDomainCalldataHash] == 0, \"Duplicated message\");\n        messageSendTimestamp[_xDomainCalldataHash] = block.timestamp;\n\n        L2MessageQueue(messageQueue).appendMessage(_xDomainCalldataHash);\n\n        emit SentMessage(_msgSender(), _to, _value, _nonce, _gasLimit, _message);\n    }\n\n    /// @dev Internal function to execute a L1 => L2 message.\n    /// @param _from The address of the sender of the message.\n    /// @param _to The address of the recipient of the message.\n    /// @param _value The msg.value passed to the message call.\n    /// @param _message The content of the message.\n    /// @param _xDomainCalldataHash The hash of the message.\n    function _executeMessage(\n        address _from,\n        address _to,\n        uint256 _value,\n        bytes memory _message,\n        bytes32 _xDomainCalldataHash\n    ) internal {\n        // @note check more `_to` address to avoid attack in the future when we add more gateways.\n        require(_to != messageQueue, \"Forbid to call message queue\");\n        _validateTargetAddress(_to);\n\n        // @note This usually will never happen, just in case.\n        require(_from != xDomainMessageSender, \"Invalid message sender\");\n\n        xDomainMessageSender = _from;\n        // solhint-disable-next-line avoid-low-level-calls\n        (bool success,) = _to.call{value: _value}(_message);\n        // reset value to refund gas.\n        xDomainMessageSender = ScrollConstants.DEFAULT_XDOMAIN_MESSAGE_SENDER;\n\n        if (success) {\n            isL1MessageExecuted[_xDomainCalldataHash] = true;\n            emit RelayedMessage(_xDomainCalldataHash);\n        } else {\n            emit FailedRelayedMessage(_xDomainCalldataHash);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 149,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2ScrollMessenger",
+        "similarity": 1,
+        "reportId": "scroll/trailofbits-scroll-feynman-upgrade",
+        "repository": "scroll-tech/scroll-contracts",
+        "path": "src/L2/L2ScrollMessenger.sol",
+        "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+        "commitTimestamp": "2025-06-26T17:12:11Z",
+        "url": "https://github.com/scroll-tech/scroll-contracts/blob/00e2a897db429eb4bc3918d1e40b410a68fb6eac/src/L2/L2ScrollMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff review 8e6a02b120d3a997f7c8e948b62bfb0e5b3ac185..00e2a897 (v2.0.0...feat-feynman-contract-changes) of Feynman upgrade changes only. Correctness and replay checks.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 149,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 135,
+            "oldLines": 8,
+            "newStart": 135,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 135, "newLine": 135, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 136,
+                "text": "        xDomainMessageSender = _from;"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls"
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        // no reentrancy risk, only alias(l1ScrollMessenger) can call relayMessage.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "        // slither-disable-next-line reentrancy-eth",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 138,
+                "text": "        (bool success,) = _to.call{value: _value}(_message);"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 139,
+                "text": "        // reset value to refund gas."
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 140,
+                "text": "        xDomainMessageSender = ScrollConstants.DEFAULT_XDOMAIN_MESSAGE_SENDER;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

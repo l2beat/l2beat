@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "42cabaf1d488adb4c48812225d29d17937d48bcd3d51f2c86b666b8ff176e564",
+  "name": "Proxy",
+  "kind": "abstract",
+  "lines": 50,
+  "source": "abstract contract Proxy {\n    /**\n     * @dev Delegates the current call to `implementation`.\n     *\n     * This function does not return to its internal call site, it will return directly to the external caller.\n     */\n    function _delegate(address implementation) internal virtual {\n        assembly {\n            // Copy msg.data. We take full control of memory in this inline assembly\n            // block because it will not return to Solidity code. We overwrite the\n            // Solidity scratch pad at memory position 0.\n            calldatacopy(0, 0, calldatasize())\n\n            // Call the implementation.\n            // out and outsize are 0 because we don't know the size yet.\n            let result := delegatecall(gas(), implementation, 0, calldatasize(), 0, 0)\n\n            // Copy the returned data.\n            returndatacopy(0, 0, returndatasize())\n\n            switch result\n            // delegatecall returns 0 on error.\n            case 0 { revert(0, returndatasize()) }\n            default { return(0, returndatasize()) }\n        }\n    }\n\n    /**\n     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback\n     * function and {_fallback} should delegate.\n     */\n    function _implementation() internal view virtual returns (address);\n\n    /**\n     * @dev Delegates the current call to the address returned by `_implementation()`.\n     *\n     * This function does not return to its internal call site, it will return directly to the external caller.\n     */\n    function _fallback() internal virtual {\n        _delegate(_implementation());\n    }\n\n    /**\n     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other\n     * function in the contract matches the call data.\n     */\n    fallback() external payable virtual {\n        _fallback();\n    }\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

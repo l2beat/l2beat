@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.3.0",
+  "project": "Lib",
+  "reports": [
+    {
+      "id": "lib-audit",
+      "report_file": "lib-audit.md",
+      "title": "Lib audit",
+      "description": "x",
+      "isRelevant": true,
+      "auditor": "Auditor",
+      "report_date": "2024-01-01",
+      "repositories": [
+        {
+          "id": "vendor/lib",
+          "url": "https://github.com/vendor/lib"
+        }
+      ],
+      "scopes": [
+        {
+          "repository": "vendor/lib",
+          "paths": {
+            "src/Ownable.sol": {
+              "path_kind": "file",
+              "versions": [
+                {
+                  "revision": {
+                    "kind": "commit",
+                    "commit": "cccc000000000000000000000000000000000000",
+                    "timestamp": "2024-01-01T00:00:00Z",
+                    "url": ""
+                  },
+                  "status": "audited_with_no_major_findings",
+                  "review_phase": "initial audit",
+                  "coverage": "full file",
+                  "major_findings": 0
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3179ea209407564ff887a647fd8a9d012b0db8dab7e61d270ad42490b0fa5dad",
+  "name": "IUniswapV3PoolDeployer",
+  "kind": "interface",
+  "lines": 13,
+  "source": "interface IUniswapV3PoolDeployer {\n    /// @notice Get the parameters to be used in constructing the pool, set transiently during pool creation.\n    /// @dev Called by the pool constructor to fetch the parameters of the pool\n    /// Returns factory The factory address\n    /// Returns token0 The first token of the pool by address sort order\n    /// Returns token1 The second token of the pool by address sort order\n    /// Returns fee The fee collected upon every swap in the pool, denominated in hundredths of a bip\n    /// Returns tickSpacing The minimum number of ticks between initialized ticks\n    function parameters()\n        external\n        view\n        returns (address factory, address token0, address token1, uint24 fee, int24 tickSpacing);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 13,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3PoolDeployer",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IUniswapV3PoolDeployer.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/interfaces/IUniswapV3PoolDeployer.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

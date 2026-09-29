@@ -1,0 +1,1094 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a0cfd44094a5a4bf65daf7dbbea3d6e7eddc2217fc78ed4a3b3a349b9b0a1bab",
+  "name": "AccessControlUpgradeable",
+  "kind": "abstract",
+  "lines": 183,
+  "source": "abstract contract AccessControlUpgradeable is Initializable, ContextUpgradeable, IAccessControl, ERC165Upgradeable {\n    struct RoleData {\n        mapping(address account => bool) hasRole;\n        bytes32 adminRole;\n    }\n\n    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;\n\n    /// @custom:storage-location erc7201:openzeppelin.storage.AccessControl\n    struct AccessControlStorage {\n        mapping(bytes32 role => RoleData) _roles;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.AccessControl\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant AccessControlStorageLocation =\n        0x02dd7bc7dec4dceedda775e58dd541e08a116c6c53815c0bd028192f7b626800;\n\n    function _getAccessControlStorage() private pure returns (AccessControlStorage storage $) {\n        assembly {\n            $.slot := AccessControlStorageLocation\n        }\n    }\n\n    /**\n     * @dev Modifier that checks that an account has a specific role. Reverts\n     * with an {AccessControlUnauthorizedAccount} error including the required role.\n     */\n    modifier onlyRole(bytes32 role) {\n        _checkRole(role);\n        _;\n    }\n\n    function __AccessControl_init() internal onlyInitializing {}\n\n    function __AccessControl_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n\n    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\n        return interfaceId == type(IAccessControl).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev Returns `true` if `account` has been granted `role`.\n     */\n    function hasRole(bytes32 role, address account) public view virtual returns (bool) {\n        AccessControlStorage storage $ = _getAccessControlStorage();\n        return $._roles[role].hasRole[account];\n    }\n\n    /**\n     * @dev Reverts with an {AccessControlUnauthorizedAccount} error if `_msgSender()`\n     * is missing `role`. Overriding this function changes the behavior of the {onlyRole} modifier.\n     */\n    function _checkRole(bytes32 role) internal view virtual {\n        _checkRole(role, _msgSender());\n    }\n\n    /**\n     * @dev Reverts with an {AccessControlUnauthorizedAccount} error if `account`\n     * is missing `role`.\n     */\n    function _checkRole(bytes32 role, address account) internal view virtual {\n        if (!hasRole(role, account)) {\n            revert AccessControlUnauthorizedAccount(account, role);\n        }\n    }\n\n    /**\n     * @dev Returns the admin role that controls `role`. See {grantRole} and\n     * {revokeRole}.\n     *\n     * To change a role's admin, use {_setRoleAdmin}.\n     */\n    function getRoleAdmin(bytes32 role) public view virtual returns (bytes32) {\n        AccessControlStorage storage $ = _getAccessControlStorage();\n        return $._roles[role].adminRole;\n    }\n\n    /**\n     * @dev Grants `role` to `account`.\n     *\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\n     * event.\n     *\n     * Requirements:\n     *\n     * - the caller must have ``role``'s admin role.\n     *\n     * May emit a {RoleGranted} event.\n     */\n    function grantRole(bytes32 role, address account) public virtual onlyRole(getRoleAdmin(role)) {\n        _grantRole(role, account);\n    }\n\n    /**\n     * @dev Revokes `role` from `account`.\n     *\n     * If `account` had been granted `role`, emits a {RoleRevoked} event.\n     *\n     * Requirements:\n     *\n     * - the caller must have ``role``'s admin role.\n     *\n     * May emit a {RoleRevoked} event.\n     */\n    function revokeRole(bytes32 role, address account) public virtual onlyRole(getRoleAdmin(role)) {\n        _revokeRole(role, account);\n    }\n\n    /**\n     * @dev Revokes `role` from the calling account.\n     *\n     * Roles are often managed via {grantRole} and {revokeRole}: this function's\n     * purpose is to provide a mechanism for accounts to lose their privileges\n     * if they are compromised (such as when a trusted device is misplaced).\n     *\n     * If the calling account had been revoked `role`, emits a {RoleRevoked}\n     * event.\n     *\n     * Requirements:\n     *\n     * - the caller must be `callerConfirmation`.\n     *\n     * May emit a {RoleRevoked} event.\n     */\n    function renounceRole(bytes32 role, address callerConfirmation) public virtual {\n        if (callerConfirmation != _msgSender()) {\n            revert AccessControlBadConfirmation();\n        }\n\n        _revokeRole(role, callerConfirmation);\n    }\n\n    /**\n     * @dev Sets `adminRole` as ``role``'s admin role.\n     *\n     * Emits a {RoleAdminChanged} event.\n     */\n    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {\n        AccessControlStorage storage $ = _getAccessControlStorage();\n        bytes32 previousAdminRole = getRoleAdmin(role);\n        $._roles[role].adminRole = adminRole;\n        emit RoleAdminChanged(role, previousAdminRole, adminRole);\n    }\n\n    /**\n     * @dev Attempts to grant `role` to `account` and returns a boolean indicating if `role` was granted.\n     *\n     * Internal function without access restriction.\n     *\n     * May emit a {RoleGranted} event.\n     */\n    function _grantRole(bytes32 role, address account) internal virtual returns (bool) {\n        AccessControlStorage storage $ = _getAccessControlStorage();\n        if (!hasRole(role, account)) {\n            $._roles[role].hasRole[account] = true;\n            emit RoleGranted(role, account, _msgSender());\n            return true;\n        } else {\n            return false;\n        }\n    }\n\n    /**\n     * @dev Attempts to revoke `role` to `account` and returns a boolean indicating if `role` was revoked.\n     *\n     * Internal function without access restriction.\n     *\n     * May emit a {RoleRevoked} event.\n     */\n    function _revokeRole(bytes32 role, address account) internal virtual returns (bool) {\n        AccessControlStorage storage $ = _getAccessControlStorage();\n        if (hasRole(role, account)) {\n            $._roles[role].hasRole[account] = false;\n            emit RoleRevoked(role, account, _msgSender());\n            return true;\n        } else {\n            return false;\n        }\n    }\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "differs",
+      "coveredLines": 160,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "AccessControl",
+        "similarity": 0.731,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/AccessControl.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/access/AccessControl.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 23,
+        "removed": 7,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 3,
+        "unchanged": 160,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 13,
+            "newStart": 1,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract AccessControl is Context, IAccessControl, ERC165 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract AccessControlUpgradeable is Initializable, ContextUpgradeable, IAccessControl, ERC165Upgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    struct RoleData {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        mapping(address account => bool) hasRole;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        bytes32 adminRole;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    }" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    mapping(bytes32 role => RoleData) private _roles;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 7,
+                "text": "    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @custom:storage-location erc7201:openzeppelin.storage.AccessControl",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    struct AccessControlStorage {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        mapping(bytes32 role => RoleData) _roles;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.AccessControl\")) - 1)) & ~bytes32(uint256(0xff))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    bytes32 private constant AccessControlStorageLocation =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        0x02dd7bc7dec4dceedda775e58dd541e08a116c6c53815c0bd028192f7b626800;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function _getAccessControlStorage() private pure returns (AccessControlStorage storage $) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            $.slot := AccessControlStorageLocation",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 22, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 11, "newLine": 24, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 25,
+                "text": "     * @dev Modifier that checks that an account has a specific role. Reverts"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 26,
+                "text": "     * with an {AccessControlUnauthorizedAccount} error including the required role."
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 30,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 30,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 31, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @inheritdoc ERC165",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function __AccessControl_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    function __AccessControl_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 39, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 40,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 41,
+                "text": "        return interfaceId == type(IAccessControl).interfaceId || super.supportsInterface(interfaceId);"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 42, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 45,
+                "text": "     * @dev Returns `true` if `account` has been granted `role`."
+              },
+              { "type": " ", "oldLine": 27, "newLine": 46, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 47,
+                "text": "    function hasRole(bytes32 role, address account) public view virtual returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        return _roles[role].hasRole[account];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        return $._roles[role].hasRole[account];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 32, "newLine": 52, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 7,
+            "newStart": 74,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 74,
+                "text": "     * To change a role's admin, use {_setRoleAdmin}."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 75, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 76,
+                "text": "    function getRoleAdmin(bytes32 role) public view virtual returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        return _roles[role].adminRole;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        return $._roles[role].adminRole;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 58, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 59, "newLine": 80, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 81, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 118,
+            "oldLines": 8,
+            "newStart": 139,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 139,
+                "text": "     * Emits a {RoleAdminChanged} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 140,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 141,
+                "text": "    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {"
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 143,
+                "text": "        bytes32 previousAdminRole = getRoleAdmin(role);"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        _roles[role].adminRole = adminRole;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        $._roles[role].adminRole = adminRole;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 145,
+                "text": "        emit RoleAdminChanged(role, previousAdminRole, adminRole);"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 146, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 147, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 131,
+            "oldLines": 8,
+            "newStart": 153,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 153,
+                "text": "     * May emit a {RoleGranted} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 154,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 155,
+                "text": "    function _grantRole(bytes32 role, address account) internal virtual returns (bool) {"
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 157,
+                "text": "        if (!hasRole(role, account)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            _roles[role].hasRole[account] = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "            $._roles[role].hasRole[account] = true;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 159,
+                "text": "            emit RoleGranted(role, account, _msgSender());"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 160,
+                "text": "            return true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 161,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 141,
+            "oldLines": 15,
+            "newStart": 164,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 141, "newLine": 164, "text": "    }" },
+              { "type": " ", "oldLine": 142, "newLine": 165, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 166,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "     * @dev Attempts to revoke `role` from `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     * @dev Attempts to revoke `role` to `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 145, "newLine": 168, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 169,
+                "text": "     * Internal function without access restriction."
+              },
+              { "type": " ", "oldLine": 147, "newLine": 170, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 171,
+                "text": "     * May emit a {RoleRevoked} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 172,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 173,
+                "text": "    function _revokeRole(bytes32 role, address account) internal virtual returns (bool) {"
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 175,
+                "text": "        if (hasRole(role, account)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "            _roles[role].hasRole[account] = false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "            $._roles[role].hasRole[account] = false;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 177,
+                "text": "            emit RoleRevoked(role, account, _msgSender());"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 178,
+                "text": "            return true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 179,
+                "text": "        } else {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 160,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "AccessControl",
+        "similarity": 0.731,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/access/AccessControl.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/access/AccessControl.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 23,
+        "removed": 7,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 3,
+        "unchanged": 160,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 13,
+            "newStart": 1,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract AccessControl is Context, IAccessControl, ERC165 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract AccessControlUpgradeable is Initializable, ContextUpgradeable, IAccessControl, ERC165Upgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    struct RoleData {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        mapping(address account => bool) hasRole;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        bytes32 adminRole;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "    }" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    mapping(bytes32 role => RoleData) private _roles;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 7,
+                "text": "    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @custom:storage-location erc7201:openzeppelin.storage.AccessControl",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    struct AccessControlStorage {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        mapping(bytes32 role => RoleData) _roles;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 13, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.AccessControl\")) - 1)) & ~bytes32(uint256(0xff))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    bytes32 private constant AccessControlStorageLocation =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        0x02dd7bc7dec4dceedda775e58dd541e08a116c6c53815c0bd028192f7b626800;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function _getAccessControlStorage() private pure returns (AccessControlStorage storage $) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            $.slot := AccessControlStorageLocation",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 22, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 11, "newLine": 24, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 25,
+                "text": "     * @dev Modifier that checks that an account has a specific role. Reverts"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 26,
+                "text": "     * with an {AccessControlUnauthorizedAccount} error including the required role."
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 30,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 30,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 31, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @inheritdoc ERC165",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    function __AccessControl_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    function __AccessControl_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 39, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 40,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 41,
+                "text": "        return interfaceId == type(IAccessControl).interfaceId || super.supportsInterface(interfaceId);"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 42, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 45,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 45,
+                "text": "     * @dev Returns `true` if `account` has been granted `role`."
+              },
+              { "type": " ", "oldLine": 27, "newLine": 46, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 47,
+                "text": "    function hasRole(bytes32 role, address account) public view virtual returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        return _roles[role].hasRole[account];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        return $._roles[role].hasRole[account];",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 32, "newLine": 52, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 7,
+            "newStart": 74,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 74,
+                "text": "     * To change a role's admin, use {_setRoleAdmin}."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 75, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 76,
+                "text": "    function getRoleAdmin(bytes32 role) public view virtual returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        return _roles[role].adminRole;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        return $._roles[role].adminRole;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 58, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 59, "newLine": 80, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 81, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 118,
+            "oldLines": 8,
+            "newStart": 139,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 139,
+                "text": "     * Emits a {RoleAdminChanged} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 140,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 141,
+                "text": "    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {"
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 143,
+                "text": "        bytes32 previousAdminRole = getRoleAdmin(role);"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        _roles[role].adminRole = adminRole;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        $._roles[role].adminRole = adminRole;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 145,
+                "text": "        emit RoleAdminChanged(role, previousAdminRole, adminRole);"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 146, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 147, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 131,
+            "oldLines": 8,
+            "newStart": 153,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 153,
+                "text": "     * May emit a {RoleGranted} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 154,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 155,
+                "text": "    function _grantRole(bytes32 role, address account) internal virtual returns (bool) {"
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 157,
+                "text": "        if (!hasRole(role, account)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            _roles[role].hasRole[account] = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "            $._roles[role].hasRole[account] = true;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 159,
+                "text": "            emit RoleGranted(role, account, _msgSender());"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 160,
+                "text": "            return true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 161,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 141,
+            "oldLines": 15,
+            "newStart": 164,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 141, "newLine": 164, "text": "    }" },
+              { "type": " ", "oldLine": 142, "newLine": 165, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 166,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "     * @dev Attempts to revoke `role` from `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     * @dev Attempts to revoke `role` to `account` and returns a boolean indicating if `role` was revoked.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 145, "newLine": 168, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 169,
+                "text": "     * Internal function without access restriction."
+              },
+              { "type": " ", "oldLine": 147, "newLine": 170, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 171,
+                "text": "     * May emit a {RoleRevoked} event."
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 172,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 173,
+                "text": "    function _revokeRole(bytes32 role, address account) internal virtual returns (bool) {"
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "        AccessControlStorage storage $ = _getAccessControlStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 175,
+                "text": "        if (hasRole(role, account)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "            _roles[role].hasRole[account] = false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "            $._roles[role].hasRole[account] = false;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 177,
+                "text": "            emit RoleRevoked(role, account, _msgSender());"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 178,
+                "text": "            return true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 179,
+                "text": "        } else {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

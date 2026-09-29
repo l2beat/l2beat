@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7821f39c356ff29d88f45db583da466863c51075bd4fe6e9321edbf2e91a8b01",
+  "name": "IValidatorSelectionCore",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IValidatorSelectionCore {\n    event EscapeHatchSet(address escapeHatch);\n\n    function setupEpoch() external;\n    function checkpointRandao() external;\n    function setEscapeHatch(address _escapeHatch) external;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IValidatorSelectionCore",
+        "similarity": 0.637,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IValidatorSelectionCore {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    event EscapeHatchUpdated(address escapeHatch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event EscapeHatchSet(address escapeHatch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function setupEpoch() external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    function checkpointRandao() external;"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function updateEscapeHatch(address _escapeHatch) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function setEscapeHatch(address _escapeHatch) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

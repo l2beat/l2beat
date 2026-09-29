@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1ce97e7dd4cbc8bbba0b7b46001c19b4b9486e1de1b9b1606f63920635bae5ab",
+  "name": "BatchHeaderV3Codec",
+  "kind": "library",
+  "lines": 52,
+  "source": "library BatchHeaderV3Codec {\n    /// @dev Thrown when the length of batch header is not equal to 193.\n    error ErrorBatchHeaderV3LengthMismatch();\n\n    /// @dev The length of fixed parts of the batch header.\n    uint256 internal constant BATCH_HEADER_FIXED_LENGTH = 193;\n\n    /// @notice Allocate memory for batch header.\n    function allocate() internal pure returns (uint256 batchPtr) {\n        assembly {\n            batchPtr := mload(0x40)\n            // This is `BatchHeaderV3Codec.BATCH_HEADER_FIXED_LENGTH`, use `193` here to reduce code complexity.\n            mstore(0x40, add(batchPtr, 193))\n        }\n    }\n\n    /// @notice Load batch header in calldata to memory.\n    /// @param _batchHeader The encoded batch header bytes in calldata.\n    /// @return batchPtr The start memory offset of the batch header in memory.\n    /// @return length The length in bytes of the batch header.\n    function loadAndValidate(bytes calldata _batchHeader) internal pure returns (uint256 batchPtr, uint256 length) {\n        length = _batchHeader.length;\n        if (length != BATCH_HEADER_FIXED_LENGTH) {\n            revert ErrorBatchHeaderV3LengthMismatch();\n        }\n\n        // copy batch header to memory.\n        batchPtr = allocate();\n        assembly {\n            calldatacopy(batchPtr, _batchHeader.offset, length)\n        }\n    }\n\n    /// @notice Store the last block timestamp of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param _lastBlockTimestamp The timestamp of the last block in this batch.\n    function storeLastBlockTimestamp(uint256 batchPtr, uint256 _lastBlockTimestamp) internal pure {\n        assembly {\n            mstore(add(batchPtr, 121), shl(192, _lastBlockTimestamp))\n        }\n    }\n\n    /// @notice Store the last block timestamp of batch header.\n    /// @param batchPtr The start memory offset of the batch header in memory.\n    /// @param blobDataProof The blob data proof: z (32), y (32)\n    function storeBlobDataProof(uint256 batchPtr, bytes calldata blobDataProof) internal pure {\n        assembly {\n            // z and y is in the first 64 bytes of `blobDataProof`\n            calldatacopy(add(batchPtr, 129), blobDataProof.offset, 64)\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 52,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "BatchHeaderV3Codec",
+        "similarity": 1,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/scroll-contracts",
+        "path": "src/libraries/codec/BatchHeaderV3Codec.sol",
+        "commit": "c382953479f9a919e850e56115924e5711810dfd",
+        "commitTimestamp": "2025-02-14T11:39:08Z",
+        "url": "https://github.com/scroll-tech/scroll-contracts/blob/c382953479f9a919e850e56115924e5711810dfd/src/libraries/codec/BatchHeaderV3Codec.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Reviewed alongside the Euclid phase 1 rollup changes; only documentation code-quality notes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

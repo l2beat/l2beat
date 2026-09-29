@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "364be828b3527dbd3dcef7add643f41dd98fd33be72b51782ec22991ccc655fa",
+  "name": "MinterManagementInterface",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface MinterManagementInterface {\n    function isMinter(address _account) external view returns (bool);\n\n    function minterAllowance(address _minter) external view returns (uint256);\n\n    function configureMinter(address _minter, uint256 _minterAllowedAmount) external returns (bool);\n\n    function removeMinter(address _minter) external returns (bool);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

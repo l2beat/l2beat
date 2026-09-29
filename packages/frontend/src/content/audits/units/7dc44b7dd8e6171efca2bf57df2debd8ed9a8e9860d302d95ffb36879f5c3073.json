@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7dc44b7dd8e6171efca2bf57df2debd8ed9a8e9860d302d95ffb36879f5c3073",
+  "name": "AppendOnlyMerkleTree",
+  "kind": "abstract",
+  "lines": 69,
+  "source": "abstract contract AppendOnlyMerkleTree {\n    /// @dev The maximum height of the withdraw merkle tree.\n    uint256 private constant MAX_TREE_HEIGHT = 40;\n\n    /// @notice The merkle root of the current merkle tree.\n    /// @dev This is actual equal to `branches[n]`.\n    bytes32 public messageRoot;\n\n    /// @notice The next unused message index.\n    uint256 public nextMessageIndex;\n\n    /// @notice The list of zero hash in each height.\n    bytes32[MAX_TREE_HEIGHT] private zeroHashes;\n\n    /// @notice The list of minimum merkle proofs needed to compute next root.\n    /// @dev Only first `n` elements are used, where `n` is the minimum value that `2^{n-1} >= currentMaxNonce + 1`.\n    /// It means we only use `currentMaxNonce + 1` leaf nodes to construct the merkle tree.\n    bytes32[MAX_TREE_HEIGHT] public branches;\n\n    function _initializeMerkleTree() internal {\n        // Compute hashes in empty sparse Merkle tree\n        for (uint256 height = 0; height + 1 < MAX_TREE_HEIGHT; height++) {\n            zeroHashes[height + 1] = _efficientHash(zeroHashes[height], zeroHashes[height]);\n        }\n    }\n\n    function _appendMessageHash(bytes32 _messageHash) internal returns (uint256, bytes32) {\n        require(zeroHashes[1] != bytes32(0), \"call before initialization\");\n\n        uint256 _currentMessageIndex = nextMessageIndex;\n        bytes32 _hash = _messageHash;\n        uint256 _height = 0;\n\n        while (_currentMessageIndex != 0) {\n            if (_currentMessageIndex % 2 == 0) {\n                // it may be used in next round.\n                branches[_height] = _hash;\n                // it's a left child, the right child must be null\n                _hash = _efficientHash(_hash, zeroHashes[_height]);\n            } else {\n                // it's a right child, use previously computed hash\n                _hash = _efficientHash(branches[_height], _hash);\n            }\n            unchecked {\n                _height += 1;\n            }\n            _currentMessageIndex >>= 1;\n        }\n\n        branches[_height] = _hash;\n        messageRoot = _hash;\n\n        _currentMessageIndex = nextMessageIndex;\n        unchecked {\n            nextMessageIndex = _currentMessageIndex + 1;\n        }\n\n        return (_currentMessageIndex, _hash);\n    }\n\n    function _efficientHash(bytes32 a, bytes32 b) private pure returns (bytes32 value) {\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            mstore(0x00, a)\n            mstore(0x20, b)\n            value := keccak256(0x00, 0x40)\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 69,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "AppendOnlyMerkleTree",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/common/AppendOnlyMerkleTree.sol",
+        "commit": "89814bde4c28901839b659409ed55b57af4ade23",
+        "commitTimestamp": "2023-07-10T06:50:13Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/89814bde4c28901839b659409ed55b57af4ade23/contracts/src/libraries/common/AppendOnlyMerkleTree.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #630 fix of M-01 (appendMessage guarded until initialized). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

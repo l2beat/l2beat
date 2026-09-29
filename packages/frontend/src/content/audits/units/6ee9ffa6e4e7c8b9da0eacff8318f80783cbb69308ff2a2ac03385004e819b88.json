@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6ee9ffa6e4e7c8b9da0eacff8318f80783cbb69308ff2a2ac03385004e819b88",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 18,
+  "source": "struct LeanIMTData {\n    // Tracks the current number of leaves in the tree.\n    uint256 size;\n    // Represents the current depth of the tree, which can increase as new leaves are inserted.\n    uint256 depth;\n    // A mapping from each level of the tree to the node value of the last even position at that level.\n    // Used for efficient inserts, updates and root calculations.\n    mapping(uint256 => uint256) sideNodes;\n    // A mapping from leaf values to their respective indices in the tree.\n    // This facilitates checks for leaf existence and retrieval of leaf positions.\n    mapping(uint256 => uint256) leaves;\n}\nuint256 constant SNARK_SCALAR_FIELD = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\nerror LeafGreaterThanSnarkScalarField();\nerror LeafCannotBeZero();\nerror LeafAlreadyExists();\nerror LeafDoesNotExist();\nerror WrongSiblingNodes();",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

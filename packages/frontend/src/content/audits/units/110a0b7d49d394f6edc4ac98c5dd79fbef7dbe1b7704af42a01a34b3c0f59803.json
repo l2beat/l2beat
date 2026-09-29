@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "110a0b7d49d394f6edc4ac98c5dd79fbef7dbe1b7704af42a01a34b3c0f59803",
+  "name": "L2ToL1MessagePasser",
+  "kind": "contract",
+  "lines": 112,
+  "source": "contract L2ToL1MessagePasser is Semver {\n    /**\n     * @notice The L1 gas limit set when eth is withdrawn using the receive() function.\n     */\n    uint256 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 100_000;\n\n    /**\n     * @notice Current message version identifier.\n     */\n    uint16 public constant MESSAGE_VERSION = 1;\n\n    /**\n     * @notice Includes the message hashes for all withdrawals\n     */\n    mapping(bytes32 => bool) public sentMessages;\n\n    /**\n     * @notice A unique value hashed with each withdrawal.\n     */\n    uint240 internal msgNonce;\n\n    /**\n     * @notice Emitted any time a withdrawal is initiated.\n     *\n     * @param nonce          Unique value corresponding to each withdrawal.\n     * @param sender         The L2 account address which initiated the withdrawal.\n     * @param target         The L1 account address the call will be send to.\n     * @param value          The ETH value submitted for withdrawal, to be forwarded to the target.\n     * @param gasLimit       The minimum amount of gas that must be provided when withdrawing.\n     * @param data           The data to be forwarded to the target on L1.\n     * @param withdrawalHash The hash of the withdrawal.\n     */\n    event MessagePassed(\n        uint256 indexed nonce,\n        address indexed sender,\n        address indexed target,\n        uint256 value,\n        uint256 gasLimit,\n        bytes data,\n        bytes32 withdrawalHash\n    );\n\n    /**\n     * @notice Emitted when the balance of this contract is burned.\n     *\n     * @param amount Amount of ETh that was burned.\n     */\n    event WithdrawerBalanceBurnt(uint256 indexed amount);\n\n    /**\n     * @custom:semver 1.0.0\n     */\n    constructor() Semver(1, 0, 0) {}\n\n    /**\n     * @notice Allows users to withdraw ETH by sending directly to this contract.\n     */\n    receive() external payable {\n        initiateWithdrawal(msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));\n    }\n\n    /**\n     * @notice Removes all ETH held by this contract from the state. Used to prevent the amount of\n     *         ETH on L2 inflating when ETH is withdrawn. Currently only way to do this is to\n     *         create a contract and self-destruct it to itself. Anyone can call this function. Not\n     *         incentivized since this function is very cheap.\n     */\n    function burn() external {\n        uint256 balance = address(this).balance;\n        Burn.eth(balance);\n        emit WithdrawerBalanceBurnt(balance);\n    }\n\n    /**\n     * @notice Sends a message from L2 to L1.\n     *\n     * @param _target   Address to call on L1 execution.\n     * @param _gasLimit Minimum gas limit for executing the message on L1.\n     * @param _data     Data to forward to L1 target.\n     */\n    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes memory _data) public payable {\n        bytes32 withdrawalHash = Hashing.hashWithdrawal(\n            Types.WithdrawalTransaction({\n                nonce: messageNonce(),\n                sender: msg.sender,\n                target: _target,\n                value: msg.value,\n                gasLimit: _gasLimit,\n                data: _data\n            })\n        );\n\n        sentMessages[withdrawalHash] = true;\n\n        emit MessagePassed(messageNonce(), msg.sender, _target, msg.value, _gasLimit, _data, withdrawalHash);\n\n        unchecked {\n            ++msgNonce;\n        }\n    }\n\n    /**\n     * @notice Retrieves the next message nonce. Message version will be added to the upper two\n     *         bytes of the message nonce. Message version allows us to treat messages as having\n     *         different structures.\n     *\n     * @return Nonce of the next message to be sent, with added message version.\n     */\n    function messageNonce() public view returns (uint256) {\n        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 112,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2ToL1MessagePasser",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "warnings": []
+    }
+  }
+}

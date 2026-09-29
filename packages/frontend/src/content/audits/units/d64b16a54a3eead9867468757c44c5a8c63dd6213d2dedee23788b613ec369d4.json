@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d64b16a54a3eead9867468757c44c5a8c63dd6213d2dedee23788b613ec369d4",
+  "name": "PeripheryValidation",
+  "kind": "abstract",
+  "lines": 6,
+  "source": "abstract contract PeripheryValidation is BlockTimestamp {\n    modifier checkDeadline(uint256 deadline) {\n        require(_blockTimestamp() <= deadline, \"Transaction too old\");\n        _;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

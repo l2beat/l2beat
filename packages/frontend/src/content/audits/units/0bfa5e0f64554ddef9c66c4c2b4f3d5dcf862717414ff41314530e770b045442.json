@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0bfa5e0f64554ddef9c66c4c2b4f3d5dcf862717414ff41314530e770b045442",
+  "name": "L1CrossDomainMessenger",
+  "kind": "contract",
+  "lines": 80,
+  "source": "contract L1CrossDomainMessenger is CrossDomainMessenger, ProxyAdminOwnedBase, ReinitializableBase, ISemver {\n    /// @custom:legacy\n    /// @custom:spacer superchainConfig\n    /// @notice Spacer taking up the legacy `superchainConfig` slot.\n    address private spacer_251_0_20;\n\n    /// @notice Contract of the OptimismPortal.\n    /// @custom:network-specific\n    IOptimismPortal public portal;\n\n    /// @custom:legacy\n    /// @custom:spacer systemConfig\n    /// @notice Spacer taking up the legacy `systemConfig` slot.\n    address private spacer_253_0_20;\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.11.0\n    string public constant version = \"2.11.0\";\n\n    /// @notice Contract of the SystemConfig.\n    ISystemConfig public systemConfig;\n\n    /// @notice Constructs the L1CrossDomainMessenger contract.\n    constructor() ReinitializableBase(3) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializes the contract.\n    /// @param _systemConfig Contract of the SystemConfig contract on this network.\n    /// @param _portal Contract of the OptimismPortal contract on this network.\n    function initialize(ISystemConfig _systemConfig, IOptimismPortal _portal) external reinitializer(initVersion()) {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        systemConfig = _systemConfig;\n        portal = _portal;\n        __CrossDomainMessenger_init({_otherMessenger: CrossDomainMessenger(Predeploys.L2_CROSS_DOMAIN_MESSENGER)});\n    }\n\n    /// @inheritdoc CrossDomainMessenger\n    function paused() public view override returns (bool) {\n        return systemConfig.paused();\n    }\n\n    /// @notice Returns the SuperchainConfig contract.\n    /// @return ISuperchainConfig The SuperchainConfig contract.\n    function superchainConfig() public view returns (ISuperchainConfig) {\n        return systemConfig.superchainConfig();\n    }\n\n    /// @notice Getter function for the OptimismPortal contract on this chain.\n    ///         Public getter is legacy and will be removed in the future. Use `portal()` instead.\n    /// @return Contract of the OptimismPortal on this chain.\n    /// @custom:legacy\n    function PORTAL() external view returns (IOptimismPortal) {\n        return portal;\n    }\n\n    /// @inheritdoc CrossDomainMessenger\n    function _sendMessage(address _to, uint64 _gasLimit, uint256 _value, bytes memory _data) internal override {\n        portal.depositTransaction{value: _value}({\n            _to: _to,\n            _value: _value,\n            _gasLimit: _gasLimit,\n            _isCreation: false,\n            _data: _data\n        });\n    }\n\n    /// @inheritdoc CrossDomainMessenger\n    function _isOtherMessenger() internal view override returns (bool) {\n        return msg.sender == address(portal) && portal.l2Sender() == address(otherMessenger);\n    }\n\n    /// @inheritdoc CrossDomainMessenger\n    function _isUnsafeTarget(address _target) internal view override returns (bool) {\n        return _target == address(this) || _target == address(portal);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 80,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L1CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 14
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 80,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "L1CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 14
+      },
+      "warnings": []
+    }
+  }
+}

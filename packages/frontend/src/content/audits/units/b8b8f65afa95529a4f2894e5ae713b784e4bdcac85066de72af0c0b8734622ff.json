@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8b8f65afa95529a4f2894e5ae713b784e4bdcac85066de72af0c0b8734622ff",
+  "name": "PeripheryPayments",
+  "kind": "abstract",
+  "lines": 51,
+  "source": "abstract contract PeripheryPayments is IPeripheryPayments, PeripheryImmutableState {\n    receive() external payable {\n        require(msg.sender == WETH9, \"Not WETH9\");\n    }\n\n    /// @inheritdoc IPeripheryPayments\n    function unwrapWETH9(uint256 amountMinimum, address recipient) external payable override {\n        uint256 balanceWETH9 = IWETH9(WETH9).balanceOf(address(this));\n        require(balanceWETH9 >= amountMinimum, \"Insufficient WETH9\");\n\n        if (balanceWETH9 > 0) {\n            IWETH9(WETH9).withdraw(balanceWETH9);\n            TransferHelper.safeTransferETH(recipient, balanceWETH9);\n        }\n    }\n\n    /// @inheritdoc IPeripheryPayments\n    function sweepToken(address token, uint256 amountMinimum, address recipient) external payable override {\n        uint256 balanceToken = IERC20(token).balanceOf(address(this));\n        require(balanceToken >= amountMinimum, \"Insufficient token\");\n\n        if (balanceToken > 0) {\n            TransferHelper.safeTransfer(token, recipient, balanceToken);\n        }\n    }\n\n    /// @inheritdoc IPeripheryPayments\n    function refundETH() external payable override {\n        if (address(this).balance > 0) {\n            TransferHelper.safeTransferETH(msg.sender, address(this).balance);\n        }\n    }\n\n    /// @param token The token to pay\n    /// @param payer The entity that must pay\n    /// @param recipient The entity that will receive payment\n    /// @param value The amount to pay\n    function pay(address token, address payer, address recipient, uint256 value) internal {\n        if (token == WETH9 && address(this).balance >= value) {\n            // pay with WETH9\n            IWETH9(WETH9).deposit{value: value}(); // wrap only what is needed to pay\n            IWETH9(WETH9).transfer(recipient, value);\n        } else if (payer == address(this)) {\n            // pay with tokens already in the contract (for the exact input multihop case)\n            TransferHelper.safeTransfer(token, recipient, value);\n        } else {\n            // pull payment\n            TransferHelper.safeTransferFrom(token, payer, recipient, value);\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

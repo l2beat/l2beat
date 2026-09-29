@@ -1,0 +1,696 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d0b03f0979acfb95e6c490b5f668fa4ab76d4cc4c4528a26c9fef7d8fb3f190f",
+  "name": "L2ToL1MessagePasser",
+  "kind": "contract",
+  "lines": 86,
+  "source": "contract L2ToL1MessagePasser is ISemver {\n    /// @notice The L1 gas limit set when eth is withdrawn using the receive() function.\n    uint256 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 100_000;\n\n    /// @notice The current message version identifier.\n    uint16 public constant MESSAGE_VERSION = 1;\n\n    /// @notice Includes the message hashes for all withdrawals\n    mapping(bytes32 => bool) public sentMessages;\n\n    /// @notice A unique value hashed with each withdrawal.\n    uint240 internal msgNonce;\n\n    /// @notice Emitted any time a withdrawal is initiated.\n    /// @param nonce          Unique value corresponding to each withdrawal.\n    /// @param sender         The L2 account address which initiated the withdrawal.\n    /// @param target         The L1 account address the call will be send to.\n    /// @param value          The ETH value submitted for withdrawal, to be forwarded to the target.\n    /// @param gasLimit       The minimum amount of gas that must be provided when withdrawing.\n    /// @param data           The data to be forwarded to the target on L1.\n    /// @param withdrawalHash The hash of the withdrawal.\n    event MessagePassed(\n        uint256 indexed nonce,\n        address indexed sender,\n        address indexed target,\n        uint256 value,\n        uint256 gasLimit,\n        bytes data,\n        bytes32 withdrawalHash\n    );\n\n    /// @notice Emitted when the balance of this contract is burned.\n    /// @param amount Amount of ETh that was burned.\n    event WithdrawerBalanceBurnt(uint256 indexed amount);\n\n    /// @custom:semver 1.1.1-beta.1\n    string public constant version = \"1.1.1-beta.1\";\n\n    /// @notice Allows users to withdraw ETH by sending directly to this contract.\n    receive() external payable {\n        initiateWithdrawal(msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));\n    }\n\n    /// @notice Removes all ETH held by this contract from the state. Used to prevent the amount of\n    ///         ETH on L2 inflating when ETH is withdrawn. Currently only way to do this is to\n    ///         create a contract and self-destruct it to itself. Anyone can call this function. Not\n    ///         incentivized since this function is very cheap.\n    function burn() external {\n        uint256 balance = address(this).balance;\n        Burn.eth(balance);\n        emit WithdrawerBalanceBurnt(balance);\n    }\n\n    /// @notice Sends a message from L2 to L1.\n    /// @param _target   Address to call on L1 execution.\n    /// @param _gasLimit Minimum gas limit for executing the message on L1.\n    /// @param _data     Data to forward to L1 target.\n    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes memory _data) public payable {\n        bytes32 withdrawalHash = Hashing.hashWithdrawal(\n            Types.WithdrawalTransaction({\n                nonce: messageNonce(),\n                sender: msg.sender,\n                target: _target,\n                value: msg.value,\n                gasLimit: _gasLimit,\n                data: _data\n            })\n        );\n\n        sentMessages[withdrawalHash] = true;\n\n        emit MessagePassed(messageNonce(), msg.sender, _target, msg.value, _gasLimit, _data, withdrawalHash);\n\n        unchecked {\n            ++msgNonce;\n        }\n    }\n\n    /// @notice Retrieves the next message nonce. Message version will be added to the upper two\n    ///         bytes of the message nonce. Message version allows us to treat messages as having\n    ///         different structures.\n    /// @return Nonce of the next message to be sent, with added message version.\n    function messageNonce() public view returns (uint256) {\n        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 84,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L2ToL1MessagePasser",
+        "similarity": 0.986,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 28,
+        "ignoredRemoved": 54,
+        "unchanged": 84,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 35,
+            "newStart": 1,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L2ToL1MessagePasser is Semver {",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @notice The L1 gas limit set when eth is withdrawn using the receive() function.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract L2ToL1MessagePasser is ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice The L1 gas limit set when eth is withdrawn using the receive() function.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 3,
+                "text": "    uint256 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 100_000;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 4, "text": "" },
+              { "type": "-", "oldLine": 7, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @notice Current message version identifier.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice The current message version identifier.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 6,
+                "text": "    uint16 public constant MESSAGE_VERSION = 1;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @notice Includes the message hashes for all withdrawals",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Includes the message hashes for all withdrawals",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 9,
+                "text": "    mapping(bytes32 => bool) public sentMessages;"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @notice A unique value hashed with each withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @notice A unique value hashed with each withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 12,
+                "text": "    uint240 internal msgNonce;"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * @notice Emitted any time a withdrawal is initiated.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 24, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @param nonce          Unique value corresponding to each withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * @param sender         The L2 account address which initiated the withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * @param target         The L1 account address the call will be send to.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "     * @param value          The ETH value submitted for withdrawal, to be forwarded to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @param gasLimit       The minimum amount of gas that must be provided when withdrawing.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @param data           The data to be forwarded to the target on L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @param withdrawalHash The hash of the withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @notice Emitted any time a withdrawal is initiated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @param nonce          Unique value corresponding to each withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param sender         The L2 account address which initiated the withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param target         The L1 account address the call will be send to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param value          The ETH value submitted for withdrawal, to be forwarded to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param gasLimit       The minimum amount of gas that must be provided when withdrawing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param data           The data to be forwarded to the target on L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @param withdrawalHash The hash of the withdrawal.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 22,
+                "text": "    event MessagePassed("
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 23,
+                "text": "        uint256 indexed nonce,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 24,
+                "text": "        address indexed sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 44,
+            "newStart": 29,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 29,
+                "text": "        bytes32 withdrawalHash"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 30, "text": "    );" },
+              { "type": " ", "oldLine": 42, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * @notice Emitted when the balance of this contract is burned.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     * @param amount Amount of ETh that was burned.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @notice Emitted when the balance of this contract is burned.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// @param amount Amount of ETh that was burned.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 34,
+                "text": "    event WithdrawerBalanceBurnt(uint256 indexed amount);"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @custom:semver 1.0.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    constructor() Semver(1, 0, 0) {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @custom:semver 1.1.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    string public constant version = \"1.1.1-beta.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 54, "newLine": 38, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "     * @notice Allows users to withdraw ETH by sending directly to this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @notice Allows users to withdraw ETH by sending directly to this contract.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 40,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 41,
+                "text": "        initiateWithdrawal(msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 61, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     * @notice Removes all ETH held by this contract from the state. Used to prevent the amount of",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "     *         ETH on L2 inflating when ETH is withdrawn. Currently only way to do this is to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     *         create a contract and self-destruct it to itself. Anyone can call this function. Not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     *         incentivized since this function is very cheap.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    /// @notice Removes all ETH held by this contract from the state. Used to prevent the amount of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    ///         ETH on L2 inflating when ETH is withdrawn. Currently only way to do this is to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    ///         create a contract and self-destruct it to itself. Anyone can call this function. Not",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    ///         incentivized since this function is very cheap.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 48,
+                "text": "    function burn() external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 49,
+                "text": "        uint256 balance = address(this).balance;"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 50,
+                "text": "        Burn.eth(balance);"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 51,
+                "text": "        emit WithdrawerBalanceBurnt(balance);"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 52, "text": "    }" },
+              { "type": " ", "oldLine": 73, "newLine": 53, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * @notice Sends a message from L2 to L1.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 76, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "     * @param _target   Address to call on L1 execution.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "     * @param _gasLimit Minimum gas limit for executing the message on L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @param _data     Data to forward to L1 target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @notice Sends a message from L2 to L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param _target   Address to call on L1 execution.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @param _gasLimit Minimum gas limit for executing the message on L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @param _data     Data to forward to L1 target.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 58,
+                "text": "    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes memory _data) public payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 59,
+                "text": "        bytes32 withdrawalHash = Hashing.hashWithdrawal("
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 60,
+                "text": "            Types.WithdrawalTransaction({"
+              }
+            ]
+          },
+          {
+            "oldStart": 99,
+            "oldLines": 13,
+            "newStart": 76,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 76,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 100, "newLine": 77, "text": "    }" },
+              { "type": " ", "oldLine": 101, "newLine": 78, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "     * @notice Retrieves the next message nonce. Message version will be added to the upper two",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "     *         bytes of the message nonce. Message version allows us to treat messages as having",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "     *         different structures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "     * @return Nonce of the next message to be sent, with added message version.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /// @notice Retrieves the next message nonce. Message version will be added to the upper two",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    ///         bytes of the message nonce. Message version allows us to treat messages as having",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    ///         different structures.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @return Nonce of the next message to be sent, with added message version.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 83,
+                "text": "    function messageNonce() public view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 84,
+                "text": "        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);"
+              },
+              { "type": " ", "oldLine": 111, "newLine": 85, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

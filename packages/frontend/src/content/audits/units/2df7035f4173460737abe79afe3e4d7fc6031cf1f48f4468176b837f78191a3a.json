@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2df7035f4173460737abe79afe3e4d7fc6031cf1f48f4468176b837f78191a3a",
+  "name": "Clones",
+  "kind": "library",
+  "lines": 241,
+  "source": "library Clones {\n    error CloneArgumentsTooLong();\n\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`.\n     *\n     * This function uses the create opcode, which should never revert.\n     */\n    function clone(address implementation) internal returns (address instance) {\n        return clone(implementation, 0);\n    }\n\n    /**\n     * @dev Same as {xref-Clones-clone-address-}[clone], but with a `value` parameter to send native currency\n     * to the new contract.\n     *\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\n     */\n    function clone(address implementation, uint256 value) internal returns (address instance) {\n        if (address(this).balance < value) {\n            revert Errors_2.InsufficientBalance(address(this).balance, value);\n        }\n        assembly (\"memory-safe\") {\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\n            // of the `implementation` address with the bytecode before the address.\n            mstore(0x00, or(shr(0xe8, shl(0x60, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\n            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))\n            instance := create(value, 0x09, 0x37)\n        }\n        if (instance == address(0)) {\n            revert Errors_2.FailedDeployment();\n        }\n    }\n\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`.\n     *\n     * This function uses the create2 opcode and a `salt` to deterministically deploy\n     * the clone. Using the same `implementation` and `salt` multiple time will revert, since\n     * the clones cannot be deployed twice at the same address.\n     */\n    function cloneDeterministic(address implementation, bytes32 salt) internal returns (address instance) {\n        return cloneDeterministic(implementation, salt, 0);\n    }\n\n    /**\n     * @dev Same as {xref-Clones-cloneDeterministic-address-bytes32-}[cloneDeterministic], but with\n     * a `value` parameter to send native currency to the new contract.\n     *\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\n     */\n    function cloneDeterministic(address implementation, bytes32 salt, uint256 value)\n        internal\n        returns (address instance)\n    {\n        if (address(this).balance < value) {\n            revert Errors_2.InsufficientBalance(address(this).balance, value);\n        }\n        assembly (\"memory-safe\") {\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\n            // of the `implementation` address with the bytecode before the address.\n            mstore(0x00, or(shr(0xe8, shl(0x60, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\n            mstore(0x20, or(shl(0x78, implementation), 0x5af43d82803e903d91602b57fd5bf3))\n            instance := create2(value, 0x09, 0x37, salt)\n        }\n        if (instance == address(0)) {\n            revert Errors_2.FailedDeployment();\n        }\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\n     */\n    function predictDeterministicAddress(address implementation, bytes32 salt, address deployer)\n        internal\n        pure\n        returns (address predicted)\n    {\n        assembly (\"memory-safe\") {\n            let ptr := mload(0x40)\n            mstore(add(ptr, 0x38), deployer)\n            mstore(add(ptr, 0x24), 0x5af43d82803e903d91602b57fd5bf3ff)\n            mstore(add(ptr, 0x14), implementation)\n            mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73)\n            mstore(add(ptr, 0x58), salt)\n            mstore(add(ptr, 0x78), keccak256(add(ptr, 0x0c), 0x37))\n            predicted := and(keccak256(add(ptr, 0x43), 0x55), 0xffffffffffffffffffffffffffffffffffffffff)\n        }\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\n     */\n    function predictDeterministicAddress(address implementation, bytes32 salt)\n        internal\n        view\n        returns (address predicted)\n    {\n        return predictDeterministicAddress(implementation, salt, address(this));\n    }\n\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom\n     * immutable arguments. These are provided through `args` and cannot be changed after deployment. To\n     * access the arguments within the implementation, use {fetchCloneArgs}.\n     *\n     * This function uses the create opcode, which should never revert.\n     */\n    function cloneWithImmutableArgs(address implementation, bytes memory args) internal returns (address instance) {\n        return cloneWithImmutableArgs(implementation, args, 0);\n    }\n\n    /**\n     * @dev Same as {xref-Clones-cloneWithImmutableArgs-address-bytes-}[cloneWithImmutableArgs], but with a `value`\n     * parameter to send native currency to the new contract.\n     *\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\n     */\n    function cloneWithImmutableArgs(address implementation, bytes memory args, uint256 value)\n        internal\n        returns (address instance)\n    {\n        if (address(this).balance < value) {\n            revert Errors_2.InsufficientBalance(address(this).balance, value);\n        }\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\n        assembly (\"memory-safe\") {\n            instance := create(value, add(bytecode, 0x20), mload(bytecode))\n        }\n        if (instance == address(0)) {\n            revert Errors_2.FailedDeployment();\n        }\n    }\n\n    /**\n     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation` with custom\n     * immutable arguments. These are provided through `args` and cannot be changed after deployment. To\n     * access the arguments within the implementation, use {fetchCloneArgs}.\n     *\n     * This function uses the create2 opcode and a `salt` to deterministically deploy the clone. Using the same\n     * `implementation` and `salt` multiple time will revert, since the clones cannot be deployed twice at the same\n     * address.\n     */\n    function cloneDeterministicWithImmutableArgs(address implementation, bytes memory args, bytes32 salt)\n        internal\n        returns (address instance)\n    {\n        return cloneDeterministicWithImmutableArgs(implementation, args, salt, 0);\n    }\n\n    /**\n     * @dev Same as {xref-Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-}[cloneDeterministicWithImmutableArgs],\n     * but with a `value` parameter to send native currency to the new contract.\n     *\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\n     */\n    function cloneDeterministicWithImmutableArgs(address implementation, bytes memory args, bytes32 salt, uint256 value)\n        internal\n        returns (address instance)\n    {\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\n        return Create2.deploy(value, salt, bytecode);\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministicWithImmutableArgs}.\n     */\n    function predictDeterministicAddressWithImmutableArgs(\n        address implementation,\n        bytes memory args,\n        bytes32 salt,\n        address deployer\n    ) internal pure returns (address predicted) {\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\n        return Create2.computeAddress(salt, keccak256(bytecode), deployer);\n    }\n\n    /**\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministicWithImmutableArgs}.\n     */\n    function predictDeterministicAddressWithImmutableArgs(address implementation, bytes memory args, bytes32 salt)\n        internal\n        view\n        returns (address predicted)\n    {\n        return predictDeterministicAddressWithImmutableArgs(implementation, args, salt, address(this));\n    }\n\n    /**\n     * @dev Get the immutable args attached to a clone.\n     *\n     * - If `instance` is a clone that was deployed using `clone` or `cloneDeterministic`, this\n     *   function will return an empty array.\n     * - If `instance` is a clone that was deployed using `cloneWithImmutableArgs` or\n     *   `cloneDeterministicWithImmutableArgs`, this function will return the args array used at\n     *   creation.\n     * - If `instance` is NOT a clone deployed using this library, the behavior is undefined. This\n     *   function should only be used to check addresses that are known to be clones.\n     */\n    function fetchCloneArgs(address instance) internal view returns (bytes memory) {\n        bytes memory result = new bytes(instance.code.length - 0x2d); // revert if length is too short\n        assembly (\"memory-safe\") {\n            extcodecopy(instance, add(result, 0x20), 0x2d, mload(result))\n        }\n        return result;\n    }\n\n    /**\n     * @dev Helper that prepares the initcode of the proxy with immutable args.\n     *\n     * An assembly variant of this function requires copying the `args` array, which can be efficiently done using\n     * `mcopy`. Unfortunately, that opcode is not available before cancun. A pure solidity implementation using\n     * abi.encodePacked is more expensive but also more portable and easier to review.\n     *\n     * NOTE: https://eips.ethereum.org/EIPS/eip-170[EIP-170] limits the length of the contract code to 24576 bytes.\n     * With the proxy code taking 45 bytes, that limits the length of the immutable args to 24531 bytes.\n     */\n    function _cloneCodeWithImmutableArgs(address implementation, bytes memory args)\n        private\n        pure\n        returns (bytes memory)\n    {\n        if (args.length > 0x5fd3) {\n            revert CloneArgumentsTooLong();\n        }\n        return abi.encodePacked(\n            hex\"61\",\n            uint16(args.length + 0x2d),\n            hex\"3d81600a3d39f3363d3d373d3d3d363d73\",\n            implementation,\n            hex\"5af43d82803e903d91602b57fd5bf3\",\n            args\n        );\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 235,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Clones",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-12-v5.2",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Clones.sol",
+        "commit": "ff30cd42fcb791d62e9a94341495eb82b28f140f",
+        "commitTimestamp": "2024-11-20T09:39:05Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ff30cd42fcb791d62e9a94341495eb82b28f140f/contracts/proxy/Clones.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Diff-only review of the fix for L-08 at the report-cited commit of pull request #5310.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 235,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    function clone(address implementation, uint256 value) internal returns (address instance) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        if (address(this).balance < value) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "            revert Errors.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "            revert Errors_2.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        assembly (\"memory-safe\") {"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes"
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 7,
+            "newStart": 30,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "            instance := create(value, 0x09, 0x37)"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "        if (instance == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "            revert Errors.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            revert Errors_2.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 57,
+            "oldLines": 7,
+            "newStart": 57,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "        returns (address instance)"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "        if (address(this).balance < value) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            revert Errors.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            revert Errors_2.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "        assembly (\"memory-safe\") {"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 7,
+            "newStart": 68,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "            instance := create2(value, 0x09, 0x37, salt)"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "        if (instance == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            revert Errors.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            revert Errors_2.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "    }" },
+              { "type": " ", "oldLine": 74, "newLine": 74, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 126,
+            "oldLines": 14,
+            "newStart": 126,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 126,
+                "text": "        returns (address instance)"
+              },
+              { "type": " ", "oldLine": 127, "newLine": 127, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 128,
+                "text": "        if (address(this).balance < value) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            revert Errors.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "            revert Errors_2.InsufficientBalance(address(this).balance, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "        assembly (\"memory-safe\") {"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 133,
+                "text": "            instance := create(value, add(bytecode, 0x20), mload(bytecode))"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 134,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "        if (instance == address(0)) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            revert Errors.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "            revert Errors_2.FailedDeployment();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 138, "newLine": 138, "text": "    }" },
+              { "type": " ", "oldLine": 139, "newLine": 139, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 143,
+            "oldLines": 8,
+            "newStart": 143,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 143,
+                "text": "     * access the arguments within the implementation, use {fetchCloneArgs}."
+              },
+              { "type": " ", "oldLine": 144, "newLine": 144, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 145,
+                "text": "     * This function uses the create2 opcode and a `salt` to deterministically deploy the clone. Using the same"
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "     * `implementation`, `args` and `salt` multiple time will revert, since the clones cannot be deployed twice",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "     * at the same address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "     * `implementation` and `salt` multiple time will revert, since the clones cannot be deployed twice at the same",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "     * address.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 148,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 149,
+                "text": "    function cloneDeterministicWithImmutableArgs(address implementation, bytes memory args, bytes32 salt)"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 150,
+                "text": "        internal"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

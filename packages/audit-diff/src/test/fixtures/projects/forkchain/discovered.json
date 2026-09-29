@@ -1,0 +1,32 @@
+{
+  "name": "forkchain",
+  "timestamp": 1700000000,
+  "entries": [
+    {
+      "type": "Contract",
+      "name": "Vault",
+      "address": "eth:0x0000000000000000000000000000000000000001",
+      "template": "acmestack/Vault",
+      "proxyType": "EIP1967 proxy"
+    },
+    {
+      "type": "Contract",
+      "name": "Treasury",
+      "address": "eth:0x0000000000000000000000000000000000000002"
+    },
+    {
+      "type": "Contract",
+      "name": "Extra",
+      "address": "eth:0x0000000000000000000000000000000000000003"
+    },
+    {
+      "type": "Contract",
+      "name": "Unknown",
+      "address": "eth:0x0000000000000000000000000000000000000004"
+    },
+    {
+      "type": "EOA",
+      "address": "eth:0x0000000000000000000000000000000000000005"
+    }
+  ]
+}

@@ -1,0 +1,1054 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f7b9c058da970111e286010c84ccb3c415d0ad20b91c09c04b388a732a2ddd7b",
+  "name": "RewardLib",
+  "kind": "library",
+  "lines": 232,
+  "source": "library RewardLib {\n    using SafeERC20 for IERC20;\n    using BitMaps for BitMaps.BitMap;\n    using TimeLib for Timestamp;\n    using TimeLib for Epoch;\n    using FeeHeaderLib for CompressedFeeHeader;\n    using SafeCast for uint256;\n\n    bytes32 private constant REWARD_STORAGE_POSITION = keccak256(\"aztec.reward.storage\");\n\n    // A Cuauhxicalli [kʷaːʍʃiˈkalːi] (\"eagle gourd bowl\") is a ceremonial Aztec vessel or altar used to hold\n    // offerings,\n    // such as sacrificial hearts, during rituals performed within temples.\n    address public constant BURN_ADDRESS = address(bytes20(\"CUAUHXICALLI\"));\n\n    /// @notice One-shot writer used during rollup construction. Writes every field of\n    ///         {RewardConfig}, including the immutable `rewardDistributor` and `booster`.\n    /// @dev Must only be reachable from the constructor path. Post-deployment updates go through\n    ///      {updateConfig}, which preserves the immutable fields.\n    function initializeConfig(RewardConfig memory _config) internal {\n        require(Bps.unwrap(_config.sequencerBps) <= 10_000, Errors_1.RewardLib__InvalidSequencerBps());\n        RewardStorage storage rewardStorage = getStorage();\n        rewardStorage.config = _config;\n    }\n\n    /// @notice Owner-gated post-deployment writer. Only updates the mutable subset\n    ///         (`sequencerBps`, `checkpointReward`). The `rewardDistributor` and `booster`\n    ///         addresses MUST NOT be reachable from this path -- they remain whatever was\n    ///         written by {initializeConfig}.\n    function updateConfig(MutableRewardConfig memory _config) internal {\n        require(Bps.unwrap(_config.sequencerBps) <= 10_000, Errors_1.RewardLib__InvalidSequencerBps());\n        RewardStorage storage rewardStorage = getStorage();\n        rewardStorage.config.sequencerBps = _config.sequencerBps;\n        rewardStorage.config.checkpointReward = _config.checkpointReward;\n    }\n\n    function claimSequencerRewards(address _sequencer) internal returns (uint256) {\n        RewardStorage storage rewardStorage = getStorage();\n        RollupStore storage rollupStore = STFLib.getStorage();\n        uint256 amount = rewardStorage.sequencerRewards[_sequencer];\n\n        if (amount > 0) {\n            rewardStorage.sequencerRewards[_sequencer] = 0;\n            rollupStore.config.feeAsset.safeTransfer(_sequencer, amount);\n        }\n\n        return amount;\n    }\n\n    function claimProverRewards(address _prover, Epoch[] memory _epochs) internal returns (uint256) {\n        Epoch currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        RewardStorage storage rewardStorage = getStorage();\n\n        uint256 accumulatedRewards = 0;\n        for (uint256 i = 0; i < _epochs.length; i++) {\n            require(\n                !_epochs[i].isAcceptingProofsAtEpoch(currentEpoch),\n                Errors_1.Rollup__NotPastDeadline(_epochs[i].toDeadlineEpoch(), currentEpoch)\n            );\n\n            if (rewardStorage.proverClaimed[_prover].get(Epoch.unwrap(_epochs[i]))) {\n                continue;\n            }\n            rewardStorage.proverClaimed[_prover].set(Epoch.unwrap(_epochs[i]));\n\n            EpochRewards storage e = rewardStorage.epochRewards[_epochs[i]];\n            SubEpochRewards storage se = e.subEpoch[e.longestProvenLength];\n            uint256 shares = se.shares[_prover];\n            if (shares > 0) {\n                accumulatedRewards += (shares * e.rewards / se.summedShares);\n            }\n        }\n\n        if (accumulatedRewards > 0) {\n            rollupStore.config.feeAsset.safeTransfer(_prover, accumulatedRewards);\n        }\n\n        return accumulatedRewards;\n    }\n\n    function handleRewardsAndFees(SubmitEpochRootProofArgs calldata _args, Epoch _endEpoch) internal {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        RewardStorage storage rewardStorage = getStorage();\n\n        uint256 length = _args.end - _args.start + 1;\n        EpochRewards storage $er = rewardStorage.epochRewards[_endEpoch];\n\n        {\n            SubEpochRewards storage $sr = $er.subEpoch[length];\n            address prover = _args.args.proverId;\n\n            require($sr.shares[prover] == 0, Errors_1.Rollup__ProverHaveAlreadySubmitted(prover, _endEpoch));\n            // Beware that it is possible to get marked active in an epoch even if you did not provide the longest\n            // proof. This is acceptable, as they were actually active. And boosting this way is not the most\n            // efficient way to do it, so this is fine.\n            uint256 shares = rewardStorage.config.booster.updateAndGetShares(prover);\n\n            // The duplicate-submission guard above uses `shares == 0` as the sentinel for \"not yet\n            // submitted\". A booster that ever returns zero would let the same prover submit again\n            // for the same epoch length, breaking that guard. RewardBooster's constructor rejects\n            // configs that can return zero, but the booster slot is an external pointer; bounce\n            // back if a misbehaving booster ever crosses this layer.\n            require(shares > 0, Errors_1.RewardLib__ZeroShares(prover));\n\n            $sr.shares[prover] = shares;\n            $sr.summedShares += shares;\n        }\n\n        if (length > $er.longestProvenLength) {\n            Values memory v;\n            Totals memory t;\n\n            {\n                uint256 added = length - $er.longestProvenLength;\n                uint256 checkpointRewardsDesired = added * getCheckpointReward();\n                uint256 checkpointRewardsAvailable = 0;\n\n                if (checkpointRewardsDesired > 0) {\n                    // Cache the reward distributor contract\n                    IRewardDistributor distributor = rewardStorage.config.rewardDistributor;\n\n                    uint256 amountToClaim = Math.min(checkpointRewardsDesired, distributor.availableTo(address(this)));\n\n                    if (amountToClaim > 0) {\n                        distributor.claim(address(this), amountToClaim);\n                        checkpointRewardsAvailable = amountToClaim;\n                    }\n                }\n\n                uint256 sequenceCheckpointRewards =\n                    BpsLib.mul(checkpointRewardsAvailable, rewardStorage.config.sequencerBps);\n                v.sequencerCheckpointReward = sequenceCheckpointRewards / added;\n\n                uint256 dust = sequenceCheckpointRewards - (v.sequencerCheckpointReward * added);\n                uint256 proverCheckpointRewards = checkpointRewardsAvailable - sequenceCheckpointRewards + dust;\n                if (proverCheckpointRewards > 0) {\n                    $er.rewards += proverCheckpointRewards.toUint128();\n                }\n            }\n\n            for (uint256 i = $er.longestProvenLength; i < length; i++) {\n                CompressedFeeHeader feeHeader = STFLib.getFeeHeader(_args.start + i);\n\n                v.manaUsed = feeHeader.getManaUsed();\n\n                uint256 fee = _args.headers[i].accumulatedFees;\n                uint256 burn = feeHeader.getCongestionCost() * v.manaUsed;\n\n                t.feesToClaim += fee;\n                t.totalBurn += burn;\n\n                // Compute the proving fee in the fee asset\n                v.proverFee = Math.min(v.manaUsed * feeHeader.getProverCost(), fee - burn);\n                if (v.proverFee > 0) {\n                    $er.rewards += v.proverFee.toUint128();\n                }\n\n                v.sequencerFee = fee - burn - v.proverFee;\n\n                {\n                    v.sequencer = _args.headers[i].coinbase;\n                    uint256 toSequencer = v.sequencerCheckpointReward + v.sequencerFee;\n                    if (toSequencer > 0) {\n                        rewardStorage.sequencerRewards[v.sequencer] += toSequencer;\n                    }\n                }\n            }\n\n            $er.longestProvenLength = length.toUint128();\n\n            if (t.feesToClaim > 0) {\n                rollupStore.config.feeAssetPortal.distributeFees(address(this), t.feesToClaim);\n            }\n\n            if (t.totalBurn > 0) {\n                rollupStore.config.feeAsset.safeTransfer(BURN_ADDRESS, t.totalBurn);\n            }\n        }\n    }\n\n    function getSharesFor(address _prover) internal view returns (uint256) {\n        return getStorage().config.booster.getSharesFor(_prover);\n    }\n\n    function getSequencerRewards(address _sequencer) internal view returns (uint256) {\n        return getStorage().sequencerRewards[_sequencer];\n    }\n\n    function getCollectiveProverRewardsForEpoch(Epoch _epoch) internal view returns (uint256) {\n        return getStorage().epochRewards[_epoch].rewards;\n    }\n\n    function getHasSubmitted(Epoch _epoch, uint256 _length, address _prover) internal view returns (bool) {\n        return getStorage().epochRewards[_epoch].subEpoch[_length].shares[_prover] > 0;\n    }\n\n    function getHasClaimed(address _prover, Epoch _epoch) internal view returns (bool) {\n        return getStorage().proverClaimed[_prover].get(Epoch.unwrap(_epoch));\n    }\n\n    function getCheckpointReward() internal view returns (uint256) {\n        return getStorage().config.checkpointReward;\n    }\n\n    function getSpecificProverRewardsForEpoch(Epoch _epoch, address _prover) internal view returns (uint256) {\n        RewardStorage storage rewardStorage = getStorage();\n\n        if (rewardStorage.proverClaimed[_prover].get(Epoch.unwrap(_epoch))) {\n            return 0;\n        }\n\n        EpochRewards storage er = rewardStorage.epochRewards[_epoch];\n        SubEpochRewards storage se = er.subEpoch[er.longestProvenLength];\n\n        // Only if prover has shares will he get a reward. Also avoid a 0-div\n        // in case of no shares at all.\n        if (se.shares[_prover] == 0) {\n            return 0;\n        }\n\n        return (se.shares[_prover] * er.rewards / se.summedShares);\n    }\n\n    function getStorage() internal pure returns (RewardStorage storage storageStruct) {\n        bytes32 position = REWARD_STORAGE_POSITION;\n        assembly {\n            storageStruct.slot := position\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 218,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "RewardLib",
+        "similarity": 0.844,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 14,
+        "removed": 40,
+        "ignoredAdded": 26,
+        "ignoredRemoved": 26,
+        "unchanged": 218,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library RewardLib {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeERC20 for IERC20;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using BitMaps for BitMaps.BitMap;"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    using CompressedTimeMath for CompressedTimestamp;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    using CompressedTimeMath for Timestamp;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 4,
+                "text": "    using TimeLib for Timestamp;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 5,
+                "text": "    using TimeLib for Epoch;"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 6,
+                "text": "    using FeeHeaderLib for CompressedFeeHeader;"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 34,
+            "newStart": 13,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 13,
+                "text": "    // such as sacrificial hearts, during rituals performed within temples."
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 14,
+                "text": "    address public constant BURN_ADDRESS = address(bytes20(\"CUAUHXICALLI\"));"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    function initialize(Timestamp _earliestRewardsClaimableTimestamp) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @notice One-shot writer used during rollup construction. Writes every field of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    ///         {RewardConfig}, including the immutable `rewardDistributor` and `booster`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @dev Must only be reachable from the constructor path. Post-deployment updates go through",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    ///      {updateConfig}, which preserves the immutable fields.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    function initializeConfig(RewardConfig memory _config) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        require(Bps.unwrap(_config.sequencerBps) <= 10_000, Errors_1.RewardLib__InvalidSequencerBps());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 22,
+                "text": "        RewardStorage storage rewardStorage = getStorage();"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        rewardStorage.earliestRewardsClaimableTimestamp = _earliestRewardsClaimableTimestamp.compress();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        rewardStorage.isRewardsClaimable = false;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 22, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    function setConfig(RewardConfig memory _config) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        require(Bps.unwrap(_config.sequencerBps) <= 10_000, Errors.RewardLib__InvalidSequencerBps());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        RewardStorage storage rewardStorage = getStorage();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 23,
+                "text": "        rewardStorage.config = _config;"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    function setIsRewardsClaimable(bool _isRewardsClaimable) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Owner-gated post-deployment writer. Only updates the mutable subset",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    ///         (`sequencerBps`, `checkpointReward`). The `rewardDistributor` and `booster`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    ///         addresses MUST NOT be reachable from this path -- they remain whatever was",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    ///         written by {initializeConfig}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function updateConfig(MutableRewardConfig memory _config) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        require(Bps.unwrap(_config.sequencerBps) <= 10_000, Errors_1.RewardLib__InvalidSequencerBps());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 32,
+                "text": "        RewardStorage storage rewardStorage = getStorage();"
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        uint256 earliestRewardsClaimableTimestamp =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "            Timestamp.unwrap(rewardStorage.earliestRewardsClaimableTimestamp.decompress());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "            block.timestamp >= earliestRewardsClaimableTimestamp,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "            Errors.Rollup__TooSoonToSetRewardsClaimable(earliestRewardsClaimableTimestamp, block.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        rewardStorage.isRewardsClaimable = _isRewardsClaimable;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        rewardStorage.config.sequencerBps = _config.sequencerBps;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        rewardStorage.config.checkpointReward = _config.checkpointReward;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 37,
+                "text": "    function claimSequencerRewards(address _sequencer) internal returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 38,
+                "text": "        RewardStorage storage rewardStorage = getStorage();"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        require(rewardStorage.isRewardsClaimable, Errors.Rollup__RewardsNotClaimable());",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 45, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 39,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 40,
+                "text": "        uint256 amount = rewardStorage.sequencerRewards[_sequencer];"
+              },
+              { "type": " ", "oldLine": 48, "newLine": 41, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 13,
+            "newStart": 53,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 54,
+                "text": "        RewardStorage storage rewardStorage = getStorage();"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 55, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        require(rewardStorage.isRewardsClaimable, Errors.Rollup__RewardsNotClaimable());",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 64, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 56,
+                "text": "        uint256 accumulatedRewards = 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 57,
+                "text": "        for (uint256 i = 0; i < _epochs.length; i++) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 58,
+                "text": "            require("
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 59,
+                "text": "                !_epochs[i].isAcceptingProofsAtEpoch(currentEpoch),"
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                Errors.Rollup__NotPastDeadline(_epochs[i].toDeadlineEpoch(), currentEpoch)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "                Errors_1.Rollup__NotPastDeadline(_epochs[i].toDeadlineEpoch(), currentEpoch)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 61,
+                "text": "            );"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 62, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 63,
+                "text": "            if (rewardStorage.proverClaimed[_prover].get(Epoch.unwrap(_epochs[i]))) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 12,
+            "newStart": 80,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 80,
+                "text": "        return accumulatedRewards;"
+              },
+              { "type": " ", "oldLine": 90, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 91, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    function handleRewardsAndFees(SubmitEpochRootProofArgs memory _args, Epoch _endEpoch) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    function handleRewardsAndFees(SubmitEpochRootProofArgs calldata _args, Epoch _endEpoch) internal {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 84,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 85,
+                "text": "        RewardStorage storage rewardStorage = getStorage();"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 86, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        // Determine if this rollup is canonical according to its RewardDistributor.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 97, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 87,
+                "text": "        uint256 length = _args.end - _args.start + 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 88,
+                "text": "        EpochRewards storage $er = rewardStorage.epochRewards[_endEpoch];"
+              },
+              { "type": " ", "oldLine": 100, "newLine": 89, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 102,
+            "oldLines": 12,
+            "newStart": 91,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 91,
+                "text": "            SubEpochRewards storage $sr = $er.subEpoch[length];"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 92,
+                "text": "            address prover = _args.args.proverId;"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 93, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "            require($sr.shares[prover] == 0, Errors.Rollup__ProverHaveAlreadySubmitted(prover, _endEpoch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            require($sr.shares[prover] == 0, Errors_1.Rollup__ProverHaveAlreadySubmitted(prover, _endEpoch));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 95,
+                "text": "            // Beware that it is possible to get marked active in an epoch even if you did not provide the longest"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 96,
+                "text": "            // proof. This is acceptable, as they were actually active. And boosting this way is not the most"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 97,
+                "text": "            // efficient way to do it, so this is fine."
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 98,
+                "text": "            uint256 shares = rewardStorage.config.booster.updateAndGetShares(prover);"
+              },
+              { "type": " ", "oldLine": 110, "newLine": 99, "text": "" },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            // The duplicate-submission guard above uses `shares == 0` as the sentinel for \"not yet",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            // submitted\". A booster that ever returns zero would let the same prover submit again",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "            // for the same epoch length, breaking that guard. RewardBooster's constructor rejects",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "            // configs that can return zero, but the booster slot is an external pointer; bounce",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "            // back if a misbehaving booster ever crosses this layer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            require(shares > 0, Errors_1.RewardLib__ZeroShares(prover));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 106, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 107,
+                "text": "            $sr.shares[prover] = shares;"
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 108,
+                "text": "            $sr.summedShares += shares;"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 109,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 20,
+            "newStart": 117,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 117,
+                "text": "                uint256 checkpointRewardsDesired = added * getCheckpointReward();"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 118,
+                "text": "                uint256 checkpointRewardsAvailable = 0;"
+              },
+              { "type": " ", "oldLine": 123, "newLine": 119, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "                // Only if we require checkpoint rewards and are canonical will we claim.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 120,
+                "text": "                if (checkpointRewardsDesired > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 121,
+                "text": "                    // Cache the reward distributor contract"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 122,
+                "text": "                    IRewardDistributor distributor = rewardStorage.config.rewardDistributor;"
+              },
+              { "type": " ", "oldLine": 128, "newLine": 123, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "                    if (address(this) == distributor.canonicalRollup()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "                        uint256 amountToClaim = Math.min(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "                            checkpointRewardsDesired, rollupStore.config.feeAsset.balanceOf(address(distributor))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "                        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "                    uint256 amountToClaim = Math.min(checkpointRewardsDesired, distributor.availableTo(address(this)));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 133, "newLine": 125, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "                        if (amountToClaim > 0) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "                            distributor.claim(address(this), amountToClaim);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                            checkpointRewardsAvailable = amountToClaim;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "                        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "                    if (amountToClaim > 0) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                        distributor.claim(address(this), amountToClaim);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "                        checkpointRewardsAvailable = amountToClaim;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 129,
+                "text": "                    }"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 130,
+                "text": "                }"
+              },
+              { "type": " ", "oldLine": 140, "newLine": 131, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 149,
+            "oldLines": 32,
+            "newStart": 140,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 140,
+                "text": "                }"
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 141,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 151, "newLine": 142, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "            bool isTxsEnabled = FeeLib.isTxsEnabled();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 153, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 143,
+                "text": "            for (uint256 i = $er.longestProvenLength; i < length; i++) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "                if (isTxsEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "                    // During ignition there can be no txs, so there can be no fees either",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "                    // so we can skip the fee calculation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "                CompressedFeeHeader feeHeader = STFLib.getFeeHeader(_args.start + i);",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 158, "newLine": 145, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "                    CompressedFeeHeader feeHeader = STFLib.getFeeHeader(_args.start + i);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                v.manaUsed = feeHeader.getManaUsed();",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 160, "newLine": 147, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "                    v.manaUsed = feeHeader.getManaUsed();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "                uint256 fee = _args.headers[i].accumulatedFees;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "                uint256 burn = feeHeader.getCongestionCost() * v.manaUsed;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 162, "newLine": 150, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "                    uint256 fee = uint256(_args.fees[1 + i * 2]);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "                    uint256 burn = feeHeader.getCongestionCost() * v.manaUsed;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                t.feesToClaim += fee;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "                t.totalBurn += burn;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 165, "newLine": 153, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "                    t.feesToClaim += fee;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "                    t.totalBurn += burn;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 168, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "                    // Compute the proving fee in the fee asset",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "                    v.proverFee = Math.min(v.manaUsed * feeHeader.getProverCost(), fee - burn);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "                // Compute the proving fee in the fee asset",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                v.proverFee = Math.min(v.manaUsed * feeHeader.getProverCost(), fee - burn);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "                if (v.proverFee > 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 157,
+                "text": "                    $er.rewards += v.proverFee.toUint128();"
+              },
+              { "type": "-", "oldLine": 172, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "                    v.sequencerFee = fee - burn - v.proverFee;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 158,
+                "text": "                }"
+              },
+              { "type": " ", "oldLine": 175, "newLine": 159, "text": "" },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "                v.sequencerFee = fee - burn - v.proverFee;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 161, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 162,
+                "text": "                {"
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "                    v.sequencer = fieldToAddress(_args.fees[i * 2]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "                    v.sequencer = _args.headers[i].coinbase;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 164,
+                "text": "                    uint256 toSequencer = v.sequencerCheckpointReward + v.sequencerFee;"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 165,
+                "text": "                    if (toSequencer > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 166,
+                "text": "                        rewardStorage.sequencerRewards[v.sequencer] += toSequencer;"
+              }
+            ]
+          },
+          {
+            "oldStart": 237,
+            "oldLines": 22,
+            "newStart": 223,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 223,
+                "text": "        return (se.shares[_prover] * er.rewards / se.summedShares);"
+              },
+              { "type": " ", "oldLine": 238, "newLine": 224, "text": "    }" },
+              { "type": " ", "oldLine": 239, "newLine": 225, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "    function isRewardsClaimable() internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "        return getStorage().isRewardsClaimable;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 243, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "    function getEarliestRewardsClaimableTimestamp() internal view returns (Timestamp) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "        return getStorage().earliestRewardsClaimableTimestamp.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 247, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 226,
+                "text": "    function getStorage() internal pure returns (RewardStorage storage storageStruct) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 227,
+                "text": "        bytes32 position = REWARD_STORAGE_POSITION;"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 228,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 229,
+                "text": "            storageStruct.slot := position"
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 230,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 253, "newLine": 231, "text": "    }" },
+              { "type": "-", "oldLine": 254, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "    function fieldToAddress(bytes32 _f) private pure returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "        return address(uint160(uint256(_f)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 258, "newLine": 232, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

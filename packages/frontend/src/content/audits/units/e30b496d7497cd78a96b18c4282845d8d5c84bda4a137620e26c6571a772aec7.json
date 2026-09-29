@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e30b496d7497cd78a96b18c4282845d8d5c84bda4a137620e26c6571a772aec7",
+  "name": "IUniswapV3MintCallback",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IUniswapV3MintCallback {\n    /// @notice Called to `msg.sender` after minting liquidity to a position from IUniswapV3Pool#mint.\n    /// @dev In the implementation you must pay the pool tokens owed for the minted liquidity.\n    /// The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.\n    /// @param amount0Owed The amount of token0 due to the pool for the minted liquidity\n    /// @param amount1Owed The amount of token1 due to the pool for the minted liquidity\n    /// @param data Any data passed through by the caller via the IUniswapV3PoolActions#mint call\n    function uniswapV3MintCallback(uint256 amount0Owed, uint256 amount1Owed, bytes calldata data) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 9,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3MintCallback",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/callback/IUniswapV3MintCallback.sol",
+        "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+        "commitTimestamp": "2021-03-22T19:11:50Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc/contracts/interfaces/callback/IUniswapV3MintCallback.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fixes for the reported findings (auditor status Fixed)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

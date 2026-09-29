@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "46e415cb1d60c331944a4bd0f8a74536e2ff68cf0a5e87bb45d9c2920e17e00b",
+  "name": "EIP712Domain",
+  "kind": "contract",
+  "lines": 6,
+  "source": "contract EIP712Domain {\n    /**\n     * @dev EIP712 Domain Separator\n     */\n    bytes32 public DOMAIN_SEPARATOR;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

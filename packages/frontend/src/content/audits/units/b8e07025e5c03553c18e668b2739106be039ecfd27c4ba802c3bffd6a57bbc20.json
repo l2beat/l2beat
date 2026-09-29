@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8e07025e5c03553c18e668b2739106be039ecfd27c4ba802c3bffd6a57bbc20",
+  "name": "IBn254LibWrapper",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IBn254LibWrapper {\n    function proofOfPossession(\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession\n    ) external view returns (bool);\n\n    function g1ToDigestPoint(G1Point memory pk1) external view returns (G1Point memory);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

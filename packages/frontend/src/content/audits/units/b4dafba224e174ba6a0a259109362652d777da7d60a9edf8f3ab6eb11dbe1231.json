@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b4dafba224e174ba6a0a259109362652d777da7d60a9edf8f3ab6eb11dbe1231",
+  "name": "AddressAliasHelper",
+  "kind": "library",
+  "lines": 24,
+  "source": "library AddressAliasHelper {\n    /// @dev The offset added to the address in L1.\n    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);\n\n    /// @notice Utility function that converts the address in the L1 that submitted a tx to\n    /// the inbox to the msg.sender viewed in the L2\n    /// @param l1Address the address in the L1 that triggered the tx to L2\n    /// @return l2Address L2 address as viewed in msg.sender\n    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {\n        unchecked {\n            l2Address = address(uint160(l1Address) + OFFSET);\n        }\n    }\n\n    /// @notice Utility function that converts the msg.sender viewed in the L2 to the\n    /// address in the L1 that submitted a tx to the inbox\n    /// @param l2Address L2 address as viewed in msg.sender\n    /// @return l1Address the address in the L1 that triggered the tx to L2\n    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {\n        unchecked {\n            l1Address = address(uint160(l2Address) - OFFSET);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 24,
+      "match": {
+        "origin": "other",
+        "collection": "arbitrum",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 1,
+        "reportId": "arbitrum/trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03",
+        "repository": "OffchainLabs/nitro-contracts",
+        "path": "src/libraries/AddressAliasHelper.sol",
+        "commit": "961a498b3ae3e218535a2a9fd28c306aaa04f3ee",
+        "commitTimestamp": "2025-01-25T16:43:16Z",
+        "url": "https://github.com/OffchainLabs/nitro-contracts/blob/961a498b3ae3e218535a2a9fd28c306aaa04f3ee/src/libraries/AddressAliasHelper.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "review of changes",
+        "coverage": "Only the pre-BoLD EIP-7702 fixes applied in commit 961a498 to the non-BoLD Nitro contracts branch were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 24,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AddressAliasHelper {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @dev The offset added to the address in L1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    /// @notice Utility function that converts the address in the L1 that submitted a tx to"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

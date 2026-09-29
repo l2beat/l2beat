@@ -1,4 +1,7 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import { formatInteger } from '@l2beat/shared-pure'
+import { LineCoverageBar } from '~/components/audits/AuditCoverageBar'
+import { formatShare } from '~/components/audits/auditStatus'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -42,6 +45,19 @@ export interface TechnologyContract {
   pastUpgrades?: PastUpgradesData
   escrow?: TechnologyContractEscrow
   groupCount?: number
+  audit?: TechnologyContractAudit
+}
+
+export interface TechnologyContractAudit {
+  /** This contract on the audits dashboard. */
+  href: string
+  lines: { total: number; covered: number; uncovered: number }
+  majorFinding?: {
+    reportUrl?: string
+    reportTitle: string
+    auditor: string
+    findingIds: string[]
+  }
 }
 
 export interface TechnologyContractAddress {
@@ -117,6 +133,9 @@ export function ContractEntry({
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
+            {contract.audit?.majorFinding && (
+              <MajorFindingBadge finding={contract.audit.majorFinding} />
+            )}
             {expandableAddresses ? (
               <GroupedActorAddresses
                 addresses={contract.addresses}
@@ -156,6 +175,7 @@ export function ContractEntry({
             contract.pastUpgrades.upgrades.length > 0 && (
               <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
             )}
+          {contract.audit && <AuditCoverageEntry audit={contract.audit} />}
           {contract.description && (
             <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}
@@ -228,6 +248,83 @@ export function ContractEntry({
         </>
       }
     />
+  )
+}
+
+function MajorFindingBadge({
+  finding,
+}: {
+  finding: NonNullable<TechnologyContractAudit['majorFinding']>
+}) {
+  const badge = (
+    <Badge
+      type="error"
+      padding="regular"
+      className="text-[13px] uppercase leading-none"
+    >
+      Major finding
+    </Badge>
+  )
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        {finding.reportUrl ? (
+          <a
+            href={finding.reportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex"
+          >
+            {badge}
+          </a>
+        ) : (
+          <span className="inline-flex">{badge}</span>
+        )}
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[360px] space-y-1">
+        <div>
+          The deployed code is identical to an audited revision for which the
+          audit report recorded major findings, so the fix for those findings is
+          not present in the deployed contract.
+        </div>
+        <div className="text-secondary">
+          {finding.reportTitle}
+          {finding.auditor && ` (${finding.auditor})`}
+          {finding.findingIds.length > 0 &&
+            `: ${finding.findingIds.join(', ')}`}
+        </div>
+        {finding.reportUrl && <div>Click to open the audit report.</div>}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function AuditCoverageEntry({ audit }: { audit: TechnologyContractAudit }) {
+  const { lines } = audit
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <a
+          href={audit.href}
+          className="mt-2 flex w-fit flex-wrap items-center gap-x-3 gap-y-1 text-paragraph-15 hover:underline md:text-paragraph-16"
+        >
+          <span>
+            <strong className="text-primary">Covered by audits:</strong>{' '}
+            {formatShare(lines.covered, lines.total)}{' '}
+            <span className="text-secondary">
+              ({formatInteger(lines.covered)} / {formatInteger(lines.total)}{' '}
+              lines)
+            </span>
+          </span>
+          <LineCoverageBar lines={lines} className="h-[6px] w-[120px]" />
+        </a>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[360px]">
+        Share of this contract's source lines that are identical to code covered
+        by a public audit report. Click to see the per-unit comparison on the
+        audits dashboard.
+      </TooltipContent>
+    </Tooltip>
   )
 }
 

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "124a14be0699070147802a497c45bcc4ec1dcabc3a28665fb5ad44011fe6985b",
+  "name": "IFeeJuicePortal",
+  "kind": "interface",
+  "lines": 20,
+  "source": "interface IFeeJuicePortal {\n    event DepositToAztecPublic(bytes32 indexed to, uint256 amount, bytes32 secretHash, bytes32 key, uint256 index);\n    event FeesDistributed(address indexed to, uint256 amount);\n\n    function distributeFees(address _to, uint256 _amount) external;\n    function depositToAztecPublic(bytes32 _to, uint256 _amount, bytes32 _secretHash)\n        external\n        returns (bytes32, uint256);\n\n    // solhint-disable-next-line func-name-mixedcase\n    function UNDERLYING() external view returns (IERC20);\n    // solhint-disable-next-line func-name-mixedcase\n    function L2_TOKEN_ADDRESS() external view returns (bytes32);\n    // solhint-disable-next-line func-name-mixedcase\n    function VERSION() external view returns (uint256);\n    // solhint-disable-next-line func-name-mixedcase\n    function INBOX() external view returns (IInbox);\n    // solhint-disable-next-line func-name-mixedcase\n    function ROLLUP() external view returns (IRollup);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

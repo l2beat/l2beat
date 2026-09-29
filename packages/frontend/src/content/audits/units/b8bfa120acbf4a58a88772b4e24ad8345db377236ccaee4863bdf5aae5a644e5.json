@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8bfa120acbf4a58a88772b4e24ad8345db377236ccaee4863bdf5aae5a644e5",
+  "name": "L1CustomERC20Gateway",
+  "kind": "contract",
+  "lines": 134,
+  "source": "contract L1CustomERC20Gateway is L1ERC20Gateway {\n    using SafeERC20Upgradeable for IERC20Upgradeable;\n\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when token mapping for ERC20 token is updated.\n    /// @param l1Token The address of ERC20 token in layer 1.\n    /// @param oldL2Token The address of the old corresponding ERC20 token in layer 2.\n    /// @param newL2Token The address of the new corresponding ERC20 token in layer 2.\n    event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from l1 token address to l2 token address for ERC20 token.\n    mapping(address => address) public tokenMapping;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1CustomERC20Gateway` implementation contract.\n    ///\n    /// @param _counterpart The address of `L2CustomERC20Gateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract in L1.\n    /// @param _messenger The address of `L1ScrollMessenger` contract L1.\n    constructor(address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L1CustomERC20Gateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of L2CustomERC20Gateway in L2.\n    /// @param _router The address of L1GatewayRouter in L1.\n    /// @param _messenger The address of L1ScrollMessenger in L1.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC20Gateway\n    function getL2ERC20Address(address _l1Token) public view override returns (address) {\n        return tokenMapping[_l1Token];\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update layer 1 to layer 2 token mapping.\n    /// @param _l1Token The address of ERC20 token on layer 1.\n    /// @param _l2Token The address of corresponding ERC20 token on layer 2.\n    function updateTokenMapping(address _l1Token, address _l2Token) external payable onlyOwner {\n        require(_l2Token != address(0), \"token address cannot be 0\");\n\n        address _oldL2Token = tokenMapping[_l1Token];\n        tokenMapping[_l1Token] = _l2Token;\n\n        emit UpdateTokenMapping(_l1Token, _oldL2Token, _l2Token);\n\n        // update corresponding mapping in L2, 1000000 gas limit should be enough\n        bytes memory _message = abi.encodeCall(L1CustomERC20Gateway.updateTokenMapping, (_l2Token, _l1Token));\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, 1000000, _msgSender());\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeFinalizeWithdrawERC20(address _l1Token, address _l2Token, address, address, uint256, bytes calldata)\n        internal\n        virtual\n        override\n    {\n        require(msg.value == 0, \"nonzero msg.value\");\n        require(_l2Token != address(0), \"token address cannot be 0\");\n        require(_l2Token == tokenMapping[_l1Token], \"l2 token mismatch\");\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeDropMessage(address, address, uint256) internal virtual override {\n        require(msg.value == 0, \"nonzero msg.value\");\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _deposit(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        address _l2Token = tokenMapping[_token];\n        require(_l2Token != address(0), \"no corresponding l2 token\");\n\n        // 1. Transfer token into this contract.\n        address _from;\n        (_from, _amount, _data) = _transferERC20In(_token, _amount, _data);\n\n        // 2. Generate message passed to L2CustomERC20Gateway.\n        bytes memory _message =\n            abi.encodeCall(IL2ERC20Gateway.finalizeDepositERC20, (_token, _l2Token, _from, _to, _amount, _data));\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit, _from);\n\n        emit DepositERC20(_token, _l2Token, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 131,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1CustomERC20Gateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/L1CustomERC20Gateway.sol",
+        "commit": "a8addd896717b663bc8053744f794f721ed87cdd",
+        "commitTimestamp": "2024-02-01T06:39:19Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/a8addd896717b663bc8053744f794f721ed87cdd/contracts/src/L1/gateways/L1CustomERC20Gateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of N-07 (documentation consistency) in pull request #1098 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 3,
+        "removed": 1,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 131,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 30,
+            "oldLines": 7,
+            "newStart": 30,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// @notice Constructor for `L1CustomERC20Gateway` implementation contract."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "    ///" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param _counterpart The address of `L2USDCGateway` contract in L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// @param _counterpart The address of `L2CustomERC20Gateway` contract in L2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "    /// @param _router The address of `L1GatewayRouter` contract in L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "    /// @param _messenger The address of `L1ScrollMessenger` contract L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "    constructor(address _counterpart, address _router, address _messenger)"
+              }
+            ]
+          },
+          {
+            "oldStart": 73,
+            "oldLines": 13,
+            "newStart": 73,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "    /// @notice Update layer 1 to layer 2 token mapping."
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    /// @param _l1Token The address of ERC20 token on layer 1."
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "    /// @param _l2Token The address of corresponding ERC20 token on layer 2."
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    function updateTokenMapping(address _l1Token, address _l2Token) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    function updateTokenMapping(address _l1Token, address _l2Token) external payable onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        require(_l2Token != address(0), \"token address cannot be 0\");"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "        address _oldL2Token = tokenMapping[_l1Token];"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "        tokenMapping[_l1Token] = _l2Token;"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 81, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "        emit UpdateTokenMapping(_l1Token, _oldL2Token, _l2Token);"
+              },
+              { "type": "+", "newLine": 83, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        // update corresponding mapping in L2, 1000000 gas limit should be enough",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        bytes memory _message = abi.encodeCall(L1CustomERC20Gateway.updateTokenMapping, (_l2Token, _l1Token));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, 1000000, _msgSender());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 83, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 84, "newLine": 88, "text": "" },
+              { "type": " ", "oldLine": 85, "newLine": 89, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "01e433ede0b8d606af173de274f598b8c6ea441be263fa835cd0dd9be9fc3a7f",
+  "name": "Rescuable",
+  "kind": "contract",
+  "lines": 43,
+  "source": "contract Rescuable is Ownable {\n    using SafeERC20 for IERC20;\n\n    address private _rescuer;\n\n    event RescuerChanged(address indexed newRescuer);\n\n    /**\n     * @notice Returns current rescuer\n     * @return Rescuer's address\n     */\n    function rescuer() external view returns (address) {\n        return _rescuer;\n    }\n\n    /**\n     * @notice Revert if called by any account other than the rescuer.\n     */\n    modifier onlyRescuer() {\n        require(msg.sender == _rescuer, \"Rescuable: caller is not the rescuer\");\n        _;\n    }\n\n    /**\n     * @notice Rescue ERC20 tokens locked up in this contract.\n     * @param tokenContract ERC20 token contract address\n     * @param to        Recipient address\n     * @param amount    Amount to withdraw\n     */\n    function rescueERC20(IERC20 tokenContract, address to, uint256 amount) external onlyRescuer {\n        tokenContract.safeTransfer(to, amount);\n    }\n\n    /**\n     * @notice Assign the rescuer role to a given address.\n     * @param newRescuer New rescuer's address\n     */\n    function updateRescuer(address newRescuer) external onlyOwner {\n        require(newRescuer != address(0), \"Rescuable: new rescuer is the zero address\");\n        _rescuer = newRescuer;\n        emit RescuerChanged(newRescuer);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

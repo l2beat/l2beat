@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a52b6715f6ccd0268641c7e603c2fe3cf852a8f51eaa46dec8671171b2e3ee82",
+  "name": "ITransparentUpgradeableProxy",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ITransparentUpgradeableProxy is IERC1967 {\n    function upgradeToAndCall(address, bytes calldata) external payable;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 3,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ITransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit - phase 1",
+        "coverage": "Phase 1 review limited to the changes introduced in this previously audited (v5.0.0) contract; the diff since v5.0.0 was reviewed, not the full file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    }
+  }
+}

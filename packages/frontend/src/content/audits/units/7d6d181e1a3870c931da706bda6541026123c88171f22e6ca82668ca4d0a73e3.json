@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7d6d181e1a3870c931da706bda6541026123c88171f22e6ca82668ca4d0a73e3",
+  "name": "CheckpointedUintLib",
+  "kind": "library",
+  "lines": 70,
+  "source": "library CheckpointedUintLib {\n    using Checkpoints for Checkpoints.Trace224;\n    using SafeCast for uint256;\n\n    /**\n     * @notice  Add `_amount` to the current value\n     *\n     * @dev   The amounts are cast to uint224 before storing such that the (key: value) fits in a single slot\n     *\n     * @param _self - The Trace224 to add to\n     * @param _amount - The amount to add\n     *\n     * @return - The current value and the new value\n     */\n    function add(Checkpoints.Trace224 storage _self, uint256 _amount) internal returns (uint256, uint256) {\n        uint224 current = _self.latest();\n        if (_amount == 0) {\n            return (current, current);\n        }\n        uint224 amount = _amount.toUint224();\n        _self.push(block.timestamp.toUint32(), current + amount);\n        return (current, current + amount);\n    }\n\n    /**\n     * @notice  Subtract `_amount` from the current value\n     *\n     * @param _self - The Trace224 to subtract from\n     * @param _amount - The amount to subtract\n     * @return - The current value and the new value\n     */\n    function sub(Checkpoints.Trace224 storage _self, uint256 _amount) internal returns (uint256, uint256) {\n        uint224 current = _self.latest();\n        if (_amount == 0) {\n            return (current, current);\n        }\n        uint224 amount = _amount.toUint224();\n        require(\n            current >= amount, Errors_1.Governance__CheckpointedUintLib__InsufficientValue(msg.sender, current, amount)\n        );\n        _self.push(block.timestamp.toUint32(), current - amount);\n        return (current, current - amount);\n    }\n\n    /**\n     * @notice  Get the current value\n     *\n     * @param _self - The Trace224 to get the value of\n     * @return - The current value\n     */\n    function valueNow(Checkpoints.Trace224 storage _self) internal view returns (uint256) {\n        return _self.latest();\n    }\n\n    /**\n     * @notice  Get the value at a given timestamp\n     *          The timestamp MUST be in the past to guarantee it is stable\n     *\n     * @dev     Uses `upperLookupRecent` instead of just `upperLookup` as it will most\n     *          likely be a recent value when looked up as part of governance.\n     *\n     * @param _self - The Trace224 to get the value of\n     * @param _time - The timestamp to get the value at\n     * @return - The value at the given timestamp\n     */\n    function valueAt(Checkpoints.Trace224 storage _self, Timestamp _time) internal view returns (uint256) {\n        require(_time < Timestamp.wrap(block.timestamp), Errors_1.Governance__CheckpointedUintLib__NotInPast());\n        return _self.upperLookupRecent(Timestamp.unwrap(_time).toUint32());\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 68,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "CheckpointedUintLib",
+        "similarity": 0.994,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 68,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 36,
+            "oldLines": 7,
+            "newStart": 36,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        uint224 amount = _amount.toUint224();"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "            current >= amount, Errors.Governance__CheckpointedUintLib__InsufficientValue(msg.sender, current, amount)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            current >= amount, Errors_1.Governance__CheckpointedUintLib__InsufficientValue(msg.sender, current, amount)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        _self.push(block.timestamp.toUint32(), current - amount);"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        return (current, current - amount);"
+              }
+            ]
+          },
+          {
+            "oldStart": 64,
+            "oldLines": 7,
+            "newStart": 64,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "     * @return - The value at the given timestamp"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 65, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    function valueAt(Checkpoints.Trace224 storage _self, Timestamp _time) internal view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        require(_time < Timestamp.wrap(block.timestamp), Errors.Governance__CheckpointedUintLib__NotInPast());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(_time < Timestamp.wrap(block.timestamp), Errors_1.Governance__CheckpointedUintLib__NotInPast());",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "        return _self.upperLookupRecent(Timestamp.unwrap(_time).toUint32());"
+              },
+              { "type": " ", "oldLine": 69, "newLine": 69, "text": "    }" },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

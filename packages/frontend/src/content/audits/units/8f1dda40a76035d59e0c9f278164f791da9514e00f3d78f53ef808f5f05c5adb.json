@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f1dda40a76035d59e0c9f278164f791da9514e00f3d78f53ef808f5f05c5adb",
+  "name": "IRegistry",
+  "kind": "interface",
+  "lines": 37,
+  "source": "interface IRegistry {\n    event UpdatedRevoker(address revoker);\n    event UpdatedRevokerOperator(address revokerOperator);\n    event UpdatedExecuteAllowedAt(uint256 executeAllowedAt);\n    event UpdatedUnlockStartTime(uint256 unlockStartTime);\n    event StakerRegistered(StakerVersion version, address implementation);\n    event MilestoneAdded(MilestoneId milestoneId);\n    event MilestoneStatusUpdated(MilestoneId milestoneId, MilestoneStatus status);\n\n    error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt);\n    error InvalidUnlockStartTime(uint256 newUnlockStartTime, uint256 currentUnlockStartTime);\n    error InvalidUnlockDuration();\n    error InvalidUnlockCliffDuration();\n    error InvalidStakerImplementation(address implementation);\n\n    error UnRegisteredStaker(StakerVersion version);\n    error InvalidMilestoneId(MilestoneId milestoneId);\n    error InvalidMilestoneStatus(MilestoneId milestoneId);\n\n    function setRevoker(address _revoker) external;\n    function setRevokerOperator(address _revokerOperator) external;\n    function setExecuteAllowedAt(uint256 _executeAllowedAt) external;\n    function setUnlockStartTime(uint256 _unlockStartTime) external;\n    function registerStakerImplementation(address _implementation) external;\n    function addMilestone() external returns (MilestoneId);\n    function setMilestoneStatus(MilestoneId _milestoneId, MilestoneStatus _status) external;\n\n    function getRevoker() external view returns (address);\n    function getRevokerOperator() external view returns (address);\n    function getExecuteAllowedAt() external view returns (uint256);\n    function getUnlockStartTime() external view returns (uint256);\n    function getGlobalLockParams() external view returns (LockParams memory);\n    function getStakerImplementation(StakerVersion _version) external view returns (address);\n    function getNextStakerVersion() external view returns (StakerVersion);\n    function getMilestoneStatus(MilestoneId _milestoneId) external view returns (MilestoneStatus);\n    function getNextMilestoneId() external view returns (MilestoneId);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

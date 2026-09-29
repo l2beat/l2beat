@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5d5ee7baae1f53303eee5781a7211d8515fec07a5890c8b255c111b44a8211d8",
+  "name": "BaseStaker",
+  "kind": "contract",
+  "lines": 45,
+  "source": "contract BaseStaker is IBaseStaker, UUPSUpgradeable {\n    address internal atp;\n\n    error AlreadyInitialized();\n    error ZeroATP();\n    error NotATP(address caller, address atp);\n    error NotOperator(address caller, address operator);\n    error UnSupportedOperation();\n\n    modifier onlyOperator() {\n        address operator = getOperator();\n        require(msg.sender == operator, NotOperator(msg.sender, operator));\n        _;\n    }\n\n    modifier onlyATP() {\n        require(msg.sender == address(atp), NotATP(msg.sender, address(atp)));\n        _;\n    }\n\n    constructor() {\n        atp = address(0xdead);\n    }\n\n    function initialize(address _atp) external virtual override(IBaseStaker) {\n        require(address(_atp) != address(0), ZeroATP());\n        require(address(atp) == address(0), AlreadyInitialized());\n\n        atp = _atp;\n    }\n\n    function getATP() external view virtual override(IBaseStaker) returns (address) {\n        return atp;\n    }\n\n    function getImplementation() external view virtual override(IBaseStaker) returns (address) {\n        return ERC1967Utils.getImplementation();\n    }\n\n    function getOperator() public view virtual override(IBaseStaker) returns (address) {\n        return IATPCore(atp).getOperator();\n    }\n\n    function _authorizeUpgrade(address _newImplementation) internal virtual override(UUPSUpgradeable) onlyATP {}\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

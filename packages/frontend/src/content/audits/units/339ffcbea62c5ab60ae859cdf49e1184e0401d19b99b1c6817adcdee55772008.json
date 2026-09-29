@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "339ffcbea62c5ab60ae859cdf49e1184e0401d19b99b1c6817adcdee55772008",
+  "name": "IUniswapV3SwapCallback",
+  "kind": "interface",
+  "lines": 12,
+  "source": "interface IUniswapV3SwapCallback {\n    /// @notice Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap.\n    /// @dev In the implementation you must pay the pool tokens owed for the swap.\n    /// The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.\n    /// amount0Delta and amount1Delta can both be 0 if no tokens were swapped.\n    /// @param amount0Delta The amount of token0 that was sent (negative) or must be received (positive) by the pool by\n    /// the end of the swap. If positive, the callback must send that amount of token0 to the pool.\n    /// @param amount1Delta The amount of token1 that was sent (negative) or must be received (positive) by the pool by\n    /// the end of the swap. If positive, the callback must send that amount of token1 to the pool.\n    /// @param data Any data passed through by the caller via the IUniswapV3PoolActions#swap call\n    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata data) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 12,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3SwapCallback",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 3,
+        "unchanged": 12,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IUniswapV3SwapCallback {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Called on `msg.sender` after performing a swap and transferring any output tokens to the recipient",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @dev The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical factory.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// Both amount0 and amount1 can be 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @dev In the implementation you must pay the pool tokens owed for the swap.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// amount0Delta and amount1Delta can both be 0 if no tokens were swapped.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "    /// @param amount0Delta The amount of token0 that was sent (negative) or must be received (positive) by the pool by"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "    /// the end of the swap. If positive, the callback must send that amount of token0 to the pool."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "    /// @param amount1Delta The amount of token1 that was sent (negative) or must be received (positive) by the pool by"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c5b4aa7a480408a9278fb649d25b3291cf1dc1b293b6cb8853d9040c6a2133a7",
+  "name": "Time",
+  "kind": "library",
+  "lines": 111,
+  "source": "library Time {\n    using Time for *;\n\n    /**\n     * @dev Get the block timestamp as a Timepoint.\n     */\n    function timestamp() internal view returns (uint48) {\n        return SafeCast.toUint48(block.timestamp);\n    }\n\n    /**\n     * @dev Get the block number as a Timepoint.\n     */\n    function blockNumber() internal view returns (uint48) {\n        return SafeCast.toUint48(block.number);\n    }\n\n    // ==================================================== Delay =====================================================\n    /**\n     * @dev A `Delay` is a uint32 duration that can be programmed to change value automatically at a given point in the\n     * future. The \"effect\" timepoint describes when the transitions happens from the \"old\" value to the \"new\" value.\n     * This allows updating the delay applied to some operation while keeping some guarantees.\n     *\n     * In particular, the {update} function guarantees that if the delay is reduced, the old delay still applies for\n     * some time. For example if the delay is currently 7 days to do an upgrade, the admin should not be able to set\n     * the delay to 0 and upgrade immediately. If the admin wants to reduce the delay, the old delay (7 days) should\n     * still apply for some time.\n     *\n     *\n     * The `Delay` type is 112 bits long, and packs the following:\n     *\n     * ```\n     *   | [uint48]: effect date (timepoint)\n     *   |           | [uint32]: value before (duration)\n     *   ↓           ↓       ↓ [uint32]: value after (duration)\n     * 0xAAAAAAAAAAAABBBBBBBBCCCCCCCC\n     * ```\n     *\n     * NOTE: The {get} and {withUpdate} functions operate using timestamps. Block number based delays are not currently\n     * supported.\n     */\n    type Delay is uint112;\n\n    /**\n     * @dev Wrap a duration into a Delay to add the one-step \"update in the future\" feature\n     */\n    function toDelay(uint32 duration) internal pure returns (Delay) {\n        return Delay.wrap(duration);\n    }\n\n    /**\n     * @dev Get the value at a given timepoint plus the pending value and effect timepoint if there is a scheduled\n     * change after this timepoint. If the effect timepoint is 0, then the pending value should not be considered.\n     */\n    function _getFullAt(Delay self, uint48 timepoint) private pure returns (uint32, uint32, uint48) {\n        (uint32 valueBefore, uint32 valueAfter, uint48 effect) = self.unpack();\n        return effect <= timepoint ? (valueAfter, 0, 0) : (valueBefore, valueAfter, effect);\n    }\n\n    /**\n     * @dev Get the current value plus the pending value and effect timepoint if there is a scheduled change. If the\n     * effect timepoint is 0, then the pending value should not be considered.\n     */\n    function getFull(Delay self) internal view returns (uint32, uint32, uint48) {\n        return _getFullAt(self, timestamp());\n    }\n\n    /**\n     * @dev Get the current value.\n     */\n    function get(Delay self) internal view returns (uint32) {\n        (uint32 delay,,) = self.getFull();\n        return delay;\n    }\n\n    /**\n     * @dev Update a Delay object so that it takes a new duration after a timepoint that is automatically computed to\n     * enforce the old delay at the moment of the update. Returns the updated Delay object and the timestamp when the\n     * new delay becomes effective.\n     */\n    function withUpdate(Delay self, uint32 newValue, uint32 minSetback)\n        internal\n        view\n        returns (Delay updatedDelay, uint48 effect)\n    {\n        uint32 value = self.get();\n        uint32 setback = uint32(Math.max(minSetback, value > newValue ? value - newValue : 0));\n        effect = timestamp() + setback;\n        return (pack(value, newValue, effect), effect);\n    }\n\n    /**\n     * @dev Split a delay into its components: valueBefore, valueAfter and effect (transition timepoint).\n     */\n    function unpack(Delay self) internal pure returns (uint32 valueBefore, uint32 valueAfter, uint48 effect) {\n        uint112 raw = Delay.unwrap(self);\n\n        valueAfter = uint32(raw);\n        valueBefore = uint32(raw >> 32);\n        effect = uint48(raw >> 64);\n\n        return (valueBefore, valueAfter, effect);\n    }\n\n    /**\n     * @dev pack the components into a Delay object.\n     */\n    function pack(uint32 valueBefore, uint32 valueAfter, uint48 effect) internal pure returns (Delay) {\n        return Delay.wrap((uint112(effect) << 64) | (uint112(valueBefore) << 32) | uint112(valueAfter));\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 108,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Time",
+        "similarity": 0.962,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/types/Time.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/types/Time.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 3,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 108,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    // ==================================================== Delay ====================================================="
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "     * @dev A `Delay` is a uint32 duration that can be programmed to change value automatically at a given point in the"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * future. The \"effect\" timepoint describes when the transition happens from the \"old\" value to the \"new\" value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * future. The \"effect\" timepoint describes when the transitions happens from the \"old\" value to the \"new\" value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "     * This allows updating the delay applied to some operation while keeping some guarantees."
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * In particular, the {update} function guarantees that if the delay is reduced, the old delay still applies for"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 12,
+            "newStart": 52,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "     * @dev Get the value at a given timepoint plus the pending value and effect timepoint if there is a scheduled"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "     * change after this timepoint. If the effect timepoint is 0, then the pending value should not be considered."
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _getFullAt(Delay self, uint48 timepoint)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        returns (uint32 valueBefore, uint32 valueAfter, uint48 effect)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        (valueBefore, valueAfter, effect) = self.unpack();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function _getFullAt(Delay self, uint48 timepoint) private pure returns (uint32, uint32, uint48) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        (uint32 valueBefore, uint32 valueAfter, uint48 effect) = self.unpack();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 57,
+                "text": "        return effect <= timepoint ? (valueAfter, 0, 0) : (valueBefore, valueAfter, effect);"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 63, "newLine": 59, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 7,
+            "newStart": 61,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 61,
+                "text": "     * @dev Get the current value plus the pending value and effect timepoint if there is a scheduled change. If the"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 62,
+                "text": "     * effect timepoint is 0, then the pending value should not be considered."
+              },
+              { "type": " ", "oldLine": 67, "newLine": 63, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    function getFull(Delay self) internal view returns (uint32 valueBefore, uint32 valueAfter, uint48 effect) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function getFull(Delay self) internal view returns (uint32, uint32, uint48) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 65,
+                "text": "        return _getFullAt(self, timestamp());"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 66, "text": "    }" },
+              { "type": " ", "oldLine": 71, "newLine": 67, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e04362472360a6d022ee91763746bfeebbc09f1b641bbcb64418364184f58ccc",
+  "name": "Governance",
+  "kind": "interface",
+  "lines": 12,
+  "source": "interface Governance is IGovernance {\n    function governanceProposer() external view returns (address);\n    function deposit(address _beneficiary, uint256 _amount) external override(IGovernance);\n    function initiateWithdraw(address _to, uint256 _amount) external override(IGovernance) returns (uint256);\n    function finalizeWithdraw(uint256 _withdrawalId) external override(IGovernance);\n    function propose(IPayload _proposal) external override(IGovernance) returns (uint256);\n    function proposeWithLock(IPayload _proposal, address _to) external override(IGovernance) returns (uint256);\n    function vote(uint256 _proposalId, uint256 _amount, bool _support) external override(IGovernance);\n    function getConfiguration() external view override(IGovernance) returns (Configuration memory);\n    function getProposal(uint256 _proposalId) external view override(IGovernance) returns (Proposal memory);\n    function getWithdrawal(uint256 _withdrawalId) external view override(IGovernance) returns (Withdrawal memory);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "939498c7700d3554c7638e42b765370c7ceffda315c8cc4809131ee53428f59e",
+  "name": "SampleLib",
+  "kind": "library",
+  "lines": 95,
+  "source": "library SampleLib {\n    using SlotDerivation for string;\n    using SlotDerivation for bytes32;\n    using TransientSlot for *;\n\n    // Namespace for transient storage keys used within this library\n    string private constant OVERRIDE_NAMESPACE = \"Aztec.SampleLib.Override\";\n\n    /**\n     * Compute Committee\n     *\n     * @param _committeeSize - The size of the committee\n     * @param _indexCount - The total number of indices\n     * @param _seed - The seed to use for shuffling\n     *\n     * @dev assumption, _committeeSize <= _indexCount\n     *\n     * @return indices - The indices of the committee\n     */\n    function computeCommittee(uint256 _committeeSize, uint256 _indexCount, uint256 _seed)\n        internal\n        returns (uint256[] memory)\n    {\n        require(_committeeSize <= _indexCount, Errors_1.SampleLib__SampleLargerThanIndex(_committeeSize, _indexCount));\n\n        if (_committeeSize == 0) {\n            return new uint256[](0);\n        }\n\n        uint256[] memory sampledIndices = new uint256[](_committeeSize);\n\n        uint256 upperLimit = _indexCount - 1;\n\n        for (uint256 index = 0; index < _committeeSize; index++) {\n            uint256 sampledIndex = computeSampleIndex(index, upperLimit + 1, _seed);\n\n            // Get index, or its swapped override\n            sampledIndices[index] = getValue(sampledIndex);\n            if (upperLimit > 0) {\n                // Swap with the last index\n                setOverrideValue(sampledIndex, getValue(upperLimit));\n                // Decrement the upper limit\n                upperLimit--;\n            }\n        }\n\n        // Clear transient storage.\n        // Note that we are clearing the `sampleIndices` and do not keep track of a separate list of\n        // `sampleIndex` values that were written to. The reasoning is that we only overwrite values for\n        // duplicate cases, so `sampleIndices` is a superset of the `sampleIndex` values that have been drawn\n        // (to account for duplicates). Therefore, clearing `sampleIndices` clears everything.\n        // Due to the cost of `tstore` and `tload` operations, it is cheaper to overwrite all values\n        // rather than checking if there is anything to override.\n        for (uint256 i = 0; i < _committeeSize; i++) {\n            setOverrideValue(sampledIndices[i], 0);\n        }\n\n        return sampledIndices;\n    }\n\n    function setOverrideValue(uint256 _index, uint256 _value) internal {\n        OVERRIDE_NAMESPACE.erc7201Slot().deriveMapping(_index).asUint256().tstore(_value);\n    }\n\n    function getValue(uint256 _index) internal view returns (uint256) {\n        uint256 overrideValue = getOverrideValue(_index);\n        if (overrideValue != 0) {\n            return overrideValue;\n        }\n\n        return _index;\n    }\n\n    function getOverrideValue(uint256 _index) internal view returns (uint256) {\n        return OVERRIDE_NAMESPACE.erc7201Slot().deriveMapping(_index).asUint256().tload();\n    }\n\n    /**\n     * @notice  Compute the sample index for a given index, seed and index count.\n     *\n     * @param _index - The index to shuffle\n     * @param _indexCount - The total number of indices\n     * @param _seed - The seed to use for shuffling\n     *\n     * @return shuffledIndex - The shuffled index\n     */\n    function computeSampleIndex(uint256 _index, uint256 _indexCount, uint256 _seed) internal pure returns (uint256) {\n        // Cannot modulo by 0 and if 1, then only acceptable value is 0\n        if (_indexCount <= 1) {\n            return 0;\n        }\n\n        return uint256(keccak256(abi.encodePacked(_seed, _index))) % _indexCount;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "SampleLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/crypto/SampleLib.sol",
+        "commit": "70f004dc2ad19d1c0b80f8a481424dd23542f191",
+        "commitTimestamp": "2025-09-26T07:33:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/70f004dc2ad19d1c0b80f8a481424dd23542f191/l1-contracts/src/core/libraries/crypto/SampleLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified computeSampleIndex early return from PR 17299 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 21,
+            "oldLines": 7,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "        returns (uint256[] memory)"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        require(_committeeSize <= _indexCount, Errors.SampleLib__SampleLargerThanIndex(_committeeSize, _indexCount));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        require(_committeeSize <= _indexCount, Errors_1.SampleLib__SampleLargerThanIndex(_committeeSize, _indexCount));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "        if (_committeeSize == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "            return new uint256[](0);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

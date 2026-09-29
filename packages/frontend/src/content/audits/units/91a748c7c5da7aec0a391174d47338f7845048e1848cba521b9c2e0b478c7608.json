@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "91a748c7c5da7aec0a391174d47338f7845048e1848cba521b9c2e0b478c7608",
+  "name": "Governance",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface Governance is IGovernance {\n    function propose(IPayload _proposal) external override(IGovernance) returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2d86689278896f64a67a02c32afbc93eae88fc7d5b2bb8b65e1ff16afcec3e44",
+  "name": "AbstractFiatTokenV1",
+  "kind": "abstract",
+  "lines": 5,
+  "source": "abstract contract AbstractFiatTokenV1 is IERC20 {\n    function _approve(address owner, address spender, uint256 value) internal virtual;\n\n    function _transfer(address from, address to, uint256 value) internal virtual;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

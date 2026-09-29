@@ -1,0 +1,1192 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7425c3b761e686c8f031fa55338da93e82a85435892566785eddfca702c59efa",
+  "name": "SafeERC20",
+  "kind": "library",
+  "lines": 61,
+  "source": "library SafeERC20 {\n    using SafeMath for uint256;\n    using Address for address;\n\n    function safeTransfer(IERC20 token, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));\n    }\n\n    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));\n    }\n\n    /**\n     * @dev Deprecated. This function has issues similar to the ones found in\n     * {IERC20-approve}, and its usage is discouraged.\n     *\n     * Whenever possible, use {safeIncreaseAllowance} and\n     * {safeDecreaseAllowance} instead.\n     */\n    function safeApprove(IERC20 token, address spender, uint256 value) internal {\n        // safeApprove should only be called when setting an initial allowance,\n        // or when resetting it to zero. To increase and decrease it, use\n        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'\n        // solhint-disable-next-line max-line-length\n        require(\n            (value == 0) || (token.allowance(address(this), spender) == 0),\n            \"SafeERC20: approve from non-zero to non-zero allowance\"\n        );\n        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));\n    }\n\n    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {\n        uint256 newAllowance = token.allowance(address(this), spender).add(value);\n        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n    }\n\n    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {\n        uint256 newAllowance =\n            token.allowance(address(this), spender).sub(value, \"SafeERC20: decreased allowance below zero\");\n        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n    }\n\n    /**\n     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement\n     * on the return value: the return value is optional (but if data is returned, it must not be false).\n     * @param token The token targeted by the call.\n     * @param data The call data (encoded using abi.encode or one of its variants).\n     */\n    function _callOptionalReturn(IERC20 token, bytes memory data) private {\n        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since\n        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that\n        // the target address contains contract code and also asserts for success in the low-level call.\n\n        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");\n        if (returndata.length > 0) {\n            // Return data is optional\n            // solhint-disable-next-line max-line-length\n            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 57,
+      "match": {
+        "origin": "other",
+        "collection": "zksync2",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.779,
+        "reportId": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+        "repository": "code-423n4/2023-03-zksync",
+        "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+        "commitTimestamp": "2023-03-10T20:57:33Z",
+        "url": "https://github.com/code-423n4/2023-03-zksync/blob/21d9a364a4a75adfa6f1e038232d8c0f39858a64/contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "contest audit",
+        "coverage": "One of the 40 contest-scope files (2,418 SLOC) listed in the contest repository README; code links in the report pin this commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 21,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 3,
+        "unchanged": 57,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 6,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "        // safeApprove should only be called when setting an initial allowance,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "        // or when resetting it to zero. To increase and decrease it, use"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "            (value == 0) || (token.allowance(address(this), spender) == 0),"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "            \"SafeERC20: approve from non-zero to non-zero allowance\""
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 35,
+            "newStart": 30,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 32,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender).add(value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 34,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        uint256 newAllowance =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            token.allowance(address(this), spender).sub(value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function safePermit(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        IERC20Permit token,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        address owner,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        address spender,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        uint256 value,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        uint256 deadline,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        uint8 v,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        bytes32 r,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        bytes32 s",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        uint256 nonceBefore = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        token.permit(owner, spender, value, deadline, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        uint256 nonceAfter = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        require(nonceAfter == nonceBefore + 1, \"SafeERC20: permit did not succeed\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 60, "newLine": 43, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 44,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 45,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false)."
+              }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 12,
+            "newStart": 48,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 65, "newLine": 48, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 49,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 50,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 52,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 70, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 54,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 55,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 56,
+                "text": "            // Return data is optional"
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 58,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 59,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 60, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "0bd6183c95226c8e": {
+      "status": "differs",
+      "coveredLines": 57,
+      "match": {
+        "origin": "other",
+        "collection": "zksync2",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.779,
+        "reportId": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+        "repository": "code-423n4/2023-03-zksync",
+        "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+        "commitTimestamp": "2023-03-10T20:57:33Z",
+        "url": "https://github.com/code-423n4/2023-03-zksync/blob/21d9a364a4a75adfa6f1e038232d8c0f39858a64/contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "contest audit",
+        "coverage": "One of the 40 contest-scope files (2,418 SLOC) listed in the contest repository README; code links in the report pin this commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 21,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 3,
+        "unchanged": 57,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 6,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "        // safeApprove should only be called when setting an initial allowance,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "        // or when resetting it to zero. To increase and decrease it, use"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "            (value == 0) || (token.allowance(address(this), spender) == 0),"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "            \"SafeERC20: approve from non-zero to non-zero allowance\""
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 35,
+            "newStart": 30,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 32,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender).add(value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 34,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        uint256 newAllowance =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            token.allowance(address(this), spender).sub(value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function safePermit(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        IERC20Permit token,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        address owner,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        address spender,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        uint256 value,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        uint256 deadline,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        uint8 v,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        bytes32 r,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        bytes32 s",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        uint256 nonceBefore = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        token.permit(owner, spender, value, deadline, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        uint256 nonceAfter = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        require(nonceAfter == nonceBefore + 1, \"SafeERC20: permit did not succeed\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 60, "newLine": 43, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 44,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 45,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false)."
+              }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 12,
+            "newStart": 48,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 65, "newLine": 48, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 49,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 50,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 52,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 70, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 54,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 55,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 56,
+                "text": "            // Return data is optional"
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 58,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 59,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 60, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "43889a0aeb1d556f": {
+      "status": "differs",
+      "coveredLines": 57,
+      "match": {
+        "origin": "other",
+        "collection": "zksync2",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.779,
+        "reportId": "zksync2/code4rena-zksync-era-system-contracts-2023-03",
+        "repository": "code-423n4/2023-03-zksync",
+        "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+        "commitTimestamp": "2023-03-10T20:57:33Z",
+        "url": "https://github.com/code-423n4/2023-03-zksync/blob/21d9a364a4a75adfa6f1e038232d8c0f39858a64/contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "contest audit",
+        "coverage": "One of the 40 contest-scope files (2,418 SLOC) listed in the contest repository README; code links in the report pin this commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 21,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 3,
+        "unchanged": 57,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    using Address for address;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 6,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "        // safeApprove should only be called when setting an initial allowance,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "        // or when resetting it to zero. To increase and decrease it, use"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "            (value == 0) || (token.allowance(address(this), spender) == 0),"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "            \"SafeERC20: approve from non-zero to non-zero allowance\""
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 35,
+            "newStart": 30,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 31, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 32,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender) + value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender).add(value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 34,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            uint256 oldAllowance = token.allowance(address(this), spender);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            require(oldAllowance >= value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "            uint256 newAllowance = oldAllowance - value;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        uint256 newAllowance =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            token.allowance(address(this), spender).sub(value, \"SafeERC20: decreased allowance below zero\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function safePermit(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        IERC20Permit token,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "        address owner,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        address spender,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        uint256 value,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        uint256 deadline,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        uint8 v,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        bytes32 r,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        bytes32 s",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        uint256 nonceBefore = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        token.permit(owner, spender, value, deadline, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        uint256 nonceAfter = token.nonces(owner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        require(nonceAfter == nonceBefore + 1, \"SafeERC20: permit did not succeed\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 60, "newLine": 43, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 44,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 45,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false)."
+              }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 12,
+            "newStart": 48,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 65, "newLine": 48, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 49,
+                "text": "    function _callOptionalReturn(IERC20 token, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 50,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 52,
+                "text": "        // the target address contains contract code and also asserts for success in the low-level call."
+              },
+              { "type": " ", "oldLine": 70, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 54,
+                "text": "        bytes memory returndata = address(token).functionCall(data, \"SafeERC20: low-level call failed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 55,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 56,
+                "text": "            // Return data is optional"
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 58,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 59,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 60, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

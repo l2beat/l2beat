@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "81d23185feb6ad16b58444fa2f7a950588b277318482cb8b378b9eb581e7f638",
+  "name": "IL1ScrollMessenger",
+  "kind": "interface",
+  "lines": 73,
+  "source": "interface IL1ScrollMessenger is IScrollMessenger {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the maximum number of times each message can be replayed is updated.\n    /// @param oldMaxReplayTimes The old maximum number of times each message can be replayed.\n    /// @param newMaxReplayTimes The new maximum number of times each message can be replayed.\n    event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes);\n\n    /**\n     *\n     * Structs *\n     *\n     */\n    struct L2MessageProof {\n        // The index of the batch where the message belongs to.\n        uint256 batchIndex;\n        // Concatenation of merkle proof for withdraw merkle trie.\n        bytes merkleProof;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Relay a L2 => L1 message with message proof.\n    /// @param from The address of the sender of the message.\n    /// @param to The address of the recipient of the message.\n    /// @param value The msg.value passed to the message call.\n    /// @param nonce The nonce of the message to avoid replay attack.\n    /// @param message The content of the message.\n    /// @param proof The proof used to verify the correctness of the transaction.\n    function relayMessageWithProof(\n        address from,\n        address to,\n        uint256 value,\n        uint256 nonce,\n        bytes memory message,\n        L2MessageProof memory proof\n    ) external;\n\n    /// @notice Replay an existing message.\n    /// @param from The address of the sender of the message.\n    /// @param to The address of the recipient of the message.\n    /// @param value The msg.value passed to the message call.\n    /// @param messageNonce The nonce for the message to replay.\n    /// @param message The content of the message.\n    /// @param newGasLimit New gas limit to be used for this message.\n    /// @param refundAddress The address of account who will receive the refunded fee.\n    function replayMessage(\n        address from,\n        address to,\n        uint256 value,\n        uint256 messageNonce,\n        bytes memory message,\n        uint32 newGasLimit,\n        address refundAddress\n    ) external payable;\n\n    /// @notice Drop a skipped message.\n    /// @param from The address of the sender of the message.\n    /// @param to The address of the recipient of the message.\n    /// @param value The msg.value passed to the message call.\n    /// @param messageNonce The nonce for the message to drop.\n    /// @param message The content of the message.\n    function dropMessage(address from, address to, uint256 value, uint256 messageNonce, bytes memory message)\n        external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 73,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL1ScrollMessenger",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/IL1ScrollMessenger.sol",
+        "commit": "b7a02fbe54cf14fb0149df520343bf0195e00c99",
+        "commitTimestamp": "2023-07-25T16:30:22Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/b7a02fbe54cf14fb0149df520343bf0195e00c99/contracts/src/L1/IL1ScrollMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #673 partial fix of N-05 (indexed event parameters). Note: commit timestamp (2023-07-25T16:30Z) precedes the audited commit and is on a diverged branch. Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

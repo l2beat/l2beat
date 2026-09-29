@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "567fc5ffc37ef4858ea8cba9668332f3626065c7ca13234a11777d538fff4c7a",
+  "name": "GovernorBravoDelegatorStorage",
+  "kind": "contract",
+  "lines": 10,
+  "source": "contract GovernorBravoDelegatorStorage {\n    /// @notice Administrator for this contract\n    address public admin;\n\n    /// @notice Pending administrator for this contract\n    address public pendingAdmin;\n\n    /// @notice Active brains of Governor\n    address public implementation;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

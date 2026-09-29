@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "70ddd5f87baf189863a7aebeb8d4c350c2bc99a0fe310df2a0ae405f3e7d8da8",
+  "name": "ProxyAdmin",
+  "kind": "contract",
+  "lines": 34,
+  "source": "contract ProxyAdmin is Ownable {\n    /**\n     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address)`\n     * and `upgradeAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,\n     * while `upgradeAndCall` will invoke the `receive` function if the second argument is the empty byte string.\n     * If the getter returns `\"5.0.0\"`, only `upgradeAndCall(address,bytes)` is present, and the second argument must\n     * be the empty byte string if no function should be called, making it impossible to invoke the `receive` function\n     * during an upgrade.\n     */\n    string public constant UPGRADE_INTERFACE_VERSION = \"5.0.0\";\n\n    /**\n     * @dev Sets the initial owner who can perform upgrades.\n     */\n    constructor(address initialOwner) Ownable(initialOwner) {}\n\n    /**\n     * @dev Upgrades `proxy` to `implementation` and calls a function on the new implementation.\n     * See {TransparentUpgradeableProxy-_dispatchUpgradeToAndCall}.\n     *\n     * Requirements:\n     *\n     * - This contract must be the admin of `proxy`.\n     * - If `data` is empty, `msg.value` must be zero.\n     */\n    function upgradeAndCall(ITransparentUpgradeableProxy proxy, address implementation, bytes memory data)\n        public\n        payable\n        virtual\n        onlyOwner\n    {\n        proxy.upgradeToAndCall{value: msg.value}(implementation, data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdmin",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/ProxyAdmin.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/transparent/ProxyAdmin.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

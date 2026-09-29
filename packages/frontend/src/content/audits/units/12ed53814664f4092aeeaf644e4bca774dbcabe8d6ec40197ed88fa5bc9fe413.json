@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "12ed53814664f4092aeeaf644e4bca774dbcabe8d6ec40197ed88fa5bc9fe413",
+  "name": "IEscapeHatchCore",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IEscapeHatchCore {\n    event CandidateJoined(address indexed candidate);\n    event CandidateExitInitiated(address indexed candidate, uint256 exitableAt);\n    event CandidateExited(address indexed candidate, uint256 amountReturned);\n    event CandidateSelected(Hatch indexed hatch, address indexed candidate);\n    event ArchiveUpdated(address indexed proposer, uint128 checkpointNumber, bytes32 archive);\n    event ProofValidated(Hatch indexed hatch, address indexed proposer, bool success, uint256 punishment);\n\n    function joinCandidateSet() external;\n    function initiateExit() external;\n    function leaveCandidateSet() external;\n    function selectCandidates() external;\n    function updateSubmittedArchive(address _proposer, uint128 _checkpointNumber, bytes32 _archive) external;\n    function validateProofSubmission(Hatch _hatch) external;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 14,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IEscapeHatchCore",
+        "similarity": 0.965,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IEscapeHatch.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 14,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IEscapeHatchCore {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    event CandidateJoined(address indexed candidate, uint256 amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    event CandidateJoined(address indexed candidate);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    event CandidateExitInitiated(address indexed candidate, uint256 exitableAt);"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event CandidateExited(address indexed candidate, uint256 amountReturned);"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    event CandidateSelected(Hatch indexed hatch, address indexed candidate);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

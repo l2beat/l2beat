@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c8fa236c7d484d4a7877f4d5cbf70279ad16cf36414776cd437ad3e77d05f251",
+  "name": "IZkEvmVerifierV1",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface IZkEvmVerifierV1 {\n    /// @notice Verify aggregate zk proof.\n    /// @param aggrProof The aggregated proof.\n    /// @param publicInputHash The public input hash.\n    function verify(bytes calldata aggrProof, bytes32 publicInputHash) external view;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "IZkEvmVerifier",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/verifier/IZkEvmVerifier.sol",
+        "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+        "commitTimestamp": "2023-07-25T17:25:27Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2eb458cf4224d82fc56254e91e297a9ed261cefb/contracts/src/libraries/verifier/IZkEvmVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IZkEvmVerifier {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IZkEvmVerifierV1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Verify aggregate zk proof."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    /// @param aggrProof The aggregated proof."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @param publicInputHash The public input hash."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

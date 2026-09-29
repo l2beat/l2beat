@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "da70e3f5e5ae93926cc717ffa87c6a949c6360351f67510b40f0f4460ce4b670",
+  "name": "Pausable",
+  "kind": "contract",
+  "lines": 49,
+  "source": "contract Pausable is Ownable {\n    event Pause();\n    event Unpause();\n    event PauserChanged(address indexed newAddress);\n\n    address public pauser;\n    bool public paused = false;\n\n    /**\n     * @dev Modifier to make a function callable only when the contract is not paused.\n     */\n    modifier whenNotPaused() {\n        require(!paused, \"Pausable: paused\");\n        _;\n    }\n\n    /**\n     * @dev throws if called by any account other than the pauser\n     */\n    modifier onlyPauser() {\n        require(msg.sender == pauser, \"Pausable: caller is not the pauser\");\n        _;\n    }\n\n    /**\n     * @dev called by the owner to pause, triggers stopped state\n     */\n    function pause() external onlyPauser {\n        paused = true;\n        emit Pause();\n    }\n\n    /**\n     * @dev called by the owner to unpause, returns to normal state\n     */\n    function unpause() external onlyPauser {\n        paused = false;\n        emit Unpause();\n    }\n\n    /**\n     * @dev update the pauser role\n     */\n    function updatePauser(address _newPauser) external onlyOwner {\n        require(_newPauser != address(0), \"Pausable: new pauser is the zero address\");\n        pauser = _newPauser;\n        emit PauserChanged(pauser);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

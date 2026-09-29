@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "54bfb06acfd82d7dfa1e56ac4bf8aeb6f86b5c0a14243e674db4a0986beb5449",
+  "name": "ScrollConstants",
+  "kind": "library",
+  "lines": 8,
+  "source": "library ScrollConstants {\n    /// @notice The address of default cross chain message sender.\n    address internal constant DEFAULT_XDOMAIN_MESSAGE_SENDER = address(1);\n\n    /// @notice The address for dropping message.\n    /// @dev The first 20 bytes of keccak(\"drop\")\n    address internal constant DROP_XDOMAIN_MESSAGE_SENDER = 0x6f297C61B5C92eF107fFD30CD56AFFE5A273e841;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 7,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ScrollConstants",
+        "similarity": 0.783,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/constants/ScrollConstants.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/constants/ScrollConstants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 0,
+        "unchanged": 7,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library ScrollConstants {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice The address of default cross chain message sender."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    address internal constant DEFAULT_XDOMAIN_MESSAGE_SENDER = address(1);"
+              },
+              { "type": "+", "newLine": 4, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice The address for dropping message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @dev The first 20 bytes of keccak(\"drop\")",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    address internal constant DROP_XDOMAIN_MESSAGE_SENDER = 0x6f297C61B5C92eF107fFD30CD56AFFE5A273e841;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 8, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8e7ba9499fd4573fd93df65d199868f5b83c2645b425ced4f613c05ff92f54b3",
+  "name": "LiquidityManagement",
+  "kind": "abstract",
+  "lines": 64,
+  "source": "abstract contract LiquidityManagement is IUniswapV3MintCallback, PeripheryImmutableState, PeripheryPayments {\n    struct MintCallbackData {\n        PoolAddress.PoolKey poolKey;\n        address payer;\n    }\n\n    /// @inheritdoc IUniswapV3MintCallback\n    function uniswapV3MintCallback(uint256 amount0Owed, uint256 amount1Owed, bytes calldata data) external override {\n        MintCallbackData memory decoded = abi.decode(data, (MintCallbackData));\n        CallbackValidation.verifyCallback(factory, decoded.poolKey);\n\n        if (amount0Owed > 0) {\n            pay(decoded.poolKey.token0, decoded.payer, msg.sender, amount0Owed);\n        }\n        if (amount1Owed > 0) {\n            pay(decoded.poolKey.token1, decoded.payer, msg.sender, amount1Owed);\n        }\n    }\n\n    struct AddLiquidityParams {\n        address token0;\n        address token1;\n        uint24 fee;\n        address recipient;\n        int24 tickLower;\n        int24 tickUpper;\n        uint256 amount0Desired;\n        uint256 amount1Desired;\n        uint256 amount0Min;\n        uint256 amount1Min;\n    }\n\n    /// @notice Add liquidity to an initialized pool\n    function addLiquidity(AddLiquidityParams memory params)\n        internal\n        returns (uint128 liquidity, uint256 amount0, uint256 amount1, IUniswapV3Pool pool)\n    {\n        PoolAddress.PoolKey memory poolKey =\n            PoolAddress.PoolKey({token0: params.token0, token1: params.token1, fee: params.fee});\n\n        pool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));\n\n        // compute the liquidity amount\n        {\n            (uint160 sqrtPriceX96,,,,,,) = pool.slot0();\n            uint160 sqrtRatioAX96 = TickMath.getSqrtRatioAtTick(params.tickLower);\n            uint160 sqrtRatioBX96 = TickMath.getSqrtRatioAtTick(params.tickUpper);\n\n            liquidity = LiquidityAmounts.getLiquidityForAmounts(\n                sqrtPriceX96, sqrtRatioAX96, sqrtRatioBX96, params.amount0Desired, params.amount1Desired\n            );\n        }\n\n        (amount0, amount1) = pool.mint(\n            params.recipient,\n            params.tickLower,\n            params.tickUpper,\n            liquidity,\n            abi.encode(MintCallbackData({poolKey: poolKey, payer: msg.sender}))\n        );\n\n        require(amount0 >= params.amount0Min && amount1 >= params.amount1Min, \"Price slippage check\");\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

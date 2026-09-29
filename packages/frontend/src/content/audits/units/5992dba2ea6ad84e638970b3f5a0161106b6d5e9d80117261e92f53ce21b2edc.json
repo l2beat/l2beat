@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5992dba2ea6ad84e638970b3f5a0161106b6d5e9d80117261e92f53ce21b2edc",
+  "name": "ISlasher",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface ISlasher {\n    event VetoedPayload(address indexed payload);\n    event SlashingDisabled(uint256 disabledUntil);\n\n    function slash(IPayload _payload) external returns (bool);\n    function vetoPayload(IPayload _payload) external returns (bool);\n    function setSlashingEnabled(bool _enabled) external;\n    function isSlashingEnabled() external view returns (bool);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

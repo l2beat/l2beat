@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "15d5978fb2f0cce472585dbdcda70c5c2e0800508e2eb2f0b9af106b3e78fad5",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 28,
+  "source": "type VMStatus is uint8;\nstruct Proposal {\n    Hash root;\n    uint256 l2SequenceNumber;\n}\ntype Hash is bytes32;\ntype Timestamp is uint64;\nenum BondDistributionMode {\n    // Bond distribution strategy has not been chosen.\n    UNDECIDED,\n    // Bonds should be distributed as normal.\n    NORMAL,\n    // Bonds should be refunded to claimants.\n    REFUND\n}\nenum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\ntype Duration is uint64;\ntype GameType is uint32;\ntype Clock is uint128;\ntype Position is uint128;\ntype Claim is bytes32;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "935d5d3740cf4449897fc6fa36ec4a1f9441a1dc6832e2e8a9405cbcf995f5d3",
+  "name": "Governance",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface Governance is IGovernance {\n    function proposalCount() external view returns (uint256);\n    function getProposal(uint256 _proposalId) external view override(IGovernance) returns (Proposal memory);\n    function getProposalState(uint256 _proposalId) external view override(IGovernance) returns (ProposalState);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "83ca6ea94f28f53e7ee0f6c0745bf8ec68c614318e64c01e344351f8dec6f600",
+  "name": "StakingQueueConfigLib",
+  "kind": "library",
+  "lines": 32,
+  "source": "library StakingQueueConfigLib {\n    using SafeCast for uint256;\n\n    uint256 private constant MASK_32BIT = 0xFFFFFFFF;\n\n    function compress(StakingQueueConfig memory _config) internal pure returns (CompressedStakingQueueConfig) {\n        uint256 value = 0;\n        value |= uint256(_config.maxQueueFlushSize.toUint32());\n        value |= uint256(_config.normalFlushSizeQuotient.toUint32()) << 32;\n        value |= uint256(_config.normalFlushSizeMin.toUint32()) << 64;\n        value |= uint256(_config.bootstrapFlushSize.toUint32()) << 96;\n        value |= uint256(_config.bootstrapValidatorSetSize.toUint32()) << 128;\n\n        return CompressedStakingQueueConfig.wrap(value);\n    }\n\n    function decompress(CompressedStakingQueueConfig _compressedConfig)\n        internal\n        pure\n        returns (StakingQueueConfig memory)\n    {\n        uint256 value = CompressedStakingQueueConfig.unwrap(_compressedConfig);\n\n        return StakingQueueConfig({\n            bootstrapValidatorSetSize: (value >> 128) & MASK_32BIT,\n            bootstrapFlushSize: (value >> 96) & MASK_32BIT,\n            normalFlushSizeMin: (value >> 64) & MASK_32BIT,\n            normalFlushSizeQuotient: (value >> 32) & MASK_32BIT,\n            maxQueueFlushSize: value & MASK_32BIT\n        });\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

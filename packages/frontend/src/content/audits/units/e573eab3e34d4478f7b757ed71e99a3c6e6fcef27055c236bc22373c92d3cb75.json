@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e573eab3e34d4478f7b757ed71e99a3c6e6fcef27055c236bc22373c92d3cb75",
+  "name": "PeripheryImmutableState",
+  "kind": "abstract",
+  "lines": 11,
+  "source": "abstract contract PeripheryImmutableState is IPeripheryImmutableState {\n    /// @inheritdoc IPeripheryImmutableState\n    address public immutable override factory;\n    /// @inheritdoc IPeripheryImmutableState\n    address public immutable override WETH9;\n\n    constructor(address _factory, address _WETH9) {\n        factory = _factory;\n        WETH9 = _WETH9;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 11,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "PeripheryImmutableState",
+        "similarity": 0.968,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-v3-contracts",
+        "path": "src/periphery/base/PeripheryImmutableState.sol",
+        "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+        "commitTimestamp": "2024-10-01T05:16:57Z",
+        "url": "https://github.com/ronin-chain/katana-v3-contracts/blob/03c80179e04f40d96f06c451ea494bb18f2a58fc/src/periphery/base/PeripheryImmutableState.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 11,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 13,
+            "newStart": 2,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @inheritdoc IPeripheryImmutableState"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    address public immutable override factory;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @inheritdoc IPeripheryImmutableState"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    address public immutable override governance;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @inheritdoc IPeripheryImmutableState",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 5,
+                "text": "    address public immutable override WETH9;"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 7,
+                "text": "    constructor(address _factory, address _WETH9) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 8,
+                "text": "        factory = _factory;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 9,
+                "text": "        WETH9 = _WETH9;"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        governance = IKatanaV3Factory(_factory).owner();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 11, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

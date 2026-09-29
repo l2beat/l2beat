@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5a09a8b97b992145c066a95295d5acafaaf7fe833119bc61f0187899d065edc1",
+  "name": "SlashPayloadLib",
+  "kind": "library",
+  "lines": 58,
+  "source": "library SlashPayloadLib {\n    /**\n     * @notice Encode immutable arguments for SlashPayloadCloneable clones\n     * @dev Encodes data in the format expected by SlashPayloadCloneable._getImmutableArgs()\n     *      Layout: [validatorSelection(20 bytes)][arrayLength(32 bytes)][validators+amounts array data]\n     *      Each validator entry: [address(20 bytes)][amount(12 bytes for uint96)]\n     * @param _validatorSelection Address of the validator selection contract\n     * @param _validators Array of validator addresses to slash\n     * @param _amounts Array of amounts to slash for each validator (uint96 values)\n     * @return Encoded arguments for use with cloneDeterministicWithImmutableArgs\n     */\n    function encodeImmutableArgs(address _validatorSelection, address[] memory _validators, uint96[] memory _amounts)\n        internal\n        pure\n        returns (bytes memory)\n    {\n        require(\n            _validators.length == _amounts.length,\n            Errors_1.SlashPayload_ArraySizeMismatch(_validators.length, _amounts.length)\n        );\n\n        // Calculate total size: 20 bytes (address) + 32 bytes (length) + (20 + 12) * length\n        uint256 dataSize = 52 + 32 * _validators.length;\n        bytes memory data = new bytes(dataSize);\n\n        assembly {\n            let ptr := add(data, 0x20)\n\n            // Store validator selection address (20 bytes)\n            // Shift left by 96 bits (12 bytes) to align to the left of the 32-byte slot\n            mstore(ptr, shl(96, _validatorSelection))\n            ptr := add(ptr, 0x14) // Move 20 bytes forward\n\n            // Store array length (32 bytes)\n            mstore(ptr, mload(_validators))\n            ptr := add(ptr, 0x20) // Move 32 bytes forward\n\n            // Store validators and amounts\n            let len := mload(_validators)\n            let validatorsPtr := add(_validators, 0x20)\n            let amountsPtr := add(_amounts, 0x20)\n\n            for { let i := 0 } lt(i, len) { i := add(i, 1) } {\n                // Store validator address (20 bytes)\n                // Shift left by 96 bits to align to the left of the 32-byte slot\n                mstore(ptr, shl(96, mload(add(validatorsPtr, mul(i, 0x20)))))\n                ptr := add(ptr, 0x14) // Move 20 bytes forward\n\n                // Store amount (12 bytes for uint96)\n                // Shift left by 160 bits (20 bytes) to align to the left of the remaining space\n                mstore(ptr, shl(160, mload(add(amountsPtr, mul(i, 0x20)))))\n                ptr := add(ptr, 0x0c) // Move 12 bytes forward\n            }\n        }\n\n        return data;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

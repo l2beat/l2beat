@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "318066d68adfde80a6b459387b1158582e2b4c2b7e62594ee51fbe57d584d41b",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 17,
+  "source": "struct G1Point {\n    uint256 x;\n    uint256 y;\n}\nstruct G2Point {\n    uint256 x0;\n    uint256 x1;\n    uint256 y0;\n    uint256 y1;\n}\nstruct StakingQueueConfig {\n    uint256 bootstrapValidatorSetSize;\n    uint256 bootstrapFlushSize;\n    uint256 normalFlushSizeMin;\n    uint256 normalFlushSizeQuotient;\n    uint256 maxQueueFlushSize;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

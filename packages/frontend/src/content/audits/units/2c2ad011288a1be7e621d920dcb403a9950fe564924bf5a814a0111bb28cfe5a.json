@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2c2ad011288a1be7e621d920dcb403a9950fe564924bf5a814a0111bb28cfe5a",
+  "name": "ERC721Permit",
+  "kind": "abstract",
+  "lines": 64,
+  "source": "abstract contract ERC721Permit is BlockTimestamp, ERC721, IERC721Permit {\n    /// @dev Gets the current nonce for a token ID and then increments it, returning the original value\n    function _getAndIncrementNonce(uint256 tokenId) internal virtual returns (uint256);\n\n    /// @dev The hash of the name used in the permit signature verification\n    bytes32 private immutable nameHash;\n\n    /// @dev The hash of the version string used in the permit signature verification\n    bytes32 private immutable versionHash;\n\n    /// @notice Computes the nameHash and versionHash\n    constructor(string memory name_, string memory symbol_, string memory version_) ERC721(name_, symbol_) {\n        nameHash = keccak256(bytes(name_));\n        versionHash = keccak256(bytes(version_));\n    }\n\n    /// @inheritdoc IERC721Permit\n    function DOMAIN_SEPARATOR() public view override returns (bytes32) {\n        return keccak256(\n            abi.encode(\n                // keccak256('EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)')\n                0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f,\n                nameHash,\n                versionHash,\n                ChainId.get(),\n                address(this)\n            )\n        );\n    }\n\n    /// @inheritdoc IERC721Permit\n    /// @dev Value is equal to keccak256(\"Permit(address spender,uint256 tokenId,uint256 nonce,uint256 deadline)\");\n    bytes32 public constant override PERMIT_TYPEHASH =\n        0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad;\n\n    /// @inheritdoc IERC721Permit\n    function permit(address spender, uint256 tokenId, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        external\n        payable\n        override\n    {\n        require(_blockTimestamp() <= deadline, \"Permit expired\");\n\n        bytes32 digest = keccak256(\n            abi.encodePacked(\n                \"\\x19\\x01\",\n                DOMAIN_SEPARATOR(),\n                keccak256(abi.encode(PERMIT_TYPEHASH, spender, tokenId, _getAndIncrementNonce(tokenId), deadline))\n            )\n        );\n        address owner = ownerOf(tokenId);\n        require(spender != owner, \"ERC721Permit: approval to current owner\");\n\n        if (Address.isContract(owner)) {\n            require(IERC1271(owner).isValidSignature(digest, abi.encodePacked(r, s, v)) == 0x1626ba7e, \"Unauthorized\");\n        } else {\n            address recoveredAddress = ecrecover(digest, v, r, s);\n            require(recoveredAddress != address(0), \"Invalid signature\");\n            require(recoveredAddress == owner, \"Unauthorized\");\n        }\n\n        _approve(spender, tokenId);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

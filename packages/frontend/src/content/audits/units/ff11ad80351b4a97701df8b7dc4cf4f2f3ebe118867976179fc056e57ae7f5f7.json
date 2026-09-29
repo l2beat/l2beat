@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ff11ad80351b4a97701df8b7dc4cf4f2f3ebe118867976179fc056e57ae7f5f7",
+  "name": "LivenessGuard",
+  "kind": "contract",
+  "lines": 137,
+  "source": "contract LivenessGuard is ISemver, BaseGuard {\n    using EnumerableSet for EnumerableSet.AddressSet;\n\n    /// @notice Emitted when an owner is recorded.\n    /// @param owner The owner's address.\n    event OwnerRecorded(address owner);\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.0.0\n    string public constant version = \"1.0.0\";\n\n    /// @notice The safe account for which this contract will be the guard.\n    Safe internal immutable SAFE;\n\n    /// @notice A mapping of the timestamp at which an owner last participated in signing a\n    ///         an executed transaction, or called showLiveness.\n    mapping(address => uint256) public lastLive;\n\n    /// @notice An enumerable set of addresses used to store the list of owners before execution,\n    ///         and then to update the lastLive mapping according to changes in the set observed\n    ///         after execution.\n    EnumerableSet.AddressSet internal ownersBefore;\n\n    /// @notice Constructor.\n    /// @param _safe The safe account for which this contract will be the guard.\n    constructor(Safe _safe) {\n        SAFE = _safe;\n        address[] memory owners = _safe.getOwners();\n        for (uint256 i = 0; i < owners.length; i++) {\n            address owner = owners[i];\n            lastLive[owner] = block.timestamp;\n            emit OwnerRecorded(owner);\n        }\n    }\n\n    /// @notice Getter function for the Safe contract instance\n    /// @return safe_ The Safe contract instance\n    function safe() public view returns (Safe safe_) {\n        safe_ = SAFE;\n    }\n\n    /// @notice Internal function to ensure that only the Safe can call certain functions.\n    function _requireOnlySafe() internal view {\n        require(msg.sender == address(SAFE), \"LivenessGuard: only Safe can call this function\");\n    }\n\n    /// @notice Records the most recent time which any owner has signed a transaction.\n    /// @dev Called by the Safe contract before execution of a transaction.\n    function checkTransaction(\n        address to,\n        uint256 value,\n        bytes memory data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes memory signatures,\n        address msgSender\n    ) external {\n        msgSender; // silence unused variable warning\n        _requireOnlySafe();\n\n        // Cache the set of owners prior to execution.\n        // This will be used in the checkAfterExecution method.\n        address[] memory owners = SAFE.getOwners();\n        for (uint256 i = 0; i < owners.length; i++) {\n            ownersBefore.add(owners[i]);\n        }\n\n        // This call will reenter to the Safe which is calling it. This is OK because it is only reading the\n        // nonce, and using the getTransactionHash() method.\n        bytes32 txHash = SAFE.getTransactionHash({\n            to: to,\n            value: value,\n            data: data,\n            operation: operation,\n            safeTxGas: safeTxGas,\n            baseGas: baseGas,\n            gasPrice: gasPrice,\n            gasToken: gasToken,\n            refundReceiver: refundReceiver,\n            _nonce: SAFE.nonce() - 1\n        });\n\n        uint256 threshold = SAFE.getThreshold();\n        address[] memory signers =\n            SafeSigners.getNSigners({dataHash: txHash, signatures: signatures, requiredSignatures: threshold});\n\n        for (uint256 i = 0; i < signers.length; i++) {\n            lastLive[signers[i]] = block.timestamp;\n            emit OwnerRecorded(signers[i]);\n        }\n    }\n\n    /// @notice Update the lastLive mapping according to the set of owners before and after execution.\n    /// @dev Called by the Safe contract after the execution of a transaction.\n    ///      We use this post execution hook to compare the set of owners before and after.\n    ///      If the set of owners has changed then we:\n    ///      1. Add new owners to the lastLive mapping\n    ///      2. Delete removed owners from the lastLive mapping\n    function checkAfterExecution(bytes32, bool) external {\n        _requireOnlySafe();\n        // Get the current set of owners\n        address[] memory ownersAfter = SAFE.getOwners();\n\n        // Iterate over the current owners, and remove one at a time from the ownersBefore set.\n        for (uint256 i = 0; i < ownersAfter.length; i++) {\n            // If the value was present, remove() returns true.\n            address ownerAfter = ownersAfter[i];\n            if (ownersBefore.remove(ownerAfter) == false) {\n                // This address was not already an owner, add it to the lastLive mapping\n                lastLive[ownerAfter] = block.timestamp;\n            }\n        }\n\n        // Now iterate over the remaining ownersBefore entries. Any remaining addresses are no longer an owner, so we\n        // delete them from the lastLive mapping.\n        // We cache the ownersBefore set before iterating over it, because the remove() method mutates the set.\n        address[] memory ownersBeforeCache = ownersBefore.values();\n        for (uint256 i = 0; i < ownersBeforeCache.length; i++) {\n            address ownerBefore = ownersBeforeCache[i];\n            delete lastLive[ownerBefore];\n            ownersBefore.remove(ownerBefore);\n        }\n    }\n\n    /// @notice Enables an owner to demonstrate liveness by calling this method directly.\n    ///         This is useful for owners who have not recently signed a transaction via the Safe.\n    function showLiveness() external {\n        require(SAFE.isOwner(msg.sender), \"LivenessGuard: only Safe owners may demonstrate liveness\");\n        lastLive[msg.sender] = block.timestamp;\n\n        emit OwnerRecorded(msg.sender);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 137,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "LivenessGuard",
+        "similarity": 1,
+        "reportId": "optimism/cantina-safe-extensions-2024-06",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "commit": "48393a6a1ea32efac65bb3ce6617cf101ad88225",
+        "commitTimestamp": "2024-05-10T05:04:52Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/48393a6a1ea32efac65bb3ce6617cf101ad88225/packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Competition on the Security Council Safe extensions; the report prints no commit, this revision is the only GitHub permalink it contains (finding 3.1.5). Only Medium findings are reproduced.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 137,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "LivenessGuard",
+        "similarity": 1,
+        "reportId": "optimism/cantina-safe-extensions-2024-06",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "commit": "48393a6a1ea32efac65bb3ce6617cf101ad88225",
+        "commitTimestamp": "2024-05-10T05:04:52Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/48393a6a1ea32efac65bb3ce6617cf101ad88225/packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Competition on the Security Council Safe extensions; the report prints no commit, this revision is the only GitHub permalink it contains (finding 3.1.5). Only Medium findings are reproduced.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

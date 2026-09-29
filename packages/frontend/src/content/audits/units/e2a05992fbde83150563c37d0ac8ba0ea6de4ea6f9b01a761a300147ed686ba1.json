@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e2a05992fbde83150563c37d0ac8ba0ea6de4ea6f9b01a761a300147ed686ba1",
+  "name": "L1ERC20Gateway",
+  "kind": "abstract",
+  "lines": 124,
+  "source": "abstract contract L1ERC20Gateway is IL1ERC20Gateway, ScrollGatewayBase {\n    using SafeERC20Upgradeable for IERC20Upgradeable;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @dev The storage slots for future usage.\n    uint256[50] private __gap;\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC20Gateway\n    function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable override {\n        _deposit(_token, _msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC20Gateway\n    function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) external payable override {\n        _deposit(_token, _to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC20Gateway\n    function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        external\n        payable\n        override\n    {\n        _deposit(_token, _to, _amount, _data, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC20Gateway\n    function finalizeWithdrawERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    ) external payable virtual override onlyCallByCounterpart nonReentrant {\n        _beforeFinalizeWithdrawERC20(_l1Token, _l2Token, _from, _to, _amount, _data);\n\n        // @note can possible trigger reentrant call to this contract or messenger,\n        // but it seems not a big problem.\n        IERC20Upgradeable(_l1Token).safeTransfer(_to, _amount);\n\n        _doCallback(_to, _data);\n\n        emit FinalizeWithdrawERC20(_l1Token, _l2Token, _from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function hook to perform checks and actions before finalizing the withdrawal.\n    /// @param _l1Token The address of corresponding L1 token in L1.\n    /// @param _l2Token The address of corresponding L2 token in L2.\n    /// @param _from The address of account who withdraw the token in L2.\n    /// @param _to The address of recipient in L1 to receive the token.\n    /// @param _amount The amount of the token to withdraw.\n    /// @param _data Optional data to forward to recipient's account.\n    function _beforeFinalizeWithdrawERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    ) internal virtual;\n\n    /// @dev Internal function hook to perform checks and actions before dropping the message.\n    /// @param _token The L1 token address.\n    /// @param _receiver The recipient address on L1.\n    /// @param _amount The amount of token to refund.\n    function _beforeDropMessage(address _token, address _receiver, uint256 _amount) internal virtual;\n\n    /// @dev Internal function to transfer ERC20 token to this contract.\n    /// @param _token The address of token to transfer.\n    /// @param _amount The amount of token to transfer.\n    /// @param _data The data passed by caller.\n    function _transferERC20In(address _token, uint256 _amount, bytes memory _data)\n        internal\n        returns (address, uint256, bytes memory)\n    {\n        address _sender = _msgSender();\n        address _from = _sender;\n        if (router == _sender) {\n            // Extract real sender if this call is from L1GatewayRouter.\n            (_from, _data) = abi.decode(_data, (address, bytes));\n            _amount = IL1GatewayRouter(_sender).requestERC20(_from, _token, _amount);\n        } else {\n            // common practice to handle fee on transfer token.\n            uint256 _before = IERC20Upgradeable(_token).balanceOf(address(this));\n            IERC20Upgradeable(_token).safeTransferFrom(_from, address(this), _amount);\n            uint256 _after = IERC20Upgradeable(_token).balanceOf(address(this));\n            // no unchecked here, since some weird token may return arbitrary balance.\n            _amount = _after - _before;\n        }\n        // ignore weird fee on transfer token\n        require(_amount > 0, \"deposit zero amount\");\n\n        return (_from, _amount, _data);\n    }\n\n    /// @dev Internal function to do all the deposit operations.\n    ///\n    /// @param _token The token to deposit.\n    /// @param _to The recipient address to recieve the token in L2.\n    /// @param _amount The amount of token to deposit.\n    /// @param _data Optional data to forward to recipient's account.\n    /// @param _gasLimit Gas limit required to complete the deposit on L2.\n    function _deposit(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 118,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1ERC20Gateway",
+        "similarity": 0.911,
+        "reportId": "scroll/openzeppelin-scroll-usdc-gateway-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/L1ERC20Gateway.sol",
+        "commit": "30fa5e65ef577acbde630baa982e1752b2095a60",
+        "commitTimestamp": "2023-09-11T12:44:53Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/30fa5e65ef577acbde630baa982e1752b2095a60/contracts/src/L1/gateways/L1ERC20Gateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-03 (missing docstrings) in pull request #940 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 6,
+        "removed": 14,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 11,
+        "unchanged": 118,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract L1ERC20Gateway is IL1ERC20Gateway, IMessageDropCallback, ScrollGatewayBase {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract L1ERC20Gateway is IL1ERC20Gateway, ScrollGatewayBase {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeERC20Upgradeable for IERC20Upgradeable;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    /// @inheritdoc IL1ERC20Gateway"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable override {"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        _deposit(_token, msg.sender, _amount, new bytes(0), _gasLimit);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        _deposit(_token, _msgSender(), _amount, new bytes(0), _gasLimit);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @inheritdoc IL1ERC20Gateway"
+              }
+            ]
+          },
+          {
+            "oldStart": 55,
+            "oldLines": 23,
+            "newStart": 55,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "        emit FinalizeWithdrawERC20(_l1Token, _l2Token, _from, _to, _amount, _data);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IMessageDropCallback",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    function onDropMessage(bytes calldata _message) external payable virtual onlyInDropContext nonReentrant {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        // _message should start with 0x8431f5c1  =>  finalizeDepositERC20(address,address,address,address,uint256,bytes)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        require(bytes4(_message[0:4]) == IL2ERC20Gateway.finalizeDepositERC20.selector, \"invalid selector\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 62, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // decode (token, receiver, amount)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        (address _token,, address _receiver,, uint256 _amount,) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            abi.decode(_message[4:], (address, address, address, address, uint256, bytes));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 66, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        // do dome check for each custom gateway",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        _beforeDropMessage(_token, _receiver, _amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 69, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        IERC20Upgradeable(_token).safeTransfer(_receiver, _amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 71, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        emit RefundERC20(_token, _receiver, _amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 73, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 74, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 75, "newLine": 58, "text": "    /**" },
+              { "type": " ", "oldLine": 76, "newLine": 59, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 60,
+                "text": "     * Internal Functions *"
+              }
+            ]
+          },
+          {
+            "oldStart": 108,
+            "oldLines": 11,
+            "newStart": 91,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 91,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 92,
+                "text": "        returns (address, uint256, bytes memory)"
+              },
+              { "type": " ", "oldLine": 110, "newLine": 93, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        address _from = msg.sender;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        if (router == msg.sender) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        address _sender = _msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        address _from = _sender;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        if (router == _sender) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 97,
+                "text": "            // Extract real sender if this call is from L1GatewayRouter."
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 98,
+                "text": "            (_from, _data) = abi.decode(_data, (address, bytes));"
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "            _amount = IL1GatewayRouter(msg.sender).requestERC20(_from, _token, _amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            _amount = IL1GatewayRouter(_sender).requestERC20(_from, _token, _amount);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 100,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 101,
+                "text": "            // common practice to handle fee on transfer token."
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 102,
+                "text": "            uint256 _before = IERC20Upgradeable(_token).balanceOf(address(this));"
+              }
+            ]
+          },
+          {
+            "oldStart": 124,
+            "oldLines": 9,
+            "newStart": 108,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 108,
+                "text": "        // ignore weird fee on transfer token"
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 109,
+                "text": "        require(_amount > 0, \"deposit zero amount\");"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 110, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "        // rate limit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        _addUsedAmount(_token, _amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 129, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 111,
+                "text": "        return (_from, _amount, _data);"
+              },
+              { "type": " ", "oldLine": 131, "newLine": 112, "text": "    }" },
+              { "type": " ", "oldLine": 132, "newLine": 113, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

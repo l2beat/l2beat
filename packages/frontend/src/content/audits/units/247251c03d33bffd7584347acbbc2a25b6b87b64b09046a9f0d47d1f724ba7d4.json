@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "247251c03d33bffd7584347acbbc2a25b6b87b64b09046a9f0d47d1f724ba7d4",
+  "name": "CompressedTimeMath",
+  "kind": "library",
+  "lines": 25,
+  "source": "library CompressedTimeMath {\n    function compress(Timestamp _timestamp) internal pure returns (CompressedTimestamp) {\n        return CompressedTimestamp.wrap(SafeCast.toUint32(Timestamp.unwrap(_timestamp)));\n    }\n\n    function compress(Slot _slot) internal pure returns (CompressedSlot) {\n        return CompressedSlot.wrap(SafeCast.toUint32(Slot.unwrap(_slot)));\n    }\n\n    function compress(Epoch _epoch) internal pure returns (CompressedEpoch) {\n        return CompressedEpoch.wrap(SafeCast.toUint32(Epoch.unwrap(_epoch)));\n    }\n\n    function decompress(CompressedTimestamp _ts) internal pure returns (Timestamp) {\n        return Timestamp.wrap(uint256(CompressedTimestamp.unwrap(_ts)));\n    }\n\n    function decompress(CompressedSlot _slot) internal pure returns (Slot) {\n        return Slot.wrap(uint256(CompressedSlot.unwrap(_slot)));\n    }\n\n    function decompress(CompressedEpoch _epoch) internal pure returns (Epoch) {\n        return Epoch.wrap(uint256(CompressedEpoch.unwrap(_epoch)));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 25,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CompressedTimeMath",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/shared/libraries/CompressedTimeMath.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/shared/libraries/CompressedTimeMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fa6fa7a884c3eb87fc30181f115cb709a59c7930d4c3d9aae73bd42f33f11664",
+  "name": "BitMath",
+  "kind": "library",
+  "lines": 93,
+  "source": "library BitMath {\n    /// @notice Returns the index of the most significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @dev The function satisfies the property:\n    ///     x >= 2**mostSignificantBit(x) and x < 2**(mostSignificantBit(x)+1)\n    /// @param x the value for which to compute the most significant bit, must be greater than 0\n    /// @return r the index of the most significant bit\n    function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        if (x >= 0x100000000000000000000000000000000) {\n            x >>= 128;\n            r += 128;\n        }\n        if (x >= 0x10000000000000000) {\n            x >>= 64;\n            r += 64;\n        }\n        if (x >= 0x100000000) {\n            x >>= 32;\n            r += 32;\n        }\n        if (x >= 0x10000) {\n            x >>= 16;\n            r += 16;\n        }\n        if (x >= 0x100) {\n            x >>= 8;\n            r += 8;\n        }\n        if (x >= 0x10) {\n            x >>= 4;\n            r += 4;\n        }\n        if (x >= 0x4) {\n            x >>= 2;\n            r += 2;\n        }\n        if (x >= 0x2) {\n            r += 1;\n        }\n    }\n\n    /// @notice Returns the index of the least significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @dev The function satisfies the property:\n    ///     (x & 2**leastSignificantBit(x)) != 0 and (x & (2**(leastSignificantBit(x)) - 1)) == 0)\n    /// @param x the value for which to compute the least significant bit, must be greater than 0\n    /// @return r the index of the least significant bit\n    function leastSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        r = 255;\n        if (x & type(uint128).max > 0) {\n            r -= 128;\n        } else {\n            x >>= 128;\n        }\n        if (x & type(uint64).max > 0) {\n            r -= 64;\n        } else {\n            x >>= 64;\n        }\n        if (x & type(uint32).max > 0) {\n            r -= 32;\n        } else {\n            x >>= 32;\n        }\n        if (x & type(uint16).max > 0) {\n            r -= 16;\n        } else {\n            x >>= 16;\n        }\n        if (x & type(uint8).max > 0) {\n            r -= 8;\n        } else {\n            x >>= 8;\n        }\n        if (x & 0xf > 0) {\n            r -= 4;\n        } else {\n            x >>= 4;\n        }\n        if (x & 0x3 > 0) {\n            r -= 2;\n        } else {\n            x >>= 2;\n        }\n        if (x & 0x1 > 0) {\n            r -= 1;\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 93,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "BitMath",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/BitMath.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/BitMath.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

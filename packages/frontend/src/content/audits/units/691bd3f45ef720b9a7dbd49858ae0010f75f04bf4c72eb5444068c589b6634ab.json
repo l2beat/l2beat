@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "691bd3f45ef720b9a7dbd49858ae0010f75f04bf4c72eb5444068c589b6634ab",
+  "name": "L2WETHGateway",
+  "kind": "contract",
+  "lines": 137,
+  "source": "contract L2WETHGateway is L2ERC20Gateway {\n    using SafeERC20Upgradeable for IERC20Upgradeable;\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of L1 WETH address.\n    address public immutable l1WETH;\n\n    /// @notice The address of L2 WETH address.\n    // solhint-disable-next-line var-name-mixedcase\n    address public immutable WETH;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L2WETHGateway` implementation contract.\n    ///\n    /// @param _WETH The address of WETH in L2.\n    /// @param _l1WETH The address of WETH in L1.\n    /// @param _counterpart The address of `L1WETHGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract.\n    /// @param _messenger The address of `L2ScrollMessenger` contract.\n    constructor(address _WETH, address _l1WETH, address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_WETH == address(0) || _l1WETH == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        WETH = _WETH;\n        l1WETH = _l1WETH;\n    }\n\n    /// @notice Initialize the storage of `L2WETHGateway`.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of `L1WETHGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    receive() external payable {\n        require(_msgSender() == WETH, \"only WETH\");\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL1ERC20Address(address) external view override returns (address) {\n        return l1WETH;\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL2ERC20Address(address) public view override returns (address) {\n        return WETH;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function finalizeDepositERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    ) external payable override onlyCallByCounterpart nonReentrant {\n        require(_l1Token == l1WETH, \"l1 token not WETH\");\n        require(_l2Token == WETH, \"l2 token not WETH\");\n        require(_amount == msg.value, \"msg.value mismatch\");\n\n        IWETH(_l2Token).deposit{value: _amount}();\n        IERC20Upgradeable(_l2Token).safeTransfer(_to, _amount);\n\n        _doCallback(_to, _data);\n\n        emit FinalizeDepositERC20(_l1Token, _l2Token, _from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L2ERC20Gateway\n    function _withdraw(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        require(_amount > 0, \"withdraw zero amount\");\n        require(_token == WETH, \"only WETH is allowed\");\n\n        // 1. Extract real sender if this call is from L1GatewayRouter.\n        address _from = _msgSender();\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n\n        // 2. Transfer token into this contract.\n        IERC20Upgradeable(_token).safeTransferFrom(_from, address(this), _amount);\n        IWETH(_token).withdraw(_amount);\n\n        // 3. Generate message passed to L2StandardERC20Gateway.\n        address _l1WETH = l1WETH;\n        bytes memory _message =\n            abi.encodeCall(IL1ERC20Gateway.finalizeWithdrawERC20, (_l1WETH, _token, _from, _to, _amount, _data));\n\n        // 4. Send message to L1ScrollMessenger.\n        IL2ScrollMessenger(messenger).sendMessage{value: _amount + msg.value}(counterpart, _amount, _message, _gasLimit);\n\n        emit WithdrawERC20(_l1WETH, _token, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 137,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2WETHGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/L2WETHGateway.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/L2/gateways/L2WETHGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

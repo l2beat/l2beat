@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "12fff0c61f66d68f34afedb8c5d0bf9f8eb05a0c257c216a027f22e7b3f55191",
+  "name": "IGSECore",
+  "kind": "interface",
+  "lines": 27,
+  "source": "interface IGSECore {\n    event Deposit(address indexed instance, address indexed attester, address withdrawer);\n\n    function setGovernance(Governance _governance) external;\n    function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit) external;\n    function addRollup(address _rollup) external;\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) external;\n    function withdraw(address _attester, uint256 _amount) external returns (uint256, bool, uint256);\n    function delegate(address _instance, address _attester, address _delegatee) external;\n    function vote(uint256 _proposalId, uint256 _amount, bool _support) external;\n    function voteWithBonus(uint256 _proposalId, uint256 _amount, bool _support) external;\n    function finalizeWithdraw(uint256 _withdrawalId) external;\n    function proposeWithLock(IPayload _proposal, address _to) external returns (uint256);\n\n    function isRegistered(address _instance, address _attester) external view returns (bool);\n    function isRollupRegistered(address _instance) external view returns (bool);\n    function getLatestRollup() external view returns (address);\n    function getLatestRollupAt(Timestamp _timestamp) external view returns (address);\n    function getGovernance() external view returns (Governance);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 26,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IGSECore",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/GSE.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/GSE.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 26,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 6,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    event Deposit(address indexed instance, address indexed attester, address withdrawer);"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function setGovernance(Governance _governance) external;"
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "    function addRollup(address _rollup) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "    function deposit("
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "        address _attester,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

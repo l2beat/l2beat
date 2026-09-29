@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9721e9b2c8e902d5647fe260bbc1925707a43a8845a0a104eb9758c040aad52f",
+  "name": "L2MessageQueue",
+  "kind": "contract",
+  "lines": 60,
+  "source": "contract L2MessageQueue is AppendOnlyMerkleTree, OwnableBase {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a new message is added to the merkle tree.\n    /// @param index The index of the corresponding message.\n    /// @param messageHash The hash of the corresponding message.\n    event AppendMessage(uint256 index, bytes32 messageHash);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice The address of L2ScrollMessenger contract.\n    address public messenger;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _owner) {\n        _transferOwnership(_owner);\n    }\n\n    /// @notice Initialize the state of `L2MessageQueue`\n    /// @dev You are not allowed to initialize when there are some messages appended.\n    /// @param _messenger The address of messenger to update.\n    function initialize(address _messenger) external onlyOwner {\n        require(nextMessageIndex == 0, \"cannot initialize\");\n\n        _initializeMerkleTree();\n\n        messenger = _messenger;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice record the message to merkle tree and compute the new root.\n    /// @param _messageHash The hash of the new added message.\n    function appendMessage(bytes32 _messageHash) external returns (bytes32) {\n        require(msg.sender == messenger, \"only messenger\");\n\n        (uint256 _currentNonce, bytes32 _currentRoot) = _appendMessageHash(_messageHash);\n\n        // We can use the event to compute the merkle tree locally.\n        emit AppendMessage(_currentNonce, _messageHash);\n\n        return _currentRoot;\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 60,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2MessageQueue",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/predeploys/L2MessageQueue.sol",
+        "commit": "dd9d880c2ae867ec2eb21f4ac3f42a902d72f929",
+        "commitTimestamp": "2023-07-17T05:43:17Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/dd9d880c2ae867ec2eb21f4ac3f42a902d72f929/contracts/src/L2/predeploys/L2MessageQueue.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #652 fix of L-06 (initialization moved into initializer). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 23,
+        "ignoredRemoved": 0,
+        "unchanged": 60,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 12,
+            "newStart": 1,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract L2MessageQueue is AppendOnlyMerkleTree, OwnableBase {"
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              { "type": "+", "newLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * Events *",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              { "type": "+", "newLine": 6, "text": "     */", "ignored": true },
+              { "type": "+", "newLine": 7, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 8,
+                "text": "    /// @notice Emitted when a new message is added to the merkle tree."
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 9,
+                "text": "    /// @param index The index of the corresponding message."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 10,
+                "text": "    /// @param messageHash The hash of the corresponding message."
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 11,
+                "text": "    event AppendMessage(uint256 index, bytes32 messageHash);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 12, "text": "" },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 14, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     * Variables *",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 18, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 19,
+                "text": "    /// @notice The address of L2ScrollMessenger contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 20,
+                "text": "    address public messenger;"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 21, "text": "" },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 25, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 27,
+                "text": "    constructor(address _owner) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 28,
+                "text": "        _transferOwnership(_owner);"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 29, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 6,
+            "newStart": 39,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 39,
+                "text": "        messenger = _messenger;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 40, "text": "    }" },
+              { "type": " ", "oldLine": 24, "newLine": 41, "text": "" },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 43, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * Public Mutating Functions *",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 47, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 48,
+                "text": "    /// @notice record the message to merkle tree and compute the new root."
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 49,
+                "text": "    /// @param _messageHash The hash of the new added message."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 50,
+                "text": "    function appendMessage(bytes32 _messageHash) external returns (bytes32) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

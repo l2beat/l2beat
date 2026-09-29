@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b29707a143cc209223db46869c8e7b519ff1fc6df2f4e87776d7b9b8a444423a",
+  "name": "MasterMinter",
+  "kind": "contract",
+  "lines": 3,
+  "source": "contract MasterMinter is MintController {\n    constructor(address _minterManager) public MintController(_minterManager) {}\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}
