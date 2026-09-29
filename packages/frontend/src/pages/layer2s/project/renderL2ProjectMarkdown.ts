@@ -10,8 +10,9 @@ import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { formatStage } from '~/server/markdown/renderProjectSection'
 import {
-  COMPARISON_PERIOD_LABELS,
+  COMPARED_TO_PERIOD,
   formatPercent,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
@@ -57,13 +58,14 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
 
 /** Labels follow the stats block at the top of the HTML page. */
 function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
-  const tvs = header.tvs?.breakdown
   return compact([
-    header.tvs &&
-      tvs && {
-        label: 'Total Value Secured',
-        value: `${formatUsd(tvs.total)} (${formatChange(tvs.totalChange, tvs.totalChangePeriod)}; canonically bridged ${formatUsd(tvs.canonical)}, natively minted ${formatUsd(tvs.native)}, externally bridged ${formatUsd(tvs.external)}; ${formatPercent(header.tvs.additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS})`,
-      },
+    header.tvs?.breakdown && {
+      label: 'Total Value Secured',
+      value: formatTvs(
+        header.tvs.breakdown,
+        header.tvs.additionalTrustAssumptionsPercentage,
+      ),
+    },
     header.activity && {
       label: 'Past day UOPS',
       value: `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`,
@@ -71,10 +73,7 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
     header.category && { label: 'Type', value: header.category },
     stageConfig.stage !== 'NotApplicable' && {
       label: 'Stage',
-      value:
-        stageConfig.stage === 'UnderReview'
-          ? 'Under review'
-          : stageConfig.stage,
+      value: formatStage(stageConfig),
     },
     { label: 'Host chain', value: hostChainName },
     header.purposes.length > 0 && {
@@ -88,13 +87,34 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
   ])
 }
 
+type TvsBreakdown = NonNullable<
+  NonNullable<ProjectL2Entry['header']['tvs']>['breakdown']
+>
+
+function formatTvs(
+  breakdown: TvsBreakdown,
+  additionalTrustAssumptionsPercentage: number,
+) {
+  const change = formatChange(
+    breakdown.totalChange,
+    breakdown.totalChangePeriod,
+  )
+  const sources = [
+    `canonically bridged ${formatUsd(breakdown.canonical)}`,
+    `natively minted ${formatUsd(breakdown.native)}`,
+    `externally bridged ${formatUsd(breakdown.external)}`,
+  ].join(', ')
+  const trust = `${formatPercent(additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS}`
+  return `${formatUsd(breakdown.total)} (${change}; ${sources}; ${trust})`
+}
+
 /** The wording of the HTML TVS tooltip, which says what the percentage is relative to. */
 const ADDITIONAL_TRUST_ASSUMPTIONS =
   "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"
 
 function formatChange(change: number, period: PercentageChangePeriod) {
   const sign = change > 0 ? '+' : change < 0 ? '-' : ''
-  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARISON_PERIOD_LABELS[period]}`
+  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARED_TO_PERIOD[period]}`
 }
 
 /** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */

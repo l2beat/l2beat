@@ -2,6 +2,7 @@ import type {
   Milestone,
   ProjectRisk,
   ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ReferenceLink,
 } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
@@ -25,6 +26,7 @@ import {
   nestHeadings,
   numberedList,
   subsection,
+  textSubsection,
   warning,
   withSentiment,
 } from './markdown'
@@ -36,7 +38,6 @@ export interface SectionContext {
   apiLinks: Partial<Record<ProjectSectionId, ReferenceLink[]>>
 }
 
-/** One page section as markdown, headed like its HTML counterpart. */
 export function renderProjectSection(
   section: ProjectDetailsSection,
   level: number,
@@ -59,10 +60,9 @@ type SectionProps<T extends SectionType> = Extract<
   ProjectDetailsSection,
   { type: T }
 >['props']
-/** `level` is the heading level for subsections. */
 type SectionBody<T extends SectionType> = (
   props: SectionProps<T>,
-  level: number,
+  subsectionLevel: number,
   context: SectionContext,
 ) => string
 
@@ -76,7 +76,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       renderUnverifiedContracts(props.unverifiedContracts),
       renderWarnings(
         props.verificationWarnings.programHashes &&
-          `${props.verificationWarnings.programHashes} (CRITICAL)`,
+          markCritical(props.verificationWarnings.programHashes, true),
         props.redWarning?.text,
         props.warning,
       ),
@@ -139,18 +139,16 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ['Genesis state', props.genesisState],
           ['Data format', props.dataFormat],
         ] as const
-      ).map(([title, text]) =>
-        subsection(level, title, nestHeadings(text ?? '', level + 1)),
-      ),
+      ).map(([title, text]) => textSubsection(level, title, text ?? '')),
     ),
   SequencingSection: (props, level) =>
     joinBlocks([
       heading(level, props.name),
       nestHeadings(props.content, level + 1),
-      subsection(
+      textSubsection(
         level + 1,
         'Censorship resistance',
-        nestHeadings(props.censorshipResistance ?? '', level + 2),
+        props.censorshipResistance ?? '',
       ),
       renderRisks(props.risks ?? []),
       renderReferences(props.references ?? []),
@@ -159,7 +157,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     nestHeadings(props.content ?? '', level),
   StageSection: (props, level) => {
     const { stageConfig, name } = props
-    if (stageConfig.stage === 'UnderReview' || props.isUnderReview) {
+    if (isStageUnderReview(stageConfig) || props.isUnderReview) {
       return `${name}'s stage is currently under review.`
     }
     const notEvenAStage0 =
@@ -222,24 +220,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           level,
           chain,
           joinBlocks([
-            subsection(
-              level + 1,
-              'Roles',
-              joinBlocks(
-                permissions.roles.map((role) =>
-                  renderContract(role, level + 2),
-                ),
-              ),
-            ),
-            subsection(
-              level + 1,
-              'Actors',
-              joinBlocks(
-                permissions.actors.map((actor) =>
-                  renderContract(actor, level + 2),
-                ),
-              ),
-            ),
+            renderContracts(level + 1, 'Roles', permissions.roles),
+            renderContracts(level + 1, 'Actors', permissions.actors),
           ]),
         ),
       ),
@@ -247,13 +229,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   ContractsSection: (props, level) =>
     joinBlocks([
       ...Object.entries(props.contracts).map(([chain, contracts]) =>
-        subsection(
-          level,
-          chain,
-          joinBlocks(
-            contracts.map((entry) => renderContract(entry, level + 1)),
-          ),
-        ),
+        renderContracts(level, chain, contracts),
       ),
       renderRisks(
         props.risks,
@@ -298,6 +274,18 @@ function linkToHtmlPage(
   return `Shown as an interactive chart or widget on ${link('the HTML page', `${context.pageUrl}#${props.id}`)}.`
 }
 
+function renderContracts(
+  level: number,
+  title: string,
+  contracts: TechnologyContract[],
+) {
+  return subsection(
+    level,
+    title,
+    joinBlocks(contracts.map((entry) => renderContract(entry, level + 1))),
+  )
+}
+
 /** A contract or a permissioned role/actor, as the HTML contract entry shows it. */
 function renderContract(entry: TechnologyContract, level: number) {
   const upgradeableBy = entry.upgradeableBy ?? []
@@ -328,7 +316,12 @@ function renderUnverifiedContracts(entries: UnverifiedContractEntry[]) {
   if (entries.length === 0) return ''
   const subject = entries.length === 1 ? 'address has' : 'addresses have'
   return joinBlocks([
-    warning(`${entries.length} ${subject} unverified source code. (CRITICAL)`),
+    warning(
+      markCritical(
+        `${entries.length} ${subject} unverified source code.`,
+        true,
+      ),
+    ),
     bulletList(
       entries.map((entry) => {
         const address = ChainSpecificAddress.address(entry.address)
@@ -366,11 +359,25 @@ function renderRiskValues(values: RosetteValue[], level: number) {
     values.map((risk) =>
       joinBlocks([
         heading(level, risk.name),
-        withSentiment(risk.value, risk.sentiment),
+        formatRiskValue(risk),
         nestHeadings(risk.description ?? '', level + 1),
       ]),
     ),
   )
+}
+
+export function formatRiskValue(risk: RosetteValue) {
+  return withSentiment(risk.value, risk.sentiment)
+}
+
+export function formatStage(stageConfig: ProjectScalingStage) {
+  return isStageUnderReview(stageConfig) ? 'Under review' : stageConfig.stage
+}
+
+function isStageUnderReview<C extends { stage: string }>(
+  stageConfig: C,
+): stageConfig is Extract<C, { stage: 'UnderReview' }> {
+  return stageConfig.stage === 'UnderReview'
 }
 
 function renderMilestone(milestone: Milestone) {

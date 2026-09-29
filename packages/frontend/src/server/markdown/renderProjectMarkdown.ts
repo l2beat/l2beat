@@ -13,18 +13,18 @@ import {
   nestHeadings,
   subsection,
   warning,
-  withSentiment,
 } from './markdown'
 import {
+  formatRiskValue,
   renderProjectSection,
   type SectionContext,
 } from './renderProjectSection'
 
 /**
- * A project page as markdown, independent of the project kind. Each page kind
- * (scaling, DA, ZK catalog, interop) maps its page entry to this shape; the
- * layout and the rendering of the shared page sections live here, so the
- * markdown outline follows the HTML page outline for every kind.
+ * A project page as markdown, independent of the project kind. A page kind
+ * maps its page entry to this shape; the layout and the rendering of the
+ * shared page sections live here, so the markdown outline follows the HTML
+ * page outline whichever kind renders it.
  */
 export interface ProjectMarkdown extends SectionContext {
   name: string
@@ -75,10 +75,7 @@ function renderSummary(summary: ProjectMarkdown['summary']): string {
       3,
       'Risks',
       bulletList(
-        summary.risks.map(
-          (risk) =>
-            `${risk.name}: ${withSentiment(risk.value, risk.sentiment)}`,
-        ),
+        summary.risks.map((risk) => `${risk.name}: ${formatRiskValue(risk)}`),
       ),
     ),
     subsection(3, 'About', nestHeadings(summary.description ?? '', 4)),

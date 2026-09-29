@@ -18,6 +18,11 @@ export function subsection(
   return body ? joinBlocks([heading(level, title), body]) : ''
 }
 
+/** For config text, whose own headings must nest under the subsection heading. */
+export function textSubsection(level: number, title: string, text: string) {
+  return subsection(level, title, nestHeadings(text, level + 1))
+}
+
 export function bulletList(items: string[]) {
   return items.map((item) => `- ${item}`).join('\n')
 }
@@ -40,7 +45,9 @@ export function withSentiment(value: string, sentiment: Sentiment | undefined) {
 
 /** Same marker placement as the HTML risk lists: before the closing punctuation. */
 export function markCritical(text: string, isCritical: boolean | undefined) {
-  return isCritical ? `${text.slice(0, -1)} (CRITICAL)${text.slice(-1)}` : text
+  if (!isCritical) return text
+  const [, body, punctuation] = text.match(/^(.*?)([.!?]?)$/s) ?? []
+  return `${body} (CRITICAL)${punctuation}`
 }
 
 /**
@@ -58,15 +65,15 @@ export function absolutizeLinks(markdown: string, origin: string) {
  */
 export function nestHeadings(content: string, level: number) {
   const lines = content.split('\n')
-  const headingDepths = findHeadingDepths(lines)
-  if (headingDepths.size === 0) return content
+  const headingDepthByLine = findHeadingDepthByLine(lines)
+  if (headingDepthByLine.size === 0) return content
 
-  const shift = level - Math.min(...headingDepths.values())
+  const shift = level - Math.min(...headingDepthByLine.values())
   if (shift <= 0) return content
 
   return lines
     .map((line, i) => {
-      const depth = headingDepths.get(i)
+      const depth = headingDepthByLine.get(i)
       if (depth === undefined) return line
       const nestedDepth = Math.min(depth + shift, MAX_HEADING_DEPTH)
       return `${'#'.repeat(nestedDepth)}${line.slice(depth)}`
@@ -76,8 +83,8 @@ export function nestHeadings(content: string, level: number) {
 
 const MAX_HEADING_DEPTH = 6
 
-/** Line index to depth of each ATX heading, skipping fenced code where `#` is literal. */
-function findHeadingDepths(lines: string[]) {
+/** Skips fenced code, where `#` is literal. */
+function findHeadingDepthByLine(lines: string[]) {
   const depths = new Map<number, number>()
   let inCodeFence = false
   for (const [i, line] of lines.entries()) {

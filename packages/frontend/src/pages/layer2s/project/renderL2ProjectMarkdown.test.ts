@@ -190,8 +190,8 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
 
     expect(riskSummary).toInclude(
-      '**Warning:** 1 address has unverified source code. (CRITICAL)\n\n- RollupProxy: 0x6666666666666666666666666666666666666666',
-      '**Warning:** Program hashes could not be verified. (CRITICAL)',
+      '**Warning:** 1 address has unverified source code (CRITICAL).\n\n- RollupProxy: 0x6666666666666666666666666666666666666666',
+      '**Warning:** Program hashes could not be verified (CRITICAL).',
     )
   })
 
