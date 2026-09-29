@@ -138,7 +138,7 @@ function Flower({ delay }: { delay: number }) {
             cx="17"
             cy="9"
             r="2.05"
-            className="fill-garden-sun [paint-order:stroke] dark:fill-[#ffd54a] dark:stroke-[#0a6b33] dark:[stroke-width:0.9px]"
+            className="fill-garden-bloom stroke-garden-bloom-ring [paint-order:stroke] [stroke-width:0.9px]"
           />
         </g>
       </g>

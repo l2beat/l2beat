@@ -614,6 +614,8 @@
   --color-garden-canvas: var(--garden-canvas);
   --color-plot-canvas: var(--plot-canvas);
   --color-garden-sun: var(--garden-sun);
+  --color-garden-bloom: var(--garden-bloom);
+  --color-garden-bloom-ring: var(--garden-bloom-ring);
   --color-garden-sprout: var(--garden-sprout);
 }
 
@@ -836,6 +838,8 @@
   --garden-canvas: #eaf4e6;
   --plot-canvas: #fdf1de;
   --garden-sun: #ffd54a;
+  --garden-bloom: var(--garden-sun);
+  --garden-bloom-ring: transparent;
   --garden-sprout: #7fae6a;
 }
 
@@ -855,6 +859,9 @@
   --garden-canvas: #0a0f08;
   --plot-canvas: #0f0d07;
   --garden-sun: #c9a437;
+  /* The dimmed sun would sink into the dark petals, so the bloom keeps the bright one and gets a ring. */
+  --garden-bloom: #ffd54a;
+  --garden-bloom-ring: #0a6b33;
   --garden-sprout: #3f6b3a;
 }
 
