@@ -1,7 +1,8 @@
-Generated with discovered.json: 0xad931198571a8787a3eba369ec1ab59d40e97843
+Generated with discovered.json: 0xc9e6bbc805a39054c1a1cd82732f1a47f655d41f
 
-# Diff at Tue, 29 Sep 2026 08:50:38 GMT:
+# Diff at Tue, 29 Sep 2026 09:01:45 GMT:
 
+- id: 5dfb7db3
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@c3621fa7eb494214211a85dc9afaff12f0d2ed79 block: 1788301081
 - current timestamp: 1790671700
@@ -15,6 +16,12 @@ Routine rediscovery after explorer change
 ```diff
     contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
     +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      deployerAddress:
+-        "robinhood:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1777567931
+      sinceBlock:
+-        0
       values.filteredTransactionsAdded:
 -        6092
 +        6096
@@ -55,18 +62,6 @@ Routine rediscovery after explorer change
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1788301081 (main branch discovery), not current.
-
-```diff
-    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
-    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
-      deployerAddress:
--        "robinhood:0x0000000000000000000000000000000000000000"
-      sinceTimestamp:
--        1777567931
-      sinceBlock:
--        0
-    }
-```
 
 ```diff
     contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
