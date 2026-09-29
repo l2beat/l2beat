@@ -46,7 +46,7 @@ export function toPrivacySummaryView(value: string): PrivacySummaryView {
 }
 
 /** Columns a kind of privacy can leave out. */
-export type PrivacySummaryOptionalColumn = 'tvl'
+export type PrivacySummaryOptionalColumn = 'tvl' | 'trustedSetup'
 
 /**
  * One group per kind of privacy a protocol promises, keyed by the field its
@@ -73,8 +73,9 @@ export const PRIVACY_TYPES = [
     description:
       'Recipient privacy hides who is being paid. Each payment goes to a fresh one-time address that only the recipient can recognise as their own, so their main address and payment history stay out of view. The sender and the amount usually remain public.',
     // Stealth payments land straight in the recipient's one-time address;
-    // nothing is locked in a contract, so there is no TVL to show.
-    hiddenColumns: ['tvl'],
+    // nothing is locked in a contract, so there is no TVL to show. None of
+    // these protocols has a ZK proving system, so every setup reads 'No setup'.
+    hiddenColumns: ['tvl', 'trustedSetup'],
   },
   {
     field: 'amount',
@@ -84,6 +85,9 @@ export const PRIVACY_TYPES = [
       'Hides how much moves: balances and transfers are encrypted.',
     description:
       'Amount privacy hides how much is moved. Balances and transfer values are encrypted so only the parties involved can read them, while who pays whom stays public.',
+    // None of these protocols has a ZK proving system, so every setup reads
+    // 'No setup'.
+    hiddenColumns: ['trustedSetup'],
   },
 ] as const satisfies {
   field: PrivacyField

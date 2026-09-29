@@ -48,6 +48,7 @@ function MetricCell({ children }: { children: React.ReactNode }) {
 
 const OPTIONAL_COLUMN_IDS: Record<PrivacySummaryOptionalColumn, string[]> = {
   tvl: ['totalValueLockedUsd', 'totalValueLockedUsdChange'],
+  trustedSetup: ['trustedSetup'],
 }
 
 /** Left out of the half-width tables of the grid, which only fit the essentials. */
@@ -409,14 +410,16 @@ export function getPrivacySummaryColumns({
       : []),
   ]
 
-  return [
-    ...leadingColumns,
-    ...assessment[view].afterName,
-    ...metricColumns,
-    ...assessment[view].afterMetrics,
-    attributesColumn,
-  ]
-    .filter((column) => !hiddenIds.includes(getColumnId(column)))
+  return withoutHiddenColumns(
+    [
+      ...leadingColumns,
+      ...assessment[view].afterName,
+      ...metricColumns,
+      ...assessment[view].afterMetrics,
+      attributesColumn,
+    ],
+    hiddenIds,
+  )
     .map((column) => withoutMissingChangeSort(column, hiddenIds))
     .map((column) => {
       const header = compact ? COMPACT_HEADERS[getColumnId(column)] : undefined
@@ -427,6 +430,23 @@ export function getPrivacySummaryColumns({
 /** Shorter headers where a half-width table would otherwise clip a column. */
 const COMPACT_HEADERS: Record<string, string> = {
   anonymitySet: 'Anon. set',
+}
+
+/** Drops the hidden columns, including those inside a group. */
+function withoutHiddenColumns(
+  columns: PrivacyColumn[],
+  hiddenIds: string[],
+): PrivacyColumn[] {
+  return columns
+    .filter((column) => !hiddenIds.includes(getColumnId(column)))
+    .map((column) =>
+      'columns' in column && column.columns
+        ? {
+            ...column,
+            columns: withoutHiddenColumns(column.columns, hiddenIds),
+          }
+        : column,
+    )
 }
 
 /**
