@@ -1,6 +1,10 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -13,7 +17,10 @@ import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
-import { getInteropTokenPageData } from './token/getInteropTokenPageData'
+import {
+  getInteropTokenMarkdown,
+  getInteropTokenPageData,
+} from './token/getInteropTokenPageData'
 import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
@@ -148,6 +155,24 @@ export function createInteropRouter(
       )
       res.send(image)
     },
+  )
+
+  const getTokenMarkdown = (req: Request<{ slug: string }>) =>
+    getInteropTokenMarkdown(req.params.slug, manifest, cache)
+
+  // `.md` ends whichever segment is last, like the page URL it stands for.
+  // Registered first: the page route would take "usdc01.md" as the slug.
+  router.get(
+    '/interop/tokens/:slug{/:issuer}{/:symbol}.md',
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdown(getTokenMarkdown),
+  )
+
+  // A route of its own: the markdown handlers do not accept the optional
+  // query type the page route below validates.
+  router.get(
+    '/interop/tokens/:slug{/:issuer}{/:symbol}',
+    serveMarkdownIfPreferred(getTokenMarkdown),
   )
 
   // The optional issuer and symbol segments only make the URL readable - the

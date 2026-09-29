@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { nestHeadings, subsection } from './markdown'
+import { nestHeadings, subsection, table } from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
 // expected text literally.
@@ -38,5 +38,19 @@ describe(subsection.name, () => {
   it('drops the heading when there is no body to head', () => {
     expect(subsection(3, 'Roles', '')).toEqual('')
     expect(subsection(3, 'Roles', undefined)).toEqual('')
+  })
+})
+
+describe(table.name, () => {
+  it('lays out a header row, a separator and one row per item', () => {
+    expect(table(['Chain', 'Symbol'], [['Ethereum', 'USDC']])).toEqual(
+      '| Chain | Symbol |\n| --- | --- |\n| Ethereum | USDC |',
+    )
+  })
+
+  it('escapes pipes and flattens line breaks so a cell stays in its row', () => {
+    expect(table(['Name'], [['A | B\nC']])).toEqual(
+      '| Name |\n| --- |\n| A \\| B C |',
+    )
   })
 })

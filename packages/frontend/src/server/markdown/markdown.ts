@@ -26,6 +26,17 @@ export function numberedList(items: string[], start = 1) {
   return items.map((item, i) => `${start + i}. ${item}`).join('\n')
 }
 
+export function table(headers: string[], rows: string[][]) {
+  return [headers, headers.map(() => '---'), ...rows]
+    .map((cells) => `| ${cells.map(escapeTableCell).join(' | ')} |`)
+    .join('\n')
+}
+
+/** Data can carry `|` or line breaks, which would otherwise end the cell or the row. */
+function escapeTableCell(text: string) {
+  return text.replaceAll('|', '\\|').replace(/\s*\n\s*/g, ' ')
+}
+
 export function link(name: string, url: string) {
   return `[${name}](${url})`
 }

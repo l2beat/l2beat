@@ -313,6 +313,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
+    {
+      name: 'Interop token',
+      path: '/interop/tokens/{slug}.md',
+      description:
+        'One token across bridges as markdown: past-day volume, transfer count, transfer time and top path, the protocols moving it, and its onchain deployments with addresses and minting bridges. {slug} is the token id, the segment right after /interop/tokens/ in a token page URL; appending .md to the full page URL works too.',
+    },
   ],
 }
 

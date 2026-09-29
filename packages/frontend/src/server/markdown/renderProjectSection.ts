@@ -9,6 +9,7 @@ import type {
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { renderOnchainDeployments } from './interopTokenMarkdown'
 import {
   bulletList,
   heading,
@@ -252,7 +253,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   ExternalDependenciesSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
   InteropFlowsSection: linkToHtmlPage,
-  InteropTokenOnchainDeploymentsSection: linkToHtmlPage,
+  InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
   InteropTokenProtocolsSection: linkToHtmlPage,
   InteropTokenTransfersSection: linkToHtmlPage,
   InteropTokenVolumeSection: linkToHtmlPage,
