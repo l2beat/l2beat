@@ -36,16 +36,13 @@ export function renderProjectSection(
   context: SectionContext,
 ): string {
   const { id, title } = section.props
-  const renderBody = SECTION_BODIES[section.type] as
-    | SectionBody<typeof section.type>
-    | undefined
-  const body = renderBody
-    ? renderBody(section.props, level + 1, context)
-    : `Shown as an interactive chart or widget on ${link('the HTML page', `${context.pageUrl}#${id}`)}.`
+  const renderBody = SECTION_BODIES[section.type] as SectionBody<
+    typeof section.type
+  >
 
   return joinBlocks([
     heading(level, title),
-    body,
+    renderBody(section.props, level + 1, context),
     renderLinks(context.apiLinks[id] ?? []),
   ])
 }
@@ -63,11 +60,10 @@ type SectionBody<T extends SectionType> = (
 ) => string
 
 /**
- * Section types without a body here (charts, interactive widgets) link to the
- * HTML page instead. Supporting another page kind means adding the section
- * types it uses.
+ * Exhaustive, so a new section type fails the build until it gets a markdown
+ * body or is explicitly left to the HTML page with `linkToHtmlPage`.
  */
-const SECTION_BODIES: { [T in SectionType]?: SectionBody<T> } = {
+const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   RiskSummarySection: (props, level) =>
     joinBlocks([
       renderWarnings(props.redWarning?.text, props.warning),
@@ -249,6 +245,42 @@ const SECTION_BODIES: { [T in SectionType]?: SectionBody<T> } = {
         'The current deployment carries some associated risks:',
       ),
     ]),
+  ActivitySection: linkToHtmlPage,
+  CostsSection: linkToHtmlPage,
+  DaRiskSummarySection: linkToHtmlPage,
+  DataPostedSection: linkToHtmlPage,
+  ExternalDependenciesSection: linkToHtmlPage,
+  GardenCropsSection: linkToHtmlPage,
+  InteropFlowsSection: linkToHtmlPage,
+  InteropTokenOnchainDeploymentsSection: linkToHtmlPage,
+  InteropTokenProtocolsSection: linkToHtmlPage,
+  InteropTokenTransfersSection: linkToHtmlPage,
+  InteropTokenVolumeSection: linkToHtmlPage,
+  InteropTokensSection: linkToHtmlPage,
+  InteropTransfersSection: linkToHtmlPage,
+  InteropVolumeSection: linkToHtmlPage,
+  L2TvsSection: linkToHtmlPage,
+  LivenessSection: linkToHtmlPage,
+  PrivacyAdversariesSection: linkToHtmlPage,
+  PrivacyAnonymitySetSection: linkToHtmlPage,
+  PrivacyAssetsBreakdownSection: linkToHtmlPage,
+  PrivacyFlowsSection: linkToHtmlPage,
+  ProgramHashesSection: linkToHtmlPage,
+  ThroughputSection: linkToHtmlPage,
+  TrustedSetupSection: linkToHtmlPage,
+  TvsValueSection: linkToHtmlPage,
+  UpdatesSection: linkToHtmlPage,
+  VerifiersSection: linkToHtmlPage,
+  ZkCatalogTvsSection: linkToHtmlPage,
+}
+
+/** For charts and interactive widgets, which markdown cannot express. */
+function linkToHtmlPage(
+  props: { id: ProjectSectionId },
+  _level: number,
+  context: SectionContext,
+) {
+  return `Shown as an interactive chart or widget on ${link('the HTML page', `${context.pageUrl}#${props.id}`)}.`
 }
 
 /** A contract or a permissioned role/actor, as the HTML contract entry shows it. */
