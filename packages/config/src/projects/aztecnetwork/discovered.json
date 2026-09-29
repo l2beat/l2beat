@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1789471807,
-  "configHash": "0x72848178808a6f21bf628aaec57398aac3664134551b43dac995d42890cdd0e4",
+  "timestamp": 1790663422,
+  "configHash": "0x91f649f667ff3a97e0efd73985b1ea11ff2750e8a5f73efdcd73b9c49cd64dff",
   "entries": [
     {
       "name": "CoinIssuer",
@@ -61,7 +61,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 92,
+        "getCurrentRound": 109,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -159,8 +159,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 5,
-        "totalPowerNow": "637851307617194713608299629",
-        "withdrawalCount": 5927
+        "totalPowerNow": "612213841005889423113555405",
+        "withdrawalCount": 6150
       },
       "fieldMeta": {
         "ASSET": {
@@ -469,13 +469,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-        "getInProgress": 72205,
+        "getInProgress": 87892,
         "getState": {
-          "rollingHash": "0xda1f6f799985c20176d66335411dd455",
-          "totalMessagesInserted": 1052,
-          "inProgress": 72205
+          "rollingHash": "0x29d04489300893f842a058bdb58fcdb6",
+          "totalMessagesInserted": 1183,
+          "inProgress": 87892
         },
-        "getTotalMessagesInserted": 1052,
+        "getTotalMessagesInserted": 1183,
         "LAG": 2,
         "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "VERSION": 4248422647
@@ -541,7 +541,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 723,
+        "getCurrentRound": 852,
         "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -641,7 +641,7 @@
       "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "archive": "0x01388a1e00116195ea4ef72206ba8fdbcd6cecd8e3fd71234aaa7e00b9da0ae3",
+        "archive": "0x274d1238414ada08546f29e45e382b907322fc18ab0bb272f392acc3920dbe89",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -713,21 +713,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3187,
+        "getActiveAttesterCount": 3058,
         "getAvailableValidatorFlushes": 4,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00f3f0f46c3f22317452e59e672db789a1b6ab7fb9f2208366020a960a9992b2",
-        "getCurrentEpoch": 2894,
-        "getCurrentSampleSeed": "3830480797862557965703362019279005078845586190687463338462252644235653999709",
-        "getCurrentSlot": 92617,
+        "getCurrentBlobCommitmentsHash": "0x00b0c939a405b47639dc1dd0f327f43be35de2a89a3bb4d4fbfcc2f352ed60fd",
+        "getCurrentEpoch": 3411,
+        "getCurrentSampleSeed": "57733964322461449846294177956767010648663081489707400229809248333704665313459",
+        "getCurrentSlot": 109167,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
         "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-        "getEthPerFeeAsset": 5541636,
+        "getEthPerFeeAsset": 6936986,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
@@ -745,18 +745,18 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 2851,
+        "getNextFlushableEpoch": 3401,
         "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-        "getPendingCheckpointNumber": 72202,
+        "getPendingCheckpointNumber": 87889,
         "getPendingSlasher": {
           "slasher": "eth:0x0000000000000000000000000000000000000000",
           "readyAt": 0
         },
         "getProofSubmissionEpochs": 1,
         "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
-        "getProvenCheckpointNumber": 72192,
+        "getProvenCheckpointNumber": 87875,
         "getProvingCostPerManaInEth": 12500000,
-        "getProvingCostPerManaInFeeAsset": 2255651580148,
+        "getProvingCostPerManaInFeeAsset": 1801935307352,
         "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
@@ -770,7 +770,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 72202, "proven": 72192 },
+        "getTips": { "pending": 87889, "proven": 87875 },
         "getVersion": 4248422647,
         "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
         "L1_BLOCK_AT_GENESIS": 25428902,
@@ -951,7 +951,7 @@
         "getLatestRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "635958000000000000000000000"
+        "totalSupply": "610480000000000000000000000"
       },
       "fieldMeta": {
         "ASSET": {
@@ -1195,6 +1195,101 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "ZkMoneyPortal",
+      "address": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+      "type": "Contract",
+      "template": "zkmoney/ZkMoneyPortal",
+      "sourceHashes": [
+        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, after which funds exit through refunds that need a zk proof and a TEE signature.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "_$cachedAvailable",
+        "_$lastUpdatedTime",
+        "getCurrentAvailable"
+      ],
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298635,
+      "sinceBlock": 26051097,
+      "values": {
+        "_$cachedAvailable": "49989001665702150241958",
+        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$freezeCheckpointCount": 0,
+        "_$freezeCheckpointNumber": 0,
+        "_$freezeEpochNumber": 0,
+        "_$frozen": false,
+        "_$initialized": true,
+        "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
+        "_$lastUpdatedTime": 1790626379,
+        "$immutable": true,
+        "approvedPcr0Hashes": [
+          "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
+        ],
+        "FPC_FUNDER": "eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb",
+        "FPC_FUNDING_CUT": "100000000000000000",
+        "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
+        "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
+        "getCurrentAvailable": "50000000000000000000000",
+        "GLOBAL_LIMIT": "50000000000000000000000",
+        "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+        "L2_PORTAL": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
+        "OUTBOX": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "RATE": "578703703703703703",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "ROLLUP_VERSION": 4248422647,
+        "TEE_ATTESTATION_MAX_AGE": 3600,
+        "TEE_CERT_MANAGER": "eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875",
+        "TEE_NITRO_VALIDATOR": "eth:0x0119bC52a09Ac6e7998378BadC16D0e9A866Be56",
+        "teeSigners": [
+          "eth:0xdFd008642F54aCD44A2a03438A86A25f55c4D3Bc",
+          "eth:0xefc45B71e9432a6149a7d52f11a125A19E3A11DC"
+        ],
+        "UNDERLYING": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "approvedPcr0Hashes": {
+          "severity": "HIGH",
+          "description": "Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."
+        },
+        "teeSigners": {
+          "description": "Registered TEE signers. Registrations are permanent."
+        },
+        "_$l2Portal": {
+          "severity": "HIGH",
+          "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
+        },
+        "_$frozen": {
+          "severity": "HIGH",
+          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits and pays out only through refunds."
+        },
+        "REGISTRY": {
+          "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+        },
+        "FPC_FUNDER": {
+          "description": "Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users."
+        },
+        "GLOBAL_LIMIT": {
+          "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals are only limited by a hardcoded per-transaction cap.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": "OxidePortal"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xdFd008642F54aCD44A2a03438A86A25f55c4D3Bc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ValidatorOperationsExtLib",
       "address": "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411",
       "type": "Contract",
@@ -1212,6 +1307,11 @@
         "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": "ValidatorOperationsExtLib"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xefc45B71e9432a6149a7d52f11a125A19E3A11DC",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EscapeHatch",
@@ -1234,7 +1334,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 25,
+        "getCurrentHatch": 30,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -2152,6 +2252,142 @@
       "function setUnlockStartTime(uint256 _unlockStartTime)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": [
+      "constructor(address _owner, tuple(address funder, uint256 cut) _fpcFunding, address _certManager, address _nitroValidator, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposit, address unprocessedDeposit) _verifiers, uint256 _rate, uint256 _globalLimit)",
+      "error Caps__GlobalLimitSurpassed()",
+      "error Caps__TxLimitSurpassed()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error OxidePortal__AlreadyFrozen()",
+      "error OxidePortal__AlreadyInitialized()",
+      "error OxidePortal__AmountNotAboveFpcFundingCut()",
+      "error OxidePortal__AmountTooLarge()",
+      "error OxidePortal__CheckpointAlreadyProven(uint256 checkpointNumber, uint256 provenCheckpointNumber)",
+      "error OxidePortal__CheckpointNotJustProven(uint256 checkpointNumber, uint256 provenCheckpointNumber)",
+      "error OxidePortal__CheckpointPastFreeze()",
+      "error OxidePortal__EmptyFrozenNotesRefundNullifiers()",
+      "error OxidePortal__EpochPastFreeze()",
+      "error OxidePortal__FirstProverAlreadyRecorded(uint256 checkpointNumber, address existingFirstProver)",
+      "error OxidePortal__FirstProverNotPrepared(uint256 checkpointNumber, address prover)",
+      "error OxidePortal__FrozenPortal()",
+      "error OxidePortal__InvalidFrozenDepositRefundProof()",
+      "error OxidePortal__InvalidFrozenNotesRefundProof()",
+      "error OxidePortal__InvalidProofLengthForCheckpoint(uint256 checkpointNumber, uint256 proofLength)",
+      "error OxidePortal__InvalidProver()",
+      "error OxidePortal__InvalidUnprocessedDepositRefundProof()",
+      "error OxidePortal__InvalidUserPayload()",
+      "error OxidePortal__InvalidWithdrawalExecutor()",
+      "error OxidePortal__NotFrozen()",
+      "error OxidePortal__ProofDepthPastFreeze()",
+      "error OxidePortal__ProverDidNotSubmit(address prover, uint256 epochNumber, uint256 proofLength)",
+      "error OxidePortal__ProverTipExceedsAmount()",
+      "error OxidePortal__RefundNullifierAlreadySpent(bytes32 nullifier)",
+      "error OxidePortal__RollupStillCanonical()",
+      "error OxidePortal__TooManyFrozenNotesRefundNullifiers(uint256 count)",
+      "error OxidePortal__Uninitialized()",
+      "error OxidePortal__UnknownCheckpoint()",
+      "error OxidePortal__UnprovenCheckpoint()",
+      "error OxidePortal__UnregisteredTEE()",
+      "error OxidePortal__WithdrawalAlreadyClaimed()",
+      "error OxidePortal__WithdrawalProverClaimAlreadyMade(bytes32 withdrawalId)",
+      "error OxidePortal__ZeroL2Portal()",
+      "error OxidePortal__ZeroRecipientCommitment()",
+      "error OxidePortal__ZeroRefundNullifier()",
+      "error ProverClaim__CheckpointEpochMismatch(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__CheckpointNotEpochBoundary(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ClaimAlreadyTracked(address portal, uint256 epochNumber, uint256 leafId)",
+      "error ProverClaim__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error ProverClaim__NoFirstProverInRange(uint256 messageCheckpointNumber, uint256 proofCheckpointNumber)",
+      "error ProverClaim__NotFirstProver(uint256 checkpointNumber, address firstProver)",
+      "error ProverClaim__PathTooLong(uint256 pathLength)",
+      "error ProverClaim__PathTooShort(uint256 pathLength, uint256 minimumPathLength)",
+      "error ProverClaim__ProofCheckpointNotInEpoch(uint256 proofCheckpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ProofLengthBelowMessageCheckpoint(uint256 proofLength, uint256 messageCheckpointPosition)",
+      "error ProverClaim__UnprovenEpoch(uint256 epochNumber)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TEERegistration__AlreadyRegistered()",
+      "error TEERegistration__DebugModeTEEPcr0Hash()",
+      "error TEERegistration__InvalidTEERegistrationUserData()",
+      "error TEERegistration__MissingTEEPcr0()",
+      "error TEERegistration__OffCurveTEEPubKey()",
+      "error TEERegistration__StaleTEEAttestation()",
+      "error TEERegistration__UnapprovedTEEPcr0(bytes32 pcr0Hash)",
+      "error TEERegistration__ZeroTEE()",
+      "error TEERegistration__ZeroTEEPcr0Hash()",
+      "event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)",
+      "event FirstProverRecorded(uint256 indexed checkpointNumber, address indexed prover)",
+      "event Frozen(uint256 indexed checkpointNumber, uint256 indexed epochNumber, bytes32 archive, uint256 freezeCheckpointCount)",
+      "event Initialized(bytes32 l2Portal)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TEEAdded(address indexed tee, bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY, bytes32 messageKey, uint256 index)",
+      "event TEEAttestationHashStaged(bytes32 indexed attestationTbsKeccak)",
+      "event TEEAttestationSigVerified(bytes32 indexed attestationTbsKeccak, bytes32 indexed leafCertHash)",
+      "event TEECACertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "event TEEClientCertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "event TEEPcr0Approved(bytes32 indexed pcr0Hash)",
+      "event TipReleased(address indexed to, uint256 amount)",
+      "event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)",
+      "function $approvedTeePcr0(bytes32 pcr0Hash) view returns (bool approved)",
+      "function $cachedAvailable() view returns (uint256)",
+      "function $claimed(uint256 epoch, uint256 leafId) view returns (bool claimed)",
+      "function $firstProver(uint256 checkpointNumber) view returns (address prover)",
+      "function $freezeArchive() view returns (bytes32)",
+      "function $freezeCheckpointCount() view returns (uint256)",
+      "function $freezeCheckpointNumber() view returns (uint256)",
+      "function $freezeEpochNumber() view returns (uint256)",
+      "function $frozen() view returns (bool)",
+      "function $initialized() view returns (bool)",
+      "function $isRefundNullifierSpent(bytes32 nullifier) view returns (bool spent)",
+      "function $isWithdrawalProverClaimSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $isWithdrawalSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $l2Portal() view returns (bytes32)",
+      "function $lastUpdatedTime() view returns (uint256)",
+      "function $teeBindings(address tee) view returns (bytes32 pcr0Hash, tuple(bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY) keys)",
+      "function FPC_FUNDER() view returns (address)",
+      "function FPC_FUNDING_CUT() view returns (uint256)",
+      "function FROZEN_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function FROZEN_NOTES_REFUND_VERIFIER() view returns (address)",
+      "function GLOBAL_LIMIT() view returns (uint256)",
+      "function INBOX() view returns (address)",
+      "function L2_PORTAL() view returns (bytes32)",
+      "function OUTBOX() view returns (address)",
+      "function RATE() view returns (uint256)",
+      "function REGISTRY() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_ATTESTATION_MAX_AGE() view returns (uint256)",
+      "function TEE_CERT_MANAGER() view returns (address)",
+      "function TEE_NITRO_VALIDATOR() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function UNPROCESSED_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function approveTeePcr0(bytes32 _pcr0Hash)",
+      "function claimProverTips(address _proverSubsidy, tuple(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) args, tuple(uint256 epochNumber, uint256 messageLeafIndex, bytes32[] path, uint256 proofLength, uint256 checkpointNumber) proof)[] _claims) returns (uint256 totalSubsidy)",
+      "function deposit(bytes32 _recipientCommitment, uint256 _amount) returns (bytes32 key, uint256 index, uint256 creditedAmount)",
+      "function freeze()",
+      "function getCurrentAvailable() view returns (uint256)",
+      "function initialize(bytes32 _l2Portal)",
+      "function isTeeActive(address _tee) view returns (bool)",
+      "function owner() view returns (address)",
+      "function prepareFirstProver(uint256 _checkpointNumber, address _prover)",
+      "function recordFirstProver(uint256 _checkpointNumber, uint256 _proofLength, address _prover)",
+      "function refundFrozenDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes proof, bytes teeSignature) _args)",
+      "function refundFrozenNotes(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundUnprocessedDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes32 messageHash, uint256 messageLeafIndex, bytes32[] inboxSiblingPath, bytes proof, bytes teeSignature) _args)",
+      "function registerTee(bytes _attestationTbs, bytes _signature, bytes32 _teePubKeyX, bytes32 _teePubKeyY, bytes32 _encPubKeyX, bytes32 _encPubKeyY) returns (bytes32 key, uint256 index)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifyTeeAttestationHash(bytes _attestationTbs) returns (bytes32 attestationTbsKeccak)",
+      "function verifyTeeAttestationSig(bytes32 _attestationTbsKeccak, bytes _signature, bytes32 _leafCertHash)",
+      "function verifyTeeCACert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
+      "function verifyTeeClientCert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
+      "function withdraw(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
+    ],
     "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": [
       "error AttestationLib__NotASignatureAtIndex(uint256 index)",
       "error AttestationLib__NotAnAddressAtIndex(uint256 index)",
@@ -2314,10 +2550,11 @@
     "aztecnetwork/SlashingProposer": "0x70b79a36c61b6cf4228961c38942c4583a1cea12fff8b55c4566c5961d001891",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/ValidatorOperationsExtLib": "0x85a15d05fdc1ce926a97e31cd9f09ae813b449a9982a9e5a8d7bf37cc56a95f5",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
-  "usedBlockNumbers": { "ethereum": 25982572 },
-  "permissionsConfigHash": "0x6dd3020557aff4d64530f092fcee94c6a932fd396f39ec7c699b3f4cea843634",
+  "usedBlockNumbers": { "ethereum": 26081339 },
+  "permissionsConfigHash": "0xc01b338cf32010fd523cf91d23900a08c5bbc82f36f0f242a90e4138138a501a",
   "permissions": {
     "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
       "directlyReceivedPermissions": [
@@ -2539,6 +2776,26 @@
           "description": "slash and eject validators while this contract is configured as the active Slasher.",
           "role": ".getSlasher",
           "condition": "the active Slasher authorizes the call under its own execution rules."
+        }
+      ]
+    },
+    "eth:0xdFd008642F54aCD44A2a03438A86A25f55c4D3Bc": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal.",
+          "role": ".teeSigners"
+        }
+      ]
+    },
+    "eth:0xefc45B71e9432a6149a7d52f11a125A19E3A11DC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal.",
+          "role": ".teeSigners"
         }
       ]
     }

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RegistrationController",
+  "category": "core",
+  "description": "Completes paid name registrations: deploys the user's L1 account, claims the name and writes the user record. Fees above the relayer fee go to an allowlisted beneficiary.",
+  "ignoreMethods": ["usedTermsNonces"],
+  "ignoreRelatives": [
+    "ACCOUNT_FACTORY",
+    "ENTRY_POINT",
+    "FEE_TOKEN",
+    "NAME_PORTAL"
+  ],
+  "fields": {
+    "beneficiaries": {
+      "description": "Allowlisted fee recipients. The domainOwner can append entries, none can be removed.",
+      "handler": {
+        "type": "array",
+        "length": "{{ nextBeneficiaryId }}"
+      }
+    }
+  }
+}

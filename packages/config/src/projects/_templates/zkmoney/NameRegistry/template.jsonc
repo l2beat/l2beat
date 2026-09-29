@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NameRegistry",
+  "category": "core",
+  "description": "Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.",
+  "ignoreMethods": ["usedDomainOwnerNonces"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the RegistrationController and the AccountMetadataRegistry, and change the domainOwner. A new RegistrationController can reassign names and rewrite any user record, and a new AccountMetadataRegistry decides where future payments to zk.money names resolve to."
+        }
+      ]
+    },
+    "domainOwner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize or refuse every name claim and sign custom registration fees."
+        }
+      ]
+    },
+    "registrationController": {
+      "severity": "HIGH"
+    },
+    "accountMetadataRegistry": {
+      "severity": "HIGH"
+    }
+  }
+}

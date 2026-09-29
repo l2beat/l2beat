@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "zkmoney",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449", // ZkMoneyPortal
+    "eth:0xC2363b7155EE8391C5395B72C46a6d22BF49151c", // PlainWithdrawalExecutor
+    "eth:0x03b21bba8e75a1bd0354c5ecbec078cf59c85343", // SwapEscrowFactory
+    "eth:0xc357e34d4c7520a83c9ec0a242ba52b4ecaba1fc", // SIPAFactory
+    "eth:0xF714D8Cf287F4A410b018514074A9371BC45461b", // DepositSIPA
+    "eth:0x0934F010d59b552949DBe44AcBE5AFf0e32C8C34", // RegistrationSIPA
+    "eth:0xa9863b8f573d62377d987ccb9af6e0000f99d14a", // NameRegistry
+    "eth:0x933000d02883639e92a81cb0091ff6626466fa70" // Resolver
+  ],
+  "names": {
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": "ZkMoneyPortal",
+    "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877": "FrozenNotesRefundVerifier",
+    "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe": "FrozenDepositRefundVerifier",
+    "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5": "UnprocessedDepositRefundVerifier",
+    "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451": "ResolverVerifier"
+  },
+  "overrides": {
+    "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70": {
+      "fields": {
+        "ensNodeOwner": {
+          "description": "Owner of zk.money in the ENS registry. zk.money is a DNS name imported into ENS, so the holder of the DNS domain can also reclaim it with a DNSSEC proof.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "address": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            "method": "function owner(bytes32 node) view returns (address)",
+            "args": [
+              "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace this Resolver as the ENS resolver of zk.money names, which decides the addresses that payments to these names resolve to."
+            }
+          ]
+        },
+        "ensResolver": {
+          "description": "Resolver set for zk.money in the ENS registry.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "address": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            "method": "function resolver(bytes32 node) view returns (address)",
+            "args": [
+              "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2"
+            ],
+            "ignoreRelative": true
+          }
+        }
+      }
+    }
+  }
+}
