@@ -313,6 +313,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
+    {
+      name: 'Interop protocol',
+      path: '/interop/protocols/{slug}.md',
+      description:
+        'One bridge or cross-chain protocol as markdown: last 24h volume, transfer count, time and size, top tokens, chains and routes, permissions and contracts. Protocols that are also scaling projects redirect to the scaling project markdown.',
+    },
   ],
 }
 

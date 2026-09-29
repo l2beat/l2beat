@@ -9,6 +9,7 @@ import type {
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { renderInteropVolumeSection } from './interopMarkdown'
 import {
   bulletList,
   heading,
@@ -258,7 +259,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   InteropTokenVolumeSection: linkToHtmlPage,
   InteropTokensSection: linkToHtmlPage,
   InteropTransfersSection: linkToHtmlPage,
-  InteropVolumeSection: linkToHtmlPage,
+  InteropVolumeSection: (props, level, context) =>
+    renderInteropVolumeSection(props, level, `${context.pageUrl}#${props.id}`),
   L2TvsSection: linkToHtmlPage,
   LivenessSection: linkToHtmlPage,
   PrivacyAdversariesSection: linkToHtmlPage,
