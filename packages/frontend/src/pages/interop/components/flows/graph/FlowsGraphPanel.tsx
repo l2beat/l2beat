@@ -29,6 +29,7 @@ export function FlowsGraphPanel({
   topChainId,
   centerChainId,
   particleScale,
+  timeScale,
   getCaption,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
@@ -83,6 +84,7 @@ export function FlowsGraphPanel({
               topChainId={topChainId}
               centerChainId={centerChainId}
               particleScale={particleScale}
+              timeScale={timeScale}
               getCaption={getCaption}
             />
           )}

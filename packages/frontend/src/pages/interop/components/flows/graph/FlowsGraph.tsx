@@ -18,6 +18,8 @@ export interface FlowsGraphOptions {
   centerChainId?: string
   /** Unit of `volume`. Defaults to dollars */
   particleScale?: ParticleScale
+  /** How many times faster than real time the flows play. Defaults to 1 */
+  timeScale?: number
   /** Line under each chain's name. Defaults to its net flow in dollars */
   getCaption?: GetFlowsGraphCaption
 }
@@ -40,6 +42,7 @@ export function FlowsGraph({
   topChainId,
   centerChainId,
   particleScale,
+  timeScale,
   getCaption,
 }: FlowsGraphProps) {
   const layout = useMemo(
@@ -97,6 +100,7 @@ export function FlowsGraph({
         baseDollarsPerParticle={baseDollarsPerParticle}
         particleScale={particleScale}
         centerChainId={centerChainId}
+        timeScale={timeScale}
       />
       <ChainBubblesLayer
         interopChains={interopChains}

@@ -15,6 +15,11 @@ export interface FlowsGraphFlow {
   dstChain: string
   /** Amount moved in 24h, in the unit the particle scale is expressed in */
   volume: number
+  /**
+   * Amount moved at once. Particles then travel in bursts of that size
+   * rather than evenly spaced. Leave out for a steady flow
+   */
+  burstVolume?: number
 }
 
 export interface FlowsGraphNodeData {

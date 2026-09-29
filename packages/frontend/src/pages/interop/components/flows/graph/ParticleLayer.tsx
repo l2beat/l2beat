@@ -8,6 +8,7 @@ import type {
 } from './types'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { useFlowsGraph } from './utils/FlowsGraphContext'
+import { getBurstSchedule } from './utils/getBurstSchedule'
 import { getChainColor } from './utils/getChainColor'
 import {
   BIDIRECTIONAL_OFFSET,
@@ -28,6 +29,7 @@ interface Props {
   baseDollarsPerParticle?: number
   particleScale?: ParticleScale
   centerChainId?: string
+  timeScale?: number
 }
 
 /**
@@ -43,6 +45,10 @@ interface Props {
  * for the remainder of the cycle. This way the visible density is
  * exactly 2.5 on average and the emission rate is exactly R/s —
  * two flows with slightly different volumes are always visually distinct.
+ *
+ * A flow that says how much it moves at once sends its particles off in
+ * bursts of that size. The emission rate stays the same, so the gap between
+ * bursts grows with their size.
  *
  * Only <animateMotion> is used — no SMIL animation of a CSS property such as
  * opacity. Those are applied through style per element per sample, and when
@@ -68,17 +74,18 @@ export function ParticleLayer({
   baseDollarsPerParticle,
   particleScale,
   centerChainId,
+  timeScale,
 }: Props) {
   const { highlightedChains } = useFlowsGraph()
   const particleRadius = isSmallScreen ? 1.5 : 2
   const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
 
-  const { flowsParticles } = useScaledParticleCounts(
+  const { flowsParticles, valuePerParticle } = useScaledParticleCounts(
     visibleChainIds,
     chainData,
     flows,
     baseDollarsPerParticle,
-    { centerChainId, scale: particleScale },
+    { centerChainId, scale: particleScale, timeScale },
   )
 
   return (
@@ -117,14 +124,17 @@ export function ParticleLayer({
 
         const { exactCount, travelDuration } = particles
 
-        // ceil → DOM element count; stretch cycleDuration so emission rate is exact
-        const count = Math.max(1, Math.ceil(exactCount))
-        const cycleDuration = (count / exactCount) * travelDuration
-        const particleInterval = cycleDuration / count
-        const initialOffset = Math.random() * particleInterval
-
-        // fraction of each cycle spent traveling (rest is parked at the end)
-        const t = exactCount / count
+        const burstSize =
+          flow.burstVolume && valuePerParticle
+            ? flow.burstVolume / valuePerParticle
+            : 1
+        const { begins, cycleDuration, travelShare } = getBurstSchedule(
+          exactCount,
+          travelDuration,
+          burstSize,
+          // Flows start out of step, or they would all pulse together
+          Math.random(),
+        )
 
         return (
           <g
@@ -132,25 +142,21 @@ export function ParticleLayer({
             opacity={groupOpacity}
             transform={`translate(${src.x} ${src.y})`}
           >
-            {Array.from({ length: count }, (_, i) => {
+            {begins.map((begin, i) => (
               // Positive delay, so particles emerge from the source one by
               // one over the first cycle instead of appearing mid-path.
-              const begin = `${initialOffset + i * particleInterval}s`
-
-              return (
-                <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
-                  <animateMotion
-                    path={path}
-                    dur={`${cycleDuration}s`}
-                    keyPoints="0;1;1"
-                    keyTimes={`0;${t};1`}
-                    calcMode="linear"
-                    begin={begin}
-                    repeatCount="indefinite"
-                  />
-                </circle>
-              )
-            })}
+              <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
+                <animateMotion
+                  path={path}
+                  dur={`${cycleDuration}s`}
+                  keyPoints="0;1;1"
+                  keyTimes={`0;${travelShare};1`}
+                  calcMode="linear"
+                  begin={`${begin}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
           </g>
         )
       })}

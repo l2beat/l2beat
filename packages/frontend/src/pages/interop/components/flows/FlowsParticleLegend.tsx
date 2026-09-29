@@ -12,6 +12,8 @@ interface FlowsParticleLegendProps {
   unit?: {
     label: string
     format: (value: number) => string
+    /** When a particle is counted in something other than the flow */
+    formatParticle?: (value: number) => string
   }
 }
 
@@ -41,7 +43,7 @@ export function FlowsParticleLegend({
       <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
       <span className="font-bold text-brand">
         {unit
-          ? unit.format(dollarsPerParticle)
+          ? (unit.formatParticle ?? unit.format)(dollarsPerParticle)
           : formatCurrency(dollarsPerParticle, 'usd', {
               // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
               decimals: dollarsPerParticle < 1 ? 1 : 0,

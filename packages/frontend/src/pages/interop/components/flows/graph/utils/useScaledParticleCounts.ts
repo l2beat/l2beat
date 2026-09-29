@@ -23,6 +23,11 @@ interface Options {
   centerChainId?: string
   /** Defaults to dollars. `base` is overridden by baseValuePerParticle */
   scale?: ParticleScale
+  /**
+   * How many times faster than real time the flows play. Flows that move
+   * little per second would show next to nothing at their real pace
+   */
+  timeScale?: number
 }
 
 /**
@@ -47,6 +52,7 @@ export function useScaledParticleCounts(
 ): Result {
   const centerChainId = options?.centerChainId
   const scale = options?.scale ?? DOLLARS_PARTICLE_SCALE
+  const timeScale = options?.timeScale ?? 1
   const base = baseValuePerParticle ?? scale.base
 
   return useMemo(() => {
@@ -84,7 +90,7 @@ export function useScaledParticleCounts(
     )
 
     const exactCounts = filteredFlows.map((flow, i) => {
-      const volumePerSecond = flow.volume / UnixTime.DAY
+      const volumePerSecond = (flow.volume / UnixTime.DAY) * timeScale
       const particlesPerSecond = volumePerSecond / base
       return particlesPerSecond * (travelDurations[i] ?? 0)
     })
@@ -107,5 +113,5 @@ export function useScaledParticleCounts(
     }
 
     return { valuePerParticle, flowsParticles: result }
-  }, [chainIds, chainData, flows, base, scale, centerChainId])
+  }, [chainIds, chainData, flows, base, scale, centerChainId, timeScale])
 }
