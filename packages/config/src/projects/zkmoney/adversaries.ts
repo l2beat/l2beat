@@ -4,12 +4,11 @@ import {
 } from '../../common/privacyAdversaries'
 
 const DOCS = 'https://docs.zk.money/docs/'
-// TODO: both repositories are private until launch, check that these links
-// resolve before publishing.
-const OX =
-  'https://github.com/aztec-labs-eng/oxide/blob/a534df2ff35b22d11bf38ed06c0c22ed6b3a2cd9/'
-const OW =
-  'https://github.com/aztec-labs-eng/obsidion-wallet/blob/fcc6424c9492b3b6103c36ae3bab9d77ac30b2bf/'
+// Public source of the zk.money desktop release. vendor/oxide holds the Oxide
+// sources, which match the deployed Oxide commit a534df2f.
+const ZM =
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/fc37a3e25440bc4bd7a9de81a7f4830ec753a4d4/'
+const OX = `${ZM}vendor/oxide/`
 
 export const zkMoneyAdversaries = definePrivacyAdversaries({
   promise: {
@@ -48,11 +47,11 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'First delivery to a new contact opens a handshake',
-          url: `${OW}packages/sdk/src/feePaymentMethod/claimFpcGasModel.ts#L232-L237`,
+          url: `${ZM}packages/sdk/src/feePaymentMethod/claimFpcGasModel.ts#L232-L237`,
         },
         {
           title: 'First sponsored transaction nullifies the L1 account',
-          url: `${OW}packages/contracts/contracts/fee_paying/claim_fpc/src/main.nr#L205-L217`,
+          url: `${ZM}packages/contracts/contracts/fee_paying/claim_fpc/src/main.nr#L205-L217`,
         },
         {
           title: 'Withdrawals publish their L1 payload',
@@ -86,9 +85,13 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         { contract: 'RegistrationSIPA' },
         { contract: 'PlainWithdrawalExecutor' },
         {
+          title: 'Resolver notifies the recipient of each deposit address',
+          url: `${OX}noir-projects/oxide_token_contract/src/main.nr#L236-L251`,
+        },
+        {
           title:
-            'Resolver notifies the recipient and requests the sweep in one transaction',
-          url: `${OX}yarn-project/resolver-service/src/sipa_broadcaster.ts#L138-L148`,
+            'The notification and the sweep request share one Aztec transaction',
+          url: `${ZM}packages/sdk/src/services/sipaIntents.ts#L171-L186`,
         },
         {
           title:
@@ -100,9 +103,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposure:
-        'Keys, proving and note discovery stay on your device, and zk.money Desktop can use your own Aztec node, Ethereum RPC and enclave. Payment requests and contact links travel over XMTP under your public account address, which shows XMTP nodes who asks whom for money.',
+        'Keys and proving stay on your device, and both the web wallet and zk.money Desktop can use your own Aztec node, Ethereum RPC and enclave. Note discovery asks the Aztec node for handshakes tagged with your address. The Ethereum RPC sees your funding wallet and deposit addresses and estimates every L1 transaction with your address. Payment requests and contact links travel over XMTP under your public account address, which shows XMTP nodes who asks whom for money.',
       advice:
-        'Use zk.money Desktop with your own Aztec node and Ethereum RPC and route its traffic through Tor. Settle payments with counterparties that must stay private without payment requests or contact links.',
+        'Use zk.money Desktop with your own Aztec node and your own Ethereum node, since the wallet reads and sends through the same Aztec node. Send L1 transactions from your Ethereum wallet over a public RPC. Route all traffic of your computer through a VPN or Tor, not only the browser. Settle payments with counterparties that must stay private without payment requests or contact links.',
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -115,14 +118,29 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Desktop endpoint settings',
-          url: `${OW}packages/web-wallet-desktop/src/config.js#L54-L61`,
+          title: 'Desktop endpoint overrides',
+          url: `${ZM}packages/web-wallet-desktop/src/config.js#L36-L47`,
+        },
+        {
+          title: 'Handshakes are found by a tag derived from your address',
+          url: 'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96',
+        },
+        {
+          title: 'L1 gas estimates over the wallet RPC carry your address',
+          url: `${ZM}packages/web-wallet/src/features/deposit/sipaRecovery.ts#L166-L193`,
+        },
+        {
+          title: 'Desktop sends screening to zk.money from its own process',
+          url: `${ZM}packages/web-wallet-desktop/scripts/compose-config.js#L15-L20`,
         },
         {
           title: 'XMTP identity is the account bootstrap address',
-          url: `${OW}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
+          url: `${ZM}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
         },
-        { title: 'Using the desktop app', url: `${DOCS}desktop` },
+        {
+          title: 'Pointing the wallet at a different service',
+          url: `${DOCS}desktop`,
+        },
       ],
     },
     privilegedInsider: {
@@ -130,7 +148,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposure:
         'Every payment, withdrawal and deposit claim reaches an enclave in plaintext, so privacy against its operator rests on AWS Nitro and on the approved enclave code. The resolver operator can re-derive every deposit address, including those your wallet creates itself, and so ties each deposit from L1 to its recipient on L2.',
       advice:
-        'Use zk.money Desktop, started from its baked contract list and pointed at your own Aztec node and Ethereum RPC, instead of the hosted web wallet. Nothing you do hides your operations from the enclave or your deposits from the resolver operator. Registering a TEE yourself depends only on AWS as a counterparty, the onchain step is permissionless.',
+        'Use zk.money Desktop, pointed at your own Aztec node and Ethereum RPC, instead of the hosted web wallet. Nothing you do hides your operations from the enclave or your deposits from the resolver operator. Registering a TEE yourself depends only on AWS as a counterparty, the onchain step is permissionless.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -145,15 +163,15 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Deposit address secrets derive from the resolver key',
-          url: `${OW}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+          url: `${ZM}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
         },
         {
           title: 'Self-made deposit addresses use predictable nonces',
-          url: `${OW}packages/sdk/src/services/sipaSelfResolve.ts#L47-L53`,
+          url: `${ZM}packages/sdk/src/services/sipaSelfResolve.ts#L47-L53`,
         },
         {
           title: 'Addresses are sent to Predicate for screening',
-          url: `${OW}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L86-L97`,
+          url: `${ZM}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L86-L97`,
         },
         { contract: 'ZkMoneyPortal', title: 'Registered TEE signers' },
         { contract: 'Resolver' },
@@ -180,7 +198,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Deposit address secrets use secp256k1 key exchange',
-          url: `${OW}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+          url: `${ZM}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
         },
         {
           title: 'Enclave channel uses P-256 HPKE',

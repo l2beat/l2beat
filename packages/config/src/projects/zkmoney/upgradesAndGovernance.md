@@ -12,4 +12,4 @@ The naming and deposit address layer is controlled by a single deployer EOA:
 
 A separate domain owner EOA must sign every name claim, so it can refuse any name. It also sets custom registration fees.
 
-Offchain, the wallet takes the contract addresses from an unsigned list published by zk.money, and Aztec Labs controls the web wallet and the desktop app releases.
+Offchain, the wallet takes the contract addresses from two unsigned lists that Aztec Labs publishes (the zk.money config profile and the Oxide deployment manifest), and Aztec Labs controls the web wallet and the desktop app releases.

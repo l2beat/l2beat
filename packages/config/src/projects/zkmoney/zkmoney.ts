@@ -86,6 +86,10 @@ const depositFee = discovery.getContractValueBigInt(
   'DepositSIPA',
   'DEPOSIT_FEE',
 )
+const registrationSweepFee = discovery.getContractValueBigInt(
+  'RegistrationSIPA',
+  'DEPOSIT_FEE',
+)
 const registrationFee = discovery.getContractValueBigInt(
   'RegistrationController',
   'REGISTRATION_FEE',
@@ -103,6 +107,7 @@ const descriptionValues = {
   depositLimit: formatDai(depositLimit),
   depositRefillTime,
   depositFee: formatDai(depositFee),
+  registrationSweepFee: formatDai(registrationSweepFee),
   registrationFee: formatDai(registrationFee),
 }
 
@@ -176,11 +181,7 @@ export const zkmoney: BaseProject = {
     links: {
       websites: ['https://zk.money'],
       documentation: ['https://docs.zk.money/docs'],
-      // TODO: both repositories are private until launch.
-      repositories: [
-        'https://github.com/aztec-labs-eng/oxide',
-        'https://github.com/aztec-labs-eng/obsidion-wallet',
-      ],
+      repositories: ['https://github.com/aztec-labs-eng/zkmoney-public'],
       explorers: [
         'https://aztecscan.xyz/contracts/instances/0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d',
       ],
@@ -213,18 +214,24 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Every withdrawal and every refund needs a signature from a live enclave running the one approved image. L2BEAT could not rebuild that image from the published source. Even with a reproducible image, exits would still depend on an AWS Nitro TEE, which is not freely available.',
+          'Every withdrawal and every refund needs a signature from a live enclave running the one approved image. Aztec Labs publishes that image, so anyone with an AWS account can run and register an enclave, but its build is not published. Exits depend on an AWS Nitro TEE, which is not freely available.',
       },
     },
-    // TODO: needs a reproducible build of the TEE image that matches the
-    // approved PCR0 from published source, and public source verification of
-    // the zk.money contracts on Aztec (token, fee-paying contract, broadcaster)
-    // on aztecscan.xyz.
+    // TODO: needs a published, reproducible build of the TEE image that matches
+    // the approved PCR0, the Noir source of the refund and resolver circuits,
+    // the source of the hosted web wallet release, and public source
+    // verification of the zk.money contracts on Aztec (token, fee-paying
+    // contract, broadcaster) on aztecscan.xyz.
+    // TODO: recheck before publishing that the hosted web wallet still runs a
+    // release newer than the published source. The live commit is the
+    // `[boot] commit` line in https://wallet.zk.money/assets/index-*.js (it was
+    // 9f2ef22, obsidion-wallet v0.0.18, while zkmoney-public holds v0.0.13 at
+    // fc37a3e). If zkmoney-public contains the live commit, drop that sentence.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contracts, circuits, enclave, wallet and desktop app are open source, and L2BEAT matched the deployed zk.money token contract on Aztec L2 to its source. The approved enclave image could not be rebuilt from the published source, so it cannot be checked that the enclaves run the published code.',
+        'The contracts on Ethereum and Aztec, the enclave code and the desktop app are open source, and L2BEAT matched the deployed zk.money token contract on Aztec L2 to its source. The refund and resolver circuits are published only as their onchain verifiers, without their Noir source. The approved enclave image is published as a binary, but its build is not, so it cannot be checked that the enclaves run the published code. The hosted web wallet currently runs a newer release than the published source, and the resolver service is closed source.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
