@@ -1,61 +1,61 @@
 import {
   type ColorConfig,
   type ColorContract,
-  ConfigReader,
+  type ConfigReader,
   type CriticalFlag,
   type DiffHistoryChange,
   DiffHistoryParser,
+  type DiscoveryOutput,
   type EntryParameters,
   getDiffHistoryChanges,
   getDiscoveryPaths,
   makeEntryColorConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
-import type { ProjectOssification } from '../types'
 import {
   type CriticalOverride,
   getOssificationInput,
   type OssificationJudgement,
 } from './getOssificationInput'
-import { measureOssification } from './measureOssification'
 import type { OssificationInput } from './OssificationInput'
 import {
   EMPTY_OSSIFICATION_PATCH,
   OssificationPatch,
 } from './OssificationPatch'
 
-interface DiscoveryServices {
-  root: string
-  configReader: ConfigReader
-  templateService: TemplateService
-}
-
-let services: DiscoveryServices | undefined
-const buildTime = UnixTime.now()
-
-export function getOssification(
-  projectId: string,
-  projectStart?: UnixTime,
-): ProjectOssification | undefined {
-  const input = loadOssificationInput(projectId, buildTime, projectStart)
-  return input === undefined ? undefined : measureOssification(input)
-}
+let templateService: TemplateService | undefined
 
 export function loadOssificationInput(
-  projectId: string,
+  discovery: DiscoveryOutput,
+  reachable: ReadonlySet<ChainSpecificAddress>,
+  configReader: ConfigReader,
   now: UnixTime,
   projectStart?: number,
 ): OssificationInput | undefined {
-  const { root, configReader, templateService } = getServices()
-  const projectPath = join(root, projectId)
-  if (!existsSync(join(projectPath, 'discovered.json'))) return undefined
+  const outOfReach = new Set(
+    discovery.entries
+      .filter((e) => !reachable.has(e.address))
+      .map((e) => e.address.toLowerCase()),
+  )
+  assert(
+    outOfReach.size < discovery.entries.length,
+    `no entry of ${discovery.name} is reachable`,
+  )
+  const withinReach = (address: string) =>
+    !outOfReach.has(address.toLowerCase())
 
-  const entries = configReader.readDiscovery(projectId).entries
-  const color = configReader.readConfig(projectId).color
-  const overrides = getCriticalOverrides(color)
+  const entries = discovery.entries.filter((e) => withinReach(e.address))
+  const color = configReader.readConfig(discovery.name).color
+  const overrides = getCriticalOverrides(color).filter((o) =>
+    withinReach(o.address),
+  )
   if (
     overrides.length === 0 &&
     !entries.some((e) => e.critical !== undefined)
@@ -63,27 +63,29 @@ export function loadOssificationInput(
     return undefined
   }
 
+  const projectPath = configReader.getProjectPath(discovery.name)
+  const patch = readPatch(join(projectPath, 'ossification.json'))
   return getOssificationInput({
     now,
     projectStart,
     entries,
     overrides,
     changes: readDiffHistory(join(projectPath, 'diffHistory.md')),
-    judgement: new DiscoveryJudgement(templateService, color, entries),
-    patch: readPatch(join(projectPath, 'ossification.json')),
+    judgement: new DiscoveryJudgement(
+      getTemplateService(),
+      color,
+      discovery.entries,
+    ),
+    patch: {
+      ...patch,
+      events: patch.events.filter((e) => withinReach(e.contract)),
+    },
   })
 }
 
-function getServices(): DiscoveryServices {
-  if (services === undefined) {
-    const root = getDiscoveryPaths().discovery
-    services = {
-      root,
-      configReader: new ConfigReader(root),
-      templateService: new TemplateService(root),
-    }
-  }
-  return services
+function getTemplateService(): TemplateService {
+  templateService ??= new TemplateService(getDiscoveryPaths().discovery)
+  return templateService
 }
 
 function getCriticalOverrides(color: ColorConfig): CriticalOverride[] {
