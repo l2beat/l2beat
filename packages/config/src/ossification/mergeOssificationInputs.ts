@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import { isDeepStrictEqual } from 'util'
+import type { ProjectOssificationContract } from '../types'
 import type { OssificationInput } from './OssificationInput'
 
 export function mergeOssificationInputs(
@@ -12,10 +13,16 @@ export function mergeOssificationInputs(
     'merged perimeters are measured at one time',
   )
 
-  const contracts = uniqBy(
-    inputs.flatMap((input) => input.contracts),
-    (contract) => contract.address,
-  )
+  const byAddress = new Map<string, ProjectOssificationContract>()
+  for (const contract of inputs.flatMap((input) => input.contracts)) {
+    const seen = byAddress.get(contract.address)
+    assert(
+      seen === undefined || isDeepStrictEqual(seen, contract),
+      `${contract.address} differs between the discoveries that share it`,
+    )
+    byAddress.set(contract.address, contract)
+  }
+  const contracts = [...byAddress.values()]
   if (contracts.length === 0) return undefined
 
   return {

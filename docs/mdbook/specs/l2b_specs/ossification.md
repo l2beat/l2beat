@@ -52,7 +52,7 @@ contracts are judged by the module's own `config.jsonc`, templates,
 `diffHistory.md` and `ossification.json`. The project start also bounds the
 changes of the module. A module whose critical contracts have all retired
 still adds its changes and resets. A contract that two discoveries both
-contain has one row, taken from the first of them.
+contain must have the same row in both, and has one row.
 
 **Critical code change.** A change of the implementation of a critical
 contract.

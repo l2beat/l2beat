@@ -82,13 +82,19 @@ describe(mergeOssificationInputs.name, () => {
     expect(merged?.observedSince).toEqual(40)
   })
 
-  it('keeps a contract two perimeters share as the first one has it', () => {
-    const merged = mergeOssificationInputs([
-      input(ADDRESS_A),
-      input(ADDRESS_A, {
-        contracts: [{ ...contract(ADDRESS_A), ossifyingSince: 200 }],
-      }),
-    ])
+  it('keeps one row of a contract two perimeters share', () => {
+    const merged = mergeOssificationInputs([input(ADDRESS_A), input(ADDRESS_A)])
     expect(merged?.contracts).toEqual([contract(ADDRESS_A)])
+  })
+
+  it('refuses a shared contract whose rows differ', () => {
+    expect(() =>
+      mergeOssificationInputs([
+        input(ADDRESS_A),
+        input(ADDRESS_A, {
+          contracts: [{ ...contract(ADDRESS_A), ossifyingSince: 200 }],
+        }),
+      ]),
+    ).toThrow('differs between the discoveries')
   })
 })
