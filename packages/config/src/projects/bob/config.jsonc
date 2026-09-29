@@ -33,58 +33,60 @@
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true
     },
-    // Active Kailua proof path: KailuaGame/KailuaTreasury (game type 1337) verify
-    // state roots through the KailuaVerifier, which routes RISC Zero receipts
-    // through the shared RiscZeroVerifierRouter. Permanently paused verifier
-    // routes are intentionally not flagged (base precedent).
+    // Historical Kailua proof path, retired when BOB returned to a permissioned
+    // dispute game on 2026-09-16. Permanently paused verifier routes were never
+    // part of this path.
     "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d": {
       "fields": {
-        "PERMIT_DURATION": {
-          "severity": "HIGH"
-        },
-        "PERMIT_DELAY": {
-          "severity": "HIGH"
-        },
-        "ROLLUP_CONFIG_HASH": {
-          "severity": "HIGH"
-        },
-        "RISC_ZERO_VERIFIER": {
-          "severity": "HIGH"
-        },
-        "FPVM_IMAGE_ID": {
-          "severity": "HIGH"
-        },
         "$admin": {
           "severity": "HIGH"
         }
       },
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
-    // Active RISC Zero verification path: router, unpaused emergency stops and
-    // the verifiers they wrap.
+    // Historical RISC Zero verification path: router, emergency stops and the
+    // verifiers they wrapped for Kailua.
     "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
-      "critical": true
+      "critical": {
+        "untilTimestamp": 1789547003
+      }
     },
     // ProxyAdmin: can upgrade the core BOB contracts (portal, bridges, DGF, SystemConfig).
     "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": {
@@ -97,7 +99,9 @@
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
       // RiscZeroVerifierRouter: routes proof verification by selector; the owner
       // (RISC Zero governance timelock) can add or remove verifier routes.
-      "critical": true,
+      "critical": {
+        "untilTimestamp": 1789547003
+      },
       "fields": {
         // "verifier0Manual": {
         //   "handler": {
@@ -162,7 +166,9 @@
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used by
       // the KailuaVerifier (add/remove verifier routes).
-      "critical": true,
+      "critical": {
+        "untilTimestamp": 1789547003
+      },
       "fields": {
         "callsScheduled": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",

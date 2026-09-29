@@ -34,13 +34,7 @@
     "disputeGameFactory": {
       "severity": "HIGH"
     },
-    "superchainConfig": {
-      "severity": "HIGH"
-    },
     "systemConfig": {
-      "severity": "HIGH"
-    },
-    "disputeGameFinalityDelaySeconds": {
       "severity": "HIGH"
     },
     "paused": {

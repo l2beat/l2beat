@@ -36,6 +36,20 @@
       "reason": "Transferred the factory's protocol-fee authority from the timelock to the first fee adapter."
     },
     {
+      "timestamp": 1766867915,
+      "type": "state",
+      "contract": "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD",
+      "transaction": "0x000bac7e577d00ea632f59a9e1ef5bf718c64bac43855db2ba9c7bc3feef075e",
+      "reason": "Enabled a 1/6 protocol share of each token's swap fees in the WBTC/WETH 0.3% pool."
+    },
+    {
+      "timestamp": 1766868719,
+      "type": "state",
+      "contract": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
+      "transaction": "0x4e65a8e3027011e36d0e027785191b3dea11f09cd8eb4eddaccb1050a70aebc9",
+      "reason": "Enabled a 1/4 protocol share of each token's swap fees in the USDC/WETH 0.05% pool."
+    },
+    {
       "timestamp": 1772781599,
       "type": "state",
       "contract": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",

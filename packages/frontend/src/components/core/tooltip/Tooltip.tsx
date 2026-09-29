@@ -2,7 +2,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
-import { useRef, useState } from 'react'
+import { createContext, useContext, useId, useRef, useState } from 'react'
 import { useDevice } from '~/hooks/useDevice'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
@@ -14,13 +14,28 @@ const TooltipProvider = TooltipPrimitive.Provider
 
 const Tooltip = ({
   children,
+  contentInHtml,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) => {
+}: React.ComponentProps<typeof TooltipPrimitive.Root> & {
+  /**
+   * Radix renders the content only on hover, so explanations kept in a
+   * tooltip are invisible to crawlers and LLMs reading the server-rendered
+   * HTML. This also renders the content as a visually hidden description of
+   * the trigger. Use it only when the tooltip carries meaning not shown
+   * elsewhere on the page. The copy renders where TooltipContent does, so it
+   * does not work with TooltipPortal, which renders nothing while closed.
+   */
+  contentInHtml?: boolean
+}) => {
   const [open, setOpen] = useState(!!props.defaultOpen)
+  const id = useId()
+  const contentDescriptionId = contentInHtml ? `${id}-description` : undefined
 
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
-      <TooltipTriggerContextProvider value={{ open, setOpen }}>
+      <TooltipTriggerContextProvider
+        value={{ open, setOpen, contentDescriptionId }}
+      >
         {children}
       </TooltipTriggerContextProvider>
     </TooltipPrimitive.Root>
@@ -36,7 +51,12 @@ const TooltipTrigger = ({
 }) => {
   const localRef = useRef(null)
   const { isDesktop } = useDevice()
-  const { setOpen } = useTooltipTriggerContext()
+  const { setOpen, contentDescriptionId } = useTooltipTriggerContext()
+  // Omitted rather than undefined: an explicit undefined would override the
+  // id Radix sets while the tooltip is open.
+  const describedBy = contentDescriptionId
+    ? { 'aria-describedby': contentDescriptionId }
+    : {}
 
   if (props.disabled) {
     return props.children
@@ -44,7 +64,7 @@ const TooltipTrigger = ({
 
   // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
-    return <TooltipPrimitive.Trigger ref={ref} {...props} />
+    return <TooltipPrimitive.Trigger ref={ref} {...describedBy} {...props} />
   }
 
   const onClick = !isDesktop
@@ -59,6 +79,7 @@ const TooltipTrigger = ({
       ref={mergeRefs(ref, localRef)}
       onClick={onClick}
       data-role="tooltip-trigger"
+      {...describedBy}
       {...props}
     />
   )
@@ -79,6 +100,8 @@ const tooltipContentVariants = cva(
   },
 )
 
+const InsideHtmlCopyContext = createContext(false)
+
 const TooltipContent = ({
   ref,
   className,
@@ -86,15 +109,39 @@ const TooltipContent = ({
   fitContent,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content> &
-  VariantProps<typeof tooltipContentVariants>) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={tooltipContentVariants({ fitContent, className })}
-    {...props}
-  />
-)
+  VariantProps<typeof tooltipContentVariants>) => {
+  const { contentDescriptionId } = useTooltipTriggerContext()
+
+  return (
+    <>
+      {contentDescriptionId && (
+        // A span, unlike a div, is not split by the HTML parser when the
+        // tooltip sits in phrasing content, so hydration stays consistent.
+        <span id={contentDescriptionId} className="sr-only">
+          <InsideHtmlCopyContext value={true}>
+            {props.children}
+          </InsideHtmlCopyContext>
+        </span>
+      )}
+      <TooltipPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        className={tooltipContentVariants({ fitContent, className })}
+        {...props}
+      />
+    </>
+  )
+}
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+/**
+ * Shown in the tooltip popup but left out of its HTML copy, for
+ * parts that mean nothing as text (diagrams, "click to view details").
+ */
+const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
+  const isInsideHtmlCopy = useContext(InsideHtmlCopyContext)
+  return isInsideHtmlCopy ? null : children
+}
 
 const TooltipPortal = TooltipPrimitive.Portal
 TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
@@ -106,4 +153,5 @@ export {
   TooltipProvider,
   TooltipTrigger,
   TooltipPortal,
+  TooltipVisualOnly,
 }

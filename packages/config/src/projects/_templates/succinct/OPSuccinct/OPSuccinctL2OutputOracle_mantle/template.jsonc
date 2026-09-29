@@ -15,9 +15,6 @@
     "SUBMISSION_INTERVAL": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "initialProposer": {
       "handler": {
         "type": "hardcoded", // constructor param
@@ -45,7 +42,6 @@
       }
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -54,7 +50,6 @@
       ]
     },
     "challenger": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

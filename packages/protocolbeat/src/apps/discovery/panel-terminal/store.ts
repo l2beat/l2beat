@@ -49,17 +49,17 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
       }
     }),
   matchFlat: (project: string, address: string) => {
-    executeStreaming(get, set, () =>
+    void executeStreaming(get, set, () =>
       executeMatchFlat(project, address, 'templates'),
     )
   },
   matchProject: (project: string, address: string) => {
-    executeStreaming(get, set, () =>
+    void executeStreaming(get, set, () =>
       executeMatchFlat(project, address, 'projects'),
     )
   },
   downloadAllShapes: () => {
-    executeStreaming(get, set, () => executeDownloadAllShapes())
+    void executeStreaming(get, set, () => executeDownloadAllShapes())
   },
   discover: (project: string): Promise<boolean> => {
     return executeStreaming(get, set, () =>
@@ -67,7 +67,7 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
     )
   },
   findMinters: (address: string) => {
-    executeStreaming(get, set, () => executeFindMinters(address))
+    void executeStreaming(get, set, () => executeFindMinters(address))
   },
 }))
 
@@ -78,7 +78,7 @@ function executeStreaming(
   ) => void,
   cmd: () => EventSource,
 ) {
-  return new Promise<boolean>((resolve, reject) => {
+  return new Promise<boolean>((resolve) => {
     if (get().command.inFlight) {
       return
     }
@@ -134,7 +134,7 @@ function executeStreaming(
       set((state) => ({
         command: { ...state.command, stream: undefined, inFlight: false },
       }))
-      reject(error)
+      resolve(false)
     }
   })
 }

@@ -1,27 +1,6 @@
 {
   "events": [
     {
-      "timestamp": 1636658804,
-      "type": "state",
-      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-      "transaction": "0xafb7c2d5dcbe88dc33db9fb3d9e4e807dce1ff6d231889d5913cb3857804ef1d",
-      "reason": "Temporarily transferred control of the legacy address mappings away from the Operations Safe."
-    },
-    {
-      "timestamp": 1636658954,
-      "type": "state",
-      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-      "transaction": "0xbabb37235bd38ae5a29717590eedfd9b02f84a12b890b2126feac68f223d7448",
-      "reason": "Restored control of the legacy address mappings to the Operations Safe."
-    },
-    {
-      "timestamp": 1636675748,
-      "type": "state",
-      "contract": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-      "transaction": "0xed2e696715675f37e1a5c17c6db8c67d3e41a2829bb79859afb4fdb07d29a588",
-      "reason": "Transferred control of the canonical L1 messenger to the Operations Safe."
-    },
-    {
       "timestamp": 1665503636,
       "type": "state",
       "contract": "oeth:0x4200000000000000000000000000000000000042",
@@ -45,9 +24,9 @@
     {
       "timestamp": 1696542003,
       "type": "state",
-      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+      "contract": "oeth:0x2A82ae142b2E62Cb7d10B55E323acb1Cab663A26",
       "transaction": "0xa0c510a0e82cbd8612634beb71509c0423a0c91cd3f3065535631055318ec888",
-      "reason": "Changed the MintManagerOwner Safe threshold governing OP minting policy (Safe is the owner of MintManager; the Safe itself is outside the perimeter)."
+      "reason": "Changed the MintManagerOwner Safe threshold governing OP minting policy from 2 to 3."
     },
     {
       "timestamp": 1707514547,
@@ -58,6 +37,22 @@
       "reason": "Transferred the core ProxyAdmin to the new Foundation and Security Council authority path."
     },
     {
+      "timestamp": 1708983851,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
+      "updateId": "34096a96",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
+    },
+    {
+      "timestamp": 1712868599,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
+      "updateId": "234c8021",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
+    },
+    {
       "timestamp": 1718042751,
       "type": "state",
       "contract": "oeth:0x4200000000000000000000000000000000000018",
@@ -66,12 +61,20 @@
       "reason": "Transferred the L2 predeploy ProxyAdmin to the aliased Superchain authority path."
     },
     {
-      "timestamp": 1719529907,
+      "timestamp": 1718045303,
       "type": "state",
-      "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-      "transaction": "0xa324ca8056ff79064771df050d70df9d44deab56290916339d94fd11ea5ee3c0",
-      "updateId": "50024322",
-      "reason": "Transferred control of SystemConfig to the Foundation Upgrade Safe."
+      "contract": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+      "transaction": "0x50db5f9d459613b07977e0d0c8fff898920271dfc90e4a9678a46fcc9e4f1144",
+      "updateId": "d86b3fe1",
+      "reason": "Changed the Security Council Safe threshold to 10 and enabled the LivenessModule."
+    },
+    {
+      "timestamp": 1718045303,
+      "type": "state",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "transaction": "0x50db5f9d459613b07977e0d0c8fff898920271dfc90e4a9678a46fcc9e4f1144",
+      "updateId": "d86b3fe1",
+      "reason": "Enabled the initial protocol-pause module on the Guardian Safe."
     },
     {
       "timestamp": 1720551167,
@@ -90,9 +93,10 @@
     {
       "timestamp": 1726070915,
       "type": "state",
-      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "transaction": "0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
-      "reason": "Replaced the Guardian Safe module that delegated protocol pause authority (Safe is the safe of LivenessModule; the Safe itself is outside the perimeter)."
+      "updateId": "fd9b3eaa",
+      "reason": "Replaced the Guardian Safe module that delegated protocol pause authority."
     },
     {
       "timestamp": 1733920163,
@@ -116,11 +120,27 @@
       "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissioned dispute games."
     },
     {
+      "timestamp": 1743612623,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
+      "updateId": "62284543",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
+    },
+    {
       "timestamp": 1745511383,
       "type": "state",
       "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "transaction": "0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
       "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1745511383,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "updateId": "24b38107",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
     },
     {
       "timestamp": 1746628403,
@@ -132,30 +152,74 @@
     {
       "timestamp": 1753378247,
       "type": "state",
-      "contract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
-      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe (Safe is the guardianSafe of DeputyPauseModule; the Safe itself is outside the perimeter)."
+      "updateId": "793e7ea6",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753379243,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
+      "updateId": "793e7ea6",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
     },
     {
       "timestamp": 1753380539,
       "type": "state",
-      "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
-      "reason": "Disabled the former deputy module on the Guardian Safe (Safe is the guardian of SystemConfig; the Safe itself is outside the perimeter)."
+      "updateId": "793e7ea6",
+      "reason": "Disabled the former deputy module on the Guardian Safe."
+    },
+    {
+      "timestamp": 1759422923,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0x744cf7d28324729cace731ac736872da669439a0d380f1f52b8d31af203f7329",
+      "updateId": "9ecac755",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
+    },
+    {
+      "timestamp": 1764092795,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
+      "updateId": "5a491673",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
+    },
+    {
+      "timestamp": 1765898063,
+      "type": "code",
+      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "transaction": "0x50705c3d1a35df65f3690ab89546b4a2895b01a51e02b9d3d163d947bd99f829",
+      "updateId": "e7f01124",
+      "reason": "Upgraded the Foundation Upgrade Safe singleton to Safe 1.4.1."
     },
     {
       "timestamp": 1769109083,
       "type": "state",
-      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
-      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe (Safe is the fallbackOwner of LivenessModule; the Safe itself is outside the perimeter)."
+      "updateId": "5871bec8",
+      "reason": "Enabled the SaferSafes execution module on the Foundation Upgrade Safe."
     },
     {
       "timestamp": 1775575311,
       "type": "state",
-      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+      "contract": "oeth:0x2A82ae142b2E62Cb7d10B55E323acb1Cab663A26",
       "transaction": "0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
-      "reason": "Replaced the direct OP minting threshold with the SafeL2 authority path (Safe is the owner of MintManager; the Safe itself is outside the perimeter)."
+      "updateId": "4bd2123b",
+      "reason": "Changed the MintManagerOwner Safe threshold from 3 to 1 and moved effective approval into the nested SafeL2 authority path."
+    },
+    {
+      "timestamp": 1782428747,
+      "type": "code",
+      "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "transaction": "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+      "updateId": "60c3fc67",
+      "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
     },
     {
       "timestamp": 1783526401,

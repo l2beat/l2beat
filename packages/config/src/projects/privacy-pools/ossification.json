@@ -1,3 +1,74 @@
 {
-  "events": []
+  "events": [
+    {
+      "timestamp": 1743265271,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0x53c908fdbf8b02b2ba2be089c886772a3a7cd48ac4745c145e13a8137f70dac9",
+      "reason": "Registered the ETH pool as the first active Entrypoint route."
+    },
+    {
+      "timestamp": 1752600335,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xbe276265bd093b5e56a58361edef9eb3075e2aeefe80040e096e844f22f655d5",
+      "reason": "Registered the USDS pool in the Entrypoint."
+    },
+    {
+      "timestamp": 1752792059,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xed489600db81832cb97a395d848690aace5e062ca6d335f9345b74f5a3b9e25b",
+      "reason": "Registered the sUSDS pool in the Entrypoint."
+    },
+    {
+      "timestamp": 1752856079,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xa326da0c9b5da1a32bf61d412ad3567eced39c225156e7d5cd095077ee4bf9a4",
+      "reason": "Registered the DAI pool in the Entrypoint."
+    },
+    {
+      "timestamp": 1753360031,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0x106166aec07d5ab88b0f0c7607bc410a2dd1821e6d583c065802306b2aeb08eb",
+      "reason": "Registered the USDT and USDC pools in one transaction."
+    },
+    {
+      "timestamp": 1753994843,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xcfeafd032ab596c24c8ce4d734ef5f4ccf3dd2182779cc0afe31451b4661666c",
+      "reason": "Registered the wstETH and WBTC pools in one transaction."
+    },
+    {
+      "timestamp": 1754667935,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0x4693ea3fefaafcefac6a23eb7bc4398f94fd7caa5d7dbe078277119735938731",
+      "reason": "Registered the USDe, USD1 and frxUSD pools in one transaction."
+    },
+    {
+      "timestamp": 1756405043,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xba050b214327843c1705f04829a28ce8b9b737968b4ec809fe2a976082dda95d",
+      "reason": "Registered the wOETH pool in the Entrypoint."
+    },
+    {
+      "timestamp": 1765812563,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xe1b6ca00c8484177c7eb9b7895f5bb74d041b840fa48b88937e651bec2eaaf50",
+      "reason": "Registered the fxUSD pool in the Entrypoint."
+    },
+    {
+      "timestamp": 1770833867,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0xed558f2e723b62cf65227d5e5acb199939a764c75b77143e3e7ea6c18562e890",
+      "reason": "Registered the BOLD pool in the Entrypoint."
+    }
+  ]
 }

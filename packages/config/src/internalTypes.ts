@@ -25,6 +25,7 @@ import type {
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
+  ProjectOssification,
   ProjectPermissions,
   ProjectPrivacyInfo,
   ProjectRedWarning,
@@ -73,6 +74,8 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Ossification factor measured at config build time */
+  ossification?: ProjectOssification
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */

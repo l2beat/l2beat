@@ -10,5 +10,11 @@
     "address": "eth:0xA7e1f2693b3b5038e505396Dbd21d6c26ECa8aA2",
     "chain": "ethereum",
     "blockNumber": 25883001
+  },
+  "InterfoldV3": {
+    "hash": "0x2df58a27c4061f9543d01a5d32f6f88aefd401d25a50c1c574ecae4a01236915",
+    "address": "eth:0xad5C8CA4bd0d086272039400Fa532019A920dD43",
+    "chain": "ethereum",
+    "blockNumber": 25998889
   }
 }

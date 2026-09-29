@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1789726631,
+  "timestamp": 1790600981,
   "configHash": "0x7fe33980dbbd6367a2d0feaeb3ff31e2b1379012812521df943d1f179dc1e1bd",
   "entries": [
     {
@@ -59,10 +59,13 @@
         "zkLighterProxy": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d"
       },
       "fieldMeta": {
-        "getMaster": { "severity": "HIGH" },
+        "approvedUpgradeNoticePeriod": {
+          "severity": "HIGH",
+          "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
+        },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored).",
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
         }
       },
       "implementationNames": {
@@ -184,21 +187,21 @@
           "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
         ],
         "additionalZkLighter": "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c",
-        "committedBatchesCount": 113046,
-        "committedPriorityRequestCount": 71743,
+        "committedBatchesCount": 127578,
+        "committedPriorityRequestCount": 98936,
         "desertMode": false,
         "desertVerifier": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
-        "executedBatchesCount": 113040,
-        "executedOnChainBatchesCount": 19810,
-        "executedPriorityRequestCount": 71736,
+        "executedBatchesCount": 127572,
+        "executedOnChainBatchesCount": 26335,
+        "executedPriorityRequestCount": 98910,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90",
         "governance": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
         "insuranceFundOperator": "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A",
-        "lastAccountIndex": 28821,
-        "lastVerifiedEndBlockNumber": 24067444,
-        "lastVerifiedStateRoot": "0xc2dd41177f0fd119d4fc1d53a4101a864c3211872b861187cd0d220348ed4052",
-        "lastVerifiedValidiumRoot": "0x9518557fbc9347c5e58bce1f86a3631b7d8b9b9271db8f4ef97bd28be89e1d0e",
+        "lastAccountIndex": 37157,
+        "lastVerifiedEndBlockNumber": 29368951,
+        "lastVerifiedStateRoot": "0xb2c399e0de81219e2aeb005b5c894ed31e5e4a986b6f57dc143c61f70d7896d1",
+        "lastVerifiedValidiumRoot": "0x8a3413f2d891a44eafc970ea0ead72ea808089691df40a085355eb37f5cad588",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -220,15 +223,15 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 10,
-        "pendingOnChainBatchesCount": 5,
+        "openPriorityRequestCount": 27,
+        "pendingOnChainBatchesCount": 3,
         "PRIORITY_EXPIRATION": 1209600,
         "QUOTE_ASSET_INDEX": 3,
-        "stateRoot": "0x030a65443cad83225b1dbe9bf01ee260dad90efa382d1e68fecb8501ba7d23ef",
+        "stateRoot": "0xb2c399e0de81219e2aeb005b5c894ed31e5e4a986b6f57dc143c61f70d7896d1",
         "treasury": "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357",
-        "validiumRoot": "0x83a3b0d494ebbada4df833110933b992c9cfc2bbbb1d926e8330ac73c88a0a9f",
-        "verifiedBatchesCount": 113041,
-        "verifiedPriorityRequestCount": 71736,
+        "validiumRoot": "0x8a3413f2d891a44eafc970ea0ead72ea808089691df40a085355eb37f5cad588",
+        "verifiedBatchesCount": 127572,
+        "verifiedPriorityRequestCount": 98910,
         "verifier": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
       },
       "fieldMeta": {
@@ -337,7 +340,6 @@
           "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f"
         ]
       },
-      "fieldMeta": { "networkGovernor": { "severity": "HIGH" } },
       "implementationNames": {
         "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": "Proxy",
         "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61": "Governance"
@@ -735,10 +737,10 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
-    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59"
+    "lighter/UpgradeGatekeeper": "0x510c4667b3a31f0719ea9fac40e598ae3d96880abc579c8f901e03d153b19bdb"
   },
-  "usedBlockNumbers": { "robinhood": 66146640 },
-  "permissionsConfigHash": "0x4311265ccf3b973dbc8aa741ea7b57b1a475526868fe3ca1b48d368669ccb08d",
+  "usedBlockNumbers": { "robinhood": 74821908 },
+  "permissionsConfigHash": "0xe34453528dcc473f24d3670eaf9f0dc6703abf00c38f822d7ef47f51e3694155",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {
       "receivedPermissions": [

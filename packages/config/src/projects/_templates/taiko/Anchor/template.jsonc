@@ -18,13 +18,7 @@
       "severity": "HIGH"
     },
     "checkpointStore": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
+      "description": "Immutable checkpoint store; replacement requires a code change."
     }
   }
 }

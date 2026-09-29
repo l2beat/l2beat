@@ -9,11 +9,7 @@
     "maxReplayTimes": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -25,12 +21,9 @@
     "rollup": {
       "severity": "HIGH"
     },
-    "messageQueue": {
-      "severity": "HIGH"
-    },
-    // The L2 messenger address accepted as the only valid message counterparty.
-    "counterpart": {
-      "severity": "HIGH"
+    "feeVault": {
+      "severity": "HIGH",
+      "description": "Recipient of L1-to-L2 message fees."
     },
     "paused": {
       "severity": "MEDIUM"

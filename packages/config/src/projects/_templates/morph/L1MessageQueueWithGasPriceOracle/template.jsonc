@@ -17,20 +17,7 @@
     "getFirstUnfinalizedMessageEnqueueTime"
   ],
   "fields": {
-    "ENFORCED_TX_GATEWAAY": {
-      "severity": "HIGH"
-    },
-    "ROLLUP_CONTRACT": {
-      "severity": "HIGH"
-    },
-    "MESSENGER": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -46,10 +33,6 @@
     // contract to price the message, so a reverting checker blocks the escape hatch.
     "whitelistChecker": {
       "severity": "HIGH"
-    },
-    // Price per gas unit charged on L1 for L1 -> L2 messages.
-    "l2BaseFee": {
-      "severity": "MEDIUM"
     }
   }
 }

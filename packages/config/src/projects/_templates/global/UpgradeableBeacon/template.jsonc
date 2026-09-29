@@ -9,7 +9,6 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -6,6 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '~/components/core/Dialog'
 import {
   Drawer,
@@ -13,33 +15,28 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from '~/components/core/Drawer'
 import { Skeleton } from '~/components/core/Skeleton'
 import { UpdateCard } from '~/components/projects/sections/UpdatesSection'
 import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { RecentChangesProjectGroup } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { useTRPC } from '~/trpc/React'
 
 const TITLE = 'Recent changes'
 const DESCRIPTION = 'Project changes handled over the past 7 days'
 
 interface Props {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  trigger: ReactNode
 }
 
-export function RecentChangesDialog({ open, onOpenChange }: Props) {
+export function RecentChangesDialog({ trigger }: Props) {
   const { isMobile } = useDevice()
-  const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
-    trpc.projects.recentChanges.queryOptions(),
-  )
-  const groups = data?.groups ?? []
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={onOpenChange}>
+      <Drawer>
+        <DrawerTrigger asChild>{trigger}</DrawerTrigger>
         <DrawerContent
           className="max-h-[90dvh]"
           contentClassName="flex min-h-0 flex-col px-0 pb-0"
@@ -49,7 +46,7 @@ export function RecentChangesDialog({ open, onOpenChange }: Props) {
             <DrawerDescription>{DESCRIPTION}</DrawerDescription>
           </DrawerHeader>
           <div className="min-h-0 overflow-y-auto px-4 pb-4">
-            <RecentChangesBody groups={groups} isLoading={isLoading} />
+            <RecentChangesBody />
           </div>
         </DrawerContent>
       </Drawer>
@@ -57,7 +54,8 @@ export function RecentChangesDialog({ open, onOpenChange }: Props) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="primary-card flex max-h-[90dvh] w-[768px] flex-col overflow-hidden bg-surface-primary p-0 lg:w-[900px]">
         <DialogClose className="top-5 right-5" />
         <DialogHeader className="px-6 pt-6 pb-2 text-left">
@@ -65,20 +63,21 @@ export function RecentChangesDialog({ open, onOpenChange }: Props) {
           <DialogDescription>{DESCRIPTION}</DialogDescription>
         </DialogHeader>
         <div className="min-h-0 overflow-y-auto px-6 pb-6">
-          <RecentChangesBody groups={groups} isLoading={isLoading} />
+          <RecentChangesBody />
         </div>
       </DialogContent>
     </Dialog>
   )
 }
 
-function RecentChangesBody({
-  groups,
-  isLoading,
-}: {
-  groups: RecentChangesProjectGroup[]
-  isLoading: boolean
-}) {
+// Lives inside the content so the query only fires once the dialog opens.
+function RecentChangesBody() {
+  const trpc = useTRPC()
+  const { data, isLoading } = useQuery(
+    trpc.projects.recentChanges.queryOptions(),
+  )
+  const groups = data?.groups ?? []
+
   if (isLoading) {
     return (
       <div className="flex flex-col gap-3">

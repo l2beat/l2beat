@@ -9,21 +9,60 @@
     "nextMessageNumber"
   ],
   "fields": {
-    "PAUSE_DURATION": {
-      "severity": "HIGH"
-    },
-    "COOLDOWN_DURATION": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "accessControl": {
-      "severity": "HIGH",
       "handler": { "type": "accessControl" }
     },
-    "l1l2MessageSetter": {
+    "pauseTypeToRole": {
       "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": ["PauseTypeRoleSet", "PauseTypeRoleUpdated"] },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": ["UnPauseTypeRoleSet", "UnPauseTypeRoleUpdated"]
+        },
+        "groupBy": "unPauseType"
+      }
+    },
+    "allPausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ALL_ROLE", "members"]
+    },
+    "allUnpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_ALL_ROLE", "members"]
+    },
+    "l1l2Pausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_L1_L2_ROLE", "members"]
+    },
+    "l1l2Unpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_L1_L2_ROLE", "members"]
+    },
+    "l2l1Pausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_L2_L1_ROLE", "members"]
+    },
+    "l2l1Unpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_L2_L1_ROLE", "members"]
+    },
+    "l1l2MessageSetter": {
       "copy": "accessControl",
       "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
       "permissions": [
@@ -46,7 +85,6 @@
       "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
     },
     "periodInSeconds": {
-      "severity": "HIGH",
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     },
     // enum PauseType {

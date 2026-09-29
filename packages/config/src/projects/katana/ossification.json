@@ -1,6 +1,263 @@
 {
   "events": [
     {
+      "timestamp": 1747774642,
+      "type": "state",
+      "contract": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "transaction": "0xf0270f10b2f6f939c5a2b0d3bafcaa14eee86c095e4b2a0a59877ebe5f217c9f",
+      "reason": "Changed the AgglayerBridgeL2 bridge manager (SetBridgeManager)."
+    },
+    {
+      "timestamp": 1747840689,
+      "type": "state",
+      "contract": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+      "transaction": "0x56183a7ca89595ed8e2f30a66f0510b06ab2758f41e8887c2fba64919c0ae86d",
+      "reason": "Changed the GlobalExitRootManagerL2 root-remover controller (AcceptGlobalExitRootRemover)."
+    },
+    {
+      "timestamp": 1747842266,
+      "type": "state",
+      "contract": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "transaction": "0xb3c92e7a065f876cfe017a4bed5a966e28075d693b5ef221fa49b2ff0d727c7c",
+      "reason": "Changed the controller of bridge-deployed token proxies (AcceptProxiedTokensManagerRole)."
+    },
+    {
+      "timestamp": 1750858139,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x69b66ecfc6cd449a80b58c1fcb937f436ca4afedc3cb9586fb7f9b3f35546c79",
+      "reason": "Changed the Aggchain manager (AcceptAggchainManagerRole)."
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "updateId": "41b0c8bb",
+      "reason": "Transferred ownership of the main L1 ProxyAdmin (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "updateId": "41b0c8bb",
+      "reason": "Transferred ownership of the SuperchainConfig ProxyAdmin (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "updateId": "41b0c8bb",
+      "reason": "Transferred ownership of SystemConfig (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "updateId": "41b0c8bb",
+      "reason": "Transferred ownership of the DisputeGameFactory (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1753290299,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",
+      "updateId": "627293ca",
+      "reason": "Changed the permissioned dispute-game implementation (ImplementationSet)."
+    },
+    {
+      "timestamp": 1753290299,
+      "type": "code",
+      "contract": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "transaction": "0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",
+      "updateId": "627293ca",
+      "reason": "Upgraded the L1StandardBridge implementation through its EIP-1967 implementation slot."
+    },
+    {
+      "timestamp": 1761747071,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+      "updateId": "f0f02b3e",
+      "reason": "Initialized the FEP proof configuration, signer threshold and default-key flags during the FEP upgrade."
+    },
+    {
+      "timestamp": 1761751511,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x868db3dc4bdd073b0b00a4c1964e5049c6ba3514f70c64dc886e6f0c82b4a0a7",
+      "updateId": "f0f02b3e",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1764004379,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x04c622c6b42d93ca193892655f17e9d45c8f1532b831d39c96e8e93cbebcef3a",
+      "updateId": "64df4461",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1765376687,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x3f67303e036940c733adbc4a4e982afd9bbb51b59382a76e2020d180979429a8",
+      "updateId": "e17f828d",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1768411847,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x4676ae1b56fb19c3df5046ac5649bc0ea0fdf7158e39790caee2444a66c99ad9",
+      "updateId": "5ff094a2",
+      "reason": "Changed the Aggchain admin (AcceptAdminRole)."
+    },
+    {
+      "timestamp": 1769765279,
+      "type": "state",
+      "contract": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
+      "transaction": "0x9e819afcd94f0f6a4880439fd33ab5f9923a82e060996292ca28e7b9a9b20731",
+      "updateId": "2760d96c",
+      "reason": "Transferred ownership of the main L1 ProxyAdmin (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1769765279,
+      "type": "state",
+      "contract": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
+      "transaction": "0x9e819afcd94f0f6a4880439fd33ab5f9923a82e060996292ca28e7b9a9b20731",
+      "updateId": "2760d96c",
+      "reason": "Transferred ownership of the SuperchainConfig ProxyAdmin (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1770634007,
+      "type": "state",
+      "contract": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+      "transaction": "0x7bc6d6a6bca48c61ab67b5a5092a5c7f0288c82467037bf31e752b53e0818eb0",
+      "updateId": "092d0a96",
+      "reason": "Transferred ownership of SystemConfig (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1770634007,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0x7bc6d6a6bca48c61ab67b5a5092a5c7f0288c82467037bf31e752b53e0818eb0",
+      "updateId": "092d0a96",
+      "reason": "Transferred ownership of the DisputeGameFactory (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1770926771,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x10c69b464e0021844f02ff6b71a23ec3ac8d271ff831cc81996e97a6cce56e1f",
+      "updateId": "5c066b30",
+      "reason": "Changed the Aggchain manager (AcceptAggchainManagerRole)."
+    },
+    {
+      "timestamp": 1771250987,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x957379e0769b6407713cbbaf0f5ecc9d1a1d29b892370cdb245a9440c0b9f409",
+      "updateId": "b182e3dc",
+      "reason": "Changed the optimistic-mode manager (AcceptOptimisticModeManagerRole)."
+    },
+    {
+      "timestamp": 1771411343,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x9585ae7987c0c63bfce9ba0bdb81234e967251245b19d66c3650c22da1f0ab85",
+      "reason": "Enabled optimistic mode, temporarily allowing permissioned state finalization without an OP Succinct proof (EnableOptimisticMode)."
+    },
+    {
+      "timestamp": 1771428611,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x3241d31373f1edd41dbbc3df54c500cf7d61c092d7dc1f338b7ce4c09b792927",
+      "reason": "Disabled optimistic mode and restored proof-based state finalization (DisableOptimisticMode)."
+    },
+    {
+      "timestamp": 1772552963,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961",
+      "updateId": "a0780ac7",
+      "reason": "Changed the permissioned dispute-game implementation (ImplementationSet)."
+    },
+    {
+      "timestamp": 1772552963,
+      "type": "code",
+      "contract": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "transaction": "0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961",
+      "updateId": "a0780ac7",
+      "reason": "Upgraded the L1StandardBridge implementation through its EIP-1967 implementation slot."
+    },
+    {
+      "timestamp": 1772715731,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xbb5469f947653f58d73ab44c2297a61b887fd70da62577ff3d5a133352943193",
+      "updateId": "d3280720",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1773388166,
+      "type": "state",
+      "contract": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "transaction": "0xf72b6bd866c642f2348a276110bb6e94a2cac098037b4f7ee48dd53fde9227e1",
+      "reason": "Increased the L2 upgrade timelock delay from 60 seconds to 12 hours (MinDelayChange)."
+    },
+    {
+      "timestamp": 1773662783,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x728d1edb516de9c0bfc2c5a349d39f609e448fe54f81e97eec2c208a03185567",
+      "updateId": "5acfd848",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1776963143,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xea55bab66a0efbd6b2d8e6c514cab744711643dfc964db48e6532aa68bd4ceaf",
+      "updateId": "08710e37",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1781619767,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xdfe173a66988f60f6b750641c22a28698fda17b43a9be0919f3625ab3ba41a15",
+      "updateId": "870b374c",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1784022011,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x2d5fb482b4b6da30e64f6ad141601dcc3dbb03086868a0fffe4ce996ad5c3b4a",
+      "updateId": "c93bf0f0",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1787568047,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xf4c091d8416a41f4a6507527ccc5d394e00edde8b9f39c6c05af0ede17fb1dfb",
+      "updateId": "d922a712",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1788245483,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0xdc33ac095940c214c81adf08eda36e0a14d97f397597f4d8e5d2fbbc4cd20033",
+      "updateId": "60da3e8b",
+      "reason": "Reconfigured the active dispute-game implementations and immutable arguments (ImplementationSet and ImplementationArgsSet)."
+    },
+    {
       "timestamp": 1788245483,
       "type": "code",
       "contract": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",

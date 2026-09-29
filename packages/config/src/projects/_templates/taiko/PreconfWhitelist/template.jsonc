@@ -21,7 +21,6 @@
       "severity": "MEDIUM"
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

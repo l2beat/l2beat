@@ -4,5 +4,23 @@
     "address": "eth:0x9e58443eB40A1B08D07f89D36bf69909d401a542",
     "chain": "ethereum",
     "blockNumber": 25831469
+  },
+  "DkgAggregatorVerifier_secure8192_minimum": {
+    "hash": "0xa767421f97b0d3416468d606e523826179396691123049beef97d510ba5775e3",
+    "address": "eth:0x1Eba833dd9CBC32c925B4a54DBC7682Ac276f302",
+    "chain": "ethereum",
+    "blockNumber": 25998922
+  },
+  "DkgAggregatorVerifier_secure8192_micro": {
+    "hash": "0xad46eb69b599851c9c04196b53815c09f0240817f4bf7c44282ab06133345a08",
+    "address": "eth:0x00a586aB1E533e2544daAF4BB7388e176320572F",
+    "chain": "ethereum",
+    "blockNumber": 25998914
+  },
+  "DkgAggregatorVerifier_secure8192_small": {
+    "hash": "0x2ac392c5f3e340a4f7459902880999eda941dc5eedec3d01811eaffc019f1d38",
+    "address": "eth:0xaC784625D32Ce7840D3f0EBD7E5832ea34C188C0",
+    "chain": "ethereum",
+    "blockNumber": 25998904
   }
 }

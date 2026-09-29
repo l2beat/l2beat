@@ -2,11 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ProxyAdmin",
   "fields": {
-    "addressManager": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     }
   }

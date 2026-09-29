@@ -18,11 +18,18 @@
     "protocolFees"
   ],
   "fields": {
-    "factory": {
-      "severity": "HIGH"
-    },
     "slot0": {
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+    },
+    "feeProtocol": {
+      "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+        "args": []
+      },
+      "edit": ["get", "feeProtocol"]
     },
     // Q128.128 accumulators; large uints in the 160-bit range get misread as
     // addresses by the relative detector.

@@ -1,4 +1,4 @@
-import type { ActivityTotals } from '@l2beat/database'
+import type { ActivityRecord, ActivityTotals } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -87,9 +87,7 @@ export async function getActivityChart({
     syncWarning = syncInfo.syncWarning
   }
 
-  const projectDataStart =
-    entries.find((e) => e.projectId === projectId && e.count > 0)?.timestamp ??
-    0
+  const projectDataStart = findFirstActivityTimestamp(entries, projectId) ?? 0
 
   const startTimestamp = getChartStartTimestamp({
     rangeStart: adjustedRange[0],
@@ -152,6 +150,20 @@ export async function getActivityChart({
     syncedUntil,
     stats,
   }
+}
+
+// Without a single project, the chart aggregates many projects, so any
+// non-Ethereum activity marks where it starts.
+function findFirstActivityTimestamp(
+  entries: ActivityRecord[],
+  projectId: ProjectId | undefined,
+): UnixTime | undefined {
+  return entries.find(
+    (e) =>
+      (projectId
+        ? e.projectId === projectId
+        : e.projectId !== ProjectId.ETHEREUM) && e.count > 0,
+  )?.timestamp
 }
 
 function getActivityChartStats(

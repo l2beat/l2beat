@@ -4,18 +4,10 @@
   "description": "A simple Timelock contract with an immutable delay of {{executionDelayFmt}}. The owner ({{owner}}) can queue transactions.",
   "category": "gov",
   "fields": {
-    "executionExpiration": {
-      "severity": "HIGH"
-    },
-    "executionDelay": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [{ "type": "act", "delay": "{{executionDelay}}" }]
     },
     "executionDelayFmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "executionDelay",

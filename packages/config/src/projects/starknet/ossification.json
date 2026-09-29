@@ -1,6 +1,35 @@
 {
   "events": [
     {
+      "timestamp": 1672699319,
+      "type": "state",
+      "contract": "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "transaction": "0x485fd2299d1ee3ff3c2d914c2a85065dc2633ecc0af5421072f982bf7f688002",
+      "reason": "The core proxy governor Safe changed its signature threshold to 2 after accepting governance."
+    },
+    {
+      "timestamp": 1738755599,
+      "type": "state",
+      "contract": "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+      "transaction": "0xb711708a19da99c1f37dd9cbb73cb50d69cab941e82d8ca3b643f803fee311e6",
+      "reason": "The Security Council Safe changed its signature threshold to 3 after accepting core governance."
+    },
+    {
+      "timestamp": 1738762427,
+      "type": "state",
+      "contract": "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+      "transaction": "0x3a28da18607f4b54d3786e03709e5373886e6123a4658c2b246f57944096fc43",
+      "reason": "The Security Council Safe changed its signature threshold from 3 to 9."
+    },
+    {
+      "timestamp": 1739799179,
+      "type": "state",
+      "contract": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+      "transaction": "0x70043bcda31be7720886fc262135f0b10b15d656fbf0d253fca63e0dc841c229",
+      "updateId": "71a58712",
+      "reason": "The Safe authorized to enable canonical bridge withdrawal limits reduced its signature threshold from 2 to 1."
+    },
+    {
       "timestamp": 1756750079,
       "type": "state",
       "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",

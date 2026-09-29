@@ -13,12 +13,6 @@
   ],
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
-    "WETH9": {
-      "severity": "HIGH"
-    },
-    "factory": {
-      "severity": "HIGH"
-    },
     "totalSupply": {
       "description": "Number of position NFTs minted so far."
     }

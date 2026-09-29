@@ -1,19 +1,21 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropEventContext } from '@l2beat/database'
-import { Address32, UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
+import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { RelayApiClient } from './RelayApiClient'
+import type { RelayApiClient, RelayRequest } from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export interface RelayIndexerConfig {
   batchSize: number
-  maxRequestsPerUpdate: number
+  concurrency: number
+  maxRequestsPerChunk: number
   safeTimeOffset: number
 }
 
@@ -64,6 +66,7 @@ export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
   private readonly bootstrapChainNamesById: Map<number, string>
+  private readonly relayChainId: number | undefined
 
   constructor(
     chains: { id: number; name: string }[],
@@ -88,7 +91,15 @@ export class RelayIndexer extends ManagedChildIndexer {
       logger,
     )
 
+    assert(
+      Number.isInteger(relayConfig.concurrency) && relayConfig.concurrency > 0,
+      'Relay concurrency must be a positive integer',
+    )
     this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(chains)
+    this.relayChainId =
+      trackedChains.length === 1
+        ? chains.find((chain) => chain.name === trackedChains[0])?.id
+        : undefined
   }
 
   override async start(): Promise<void> {
@@ -123,22 +134,90 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const batchSize = this.relayConfig.batchSize
-    const syncedTo = from + batchSize < to ? from + batchSize : to
+    const syncedTo = Math.min(from + this.relayConfig.batchSize, to)
+    const windows = splitRange(from, syncedTo, this.relayConfig.concurrency)
+    const saveMutex = new AsyncMutex()
+    const startedAt = Date.now()
+    const results = await Promise.allSettled(
+      windows.map((window) =>
+        this.syncWindow(window.from, window.to, saveMutex),
+      ),
+    )
 
-    const res = await this.relayApiClient.getAllRequests({
-      startTimestamp: from,
-      endTimestamp: syncedTo + 1,
-      limit: this.relayConfig.maxRequestsPerUpdate,
-    })
-
-    if (res.continuation) {
-      throw new Error(
-        `Window ${from}-${syncedTo} exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=${this.relayConfig.maxRequestsPerUpdate}. Fetched ${res.requests.length} requests but a continuation remains`,
-      )
+    let chunks = 0
+    let requests = 0
+    for (const result of results) {
+      if (result.status === 'rejected') {
+        throw result.reason
+      }
+      chunks += result.value.chunks
+      requests += result.value.requests
     }
 
-    const successes = res.requests.filter((x) => x.status === 'success')
+    this.logger.info('Processed Relay window', {
+      from,
+      to: syncedTo,
+      partitions: windows.length,
+      chunks,
+      requests,
+      durationMs: Date.now() - startedAt,
+    })
+
+    return syncedTo
+  }
+
+  private async syncWindow(from: number, to: number, saveMutex: AsyncMutex) {
+    let continuation: string | undefined
+    const seenCursors = new Set<string>()
+    let chunks = 0
+    let requests = 0
+
+    do {
+      const res = await this.fetchWindow(from, to, continuation)
+
+      // An API that hands back a cursor it already returned, or a cursor with
+      // nothing behind it, would otherwise keep this loop running forever.
+      if (res.continuation && seenCursors.has(res.continuation)) {
+        throw new Error(
+          `Relay API returned a repeated continuation cursor for window ${from}-${to}`,
+        )
+      }
+      if (res.requests.length === 0 && res.continuation) {
+        throw new Error(
+          `Relay API returned a continuation cursor without requests for window ${from}-${to}`,
+        )
+      }
+
+      await saveMutex.runExclusive(() => this.saveRequests(res.requests))
+      chunks++
+      requests += res.requests.length
+
+      if (res.continuation) {
+        seenCursors.add(res.continuation)
+      }
+      continuation = res.continuation
+    } while (continuation)
+
+    return { chunks, requests }
+  }
+
+  private fetchWindow(from: number, to: number, continuation?: string) {
+    return this.relayApiClient.getAllRequests({
+      startTimestamp: from,
+      // Both bounds are inclusive. The extra second covers sub-second updatedAt
+      // values right at the boundary; duplicates are dropped by request id.
+      endTimestamp: to + 1,
+      limit: this.relayConfig.maxRequestsPerChunk,
+      status: 'success',
+      ...(this.relayChainId !== undefined
+        ? { chainId: this.relayChainId }
+        : {}),
+      ...(continuation !== undefined ? { continuation } : {}),
+    })
+  }
+
+  private async saveRequests(requests: RelayRequest[]) {
+    const successes = requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
@@ -206,37 +285,68 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
+    // Ids are marked as saved only once persistence succeeded, so a failed
+    // save is retried instead of being silently skipped. The chunk-local sets
+    // still deduplicate within the chunk itself.
+    const chunkSentIds = new Set<string>()
+    const chunkReceivedIds = new Set<string>()
     const newTrackedEvents = events.filter((e) => {
       if (!this.trackedChains.includes(e.ctx.chain)) {
         return false
       }
 
       if (TokenSent.checkType(e)) {
-        if (this.sentIds.has(e.args.id)) {
+        if (this.sentIds.has(e.args.id) || chunkSentIds.has(e.args.id)) {
           return false
         }
-        this.sentIds.add(e.args.id)
+        chunkSentIds.add(e.args.id)
         return true
       }
       if (TokenReceived.checkType(e)) {
-        if (this.receivedIds.has(e.args.id)) {
+        if (
+          this.receivedIds.has(e.args.id) ||
+          chunkReceivedIds.has(e.args.id)
+        ) {
           return false
         }
-        this.receivedIds.add(e.args.id)
+        chunkReceivedIds.add(e.args.id)
         return true
       }
       return false
     })
 
     if (newTrackedEvents.length > 0) {
-      this.logger.info('Saved new events', { events: newTrackedEvents.length })
       await this.interopEventStore.saveNewEvents(newTrackedEvents)
+      this.logger.info('Saved new events', { events: newTrackedEvents.length })
     }
-
-    return syncedTo
+    for (const id of chunkSentIds) {
+      this.sentIds.add(id)
+    }
+    for (const id of chunkReceivedIds) {
+      this.receivedIds.add(id)
+    }
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+function splitRange(from: number, to: number, requestedParts: number) {
+  const length = to - from + 1
+  const parts = Math.min(requestedParts, length)
+  const baseSize = Math.floor(length / parts)
+  let remainder = length % parts
+  let start = from
+
+  return Array.from({ length: parts }, () => {
+    const size = baseSize + (remainder > 0 ? 1 : 0)
+    remainder = Math.max(0, remainder - 1)
+    const range = {
+      from: start,
+      to: start + size - 1,
+    }
+    start = range.to + 1
+    return range
+  })
 }

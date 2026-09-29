@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -21,6 +22,7 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getOssification } from '../../ossification/getOssification'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -29,6 +31,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('morph')
+const chainStart = UnixTime(1729490400) // morph block 0
 
 const rollupDelayPeriod = discovery.getContractValue<number>(
   'Rollup',
@@ -40,21 +43,39 @@ const challengeWindow = discovery.getContractValue<number>(
   'finalizationPeriodSeconds',
 )
 
+// The Rollup reads the challenge deposit and slashes submitter stakes through
+// the Submitter contract it points to; L1Staking only manages the L2 sequencer set.
+assert(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'Rollup',
+    'submitterContract',
+  ) === discovery.getContract('Submitter').address,
+  'Rollup does not point to the Submitter contract, update morph.ts',
+)
+
 const challengeBond = discovery.getContractValue<number>(
-  'L1Staking',
+  'Submitter',
   'challengeDeposit',
 )
 
 const upgradeDelay = 0
 
-const stakingValue =
-  discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10 ** 18
+const minimumStake = discovery.getContractValue<string>(
+  'Submitter',
+  'minimumStake',
+)
+const stakingValue = Number(formatEther(minimumStake))
+
+const rewardPercentage = discovery.getContractValue<number>(
+  'Submitter',
+  'rewardPercentage',
+)
 
 const proofWindow = discovery.getContractValue<number>('Rollup', 'proofWindow')
 
-const sequencers = discovery.getContractValue<ChainSpecificAddress[]>(
-  'L1Staking',
-  'getActiveStakers',
+const submitters = discovery.getContractValue<ChainSpecificAddress[]>(
+  'Submitter',
+  'submitters',
 )
 
 export const morph: ScalingProject = {
@@ -181,8 +202,24 @@ export const morph: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 22744284, // first block after the original staker set shrank
+        untilBlock: 26031669, // Rollup cutover to Submitter authorization (initialize4 in the upgrade tx)
         inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
-        sequencers: sequencers.map((s) => ChainSpecificAddress.address(s)),
+        // frozen L1Staking active staker set that authorized batch submission before the cutover
+        sequencers: [
+          EthereumAddress('0x6aB0E960911b50f6d14f249782ac12EC3E7584A0'),
+          EthereumAddress('0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80'),
+          EthereumAddress('0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796'),
+          EthereumAddress('0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4'),
+          EthereumAddress('0x76F91869161dC4348230D5F60883Dd17462035f4'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 26031669, // Rollup cutover to Submitter authorization
+        inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
+        // registered submitters (batch committers)
+        sequencers: submitters.map((s) => ChainSpecificAddress.address(s)),
       },
     ],
   },
@@ -201,9 +238,7 @@ export const morph: ScalingProject = {
       challengeDelay: challengeWindow,
       executionDelay: 0,
       initialBond: {
-        value: formatEther(
-          discovery.getContractValue<number>('L1Staking', 'stakingValue'),
-        ),
+        value: formatEther(minimumStake),
       },
       permissioned: true,
       defenderAdvantage: 'not-applicable',
@@ -227,7 +262,7 @@ export const morph: ScalingProject = {
     chainId: 2818,
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
-    sinceTimestamp: UnixTime(1729490400), // morph block 0
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -245,6 +280,7 @@ export const morph: ScalingProject = {
       },
     ],
   },
+  ossification: getOssification('morph', chainStart),
   stateValidation: {
     categories: [
       {
@@ -257,6 +293,7 @@ export const morph: ScalingProject = {
             challengeBond,
             proofWindow: formatSeconds(proofWindow),
             stakingValue,
+            rewardPercentage,
           },
         ),
         references: [
@@ -267,7 +304,12 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0xaC3C379D772f3520B34690d32BA14510ab36C3fB',
+            url: 'https://etherscan.io/address/0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d#code',
+          },
+          {
+            title:
+              'Submitter.sol - Etherscan source code, isActive(), stake(), slash() functions',
+            url: 'https://etherscan.io/address/0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576#code',
           },
         ],
         risks: [
@@ -291,14 +333,17 @@ export const morph: ScalingProject = {
       ],
     },
     operator: {
-      name: 'Decentralised sequencer network',
-      description:
-        'BLS signatures of the Sequencers are not verified onchain. Sequencing is centralized an permissioned to the listed sequencers in practice.',
+      name: 'The system has a centralized operator',
+      description: `Batches and state roots can only be committed to L1 by submitters whitelisted by the Morph multisig in the Submitter contract, each staking at least ${stakingValue} ETH. No sequencer signatures are verified onchain, and the L2 block-producing sequencer set is managed separately through the L1Staking contract. Sequencing is centralized and permissioned to the listed submitters in practice.`,
       references: [
         {
           title:
-            'L1Staking.sol - Etherscan source code, verifySignature() stub',
-          url: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code#F1#L340',
+            'Rollup.sol - Etherscan source code, onlyActiveSubmitter modifier',
+          url: 'https://etherscan.io/address/0x213CE22b487B71Ac68a1B5b12d2b93D1AF30Ea1d#code',
+        },
+        {
+          title: 'Submitter.sol - Etherscan source code, addSubmitter()',
+          url: 'https://etherscan.io/address/0x3c5C88F69B190a1c497996AfEDb1a6591b0dF576#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],
@@ -340,6 +385,16 @@ export const morph: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  milestones: [
+    {
+      title: 'Fully centralized sequencing',
+      url: 'https://etherscan.io/tx/0xdeb5268cbec1b47c77ad46cb8dd29491833e45ae374d2905f94f4e0499e8110e',
+      date: '2026-09-22T00:00:00Z',
+      description:
+        'Only submitters staked in the new Submitter contract can commit batches. BLS input removed.',
+      type: 'general',
+    },
+  ],
 }
 
 function getMorphVKeys(): string[] {

@@ -20,19 +20,9 @@
     },
     // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
     "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
-      "fields": {
-        "getChainConfiguration": {
-          "severity": "HIGH"
-        }
-      },
       "critical": true
     },
     "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
-      "fields": {
-        "getChainConfiguration": {
-          "severity": "HIGH"
-        }
-      },
       "critical": true
     },
     // former proof-type-0 verifier, replaced by 0xAFF2... in tx 0xbe5ba386... (VerifierAddressChanged, 2026-09-04)
@@ -42,15 +32,7 @@
     // 90-day module on the secondary proposer Safe; its delay and authority
     // path directly constrain L1 upgrades.
     "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
-      "critical": true,
-      "fields": {
-        "owner": { "severity": "HIGH" },
-        "target": { "severity": "HIGH" },
-        "guard": { "severity": "HIGH" },
-        "txCooldown": { "severity": "HIGH" },
-        "txExpiration": { "severity": "HIGH" },
-        "ZodiacModule_modules": { "severity": "HIGH" }
-      }
+      "critical": true
     },
     // Immutable public forwarding mechanism used for the six-month liveness
     // recovery path in LineaRollup.

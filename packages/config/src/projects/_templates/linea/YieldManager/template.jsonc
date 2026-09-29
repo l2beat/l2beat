@@ -12,18 +12,93 @@
   ],
   "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
   "fields": {
-    "$admin": {
-      "severity": "HIGH"
-    },
     "userFundsInYieldProvidersTotal": {
       "description": "User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."
     },
     "accessControl": {
-      "severity": "HIGH",
       "handler": { "type": "accessControl" }
     },
-    "yieldStakingOperatorAC": {
+    "pauseTypeToRole": {
       "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": ["PauseTypeRoleSet", "PauseTypeRoleUpdated"] },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": ["UnPauseTypeRoleSet", "UnPauseTypeRoleUpdated"]
+        },
+        "groupBy": "unPauseType"
+      }
+    },
+    "allPausers": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSE_ALL_ROLE"
+      }
+    },
+    "allUnpausers": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "UNPAUSE_ALL_ROLE"
+      }
+    },
+    "securityCouncilAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      }
+    },
+    "stakingPauseControllers": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "STAKING_PAUSE_CONTROLLER_ROLE"
+      }
+    },
+    "isPaused_NATIVE_YIELD_STAKING": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8) view returns (bool)",
+        "args": [9]
+      }
+    },
+    "isPaused_NATIVE_YIELD_UNSTAKING": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8) view returns (bool)",
+        "args": [10]
+      }
+    },
+    "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8) view returns (bool)",
+        "args": [11]
+      }
+    },
+    "isPaused_NATIVE_YIELD_REPORTING": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8) view returns (bool)",
+        "args": [12]
+      }
+    },
+    "yieldStakingOperatorAC": {
       "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified.",
       "handler": {
         "type": "accessControl",
@@ -37,7 +112,6 @@
       ]
     },
     "yieldStakingManagerAC": {
-      "severity": "HIGH",
       "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified.",
       "handler": {
         "type": "accessControl",

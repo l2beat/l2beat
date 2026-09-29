@@ -5,17 +5,10 @@
   "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
-    "validatorTimelock": {
-      "severity": "HIGH"
-    },
     "executionDelay": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -57,7 +50,6 @@
       "copy": "multisigMembers"
     },
     "executor": {
-      "severity": "HIGH",
       "handler": {
         "type": "crossChainAccessControl",
         "roleNames": {

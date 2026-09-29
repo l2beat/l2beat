@@ -4,12 +4,15 @@ import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const API_URL = 'https://api.relay.link'
+const MAX_PAGE_SIZE = 100
 
 interface GetRequestsOptions {
   limit?: number
   continuation?: string
   startTimestamp?: number
   endTimestamp?: number
+  status?: 'success'
+  chainId?: number
   sortBy?: 'createdAt' | 'updatedAt'
   sortDirection?: 'asc' | 'desc'
 }
@@ -108,14 +111,14 @@ export interface GetRequestsResponse {
 }
 
 interface RelayApiClientOptions {
-  callsPerMinute: number
+  callsPerMinutePerKey: number
   maxAttempts: number
   initialRetryDelayMs: number
   maxRetryDelayMs: number
 }
 
 const DEFAULT_OPTIONS: RelayApiClientOptions = {
-  callsPerMinute: 200,
+  callsPerMinutePerKey: 190,
   maxAttempts: 4,
   initialRetryDelayMs: 1_000,
   maxRetryDelayMs: 4_000,
@@ -124,22 +127,24 @@ const DEFAULT_OPTIONS: RelayApiClientOptions = {
 export class RelayApiClient {
   private readonly options: RelayApiClientOptions
   private readonly rateLimiter: RateLimiter
+  private nextApiKeyIndex = 0
 
   constructor(
     private readonly httpClient: HttpClient,
     private logger: Logger,
-    private readonly apiKey: string,
+    private readonly apiKeys: string[],
     options: Partial<RelayApiClientOptions> = {},
   ) {
     this.logger = logger.for(this)
     this.options = { ...DEFAULT_OPTIONS, ...options }
     assert(
-      Number.isInteger(this.options.callsPerMinute) &&
-        this.options.callsPerMinute > 0,
-      'Relay callsPerMinute must be a positive integer',
+      Number.isInteger(this.options.callsPerMinutePerKey) &&
+        this.options.callsPerMinutePerKey > 0,
+      'Relay callsPerMinutePerKey must be a positive integer',
     )
+    assert(apiKeys.length > 0, 'Relay API keys must not be empty')
     this.rateLimiter = new RateLimiter({
-      callsPerMinute: this.options.callsPerMinute,
+      callsPerMinute: this.options.callsPerMinutePerKey * apiKeys.length,
     })
   }
 
@@ -183,7 +188,7 @@ export class RelayApiClient {
         ...options,
         sortBy: 'updatedAt',
         sortDirection: 'asc',
-        limit: Math.min(remaining, 50),
+        limit: Math.min(remaining, MAX_PAGE_SIZE),
         continuation,
       })
 
@@ -253,7 +258,8 @@ export class RelayApiClient {
   private async fetchWithRetry(url: string): Promise<unknown> {
     for (let attempt = 1; ; attempt++) {
       try {
-        return await this.rateLimiter.call(() => this.fetchPage(url))
+        const apiKey = this.getNextApiKey()
+        return await this.rateLimiter.call(() => this.fetchPage(url, apiKey))
       } catch (error) {
         if (
           attempt >= this.options.maxAttempts ||
@@ -269,6 +275,7 @@ export class RelayApiClient {
         this.logger.warn('Retrying Relay API page', {
           attempt,
           delay,
+          status: error instanceof RelayHttpError ? error.status : undefined,
           error: error instanceof Error ? error.message : error,
         })
         if (delay > 0) {
@@ -278,9 +285,16 @@ export class RelayApiClient {
     }
   }
 
-  private async fetchPage(url: string): Promise<unknown> {
+  private getNextApiKey() {
+    const apiKey = this.apiKeys[this.nextApiKeyIndex]
+    assert(apiKey !== undefined)
+    this.nextApiKeyIndex = (this.nextApiKeyIndex + 1) % this.apiKeys.length
+    return apiKey
+  }
+
+  private async fetchPage(url: string, apiKey: string): Promise<unknown> {
     const response = await this.httpClient.fetchRaw(url, {
-      headers: { 'x-api-key': this.apiKey },
+      headers: { 'x-api-key': apiKey },
     })
 
     if (!response.ok) {
