@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { computeGraphLayout } from './computeGraphLayout'
+import { computeGraphLayout, type FlowsGraphLayout } from './computeGraphLayout'
 
 describe(computeGraphLayout.name, () => {
   const volumes = [
@@ -59,6 +59,72 @@ describe(computeGraphLayout.name, () => {
     expect(layout.get('b')?.radius).toEqual(25)
   })
 
+  it('keeps the given order around a hub, clockwise from the top', () => {
+    const layout = computeGraphLayout(
+      ['hub', 'b', 'a', 'c'],
+      volumes,
+      1000,
+      false,
+      undefined,
+      'hub',
+    )
+
+    const angles = ['b', 'a', 'c'].map((id) => getAngle(layout, id))
+    expect(angles[0]).toEqual(0)
+    expect((angles[1] ?? 0) > 0).toEqual(true)
+    expect((angles[2] ?? 0) > (angles[1] ?? 0)).toEqual(true)
+  })
+
+  it('leaves the same gap between every two neighbours around a hub', () => {
+    const layout = computeGraphLayout(
+      ['hub', 'a', 'b', 'c'],
+      volumes,
+      1000,
+      false,
+      undefined,
+      'hub',
+    )
+
+    // radii 50, 25 and 25 on a ring of radius 330
+    const gap = (2 * Math.PI * 330 - 200) / 3
+    const arcs = ['a', 'b', 'c'].map((id) => getAngle(layout, id) * 330)
+    expect(arcs.map(Math.round)).toEqual(
+      [0, 50 + gap + 25, 50 + gap + 25 + 25 + gap + 25].map(Math.round),
+    )
+  })
+
+  it('spreads the ring of a hub evenly when the bubbles do not fit', () => {
+    // a ring this small cannot hold three bubbles of at least 8 px each
+    const layout = computeGraphLayout(
+      ['hub', 'a', 'b', 'c'],
+      volumes,
+      1,
+      false,
+      undefined,
+      'hub',
+    )
+
+    const angles = ['a', 'b', 'c'].map((id) => getAngle(layout, id, 1))
+    expect(angles.map((angle) => Math.round((angle * 180) / Math.PI))).toEqual([
+      0, 120, 240,
+    ])
+  })
+
+  it('still keeps large chains apart without a hub', () => {
+    const layout = computeGraphLayout(
+      ['a', 'b', 'c', 'hub'],
+      volumes,
+      1000,
+      false,
+    )
+
+    // by volume: hub, a, then b and c. The two largest are not neighbours
+    const angles = ['hub', 'b', 'a', 'c'].map((id) => getAngle(layout, id))
+    expect(angles.map((angle) => Math.round((angle * 180) / Math.PI))).toEqual([
+      0, 90, 180, 270,
+    ])
+  })
+
   it('ignores a center chain that is not among the chains', () => {
     const layout = computeGraphLayout(
       ['a', 'b', 'c'],
@@ -75,3 +141,14 @@ describe(computeGraphLayout.name, () => {
     expect(Math.round(distance)).toEqual(400)
   })
 })
+
+/** Clockwise from the top, in radians */
+function getAngle(layout: FlowsGraphLayout, id: string, size = 1000): number {
+  const node = layout.get(id)
+  const x = (node?.x ?? 0) - size / 2
+  const y = (node?.y ?? 0) - size / 2
+  const angle = Math.atan2(x, -y)
+  // the first bubble sits at the very top, give or take a rounding error
+  if (Math.abs(angle) < 1e-9) return 0
+  return angle < 0 ? angle + 2 * Math.PI : angle
+}

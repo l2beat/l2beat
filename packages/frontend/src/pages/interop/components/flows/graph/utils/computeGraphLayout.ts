@@ -25,6 +25,12 @@ const HUB_RING_RADIUS_RATIO = 0.33
  * With a center chain the graph becomes a hub: that chain sits in the middle
  * with a fixed radius and the others go around it. Its volume is the sum of
  * everything flowing through it, so it is left out of the bubble scale.
+ *
+ * Around a hub the chains keep the order they are given in, clockwise from
+ * the top. Large chains are kept apart elsewhere because a flow between two
+ * neighbours is too short to read, and around a hub every flow runs to the
+ * middle. They are spaced by their size there, so that large neighbours do
+ * not overlap.
  */
 export function computeGraphLayout(
   chainIds: string[],
@@ -55,7 +61,9 @@ export function computeGraphLayout(
     ? SMALL_SCREEN_MAX_BUBBLE_RADIUS
     : MAX_BUBBLE_RADIUS
 
-  const spreadIds = spreadByVolume(ringIds, volumeMap, topChainId)
+  const orderedIds = hasCenter
+    ? startFrom(ringIds, topChainId)
+    : spreadByVolume(ringIds, volumeMap, topChainId)
 
   const centerX = size / 2
   const centerY = size / 2
@@ -72,18 +80,20 @@ export function computeGraphLayout(
     })
   }
 
-  for (let i = 0; i < spreadIds.length; i++) {
-    const chainId = spreadIds[i]
-    if (!chainId) continue
-    // Start from the top (-π/2) and distribute evenly
-    const angle = (2 * Math.PI * i) / spreadIds.length - Math.PI / 2
-
+  const radii = orderedIds.map((chainId) => {
     // sqrt scaling: bubble area is proportional to volume
     const ratio = maxVolume > 0 ? (volumeMap.get(chainId) ?? 0) / maxVolume : 0
-    const radius = Math.max(
-      MIN_BUBBLE_RADIUS,
-      maxBubbleRadius * Math.sqrt(ratio),
-    )
+    return Math.max(MIN_BUBBLE_RADIUS, maxBubbleRadius * Math.sqrt(ratio))
+  })
+  const arcs = hasCenter ? spaceBySize(radii, circleRadius) : undefined
+
+  for (let i = 0; i < orderedIds.length; i++) {
+    const chainId = orderedIds[i]
+    const radius = radii[i]
+    if (!chainId || radius === undefined) continue
+    // Start from the top (-π/2) and distribute evenly
+    const angle =
+      (arcs?.[i] ?? (2 * Math.PI * i) / orderedIds.length) - Math.PI / 2
 
     layout.set(chainId, {
       x: centerX + circleRadius * Math.cos(angle),
@@ -93,6 +103,35 @@ export function computeGraphLayout(
   }
 
   return layout
+}
+
+/**
+ * Angle of each bubble from the first one, leaving the same gap between the
+ * edges of every two neighbours. Returns nothing when the bubbles do not fit
+ * on the ring, and they are then spread evenly.
+ */
+function spaceBySize(
+  radii: number[],
+  circleRadius: number,
+): number[] | undefined {
+  const circumference = 2 * Math.PI * circleRadius
+  const taken = radii.reduce((sum, radius) => sum + 2 * radius, 0)
+  const gap = (circumference - taken) / radii.length
+  if (gap <= 0) return undefined
+
+  let arc = 0
+  return radii.map((radius, i) => {
+    const previous = radii[i - 1]
+    if (previous !== undefined) arc += previous + gap + radius
+    return arc / circleRadius
+  })
+}
+
+/** Turns the ring so that the given chain comes first. Keeps the order */
+function startFrom(chainIds: string[], topChainId?: string): string[] {
+  const index = topChainId ? chainIds.indexOf(topChainId) : -1
+  if (index <= 0) return chainIds
+  return [...chainIds.slice(index), ...chainIds.slice(0, index)]
 }
 
 /**
@@ -129,10 +168,5 @@ function spreadByVolume(
     }
   }
 
-  if (!topChainId) return result
-
-  const topChainIndex = result.indexOf(topChainId)
-  if (topChainIndex === -1) return result
-
-  return [...result.slice(topChainIndex), ...result.slice(0, topChainIndex)]
+  return startFrom(result, topChainId)
 }
