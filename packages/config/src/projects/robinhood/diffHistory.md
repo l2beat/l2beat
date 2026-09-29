@@ -8,7 +8,7 @@ Generated with discovered.json: 0xad931198571a8787a3eba369ec1ab59d40e97843
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Routine rediscovery after explorer change
 
 ## Watched changes
 
