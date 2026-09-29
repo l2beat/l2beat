@@ -15,11 +15,14 @@ import type { ProjectSectionProps } from '../types'
 
 export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
+  /** Registrations: users register keys and then receive, e.g. stealth addresses. */
+  kind: 'deposits' | 'registrations'
   project: ChartProject
 }
 
 export function PrivacyAnonymitySetSection({
   defaultRange,
+  kind,
   project,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
@@ -40,6 +43,7 @@ export function PrivacyAnonymitySetSection({
     [data],
   )
   const hasSyncedSeries = (data?.series.length ?? 0) > 0
+  const copy = COPY[kind]
 
   return (
     <ProjectSection {...projectSectionProps}>
@@ -54,10 +58,10 @@ export function PrivacyAnonymitySetSection({
             {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            How many unique addresses you could have blended in with if you
-            withdrew on a particular day after depositing during the previous{' '}
-            {ANONYMITY_SET_WINDOW_DAYS} days. This metric is a proxy for the
-            historic anonymity set and shows how it developed over time.
+            How many unique addresses you could have blended in with if you{' '}
+            {copy.historyAction} during the previous {ANONYMITY_SET_WINDOW_DAYS}{' '}
+            days. This metric is a proxy for the historic anonymity set and
+            shows how it developed over time.
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
             <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
@@ -85,27 +89,27 @@ export function PrivacyAnonymitySetSection({
             type="history"
           />
           <p className="mt-4 text-paragraph-14 text-secondary">
-            The metric looks backwards: it counts deposits that already
-            happened, including from addresses that have since withdrawn. Your
-            real anonymity also depends on deposits made after yours, which
-            cannot be known in advance.
+            The metric looks backwards: it counts {copy.events} that already
+            happened, including from addresses that have since {copy.completed}.
+            Your real anonymity also depends on {copy.events} made after yours,
+            which cannot be known in advance.
           </p>
 
           <h3 className="mt-4 mb-2 font-bold text-heading-20">
-            Estimated anonymity set by holding duration
+            Estimated anonymity set by {copy.duration}
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
             An estimate of how many unique addresses you blend in with,
-            depending on how long you leave your deposit in the pool. It is
-            based on historic data of past deposits: each point counts
-            depositors from the preceding period, so holding for up to{' '}
+            depending on {copy.durationDescription}. It is based on historic
+            data of past {copy.events}: each point counts {copy.actors} from the
+            preceding period, so {copy.durationAction} for up to{' '}
             {ANONYMITY_SET_WINDOW_DAYS} days effectively means blending in with
-            everyone who deposited during the last {ANONYMITY_SET_WINDOW_DAYS}{' '}
-            days.
+            everyone who {copy.pastAction} during the last{' '}
+            {ANONYMITY_SET_WINDOW_DAYS} days.
             {data?.syncedUntil !== undefined && (
               <>
                 {' '}
-                Counted over deposits up to{' '}
+                Counted over {copy.events} up to{' '}
                 {formatTimestamp(data.syncedUntil, { longMonthName: true })}.
               </>
             )}
@@ -116,9 +120,35 @@ export function PrivacyAnonymitySetSection({
             isLoading={isLoading}
             project={project}
             type="holding-duration"
+            durationLabel={copy.duration}
           />
         </>
       )}
     </ProjectSection>
   )
 }
+
+const COPY = {
+  deposits: {
+    historyAction: 'withdrew on a particular day after depositing',
+    events: 'deposits',
+    actors: 'depositors',
+    completed: 'withdrawn',
+    duration: 'holding duration',
+    durationDescription: 'how long you leave your deposit in the pool',
+    durationAction: 'holding',
+    pastAction: 'deposited',
+  },
+  registrations: {
+    historyAction:
+      'received a stealth address transfer on a particular day after registering keys',
+    events: 'registrations',
+    actors: 'registrants',
+    completed: 'received transfers',
+    duration: 'waiting time',
+    durationDescription:
+      'how long you wait between registering keys and receiving a transfer',
+    durationAction: 'waiting',
+    pastAction: 'registered keys',
+  },
+} satisfies Record<PrivacyAnonymitySetSectionProps['kind'], unknown>

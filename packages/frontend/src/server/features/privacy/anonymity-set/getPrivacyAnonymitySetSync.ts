@@ -41,6 +41,8 @@ export function getPrivacyAnonymitySetSyncStatus(
 }
 
 function toCompactSeriesLabel(series: PrivacyAnonymitySetSeries): string {
+  if (series.bucketType === 'registration') return series.label
+
   const amount = Number(series.formattedAmount)
   const formattedAmount =
     Number.isFinite(amount) && amount >= 1_000

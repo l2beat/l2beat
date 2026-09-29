@@ -43,6 +43,8 @@
     "typecheck": "tsc --noEmit",
     "env:sync": "tsx ./scripts/env/sync.ts",
     "railgun-observe": "tsx scripts/railgunObserve.ts",
+    "privacy:starknet-anonymity-set": "tsx scripts/privacyStarknetAnonymitySet.ts",
+    "privacy:key-registration-anonymity-set": "tsx scripts/privacyKeyRegistrationAnonymitySet.ts",
     "starkware-costs": "tsx scripts/starkwareCosts.ts",
     "discover-tokens": "tsx scripts/discover-tokens/index.ts",
     "db:inspect": "pnpm prisma studio",

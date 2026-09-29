@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type {
   BlockProvider,
@@ -14,7 +13,10 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import type {
+  EvmPrivacyAnonymitySetDepositSource,
+  PrivacyAnonymitySetIndexerConfig,
+} from '../types'
 import { PrivacyAnonymitySetIndexer } from './PrivacyAnonymitySetIndexer'
 
 const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -378,7 +380,7 @@ function privacyPoolsConfiguration(
 }
 
 function baseConfiguration(
-  source: PrivacyAnonymitySetDepositSource,
+  source: EvmPrivacyAnonymitySetDepositSource,
 ): Configuration<PrivacyAnonymitySetIndexerConfig> {
   const properties = {
     id: 'config-1',

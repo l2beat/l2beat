@@ -45,6 +45,8 @@ interface Props {
   isLoading: boolean
   project: ChartProject
   type: 'history' | 'holding-duration'
+  /** Tooltip label of the holding-duration x-axis. */
+  durationLabel?: string
 }
 
 export function PrivacyAnonymitySetChart({
@@ -54,6 +56,7 @@ export function PrivacyAnonymitySetChart({
   isLoading,
   project,
   type,
+  durationLabel = 'holding duration',
 }: Props) {
   const meta = useMemo(() => getChartMeta(series), [series])
   const chartData = useMemo(
@@ -94,7 +97,9 @@ export function PrivacyAnonymitySetChart({
         ))}
         <ChartTooltip
           filterNull={false}
-          content={<AnonymitySetTooltip type={type} />}
+          content={
+            <AnonymitySetTooltip type={type} durationLabel={durationLabel} />
+          }
         />
         <ChartCommonComponents
           data={chartData}
@@ -138,8 +143,10 @@ function AnonymitySetTooltip({
   payload,
   label,
   type,
+  durationLabel,
 }: CustomChartTooltipProps & {
   type: Props['type']
+  durationLabel: string
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -149,7 +156,7 @@ function AnonymitySetTooltip({
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {type === 'history'
           ? formatTimestamp(label, { longMonthName: true })
-          : `${label}-day holding duration`}
+          : `${label}-day ${durationLabel}`}
       </div>
       <div className="flex flex-col gap-2">
         {sortAnonymitySetTooltipEntries(payload).map((entry) => {

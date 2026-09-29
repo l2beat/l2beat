@@ -14,6 +14,12 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
+  starknetAnonymitySetConfigs: StarknetPrivacyAnonymitySetIndexerConfig[]
+  /** Prototype: Starknet anonymity set events are written here, not to DB. */
+  starknetAnonymitySetFile: string
+  keyRegistrationAnonymitySetConfigs: PrivacyKeyRegistrationIndexerConfig[]
+  /** Prototype: key registration events are written here, not to DB. */
+  keyRegistrationAnonymitySetFile: string
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
@@ -30,11 +36,43 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
   address: EthereumAddress
   event: string
   sinceTimestamp: UnixTime
-} & PrivacyAnonymitySetDepositSource
+} & EvmPrivacyAnonymitySetDepositSource
+
+export type EvmPrivacyAnonymitySetDepositSource = Exclude<
+  PrivacyAnonymitySetDepositSource,
+  { extractor: 'strk20Deposit' }
+>
 
 export type PrivacyAnonymitySetIndexerConfig = {
   id: string
 } & PrivacyAnonymitySetIndexerConfigProperties
+
+export type StarknetPrivacyAnonymitySetIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: string
+  event: string
+  sinceTimestamp: UnixTime
+} & Extract<PrivacyAnonymitySetDepositSource, { extractor: 'strk20Deposit' }>
+
+export type StarknetPrivacyAnonymitySetIndexerConfig = {
+  id: string
+} & StarknetPrivacyAnonymitySetIndexerConfigProperties
+
+export interface PrivacyKeyRegistrationIndexerConfigProperties {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: EthereumAddress
+  /** topic0, the registrant is in topic1. */
+  event: string
+  sinceTimestamp: UnixTime
+}
+
+export type PrivacyKeyRegistrationIndexerConfig = {
+  id: string
+} & PrivacyKeyRegistrationIndexerConfigProperties
 
 /**
  * Filters on the indexed event args starting at topic1, null matching

@@ -1104,10 +1104,12 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    | PrivacyKeyRegistrationAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1356,6 +1358,26 @@ export interface ProjectPrivacyAdversaries {
 
 // #endregion
 
+/**
+ * Anonymity set of protocols without a shared pool, e.g. stealth addresses:
+ * the unique addresses that registered keys in the registry during the
+ * window, assuming a new user registers right before being paid.
+ */
+export interface PrivacyKeyRegistrationAnonymitySet {
+  type: 'keyRegistrations'
+  /** Used as the bucket id of the indexed records. */
+  id: string
+  label: string
+  address: ChainSpecificAddress
+  /** topic0 of the registration event, registrant in topic1. */
+  event: string
+  /**
+   * Start of data collection. Can be later than the registry deployment, the
+   * history chart then starts one window later so it is never partial.
+   */
+  sinceTimestamp: UnixTime
+}
+
 export interface ProjectPrivacyToken {
   token: {
     address: string
@@ -1389,7 +1411,6 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            */
           minimumAmounts: string[]
         }
-        address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
       }
     | {
@@ -1415,7 +1436,13 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'strk20Deposit'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =
