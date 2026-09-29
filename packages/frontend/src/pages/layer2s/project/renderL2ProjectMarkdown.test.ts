@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -48,7 +48,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     const summary = getSection(renderL2ProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Total Value Secured: $15.20 B (+1.23% compared to seven days ago; canonically bridged $8.00 B, natively minted $5.00 B, externally bridged $2.20 B)',
+      "- Total Value Secured: $15.20 B (+1.23% compared to seven days ago; canonically bridged $8.00 B, natively minted $5.00 B, externally bridged $2.20 B; 12.5% with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge)",
       '- Past day UOPS: 25.30 (-2.10% compared to seven days ago)',
     )
   })
@@ -74,6 +74,22 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
       summary.indexOf('- Type:'),
+    )
+  })
+
+  it('warns that an archived or under-review project may be outdated', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        archivedAt: 1_700_000_000,
+        underReviewStatus: 'impactful-change',
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '**Warning:** This project is archived and no longer maintained.',
+      '**Warning:** There are impactful changes and part of the information might be outdated.',
     )
   })
 
@@ -143,6 +159,42 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('warns about unverified contracts and program hashes as critical', () => {
+    const riskSummary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        sections: SECTIONS.map((section) =>
+          section.type === 'RiskSummarySection'
+            ? {
+                ...section,
+                props: {
+                  ...section.props,
+                  verificationWarnings: {
+                    programHashes: 'Program hashes could not be verified.',
+                    programHashesDescription: undefined,
+                  },
+                  unverifiedContracts: [
+                    {
+                      address: ChainSpecificAddress(
+                        'eth:0x6666666666666666666666666666666666666666',
+                      ),
+                      target: { id: 'rollup-proxy', label: 'RollupProxy' },
+                    },
+                  ],
+                },
+              }
+            : section,
+        ),
+      }),
+      'Risk summary',
+    )
+
+    expect(riskSummary).toInclude(
+      '**Warning:** 1 address has unverified source code. (CRITICAL)\n\n- RollupProxy: 0x6666666666666666666666666666666666666666',
+      '**Warning:** Program hashes could not be verified. (CRITICAL)',
+    )
+  })
+
   it('explains each risk analysis value with its sentiment', () => {
     const riskAnalysis = getSection(
       renderL2ProjectMarkdown(ENTRY),
@@ -162,6 +214,14 @@ describe(renderL2ProjectMarkdown.name, () => {
       '### Stage 0\n\n- [x] The project posts all data on L1.',
       '### Stage 1\n\n- [x] Principle: Compromising the Security Council is needed to steal funds.\n- [x] Fraud proof system is permissionless.',
       '### Stage 2\n\n- [ ] Upgrades unrelated to onchain provable bugs provide at least 30d to exit.',
+    )
+  })
+
+  it('lists what the stage assessment covers and excludes', () => {
+    const stage = getSection(renderL2ProjectMarkdown(ENTRY), 'Stage')
+
+    expect(stage).toInclude(
+      '### Scope of assessment\n\n#### In scope\n\n- Contracts on Ethereum\n\n#### Not in scope\n\n- The Orbit chains built on it',
     )
   })
 
@@ -191,6 +251,17 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('notes technology text that requires more research', () => {
+    const withdrawals = getSection(
+      renderL2ProjectMarkdown(ENTRY),
+      'Withdrawals',
+    )
+
+    expect(withdrawals).toInclude(
+      '### Forced exits\n\n**Note:** This section requires more research and might not present accurate information.\n\nThe user forces the withdrawal on L1.',
+    )
+  })
+
   it('lists permissions per chain as roles and actors with addresses', () => {
     const permissions = getSection(
       renderL2ProjectMarkdown(ENTRY),
@@ -210,7 +281,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
 
     expect(contracts).toInclude(
-      '### ethereum\n\n#### RollupProxy\n\nAddresses: [0x4444444444444444444444444444444444444444](https://etherscan.io/address/0x4444444444444444444444444444444444444444), [0x6666666666666666666666666666666666666666](https://etherscan.io/address/0x6666666666666666666666666666666666666666) (Implementation (Upgradable), unverified)\n\nMain entry point of the rollup.\n\nCan be upgraded by: Security Council with no delay',
+      '### ethereum\n\n#### RollupProxy\n\nAddresses: [0x4444444444444444444444444444444444444444](https://etherscan.io/address/0x4444444444444444444444444444444444444444), [0x6666666666666666666666666666666666666666](https://etherscan.io/address/0x6666666666666666666666666666666666666666) (Implementation (Upgradable), unverified), [0x7777777777777777777777777777777777777777](https://etherscan.io/address/0x7777777777777777777777777777777777777777) (Admin)\n\nMain entry point of the rollup.\n\nCan be upgraded by: Security Council with no delay',
       'The current deployment carries some associated risks:\n\n- Funds can be stolen if a contract receives a malicious code upgrade (CRITICAL).',
     )
   })
@@ -385,6 +456,10 @@ const SECTIONS: ProjectDetailsSection[] = [
       name: 'Arbitrum One',
       type: 'Optimistic Rollup',
       isAppchain: false,
+      scopeOfAssessment: {
+        inScope: ['Contracts on Ethereum'],
+        notInScope: ['The Orbit chains built on it'],
+      },
       additionalConsiderations: undefined,
       stageConfig: {
         stage: 'Stage 1',
@@ -479,6 +554,15 @@ const SECTIONS: ProjectDetailsSection[] = [
           ],
           references: [],
         },
+        {
+          id: 'forced-exits',
+          name: 'Forced exits',
+          description: 'The user forces the withdrawal on L1.',
+          isIncomplete: true,
+          isUnderReview: false,
+          risks: [],
+          references: [],
+        },
       ],
     },
   },
@@ -532,6 +616,14 @@ const SECTIONS: ProjectDetailsSection[] = [
                 address: '0x6666666666666666666666666666666666666666',
                 href: 'https://etherscan.io/address/0x6666666666666666666666666666666666666666',
                 verificationStatus: 'unverified',
+              },
+            ],
+            admins: [
+              {
+                name: 'Admin',
+                address: '0x7777777777777777777777777777777777777777',
+                href: 'https://etherscan.io/address/0x7777777777777777777777777777777777777777',
+                verificationStatus: 'verified',
               },
             ],
             upgradeableBy: [{ name: 'Security Council', delay: 'no' }],
@@ -682,7 +774,7 @@ const ENTRY: ProjectL2Entry = {
         totalChange: 0.0123,
         totalChangePeriod: '7D',
       },
-      additionalTrustAssumptionsPercentage: 0,
+      additionalTrustAssumptionsPercentage: 0.125,
       tokens: { warnings: [], associatedTokens: [] },
     },
     activity: {

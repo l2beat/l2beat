@@ -6,7 +6,10 @@ import {
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+import {
+  getProjectStatusWarnings,
+  renderProjectMarkdown,
+} from '~/server/markdown/renderProjectMarkdown'
 import {
   COMPARISON_PERIOD_LABELS,
   formatPercent,
@@ -22,10 +25,12 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
     // cited, whichever deployment rendered it.
     pageUrl: `${PRODUCTION_ORIGIN}/layer2s/projects/${entry.slug}`,
     summary: {
+      // Same order as the banners on the HTML page.
       warnings: compact([
-        entry.header.emergencyWarning,
-        entry.header.redWarning?.text,
+        ...getProjectStatusWarnings(entry),
         entry.header.warning,
+        entry.header.redWarning?.text,
+        entry.header.emergencyWarning,
       ]),
       facts: getFacts(entry),
       risks: entry.rosette.self,
@@ -54,10 +59,11 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
 function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
   const tvs = header.tvs?.breakdown
   return compact([
-    tvs && {
-      label: 'Total Value Secured',
-      value: `${formatUsd(tvs.total)} (${formatChange(tvs.totalChange, tvs.totalChangePeriod)}; canonically bridged ${formatUsd(tvs.canonical)}, natively minted ${formatUsd(tvs.native)}, externally bridged ${formatUsd(tvs.external)})`,
-    },
+    header.tvs &&
+      tvs && {
+        label: 'Total Value Secured',
+        value: `${formatUsd(tvs.total)} (${formatChange(tvs.totalChange, tvs.totalChangePeriod)}; canonically bridged ${formatUsd(tvs.canonical)}, natively minted ${formatUsd(tvs.native)}, externally bridged ${formatUsd(tvs.external)}; ${formatPercent(header.tvs.additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS})`,
+      },
     header.activity && {
       label: 'Past day UOPS',
       value: `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`,
@@ -81,6 +87,10 @@ function getFacts({ header, stageConfig, hostChainName }: ProjectL2Entry) {
     },
   ])
 }
+
+/** The wording of the HTML TVS tooltip, which says what the percentage is relative to. */
+const ADDITIONAL_TRUST_ASSUMPTIONS =
+  "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"
 
 function formatChange(change: number, period: PercentageChangePeriod) {
   const sign = change > 0 ? '+' : change < 0 ? '-' : ''

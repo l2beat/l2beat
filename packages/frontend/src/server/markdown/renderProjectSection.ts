@@ -1,4 +1,10 @@
-import type { Milestone, ProjectRisk, ReferenceLink } from '@l2beat/config'
+import type {
+  Milestone,
+  ProjectRisk,
+  ProjectScalingScopeOfAssessment,
+  ReferenceLink,
+} from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -9,6 +15,7 @@ import type {
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import {
   bulletList,
   heading,
@@ -66,7 +73,13 @@ type SectionBody<T extends SectionType> = (
 const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   RiskSummarySection: (props, level) =>
     joinBlocks([
-      renderWarnings(props.redWarning?.text, props.warning),
+      renderUnverifiedContracts(props.unverifiedContracts),
+      renderWarnings(
+        props.verificationWarnings.programHashes &&
+          `${props.verificationWarnings.programHashes} (CRITICAL)`,
+        props.redWarning?.text,
+        props.warning,
+      ),
       ...props.riskGroups.map((group) =>
         subsection(
           level,
@@ -156,6 +169,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       notEvenAStage0
         ? `${name} is not even a ${stageConfig.stage} project.`
         : `${name} is a ${stageConfig.stage} ${props.type}.`,
+      renderScopeOfAssessment(props.scopeOfAssessment, level),
       nestHeadings(props.additionalConsiderations?.long ?? '', level),
       ...stageConfig.summary.map((stage) => {
         const principle = stage.principle && {
@@ -193,6 +207,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ...(item.isUnderReview
             ? ['This section is under review.']
             : [
+                item.isIncomplete ? INCOMPLETE_NOTE : '',
                 nestHeadings(item.description, level + 1),
                 renderRisks(item.risks),
               ]),
@@ -288,7 +303,7 @@ function renderContract(entry: TechnologyContract, level: number) {
   const upgradeableBy = entry.upgradeableBy ?? []
   return joinBlocks([
     heading(level, entry.name),
-    `Addresses: ${entry.addresses.map(renderContractAddress).join(', ')}`,
+    `Addresses: ${[...entry.addresses, ...entry.admins].map(renderContractAddress).join(', ')}`,
     nestHeadings(entry.description ?? '', level + 1),
     upgradeableBy.length > 0
       ? `Can be upgraded by: ${upgradeableBy.map((actor) => `${actor.name} with ${actor.delay} delay`).join(', ')}`
@@ -307,6 +322,44 @@ function renderContractAddress(address: TechnologyContractAddress) {
   const suffix = notes.length > 0 ? ` (${notes.join(', ')})` : ''
   return `${link(address.address, address.href)}${suffix}`
 }
+
+/** The HTML lists them collapsed behind a count; markdown has no collapsing, so all are listed. */
+function renderUnverifiedContracts(entries: UnverifiedContractEntry[]) {
+  if (entries.length === 0) return ''
+  const subject = entries.length === 1 ? 'address has' : 'addresses have'
+  return joinBlocks([
+    warning(`${entries.length} ${subject} unverified source code. (CRITICAL)`),
+    bulletList(
+      entries.map((entry) => {
+        const address = ChainSpecificAddress.address(entry.address)
+        const label = entry.target?.label
+        return label ? `${label}: ${address}` : address
+      }),
+    ),
+  ])
+}
+
+/** Without it, the stage would read as covering components L2BEAT did not assess. */
+function renderScopeOfAssessment(
+  scope: ProjectScalingScopeOfAssessment | undefined,
+  level: number,
+) {
+  return subsection(
+    level,
+    'Scope of assessment',
+    joinBlocks([
+      subsection(level + 1, 'In scope', bulletList(scope?.inScope ?? [])),
+      subsection(
+        level + 1,
+        'Not in scope',
+        bulletList(scope?.notInScope ?? []),
+      ),
+    ]),
+  )
+}
+
+const INCOMPLETE_NOTE =
+  '**Note:** This section requires more research and might not present accurate information.'
 
 function renderRiskValues(values: RosetteValue[], level: number) {
   return joinBlocks(
