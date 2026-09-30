@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { env } from '~/env'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -24,7 +23,6 @@ export function CompareProjectsLink({
   className,
   children = 'Compare projects',
 }: Props) {
-  if (!env.CLIENT_SIDE_COMPARE_PROJECTS) return null
   return (
     <a
       href={href}

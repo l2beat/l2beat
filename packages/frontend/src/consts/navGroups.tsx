@@ -85,7 +85,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           href: '/layer2s/archived',
         },
       ],
-      env.CLIENT_SIDE_COMPARE_PROJECTS && [
+      [
         {
           title: 'Compare',
           href: '/layer2s/compare',
