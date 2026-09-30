@@ -20,7 +20,7 @@ export function OssificationScore({
 }
 
 function getScoreSentiment(score: number): Sentiment {
-  if (score >= 80) return 'neutral'
+  if (score >= 80) return 'good'
   if (score >= 50) return 'warning'
   return 'bad'
 }
