@@ -24,11 +24,11 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       interior: {
         sender: {
           verdict: 'atRisk',
-          note: 'Your first sponsored transaction on Aztec is publicly tied to your account.',
+          note: 'Your first sponsored transaction after registration is publicly tied to your account.',
         },
         recipient: {
           verdict: 'exposed',
-          note: "The first payment to a new contact publishes the recipient's Aztec address.",
+          note: "The first payment to a new contact reveals the recipient's Aztec address.",
         },
         amount: 'private',
         asset: {
@@ -37,7 +37,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         linkage: {
           verdict: 'atRisk',
-          note: 'Reusing or recovering a deposit address links it to your account.',
+          note: 'If your first sponsored transaction after registration is a payment to a new contact, it shows both ends.',
         },
       },
       sources: [
@@ -72,7 +72,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
-          note: "Public deposit and withdrawal amounts and timing can support correlations. Incoming private payments can exceed an account's own deposits.",
+          note: 'Inferable when a payment sits between a matching public deposit and withdrawal.',
         },
         asset: 'exposed',
         linkage: {

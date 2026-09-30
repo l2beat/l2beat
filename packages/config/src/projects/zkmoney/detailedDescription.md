@@ -3,7 +3,7 @@ zk.money is a private DAI wallet by Aztec Labs. Funds are escrowed in the ZkMone
 ### Deposits
 Users fund one-time deposit addresses (SIPAs) derived for their account. Anyone can sweep them into the portal. USDC and USDT are swapped to DAI through the Curve 3pool, the sweeper receives {{depositFee}} ({{registrationSweepFee}} when claiming a tag) and the remainder is sent to Aztec through the canonical Inbox.
 
-Claiming a tag costs {{registrationFee}} by default, including the sweep fee, paid from the first deposit. The domain owner can sign custom prices that cover the sweep fee. The portal accepts at most {{depositLimit}} per {{depositRefillTime}}, and every deposit, payment and withdrawal is capped per transaction.
+Claiming a tag costs {{registrationFee}} by default, including the sweep fee, paid from the first deposit. The domain owner can sign custom prices that cover the sweep fee. Deposits share a {{depositLimit}} limit that refills over {{depositRefillTime}}. Withdrawals are not rate-limited, but every deposit, payment and withdrawal is capped per transaction.
 
 ### Multi-proof system
 Every payment and withdrawal needs both an Aztec validity proof and a signature from an AWS Nitro enclave registered on the portal (2/2). Anyone can register an enclave with a fresh AWS attestation of the approved image. Aztec Labs publishes the image without a reproducible build, so its correspondence to the published code cannot be checked. Stealing funds requires a failure of Aztec's private execution and of the enclave layer at the same time. Every exit depends on a live enclave, which sees each operation in plaintext.
