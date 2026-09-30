@@ -72,7 +72,7 @@ export function formatChange(change: number, period: PercentageChangePeriod) {
 }
 
 /** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function withRegularSpaces(text: string) {
+export function withRegularSpaces(text: string) {
   return text.replaceAll('\u200A', ' ')
 }
 
