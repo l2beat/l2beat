@@ -1,10 +1,12 @@
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -115,6 +117,21 @@ const governanceValues = {
   teeSignerCount: String(teeSigners.length),
 }
 
+const anonymitySetMinimumAmounts =
+  PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[underlying.symbol]
+assert(
+  anonymitySetMinimumAmounts,
+  `No anonymity set thresholds for ${underlying.symbol}`,
+)
+
+// Deposit addresses accept the underlying and, through the Curve 3pool, the
+// USDC and USDT constants of the immutable DepositSIPA code.
+const DEPOSIT_FUNDING_TOKENS = [
+  underlyingAddress,
+  EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
+  EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
+]
+
 const privacyTokens: ProjectPrivacyToken[] = [
   {
     token: {
@@ -132,6 +149,12 @@ const privacyTokens: ProjectPrivacyToken[] = [
         label: underlying.symbol,
         address: portal.address,
         sinceTimestamp: PORTAL_SINCE,
+        // Deposits arrive from one-time deposit addresses, so the depositor
+        // is whoever funded the address.
+        anonymitySet: {
+          minimumAmounts: anonymitySetMinimumAmounts,
+          fundingTokens: DEPOSIT_FUNDING_TOKENS,
+        },
         // Deposits are gross transfers into the portal, including the
         // funding cut that is forwarded to the FPC funder.
         deposit: {
@@ -203,6 +226,16 @@ export const zkmoney: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: [
+        {
+          address: portal.address,
+          sinceTimestamp: PORTAL_SINCE,
+          extractor: 'zkMoneyWithdrawal',
+        },
+      ],
+    },
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
       value: 'Infinite',
