@@ -10,26 +10,41 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('serves the .md suffix as markdown', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/projects/arbitrum.md',
+      '/layer2s/projects/arbitrum.md',
     )
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(await response.text()).toEqual('# arbitrum\n')
   })
 
-  it('answers 404 in markdown for a page that does not exist', async () => {
+  it('sends the .md suffix with the headers of every markdown document', async () => {
     const response = await fetchFromRouter(
       createRouter(),
-      '/projects/unknown.md',
+      '/layer2s/projects/arbitrum.md',
+    )
+
+    expect(response.headers.get('link')).toEqual(
+      '<https://l2beat.com/llms.txt>; rel="describedby"',
+    )
+    expect(response.headers.get('cache-control')).toEqual(
+      'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600',
+    )
+  })
+
+  it('answers 404 in markdown for a page that does not exist, uncached', async () => {
+    const response = await fetchFromRouter(
+      createRouter(),
+      '/layer2s/projects/unknown.md',
     )
 
     expect(response.status).toEqual(404)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
+    expect(response.headers.get('cache-control')).toEqual(null)
     expect(await response.text()).toEqual('# Not found\n')
   })
 
@@ -37,13 +52,13 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     for (const accept of ['text/markdown', 'text/markdown, text/html;q=0.9']) {
       const response = await fetchFromRouter(
         createRouter(),
-        '/projects/arbitrum',
+        '/layer2s/projects/arbitrum',
         { headers: { Accept: accept } },
       )
 
       expect(response.status).toEqual(200)
       expect(response.headers.get('content-type')).toEqual(
-        'text/markdown; charset=utf-8',
+        'text/plain; charset=utf-8',
       )
       expect(await response.text()).toEqual('# arbitrum\n')
     }
@@ -54,7 +69,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     // would be served to browsers asking for the same URL.
     const response = await fetchFromRouter(
       createRouter(),
-      '/projects/arbitrum',
+      '/layer2s/projects/arbitrum',
       { headers: { Accept: 'text/markdown' } },
     )
 
@@ -68,7 +83,7 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
     for (const accept of [browserAccept, '*/*', undefined]) {
       const response = await fetchFromRouter(
         createRouter(),
-        '/projects/arbitrum',
+        '/layer2s/projects/arbitrum',
         { headers: accept ? { Accept: accept } : {} },
       )
 
@@ -85,9 +100,9 @@ function createRouter() {
     req.params.slug === 'unknown' ? undefined : `# ${req.params.slug}\n`
 
   const router = express.Router()
-  router.get('/projects/:slug.md', serveMarkdown(getMarkdown))
+  router.get('/layer2s/projects/:slug.md', serveMarkdown(getMarkdown))
   router.get(
-    '/projects/:slug',
+    '/layer2s/projects/:slug',
     serveMarkdownIfPreferred(getMarkdown),
     (_req, res) => {
       res.header('Content-Type', 'text/html; charset=utf-8').send('<html />')

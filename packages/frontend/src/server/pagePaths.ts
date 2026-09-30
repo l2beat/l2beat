@@ -23,7 +23,7 @@ export interface Page {
 }
 
 export const STATIC_PAGE_PATHS = [
-  ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
+  '/',
   '/layer2s/summary',
   '/layer2s/activity',
   '/layer2s/risk',
@@ -65,10 +65,7 @@ export const STATIC_PAGE_PATHS = [
 ] as const satisfies PagePath[]
 
 export async function getPages(): Promise<Page[]> {
-  const paths: PagePath[] = [...STATIC_PAGE_PATHS]
-  if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
-    paths.push('/layer2s/compare')
-  }
+  const paths: PagePath[] = [...STATIC_PAGE_PATHS, '/layer2s/compare']
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
   }

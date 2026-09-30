@@ -1,3 +1,134 @@
+Generated with discovered.json: 0xc8d541c0d136149d0271fad1d2c1994ddad4be12
+
+# Diff at Tue, 29 Sep 2026 17:50:01 GMT:
+
+- id: b5e390ee
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790671700
+- current timestamp: 1790671700
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+Generated with discovered.json: 0xc9e6bbc805a39054c1a1cd82732f1a47f655d41f
+
+# Diff at Tue, 29 Sep 2026 09:01:45 GMT:
+
+- id: 5dfb7db3
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@c3621fa7eb494214211a85dc9afaff12f0d2ed79 block: 1788301081
+- current timestamp: 1790671700
+
+## Description
+
+Routine rediscovery after explorer change
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      deployerAddress:
+-        "robinhood:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1777567931
+      sinceBlock:
+-        0
+      values.filteredTransactionsAdded:
+-        6092
++        6096
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.chainOwners.1:
++        "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [orbitstack/layer2/ResourceConstraintManager]
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+## Source code changes
+
+```diff
+.../robinhood/.flat/ResourceConstraintManager.sol  | 1423 ++++++++++++++++++++
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 3 files changed, 2751 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788301081 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      sourceHashes.1:
+-        "0x4f3e8e6c5b1c8bb195977df29816a2b30d65f6017df81bd01ba9934736baf1c8"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+      implementationNames.robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd:
+-        "UpgradeExtractor"
++        "UpgradeExecutor"
+    }
+```
+
 Generated with discovered.json: 0x6ebd80dc0d044e709f8606c0751d5d221942da3b
 
 # Diff at Wed, 23 Sep 2026 05:49:08 GMT:

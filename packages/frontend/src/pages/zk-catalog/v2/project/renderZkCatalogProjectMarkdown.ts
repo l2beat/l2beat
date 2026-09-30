@@ -1,8 +1,8 @@
-import { formatCurrency } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { formatChange, formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import {
   formatTag,
@@ -10,11 +10,6 @@ import {
   renderVerificationStatus,
   VERIFICATION_STATUSES,
 } from '~/server/markdown/zkSectionBodies'
-import {
-  COMPARISON_PERIOD_LABELS,
-  formatPercent,
-  type PercentageChangePeriod,
-} from '~/utils/calculatePercentageChange'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -96,14 +91,4 @@ function countVerifiers(
       : []
   })
   return counts.length > 0 ? counts.join(', ') : 'none'
-}
-
-function formatChange(change: number, period: PercentageChangePeriod) {
-  const sign = change > 0 ? '+' : change < 0 ? '-' : ''
-  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARISON_PERIOD_LABELS[period]}`
-}
-
-/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function formatUsd(value: number) {
-  return formatCurrency(value, 'usd').replaceAll(' ', ' ')
 }

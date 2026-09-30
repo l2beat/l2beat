@@ -60,7 +60,7 @@ assert(
 export const debridgeDln: BaseProject = {
   id: ProjectId('debridge-dln'),
   slug: 'debridge-dln',
-  name: 'Debridge DLN',
+  name: 'deBridge DLN',
   shortName: undefined,
   addedAt: UnixTime(1768915493),
   interopConfig: {

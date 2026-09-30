@@ -23,7 +23,7 @@ export function createMigratedProjectsRouter() {
   return router
 }
 
-/** Old slug to new slug. Every variant of the page (HTML, .md, TVS breakdown) redirects. */
+/** Every variant of the page (HTML, .md, TVS breakdown) redirects. */
 const RENAMED_SCALING_SLUGS: Record<string, string> = {
   zksync: 'zksync-lite',
   zksync2: 'zksync-era',

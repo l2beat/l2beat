@@ -29,7 +29,7 @@ export function createZkCatalogRouter(
   })
 
   const getProjectMarkdown = (req: Request<{ slug: string }>) =>
-    getZkCatalogProjectMarkdown(req.params.slug, manifest, cache)
+    getZkCatalogProjectMarkdown(manifest, req.params.slug, cache)
 
   // Before `:slug`, which would otherwise take "sp1turbo.md" as the slug.
   router.get(
@@ -46,8 +46,8 @@ export function createZkCatalogRouter(
     serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
       const data = await getZkCatalogProjectData(
-        req.params.slug,
         manifest,
+        req.params.slug,
         cache,
       )
       if (!data) {

@@ -20,7 +20,6 @@ export default defineConfig({
       PORT: '7357',
       LOG_LEVEL: 'ERROR',
       INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
-      CLIENT_SIDE_HOME_PAGE: 'true',
       CLIENT_SIDE_DEFI_ENABLED: 'true',
     },
     command: 'pnpm start:mock',

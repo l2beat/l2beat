@@ -3,17 +3,18 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getZkCatalogMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { renderZkCatalogProjectMarkdown } from './renderZkCatalogProjectMarkdown'
 
 export async function getZkCatalogProjectData(
-  slug: string,
   manifest: Manifest,
+  slug: string,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedZkCatalogProjectPage(slug, manifest, cache)
+  const data = await getCachedZkCatalogProjectPage(manifest, slug, cache)
   if (!data) return undefined
 
   return {
@@ -27,17 +28,17 @@ export async function getZkCatalogProjectData(
 
 /** The markdown alternate of the page, built from the same cached entry as the HTML. */
 export async function getZkCatalogProjectMarkdown(
-  slug: string,
   manifest: Manifest,
+  slug: string,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const data = await getCachedZkCatalogProjectPage(slug, manifest, cache)
+  const data = await getCachedZkCatalogProjectPage(manifest, slug, cache)
   return data && renderZkCatalogProjectMarkdown(data.props.projectEntry)
 }
 
 function getCachedZkCatalogProjectPage(
-  slug: string,
   manifest: Manifest,
+  slug: string,
   cache: InMemoryCache,
 ) {
   return cache.get(
@@ -69,14 +70,18 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
-        description: project.display.description,
+        description: getZkCatalogMetadataDescription({
+          name: project.name,
+          creator: project.zkCatalogInfo.creator,
+          tvs: projectEntry.header.tvs.value,
+          description: project.display.description,
+        }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
         url: `/zk-catalog/${project.slug}`,
         openGraph: {
           image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
         },
-        markdownAlternatePath: `/zk-catalog/${project.slug}.md`,
       }),
     },
     props: {
