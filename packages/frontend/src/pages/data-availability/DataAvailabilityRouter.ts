@@ -1,13 +1,20 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 import { getDataAvailabilityLivenessData } from './liveness/getDataAvailabilityLivenessData'
-import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
+import {
+  getDataAvailabilityProjectData,
+  getDataAvailabilityProjectMarkdown,
+} from './project/getDataAvailabilityProjectData'
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
 import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabilityThroughputData'
@@ -88,25 +95,29 @@ export function createDataAvailabilityRouter(
     res.status(200).send(html)
   })
 
+  const projectParams = validateRoute({
+    params: v.object({ layer: v.string(), bridge: v.string() }),
+  })
+  const getProjectMarkdown = (
+    req: Request<{ layer: string; bridge: string }>,
+  ) => getDataAvailabilityProjectMarkdown(req.params, manifest, cache)
+
+  // Before `:bridge`, which would otherwise take "blobstream.md" as the bridge.
+  router.get(
+    '/data-availability/projects/:layer/:bridge.md',
+    projectParams,
+    serveMarkdown(getProjectMarkdown),
+  )
+
   router.get(
     '/data-availability/projects/:layer/:bridge',
-    validateRoute({
-      params: v.object({ layer: v.string(), bridge: v.string() }),
-    }),
+    projectParams,
+    serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: [
-            'data-availability',
-            'projects',
-            req.params.layer,
-            req.params.bridge,
-          ],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () =>
-          getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),
+      const data = await getDataAvailabilityProjectData(
+        req.params,
+        manifest,
+        cache,
       )
       if (!data) {
         await sendNotFoundPage(manifest, render, req.originalUrl, res)
