@@ -24,7 +24,6 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getSP1Verifiers } from '../../templates/opStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -449,7 +448,7 @@ export const taiko: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: getOssification('taiko', chainStart),
+  ossification: discovery.getOssification(chainStart),
   type: 'layer2',
   riskView: {
     stateValidation: {

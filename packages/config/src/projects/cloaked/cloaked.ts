@@ -52,6 +52,11 @@ export const cloaked: BaseProject = {
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.
     tokens: [],
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Cloaked sends funds to one-time stealth addresses instead of mixing deposits in a shared pool.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

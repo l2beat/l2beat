@@ -91,7 +91,6 @@ async function loadDaProjectPage(
         openGraph: {
           image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
         },
-        markdownAlternatePath: `${path}.md`,
       }),
     },
     props: {

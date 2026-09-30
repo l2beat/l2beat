@@ -108,7 +108,6 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
         },
-        markdownAlternatePath: `/layer2s/projects/${project.slug}.md`,
       }),
     },
     props: {

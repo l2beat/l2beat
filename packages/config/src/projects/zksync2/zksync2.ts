@@ -10,7 +10,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -224,7 +223,7 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
-  ossification: getOssification('zksync2', chainStart),
+  ossification: discovery.getOssification(chainStart),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

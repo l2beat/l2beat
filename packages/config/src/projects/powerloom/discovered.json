@@ -885,6 +885,7 @@
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "getValidators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
@@ -1960,7 +1961,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25293909 },
-  "permissionsConfigHash": "0x67aa366632dddf637a33b436986cf834bb58a0dfb196aa8181181f58c56fab0d",
+  "permissionsConfigHash": "0x4b05cde50ff5397fa968c14981f05683b7919b74d11550566c8308afcc19350b",
   "permissions": {
     "eth:0x17F187D978664C96ffD655996a45e085c403AD8b": {
       "receivedPermissions": [
@@ -2045,6 +2046,15 @@
         {
           "permission": "interact",
           "from": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "eth:0xA7A2cc389aFCcDE8A1F47F14dA88e82e7D99b68F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
         }
@@ -2055,7 +2065,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F" }
@@ -2192,7 +2202,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
@@ -2229,6 +2239,16 @@
           "from": "eth:0x903Af716AA8C7C27Fd785F453D5a59C20E06bDeC",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
+        }
+      ]
+    },
+    "eth:0xA7A2cc389aFCcDE8A1F47F14dA88e82e7D99b68F": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
         }
       ]
     },

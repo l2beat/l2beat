@@ -18,7 +18,6 @@ import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -78,7 +77,7 @@ export const lighter: ScalingProject = {
     chainId: undefined,
     apis: [],
   },
-  ossification: getOssification('lighter'),
+  ossification: discovery.getOssification(),
   config: {
     associatedTokens: ['LIT'],
     escrows: [

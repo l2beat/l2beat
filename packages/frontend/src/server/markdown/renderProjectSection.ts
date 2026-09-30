@@ -1,4 +1,10 @@
-import type { Milestone, ProjectRisk, ReferenceLink } from '@l2beat/config'
+import type {
+  Milestone,
+  ProjectRisk,
+  ProjectScalingScopeOfAssessment,
+  ReferenceLink,
+} from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -12,6 +18,7 @@ import type {
 } from '~/components/projects/sections/types'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import {
   bulletList,
   heading,
@@ -21,6 +28,7 @@ import {
   nestHeadings,
   numberedList,
   subsection,
+  textSubsection,
   warning,
   withSentiment,
 } from './markdown'
@@ -32,7 +40,6 @@ export interface SectionContext {
   apiLinks: Partial<Record<ProjectSectionId, ReferenceLink[]>>
 }
 
-/** One page section as markdown, headed like its HTML counterpart. */
 export function renderProjectSection(
   section: ProjectDetailsSection,
   level: number,
@@ -55,10 +62,9 @@ type SectionProps<T extends SectionType> = Extract<
   ProjectDetailsSection,
   { type: T }
 >['props']
-/** `level` is the heading level for subsections. */
 type SectionBody<T extends SectionType> = (
   props: SectionProps<T>,
-  level: number,
+  subsectionLevel: number,
   context: SectionContext,
 ) => string
 
@@ -69,7 +75,13 @@ type SectionBody<T extends SectionType> = (
 const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   RiskSummarySection: (props, level) =>
     joinBlocks([
-      renderWarnings(props.redWarning?.text, props.warning),
+      renderUnverifiedContracts(props.unverifiedContracts),
+      renderWarnings(
+        props.verificationWarnings.programHashes &&
+          markCritical(props.verificationWarnings.programHashes, true),
+        props.redWarning?.text,
+        props.warning,
+      ),
       renderRiskGroups(props.riskGroups, level),
     ]),
   DaRiskSummarySection: (props, level) => {
@@ -120,14 +132,14 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     ]),
   GrissiniRiskAnalysisSection: (props, level) =>
     joinBlocks([
-      nestHeadings(props.description ?? '', level),
+      nestHeadings(props.description, level),
       renderRiskValues(props.layerGrissiniValues ?? [], level),
       renderRiskValues(props.bridgeGrissiniValues ?? [], level),
       props.isNoBridge ? renderRiskValues([NO_BRIDGE_RISK], level) : '',
     ]),
   Group: (props, level, context) =>
     joinBlocks([
-      nestHeadings(props.description ?? '', level),
+      nestHeadings(props.description, level),
       ...props.items.map((item) => renderProjectSection(item, level, context)),
     ]),
   MarkdownSection: (props, level) =>
@@ -138,8 +150,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     ]),
   DetailedDescriptionSection: (props, level) =>
     joinBlocks([
-      nestHeadings(props.description ?? '', level),
-      nestHeadings(props.detailedDescription ?? '', level),
+      nestHeadings(props.description, level),
+      nestHeadings(props.detailedDescription, level),
       renderReferences(props.references ?? []),
     ]),
   MilestonesAndIncidentsSection: ({ milestones }) =>
@@ -153,24 +165,22 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ['Genesis state', props.genesisState],
           ['Data format', props.dataFormat],
         ] as const
-      ).map(([title, text]) =>
-        subsection(level, title, nestHeadings(text ?? '', level + 1)),
-      ),
+      ).map(([title, text]) => textSubsection(level, title, text)),
     ),
   SequencingSection: (props, level) =>
     joinBlocks([
       heading(level, props.name),
       nestHeadings(props.content, level + 1),
-      subsection(
+      textSubsection(
         level + 1,
         'Censorship resistance',
-        nestHeadings(props.censorshipResistance ?? '', level + 2),
+        props.censorshipResistance,
       ),
       renderRisks(props.risks ?? []),
       renderReferences(props.references ?? []),
     ]),
   UpgradesAndGovernanceSection: (props, level) =>
-    nestHeadings(props.content ?? '', level),
+    nestHeadings(props.content, level),
   StageSection: (props, level) => {
     const { stageConfig, name } = props
     if (stageConfig.stage === 'UnderReview' || props.isUnderReview) {
@@ -179,11 +189,13 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     const notEvenAStage0 =
       props.type === 'Other' && !!stageConfig.missing?.requirements
     return joinBlocks([
-      renderWarnings(props.emergencyWarning, stageConfig.message?.text),
+      renderWarnings(props.emergencyWarning),
       notEvenAStage0
         ? `${name} is not even a ${stageConfig.stage} project.`
         : `${name} is a ${stageConfig.stage} ${props.type}.`,
-      nestHeadings(props.additionalConsiderations?.long ?? '', level),
+      renderScopeOfAssessment(props.scopeOfAssessment, level),
+      nestHeadings(props.additionalConsiderations?.long, level),
+      renderWarnings(stageConfig.message?.text),
       ...stageConfig.summary.map((stage) => {
         const principle = stage.principle && {
           ...stage.principle,
@@ -202,7 +214,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   },
   StateValidationSection: ({ stateValidation }, level) =>
     joinBlocks([
-      nestHeadings(stateValidation.description ?? '', level),
+      nestHeadings(stateValidation.description, level),
       ...stateValidation.categories.map((category) =>
         joinBlocks([
           heading(level, category.title),
@@ -220,6 +232,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ...(item.isUnderReview
             ? ['This section is under review.']
             : [
+                item.isIncomplete ? INCOMPLETE_NOTE : '',
                 nestHeadings(item.description, level + 1),
                 renderRisks(item.risks),
               ]),
@@ -235,24 +248,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           level,
           chain,
           joinBlocks([
-            subsection(
-              level + 1,
-              'Roles',
-              joinBlocks(
-                permissions.roles.map((role) =>
-                  renderContract(role, level + 2),
-                ),
-              ),
-            ),
-            subsection(
-              level + 1,
-              'Actors',
-              joinBlocks(
-                permissions.actors.map((actor) =>
-                  renderContract(actor, level + 2),
-                ),
-              ),
-            ),
+            renderContracts(level + 1, 'Roles', permissions.roles),
+            renderContracts(level + 1, 'Actors', permissions.actors),
           ]),
         ),
       ),
@@ -260,13 +257,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   ContractsSection: (props, level) =>
     joinBlocks([
       ...Object.entries(props.contracts).map(([chain, contracts]) =>
-        subsection(
-          level,
-          chain,
-          joinBlocks(
-            contracts.map((entry) => renderContract(entry, level + 1)),
-          ),
-        ),
+        renderContracts(level, chain, contracts),
       ),
       renderRisks(
         props.risks,
@@ -310,13 +301,25 @@ function linkToHtmlPage(
   return `Shown as an interactive chart or widget on ${link('the HTML page', `${context.pageUrl}#${props.id}`)}.`
 }
 
+function renderContracts(
+  level: number,
+  title: string,
+  contracts: TechnologyContract[],
+) {
+  return subsection(
+    level,
+    title,
+    joinBlocks(contracts.map((entry) => renderContract(entry, level + 1))),
+  )
+}
+
 /** A contract or a permissioned role/actor, as the HTML contract entry shows it. */
 function renderContract(entry: TechnologyContract, level: number) {
   const upgradeableBy = entry.upgradeableBy ?? []
   return joinBlocks([
     heading(level, entry.name),
-    `Addresses: ${entry.addresses.map(renderContractAddress).join(', ')}`,
-    nestHeadings(entry.description ?? '', level + 1),
+    `Addresses: ${[...entry.addresses, ...entry.admins].map(renderContractAddress).join(', ')}`,
+    nestHeadings(entry.description, level + 1),
     upgradeableBy.length > 0
       ? `Can be upgraded by: ${upgradeableBy.map((actor) => `${actor.name} with ${actor.delay} delay`).join(', ')}`
       : '',
@@ -334,6 +337,49 @@ function renderContractAddress(address: TechnologyContractAddress) {
   const suffix = notes.length > 0 ? ` (${notes.join(', ')})` : ''
   return `${link(address.address, address.href)}${suffix}`
 }
+
+/** The HTML lists them collapsed behind a count; markdown has no collapsing, so all are listed. */
+function renderUnverifiedContracts(entries: UnverifiedContractEntry[]) {
+  if (entries.length === 0) return ''
+  const subject = entries.length === 1 ? 'address has' : 'addresses have'
+  return joinBlocks([
+    warning(
+      markCritical(
+        `${entries.length} ${subject} unverified source code.`,
+        true,
+      ),
+    ),
+    bulletList(
+      entries.map((entry) => {
+        const address = ChainSpecificAddress.address(entry.address)
+        const label = entry.target?.label
+        return label ? `${label}: ${address}` : address
+      }),
+    ),
+  ])
+}
+
+/** Without it, the stage would read as covering components L2BEAT did not assess. */
+function renderScopeOfAssessment(
+  scope: ProjectScalingScopeOfAssessment | undefined,
+  level: number,
+) {
+  return subsection(
+    level,
+    'Scope of assessment',
+    joinBlocks([
+      subsection(level + 1, 'In scope', bulletList(scope?.inScope ?? [])),
+      subsection(
+        level + 1,
+        'Not in scope',
+        bulletList(scope?.notInScope ?? []),
+      ),
+    ]),
+  )
+}
+
+const INCOMPLETE_NOTE =
+  '**Note:** This section requires more research and might not present accurate information.'
 
 function renderRiskGroups(groups: RiskGroup[], level: number) {
   return joinBlocks(
@@ -356,7 +402,7 @@ function renderRiskValues(values: RosetteValue[], level: number) {
       joinBlocks([
         heading(level, risk.name),
         withSentiment(risk.value, risk.sentiment),
-        nestHeadings(risk.description ?? '', level + 1),
+        nestHeadings(risk.description, level + 1),
       ]),
     ),
   )
