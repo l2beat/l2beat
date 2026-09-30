@@ -7,7 +7,7 @@ import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
  * A Dataset rather than a plain WebPage because the page's metrics are
  * published as machine-readable JSON, which `distribution` points at.
  */
-export function getScalingProjectStructuredData(project: ScalingProject) {
+export function getL2ProjectStructuredData(project: L2Project) {
   const url = toProductionUrl(`/layer2s/projects/${project.slug}`)
   return withSchemaOrgContext({
     '@type': 'Dataset',
@@ -26,7 +26,7 @@ export function getScalingProjectStructuredData(project: ScalingProject) {
   })
 }
 
-interface ScalingProject {
+interface L2Project {
   name: string
   slug: string
   display: { description: string }

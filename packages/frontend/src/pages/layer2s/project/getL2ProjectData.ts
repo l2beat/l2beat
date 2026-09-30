@@ -6,7 +6,7 @@ import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2Projec
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
-import { getScalingProjectStructuredData } from '~/ssr/head/structured-data/getScalingProjectStructuredData'
+import { getL2ProjectStructuredData } from '~/ssr/head/structured-data/getL2ProjectStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -128,7 +128,7 @@ export function getL2ProjectMetadata(
       image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
     },
     structuredData: [
-      getScalingProjectStructuredData({
+      getL2ProjectStructuredData({
         ...project,
         hasTvsApi: project.tvsConfig !== undefined,
         hasActivityApi: project.activityConfig !== undefined,

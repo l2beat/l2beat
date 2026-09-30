@@ -42,7 +42,7 @@ describe('page structured data', () => {
     expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
   })
 
-  it('scaling project page emits a Dataset linking its JSON APIs', async () => {
+  it('L2 project page emits a Dataset linking its JSON APIs', async () => {
     const project = await ps.getProject({
       slug: 'arbitrum',
       select: ['display'],

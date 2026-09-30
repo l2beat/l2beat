@@ -1,9 +1,9 @@
 import { expect } from 'earl'
-import { getScalingProjectStructuredData } from './getScalingProjectStructuredData'
+import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 
 // Feeds a hand-written project and compares against the literal Dataset a
 // crawler should see, then drops one input at a time to check what it gates.
-describe(getScalingProjectStructuredData.name, () => {
+describe(getL2ProjectStructuredData.name, () => {
   const arbitrum = {
     name: 'Arbitrum One',
     slug: 'arbitrum',
@@ -13,7 +13,7 @@ describe(getScalingProjectStructuredData.name, () => {
   }
 
   it('describes the project page as a Dataset served by the JSON API', () => {
-    expect(getScalingProjectStructuredData(arbitrum)).toEqual({
+    expect(getL2ProjectStructuredData(arbitrum)).toEqual({
       '@context': 'https://schema.org',
       '@type': 'Dataset',
       '@id': 'https://l2beat.com/layer2s/projects/arbitrum',
@@ -47,7 +47,7 @@ describe(getScalingProjectStructuredData.name, () => {
   })
 
   it('links only the APIs that serve the project', () => {
-    const dataset = getScalingProjectStructuredData({
+    const dataset = getL2ProjectStructuredData({
       ...arbitrum,
       hasTvsApi: false,
     })
