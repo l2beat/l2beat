@@ -5,8 +5,10 @@ import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-import { PRIVACY_PROJECT_STATS_COPY as COPY } from './privacyProjectStatsCopy'
-import { RELAYER_STAT_COPY } from './relayerStatCopy'
+import {
+  PRIVACY_PROJECT_STATS_COPY as COPY,
+  RELAYER_STAT_COPY,
+} from './privacyProjectStatsCopy'
 
 interface Props {
   totalValueLockedUsd: number | undefined

@@ -21,7 +21,7 @@ import {
   getPrivacyAssetsTotals,
   PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
-import type { PrivacyDepositedValueUsd } from '~/server/features/privacy/types'
+import type { PrivacyBucket } from '~/server/features/privacy/types'
 import {
   bulletList,
   formatCount,
@@ -165,11 +165,10 @@ interface AssetsBreakdownRow {
   name: string
   /** Only asset rows have one; bucket and total rows leave the cell empty, like the HTML. */
   bucketCount?: number
-  metrics: {
-    deposits: { last7d: number; last30d: number; total: number }
-    depositedValueUsd: PrivacyDepositedValueUsd
-    totalValueUsd: number | null
-  }
+  metrics: Pick<
+    PrivacyBucket,
+    'deposits' | 'depositedValueUsd' | 'totalValueUsd'
+  >
 }
 
 interface AssetsBreakdownColumn {
@@ -201,7 +200,7 @@ function getAssetsBreakdownColumns(options: {
 
 function depositsColumn(
   header: string,
-  period: 'last7d' | 'last30d' | 'total',
+  period: keyof PrivacyBucket['deposits'],
 ): AssetsBreakdownColumn {
   return {
     header,

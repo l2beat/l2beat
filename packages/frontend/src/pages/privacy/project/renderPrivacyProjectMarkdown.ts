@@ -3,7 +3,8 @@ import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { toPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import {
   formatChange,
   formatCount,
@@ -16,8 +17,10 @@ import {
 } from '~/server/markdown/renderProjectMarkdown'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
-import { PRIVACY_PROJECT_STATS_COPY as COPY } from './components/privacyProjectStatsCopy'
-import { RELAYER_STAT_COPY } from './components/relayerStatCopy'
+import {
+  PRIVACY_PROJECT_STATS_COPY as COPY,
+  RELAYER_STAT_COPY,
+} from './components/privacyProjectStatsCopy'
 
 /** The markdown alternate of the privacy project page, from the entry the HTML page renders. */
 export function renderPrivacyProjectMarkdown(
@@ -122,19 +125,16 @@ function notTrackedFact(copy: { title: string; description: string }) {
  * summary has no other place for it.
  */
 function getRiskProfile(entry: ProjectPrivacyEntry): RosetteValue[] {
-  const adversaries = entry.sections.find(
-    (section) => section.type === 'PrivacyAdversariesSection',
-  )?.props.adversaries
-  return compact([
+  return [
     explainedRisk('Trusted setup', entry.trustedSetup),
     explainedRisk(
       'Exit window',
       entry.exitWindow,
       describeWalkawayTest(entry.exitWindow.walkawayTest),
     ),
-    adversaries && privacyRisk(toPrivacyAdversariesSummary(adversaries)),
+    privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
     explainedRisk('Reproducibility', entry.reproducibility),
-  ])
+  ]
 }
 
 function explainedRisk(
@@ -156,9 +156,7 @@ function explainedRisk(
  * The promise, then the grade against each adversary the HTML dots stand for.
  * No overall grade: the page gives none, only the summary table sorts by one.
  */
-function privacyRisk(
-  adversaries: ReturnType<typeof toPrivacyAdversariesSummary>,
-): RosetteValue {
+function privacyRisk(adversaries: PrivacyAdversariesSummary): RosetteValue {
   const perAdversary = adversaries.cells.map(
     (cell) => `${cell.label}: ${withSentiment(cell.value, cell.sentiment)}`,
   )

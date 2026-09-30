@@ -1,3 +1,4 @@
+import type { ProjectPrivacyAdversaries } from '@l2beat/config'
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
@@ -89,5 +90,20 @@ const ENTRY: ProjectPrivacyEntry = {
   isUnderReview: false,
   recentUpdatesCount: 0,
   warnings: {},
-  sections: [],
+  // Every privacy project has one; the risk profile is derived from it.
+  sections: [
+    {
+      type: 'PrivacyAdversariesSection',
+      props: {
+        id: 'privacy-adversaries',
+        title: 'Privacy',
+        adversaries: {
+          promise: { protects: 'linkage', text: '' },
+          adversaries: [],
+          fields: [],
+          cells: {} as ProjectPrivacyAdversaries['cells'],
+        },
+      },
+    },
+  ],
 }
