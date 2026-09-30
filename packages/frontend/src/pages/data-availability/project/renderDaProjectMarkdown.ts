@@ -8,8 +8,10 @@ import type {
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { formatUsd, link, withRegularSpaces } from '~/server/markdown/markdown'
-import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
-import { getUnderReviewText } from '~/utils/project/underReview'
+import {
+  getProjectStatusWarnings,
+  renderProjectMarkdown,
+} from '~/server/markdown/renderProjectMarkdown'
 
 type DaProjectEntry = DaProjectPageEntry | EthereumDaProjectPageEntry
 
@@ -60,9 +62,10 @@ function getWarnings(entry: DaProjectEntry, pageUrl: string) {
   return compact([
     ongoingAnomaly &&
       `${ongoingAnomaly === 'single' ? 'Ongoing anomaly' : 'Ongoing anomalies'} in the DA bridge liveness, see ${link('the HTML page', `${pageUrl}#da-bridge-liveness`)}.`,
-    entry.archivedAt !== undefined &&
-      'This project is archived and no longer maintained.',
-    entry.isUnderReview && getUnderReviewText('config'),
+    ...getProjectStatusWarnings({
+      archivedAt: entry.archivedAt,
+      underReviewStatus: entry.isUnderReview ? 'config' : undefined,
+    }),
   ])
 }
 

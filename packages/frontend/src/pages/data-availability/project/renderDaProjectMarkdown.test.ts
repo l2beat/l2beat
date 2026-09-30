@@ -148,7 +148,7 @@ describe(renderDaProjectMarkdown.name, () => {
 
     expect(riskSummary).toInclude(
       '### Celestia risks\n\n#### Funds can be lost if\n\n1. the data is withheld by a supermajority of validators.',
-      '### Blobstream risks\n\n**Warning:** This bridge includes unverified contracts.\n\n#### Funds can be stolen if\n\n2. the bridge contract receives a malicious code upgrade (CRITICAL).',
+      '### Blobstream risks\n\n**Warning:** This bridge includes unverified contracts (CRITICAL).\n\n#### Funds can be stolen if\n\n2. the bridge contract receives a malicious code upgrade (CRITICAL).',
     )
   })
 

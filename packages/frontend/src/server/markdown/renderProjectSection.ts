@@ -90,7 +90,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     return joinBlocks([
       renderWarnings(
         props.isVerified === false
-          ? 'This project includes unverified contracts.'
+          ? markCritical('This project includes unverified contracts.', true)
           : undefined,
         props.redWarning?.text,
         props.warning,
@@ -108,7 +108,10 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
               renderWarnings(
                 bridge.isVerified
                   ? undefined
-                  : 'This bridge includes unverified contracts.',
+                  : markCritical(
+                      'This bridge includes unverified contracts.',
+                      true,
+                    ),
               ),
               renderRiskGroups(bridge.risks, level + 1),
             ]),
