@@ -14,7 +14,7 @@ export const cctpv2: BaseProject = {
   addedAt: UnixTime(1769070497),
   interopConfig: {
     description:
-      'This is the cross-chain transfer protocol by Circle in its second version. Mainly used for USDC burn-mint transfers, it coexists with the v1 protocol but improves on its transfer speed.',
+      'CCTP v2 is the second version of the Cross-Chain Transfer Protocol by Circle. Mainly used for USDC burn-mint transfers, it coexists with the v1 protocol but improves on its transfer speed.',
     detailedDescription: CCTP_DETAILED_DESCRIPTION,
     plugins: [
       {

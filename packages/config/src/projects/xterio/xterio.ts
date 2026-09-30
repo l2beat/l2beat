@@ -67,7 +67,7 @@ export const xterio: ScalingProject = opStackL2({
     warning:
       'Deposited/Forced transactions are disabled, a permissioned admin can withdraw all ETH. Xterio chain on ethereum is sunset and funds [are being transferred to Xterio Chain (BNB)](https://info.xter.io/xterio-chain-migration).',
     description:
-      'Xterio Chain is an OP stack Optimium on Ethereum. The chain focuses on gaming, high performance and low fees .',
+      'Xterio Chain is an OP stack Optimium on Ethereum. The chain focuses on gaming, high performance and low fees.',
     links: {
       websites: ['https://xter.io/'],
       bridges: ['https://xter.io/', 'https://eth-bridge.xter.io/'],

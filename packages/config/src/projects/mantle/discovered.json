@@ -464,7 +464,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
@@ -1218,7 +1221,7 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
   "usedBlockNumbers": { "ethereum": 26019578 },
-  "permissionsConfigHash": "0xf0350f0e41a1aac34a498ddd92bd0369870fe71cafe98bebb1981eb16a04cf60",
+  "permissionsConfigHash": "0x5a4ca829301771fe1a73e47d0b99dee5280105796ca82deb2c0d934f29b68b1c",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },

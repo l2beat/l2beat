@@ -43,7 +43,7 @@ export const immutablezkevm: ScalingProject = {
     name: 'Immutable zkEVM',
     slug: 'immutablezkevm',
     description:
-      'Immutable zkEVM is a sidechain focused on gaming and powered by Polygon stack. It plans to eventually transition to a ZK Rollup.',
+      'Immutable zkEVM is a sidechain focused on gaming and powered by the Polygon stack. It plans to eventually transition to a ZK Rollup.',
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/chain'],

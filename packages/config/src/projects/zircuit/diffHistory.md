@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x7b11bee620ff899ec4e788cf86d0848ae9694b22
+Generated with discovered.json: 0x89e4ae993b78742abd9992f1c8562608d96d4f0e
 
-# Diff at Wed, 30 Sep 2026 09:55:57 GMT:
+# Diff at Wed, 30 Sep 2026 14:36:30 GMT:
 
-- id: be94796b
+- id: 3d616d5d
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@fd631e84d28f970cf24b92bfa73a6d23f516b81d block: 1789044680
-- current timestamp: 1790762075
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789044680
+- current timestamp: 1790778923
 
 ## Description
 
@@ -260,11 +260,8 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged.
     +++ description: None
       receivedPermissions.2:
 +        {"permission":"interact","from":"eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
-      receivedPermissions.3:
+      receivedPermissions.4:
 +        {"permission":"interact","from":"eth:0x9D3acbf448541738cB45661905AE26233FBe65e5","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"}]}
-      receivedPermissions.3.via.0.address:
--        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
-+        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
       receivedPermissions.4.via.0.address:
 -        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
 +        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
@@ -280,19 +277,22 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged.
       receivedPermissions.8.via.0.address:
 -        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
 +        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
-      receivedPermissions.8.from:
--        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
-+        "eth:0x64555e021B913963e2D17de97efCc2723D3ec037"
       receivedPermissions.9.via.0.address:
 -        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
 +        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
       receivedPermissions.9.from:
--        "eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162"
-+        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
+-        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
++        "eth:0x64555e021B913963e2D17de97efCc2723D3ec037"
       receivedPermissions.10.via.0.address:
 -        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
 +        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
+      receivedPermissions.10.from:
+-        "eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162"
++        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
       receivedPermissions.11.via.0.address:
+-        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
+      receivedPermissions.12.via.0.address:
 -        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
 +        "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d"
       directlyReceivedPermissions.0.from:
@@ -718,6 +718,33 @@ discovery. Values are for block 1789044680 (main branch discovery), not current.
 +        {"addressManager":"Processing error occurred.","isUpgrading":"Processing error occurred.","version":"Processing error occurred."}
       fieldMeta:
 +        {"addressManager":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x08f36f4e3a56fdbf6a438e5ada1be7daab6dc2d2
+
+# Diff at Tue, 29 Sep 2026 17:47:07 GMT:
+
+- id: 0813a6d2
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044680
+- current timestamp: 1789044680
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044680 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
 ```
 

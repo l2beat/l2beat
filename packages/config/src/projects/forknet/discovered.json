@@ -2193,7 +2193,7 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 25830861 },
-  "permissionsConfigHash": "0x5a84afbba8b7d5ce6dac67494ff9f9a91328952c97525c048eaf1f0fb63ab9f9",
+  "permissionsConfigHash": "0x69036b4cd3c13b72f302321229c677f687a8d30f57239871e3977a87060b2fc9",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -2414,6 +2414,12 @@
           "permission": "interact",
           "from": "eth:0x5D2952EAe032aa33e977c52f810e0089261efB27",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xAa47071585ee92Fa9AE314C87d3d12a25c241EeD",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {

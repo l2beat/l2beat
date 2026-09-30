@@ -57,6 +57,7 @@
       ]
     },
     "Executor": {
+      "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

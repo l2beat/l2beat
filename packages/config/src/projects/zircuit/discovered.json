@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1790762075,
+  "timestamp": 1790778923,
   "configHash": "0xa894839e4bb8e18b059ac1624715952fc728bb54ca1523351215c175f9b43e49",
   "entries": [
     {
@@ -1593,10 +1593,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 215469832,
+        "basefee": 1215930921,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 11327221,
+        "blobBaseFee": 79164766,
         "blobBaseFeeScalar": 862000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -1606,15 +1606,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xdd1ddd079fb80125387eaca94624da1ce91c07b8590c67d658d5e07233f6a949",
+        "hash": "0x928c9368b1fac6bafd9a5ec72fb67622c2736572869f055dcb5e130f240f0837",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26089524,
+        "number": 26090923,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 0,
-        "timestamp": 1790762015,
+        "sequenceNumber": 2,
+        "timestamp": 1790778851,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -2613,7 +2613,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -2625,8 +2625,8 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26089529, "zircuit": 35412930 },
-  "permissionsConfigHash": "0xcf11b7967cd550b02267d72f91bee744c7ddcffe3088caff6c8b5eb896842946",
+  "usedBlockNumbers": { "ethereum": 26090929, "zircuit": 35421354 },
+  "permissionsConfigHash": "0x19aae5c356e2cb3e15f5f08144c0c504f1121ff475cdf6b5f169441ce83206fb",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {
       "receivedPermissions": [
@@ -2712,6 +2712,12 @@
           "from": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengerFromDGF"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "interact",

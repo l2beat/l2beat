@@ -29,7 +29,13 @@
     },
 
     "owner": {
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the dispute game implementation and initial bond for any game type."
+        }
+      ]
     },
     "gameImpls": {
       "severity": "HIGH",
