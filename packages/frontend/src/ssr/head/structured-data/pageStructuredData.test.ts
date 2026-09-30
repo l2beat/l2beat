@@ -50,11 +50,7 @@ describe('page structured data', () => {
     })
     if (!project) throw new Error('arbitrum is missing')
 
-    const metadata = getL2ProjectMetadata(
-      manifest,
-      project,
-      '/layer2s/projects/arbitrum',
-    )
+    const metadata = getL2ProjectMetadata(manifest, project)
 
     expect(getTypes(metadata)).toEqual(['BreadcrumbList', 'Dataset'])
     const [, dataset] = metadata.structuredData

@@ -68,17 +68,15 @@ export async function getActivityLatestUops(
         const sevenDaysAgoRecord = records.find(
           (r) => r.timestamp === syncedUntil - 7 * UnixTime.DAY,
         )
-        const pastDayUops = countPerSecond(
-          pastDayRecord?.uopsCount ?? pastDayRecord?.count ?? 0,
-        )
-        const sevenDaysAgoUops = countPerSecond(
-          sevenDaysAgoRecord?.uopsCount ?? sevenDaysAgoRecord?.count ?? 0,
-        )
+        const pastDayCount =
+          pastDayRecord?.uopsCount ?? pastDayRecord?.count ?? 0
+        const sevenDaysAgoCount =
+          sevenDaysAgoRecord?.uopsCount ?? sevenDaysAgoRecord?.count ?? 0
         return [
           projectId,
           {
-            pastDayUops,
-            change: calculatePercentageChange(pastDayUops, sevenDaysAgoUops),
+            pastDayUops: countPerSecond(pastDayCount),
+            change: calculatePercentageChange(pastDayCount, sevenDaysAgoCount),
             changePeriod: '7D',
             syncState,
           },

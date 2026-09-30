@@ -36,7 +36,7 @@ ReactDOM.createRoot(root).render(
 function AutoRedirect() {
   const navigate = useNavigate()
   useEffect(() => {
-    navigate('/decoder-3')
+    void navigate('/decoder-3')
   }, [])
   return null
 }

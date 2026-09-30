@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { env } from '~/env'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 import {
@@ -24,6 +25,7 @@ export interface Metadata {
   openGraph: OpenGraph
   canonicalUrl: string
   excludeFromSearchEngines?: boolean
+  markdownAlternateUrl?: string
   structuredData: StructuredData[]
 }
 
@@ -58,6 +60,7 @@ export function getMetadata(
   } = metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
+  const markdownAlternatePath = getMarkdownAlternatePath(strippedPath)
   return {
     title: title ?? 'L2BEAT - The state of the layer two ecosystem',
     description:
@@ -66,6 +69,10 @@ export function getMetadata(
     url: baseUrl + strippedPath,
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
     canonicalUrl: toProductionUrl(strippedPath),
+    // Production, like canonical: the markdown cites production URLs too
+    markdownAlternateUrl: markdownAlternatePath
+      ? toProductionUrl(markdownAlternatePath)
+      : undefined,
     // Crawlers skip noindex pages, so their structured data would go unread.
     structuredData: rest.excludeFromSearchEngines
       ? []

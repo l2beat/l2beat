@@ -2401,10 +2401,10 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 478619686 },
-  "permissionsConfigHash": "0xe04a7cc05b7078943192a6c06597ce17875c99921258acd9ac8821a40b00fcf0",
+  "permissionsConfigHash": "0xdd62993043a735102f52f677066443e766c3e5fdfdd47bf79bb41ef7ae02c8b8",
   "modelledAgainst": {
-    "blobstream": "0x7ad6b67fdb402e712f4d84a19d277949cd27ca8f45cde13be7353f33164ec1a9",
-    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+    "blobstream": "0xdafdca90e9bef760e86bd14ded42fb4e17c936acc5c9398a444b31a862b38769",
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "arb1:0x152FFeF04881BD1390D2A52009f42d56EaC7AA03": {

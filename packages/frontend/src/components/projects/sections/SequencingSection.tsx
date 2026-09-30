@@ -8,6 +8,7 @@ import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
+import { Subsection, SubsectionHeading } from './Subsection'
 import { CentralizedSequencingSpecSheet } from './sequencing/CentralizedSequencingSpecSheet'
 import { ProjectInclusionDelayChart } from './sequencing/ProjectInclusionDelayChart'
 import { SequencerSetSpecSheet } from './sequencing/SequencerSetSpecSheet'
@@ -51,53 +52,66 @@ export function SequencingSection({
           </figcaption>
         </figure>
       ) : null}
-      <h3 id={name} className="mb-2 font-bold text-lg md:text-xl">
-        <a href={`#${name}`}>{name}</a>
-      </h3>
-      <Markdown
-        className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
-      >
-        {content}
-      </Markdown>
-      {sequencingSpec?.type === 'sequencer-set' && (
-        <SequencerSetSpecSheet spec={sequencingSpec} />
-      )}
-      {sequencingSpec?.type === 'centralized' && (
-        <CentralizedSequencingSpecSheet spec={sequencingSpec} />
-      )}
-      {inclusionDelay && (
-        <>
-          <ProjectInclusionDelayChart
-            {...inclusionDelay}
-            projectName={projectName}
-          />
-          {inclusionDelayChartDescription && (
-            <Markdown
-              className={cn(
-                mdClassName,
-                'text-paragraph-15 md:text-paragraph-16',
-              )}
-            >
-              {inclusionDelayChartDescription}
-            </Markdown>
-          )}
-        </>
-      )}
-      {censorshipResistance && (
-        <div className="mt-6">
-          <h4 className="mb-3 font-bold text-heading-20">
-            Censorship resistance
-          </h4>
-          <Markdown
-            className={cn(
-              mdClassName,
-              'sequencing-censorship-resistance text-paragraph-15 md:text-paragraph-16',
-            )}
+      <Subsection
+        title={
+          <SubsectionHeading
+            id={name}
+            className="mb-2 font-bold text-lg md:text-xl"
           >
-            {censorshipResistance}
-          </Markdown>
-        </div>
-      )}
+            <a href={`#${name}`}>{name}</a>
+          </SubsectionHeading>
+        }
+      >
+        <Markdown
+          className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
+        >
+          {content}
+        </Markdown>
+        {sequencingSpec?.type === 'sequencer-set' && (
+          <SequencerSetSpecSheet spec={sequencingSpec} />
+        )}
+        {sequencingSpec?.type === 'centralized' && (
+          <CentralizedSequencingSpecSheet spec={sequencingSpec} />
+        )}
+        {inclusionDelay && (
+          <>
+            <ProjectInclusionDelayChart
+              {...inclusionDelay}
+              projectName={projectName}
+            />
+            {inclusionDelayChartDescription && (
+              <Markdown
+                className={cn(
+                  mdClassName,
+                  'text-paragraph-15 md:text-paragraph-16',
+                )}
+              >
+                {inclusionDelayChartDescription}
+              </Markdown>
+            )}
+          </>
+        )}
+        {censorshipResistance && (
+          <div className="mt-6">
+            <Subsection
+              title={
+                <SubsectionHeading className="mb-3 font-bold text-heading-20">
+                  Censorship resistance
+                </SubsectionHeading>
+              }
+            >
+              <Markdown
+                className={cn(
+                  mdClassName,
+                  'sequencing-censorship-resistance text-paragraph-15 md:text-paragraph-16',
+                )}
+              >
+                {censorshipResistance}
+              </Markdown>
+            </Subsection>
+          </div>
+        )}
+      </Subsection>
       {risks && risks?.length > 0 && <RiskList risks={risks} />}
       {references && references?.length > 0 && (
         <ReferenceList references={references} />

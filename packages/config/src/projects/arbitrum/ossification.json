@@ -280,5 +280,6 @@
       "updateId": "b0f8c079",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }
-  ]
+  ],
+  "ignoredUpdates": ["5399d8f1"]
 }

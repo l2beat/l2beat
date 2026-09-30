@@ -30,6 +30,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('morph')
+const chainStart = UnixTime(1729490400) // morph block 0
 
 const rollupDelayPeriod = discovery.getContractValue<number>(
   'Rollup',
@@ -260,7 +261,7 @@ export const morph: ScalingProject = {
     chainId: 2818,
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
-    sinceTimestamp: UnixTime(1729490400), // morph block 0
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -278,6 +279,7 @@ export const morph: ScalingProject = {
       },
     ],
   },
+  ossification: discovery.getOssification(chainStart),
   stateValidation: {
     categories: [
       {

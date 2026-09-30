@@ -5,8 +5,9 @@ import { identityManifest as manifest } from '~/test/identityManifest'
 import { getMetadata } from './getMetadata'
 import { Head } from './Head'
 
-// Renders the head the way ServerEntry does and reads the JSON-LD back out
-// of the markup, as a crawler would.
+// Method: build metadata the way page data fetchers do and render the real
+// <Head> to static HTML, then read back what a crawler or agent looks for:
+// the JSON-LD scripts and the alternate link to the markdown version.
 describe(Head.name, () => {
   it('renders every structured data block as a JSON-LD script', () => {
     const metadata = getMetadata(manifest, {
@@ -46,6 +47,32 @@ describe(Head.name, () => {
     expect(html).not.toInclude('<script>alert(1)')
     expect(readJsonLd(html)[1]).toEqual(metadata.structuredData[1])
   })
+
+  it('links the markdown alternate of project and list pages', () => {
+    for (const url of ['/layer2s/projects/arbitrum', '/layer2s/summary']) {
+      expect(renderHead(url)).toInclude(
+        `<link rel="alternate" type="text/markdown" href="https://l2beat.com${url}.md"/>`,
+      )
+    }
+  })
+
+  it('links the alternate of the page, whatever its query', () => {
+    expect(renderHead('/layer2s/projects/arbitrum?update=1')).toInclude(
+      'href="https://l2beat.com/layer2s/projects/arbitrum.md"',
+    )
+  })
+
+  it('has no markdown alternate on pages without a markdown version', () => {
+    expect(renderHead('/faq')).not.toInclude('text/markdown')
+  })
+
+  function renderHead(url: string) {
+    const metadata = getMetadata(manifest, {
+      url,
+      openGraph: { image: '/meta-images/og.png' },
+    })
+    return renderToStaticMarkup(createElement(Head, { manifest, metadata }))
+  }
 })
 
 function readJsonLd(html: string): unknown[] {

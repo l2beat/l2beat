@@ -89,6 +89,7 @@ const whitelistedProverCount = discovery.getContractValue<number>(
 )
 
 const chainId = 167000
+const chainStart = UnixTime(1716620627)
 
 const proverPlural = whitelistedProverCount === 1 ? '' : 's'
 const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
@@ -436,7 +437,7 @@ export const taiko: ScalingProject = {
     name: 'taiko',
     chainId,
     explorerUrl: 'https://taikoscan.io',
-    sinceTimestamp: UnixTime(1716620627),
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     apis: [
       {
@@ -447,6 +448,7 @@ export const taiko: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
+  ossification: discovery.getOssification(chainStart),
   type: 'layer2',
   riskView: {
     stateValidation: {

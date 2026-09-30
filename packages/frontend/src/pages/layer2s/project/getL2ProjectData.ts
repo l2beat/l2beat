@@ -10,20 +10,14 @@ import { getScalingProjectStructuredData } from '~/ssr/head/structured-data/getS
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
 export async function getL2ProjectData(
   req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const data = await cache.get(
-    {
-      key: ['layer2s', 'projects', req.params.slug],
-      ttl: 5 * 60,
-      staleWhileRevalidate: 25 * 60,
-    },
-    () => getCachedData(manifest, req.params.slug, req.originalUrl),
-  )
+  const data = await getCachedL2ProjectPage(req.params.slug, manifest, cache)
   if (!data) return undefined
 
   return {
@@ -38,7 +32,32 @@ export async function getL2ProjectData(
   }
 }
 
-async function getCachedData(manifest: Manifest, slug: string, url: string) {
+/** The markdown alternate of the page, built from the same cached entry as the HTML. */
+export async function getL2ProjectMarkdown(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+): Promise<string | undefined> {
+  const data = await getCachedL2ProjectPage(slug, manifest, cache)
+  return data && renderL2ProjectMarkdown(data.props.projectEntry)
+}
+
+function getCachedL2ProjectPage(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+) {
+  return cache.get(
+    {
+      key: ['layer2s', 'projects', slug],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => loadL2ProjectPage(manifest, slug),
+  )
+}
+
+async function loadL2ProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
     slug,
@@ -82,7 +101,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
   return {
     head: {
       manifest,
-      metadata: getL2ProjectMetadata(manifest, project, url),
+      metadata: getL2ProjectMetadata(manifest, project),
     },
     props: {
       ...appLayoutProps,
@@ -98,12 +117,13 @@ export function getL2ProjectMetadata(
     Project<never, 'tvsConfig' | 'activityConfig'>,
     'name' | 'slug' | 'tvsConfig' | 'activityConfig'
   > & { display: { description: string } },
-  url: string,
 ) {
   return getMetadata(manifest, {
     title: `${project.name} - L2BEAT`,
     description: getProjectMetadataDescription(project),
-    url,
+    // Derived from the slug, not the request URL: the cache entry is
+    // shared by every request for the project, including the .md one.
+    url: `/layer2s/projects/${project.slug}`,
     openGraph: {
       image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
     },

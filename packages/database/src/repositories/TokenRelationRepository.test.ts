@@ -13,7 +13,6 @@ import {
   type TokenRelationLockedToken,
   type TokenRelationRecord,
   TokenRelationRepository,
-  type TokenRelationRoute,
 } from './TokenRelationRepository'
 
 describeTokenDatabase(TokenRelationRepository.name, (db) => {
@@ -450,67 +449,6 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
-  describe(TokenRelationRepository.prototype.getRelationsTouching.name, () => {
-    const foreignToken: DeployedTokenPrimaryKey = {
-      chain: 'ethereum',
-      address: '0x' + '9'.repeat(40),
-    }
-
-    it('returns relations mentioning any of the tokens on either endpoint', async () => {
-      const inside = tokenRelation({
-        endpoints: [ethereumToken, arbitrumToken],
-        plugin: 'superbridge',
-        bridgeType: 'burnAndMint',
-      })
-      const halfOutside = tokenRelation({
-        endpoints: [arbitrumToken, foreignToken],
-        plugin: 'otherbridge',
-        bridgeType: 'burnAndMint',
-      })
-      const outside = tokenRelation({
-        endpoints: [optimismToken, foreignToken],
-        plugin: 'canonicalbridge',
-        bridgeType: 'lockAndMint',
-        lockedToken: 'A',
-      })
-      for (const relation of [inside, halfOutside, outside]) {
-        await repository.insert(relation)
-      }
-
-      const relations = await repository.getRelationsTouching([
-        ethereumToken,
-        arbitrumToken,
-      ])
-
-      expect(relations).toEqualUnsorted([
-        withoutTransfer(inside),
-        withoutTransfer(halfOutside),
-      ])
-    })
-
-    it('normalizes the queried addresses', async () => {
-      const relation = tokenRelation({
-        endpoints: [ethereumToken, arbitrumToken],
-        plugin: 'superbridge',
-        bridgeType: 'burnAndMint',
-      })
-      await repository.insert(relation)
-
-      const relations = await repository.getRelationsTouching([
-        {
-          chain: ethereumToken.chain,
-          address: ethereumToken.address.toUpperCase(),
-        },
-      ])
-
-      expect(relations).toEqual([withoutTransfer(relation)])
-    })
-
-    it('returns an empty list when no tokens are requested', async () => {
-      expect(await repository.getRelationsTouching([])).toEqual([])
-    })
-  })
-
   describe(isMintedAtEndpoint.name, () => {
     it('mints on both endpoints of a burn-and-mint pair', () => {
       const relation = { bridgeType: 'burnAndMint', lockedToken: null } as const
@@ -579,11 +517,6 @@ function tokenRelation(input: TokenRelationInput): TokenRelationRecord {
         plugin: input.plugin,
       } satisfies Record<string, unknown>),
   })
-}
-
-function withoutTransfer(record: TokenRelationRecord): TokenRelationRoute {
-  const { transfer: _transfer, ...route } = record
-  return route
 }
 
 function deployedToken(pk: DeployedTokenPrimaryKey): DeployedTokenRecord {

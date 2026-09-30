@@ -93,6 +93,7 @@ export const EVMTransactionResponse = z.object({
 })
 
 const EVMTransactionReceipt = z.object({
+  blockHash: z.string().optional(),
   logs: z.array(
     z.object({
       topics: z.array(z.string()),
@@ -111,6 +112,8 @@ const _EVMBlock = {
   logsBloom: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
   parentBeaconBlockRoot: z.string().optional(),
+  // Avalanche C-Chain after Helicon (ACP-194), see Block.settledHeight
+  settledHeight: Quantity.decode.transform((n) => Number(n)).optional(),
 }
 export type EVMBlock = z.infer<typeof EVMBlock>
 export const EVMBlock = z.object(_EVMBlock)

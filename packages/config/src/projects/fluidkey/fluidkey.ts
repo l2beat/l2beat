@@ -58,6 +58,11 @@ export const fluidkey: BaseProject = {
     // Balances live in individual stealth Safes. Earn-module events identify
     // only a subset of accounts, not a complete set of Fluidkey balances.
     tokens: [],
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Fluidkey sends funds to individual stealth Safes instead of mixing deposits in a shared pool.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

@@ -1,4 +1,107 @@
-Generated with discovered.json: 0xb9af5c546d75b043689729ae7f53fcddf1770aee
+Generated with discovered.json: 0x463024279042887100045264ef97bfab9d92af87
+
+# Diff at Mon, 28 Sep 2026 14:01:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1789464689
+- current timestamp: 1790604001
+
+## Description
+
+Redeployed identical PrivacyBoost implementation (https://disco.l2beat.com/diff/oeth:0x9CB144D35748932EC44950d0837248fcF8747828/oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002) together with redeploying three verifiers (Groth16EpochVerifier, Groth16ForcedVerifier and Groth16GiftClaimVerifier).
+
+These three verifiers have different verification keys because forced withdrawal and gift claim circuits were recompiled with gnark v0.16.3 after the EdDSA signature check was rewritten to a double-base scalar multiplication ([PR #10](https://github.com/sunnyside-io/privacy-boost-protocol/pull/10)) and some circuit shapes are no longer supported. New circuits also introduce a new trusted setup.
+
+Trusted setup artifacts are not yet published so the verification keys could not be regenerated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Groth16GiftClaimVerifier (oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+    contract AdminMultisig (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.from:
+-        "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4"
++        "oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670"
+      receivedPermissions.5:
+-        {"permission":"interact","from":"oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641","description":"register and replace the Groth16 verification keys used to validate forced withdrawal proofs.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE","description":"register and replace the Groth16 verification keys used to validate forced withdrawal proofs.","role":".owner"}
+      receivedPermissions.7.from:
+-        "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6"
++        "oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16ForcedVerifier (oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16EpochVerifier (oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+```diff
+    contract PrivacyBoost (oeth:0xca689828854a422CF1f778be03CA80549408F620) [privacy-boost/PrivacyBoost_v2] {
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+      values.$implementation:
+-        "oeth:0x9CB144D35748932EC44950d0837248fcF8747828"
++        "oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002"
+      values.$pastUpgrades.2:
++        ["2026-09-23T22:24:33.000Z","0x5bca65b825c2f2679d0fbe2d3e0285218e9c988e3f0d6484a6baaa879b52ac0f",["oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Groth16 verifier used for private transfer / withdrawal epoch proofs.
++++ severity: HIGH
+      values.epochVerifier:
+-        "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6"
++        "oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B"
++++ description: Groth16 verifier used for forced withdrawal proofs.
++++ severity: HIGH
+      values.forcedVerifier:
+-        "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641"
++        "oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE"
++++ description: Groth16 verifier for private gift settlement and public gift exit proofs.
++++ severity: HIGH
+      values.giftClaimVerifier:
+-        "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4"
++        "oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670"
+      implementationNames.oeth:0x9CB144D35748932EC44950d0837248fcF8747828:
+-        "PrivacyBoost"
+      implementationNames.oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002:
++        "PrivacyBoost"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Groth16GiftClaimVerifier (oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16ForcedVerifier (oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16EpochVerifier (oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+Generated with discovered.json: 0xc6ebfe38b90e9e1a93a8c18723d631f47cbc7c66
 
 # Diff at Wed, 23 Sep 2026 05:48:35 GMT:
 
