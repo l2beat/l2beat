@@ -48,6 +48,25 @@ describe(getSearchBarEntries.name, () => {
     expect(result[0]?.searchMatchKind).toEqual('fuzzy')
   })
 
+  // Regression: with one shared limit, "rob" returned only short token symbols
+  // and no "Robinhood Chain". Mock tokens are fixed, so here exact "Usd"
+  // project matches do the crowding instead, outscoring USDC/USDT.
+  it('limits projects and tokens separately', async () => {
+    ps.getProjects = async () =>
+      Array.from({ length: 16 }, (_, i) =>
+        l2Project(`usd-${i}`, 'Usd'),
+      ) as never
+
+    const result = await getSearchBarEntries('usd')
+
+    expect(result.filter((entry) => entry.type === 'project')).toHaveLength(15)
+    expect(
+      result
+        .filter((entry) => entry.type === 'token')
+        .map((entry) => entry.name),
+    ).toEqual(['USDC', 'USDT'])
+  })
+
   it('allows searching interop tokens by symbol', async () => {
     ps.getProjects = async () => [] as never
 
