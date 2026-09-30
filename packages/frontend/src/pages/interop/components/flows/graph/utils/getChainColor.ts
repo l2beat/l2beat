@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
-import type { InteropChainWithIcon } from '../../../chain-selector/types'
+import type { FlowsGraphNode } from '../types'
 
 export function getChainColor(
-  interopChains: InteropChainWithIcon[],
+  interopChains: FlowsGraphNode[],
   chainId: string,
 ): string {
   const chain = interopChains.find((c) => c.id === chainId)

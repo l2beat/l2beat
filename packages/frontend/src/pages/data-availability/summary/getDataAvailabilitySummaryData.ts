@@ -1,23 +1,29 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getDaFlowsProjects } from '~/server/features/data-availability/flows/getDaFlowsProjects'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/getDaSummaryEntries'
-import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/getDaThroughputSummary'
+import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { toChartProject } from '~/utils/project/toChartProject'
 
 export async function getDataAvailabilitySummaryData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [
-    appLayoutProps,
-    { publicSystems, customSystems },
-    throughputSummaryData,
-  ] = await Promise.all([
-    getAppLayoutProps(),
-    getDaSummaryEntries(),
-    getDaThroughputSummary(),
-  ])
+  const [appLayoutProps, { publicSystems }, daFlows, ethereum] =
+    await Promise.all([
+      getAppLayoutProps(),
+      getDaSummaryEntries(),
+      getDaFlowsProjects(ProjectId.ETHEREUM),
+      ps.getProject({
+        id: ProjectId.ETHEREUM,
+        select: ['daLayer'],
+        optional: ['milestones'],
+      }),
+    ])
 
   return {
     head: {
@@ -36,9 +42,14 @@ export async function getDataAvailabilitySummaryData(
       page: 'DataAvailabilitySummaryPage',
       props: {
         ...appLayoutProps,
-        publicSystems,
-        customSystems,
-        throughputSummaryData,
+        ethereum: publicSystems.find((s) => s.id === ProjectId.ETHEREUM),
+        tvsProjectIds: getDaTvsProjectIds(publicSystems),
+        throughput: ethereum && {
+          project: toChartProject(ethereum),
+          configuredThroughputs: ethereum.daLayer.throughput ?? [],
+          milestones: ethereum.milestones ?? [],
+        },
+        daFlows,
       },
     },
   }

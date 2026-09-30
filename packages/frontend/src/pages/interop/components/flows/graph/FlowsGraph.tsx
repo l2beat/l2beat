@@ -1,20 +1,35 @@
 import { useMemo } from 'react'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
-import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubblesLayer } from './ChainBubblesLayer'
 import { FlowsLogo } from './FlowsLogo'
 import { ParticleLayer } from './ParticleLayer'
+import type {
+  FlowsGraphData,
+  FlowsGraphNode,
+  GetFlowsGraphCaption,
+} from './types'
 import { computeGraphLayout } from './utils/computeGraphLayout'
+import type { ParticleScale } from './utils/particleScale'
 
-interface FlowsGraphProps {
-  interopChains: InteropChainWithIcon[]
-  visibleChainIds: string[]
-  data: InteropFlowsData
-  size: number
-  isSmallScreen: boolean
+export interface FlowsGraphOptions {
   baseDollarsPerParticle?: number
   topChainId?: string
+  /** Puts this chain in the middle and turns the graph into a hub */
+  centerChainId?: string
+  /** Unit of `volume`. Defaults to dollars */
+  particleScale?: ParticleScale
+  /** How many times faster than real time the flows play. Defaults to 1 */
+  timeScale?: number
+  /** Line under each chain's name. Defaults to its net flow in dollars */
+  getCaption?: GetFlowsGraphCaption
+}
+
+interface FlowsGraphProps extends FlowsGraphOptions {
+  interopChains: FlowsGraphNode[]
+  visibleChainIds: string[]
+  data: FlowsGraphData
+  size: number
+  isSmallScreen: boolean
 }
 
 export function FlowsGraph({
@@ -25,6 +40,10 @@ export function FlowsGraph({
   isSmallScreen,
   baseDollarsPerParticle,
   topChainId,
+  centerChainId,
+  particleScale,
+  timeScale,
+  getCaption,
 }: FlowsGraphProps) {
   const layout = useMemo(
     () =>
@@ -34,8 +53,16 @@ export function FlowsGraph({
         size,
         isSmallScreen,
         topChainId,
+        centerChainId,
       ),
-    [visibleChainIds, data.chainData, size, isSmallScreen, topChainId],
+    [
+      visibleChainIds,
+      data.chainData,
+      size,
+      isSmallScreen,
+      topChainId,
+      centerChainId,
+    ],
   )
 
   const center = size / 2
@@ -52,12 +79,15 @@ export function FlowsGraph({
         layout={layout}
         centerX={center}
         centerY={center}
+        centerChainId={centerChainId}
       />
-      <FlowsLogo
-        centerX={center}
-        centerY={center}
-        isSmallScreen={isSmallScreen}
-      />
+      {!centerChainId && (
+        <FlowsLogo
+          centerX={center}
+          centerY={center}
+          isSmallScreen={isSmallScreen}
+        />
+      )}
       <ParticleLayer
         flows={data.flows}
         chainData={data.chainData}
@@ -68,12 +98,17 @@ export function FlowsGraph({
         centerY={center}
         isSmallScreen={isSmallScreen}
         baseDollarsPerParticle={baseDollarsPerParticle}
+        particleScale={particleScale}
+        centerChainId={centerChainId}
+        timeScale={timeScale}
       />
       <ChainBubblesLayer
         interopChains={interopChains}
         layout={layout}
         chainData={data.chainData}
         isSmallScreen={isSmallScreen}
+        centerChainId={centerChainId}
+        getCaption={getCaption}
       />
     </svg>
   )

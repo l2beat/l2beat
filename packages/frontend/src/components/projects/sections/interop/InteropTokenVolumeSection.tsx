@@ -105,7 +105,7 @@ function Content({
     visibleHighlightedChains.length === 2
       ? interopChains.find((c) => c.id === visibleHighlightedChains[1])
       : undefined
-  const { dollarsPerParticle } = useScaledParticleCounts(
+  const { valuePerParticle: dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
     data?.flows,

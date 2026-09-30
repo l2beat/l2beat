@@ -55,7 +55,7 @@ export function FlowsGeneralStats({
     trpc.interop.flows.queryOptions(queryInput),
   )
 
-  const { dollarsPerParticle } = useScaledParticleCounts(
+  const { valuePerParticle: dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
     data?.flows,

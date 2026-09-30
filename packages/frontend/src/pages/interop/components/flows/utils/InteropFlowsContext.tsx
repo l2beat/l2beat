@@ -10,6 +10,7 @@ import { useQueryParam } from '~/hooks/useQueryParam'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../consts'
+import { FlowsGraphContext } from '../graph/utils/FlowsGraphContext'
 
 const CHAINS_QUERY_KEY = 'chains'
 const PROTOCOLS_QUERY_KEY = 'protocols'
@@ -238,7 +239,11 @@ export function InteropFlowsProvider({
         setHighlightedChainPair,
       }}
     >
-      {children}
+      <FlowsGraphContext.Provider
+        value={{ selectedChains, highlightedChains, toggleHighlightedChain }}
+      >
+        {children}
+      </FlowsGraphContext.Provider>
     </InteropFlowsContext.Provider>
   )
 }

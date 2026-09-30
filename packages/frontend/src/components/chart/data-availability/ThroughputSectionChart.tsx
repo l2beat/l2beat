@@ -114,7 +114,7 @@ export function ThroughputSectionChart({
   )
 }
 
-function getDataWithConfiguredThroughputs(
+export function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputChartPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
   resolution: ChartResolution,

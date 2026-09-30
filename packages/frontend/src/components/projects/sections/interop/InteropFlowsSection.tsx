@@ -108,7 +108,7 @@ function Content({
   )
   const hasGraphSelection = visibleHighlightedChains.length > 0
   const showInactiveChainsInfo = !!data && inactiveChains.length > 0
-  const { dollarsPerParticle } = useScaledParticleCounts(
+  const { valuePerParticle: dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
     data?.flows,
