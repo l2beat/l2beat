@@ -1,3 +1,4 @@
+import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
@@ -10,6 +11,7 @@ import {
   bulletList,
   heading,
   joinBlocks,
+  link,
   subsection,
   textSubsection,
   warning,
@@ -34,7 +36,21 @@ export interface ProjectMarkdown extends SectionContext {
     risks: RosetteValue[]
     description: string | undefined
   }
+  /** The link bar and badges under the HTML page title. */
+  header?: ProjectHeader
   sections: ProjectDetailsSection[]
+}
+
+export interface ProjectHeader {
+  links?: ProjectLink[]
+  badges?: ProjectBadge[]
+  /** L2BEAT's contract explorer for the project, linked from the HTML header. */
+  discoUiHref?: string
+}
+
+export interface ProjectBadge {
+  name: string
+  description?: string
 }
 
 export interface ProjectFact {
@@ -49,6 +65,7 @@ export function renderProjectMarkdown(page: ProjectMarkdown): string {
     heading(1, page.name),
     `Markdown version of ${page.pageUrl}`,
     renderSummary(page.summary),
+    renderHeader(page.header),
     ...page.sections.map((section) => renderProjectSection(section, 2, page)),
   ])
   return `${absolutizeLinks(markdown, PRODUCTION_ORIGIN)}\n`
@@ -89,6 +106,36 @@ function renderSummary(summary: ProjectMarkdown['summary']): string {
       ),
     ),
     textSubsection(3, 'About', summary.description),
+  ])
+}
+
+/** Links and badges read as reference material, so they follow the summary instead of leading it. */
+function renderHeader(header: ProjectHeader | undefined): string {
+  if (!header) return ''
+  const links = [
+    ...(header.links ?? []).map(
+      (group) =>
+        `${group.name}: ${group.links.map((url) => link(url, url)).join(', ')}`,
+    ),
+    ...(header.discoUiHref
+      ? [
+          `Contracts explorer (Disco): ${link(header.discoUiHref, header.discoUiHref)}`,
+        ]
+      : []),
+  ]
+  return joinBlocks([
+    subsection(3, 'Links', bulletList(links)),
+    subsection(
+      3,
+      'Badges',
+      bulletList(
+        (header.badges ?? []).map((badge) =>
+          badge.description
+            ? `${badge.name}: ${badge.description}`
+            : badge.name,
+        ),
+      ),
+    ),
   ])
 }
 
