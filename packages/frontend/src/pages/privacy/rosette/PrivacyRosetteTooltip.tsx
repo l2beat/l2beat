@@ -12,6 +12,8 @@ import { PrivacyRosetteFigure } from './PrivacyRosetteFigure'
 interface Props {
   adversaries: PrivacyAdversariesSummary
   isUnderReview?: boolean
+  /** Set under the analysis, e.g. what clicking the rosette does. */
+  hint?: string
 }
 
 /**
@@ -20,7 +22,11 @@ interface Props {
  * itself. The full assessment stays on the project page. On mobile the same
  * content opens in a drawer instead, see PrivacyRosetteDrawer.
  */
-export function PrivacyRosetteTooltip({ adversaries, isUnderReview }: Props) {
+export function PrivacyRosetteTooltip({
+  adversaries,
+  isUnderReview,
+  hint,
+}: Props) {
   if (isUnderReview) {
     return (
       <div className="w-[300px] text-wrap">
@@ -34,6 +40,7 @@ export function PrivacyRosetteTooltip({ adversaries, isUnderReview }: Props) {
           L2BEAT Team is working to research & validate content before
           publishing.
         </p>
+        {hint && <p className="mt-3 text-secondary text-xs">{hint}</p>}
       </div>
     )
   }
@@ -53,8 +60,8 @@ export function PrivacyRosetteTooltip({ adversaries, isUnderReview }: Props) {
           <PrivacyRosetteFigure adversaries={adversaries} />
         </TooltipVisualOnly>
         {/* One row per adversary: the verdict beside its gist rather than
-            above it, so each row is about two lines and the list stays level
-            with the rosette. */}
+            above it, so each row is two or three lines and the list stays
+            level with the rosette. */}
         <div className="grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-start gap-x-4 gap-y-3">
           {adversaries.cells.map((cell) => (
             <div key={cell.id} className="col-span-2 grid grid-cols-subgrid">
@@ -63,13 +70,14 @@ export function PrivacyRosetteTooltip({ adversaries, isUnderReview }: Props) {
                 value={PRIVACY_ADVERSARY_VERDICT[cell.sentiment]}
                 sentiment={cell.sentiment}
               />
-              <p className="line-clamp-2 text-secondary text-xs leading-snug">
+              <p className="text-secondary text-xs leading-snug">
                 {getPrivacyAdversaryGist(cell.exposure)}
               </p>
             </div>
           ))}
         </div>
       </div>
+      {hint && <p className="mt-3 text-secondary text-xs">{hint}</p>}
     </div>
   )
 }

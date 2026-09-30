@@ -80,6 +80,7 @@ export function PrivacyAdversaryRosetteCell({
         <PrivacyRosetteTooltip
           adversaries={adversaries}
           isUnderReview={isUnderReview}
+          hint="Click on the rosette to visit the detailed pages for more info."
         />
       </TooltipContent>
     </Tooltip>
