@@ -24,7 +24,7 @@ export const soneium = opStackL2({
   display: {
     name: 'Soneium',
     warning:
-      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
+      'The fault proof system is deployed but is not functional. The respected game type is the super permissioned game, which runs no VM and exposes no challenger, bond or challenge clock, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer, with the Guardian able to blacklist games and change the respected game type.',
     aliases: ['Sony'],
     slug: 'soneium',
     stateValidationImage: 'opfp',

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SuperPermissionedDisputeGame",
+  "critical": true,
+  "description": "Logic of the permissioned dispute game introduced in Upgrade 20. Only the proposer configured in the DisputeGameFactory can create games of this type, and each one commits to a super root anchored to an L2 timestamp. Unlike the permissioned game it replaces, it runs no VM and exposes no challenger, bond, clock or absolute prestate: validity is governed by the AnchorStateRegistry and the Guardian.",
+  // Clones-with-immutable-args: these read the clone's appended args, so they
+  // revert on the bare implementation. The authoritative values are watched on
+  // the DisputeGameFactory as game5Args and its decoded fields.
+  "ignoreMethods": ["anchorStateRegistry", "extraData", "gameData", "proposer"]
+}

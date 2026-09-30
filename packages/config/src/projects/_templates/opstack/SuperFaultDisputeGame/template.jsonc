@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SuperFaultDisputeGame",
+  "critical": true,
+  "description": "Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, which commits to the state of every chain in the interop set at a given L2 timestamp, rather than a single chain's output root at a block number. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.",
+  // Clones-with-immutable-args: these read the clone's appended args, so they
+  // revert on the bare implementation. The authoritative values are watched on
+  // the DisputeGameFactory as game9Args and its decoded fields.
+  "ignoreMethods": [
+    "absolutePrestate",
+    "anchorStateRegistry",
+    "extraData",
+    "gameData",
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames",
+    "vm",
+    "weth"
+  ]
+}

@@ -1,3 +1,527 @@
+Generated with discovered.json: 0xdeddd2e4c7bed13963d32bfc03afd7c45b9e541b
+
+# Diff at Wed, 30 Sep 2026 22:47:33 GMT:
+
+- id: cc3ef196
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789045166
+- current timestamp: 1790808242
+
+## Description
+
+OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed in a single transaction on 2026-09-24. `lastUsedOPCMVersion` 7.1.17 → 8.0.1.
+
+The respected game type changed 8 → 9 (CANNON_KONA → SUPER_CANNON_KONA). The factory's type 0, 1 and 8 implementations were cleared and two super games were registered: type 9 (SuperFaultDisputeGame v0.8.0, 0.08 ETH bond, max game depth 73, split depth 30, 3.5 day clock) and type 5 (SuperPermissionedDisputeGame v1.1.0, no bond). Super games commit to a super root anchored to an L2 timestamp instead of an output root at a block number, so the starting anchor sequence number changed from 19265297 to 1788848282. The type 9 game runs the same MIPS VM and PreimageOracle and uses the same DelayedWETH as before.
+
+The old FaultDisputeGame and PermissionedDisputeGame implementations were deregistered. The type 5 game exposes only a proposer and an anchor state registry: it has no challenger, so the OP Foundation Operations Safe no longer holds a challenger role in the dispute system.
+
+SystemConfig v3.14.2 → v4.0.0: the `batchInbox()` getter and `setGasConfig()` were removed, and the batch inbox address now lives only in the rollup config.
+
+OptimismPortal2 v5.6.1 → v5.8.0: `SUPER_PERMISSIONED_CANNON` was renamed to `SUPER_PERMISSIONED` with game type 5 unchanged, and zero-address and lockbox-authorization checks were added on migration.
+
+SuperchainConfig v2.4.2 → v2.4.3: version bump only.
+
+Each upgraded proxy was routed through a StorageSetter and back within the same transaction.
+
+Version changes and implementation diffs:
+
+- OptimismPortal2 5.6.1 -> 5.8.0: https://disco.l2beat.com/diff/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2/eth:0x1005217ad392DC64CEf501FA1777A27D42166748
+- SystemConfig 3.14.2 -> 4.0.0: https://disco.l2beat.com/diff/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9/eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA
+- SuperchainConfig 2.4.2 -> 2.4.3: https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      values.$pastUpgrades.8:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"]]
+      values.$upgradeCount:
+-        8
++        12
++++ severity: HIGH
+      values.absolutePrestateFromDGF:
+-        "0xdead000000000000000000000000000000000000000000000000000000000000"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.anchorStateRegistryFromDGF:
+-        "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.chainIdFromDGF:
+-        57073
++        "UNRESOLVED"
+      values.challengerFromDGF:
+-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game1:
+-        "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e"
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
+-        "UNRESOLVED"
++        "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2"
+      values.game5Args:
+-        "0x"
++        "0xee018baf058227872540ac60efbd38b023d9dae23832bfbef03173e4c49a00ec0dd178817a02d177"
++++ severity: HIGH
+      values.game5Proposer:
+-        "UNRESOLVED"
++        "eth:0x3832bfbeF03173E4C49a00ec0DD178817A02D177"
++++ severity: HIGH
+      values.game8:
+-        "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC"
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game8AbsolutePrestate:
+-        "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8AnchorStateRegistry:
+-        "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2"
++        "UNRESOLVED"
+      values.game8Args:
+-        "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025acc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea000000000000000000000000000000000000000000000000000000000000def1"
++        "0x"
++++ severity: HIGH
+      values.game8ChainId:
+-        57073
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Vm:
+-        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Weth:
+-        "eth:0x57b4C29DAee99a28E6E86778b499361294c134eA"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
+-        "UNRESOLVED"
++        "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
+-        "UNRESOLVED"
++        "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2"
+      values.game9Args:
+-        "0x"
++        "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea0000000000000000000000000000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9Vm:
+-        "UNRESOLVED"
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
++++ severity: HIGH
+      values.game9Weth:
+-        "UNRESOLVED"
++        "eth:0x57b4C29DAee99a28E6E86778b499361294c134eA"
+      values.initBondGame1:
+-        "80000000000000000"
++        0
+      values.initBondGame8:
+-        "80000000000000000"
++        0
+      values.initBondGame9:
+-        0
++        "80000000000000000"
+      values.permissionedGameArgs:
+-        "0xdead000000000000000000000000000000000000000000000000000000000000acc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea000000000000000000000000000000000000000000000000000000000000def13832bfbef03173e4c49a00ec0dd178817a02d1779ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
++        "0x"
+      values.proposerFromDGF:
+-        "eth:0x3832bfbeF03173E4C49a00ec0DD178817A02D177"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.vmFromDGF:
+-        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
++        "UNRESOLVED"
++++ severity: HIGH
+      values.wethFromDGF:
+-        "eth:0x57b4C29DAee99a28E6E86778b499361294c134eA"
++        "UNRESOLVED"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DelayedWETH (eth:0x57b4C29DAee99a28E6E86778b499361294c134eA) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades.2:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.3:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xE440CC08A71694C8229323803F59024E3144630e"]]
+      values.$pastUpgrades.4:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.5:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xE440CC08A71694C8229323803F59024E3144630e"]]
+      values.$upgradeCount:
+-        2
++        6
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the SuperFaultDisputeGame.
+      sourceHashes.1:
+-        "0xe1df4caf26d9a0735bd53eeb020546840bd2f2fd4d0d9e2519f873306b5e19b1"
++        "0x5a3a97f72d46aaebbcbdba3783f7c5a8acfcd5ae928afe402abdb21acc0be49f"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the SuperFaultDisputeGame."
+      values.$implementation:
+-        "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2"
++        "eth:0x1005217ad392DC64CEf501FA1777A27D42166748"
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x1005217ad392DC64CEf501FA1777A27D42166748"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.12:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x1005217ad392DC64CEf501FA1777A27D42166748"]]
+      values.$upgradeCount:
+-        9
++        13
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "SuperFaultDisputeGame"
+      values.respectedGameType:
+-        8
++        9
+      values.version:
+-        "5.6.1"
++        "5.8.0"
+      implementationNames.eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2:
+-        "OptimismPortal2"
+      implementationNames.eth:0x1005217ad392DC64CEf501FA1777A27D42166748:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x3d8e7cdbbdbf274bba0a11a060b01d5a50e3a478683af9ec079874d1758576d6"
++        "0x532730df835e1a130919ca2afe170505acde568abb77ed1f9a018e5019415ab6"
+      values.$implementation:
+-        "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"
++        "eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA"
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA"]]
+      values.$pastUpgrades.12:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.13:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA"]]
+      values.$upgradeCount:
+-        10
++        14
+      values.BATCH_INBOX_SLOT:
+-        "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597"
+      values.batchInbox:
+-        "eth:0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97"
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        30000000
+      values.getAddresses.opcm:
+-        "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D"
++        "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a"
+      values.lastUsedOPCM:
+-        "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D"
++        "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a"
+      values.lastUsedOPCMVersion:
+-        "7.1.17"
++        "8.0.1"
+      values.version:
+-        "3.14.2"
++        "4.0.0"
+      implementationNames.eth:0x42Ad0173051225Ac784100e9acD43349707F4db9:
+-        "SystemConfig"
+      implementationNames.eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x661235a238B11191211fa95D4Dd9E423d521E0Be) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.12:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"]]
+      values.$upgradeCount:
+-        9
++        13
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.12:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"]]
+      values.$upgradeCount:
+-        9
++        13
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
++        "0xb74ed3aa109bd981b095c02d6e3bda2b2467d40e9d1060b4c89b01de32ebad3a"
+      values.$implementation:
+-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
++        "eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"
+      values.$pastUpgrades.8:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$upgradeCount:
+-        8
++        12
+      values.version:
+-        "2.4.2"
++        "2.4.3"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
+-        "SuperchainConfig"
+      implementationNames.eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","role":".GnosisSafe_modules"}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xA8B389A82e088b164cD03230e900980CcED34d29) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.6:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.7:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"]]
+      values.$pastUpgrades.8:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"]]
+      values.$upgradeCount:
+-        6
++        10
+    }
+```
+
+```diff
+    contract ETHLockbox (eth:0xbd4AbB321138e8Eddc399cE64E66451294325a14) [opstack/ETHLockbox] {
+    +++ description: A simple escrow contract storing ETH for the canonical bridge.
+      values.$pastUpgrades.3:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.4:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad"]]
+      values.$pastUpgrades.5:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.6:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad"]]
+      values.$upgradeCount:
+-        3
++        7
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      values.$pastUpgrades.5:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.6:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281"]]
+      values.$pastUpgrades.7:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.8:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281"]]
+      values.$upgradeCount:
+-        5
++        9
+      values.getStartingAnchorRoot.root:
+-        "0x10c839264195b6b897892b2d8949004bcb6005a9c712b41651aaf1a68c004d21"
++        "0x25b22a0c711fa1d01b3cdb95fb98c0e7ff003b00909bfe8fade3507a6e62d44e"
+      values.getStartingAnchorRoot.l2SequenceNumber:
+-        19265297
++        1788848282
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "SuperFaultDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        8
++        9
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SuperFaultDisputeGame (eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208) [opstack/SuperFaultDisputeGame]
+    +++ description: Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, which commits to the state of every chain in the interop set at a given L2 timestamp, rather than a single chain's output root at a block number. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.
+```
+
+```diff
++   Status: CREATED
+    contract SuperPermissionedDisputeGame (eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691) [opstack/SuperPermissionedDisputeGame]
+    +++ description: Logic of the permissioned dispute game introduced in Upgrade 20. Only the proposer configured in the DisputeGameFactory can create games of this type, and each one commits to a super root anchored to an L2 timestamp. Unlike the permissioned game it replaces, it runs no VM and exposes no challenger, bond, clock or absolute prestate: validity is governed by the AnchorStateRegistry and the Guardian.
+```
+
+## Source code changes
+
+```diff
+.../Proxy.p.sol => /dev/null                       |   42 -
+ .../Safe.sol => /dev/null                          | 1216 -----
+ .../OptimismPortal2/OptimismPortal2.sol            |   67 +-
+ .../PermissionedDisputeGame.sol => /dev/null       | 5742 --------------------
+ .../SuperFaultDisputeGame.sol}                     | 3483 ++++++------
+ .../ink/.flat/SuperPermissionedDisputeGame.sol     | 2065 +++++++
+ .../SuperchainConfig/SuperchainConfig.sol          |    8 +-
+ .../SystemConfig/SystemConfig.sol                  |   84 +-
+ 8 files changed, 3754 insertions(+), 8953 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789045166 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame5:
++        0
+      values.initBondGame9:
++        0
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
++        {"severity":"HIGH"}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xca25766ecd51bf021bf156350f7ba5d1f502600c
 
 # Diff at Tue, 29 Sep 2026 17:46:35 GMT:

@@ -86,7 +86,9 @@ import {
   getOpStackMaxCumulativeClockExtension,
   getOptimismPortal,
   getOracleChallengePeriod,
+  getPermissionedDisputeGameName,
   getPermissionedGameBond,
+  getPermissionedGameClock,
   getPermissionlessGameBond,
 } from './opStack/faultDisputeGame'
 import {
@@ -683,14 +685,21 @@ function getProgramHashes(
           portal.name ?? portal.address,
           'respectedGameType',
         )
-      if (respectedGameType === 8) {
+      // The type-5 super permissioned game runs no VM and has no prestate.
+      if (respectedGameType === 5) {
+        return []
+      }
+      if (respectedGameType === 8 || respectedGameType === 9) {
+        // Upgrade 20's type-9 super game keeps its prestate in gameArgs[9] at
+        // the same offset as the type-8 game.
+        const argsField = respectedGameType === 9 ? 'game9Args' : 'game8Args'
         const konaPrestate = templateVars.discovery.hasContract(
           'DisputeGameFactory',
         )
           ? prestateFromGameArgs(
               templateVars.discovery.getContractValueOrUndefined<string>(
                 'DisputeGameFactory',
-                'game8Args',
+                argsField,
               ),
             )
           : undefined
@@ -866,28 +875,47 @@ function getStateValidation(
       }
     }
     case 'Permissioned': {
-      const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        'PermissionedDisputeGame',
-        'maxClockDuration',
-      )
+      const permissionedGame = getPermissionedDisputeGameName(templateVars)
+      const permissionedClock = getPermissionedGameClock(templateVars)
+
+      // Upgrade 20's type-5 super permissioned game exposes only a proposer and
+      // an anchor state registry, so there are no bonds, clocks or depths to
+      // describe and the old fault-proof wording would not hold.
+      if (permissionedClock === undefined) {
+        return {
+          description:
+            'State roots are proposed as super roots by a permissioned proposer. The respected game type is the super permissioned game, which carries no bond and exposes no challenge mechanics: validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.',
+          categories: [
+            {
+              title: 'State root proposals',
+              description:
+                'Only the permissioned proposer configured in the dispute game factory can create games of the respected type. Each proposal commits to a super root anchored to an L2 timestamp rather than an L2 block number.',
+              references: [],
+              risks: [],
+            },
+          ],
+        }
+      }
+
+      const maxClockDuration = permissionedClock
 
       const permissionedDisputeGameBonds = getPermissionedGameBond(templateVars)
 
       const permissionedGameClockExtension =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'clockExtension',
         )
 
       const permissionedGameMaxDepth =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'maxGameDepth',
         )
 
       const permissionedGameSplitDepth =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'splitDepth',
         )
 
@@ -1964,25 +1992,37 @@ function getTechnologyExitMechanism(
           'proofMaturityDelaySeconds',
         )
 
-      const disputeGameName =
+      const maxClockDuration =
         fraudProofType === 'Permissionless'
-          ? getFaultDisputeGameName(templateVars)
-          : 'PermissionedDisputeGame'
-
-      const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        disputeGameName,
-        'maxClockDuration',
-      )
+          ? templateVars.discovery.getContractValue<number>(
+              getFaultDisputeGameName(templateVars),
+              'maxClockDuration',
+            )
+          : getPermissionedGameClock(templateVars)
 
       result.push({
         name: 'Regular exits',
-        description: readMarkdown('templates/opStack/regularExits.md', {
-          disputeGameFinalityDelaySeconds: formatSeconds(
-            disputeGameFinalityDelaySeconds,
-          ),
-          proofMaturityDelaySeconds: formatSeconds(proofMaturityDelaySeconds),
-          challengePeriod: formatSeconds(maxClockDuration),
-        }),
+        // Upgrade 20's type-5 super permissioned game has no challenge process,
+        // so the wording must not quote a challenge period.
+        description:
+          maxClockDuration === undefined
+            ? readMarkdown('templates/opStack/regularExitsNoChallenge.md', {
+                disputeGameFinalityDelaySeconds: formatSeconds(
+                  disputeGameFinalityDelaySeconds,
+                ),
+                proofMaturityDelaySeconds: formatSeconds(
+                  proofMaturityDelaySeconds,
+                ),
+              })
+            : readMarkdown('templates/opStack/regularExits.md', {
+                disputeGameFinalityDelaySeconds: formatSeconds(
+                  disputeGameFinalityDelaySeconds,
+                ),
+                proofMaturityDelaySeconds: formatSeconds(
+                  proofMaturityDelaySeconds,
+                ),
+                challengePeriod: formatSeconds(maxClockDuration),
+              }),
         risks: [],
         references: [
           {
@@ -2580,9 +2620,15 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'Permissioned': {
+      const clock = getPermissionedGameClock(templateVars)
+      if (clock !== undefined) return clock
+      // Upgrade 20: the type-5 super permissioned game has no clock because it
+      // has no challenges. Settlement is governed by the portal's dispute game
+      // finality delay instead.
+      const portal = getOptimismPortal(templateVars)
       return templateVars.discovery.getContractValue<number>(
-        'PermissionedDisputeGame',
-        'maxClockDuration',
+        portal.name ?? portal.address,
+        'disputeGameFinalityDelaySeconds',
       )
     }
     case 'Permissionless': {

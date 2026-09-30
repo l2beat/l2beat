@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xea080124f15ef34cbd1e5458499403635039ad2c
+
+# Diff at Wed, 30 Sep 2026 22:47:29 GMT:
+
+- id: f99360ef
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1790592527
+- current timestamp: 1790592527
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790592527 (main branch discovery), not current.
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [GnosisSafe] {
+    +++ description: None
+      values.getOwners:
+-        ["eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032","eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961","eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E","eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1","eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325","eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xff8a9c8d640049921e7348f9808c39c0158a290d
 
 # Diff at Mon, 28 Sep 2026 13:34:22 GMT:

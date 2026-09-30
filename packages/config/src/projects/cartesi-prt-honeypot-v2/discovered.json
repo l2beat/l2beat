@@ -109,11 +109,13 @@
       "name": "Cartesi Multisig",
       "address": "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
       "type": "Contract",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
         "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x77eBA70fe27aC8BA1f292bDa9108555e9a065e3b",
       "sinceTimestamp": 1634112168,
       "sinceBlock": 13408863,
@@ -130,15 +132,6 @@
         ],
         "$threshold": 3,
         "domainSeparator": "0x5da08fdea0dbcc8c2e5ff2167841877be4e4105aceec36114c391bed58448056",
-        "getOwners": [
-          "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
-          "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
-          "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
-          "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
-          "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
-          "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
         "nonce": 335,
@@ -836,10 +829,11 @@
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/TopTournament": "0xbd083fb1c65455271f875f433e772fdecce43eb614fc3d12775dc903854e6905",
     "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
-    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
+    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 26075457 },
-  "permissionsConfigHash": "0x3efca5324131b231b36b4a890bd76784daec3a887b916450264f8bb63544af18",
+  "permissionsConfigHash": "0x08fb38c9841ce1d50f8f684d4f8d4674727d56d27ccbccde3d7c0a236aa86ebd",
   "permissions": {
     "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
       "receivedPermissions": [
