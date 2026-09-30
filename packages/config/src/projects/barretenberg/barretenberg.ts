@@ -5,6 +5,9 @@ import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
+const ZK_MONEY_CIRCUITS =
+  'https://github.com/aztec-labs-eng/zkmoney-public/tree/1ac7d607e2a524aa7e6ab881a7f14c0a7a02d585/vendor/oxide/noir-projects/'
+
 export const barretenberg: BaseProject = {
   id: ProjectId('barretenberg'),
   slug: 'barretenberg',
@@ -61,6 +64,10 @@ export const barretenberg: BaseProject = {
       {
         projectId: ProjectId('payy'),
         sinceTimestamp: UnixTime(1771324355), // 2026-02-17T10:32:35Z, payy rollup deployment on Ethereum
+      },
+      {
+        projectId: ProjectId('zkmoney'),
+        sinceTimestamp: UnixTime(1790298635), // 2026-09-25T01:10:35Z, ZkMoneyPortal deployment
       },
     ],
     verifierHashes: [
@@ -128,6 +135,88 @@ export const barretenberg: BaseProject = {
           'barretenberg',
           'verificationSteps-0x2f0ca3e6',
         ),
+      },
+      {
+        hash: '0x05ea6d9d0a0b1b837f081862dd77aae6bc047fb822b9cf7055ef68719b04198e',
+        name: 'zk.money frozen notes refund verifier',
+        description:
+          'Verifies refunds of notes that were unspent when the zk.money portal was frozen. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_CIRCUITS}frozen_notes_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x0694fF404DDA586C73EfCe21f34fe084541BB877',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoney-refunds',
+        ),
+      },
+      {
+        hash: '0x2290cfb58dea33c485e0ac33581c1c8d358ac3dd9f434470b6cf87da12b5fd43',
+        name: 'zk.money frozen deposit refund verifier',
+        description:
+          'Verifies refunds of deposits that reached Aztec but were unspent when the zk.money portal was frozen. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_CIRCUITS}frozen_deposit_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xa2fd594dCA2d598aF231d615E5D34903154C3cCe',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoney-refunds',
+        ),
+      },
+      {
+        hash: '0x080b44509f327b7b0ee935247a069be5def58e0edf1b52721d9c42f5918c390c',
+        name: 'zk.money unprocessed deposit refund verifier',
+        description:
+          'Verifies refunds of deposits that had not reached Aztec when the zk.money portal was frozen. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_CIRCUITS}unprocessed_deposit_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoney-refunds',
+        ),
+      },
+      {
+        hash: '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
+        name: 'zk.money resolver verifier',
+        description:
+          'Verifies that a deposit address returned for a payment to a zk.money name was derived from the registered user and resolver operator keys. The Noir circuit is not published.',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
       },
     ],
   },

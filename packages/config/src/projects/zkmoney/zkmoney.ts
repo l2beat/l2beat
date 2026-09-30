@@ -213,11 +213,11 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build. Refund proofs require circuits that Aztec Labs has not published.',
+          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build.',
       },
     },
     // TODO: needs a published, reproducible build of the TEE image that matches
-    // the approved PCR0, the Noir source of the refund and resolver circuits,
+    // the approved PCR0, the Noir source of the resolver circuit,
     // the frozen chain snapshot service, the source of the hosted web wallet
     // release, and public source
     // verification of the zk.money contracts on Aztec (token, fee-paying
@@ -231,7 +231,7 @@ export const zkmoney: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contracts, enclave code and desktop app are open source. L2BEAT matched the deployed zk.money token on Aztec to its source. Only the onchain verifiers are published for the refund and resolver circuits, without Noir source. The approved enclave binary has no published build to check against the source. The hosted wallet runs a newer release than the public source, and the resolver service is closed source.',
+        'The contracts, enclave code and desktop app are open source. The deployed zk.money token on Aztec matches its source, and the refund verifiers are reproducible from the published Noir source. The resolver circuit is published only as its onchain verifier. The approved enclave binary has no published build to check against the source. The hosted wallet runs a newer release than the public source, and the resolver service is closed source.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
