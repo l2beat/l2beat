@@ -27,6 +27,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
   '/privacy/projects/:slug',
+  '/interop/protocols/:slug',
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]

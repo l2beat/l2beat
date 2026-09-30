@@ -320,6 +320,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
+    {
+      name: 'Interop protocol',
+      path: '/interop/protocols/{slug}.md',
+      description:
+        'One bridge as markdown: last 24h volume, top tokens, chains and routes.',
+    },
   ],
 }
 
