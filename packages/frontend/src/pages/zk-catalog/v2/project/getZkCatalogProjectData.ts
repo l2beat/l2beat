@@ -31,6 +31,7 @@ export async function getZkCatalogProjectData(
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
         description: getZkCatalogMetadataDescription({
+          name: project.name,
           creator: project.zkCatalogInfo.creator,
           tvs: projectEntry.header.tvs.value,
           description: project.display.description,

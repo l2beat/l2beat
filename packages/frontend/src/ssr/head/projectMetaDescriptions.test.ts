@@ -10,6 +10,7 @@ import {
 describe(getScalingMetadataDescription.name, () => {
   it('leads with the stage, type and TVS of an L2, then the description', () => {
     const description = getScalingMetadataDescription({
+      name: 'Arbitrum One',
       category: 'Optimistic Rollup',
       stage: 'Stage 1',
       hostChain: undefined,
@@ -26,6 +27,7 @@ describe(getScalingMetadataDescription.name, () => {
   // category, which must still count as a mention.
   it('leaves out the type when the description already states it', () => {
     const description = getScalingMetadataDescription({
+      name: 'Arbitrum One',
       category: 'Optimistic Rollup',
       stage: 'Stage 1',
       hostChain: undefined,
@@ -40,6 +42,7 @@ describe(getScalingMetadataDescription.name, () => {
 
   it('names the host chain of an L3 and skips a stage under review', () => {
     const description = getScalingMetadataDescription({
+      name: 'Xai',
       category: 'Optimium',
       stage: 'UnderReview',
       hostChain: 'Arbitrum One',
@@ -54,6 +57,7 @@ describe(getScalingMetadataDescription.name, () => {
 
   it('returns the bare description when there is no fact to state', () => {
     const description = getScalingMetadataDescription({
+      name: 'Fuel Ignition',
       category: 'Other',
       stage: 'NotApplicable',
       hostChain: undefined,
@@ -66,6 +70,7 @@ describe(getScalingMetadataDescription.name, () => {
 
   it('hides a zero TVS and capitalizes a lead that starts with the host chain', () => {
     const description = getScalingMetadataDescription({
+      name: 'Upcoming Chain',
       category: undefined,
       stage: 'NotApplicable',
       hostChain: 'Base',
@@ -76,10 +81,50 @@ describe(getScalingMetadataDescription.name, () => {
     expect(description).toEqual('On Base. Upcoming Chain launches soon.')
   })
 
+  // "on Arbitrum" states the host, while "Arbitrum Orbit stack" only names
+  // the technology and must not hide it.
+  it('leaves out the host chain only when the description states it', () => {
+    const stated = getScalingMetadataDescription({
+      name: 'Winr',
+      category: 'Other',
+      stage: 'NotApplicable',
+      hostChain: 'Arbitrum One',
+      tvs: undefined,
+      description: 'WINR is a Layer 3 on Arbitrum.',
+    })
+    const technologyOnly = getScalingMetadataDescription({
+      name: 'ApeChain',
+      category: 'Other',
+      stage: 'NotApplicable',
+      hostChain: 'Arbitrum One',
+      tvs: undefined,
+      description: 'ApeChain is built on the Arbitrum Orbit stack.',
+    })
+
+    expect(stated).toEqual('WINR is a Layer 3 on Arbitrum.')
+    expect(technologyOnly).toEqual(
+      'On Arbitrum One. ApeChain is built on the Arbitrum Orbit stack.',
+    )
+  })
+
+  it('hides a TVS below $100K', () => {
+    const description = getScalingMetadataDescription({
+      name: 'Payy',
+      category: 'Other',
+      stage: 'NotApplicable',
+      hostChain: undefined,
+      tvs: 99_999,
+      description: 'Payy is a payments network.',
+    })
+
+    expect(description).toEqual('Payy is a payments network.')
+  })
+
   // Multi-line config strings reach the builder with their newline and
   // indentation intact.
   it('collapses newlines and repeated spaces in the description', () => {
     const description = getScalingMetadataDescription({
+      name: 'ApeX Pro',
       category: 'Other',
       stage: 'NotApplicable',
       hostChain: undefined,
@@ -99,6 +144,7 @@ describe(getScalingMetadataDescription.name, () => {
   it('drops the sentences of a long description that do not fit 300 chars', () => {
     const sentence = 'Lorem ipsum dolor sit amet.'
     const description = getScalingMetadataDescription({
+      name: 'Lorem',
       category: undefined,
       stage: 'Stage 1',
       hostChain: undefined,
@@ -116,6 +162,7 @@ describe(getScalingMetadataDescription.name, () => {
 describe(getDaMetadataDescription.name, () => {
   it('leads with TVS and economic security', () => {
     const description = getDaMetadataDescription({
+      name: 'Celestia',
       tvs: 1_500_000_000,
       economicSecurity: 2_300_000_000,
       description: 'Celestia is a modular data availability network.',
@@ -128,6 +175,7 @@ describe(getDaMetadataDescription.name, () => {
 
   it('omits economic security when the layer has none', () => {
     const description = getDaMetadataDescription({
+      name: 'EigenDA',
       tvs: 1_500_000_000,
       economicSecurity: undefined,
       description: 'EigenDA is a data availability service.',
@@ -142,6 +190,7 @@ describe(getDaMetadataDescription.name, () => {
 describe(getZkCatalogMetadataDescription.name, () => {
   it('leads with the creator and the TVS the proof system secures', () => {
     const description = getZkCatalogMetadataDescription({
+      name: 'Risc0',
       creator: 'RISC Zero',
       tvs: 2_100_000_000,
       description: 'Risc0 is a zkVM proving system for RISC-V programs.',
@@ -154,6 +203,7 @@ describe(getZkCatalogMetadataDescription.name, () => {
 
   it('leaves out the creator when the description already names it', () => {
     const description = getZkCatalogMetadataDescription({
+      name: 'SP1 Turbo',
       creator: 'Succinct',
       tvs: 2_100_000_000,
       description: 'SP1 Turbo is a zk proving system built by Succinct.',
@@ -164,8 +214,23 @@ describe(getZkCatalogMetadataDescription.name, () => {
     )
   })
 
+  // Privacy apps are their own creator; the name prefix already states it.
+  it('leaves out a creator that is the project itself', () => {
+    const description = getZkCatalogMetadataDescription({
+      name: 'Railgun',
+      creator: 'Railgun',
+      tvs: 2_100_000_000,
+      description: 'An onchain privacy system for Ethereum.',
+    })
+
+    expect(description).toEqual(
+      '$2.1B TVS. Railgun – An onchain privacy system for Ethereum.',
+    )
+  })
+
   it('omits the creator when unknown', () => {
     const description = getZkCatalogMetadataDescription({
+      name: 'Boojum',
       creator: undefined,
       tvs: 5_000_000,
       description: 'Boojum is a STARK prover.',
@@ -224,9 +289,43 @@ describe(getInteropMetadataDescription.name, () => {
 })
 
 describe(getProjectMetadataDescription.name, () => {
-  it('passes a short description through unchanged', () => {
-    expect(getProjectMetadataDescription('Aztec is a privacy chain.')).toEqual(
-      'Aztec is a privacy chain.',
+  it('passes a short description that names the project through unchanged', () => {
+    const description = getProjectMetadataDescription({
+      name: 'Aztec',
+      description: 'Aztec is a privacy chain.',
+    })
+
+    expect(description).toEqual('Aztec is a privacy chain.')
+  })
+
+  // Base Chain is listed under a longer name than its description uses; the
+  // description still opens with the project, so no prefix is needed.
+  it('keeps a description that opens with a shorter form of the name', () => {
+    const description = getProjectMetadataDescription({
+      name: 'Base Chain',
+      description: 'Base is an Optimistic Rollup.',
+    })
+
+    expect(description).toEqual('Base is an Optimistic Rollup.')
+  })
+
+  it('finds the shorter form inside a parenthesised part of the name', () => {
+    const description = getProjectMetadataDescription({
+      name: 'Zk.Money v2 (Aztec Connect)',
+      description: 'Aztec Connect is a layer 2 network.',
+    })
+
+    expect(description).toEqual('Aztec Connect is a layer 2 network.')
+  })
+
+  it('prefixes the project name when the description does not state it', () => {
+    const description = getProjectMetadataDescription({
+      name: 'Tornado Cash',
+      description: 'A classic Ethereum mixer design.',
+    })
+
+    expect(description).toEqual(
+      'Tornado Cash – A classic Ethereum mixer design.',
     )
   })
 
@@ -234,9 +333,10 @@ describe(getProjectMetadataDescription.name, () => {
   // cut falls back to whole words: fifty 5-letter words take 299 chars and
   // the ellipsis fills the 300-char budget.
   it('cuts one overlong sentence on a word boundary with an ellipsis', () => {
-    const description = getProjectMetadataDescription(
-      'lorem '.repeat(80).trim(),
-    )
+    const description = getProjectMetadataDescription({
+      name: 'Lorem',
+      description: 'lorem '.repeat(80).trim(),
+    })
 
     expect(description).toEqual(`${'lorem '.repeat(50).trim()}…`)
     expect(description.length).toBeLessThanOrEqual(300)

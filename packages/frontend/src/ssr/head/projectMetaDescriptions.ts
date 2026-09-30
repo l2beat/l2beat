@@ -6,6 +6,7 @@ import type {
 import { isAssignedStage } from '~/utils/project/isAssignedStage'
 
 export function getScalingMetadataDescription(project: {
+  name: string
   category: ProjectScalingCategory | undefined
   stage: ProjectScalingStage['stage']
   hostChain: string | undefined
@@ -14,82 +15,111 @@ export function getScalingMetadataDescription(project: {
 }) {
   const stage = isAssignedStage(project.stage) ? project.stage : undefined
   const category = project.category === 'Other' ? undefined : project.category
-  return leadWithFacts(
+  return describe(
     [
       joinWords(stage, unlessMentioned(category, project.description)),
-      project.hostChain && `on ${project.hostChain}`,
+      unlessHostStated(project.hostChain, project.description),
       usd(project.tvs, 'TVS'),
     ],
-    project.description,
+    project,
   )
 }
 
 export function getDaMetadataDescription(project: {
+  name: string
   tvs: number
   economicSecurity: number | undefined
   description: string
 }) {
-  return leadWithFacts(
+  return describe(
     [
       unlessMentioned('DA layer', project.description),
       usd(project.tvs, 'TVS'),
       usd(project.economicSecurity, 'economic security'),
     ],
-    project.description,
+    project,
   )
 }
 
 export function getZkCatalogMetadataDescription(project: {
+  name: string
   creator: string | undefined
   tvs: number
   description: string
 }) {
-  const creator = unlessMentioned(project.creator, project.description)
-  return leadWithFacts(
+  const creator = unlessMentioned(
+    project.creator,
+    `${project.name} ${project.description}`,
+  )
+  return describe(
     [creator && `created by ${creator}`, usd(project.tvs, 'TVS')],
-    project.description,
+    project,
   )
 }
 
 // No type lead: interop descriptions already open with the kind of bridge,
 // often in other words than ours ("Liquidity bridge" for an intent protocol).
-// They rarely name the project though, and many canonical bridges share one
-// template text, so the name keeps each page's description distinct.
 export function getInteropMetadataDescription(project: {
   name: string
   type: InteropType
   description: string | undefined
 }) {
-  const description = collapseWhitespace(project.description)
-  if (!description) {
+  if (!project.description) {
     return `${project.name} is ${withArticle(INTEROP_TYPE_NOUN[project.type])}.`
   }
-  return fitWholeSentences(
-    mentions(description, project.name)
-      ? description
-      : `${project.name} – ${description}`,
-    MAX_LENGTH,
-  )
+  return describe([], project)
 }
 
 /** For project pages that have no key facts to lead with. */
-export function getProjectMetadataDescription(description: string) {
-  return leadWithFacts([], description)
+export function getProjectMetadataDescription(project: {
+  name: string
+  description: string
+}) {
+  return describe([], project)
 }
 
 type Fact = string | undefined | false
 
 // A fragment, not an "X is a…" sentence: the hand-written description already
 // opens that way, so a sentence lead would say the same thing twice.
-function leadWithFacts(facts: Fact[], rawDescription: string | undefined) {
+function describe(
+  facts: Fact[],
+  project: { name: string; description: string | undefined },
+) {
   const stated = facts.filter(Boolean)
   const lead =
     stated.length > 0 ? `${capitalize(stated.join(' · '))}.` : undefined
-  const description = collapseWhitespace(rawDescription)
+  const description = withName(
+    project.name,
+    collapseWhitespace(project.description),
+  )
   const budget = MAX_LENGTH - (lead ? lead.length + 1 : 0)
   return [lead, description && fitWholeSentences(description, budget)]
     .filter(Boolean)
     .join(' ')
+}
+
+// Some descriptions never name their project ("A classic Ethereum mixer…"),
+// and canonical bridges share one template text; the name makes the text
+// stand on its own and keeps each page's description distinct.
+function withName(name: string, description: string | undefined) {
+  if (
+    !description ||
+    mentions(description, name) ||
+    opensWithPartOfName(description, name)
+  ) {
+    return description
+  }
+  return `${name} – ${description}`
+}
+
+// Descriptions often use a shorter name than the listing: "Base is…" for
+// Base Chain, "Hermez is…" for Polygon Hermez.
+function opensWithPartOfName(description: string, name: string) {
+  const [firstWord = ''] = description.split(' ')
+  const subject = firstWord.replace(/(['’]s)?[,.:;]?$/, '').toLowerCase()
+  const nameWords = name.toLowerCase().replace(/[()]/g, '').split(' ')
+  return nameWords.includes(subject)
 }
 
 // Search engines have no length limit and pick the part matching the query,
@@ -135,6 +165,22 @@ function withArticle(noun: string) {
   return /^[aeiou]/i.test(noun) ? `an ${noun}` : `a ${noun}`
 }
 
+// "on Arbitrum" states the host, "built on the Arbitrum Orbit stack" names
+// only the technology.
+function unlessHostStated(hostChain: string | undefined, description: string) {
+  if (!hostChain) {
+    return undefined
+  }
+  const [firstWord] = hostChain.split(' ')
+  const stated =
+    mentions(description, hostChain) ||
+    new RegExp(
+      `\\bon ${escapeRegExp(firstWord ?? hostChain)}\\b(?! (stack|orbit|nitro))`,
+      'i',
+    ).test(description)
+  return stated ? undefined : `on ${hostChain}`
+}
+
 function unlessMentioned(fact: string | undefined, description: string) {
   return fact !== undefined && mentions(description, fact) ? undefined : fact
 }
@@ -142,8 +188,11 @@ function unlessMentioned(fact: string | undefined, description: string) {
 // Whole words only, so that "Base" is not found in "based"; a plural still
 // counts ("ZK Rollups").
 function mentions(text: string, phrase: string) {
-  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  return new RegExp(`(^|\\W)${escaped}s?(\\W|$)`, 'i').test(text)
+  return new RegExp(`(^|\\W)${escapeRegExp(phrase)}s?(\\W|$)`, 'i').test(text)
+}
+
+function escapeRegExp(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 function joinWords(...words: Fact[]) {
@@ -154,10 +203,14 @@ function capitalize(text: string) {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-// A zero amount (upcoming or archived projects) says nothing useful, so it is
-// left out like a missing one.
+// A missing, zero (upcoming or archived projects) or tiny amount says nothing
+// useful: "$710 TVS" reads as noise.
+const MIN_NOTABLE_USD = 100_000
+
 function usd(value: number | undefined, label: string) {
-  return value ? `${COMPACT_USD.format(value)} ${label}` : undefined
+  return value !== undefined && value >= MIN_NOTABLE_USD
+    ? `${COMPACT_USD.format(value)} ${label}`
+    : undefined
 }
 
 // Two significant digits: a search index holds the snippet for days or weeks,

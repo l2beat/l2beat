@@ -83,6 +83,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
         description: getScalingMetadataDescription({
+          name: project.name,
           category: project.scalingInfo.type,
           stage: projectEntry.stageConfig.stage,
           hostChain: projectEntry.header.hostChain,
