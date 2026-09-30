@@ -77,7 +77,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'The anonymity set is too small for care to hide the link.',
+          note: 'Most deposits are tag registrations, publicly tied to their tag.',
         },
       },
       sources: [
