@@ -2,16 +2,12 @@ import { env } from '~/env'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
-  ...(env.CLIENT_SIDE_HOME_PAGE
-    ? [
-        {
-          category: 'other' as const,
-          name: 'Home',
-          href: '/',
-          tags: ['pages'],
-        },
-      ]
-    : []),
+  {
+    category: 'other',
+    name: 'Home',
+    href: '/',
+    tags: ['pages'],
+  },
   {
     category: 'l2',
     name: 'Summary',
@@ -36,16 +32,12 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'scaling'],
     href: '/layer2s/activity',
   },
-  ...(env.CLIENT_SIDE_COMPARE_PROJECTS
-    ? [
-        {
-          category: 'l2' as const,
-          name: 'Compare Projects',
-          tags: ['pages', 'scaling', 'layer2s', 'compare'],
-          href: '/layer2s/compare',
-        },
-      ]
-    : []),
+  {
+    category: 'l2',
+    name: 'Compare Projects',
+    tags: ['pages', 'scaling', 'layer2s', 'compare'],
+    href: '/layer2s/compare',
+  },
   {
     category: 'l2',
     name: 'Data Availability',
