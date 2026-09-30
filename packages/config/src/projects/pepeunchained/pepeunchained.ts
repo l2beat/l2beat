@@ -31,7 +31,7 @@ export const pepeunchained: ScalingProject = opStackL2({
     headerWarning:
       'The project migrated from an OP Stack to an [Orbit chain](https://l2beat.com/scaling/projects/pepe-unchained). See [announcement](https://mirror.xyz/0x5d229f641ccA8c85F356a29A2b5D12587a216Fd2/CJvQFPuEG1eUZ8rhZLnAd2d1i5wdxuxnE0mLRxeEBhs) for details.',
     description:
-      'Pepe Unchained is an Optimium utilizing the OP Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
+      'Pepe Unchained was an Optimium utilizing the OP Stack before the project migrated to an Orbit chain. It focused on memes and provided a home for meme creators, traders, and communities to thrive.',
     links: {
       websites: ['https://pepeunchained.com/'],
       bridges: ['https://pepubridge.com/'],
