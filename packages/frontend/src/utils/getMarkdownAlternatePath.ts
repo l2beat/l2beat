@@ -24,7 +24,10 @@ export const LIST_PAGES_WITH_MARKDOWN = [
 ] as const satisfies StaticPagePath[]
 
 /** Express route patterns, where `:name` stands for one path segment. */
-export const PROJECT_PAGES_WITH_MARKDOWN = ['/layer2s/projects/:slug'] as const
+export const PROJECT_PAGES_WITH_MARKDOWN = [
+  '/layer2s/projects/:slug',
+  '/privacy/projects/:slug',
+] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
 export type ProjectPageWithMarkdown =
