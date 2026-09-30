@@ -320,6 +320,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
     },
+    {
+      name: 'Privacy protocol',
+      path: '/privacy/projects/{slug}.md',
+      description:
+        'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
+    },
   ],
 }
 

@@ -4,7 +4,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -101,7 +101,14 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
-        description: getProjectMetadataDescription(project),
+        description: getScalingMetadataDescription({
+          name: project.name,
+          category: project.scalingInfo.type,
+          stage: projectEntry.stageConfig.stage,
+          hostChain: projectEntry.header.hostChain,
+          tvs: projectEntry.header.tvs?.breakdown?.total,
+          description: project.display.description,
+        }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
         url: `/layer2s/projects/${project.slug}`,

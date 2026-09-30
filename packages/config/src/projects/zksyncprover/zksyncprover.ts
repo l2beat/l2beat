@@ -21,7 +21,7 @@ export const zksyncprover: BaseProject = {
   },
   display: {
     description:
-      'Plonk proving system designed by Matter Labs to prove custom predefined state transitions of ZKsync Lite.',
+      'A Plonk proving system designed by Matter Labs to prove custom predefined state transitions of ZKsync Lite.',
     links: {
       websites: ['https://lite.zksync.io/'],
       documentation: [

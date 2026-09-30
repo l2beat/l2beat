@@ -73,6 +73,7 @@ describe(createLlmsTxtRouter.name, () => {
     expect(urls).toEqual([
       'https://l2beat.com/layer2s/projects/{slug}.md',
       'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
+      'https://l2beat.com/privacy/projects/{slug}.md',
     ])
   })
 
@@ -80,7 +81,7 @@ describe(createLlmsTxtRouter.name, () => {
     const body = await getLlmsTxt()
 
     const links = getAllLinks(body)
-    expect(body.length).toBeLessThan(10_000)
+    expect(body.length).toBeLessThan(11_000)
     expect(links.length).toBeLessThan(60)
     expect(links.map((l) => l.url)).not.toInclude(
       'https://l2beat.com/layer2s/projects/arbitrum',
