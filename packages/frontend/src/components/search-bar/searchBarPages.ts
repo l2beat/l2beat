@@ -2,16 +2,12 @@ import { env } from '~/env'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
-  ...(env.CLIENT_SIDE_HOME_PAGE
-    ? [
-        {
-          category: 'other' as const,
-          name: 'Home',
-          href: '/',
-          tags: ['pages'],
-        },
-      ]
-    : []),
+  {
+    category: 'other',
+    name: 'Home',
+    href: '/',
+    tags: ['pages'],
+  },
   {
     category: 'l2',
     name: 'Summary',

@@ -23,7 +23,7 @@ export interface Page {
 }
 
 export const STATIC_PAGE_PATHS = [
-  ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
+  '/',
   '/layer2s/summary',
   '/layer2s/activity',
   '/layer2s/risk',
