@@ -121,6 +121,7 @@
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "getValidators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
@@ -1646,7 +1647,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25481216 },
-  "permissionsConfigHash": "0x27bc806d8b3ac72fb5ab7a0a7a79c59d3471eb9717e345e30243989f8690d255",
+  "permissionsConfigHash": "0x41bf15e256413420a09517aaa5b508f0a09950282431180570468b5f6f72d021",
   "permissions": {
     "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA": {
       "directlyReceivedPermissions": [
@@ -1658,7 +1659,7 @@
         {
           "permission": "interact",
           "from": "eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
@@ -1673,7 +1674,7 @@
         {
           "permission": "interact",
           "from": "eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }

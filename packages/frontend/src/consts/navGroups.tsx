@@ -15,7 +15,7 @@ import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { createOrderedSort } from '~/utils/sort'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
-  env.CLIENT_SIDE_HOME_PAGE && {
+  {
     type: 'single',
     title: 'Home',
     match: 'home',
@@ -26,7 +26,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   },
   {
     type: 'multiple',
-    title: env.CLIENT_SIDE_HOME_PAGE ? 'Layer 2s' : 'Scaling',
+    title: 'Layer 2s',
     match: 'layer2s',
     icon: (
       <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
@@ -86,7 +86,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           href: '/layer2s/archived',
         },
       ],
-      env.CLIENT_SIDE_COMPARE_PROJECTS && [
+      [
         {
           title: 'Compare',
           href: '/layer2s/compare',

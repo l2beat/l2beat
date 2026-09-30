@@ -3,7 +3,8 @@ import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSummaryStat'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
-import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
+import { getCommonDaProjectStats } from '../utils/getCommonDaProjectStats'
+import { DaProjectStats } from './DaProjectStats'
 import { InfoCallout } from './InfoCallout'
 
 interface Props {

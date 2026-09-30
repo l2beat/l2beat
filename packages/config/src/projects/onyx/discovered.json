@@ -586,6 +586,7 @@
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "getValidators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
@@ -1751,7 +1752,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "base": 50171751 },
-  "permissionsConfigHash": "0x2fe2ca22d9f7391c40ea57e79ff246be46440283e2eee305afe06ae4dc379f09",
+  "permissionsConfigHash": "0x1276464bcda6edd9c99c2d71e30ef6cc3ca6968999f47bc6c0c8747603ac60b6",
   "permissions": {
     "base:0x107c739629aCced04e3197EAa6b44CdEe0cE246c": {
       "receivedPermissions": [
@@ -1760,6 +1761,16 @@
           "from": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
+        }
+      ]
+    },
+    "base:0x133f066C470d044dB3889359fC5B542d016B5B92": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
         }
       ]
     },
@@ -1837,7 +1848,7 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81" }
@@ -1946,6 +1957,15 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "base:0x133f066C470d044dB3889359fC5B542d016B5B92" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
         }
@@ -1961,7 +1981,7 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {

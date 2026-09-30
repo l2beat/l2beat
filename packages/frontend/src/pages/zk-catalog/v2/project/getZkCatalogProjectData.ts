@@ -2,6 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getZkCatalogMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -29,7 +30,12 @@ export async function getZkCatalogProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
-        description: project.display.description,
+        description: getZkCatalogMetadataDescription({
+          name: project.name,
+          creator: project.zkCatalogInfo.creator,
+          tvs: projectEntry.header.tvs.value,
+          description: project.display.description,
+        }),
         url,
         openGraph: {
           image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
