@@ -1,6 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectTvsBreakdown } from '~/server/features/layer2s/project/getL2ProjectTvsBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getL2ProjectTvsBreakdownStructuredData } from '~/ssr/head/structured-data/getL2ProjectStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
@@ -20,6 +21,7 @@ export async function getL2ProjectTvsBreakdownData(
     return undefined
   }
   const crumbs = getTvsBreakdownBreadcrumbs(tvsBreakdownData.project)
+  const description = `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on L2BEAT.`
 
   const range = tvsBreakdownData.project.archivedAt
     ? optionToRange('max')
@@ -30,12 +32,18 @@ export async function getL2ProjectTvsBreakdownData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${tvsBreakdownData.project.name} | TVS Breakdown - L2BEAT`,
-        description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on L2BEAT.`,
+        description,
         url,
         openGraph: {
           image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
         breadcrumb: { name: crumbs.pageName, parents: [crumbs.project] },
+        structuredData: [
+          getL2ProjectTvsBreakdownStructuredData(
+            tvsBreakdownData.project,
+            description,
+          ),
+        ],
       }),
     },
     ssr: {
