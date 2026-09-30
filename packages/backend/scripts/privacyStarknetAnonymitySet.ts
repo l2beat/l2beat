@@ -15,8 +15,8 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { command, option, optional, run, string } from 'cmd-ts'
 import { FeatureFlags } from '../src/config/FeatureFlags'
 import { getPrivacyConfig } from '../src/config/features/privacy'
-import { AnonymitySetFileStore } from '../src/modules/privacy/AnonymitySetFileStore'
 import { fetchStarknetAnonymitySetRecords } from '../src/modules/privacy/indexers/StarknetPrivacyAnonymitySetIndexer'
+import { StarknetAnonymitySetFileStore } from '../src/modules/privacy/StarknetAnonymitySetFileStore'
 import type { PrivacyConfig } from '../src/modules/privacy/types'
 
 const WINDOW_DAYS = 30
@@ -53,7 +53,7 @@ const cmd = command({
       logger,
     })
     const blockProvider = new BlockProvider(chain, [starknetClient])
-    const store = new AnonymitySetFileStore(
+    const store = new StarknetAnonymitySetFileStore(
       args.file ?? privacy.starknetAnonymitySetFile,
     )
 
@@ -93,7 +93,7 @@ const cmd = command({
 })
 
 function printSummary(
-  records: Awaited<ReturnType<AnonymitySetFileStore['getAll']>>,
+  records: Awaited<ReturnType<StarknetAnonymitySetFileStore['getAll']>>,
   projects: PrivacyConfig['projects'],
   end: UnixTime,
   filePath: string,

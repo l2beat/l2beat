@@ -12,7 +12,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { AnonymitySetFileStore } from '../AnonymitySetFileStore'
+import type { StarknetAnonymitySetFileStore } from '../StarknetAnonymitySetFileStore'
 import type {
   StarknetPrivacyAnonymitySetIndexerConfig,
   StarknetPrivacyAnonymitySetIndexerConfigProperties,
@@ -28,7 +28,7 @@ interface StarknetPrivacyAnonymitySetIndexerDeps
   chain: string
   blockProvider: BlockProvider
   starknetClient: StarknetClient
-  store: AnonymitySetFileStore
+  store: StarknetAnonymitySetFileStore
 }
 
 export class StarknetPrivacyAnonymitySetIndexer extends ManagedMultiIndexer<StarknetPrivacyAnonymitySetIndexerConfig> {

@@ -58,7 +58,6 @@ export interface PrivacyProjectDetails {
   adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
   hasAnonymitySet: boolean
-  anonymitySetKind: 'deposits' | 'registrations'
   hasTvl: boolean
   detailedDescription?: string
   riskSummary?: string
@@ -273,10 +272,6 @@ export async function getPrivacyProjectDetails(
     adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,
     hasAnonymitySet: hasPrivacyAnonymitySet(project),
-    anonymitySetKind:
-      project.privacyInfo.anonymitySet?.type === 'keyRegistrations'
-        ? 'registrations'
-        : 'deposits',
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??

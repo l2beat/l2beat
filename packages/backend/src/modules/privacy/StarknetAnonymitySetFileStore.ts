@@ -11,11 +11,10 @@ type StoredRecord = Omit<PrivacyAnonymitySetEventRecord, 'amount'> & {
 /**
  * Prototype stand-in for PrivacyAnonymitySetEventRepository. Keeps the same
  * record shape and upsert/delete semantics, but persists to a JSON file so
- * Starknet and key registration data can be collected without a schema change
- * (Starknet senders are 66 characters, the DB column fits 42). Records are
- * cached in memory, so every writer needs its own file.
+ * Starknet data can be collected without a schema change (senders are 66
+ * characters, the DB column fits 42).
  */
-export class AnonymitySetFileStore {
+export class StarknetAnonymitySetFileStore {
   private records: Map<string, PrivacyAnonymitySetEventRecord> | undefined
 
   constructor(readonly filePath: string) {}

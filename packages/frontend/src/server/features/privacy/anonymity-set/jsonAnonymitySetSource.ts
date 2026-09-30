@@ -8,24 +8,15 @@ import { UnixTime, unique } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
 /**
- * Prototype: reads anonymity set events from the JSON files written by the
- * backend instead of PrivacyAnonymitySetEvent:
- * - Starknet (STRK-20) deposits, by StarknetPrivacyAnonymitySetIndexer /
- *   `pnpm privacy:starknet-anonymity-set`
- * - key registrations (Umbra), by PrivacyKeyRegistrationIndexer /
- *   `pnpm privacy:key-registration-anonymity-set`
- * The files are committed next to the frontend so its Docker image, which
- * does not include the backend package, contains them.
+ * Prototype: reads Starknet (STRK-20) anonymity set events from the JSON file
+ * written by the backend's StarknetPrivacyAnonymitySetIndexer /
+ * `pnpm privacy:starknet-anonymity-set`, instead of PrivacyAnonymitySetEvent.
+ * The file is committed next to the frontend so its Docker image, which does
+ * not include the backend package, contains it.
  */
-const JSON_FILES = [
+const JSON_FILE =
   process.env.PRIVACY_STARKNET_ANONYMITY_SET_FILE ??
-    resolve(process.cwd(), 'data/privacy/privacy-starknet-anonymity-set.json'),
-  process.env.PRIVACY_KEY_REGISTRATION_ANONYMITY_SET_FILE ??
-    resolve(
-      process.cwd(),
-      'data/privacy/privacy-key-registration-anonymity-set.json',
-    ),
-]
+  resolve(process.cwd(), 'data/privacy/privacy-starknet-anonymity-set.json')
 
 interface JsonAnonymitySetEvent {
   configurationId: string
@@ -36,22 +27,16 @@ interface JsonAnonymitySetEvent {
   amount: string
 }
 
-const cache = new Map<
-  string,
-  { mtimeMs: number; events: JsonAnonymitySetEvent[] }
->()
+let cached: { mtimeMs: number; events: JsonAnonymitySetEvent[] } | undefined
 
 function readEvents(): JsonAnonymitySetEvent[] {
-  return JSON_FILES.flatMap(readFileEvents)
-}
-
-function readFileEvents(file: string): JsonAnonymitySetEvent[] {
-  if (!existsSync(file)) return []
-  const { mtimeMs } = statSync(file)
-  let cached = cache.get(file)
+  if (!existsSync(JSON_FILE)) return []
+  const { mtimeMs } = statSync(JSON_FILE)
   if (cached?.mtimeMs !== mtimeMs) {
-    cached = { mtimeMs, events: JSON.parse(readFileSync(file, 'utf8')) }
-    cache.set(file, cached)
+    cached = {
+      mtimeMs,
+      events: JSON.parse(readFileSync(JSON_FILE, 'utf8')),
+    }
   }
   return cached.events
 }

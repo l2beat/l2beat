@@ -20,7 +20,6 @@ import { utils } from 'ethers'
 import { PrivacyAnonymitySetIndexer } from '../../modules/privacy/indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
-import { PrivacyKeyRegistrationIndexer } from '../../modules/privacy/indexers/PrivacyKeyRegistrationIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyAnonymitySetIndexer } from '../../modules/privacy/indexers/StarknetPrivacyAnonymitySetIndexer'
@@ -32,7 +31,6 @@ import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
-  PrivacyKeyRegistrationIndexerConfig,
   PrivacyLogTopicFilter,
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
@@ -60,8 +58,7 @@ export async function getPrivacyConfig(
     .filter(
       (project) =>
         project.privacyInfo.tokens.some((token) => token.buckets.length > 0) ||
-        project.privacyInfo.relayerTracking !== undefined ||
-        project.privacyInfo.anonymitySet?.type === 'keyRegistrations',
+        project.privacyInfo.relayerTracking !== undefined,
     )
     .map((project) => ({
       projectId: project.id.toString(),
@@ -81,8 +78,6 @@ export async function getPrivacyConfig(
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   const anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[] = []
   const starknetAnonymitySetConfigs: StarknetPrivacyAnonymitySetIndexerConfig[] =
-    []
-  const keyRegistrationAnonymitySetConfigs: PrivacyKeyRegistrationIndexerConfig[] =
     []
   const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
@@ -131,22 +126,6 @@ export async function getPrivacyConfig(
           }
         }
       }
-    }
-
-    const anonymitySet = project.privacyInfo.anonymitySet
-    if (anonymitySet?.type === 'keyRegistrations') {
-      const config = {
-        projectId: project.projectId,
-        bucketId: anonymitySet.id,
-        chain: ChainSpecificAddress.longChain(anonymitySet.address),
-        address: ChainSpecificAddress.address(anonymitySet.address),
-        event: anonymitySet.event,
-        sinceTimestamp: Math.max(anonymitySet.sinceTimestamp, minTimestamp),
-      }
-      keyRegistrationAnonymitySetConfigs.push({
-        id: PrivacyKeyRegistrationIndexer.idToConfigurationId(config),
-        ...config,
-      })
     }
 
     const tracking = project.privacyInfo.relayerTracking
@@ -202,7 +181,6 @@ export async function getPrivacyConfig(
     ...flowConfigs,
     ...starknetFlowConfigs,
     ...starknetAnonymitySetConfigs,
-    ...keyRegistrationAnonymitySetConfigs,
     ...relayerConfigs,
   ]
   const chains = Array.from(
@@ -231,11 +209,6 @@ export async function getPrivacyConfig(
     starknetAnonymitySetFile: env.string(
       'PRIVACY_STARKNET_ANONYMITY_SET_FILE',
       '../frontend/data/privacy/privacy-starknet-anonymity-set.json',
-    ),
-    keyRegistrationAnonymitySetConfigs,
-    keyRegistrationAnonymitySetFile: env.string(
-      'PRIVACY_KEY_REGISTRATION_ANONYMITY_SET_FILE',
-      '../frontend/data/privacy/privacy-key-registration-anonymity-set.json',
     ),
     flowConfigs,
     starknetFlowConfigs,
