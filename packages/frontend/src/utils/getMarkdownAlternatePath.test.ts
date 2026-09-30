@@ -15,6 +15,11 @@ describe(getMarkdownAlternatePath.name, () => {
     expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
       '/layer2s/projects/arbitrum.md',
     )
+    expect(
+      getMarkdownAlternatePath(
+        '/data-availability/projects/celestia/blobstream',
+      ),
+    ).toEqual('/data-availability/projects/celestia/blobstream.md')
   })
 
   it('resolves every path Express routes to the page', () => {
@@ -31,6 +36,14 @@ describe(getMarkdownAlternatePath.name, () => {
     ]) {
       expect(getMarkdownAlternatePath(path)).toEqual(undefined)
     }
+  })
+
+  // A quadratic trailing-slash trim takes ~14s on this input, so mocha's 2s
+  // timeout fails the test without a flaky timing assertion.
+  it('resolves a request path of many slashes in linear time', () => {
+    expect(getMarkdownAlternatePath(`${'/'.repeat(100_000)}x`)).toEqual(
+      undefined,
+    )
   })
 
   it('has no alternate for the markdown version itself', () => {

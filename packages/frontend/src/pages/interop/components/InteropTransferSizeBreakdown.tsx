@@ -9,40 +9,20 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
-import { transferSizeBuckets } from '../utils/transferSizeBuckets'
+import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
 
 export function InteropTransferSizeBreakdown({
   transferSize,
 }: {
   transferSize: TransferSizeDistribution | undefined
 }) {
-  const breakdownValues = [
-    {
-      value: transferSize?.countUnder100 ?? 0,
-      label: transferSizeBuckets.under100.label,
-      style: { backgroundColor: transferSizeBuckets.under100.color },
-    },
-    {
-      value: transferSize?.count100To1K ?? 0,
-      label: transferSizeBuckets.from100To1K.label,
-      style: { backgroundColor: transferSizeBuckets.from100To1K.color },
-    },
-    {
-      value: transferSize?.count1KTo10K ?? 0,
-      label: transferSizeBuckets.from1KTo10K.label,
-      style: { backgroundColor: transferSizeBuckets.from1KTo10K.color },
-    },
-    {
-      value: transferSize?.count10KTo100K ?? 0,
-      label: transferSizeBuckets.from10KTo100K.label,
-      style: { backgroundColor: transferSizeBuckets.from10KTo100K.color },
-    },
-    {
-      value: transferSize?.countOver100K ?? 0,
-      label: transferSizeBuckets.over100K.label,
-      style: { backgroundColor: transferSizeBuckets.over100K.color },
-    },
-  ]
+  const breakdownValues = getTransferSizeBreakdown(transferSize).map(
+    (bucket) => ({
+      value: bucket.count,
+      label: bucket.label,
+      style: { backgroundColor: bucket.color },
+    }),
+  )
 
   return (
     <div>
