@@ -1,8 +1,11 @@
 import type { ExitWindowRisk, Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { env } from '~/env'
+import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getOssificationSeries } from './getOssificationSeries'
 import {
   getOssificationStats,
@@ -12,12 +15,14 @@ import { sampleTimeline } from './sampleTimeline'
 
 export type OssificationCategory = 'Layer 2' | 'Layer 3' | 'Privacy' | 'DeFi'
 
-export interface OssificationEntry extends OssificationStats {
-  slug: string
-  name: string
-  icon: string
+export interface OssificationEntry
+  extends OssificationStats,
+    Pick<
+      CommonProjectEntry,
+      'slug' | 'name' | 'icon' | 'backgroundColor' | 'statuses'
+    > {
   category: OssificationCategory
-  /** Absent for DeFi projects while DeFi pages are disabled */
+  /** Project page; absent for DeFi projects while DeFi pages are disabled */
   href?: string
   contractCount: number
   /** Absent for DeFi, which has no exit window in config yet */
@@ -43,7 +48,7 @@ export interface OssificationTimeline {
 }
 
 type OssificationEntryProject = Project<
-  'ossification',
+  'ossification' | 'statuses',
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
@@ -51,7 +56,7 @@ const TIMELINE_WINDOW = 365 * UnixTime.DAY
 
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
-    select: ['ossification'],
+    select: ['ossification', 'statuses'],
     optional: [
       'scalingInfo',
       'scalingRisks',
@@ -81,11 +86,21 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         project,
         Math.min(from, clockStart),
       )
+      const statuses = {
+        yellowWarning: project.statuses.yellowWarning,
+        redWarning: project.statuses.redWarning,
+        underReview: getUnderReviewStatus({
+          isUnderReview: !!project.statuses.reviewStatus,
+          impactfulChange: false,
+        }),
+      }
 
       return {
         slug: project.slug,
         name: project.name,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        backgroundColor: getRowBackgroundColor(statuses),
+        statuses,
         ...placement,
         ...getOssificationStats(ossification, series, now),
         contractCount: ossification.contracts.length,
@@ -129,20 +144,20 @@ function getPlacement(
   if (project.scalingInfo) {
     return {
       category: project.scalingInfo.layer === 'layer2' ? 'Layer 2' : 'Layer 3',
-      href: `/layer2s/projects/${project.slug}#ossification`,
+      href: `/layer2s/projects/${project.slug}`,
     }
   }
   if (project.privacyInfo) {
     return {
       category: 'Privacy',
-      href: `/privacy/projects/${project.slug}#ossification`,
+      href: `/privacy/projects/${project.slug}`,
     }
   }
   if (project.defiInfo) {
     return {
       category: 'DeFi',
       ...(env.CLIENT_SIDE_DEFI_ENABLED && {
-        href: `/defi/projects/${project.slug}#ossification`,
+        href: `/defi/projects/${project.slug}`,
       }),
     }
   }

@@ -47,7 +47,6 @@ export function createDefiRouter(
       const data = await getDefiProjectData(
         manifest,
         req.params.slug,
-        req.originalUrl,
         cache,
         req.query.update,
       )

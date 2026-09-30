@@ -1,11 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import type { OssificationValueSource } from '~/server/features/projects/ossification/getOssificationSeries'
-
-export const OSSIFICATION_VALUE_LABELS = {
-  tvs: 'Canonical TVS',
-  defillama: 'TVL (source: DefiLlama)',
-} satisfies Record<OssificationValueSource, string>
+import { OSSIFICATION_VALUE_LABELS } from './ossificationValueLabels'
 
 export function OssificationExposure({
   exposure,
@@ -23,7 +19,7 @@ export function OssificationExposure({
       <span className="font-normal text-secondary text-xs">·years</span>
       {valueSource === 'defillama' && (
         <span className="block font-normal text-2xs text-secondary">
-          {OSSIFICATION_VALUE_LABELS.defillama}
+          {OSSIFICATION_VALUE_LABELS.defillama.long}
         </span>
       )}
     </span>

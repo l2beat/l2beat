@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/OssificationExposure'
+import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
 import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -181,7 +181,7 @@ function getDescription({
   const known = values?.filter((value) => value !== null) ?? []
   const current = known.at(-1)
   return {
-    title: `${valueSource === 'defillama' ? 'TVL' : 'TVS'} & critical changes`,
+    title: `${OSSIFICATION_VALUE_LABELS[valueSource ?? 'tvs'].short} & critical changes`,
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
@@ -189,7 +189,7 @@ function getDescription({
         ? 'No critical change in this window.'
         : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')} in this window.`,
       current !== undefined && valueSource
-        ? `${OSSIFICATION_VALUE_LABELS[valueSource]} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
+        ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
         : 'No value data.',
     ],
   }

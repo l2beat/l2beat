@@ -111,9 +111,7 @@ export async function getPrivacyProjectDetails(
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
     getTrackedOn(project),
-    env.CLIENT_SIDE_OSSIFICATION_ENABLED
-      ? getProjectOssification(project)
-      : undefined,
+    getProjectOssification(project),
   ])
 
   const tvlBySymbol = new Map<string, number>()

@@ -3,6 +3,7 @@ import type {
   ProjectOssificationCriticalUpdate,
 } from '@l2beat/config'
 import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { calculateExposure } from './calculateExposure'
 import {
   getOssificationSeries,
@@ -45,7 +46,7 @@ export async function getProjectOssification(
   project: OssificationProject,
 ): Promise<ProjectOssificationView | undefined> {
   const { ossification } = project
-  if (!ossification) {
+  if (!env.CLIENT_SIDE_OSSIFICATION_ENABLED || !ossification) {
     return undefined
   }
 

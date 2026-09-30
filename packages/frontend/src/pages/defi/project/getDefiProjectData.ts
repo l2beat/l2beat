@@ -10,7 +10,6 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getDefiProjectData(
   manifest: Manifest,
   slug: string,
-  url: string,
   cache: InMemoryCache,
   selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
@@ -20,7 +19,7 @@ export async function getDefiProjectData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getCachedData(manifest, slug, url),
+    () => getCachedData(manifest, slug),
   )
   if (!data) return undefined
 
@@ -36,7 +35,7 @@ export async function getDefiProjectData(
   }
 }
 
-async function getCachedData(manifest: Manifest, slug: string, url: string) {
+async function getCachedData(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
   const [appLayoutProps, entry] = await Promise.all([
     getAppLayoutProps(),
@@ -58,7 +57,9 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
             description: entry.description,
           },
         }),
-        url,
+        // Derived from the slug, not the request URL: the cache entry is
+        // shared by every request for the project, whatever its query.
+        url: `/defi/projects/${entry.slug}`,
         openGraph: {
           image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,
         },

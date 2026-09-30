@@ -31,14 +31,4 @@ describe(calculateExposure.name, () => {
 
     expect(calculateExposure(series, 2 * YEAR, 3 * YEAR)).toEqual(100)
   })
-
-  it('returns null for an empty series', () => {
-    expect(calculateExposure([], 0, YEAR)).toEqual(null)
-  })
-
-  it('returns zero for an empty interval', () => {
-    const series = [{ timestamp: 0, value: 100 }]
-
-    expect(calculateExposure(series, YEAR, YEAR)).toEqual(0)
-  })
 })

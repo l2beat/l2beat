@@ -17,9 +17,6 @@ export function calculateExposure(
   if (points.length === 0) {
     return null
   }
-  if (to <= from) {
-    return 0
-  }
 
   const firstAfterIndex = points.findIndex((p) => p.timestamp > from)
   const inside = firstAfterIndex === -1 ? [] : points.slice(firstAfterIndex)

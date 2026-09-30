@@ -26,13 +26,16 @@ import { OssificationTimelineCell } from './OssificationTimelineCell'
 
 const columnHelper = createColumnHelper<OssificationEntry>()
 
+const getOssificationHref = (entry: OssificationEntry) =>
+  entry.href && `${entry.href}#ossification`
+
 const columns = [
-  ...getCommonProjectColumns(columnHelper, (row) => row.href),
+  ...getCommonProjectColumns(columnHelper, getOssificationHref),
   columnHelper.accessor('name', {
     header: 'Project',
     enableHiding: false,
     cell: (ctx) => (
-      <TableLink href={ctx.row.original.href}>
+      <TableLink href={getOssificationHref(ctx.row.original)}>
         <TwoRowCell>
           <TwoRowCell.First>
             <ProjectNameCell
@@ -40,8 +43,9 @@ const columns = [
                 name: ctx.row.original.name,
                 slug: ctx.row.original.slug,
                 icon: ctx.row.original.icon,
-                backgroundColor: undefined,
-                statuses: undefined,
+                detailsHref: ctx.row.original.href,
+                backgroundColor: ctx.row.original.backgroundColor,
+                statuses: ctx.row.original.statuses,
               }}
             />
           </TwoRowCell.First>

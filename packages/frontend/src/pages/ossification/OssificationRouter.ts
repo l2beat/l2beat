@@ -17,14 +17,7 @@ export function createOssificationRouter(
   const router = express.Router()
 
   router.get('/ossification', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['ossification', req.originalUrl],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getOssificationData(manifest, req.originalUrl, cache),
-    )
+    const data = await getOssificationData(manifest, req.originalUrl, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

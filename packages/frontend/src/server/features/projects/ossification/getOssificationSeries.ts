@@ -81,6 +81,8 @@ export async function getOssificationSeries(
       excludeRwaRestrictedTokens: true,
     },
   )
+  // Canonical only: unlike TVS elsewhere, customCanonical (canonical with
+  // additional trust assumptions) is deliberately left out.
   return {
     source,
     points: rows.map((row) => ({

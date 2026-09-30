@@ -4,7 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
-import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -80,9 +80,7 @@ export async function getDefiProjectEntry(
     getContractUtils(),
     getProjectsChangeReport(),
     getDefiDependencyProjectsById(project.externalDependencies),
-    env.CLIENT_SIDE_OSSIFICATION_ENABLED
-      ? getProjectOssification(project)
-      : undefined,
+    getProjectOssification(project),
   ])
   // DeFi pages get the Updates section together with ossification.
   const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
@@ -174,20 +172,14 @@ export async function getDefiProjectEntry(
     })
   }
 
-  if (ossification || discoveryUpdates.length > 0) {
-    sections.push({
-      type: 'UpdatesSection',
-      props: {
-        id: 'updates',
-        title: 'Updates',
-        ...(await getUpdatesSectionProps(
-          helpers,
-          project.id,
-          discoveryUpdates,
-        )),
-        ossification,
-      },
-    })
+  const updatesSection = await getUpdatesSection(
+    helpers,
+    project.id,
+    discoveryUpdates,
+    ossification,
+  )
+  if (updatesSection) {
+    sections.push(updatesSection)
   }
 
   if (permissionsSection) {
