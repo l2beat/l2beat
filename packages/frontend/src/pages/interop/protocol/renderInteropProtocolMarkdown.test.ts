@@ -125,6 +125,28 @@ describe(renderInteropProtocolMarkdown.name, () => {
     expect(summary).not.toInclude('### Risks')
   })
 
+  it('leads the warnings with the under review banner of the HTML page', () => {
+    const summary = getSection(
+      renderInteropProtocolMarkdown({
+        ...PAGE,
+        projectEntry: {
+          ...PAGE.projectEntry,
+          underReviewStatus: 'config',
+          header: {
+            ...PAGE.projectEntry.header,
+            warning: 'The protocol is being upgraded.',
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('**Warning:** This project is under review.')
+    expect(summary.indexOf('This project is under review.')).toBeLessThan(
+      summary.indexOf('The protocol is being upgraded.'),
+    )
+  })
+
   it('follows the HTML page outline with one H2 per section', () => {
     const headings = renderInteropProtocolMarkdown(PAGE)
       .split('\n')
@@ -147,7 +169,6 @@ describe(renderInteropProtocolMarkdown.name, () => {
 
     expect(volume).toInclude(
       '### Top chains by volume\n\n- Ethereum: $1.40 M (1.10 K transfers)\n- Arbitrum One: $1.10 M (900 transfers)\n- Base: $50.00 K (40 transfers)\n- and 2 more',
-      // Summed over bridge types; the zero-volume Ethereum → Base is left out.
       '### Top routes by volume\n\n- Ethereum → Arbitrum One: $700.00 K\n- Arbitrum One → Ethereum: $200.00 K\n- Base → Ethereum: $50.00 K\n\n',
       'https://l2beat.com/interop/protocols/across#interop-volume',
     )
@@ -236,20 +257,13 @@ function token(symbol: string, volume: number): TokenData {
   }
 }
 
-function bridgeType(
-  volume: number,
-  flows: [srcChain: string, dstChain: string, volume: number][],
-) {
+function bridgeType(volume: number) {
   return {
     volume,
     transferCount: 1,
     averageValue: null,
     tokens: { items: [], remainingCount: 0 },
-    flows: flows.map(([srcChain, dstChain, volume]) => ({
-      srcChain,
-      dstChain,
-      volume,
-    })),
+    flows: [],
   }
 }
 
@@ -288,18 +302,11 @@ const PROTOCOL: ProtocolEntry = {
   averageDuration: { type: 'single', duration: 90 },
   byBridgeType: {
     nonMinting: {
-      ...bridgeType(1_350_000, [
-        ['ethereum', 'arbitrum', 600_000],
-        ['arbitrum', 'ethereum', 200_000],
-        ['ethereum', 'base', 0],
-      ]),
+      ...bridgeType(1_350_000),
       averageValueInFlight: undefined,
     },
     lockAndMint: {
-      ...bridgeType(150_000, [
-        ['ethereum', 'arbitrum', 100_000],
-        ['base', 'ethereum', 50_000],
-      ]),
+      ...bridgeType(150_000),
       netMintedValue: undefined,
     },
     burnAndMint: undefined,
@@ -367,6 +374,11 @@ const ENTRY: InteropProtocolEntry = {
         entry: PROTOCOL,
         interopChains: CHAINS,
         defaultSelectedChains: ['ethereum', 'arbitrum', 'base'],
+        topRoutes: [
+          { srcChain: 'ethereum', dstChain: 'arbitrum', volume: 700_000 },
+          { srcChain: 'arbitrum', dstChain: 'ethereum', volume: 200_000 },
+          { srcChain: 'base', dstChain: 'ethereum', volume: 50_000 },
+        ],
       },
     },
     {

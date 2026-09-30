@@ -10,16 +10,16 @@ import type {
 } from '~/server/features/layer2s/interop/types'
 import type { InteropTopTokenData } from '~/server/features/layer2s/interop/utils/getTopToken'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
+import { listTopItems } from '~/server/markdown/interopMarkdown'
+import { formatCount, formatUsd, link } from '~/server/markdown/markdown'
 import {
-  formatCount,
-  formatUsd,
-  listTopItems,
-} from '~/server/markdown/interopMarkdown'
-import { link } from '~/server/markdown/markdown'
-import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+  getProjectStatusWarnings,
+  renderProjectMarkdown,
+} from '~/server/markdown/renderProjectMarkdown'
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
+import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
 import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
-import { transferSizeBuckets } from '../utils/transferSizeBuckets'
+import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
 
 /** The page props the markdown needs: the headline numbers live next to the entry, not in it. */
 export interface InteropProtocolPageContent {
@@ -38,11 +38,14 @@ export function renderInteropProtocolMarkdown({
     // cited, whichever deployment rendered it.
     pageUrl: `${PRODUCTION_ORIGIN}/interop/protocols/${entry.slug}`,
     summary: {
-      warnings: compact([
-        entry.header.emergencyWarning,
-        entry.header.redWarning?.text,
-        entry.header.warning,
-      ]),
+      warnings: [
+        ...getProjectStatusWarnings(entry),
+        ...compact([
+          entry.header.emergencyWarning,
+          entry.header.redWarning?.text,
+          entry.header.warning,
+        ]),
+      ],
       facts: getFacts(protocolData),
       risks: [],
       description: entry.header.description,
@@ -133,13 +136,6 @@ function linkToken(token: InteropTopTokenData) {
 }
 
 function formatTransferSize(size: TransferSizeDataPoint) {
-  const buckets = [
-    [transferSizeBuckets.under100.label, size.countUnder100],
-    [transferSizeBuckets.from100To1K.label, size.count100To1K],
-    [transferSizeBuckets.from1KTo10K.label, size.count1KTo10K],
-    [transferSizeBuckets.from10KTo100K.label, size.count10KTo100K],
-    [transferSizeBuckets.over100K.label, size.countOver100K],
-  ] as const
   const range = compact([
     size.minTransferValueUsd !== undefined &&
       `min ${formatUsd(size.minTransferValueUsd)}`,
@@ -148,19 +144,20 @@ function formatTransferSize(size: TransferSizeDataPoint) {
     size.maxTransferValueUsd !== undefined &&
       `max ${formatUsd(size.maxTransferValueUsd)}`,
   ])
-  const counts = buckets
-    .map(([label, count]) => `${label}: ${formatCount(count)} transfers`)
+  const counts = getTransferSizeBreakdown(size)
+    .map(({ label, count }) => `${label}: ${formatCount(count)} transfers`)
     .join(', ')
   return range.length > 0 ? `${counts} (${range.join(', ')})` : counts
 }
 
 /** Volume per bridge type, in the order and with the labels of the HTML breakdown. */
 function formatTransferTypes(byBridgeType: ByBridgeTypeData) {
+  const volumes = getBridgeTypeVolumes(byBridgeType)
   return (Object.keys(TRANSFER_TYPE_DISPLAY) as (keyof ByBridgeTypeData)[])
     .flatMap((type) => {
-      const stats = byBridgeType[type]
-      return stats
-        ? [`${TRANSFER_TYPE_DISPLAY[type].label}: ${formatUsd(stats.volume)}`]
+      const volume = volumes[type]
+      return volume !== undefined
+        ? [`${TRANSFER_TYPE_DISPLAY[type].label}: ${formatUsd(volume)}`]
         : []
     })
     .join(', ')
