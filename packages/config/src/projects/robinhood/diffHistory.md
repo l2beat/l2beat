@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd6ae7164b30a690eeecd1c32f0691f29d3b7c6e5
+Generated with discovered.json: 0xf31b6bca84b139a1d2d374f7929937640c6f85d4
 
-# Diff at Wed, 30 Sep 2026 07:45:42 GMT:
+# Diff at Wed, 30 Sep 2026 07:47:45 GMT:
 
-- id: 0c0d67ab
+- id: 7f6faff1
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790671700
+- comparing to: main@9c43493732e65a2ed2bef6bc68b94a253c304480 block: 1790671700
 - current timestamp: 1790671700
 
 ## Description
@@ -21,7 +21,7 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
     contract Safe (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe] {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
++        {"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
       receivedPermissions.2:
 +        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
       receivedPermissions.3:
@@ -61,7 +61,7 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
       fieldMeta.Executor:
 +        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
       receivedPermissions:
--        [{"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"},{"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}]
+-        [{"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"},{"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}]
       directlyReceivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"}
     }
@@ -135,6 +135,60 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
       receivedPermissions.0.description:
 -        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
 +        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+Generated with discovered.json: 0xc8d541c0d136149d0271fad1d2c1994ddad4be12
+
+# Diff at Tue, 29 Sep 2026 17:50:01 GMT:
+
+- id: b5e390ee
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790671700
+- current timestamp: 1790671700
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
     }
 ```
 
