@@ -95,6 +95,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
       name: project.name,
       slug: project.slug,
       metaDescription: getInteropMetadataDescription({
+        name: project.name,
         type: project.interopConfig.type,
         description: project.interopConfig.description,
       }),

@@ -48,7 +48,7 @@ describe(getScalingMetadataDescription.name, () => {
     })
 
     expect(description).toEqual(
-      'Optimium · built on Arbitrum One · $1.2M TVS. Xai is a gaming chain.',
+      'Optimium · on Arbitrum One · $1.2M TVS. Xai is a gaming chain.',
     )
   })
 
@@ -73,7 +73,24 @@ describe(getScalingMetadataDescription.name, () => {
       description: 'Upcoming Chain launches soon.',
     })
 
-    expect(description).toEqual('Built on Base. Upcoming Chain launches soon.')
+    expect(description).toEqual('On Base. Upcoming Chain launches soon.')
+  })
+
+  // Multi-line config strings reach the builder with their newline and
+  // indentation intact.
+  it('collapses newlines and repeated spaces in the description', () => {
+    const description = getScalingMetadataDescription({
+      category: 'Other',
+      stage: 'NotApplicable',
+      hostChain: undefined,
+      tvs: undefined,
+      description:
+        'ApeX Pro is a trading platform that delivers\n      perpetual contracts trading.',
+    })
+
+    expect(description).toEqual(
+      'ApeX Pro is a trading platform that delivers perpetual contracts trading.',
+    )
   })
 
   // The lead is 19 chars plus a separating space, leaving 280 of the 300-char
@@ -125,13 +142,25 @@ describe(getDaMetadataDescription.name, () => {
 describe(getZkCatalogMetadataDescription.name, () => {
   it('leads with the creator and the TVS the proof system secures', () => {
     const description = getZkCatalogMetadataDescription({
-      creator: 'Succinct',
+      creator: 'RISC Zero',
       tvs: 2_100_000_000,
-      description: 'SP1 is a zkVM.',
+      description: 'Risc0 is a zkVM proving system for RISC-V programs.',
     })
 
     expect(description).toEqual(
-      'ZK proof system by Succinct · $2.1B TVS. SP1 is a zkVM.',
+      'Created by RISC Zero · $2.1B TVS. Risc0 is a zkVM proving system for RISC-V programs.',
+    )
+  })
+
+  it('leaves out the creator when the description already names it', () => {
+    const description = getZkCatalogMetadataDescription({
+      creator: 'Succinct',
+      tvs: 2_100_000_000,
+      description: 'SP1 Turbo is a zk proving system built by Succinct.',
+    })
+
+    expect(description).toEqual(
+      '$2.1B TVS. SP1 Turbo is a zk proving system built by Succinct.',
     )
   })
 
@@ -142,31 +171,55 @@ describe(getZkCatalogMetadataDescription.name, () => {
       description: 'Boojum is a STARK prover.',
     })
 
-    expect(description).toEqual(
-      'ZK proof system · $5M TVS. Boojum is a STARK prover.',
-    )
+    expect(description).toEqual('$5M TVS. Boojum is a STARK prover.')
   })
 })
 
 describe(getInteropMetadataDescription.name, () => {
-  it('leads with the protocol type', () => {
+  it('prefixes the project name when the description does not state it', () => {
     const description = getInteropMetadataDescription({
+      name: 'Across',
       type: 'intent',
-      description: 'Across is a crosschain intents protocol.',
+      description: 'Intent framework specialised on popular chains.',
     })
 
     expect(description).toEqual(
-      'Intent bridge. Across is a crosschain intents protocol.',
+      'Across – Intent framework specialised on popular chains.',
     )
   })
 
-  it('states only the type when there is no description', () => {
+  it('keeps a description that already names the project unchanged', () => {
     const description = getInteropMetadataDescription({
+      name: 'deBridge',
+      type: 'other',
+      description: 'deBridge is a message bridge.',
+    })
+
+    expect(description).toEqual('deBridge is a message bridge.')
+  })
+
+  // "based" contains "Base" but does not name the project, so the prefix
+  // must still be added.
+  it('does not take part of a longer word for the project name', () => {
+    const description = getInteropMetadataDescription({
+      name: 'Base',
+      type: 'canonical',
+      description: 'The canonical bridge, based on the OP stack.',
+    })
+
+    expect(description).toEqual(
+      'Base – The canonical bridge, based on the OP stack.',
+    )
+  })
+
+  it('states the name and type when there is no description', () => {
+    const description = getInteropMetadataDescription({
+      name: 'Axelar',
       type: 'multichain',
       description: undefined,
     })
 
-    expect(description).toEqual('Multichain interop protocol.')
+    expect(description).toEqual('Axelar is a multichain interop protocol.')
   })
 })
 

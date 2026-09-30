@@ -17,7 +17,7 @@ export function getScalingMetadataDescription(project: {
   return leadWithFacts(
     [
       joinWords(stage, unlessMentioned(category, project.description)),
-      project.hostChain && `built on ${project.hostChain}`,
+      project.hostChain && `on ${project.hostChain}`,
       usd(project.tvs, 'TVS'),
     ],
     project.description,
@@ -44,25 +44,31 @@ export function getZkCatalogMetadataDescription(project: {
   tvs: number
   description: string
 }) {
+  const creator = unlessMentioned(project.creator, project.description)
   return leadWithFacts(
-    [
-      joinWords(
-        unlessMentioned('ZK proof system', project.description),
-        project.creator && `by ${project.creator}`,
-      ),
-      usd(project.tvs, 'TVS'),
-    ],
+    [creator && `created by ${creator}`, usd(project.tvs, 'TVS')],
     project.description,
   )
 }
 
+// No type lead: interop descriptions already open with the kind of bridge,
+// often in other words than ours ("Liquidity bridge" for an intent protocol).
+// They rarely name the project though, and many canonical bridges share one
+// template text, so the name keeps each page's description distinct.
 export function getInteropMetadataDescription(project: {
+  name: string
   type: InteropType
   description: string | undefined
 }) {
-  return leadWithFacts(
-    [unlessMentioned(INTEROP_TYPE_NOUN[project.type], project.description)],
-    project.description,
+  const description = collapseWhitespace(project.description)
+  if (!description) {
+    return `${project.name} is ${withArticle(INTEROP_TYPE_NOUN[project.type])}.`
+  }
+  return fitWholeSentences(
+    mentions(description, project.name)
+      ? description
+      : `${project.name} – ${description}`,
+    MAX_LENGTH,
   )
 }
 
@@ -75,11 +81,15 @@ type Fact = string | undefined | false
 
 // A fragment, not an "X is a…" sentence: the hand-written description already
 // opens that way, so a sentence lead would say the same thing twice.
-function leadWithFacts(facts: Fact[], description: string | undefined) {
+function leadWithFacts(facts: Fact[], rawDescription: string | undefined) {
   const stated = facts.filter(Boolean)
   const lead =
     stated.length > 0 ? `${capitalize(stated.join(' · '))}.` : undefined
-  return [lead, fitWholeSentences(description, lead)].filter(Boolean).join(' ')
+  const description = collapseWhitespace(rawDescription)
+  const budget = MAX_LENGTH - (lead ? lead.length + 1 : 0)
+  return [lead, description && fitWholeSentences(description, budget)]
+    .filter(Boolean)
+    .join(' ')
 }
 
 // Search engines have no length limit and pick the part matching the query,
@@ -87,18 +97,11 @@ function leadWithFacts(facts: Fact[], description: string | undefined) {
 const MAX_LENGTH = 300
 const ELLIPSIS = '…'
 
-function fitWholeSentences(
-  description: string | undefined,
-  lead: string | undefined,
-) {
-  if (!description) {
-    return undefined
+function fitWholeSentences(text: string, budget: number) {
+  if (text.length <= budget) {
+    return text
   }
-  const budget = MAX_LENGTH - (lead ? lead.length + 1 : 0)
-  if (description.length <= budget) {
-    return description
-  }
-  const sentences = description.split(/(?<=[.!?])\s+/)
+  const sentences = text.split(/(?<=[.!?])\s+/)
   let fitting = ''
   for (const sentence of sentences) {
     const next = fitting ? `${fitting} ${sentence}` : sentence
@@ -107,13 +110,18 @@ function fitWholeSentences(
     }
     fitting = next
   }
-  return fitting || cutOnWordBoundary(description, budget)
+  return fitting || cutOnWordBoundary(text, budget)
 }
 
 function cutOnWordBoundary(text: string, budget: number) {
   const fitting = text.slice(0, budget - ELLIPSIS.length + 1)
   const wholeWords = fitting.slice(0, fitting.lastIndexOf(' '))
   return wholeWords.replace(/[\s,;:.]+$/, '') + ELLIPSIS
+}
+
+// Multi-line config strings carry their newlines and indentation.
+function collapseWhitespace(text: string | undefined) {
+  return text?.replace(/\s+/g, ' ').trim()
 }
 
 const INTEROP_TYPE_NOUN: Record<InteropType, string> = {
@@ -123,10 +131,19 @@ const INTEROP_TYPE_NOUN: Record<InteropType, string> = {
   other: 'interop protocol',
 }
 
-function unlessMentioned(fact: string | undefined, description = '') {
-  const mentioned =
-    fact !== undefined && description.toLowerCase().includes(fact.toLowerCase())
-  return mentioned ? undefined : fact
+function withArticle(noun: string) {
+  return /^[aeiou]/i.test(noun) ? `an ${noun}` : `a ${noun}`
+}
+
+function unlessMentioned(fact: string | undefined, description: string) {
+  return fact !== undefined && mentions(description, fact) ? undefined : fact
+}
+
+// Whole words only, so that "Base" is not found in "based"; a plural still
+// counts ("ZK Rollups").
+function mentions(text: string, phrase: string) {
+  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return new RegExp(`(^|\\W)${escaped}s?(\\W|$)`, 'i').test(text)
 }
 
 function joinWords(...words: Fact[]) {
