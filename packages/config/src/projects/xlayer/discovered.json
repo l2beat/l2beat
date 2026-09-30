@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1789554702,
-  "configHash": "0xccb604b7376ba2f57bdc5c24d5dd054eb2cec7f6035dd31d41d8f4c908e6da2e",
+  "configHash": "0x5a6a9593410c5a884b6a607355deb5be1ca515d83dc4b41c79d47f0c5f0a1ec7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2467,7 +2467,7 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25989455 },
-  "permissionsConfigHash": "0xa550b13e99f5f7d5189944b7a76ef1cf36fed9ad170d8e69355ca628ec5f80a6",
+  "permissionsConfigHash": "0x33c4abcb6c33b683caac7dbd85b2c8ced47011682a83af71305ef7efc216c480",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf",
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"

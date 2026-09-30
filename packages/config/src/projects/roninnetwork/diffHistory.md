@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe8d4e351a9979045cc85fecd3b9c991663ae937b
+Generated with discovered.json: 0x8155a67ce3d6643faad9dce9171039f456e002c8
 
-# Diff at Tue, 29 Sep 2026 17:47:00 GMT:
+# Diff at Wed, 30 Sep 2026 07:45:38 GMT:
 
 - id: a37891d5
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -9,13 +9,21 @@ Generated with discovered.json: 0xe8d4e351a9979045cc85fecd3b9c991663ae937b
 
 ## Description
 
-Config: add the DisputeGameFactory owner permission to the shared templates.
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
 
 ```diff
     contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {

@@ -426,6 +426,9 @@
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
         "callsScheduled": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
         },
@@ -3675,7 +3678,7 @@
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25486625 },
-  "permissionsConfigHash": "0x33c67d056d0feee709d66c7a1614e696b5f6a37269ad870fd5bd6a9180943c90",
+  "permissionsConfigHash": "0xf93a22e37041de3475da89d8ea97cea68dcf53d06d0d1e7774d246c5df5d5990",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {
       "receivedPermissions": [

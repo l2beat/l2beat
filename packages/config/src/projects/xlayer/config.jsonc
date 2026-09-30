@@ -33,25 +33,6 @@
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
-    "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": {
-      "fields": {
-        "Proposer": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "propose transactions."
-            },
-            {
-              "type": "act",
-              "delay": "{{getMinDelay}}"
-            }
-          ]
-        },
-        "Executor": {
-          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
-        }
-      }
-    },
     "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8": {
       "fields": {
         "proposer": {

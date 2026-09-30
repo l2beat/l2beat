@@ -197,7 +197,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
@@ -570,7 +573,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25631964 },
-  "permissionsConfigHash": "0x64c118aa93e5ab6660f3fea89189d600c6356f9e17b84724a00cc55334b49750",
+  "permissionsConfigHash": "0x5098047cdb8b8ad6a33eb277435ba527d143f43dbc658e94b53fe9ebf732d592",
   "permissions": {
     "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": {
       "receivedPermissions": [
