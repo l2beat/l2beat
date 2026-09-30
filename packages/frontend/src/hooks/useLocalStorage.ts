@@ -1,7 +1,6 @@
 import type { VisibilityState } from '@tanstack/react-table'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
-import type { DevToolsTab } from '~/components/dev-tools/L2BeatDevTools'
 import type { STORAGE_KEY_PREFIX } from '~/components/table/persistedColumnVisibility'
 
 import { useEventCallback } from './useEventCallback'
@@ -26,8 +25,6 @@ type LocalStorageSchema = {
 } & {
   'has-finished-legend-onboarding': boolean
   'last-read-changelog-entry-id': string | undefined
-  'dev-tools-is-open': boolean
-  'dev-tools-tab': DevToolsTab
 }
 
 export type LocalStorageKey = keyof LocalStorageSchema
