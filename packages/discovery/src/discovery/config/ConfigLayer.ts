@@ -48,13 +48,14 @@ export const ContractLayer = v.object({
   fields: v.record(v.string(), FieldLayer).optional(),
 })
 
-export type ConfigLayer = v.infer<typeof ConfigLayer>
-export const ConfigLayer = v.object({
+export const _ConfigLayer = {
   ..._StructureConfig,
   ..._ColorConfig,
   ..._PermissionsConfig,
   overrides: v.record(AddressKey, ContractLayer).optional(),
-})
+}
+export type ConfigLayer = v.infer<typeof ConfigLayer>
+export const ConfigLayer = v.object(_ConfigLayer)
 
 export function mergeConfigLayer(
   base: ConfigLayer,
