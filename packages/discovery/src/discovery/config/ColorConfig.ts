@@ -1,5 +1,6 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { AddressKey } from './AddressKey'
+import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
@@ -48,7 +49,6 @@ export const CriticalWindow = v.union([
 export type CriticalFlag = v.infer<typeof CriticalFlag>
 export const CriticalFlag = v.union([v.literal(true), CriticalWindow])
 
-export type ColorContract = v.infer<typeof ColorContract>
 export const _ColorContract = {
   displayName: v.string().optional(),
   categories: v.record(v.string(), DiscoveryCategory).optional(),
@@ -56,28 +56,44 @@ export const _ColorContract = {
   critical: CriticalFlag.optional(),
   description: v.string().optional(),
   references: v.array(ExternalReference).optional(),
-  fields: v.record(v.string(), ColorContractField).default({}),
-  manualSourcePaths: v.record(v.string(), v.string()).default({}),
+  fields: v.record(v.string(), ColorContractField).optional(),
+  manualSourcePaths: v.record(v.string(), v.string()).optional(),
 }
-export const ColorContract = v.object(_ColorContract)
+export type ColorContractLayer = v.infer<typeof ColorContractLayer>
+export const ColorContractLayer = v.object(_ColorContract)
 
-export type ColorConfig = v.infer<typeof ColorConfig>
-export const _ColorConfig = {
-  categories: v.record(v.string(), DiscoveryCategory).optional(),
-  names: v
-    .record(
-      v.string().transform((v) => ChainSpecificAddress(v).toString()),
-      v.string(),
-    )
-    .optional(),
-  overrides: v
-    .record(
-      v.string().transform((v) => ChainSpecificAddress(v).toString()),
-      ColorContract,
-    )
-    .optional(),
+export type ColorContract = ReturnType<typeof resolveColorContract>
+export const ColorContract = ColorContractLayer.transform(resolveColorContract)
+
+export function resolveColorContract(layer: ColorContractLayer) {
+  const contract = resolveByShape(_ColorContract, layer, {
+    fields: {},
+    manualSourcePaths: {},
+  })
+  return {
+    ...contract,
+    fields: mapRecord(contract.fields, (field) =>
+      pickByShape(_ColorContractField, field),
+    ),
+  }
 }
-export const ColorConfig = v.object({
+
+export const _ColorConfig = {
   archived: v.boolean().optional(),
-  ..._ColorConfig,
-})
+  categories: v.record(v.string(), DiscoveryCategory).optional(),
+  names: v.record(AddressKey, v.string()).optional(),
+  overrides: v.record(AddressKey, ColorContractLayer).optional(),
+}
+export type ColorConfigLayer = v.infer<typeof ColorConfigLayer>
+export const ColorConfigLayer = v.object(_ColorConfig)
+
+export type ColorConfig = ReturnType<typeof resolveColorConfig>
+export const ColorConfig = ColorConfigLayer.transform(resolveColorConfig)
+
+export function resolveColorConfig(layer: ColorConfigLayer) {
+  const { overrides, ...config } = pickByShape(_ColorConfig, layer)
+  return {
+    ...config,
+    ...(overrides && { overrides: mapRecord(overrides, resolveColorContract) }),
+  }
+}

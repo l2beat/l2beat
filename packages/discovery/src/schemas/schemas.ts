@@ -32,12 +32,11 @@ export const ContractConfigSchema = v.object({
 export type ContractConfigSchema = v.infer<typeof ContractConfigSchema>
 
 export const DiscoveryConfigSchema = v.object({
-  name: v.string().check((x) => x.length > 0),
   import: v.array(v.string()).optional(),
-  archived: v.boolean().optional(),
   ..._StructureConfig,
   ..._ColorConfig,
   ..._PermissionsConfig,
+  name: v.string().check((x) => x.length > 0),
   overrides: v.record(v.string(), ContractConfigSchema).optional(),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
 })

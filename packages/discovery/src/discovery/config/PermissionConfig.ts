@@ -1,5 +1,7 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { AddressKey } from './AddressKey'
+import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
 
 export const BasePermissionEntries = [
   'member',
@@ -28,20 +30,44 @@ export const _ContractPermissionField = {
 }
 export const ContractPermissionField = v.object(_ContractPermissionField)
 
-export type ContractPermission = v.infer<typeof ContractPermission>
 export const _ContractPermission = {
   canActIndependently: v.boolean().optional(),
-  fields: v.record(v.string(), ContractPermissionField).default({}),
+  fields: v.record(v.string(), ContractPermissionField).optional(),
 }
-export const ContractPermission = v.object(_ContractPermission)
+export type ContractPermissionLayer = v.infer<typeof ContractPermissionLayer>
+export const ContractPermissionLayer = v.object(_ContractPermission)
 
-export type PermissionsConfig = v.infer<typeof PermissionsConfig>
-export const _PermissionsConfig = {
-  overrides: v
-    .record(
-      v.string().transform((v) => ChainSpecificAddress(v).toString()),
-      ContractPermission,
-    )
-    .optional(),
+export type ContractPermission = ReturnType<typeof resolveContractPermission>
+export const ContractPermission = ContractPermissionLayer.transform(
+  resolveContractPermission,
+)
+
+export function resolveContractPermission(layer: ContractPermissionLayer) {
+  const contract = resolveByShape(_ContractPermission, layer, { fields: {} })
+  return {
+    ...contract,
+    fields: mapRecord(contract.fields, (field) =>
+      pickByShape(_ContractPermissionField, field),
+    ),
+  }
 }
-export const PermissionsConfig = v.object(_PermissionsConfig)
+
+export const _PermissionsConfig = {
+  overrides: v.record(AddressKey, ContractPermissionLayer).optional(),
+}
+export type PermissionsConfigLayer = v.infer<typeof PermissionsConfigLayer>
+export const PermissionsConfigLayer = v.object(_PermissionsConfig)
+
+export type PermissionsConfig = ReturnType<typeof resolvePermissionsConfig>
+export const PermissionsConfig = PermissionsConfigLayer.transform(
+  resolvePermissionsConfig,
+)
+
+export function resolvePermissionsConfig(layer: PermissionsConfigLayer) {
+  const { overrides } = pickByShape(_PermissionsConfig, layer)
+  return {
+    ...(overrides && {
+      overrides: mapRecord(overrides, resolveContractPermission),
+    }),
+  }
+}

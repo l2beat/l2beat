@@ -1,9 +1,11 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 import type { BlipSexp } from '../../blip/type'
 import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
+import { AddressKey } from './AddressKey'
+import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
@@ -58,21 +60,44 @@ export const ManualProxyType = v.enum([
   'immutable',
 ])
 
-export type StructureContract = v.infer<typeof StructureContract>
 export const _StructureContract = {
   discoverLibraries: v.boolean().optional(),
   canActIndependently: v.boolean().optional(),
-  ignoreDiscovery: v.boolean().default(false),
+  ignoreDiscovery: v.boolean().optional(),
   proxyType: ManualProxyType.optional(),
   ignoreInWatchMode: v.array(v.string()).optional(),
-  ignoreMethods: v.array(v.string()).default([]),
-  ignoreRelatives: v.union([v.array(v.string()), v.literal(true)]).default([]),
-  fields: v.record(v.string(), StructureContractField).default({}),
-  methods: v.record(v.string(), v.string()).default({}),
-  manualSourcePaths: v.record(v.string(), v.string()).default({}),
-  types: v.record(v.string(), DiscoveryCustomType).default({}),
+  ignoreMethods: v.array(v.string()).optional(),
+  ignoreRelatives: v.union([v.array(v.string()), v.literal(true)]).optional(),
+  fields: v.record(v.string(), StructureContractField).optional(),
+  methods: v.record(v.string(), v.string()).optional(),
+  manualSourcePaths: v.record(v.string(), v.string()).optional(),
+  types: v.record(v.string(), DiscoveryCustomType).optional(),
 }
-export const StructureContract = v.object(_StructureContract)
+export type StructureContractLayer = v.infer<typeof StructureContractLayer>
+export const StructureContractLayer = v.object(_StructureContract)
+
+export type StructureContract = ReturnType<typeof resolveStructureContract>
+export const StructureContract = StructureContractLayer.transform(
+  resolveStructureContract,
+)
+
+export function resolveStructureContract(layer: StructureContractLayer) {
+  const contract = resolveByShape(_StructureContract, layer, {
+    ignoreDiscovery: false,
+    ignoreMethods: [],
+    ignoreRelatives: [],
+    fields: {},
+    methods: {},
+    manualSourcePaths: {},
+    types: {},
+  })
+  return {
+    ...contract,
+    fields: mapRecord(contract.fields, (field) =>
+      pickByShape(_StructureContractField, field),
+    ),
+  }
+}
 
 export type EntryType = v.infer<typeof EntryType>
 export const EntryType = v.enum(['Contract', 'EOA'])
@@ -96,30 +121,46 @@ export const _EntrypointsFile = {
 export const EntrypointsFile = v.object(_EntrypointsFile)
 export type EntrypointsFile = v.infer<typeof EntrypointsFile>
 
-export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
+  name: v
+    .string()
+    .check((v) => v.length >= 1)
+    .optional(),
   discoverLibraries: v.boolean().optional(),
-  initialAddresses: v.array(
-    v.string().transform((v) => ChainSpecificAddress(v)),
-  ),
+  initialAddresses: v
+    .array(v.string().transform((v) => ChainSpecificAddress(v)))
+    .optional(),
   maxAddresses: v
     .number()
     .check((x) => x >= 0)
-    .default(100),
-  maxDepth: v.number().default(Number.POSITIVE_INFINITY),
-  overrides: v
-    .record(
-      v.string().transform((v) => ChainSpecificAddress(v).toString()),
-      StructureContract,
-    )
     .optional(),
+  maxDepth: v.number().optional(),
+  overrides: v.record(AddressKey, StructureContractLayer).optional(),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
   ..._EntrypointsFile,
 }
+export type StructureConfigLayer = v.infer<typeof StructureConfigLayer>
+export const StructureConfigLayer = v.object(_StructureConfig)
 
-// NOTE(radomski): Big hack, shouldn't be like this
-export const StructureConfig = v.object({
-  name: v.string().check((v) => v.length >= 1),
-  import: v.array(v.string()).optional(),
-  ..._StructureConfig,
-})
+export type StructureConfig = ReturnType<typeof resolveStructureConfig>
+export const StructureConfig = StructureConfigLayer.transform(
+  resolveStructureConfig,
+)
+
+export function resolveStructureConfig(layer: StructureConfigLayer) {
+  const { overrides, ...config } = resolveByShape(_StructureConfig, layer, {
+    maxAddresses: 100,
+    maxDepth: Number.POSITIVE_INFINITY,
+  })
+  const { name, initialAddresses } = config
+  assert(name !== undefined, 'Discovery config has no name')
+  assert(initialAddresses !== undefined, `${name} has no initialAddresses`)
+  return {
+    ...config,
+    name,
+    initialAddresses,
+    ...(overrides && {
+      overrides: mapRecord(overrides, resolveStructureContract),
+    }),
+  }
+}

@@ -2,9 +2,8 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
     "import": { "type": "array", "items": { "type": "string" } },
-    "archived": { "type": "boolean" },
+    "name": { "type": "string" },
     "discoverLibraries": { "type": "boolean" },
     "initialAddresses": { "type": "array", "items": { "type": "string" } },
     "maxAddresses": { "type": "number" },
@@ -839,6 +838,7 @@
         "required": ["type", "project"]
       }
     },
+    "archived": { "type": "boolean" },
     "categories": {
       "type": "object",
       "propertyNames": { "type": "string" },
@@ -857,5 +857,5 @@
       "additionalProperties": { "type": "string" }
     }
   },
-  "required": ["name", "initialAddresses"]
+  "required": ["name"]
 }
