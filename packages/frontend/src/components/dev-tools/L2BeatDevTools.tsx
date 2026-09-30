@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { cn } from '~/utils/cn'
 import { Logo } from '../Logo'
 import { readJsonLd, readOpenGraph } from './headTags'
@@ -10,13 +9,14 @@ import { MetricWithTooltip } from './MetricWithTooltip'
 import { getDevToolsMetrics } from './metrics'
 import { OpenGraphPreview } from './OpenGraphPreview'
 import { getSizeMetrics, type SizeMetrics } from './sizeMetrics'
+import { useSessionState } from './useSessionState'
 
 export function L2BeatDevTools() {
   const isClient = useIsClient()
-  // Persisted, because every navigation is a full page load: checking the
-  // same tab across several pages would otherwise mean reopening it each time.
-  const [isOpen, setIsOpen] = useLocalStorage('dev-tools-is-open', false)
-  const [tab, setTab] = useLocalStorage('dev-tools-tab', 'ssr-data')
+  // Kept across page loads, because every navigation is one: checking the
+  // same tab on several pages would otherwise mean reopening it each time.
+  const [isOpen, setIsOpen] = useSessionState('dev-tools-is-open', false)
+  const [tab, setTab] = useSessionState<Tab>('dev-tools-tab', 'ssr-data')
   const [copied, setCopied] = useState(false)
   const [sizeMetrics, setSizeMetrics] = useState<SizeMetrics | undefined>(
     undefined,
@@ -187,7 +187,7 @@ export function L2BeatDevTools() {
       )}
       <button
         type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => setIsOpen(true)}
         className={cn(
           'flex size-12 items-center justify-center gap-2 rounded-full border border-divider bg-surface-primary shadow-lg transition-colors hover:bg-surface-primary-hover',
           isOpen && 'hidden',
@@ -199,7 +199,7 @@ export function L2BeatDevTools() {
   )
 }
 
-export type DevToolsTab = (typeof TABS)[number]['id']
+type Tab = (typeof TABS)[number]['id']
 
 const TABS = [
   { id: 'ssr-data', label: 'SSR data' },
