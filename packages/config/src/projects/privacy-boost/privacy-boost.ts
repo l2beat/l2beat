@@ -293,6 +293,11 @@ export const privacyBoost: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
     trackedOn: ['optimism'],
+    anonymitySet: {
+      type: 'too-small',
+      description:
+        'Too few users deposit into Privacy Boost for its anonymity set to be tracked meaningfully.',
+    },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

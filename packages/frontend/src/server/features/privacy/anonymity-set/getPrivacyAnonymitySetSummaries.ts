@@ -1,3 +1,4 @@
+import type { ProjectPrivacyKeyRegistrationAnonymitySet } from '@l2beat/config'
 import type {
   IndexerConfigurationRecord,
   PrivacyAnonymitySetSenderDayRecord,
@@ -11,6 +12,10 @@ import {
   calculateAnonymitySetHistory,
 } from './calculateAnonymitySets'
 import {
+  getKeyRegistrationAnonymitySet,
+  KEY_REGISTRATION_ANONYMITY_SET_LABEL,
+} from './getKeyRegistrationAnonymitySet'
+import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
   type PrivacyAnonymitySetSeries,
@@ -23,6 +28,7 @@ import {
 export type PrivacyAnonymitySetSummary =
   | ({
       status: 'available'
+      type: 'deposits'
       value: number
       label: string
       /** Labels of configured series excluded from the value while their history is indexed. */
@@ -32,7 +38,17 @@ export type PrivacyAnonymitySetSummary =
       'bucketType' | 'chain' | 'formattedAmount' | 'token'
     >)
   | {
+      status: 'available'
+      type: 'keyRegistrations'
+      value: number
+      label: string
+    }
+  | {
       status: 'not-applicable'
+      description: string
+    }
+  | {
+      status: 'too-small'
       description: string
     }
   | { status: 'syncing' }
@@ -86,8 +102,11 @@ export function getPrivacyAnonymitySetSummary(
   currentDay: UnixTime,
 ): PrivacyAnonymitySetSummary {
   const state = project.privacyInfo.anonymitySet
-  if (state?.type === 'not-applicable') {
-    return { status: 'not-applicable', description: state.description }
+  if (state?.type === 'not-applicable' || state?.type === 'too-small') {
+    return { status: state.type, description: state.description }
+  }
+  if (state?.type === 'keyRegistrations') {
+    return getKeyRegistrationSummary(project.id, state)
   }
   if (series.length === 0) {
     return { status: 'unavailable' }
@@ -106,6 +125,7 @@ export function getPrivacyAnonymitySetSummary(
 
   return {
     status: 'available',
+    type: 'deposits',
     value: largest.value,
     label: largest.series.label,
     syncingLabels,
@@ -113,6 +133,21 @@ export function getPrivacyAnonymitySetSummary(
     chain: largest.series.chain,
     formattedAmount: largest.series.formattedAmount,
     token: largest.series.token,
+  }
+}
+
+function getKeyRegistrationSummary(
+  projectId: string,
+  config: ProjectPrivacyKeyRegistrationAnonymitySet,
+): PrivacyAnonymitySetSummary {
+  const anonymitySet = getKeyRegistrationAnonymitySet(projectId, config)
+  if (anonymitySet === undefined) return { status: 'syncing' }
+
+  return {
+    status: 'available',
+    type: 'keyRegistrations',
+    value: anonymitySet.value,
+    label: KEY_REGISTRATION_ANONYMITY_SET_LABEL,
   }
 }
 
@@ -141,11 +176,15 @@ function getMockSummaries(
   return new Map(
     projects.map((project): [string, PrivacyAnonymitySetSummary] => {
       const state = project.privacyInfo.anonymitySet
-      if (state?.type === 'not-applicable') {
+      if (state?.type === 'not-applicable' || state?.type === 'too-small') {
         return [
           project.id,
-          { status: 'not-applicable', description: state.description },
+          { status: state.type, description: state.description },
         ]
+      }
+      // Registrations come from a file, so mock mode can show the real data.
+      if (state?.type === 'keyRegistrations') {
+        return [project.id, getKeyRegistrationSummary(project.id, state)]
       }
       const series = seriesByProject.get(project.id)?.[0]
       if (series) {
@@ -153,6 +192,7 @@ function getMockSummaries(
           project.id,
           {
             status: 'available',
+            type: 'deposits',
             value: Math.round(Math.random() * 1_000),
             label: series.label,
             syncingLabels: [],

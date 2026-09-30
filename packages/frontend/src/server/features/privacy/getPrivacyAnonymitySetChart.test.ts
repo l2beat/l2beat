@@ -162,5 +162,5 @@ function makeSnapshot(): PrivacyAnonymitySetChartResponse {
 function makeSeries(
   id: string,
 ): PrivacyAnonymitySetChartResponse['series'][number] {
-  return { id, label: id, token: 'ETH', minimumAmount: '1' }
+  return { id, label: id }
 }
