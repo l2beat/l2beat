@@ -14,10 +14,7 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import {
-  getInteropTokenPagePath,
-  getInteropTokenUrl,
-} from '../utils/getInteropTokenUrl'
+import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 import { renderInteropTokenMarkdown } from './renderInteropTokenMarkdown'
@@ -50,7 +47,6 @@ export async function getInteropTokenPageData(
           image: `/interop/tokens/${data.token.slug}/opengraph-image.png`,
           dynamic: true,
         },
-        markdownAlternatePath: `${getInteropTokenPagePath(data.token)}.md`,
       }),
     },
     ssr: {

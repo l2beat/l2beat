@@ -10,7 +10,6 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import {
   getOpStackDaTracking,
   getSP1Verifiers,
@@ -278,7 +277,7 @@ export const base: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },
-  ossification: getOssification('base', chainStart),
+  ossification: discovery.getOssification(chainStart),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   centralizedSequencing: {
     hardcoded: HARDCODED.BASE,

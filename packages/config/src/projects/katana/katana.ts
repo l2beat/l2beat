@@ -22,7 +22,6 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getAgglayerVerifiers } from '../../templates/agglayer'
 import {
   generateDiscoveryDrivenContracts,
@@ -174,7 +173,7 @@ export const katana: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: getOssification('katana', chainStart),
+  ossification: discovery.getOssification(chainStart),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

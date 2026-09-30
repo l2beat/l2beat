@@ -1,5 +1,22 @@
 import type { PrivacyField, ProjectPrivacyAdversaries } from '@l2beat/config'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { PrivacyAdversariesSummary } from '../types'
+
+/**
+ * Derived from the section rather than stored on the entry, so the hydrated
+ * page ships the cells only once.
+ */
+export function getPrivacyAdversariesSummary(
+  sections: ProjectDetailsSection[],
+): PrivacyAdversariesSummary {
+  const section = sections.find(
+    (section) => section.type === 'PrivacyAdversariesSection',
+  )
+  if (!section) {
+    throw new Error('Privacy project without an adversaries section')
+  }
+  return toPrivacyAdversariesSummary(section.props.adversaries)
+}
 
 export function toPrivacyAdversariesSummary(
   adversaries: ProjectPrivacyAdversaries,

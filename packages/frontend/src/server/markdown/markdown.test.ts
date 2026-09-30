@@ -1,5 +1,11 @@
 import { expect } from 'earl'
-import { nestHeadings, subsection, table } from './markdown'
+import {
+  absolutizeLinks,
+  markCritical,
+  nestHeadings,
+  subsection,
+  table,
+} from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
 // expected text literally.
@@ -41,16 +47,54 @@ describe(subsection.name, () => {
   })
 })
 
-describe(table.name, () => {
-  it('lays out a header row, a separator and one row per item', () => {
-    expect(table(['Chain', 'Symbol'], [['Ethereum', 'USDC']])).toEqual(
-      '| Chain | Symbol |\n| --- | --- |\n| Ethereum | USDC |',
+describe(absolutizeLinks.name, () => {
+  it('prefixes site paths in links and images with the origin', () => {
+    expect(
+      absolutizeLinks(
+        'See [best practices](/publications/x) and ![diagram](/images/y.png).',
+        'https://l2beat.com',
+      ),
+    ).toEqual(
+      'See [best practices](https://l2beat.com/publications/x) and ![diagram](https://l2beat.com/images/y.png).',
     )
   })
 
-  it('escapes pipes and flattens line breaks so a cell stays in its row', () => {
-    expect(table(['Name'], [['A | B\nC']])).toEqual(
-      '| Name |\n| --- |\n| A \\| B C |',
+  it('leaves absolute and protocol-relative URLs alone', () => {
+    const text = '[a](https://example.com/x) [b](//cdn.example.com/y)'
+    expect(absolutizeLinks(text, 'https://l2beat.com')).toEqual(text)
+  })
+})
+
+describe(markCritical.name, () => {
+  it('puts the marker before the closing punctuation', () => {
+    expect(markCritical('Funds can be stolen.', true)).toEqual(
+      'Funds can be stolen (CRITICAL).',
+    )
+  })
+
+  it('appends the marker to text without closing punctuation', () => {
+    expect(markCritical('Program hashes are unverified', true)).toEqual(
+      'Program hashes are unverified (CRITICAL)',
+    )
+  })
+
+  it('leaves non-critical text alone', () => {
+    expect(markCritical('Funds can be stolen.', false)).toEqual(
+      'Funds can be stolen.',
+    )
+  })
+})
+
+describe(table.name, () => {
+  it('escapes pipes so a cell cannot split into two columns', () => {
+    expect(table(['Asset', 'Value'], [['A|B', '$1']])).toEqual(
+      '| Asset | Value |\n| --- | --- |\n| A\\|B | $1 |',
+    )
+  })
+
+  it('joins the lines of a cell so it cannot split into two rows', () => {
+    expect(table(['Asset', 'Value'], [['A\nB', '$1']])).toEqual(
+      '| Asset | Value |\n| --- | --- |\n| A B | $1 |',
     )
   })
 })

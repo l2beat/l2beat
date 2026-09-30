@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -26,12 +26,7 @@ export async function getDefiProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${entry.name} - DeFi - L2BEAT`,
-        description: getProjectMetadataDescription({
-          name: entry.name,
-          display: {
-            description: entry.description,
-          },
-        }),
+        description: getProjectMetadataDescription(entry),
         url,
         openGraph: {
           image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,

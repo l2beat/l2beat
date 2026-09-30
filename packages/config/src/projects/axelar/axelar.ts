@@ -11,6 +11,8 @@ export const axelar: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
+    description:
+      'Token bridge built on the Axelar messaging protocol, mostly used for the multichain axlUSDC token. It is validated by a full validator set on a Cosmos blockchain.',
     plugins: [
       {
         plugin: 'axelar',
