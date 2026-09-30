@@ -70,7 +70,10 @@ describe(createLlmsTxtRouter.name, () => {
       (l) => l.url,
     )
 
-    expect(urls).toEqual(['https://l2beat.com/layer2s/projects/{slug}.md'])
+    expect(urls).toEqual([
+      'https://l2beat.com/layer2s/projects/{slug}.md',
+      'https://l2beat.com/privacy/projects/{slug}.md',
+    ])
   })
 
   it('stays small enough to fit in context, with project lists behind links', async () => {
