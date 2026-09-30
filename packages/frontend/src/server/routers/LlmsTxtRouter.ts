@@ -318,7 +318,7 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       name: 'Data availability project',
       path: '/data-availability/projects/{layer}/{bridge}.md',
       description:
-        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. Every valid {layer}/{bridge} pair is listed in /data-availability/summary.md.',
+        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
     },
   ],
 }
