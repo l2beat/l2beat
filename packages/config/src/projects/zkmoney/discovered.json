@@ -1,6 +1,6 @@
 {
   "name": "zkmoney",
-  "timestamp": 1790708883,
+  "timestamp": 1790759581,
   "configHash": "0xb0e63923e823eb618982a76660a077c0bb65937fa60e2dd539f7ee08b25b242c",
   "entries": [
     {
@@ -181,8 +181,8 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "29300000000000000000",
-          "bounty": "99620000000000000"
+          "balance": "1000000000000000000",
+          "bounty": 0
         }
       },
       "implementationNames": {
@@ -462,7 +462,7 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "47424779301354264520494",
+        "_$cachedAvailable": "49994487527849187076802",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -470,7 +470,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1790708879,
+        "_$lastUpdatedTime": 1790759147,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -479,7 +479,7 @@
         "FPC_FUNDING_CUT": "100000000000000000",
         "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
-        "getCurrentAvailable": "47424779301354264520494",
+        "getCurrentAvailable": "50000000000000000000000",
         "GLOBAL_LIMIT": "50000000000000000000000",
         "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
         "L2_PORTAL": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
@@ -1222,7 +1222,7 @@
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
-  "usedBlockNumbers": { "ethereum": 26085113 },
+  "usedBlockNumbers": { "ethereum": 26089322 },
   "permissionsConfigHash": "0xc7b0274d8c1ace1e3f3a3a0aadf54cb5bd3652aae73d9b3b51bfb47d5652b5d8",
   "permissions": {
     "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {

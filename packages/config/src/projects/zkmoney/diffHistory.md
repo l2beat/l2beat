@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x18fb4f3f6e31e7442546721170f01d2844456efc
+Generated with discovered.json: 0x53246bf589d4c4b6910e157a95cb97fc9b15e7cf
 
-# Diff at Tue, 29 Sep 2026 19:09:15 GMT:
+# Diff at Wed, 30 Sep 2026 09:14:13 GMT:
 
 - id: 1225e8f9
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1790708883
+- current timestamp: 1790759581
 
 ## Description
 
@@ -99,7 +99,7 @@ Initial discovery of zk.money on the Aztec Network.
 ```diff
 +   Status: CREATED
     contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal]
-    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, after which funds exit through refunds that need a zk proof and a TEE signature.
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.
 ```
 
 ```diff
