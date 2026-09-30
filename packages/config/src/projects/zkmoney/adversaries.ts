@@ -65,8 +65,8 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposure:
-        'The anonymity set is limited to zk.money users. The first payment to a tag from outside zk.money is publicly tied to that tag.',
-      advice: `Watch the anonymity set in this early stage. Give outside payers a deposit address your wallet created instead of your tag. ${S.commonAmounts} ${S.freshExit}`,
+        'The anonymity set is limited to zk.money users. The first payment to a tag from outside zk.money is publicly tied to that tag. Anyone who records Aztec transactions can also tie the first deposit address your wallet creates after registration to your account.',
+      advice: `Watch the anonymity set in this early stage. Give outside payers a deposit address your wallet created instead of your tag. Fund your first deposit address after registration from the wallet that claimed your tag. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'atRisk',
         recipient: 'exposed',

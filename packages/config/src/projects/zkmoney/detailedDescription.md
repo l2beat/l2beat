@@ -13,7 +13,7 @@ The portal takes {{fpcFundingCut}} from every deposit and withdrawal to sponsor 
 
 ### Tags, resolver and passkeys
 - **Tags** publicly map to an account's Aztec address and keys on Ethereum. Every claim requires the domain owner's signature, issued by zk.money's closed-source claim server subject to its name blocklist. The released wallet also needs a tag to restore an account on a new device.
-- **The resolver** handles payments to name.zk.money from outside the wallet, for example from MetaMask. It gets a fresh deposit address from the recipient's operator and checks its zk proof. Internal payments and deposit addresses created by the wallet use the Ethereum registry directly. Users can switch operators and anyone can register one, but the only operator is Aztec Labs' closed-source service. The proof circuit is unpublished.
+- **The resolver** handles payments to name.zk.money from outside the wallet, for example from MetaMask. It gets a fresh deposit address from the recipient's operator and checks its zk proof. Internal payments skip the resolver. Deposit addresses created by the wallet skip its gateway but always derive from Aztec Labs' operator key. Users can switch operators for payments by name and anyone can register one, but the only operator is Aztec Labs' closed-source service and the proof circuit it needs is unpublished.
 - **Passkeys** belong to auth.zk.money. On every use, the browser requires that domain to authorize wallet.zk.money for both the hosted wallet and zk.money Desktop. A wallet served under auth.zk.money itself needs no such authorization, and the contracts do not check the signature's origin. Control of the domain determines where passkeys work.
 
 ### Compliance
