@@ -13,7 +13,7 @@ export const airbender: BaseProject = {
   addedAt: UnixTime.fromDate(new Date('2025-09-09')),
   display: {
     description:
-      'Airbender is the latest prover of Matter Labs, it proves RISC-V programs.',
+      'Airbender is the latest prover by Matter Labs. It proves RISC-V programs.',
     links: {
       documentation: [
         'https://docs.zksync.io/zksync-protocol/zksync-airbender/overview',

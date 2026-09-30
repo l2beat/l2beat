@@ -18,7 +18,7 @@ export const lambda: ScalingProject = opStackL2({
     name: 'Lambda Chain',
     slug: 'lambda',
     description:
-      'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
+      'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and availability.',
     links: {
       websites: ['https://lambda.im/'],
       bridges: ['https://portal.lambda.im/bridge/'],

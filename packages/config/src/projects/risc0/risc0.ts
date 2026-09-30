@@ -20,7 +20,8 @@ export const risc0: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: 'Risc0 is a zkVM proving system for RISC-V programs.',
+    description:
+      'RISC Zero (Risc0) is a zkVM proving system for RISC-V programs.',
     links: {
       websites: ['https://risczero.com'],
       documentation: ['https://dev.risczero.com/'],

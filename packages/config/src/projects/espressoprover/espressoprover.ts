@@ -12,7 +12,7 @@ export const espressoprover: BaseProject = {
   addedAt: UnixTime.fromDate(new Date('2025-09-17')),
   display: {
     description:
-      'Espresso Light Client prover generates a Plonk proof of the HotShot consensus of Espresso network.',
+      'Espresso Light Client prover generates a Plonk proof of the HotShot consensus of the Espresso network.',
     links: {
       websites: ['https://www.espressosys.com/'],
       documentation: [
