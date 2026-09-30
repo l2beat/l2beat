@@ -171,7 +171,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A private DAI wallet built on Aztec Network by Aztec Labs. The escrow is on Ethereum L1, and every transfer and withdrawal must be co-signed by an AWS Nitro enclave, in addition to the ZK validity proof of the L2.',
+      'A private DAI wallet on Aztec by Aztec Labs, with funds escrowed on Ethereum. Transfers and withdrawals require both an Aztec validity proof and an AWS Nitro enclave signature.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
@@ -209,11 +209,11 @@ export const zkmoney: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The core contracts are immutable, and the approved enclave image is fixed. Aztec governance can move the network to a new rollup, which lets anyone freeze the portal, stopping new L1 deposits and fixing a state snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available. L2 transfers are not disabled but do not change refundable ownership.',
+        'The core contracts and approved enclave image are fixed. If Aztec moves to a new rollup, anyone can freeze the portal to stop deposits and fix the refund snapshot at the last proven checkpoint. Withdrawals within the frozen bounds remain available. Later L2 transfers do not change refundable ownership.',
       walkawayTest: {
         passed: false,
         reason:
-          'Every withdrawal and every refund needs a signature from a live enclave running the one approved image. Aztec Labs publishes that image, so anyone with an AWS account can run and register an enclave, but its build is not published. Exits depend on an AWS Nitro TEE, which is not freely available. Both released wallets also stop working without zk.money services, so users would need a modified desktop build.',
+          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build.',
       },
     },
     // TODO: needs a published, reproducible build of the TEE image that matches
@@ -230,7 +230,7 @@ export const zkmoney: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contracts on Ethereum and Aztec, the enclave code and the desktop app are open source, and L2BEAT matched the deployed zk.money token contract on Aztec L2 to its source. The refund and resolver circuits are published only as their onchain verifiers, without their Noir source. The approved enclave image is published as a binary, but its build is not, so it cannot be checked that the enclaves run the published code. The hosted web wallet currently runs a newer release than the published source, and the resolver service is closed source.',
+        'The contracts, enclave code and desktop app are open source. L2BEAT matched the deployed zk.money token on Aztec to its source. Only the onchain verifiers are published for the refund and resolver circuits, without Noir source. The approved enclave binary has no published build to check against the source. The hosted wallet runs a newer release than the public source, and the resolver service is closed source.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

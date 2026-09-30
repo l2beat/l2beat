@@ -13,14 +13,14 @@ const OX = `${ZM}vendor/oxide/`
 export const zkMoneyAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides senders, amounts and the link between deposit and withdrawal inside the ledger. Tags, deposits and withdrawals are public, and the first payment to a new contact reveals the recipient.',
+    text: 'Hides senders, amounts and links between deposits and withdrawals within the ledger. Tags, deposits and withdrawals are public. The first payment to a new contact reveals the recipient.',
   },
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Payments inside publish only encrypted notes, but fixed log tags mark every zk.money transaction on Aztec. The first payment to a new contact publishes a handshake tagged with the recipient's Aztec address, which the registry on Ethereum maps to a tag. ${S.entryExitPublic()} The deposit that claims a tag ties the funding L1 wallet to the tag and its Aztec address.`,
+      exposure: `Private payments publish encrypted notes. Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
       advice:
-        'Claim your tag from a wallet with no public link to you and fund every deposit address only once. Leave funds in a deposit address until they are swept, since recovering them publishes the link to your account.',
+        'Claim your tag from a wallet with no public link to you and fund each deposit address once. Wait for deposits to be swept. Recovering them reveals the link to your account.',
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -72,7 +72,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
-          note: 'Public entry and exit amounts and timing can support correlations. Private incoming payments let an account spend more than its own public deposits.',
+          note: "Public deposit and withdrawal amounts and timing can support correlations. Incoming private payments can exceed an account's own deposits.",
         },
         asset: 'exposed',
         linkage: {
@@ -107,9 +107,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposure:
-        'Keys and proving stay on your device, and both the web wallet and zk.money Desktop can use your own Aztec node, Ethereum RPC and enclave. Note discovery asks the Aztec node for handshakes tagged with your address. The Ethereum RPC sees your funding wallet and deposit addresses and estimates every L1 transaction with your address. Payment requests and contact links travel over XMTP under your public account address, which shows XMTP nodes who asks whom for money.',
+        'Keys and proving stay on your device. Note discovery reveals your account address to the Aztec node. Ethereum RPC requests reveal funding wallets, deposit addresses and L1 transaction senders. XMTP carries payment requests and contact links under public account addresses, exposing who asks whom for money. Both wallets support custom Aztec, Ethereum and enclave endpoints.',
       advice:
-        'Use zk.money Desktop with your own Aztec node and your own Ethereum node, since the wallet reads and sends through the same Aztec node. Send L1 transactions from your Ethereum wallet over a public RPC. Route all traffic of your computer through a VPN or Tor, not only the browser. Settle payments with counterparties that must stay private without payment requests or contact links.',
+        'Use zk.money Desktop with your own Aztec and Ethereum nodes. Send L1 transactions from your Ethereum wallet over a public RPC. Route all computer traffic through a VPN or Tor. Avoid payment requests and contact links with counterparties that must stay private.',
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -150,9 +150,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'Every payment, withdrawal and deposit claim reaches an enclave in plaintext, so privacy against its operator rests on AWS Nitro and on the approved enclave code. The resolver operator can re-derive every deposit address, including those your wallet creates itself, and so ties each deposit from L1 to its recipient on L2.',
+        'Enclaves receive payments, withdrawals and deposit claims in plaintext. Privacy against their operators depends on AWS Nitro and the approved code. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
       advice:
-        'Use zk.money Desktop, pointed at your own Aztec node and Ethereum RPC, instead of the hosted web wallet. Nothing you do hides your operations from the enclave or your deposits from the resolver operator. Registering a TEE yourself depends only on AWS as a counterparty, the onchain step is permissionless.',
+        'Use zk.money Desktop with your own nodes. Running your own enclave is permissionless onchain but still depends on AWS. Operations remain visible to the enclave and deposits to the resolver operator.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -186,7 +186,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposure:
-        "Notes and payment events are encrypted with elliptic-curve key exchange and published to Ethereum, and every user's Aztec address is registered on Ethereum, so a quantum computer decrypts the whole ledger history. Deposit address secrets and the channel to the enclave also rely on elliptic-curve key exchange.",
+        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum. Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
       advice: S.permanentlyDisclosed('every payment and every deposit link'),
       interior: {
         sender: 'exposed',
