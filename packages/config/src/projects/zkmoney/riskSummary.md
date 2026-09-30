@@ -15,4 +15,5 @@
 3. the first external payment to a tag publicly links the payment to that tag.
 4. an external Aztec RPC learns the account from note requests, or zk.money and Predicate correlate screened deposit and withdrawal addresses by IP.
 5. someone reads keys and decrypted notes stored unencrypted on the user's device.
-6. a quantum computer breaks the elliptic-curve encryption of the notes published to Ethereum.
+6. a freeze forces users to exit through refunds, which pay out fixed note and deposit amounts on Ethereum and use proofs without zero-knowledge.
+7. a quantum computer breaks the elliptic-curve encryption of the notes published to Ethereum.

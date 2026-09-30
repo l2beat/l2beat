@@ -213,12 +213,13 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build.',
+          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build. Refund proofs require circuits that Aztec Labs has not published.',
       },
     },
     // TODO: needs a published, reproducible build of the TEE image that matches
     // the approved PCR0, the Noir source of the refund and resolver circuits,
-    // the source of the hosted web wallet release, and public source
+    // the frozen chain snapshot service, the source of the hosted web wallet
+    // release, and public source
     // verification of the zk.money contracts on Aztec (token, fee-paying
     // contract, broadcaster) on aztecscan.xyz.
     // TODO: recheck before publishing that the hosted web wallet still runs a
