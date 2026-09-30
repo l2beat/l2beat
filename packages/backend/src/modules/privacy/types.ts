@@ -29,6 +29,10 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
   chain: string
   address: EthereumAddress
   event: string
+  /** Derived from erc20Transfer params. */
+  topics?: PrivacyLogTopicFilter
+  /** See the fundingTokens of the bucket's anonymity set. */
+  fundingTokens?: EthereumAddress[]
   sinceTimestamp: UnixTime
 } & PrivacyAnonymitySetDepositSource
 
@@ -126,6 +130,7 @@ export interface PrivacyFlowExtractResult {
   amount: bigint
 }
 
-export interface PrivacyRelayerActivityExtractResult {
-  relayerAddress: EthereumAddress
-}
+export type PrivacyRelayerActivityExtractResult =
+  | { relayerAddress: EthereumAddress }
+  /** The relayer is the transaction sender, unless it called the log's contract directly. */
+  | { transactionSender: true }

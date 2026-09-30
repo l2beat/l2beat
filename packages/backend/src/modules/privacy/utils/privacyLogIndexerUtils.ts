@@ -87,7 +87,7 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   return matches
 }
 
-function groupByTopics<T extends PrivacyLogIndexerConfig>(
+export function groupByTopics<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }[] {
   const groups = new Map<

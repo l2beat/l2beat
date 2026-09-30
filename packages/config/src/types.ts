@@ -1140,7 +1140,15 @@ export type ProjectPrivacyRelayerTracking =
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+  /**
+   * zkMoneyWithdrawal: the relayer is the sender of a withdrawal transaction
+   * that went through another contract. Direct calls to the portal are
+   * self-relayed.
+   */
+  extractor:
+    | 'privacyPoolsWithdrawalRelayed'
+    | 'tornadoCashWithdrawal'
+    | 'zkMoneyWithdrawal'
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1388,6 +1396,11 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            * amount. These are analytical thresholds, not protocol minimums.
            */
           minimumAmounts: string[]
+          /**
+           * Deposits arrive from one-time deposit addresses. The depositor is
+           * whoever funded the deposit address with one of these tokens.
+           */
+          fundingTokens?: EthereumAddress[]
         }
         address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
@@ -1415,7 +1428,13 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'erc20Transfer'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =

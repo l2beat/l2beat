@@ -87,6 +87,7 @@ export async function getPrivacyConfig(
               project.projectId,
               bucket,
               bucket.deposit,
+              token.token,
               minTimestamp,
             ),
           )
@@ -252,6 +253,7 @@ function toAnonymitySetConfig(
   projectId: string,
   bucket: ProjectPrivacyBucket,
   source: PrivacyAnonymitySetDepositSource,
+  token: ProjectPrivacyToken['token'],
   minTimestamp: UnixTime,
 ): PrivacyAnonymitySetIndexerConfig {
   const privacyAddress = getPrivacyBucketAddress(bucket.address)
@@ -263,10 +265,19 @@ function toAnonymitySetConfig(
     sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
     ...source,
   }
+  // The frontend derives the id from the bucket address, so it stays the id
+  // when the logs come from the token contract.
+  const id = PrivacyAnonymitySetIndexer.idToConfigurationId(config)
+  const fundingTokens = bucket.anonymitySet?.fundingTokens
 
   return {
-    id: PrivacyAnonymitySetIndexer.idToConfigurationId(config),
+    id,
     ...config,
+    ...(source.extractor === 'erc20Transfer' && {
+      address: EthereumAddress(token.address),
+      topics: getErc20TransferTopics(source.params),
+    }),
+    ...(fundingTokens !== undefined && { fundingTokens }),
   }
 }
 
