@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x1728bd7c8390bd4764975a2fe91e78684380b55a
+Generated with discovered.json: 0x7b11bee620ff899ec4e788cf86d0848ae9694b22
 
-# Diff at Tue, 29 Sep 2026 17:27:33 GMT:
+# Diff at Wed, 30 Sep 2026 09:55:57 GMT:
 
 - id: be94796b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044680
-- current timestamp: 1790702786
+- comparing to: main@fd631e84d28f970cf24b92bfa73a6d23f516b81d block: 1789044680
+- current timestamp: 1790762075
 
 ## Description
 
@@ -358,9 +358,6 @@ L2ProxyAdmin upgraded to v1.0.0 (Karst L2 network upgrade), owner unchanged.
       values.permissionedGameArgs:
 -        "0x"
 +        "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfa2613d77ffbe105ca861d526061dc3ef191e1705164555e021b913963e2d17de97efcc2723d3ec037000000000000000000000000000000000000000000000000000000000000bf042d14057c3ad6b04a480b06da2356adcdf5ed97ee4a4962275df8c60a80d3a25faec5aa7de116a746"
-      values.permissionedGameVm:
--        "UNRESOLVED"
-+        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       values.proposerFromDGF:
 -        "UNRESOLVED"
 +        "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE"
@@ -696,16 +693,6 @@ discovery. Values are for block 1789044680 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.2:
 -        {"permission":"interact","from":"eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
-    }
-```
-
-```diff
-    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory] {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-      values.permissionedGameVm:
-+        "UNRESOLVED"
-      usedTypes.3:
-+        {"typeCaster":"SliceAddress","arg":{"offset":32}}
     }
 ```
 

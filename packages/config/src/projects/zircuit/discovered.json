@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
-  "timestamp": 1790702786,
-  "configHash": "0xf4145c5e9c133f58cb9a55bc0688ea5dbbdbb4afd197d302fe46ec566f70f8b4",
+  "timestamp": 1790762075,
+  "configHash": "0xa894839e4bb8e18b059ac1624715952fc728bb54ca1523351215c175f9b43e49",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -235,7 +235,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 26082326
+          "prevBlockNum": 26089218
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -351,13 +351,13 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0x2A47a2D8E5AA96eF02Db84f7CD5Cab997E0948C1",
+        "anchorGame": "eth:0xb9C1B4179231B5249a0507800Ef7c7730075e0B6",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7fc71d55bbfdfc626870a7e7c46bd6c761c0c7851d5dd94ffa8e088e8ef4ea9e",
-          35076586
+          "0x32ba9783810e2b889b458f08d7f63b8eeb52c74c43a193c4b9a31e45f2aa4ceb",
+          35098084
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -488,7 +488,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641465",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641466",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1048,7 +1048,7 @@
         "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
         "game8Weth": "UNRESOLVED",
-        "gameCount": 113,
+        "gameCount": 114,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1057,8 +1057,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfa2613d77ffbe105ca861d526061dc3ef191e1705164555e021b913963e2d17de97efcc2723d3ec037000000000000000000000000000000000000000000000000000000000000bf042d14057c3ad6b04a480b06da2356adcdf5ed97ee4a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 113,
-        "permissionedGameVm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+        "permissionedGamesTotal": 114,
         "proposerFromDGF": "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE",
         "proxyAdmin": "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1096,8 +1095,7 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
         { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1595,10 +1593,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 1018988623,
+        "basefee": 215469832,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 62558895,
+        "blobBaseFee": 11327221,
         "blobBaseFeeScalar": 862000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -1608,15 +1606,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x44181eae85e796bee45de44e9858d4c2d612b911e633a13c5eaa8f3640a742a9",
+        "hash": "0xdd1ddd079fb80125387eaca94624da1ce91c07b8590c67d658d5e07233f6a949",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26084602,
+        "number": 26089524,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1790702723,
+        "sequenceNumber": 0,
+        "timestamp": 1790762015,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -2627,7 +2625,7 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26084607, "zircuit": 35383285 },
+  "usedBlockNumbers": { "ethereum": 26089529, "zircuit": 35412930 },
   "permissionsConfigHash": "0xcf11b7967cd550b02267d72f91bee744c7ddcffe3088caff6c8b5eb896842946",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {

@@ -238,24 +238,7 @@
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
     },
     "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90": {
-      "types": {
-        "VmFromPermissionedGameArgs": {
-          "typeCaster": "SliceAddress",
-          "arg": { "offset": 32 }
-        }
-      },
       "fields": {
-        // The template resolves the VM of game type 8 only. This chain respects
-        // game type 1, whose args share the layout (prestate(32) | vm(20)).
-        "permissionedGameVm": {
-          "handler": {
-            "type": "call",
-            "method": "function gameArgs(uint32) view returns (bytes)",
-            "args": [1],
-            "expectRevert": true
-          },
-          "edit": ["format", "VmFromPermissionedGameArgs"]
-        },
         "proposerFromDGF": {
           "permissions": [
             {
