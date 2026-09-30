@@ -4,9 +4,7 @@ import { JsonTreeNode } from './JsonTreeNode'
 export function JsonLdViewer({ blocks }: { blocks: JsonLdBlock[] }) {
   if (blocks.length === 0) {
     return (
-      <p className="text-2xs text-secondary">
-        This page has no JSON-LD. Pages excluded from search engines emit none.
-      </p>
+      <p className="text-2xs text-secondary">No JSON-LD in this page's head.</p>
     )
   }
 
