@@ -19,7 +19,7 @@ describe(getMetadata.name, () => {
 
       expect(getBreadcrumbItems(metadata)).toEqual([
         crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Scaling', 'https://l2beat.com/layer2s/summary'),
+        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',
@@ -49,7 +49,7 @@ describe(getMetadata.name, () => {
 
       expect(getBreadcrumbItems(metadata)).toEqual([
         crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Scaling', 'https://l2beat.com/layer2s/summary'),
+        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
       ])
     })
 
@@ -68,7 +68,7 @@ describe(getMetadata.name, () => {
 
       expect(getBreadcrumbItems(metadata)).toEqual([
         crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'Scaling', 'https://l2beat.com/layer2s/summary'),
+        crumb(2, 'Layer 2s', 'https://l2beat.com/layer2s/summary'),
         crumb(
           3,
           'Arbitrum One',

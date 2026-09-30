@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getScalingProjectStructuredData } from './getScalingProjectStructuredData'
 
@@ -9,7 +8,6 @@ describe(getScalingProjectStructuredData.name, () => {
     name: 'Arbitrum One',
     slug: 'arbitrum',
     display: { description: 'Arbitrum One is an Optimistic Rollup.' },
-    discoveryInfo: { baseTimestamp: UnixTime(1758499200) },
     hasTvsApi: true,
     hasActivityApi: true,
   }
@@ -23,7 +21,6 @@ describe(getScalingProjectStructuredData.name, () => {
       name: 'Arbitrum One',
       description:
         'Explore Arbitrum One metrics and in-depth research. Arbitrum One is an Optimistic Rollup.',
-      dateModified: '2025-09-22T00:00:00.000Z',
       isAccessibleForFree: true,
       creator: {
         '@type': 'Organization',
@@ -58,13 +55,5 @@ describe(getScalingProjectStructuredData.name, () => {
     expect(dataset.distribution.map((d) => d.contentUrl)).toEqual([
       'https://l2beat.com/api/scaling/activity/arbitrum',
     ])
-  })
-
-  it('leaves dateModified out when the project was never discovered', () => {
-    const { discoveryInfo: _, ...undiscovered } = arbitrum
-
-    const dataset = getScalingProjectStructuredData(undiscovered)
-
-    expect(Object.keys(dataset)).not.toInclude('dateModified')
   })
 })

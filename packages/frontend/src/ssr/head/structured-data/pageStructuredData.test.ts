@@ -46,7 +46,7 @@ describe('page structured data', () => {
     const project = await ps.getProject({
       slug: 'arbitrum',
       select: ['display'],
-      optional: ['discoveryInfo', 'tvsConfig', 'activityConfig'],
+      optional: ['tvsConfig', 'activityConfig'],
     })
     if (!project) throw new Error('arbitrum is missing')
 

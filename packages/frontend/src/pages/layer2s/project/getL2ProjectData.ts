@@ -95,8 +95,8 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
 export function getL2ProjectMetadata(
   manifest: Manifest,
   project: Pick<
-    Project<never, 'discoveryInfo' | 'tvsConfig' | 'activityConfig'>,
-    'name' | 'slug' | 'discoveryInfo' | 'tvsConfig' | 'activityConfig'
+    Project<never, 'tvsConfig' | 'activityConfig'>,
+    'name' | 'slug' | 'tvsConfig' | 'activityConfig'
   > & { display: { description: string } },
   url: string,
 ) {
