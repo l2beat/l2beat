@@ -9,15 +9,29 @@ Generated with discovered.json: 0xf710d2788c4b4b048607abbdd0b708a512a4d74e
 
 ## Description
 
-Upgrade 18 (op-contracts/v6.0.0) and Upgrade 19b "Karst" (op-contracts/v7.0.0) executed in one transaction on 2026-09-16 by Bob Multisig 1, via a Conduit-deployed OPContractsManager (v6.0.0) and OPContractsManagerV2 (v7.1.17): core L1 contracts upgraded to their v7 implementations (OptimismPortal2 v5.1.1 to v5.6.1, SystemConfig v3.11.0 to v3.14.2, DisputeGameFactory v1.3.0 to v1.6.1, AnchorStateRegistry v3.5.0 to v3.9.0, SuperchainConfig v2.4.0 to v2.4.2, bridges, etc.).
+Upgrade 18 (op-contracts/v6.0.0) and Upgrade 19b "Karst" (op-contracts/v7.0.0), executed in one transaction on 2026-09-16 by Bob Multisig 1 via Conduit-deployed OPContractsManager (v6.0.0) and OPContractsManagerV2 (v7.1.17).
 
-The same transaction called `setRespectedGameType(1)` on the AnchorStateRegistry: `respectedGameType` changed from `1337` (KailuaGame) to `1` (PermissionedDisputeGame). Withdrawals now settle against permissioned proposals. KailuaGame stays registered as game type `1337`.
+`respectedGameType` `1337` (KailuaGame) -> `1` (PermissionedDisputeGame), set in the same transaction. KailuaGame stays registered as type `1337`. Type-1 prestate: op-program v1.6.0.
 
-`disputeGameFinalityDelaySeconds` reduced from `86400` to `43200`.
-
-PermissionedDisputeGame (v1.8.0 to v2.4.0), MIPS (v1.9.0 to v1.10.1), PreimageOracle (v1.1.4 to v1.1.5) and DelayedWETH (v1.5.0 to v1.5.1) replaced. PermissionedDisputeGame `maxClockDuration` reduced from `302400` to `43200`, `clockExtension` from `10800` to `1543`. PreimageOracle `challengePeriod` reduced from `86400` to `12343`. DelayedWETH `delay` reduced from `302400` to `43200`. The type-1 prestate is op-program v1.6.0.
+`disputeGameFinalityDelaySeconds` 86400 -> 43200. PermissionedDisputeGame `maxClockDuration` 302400 -> 43200, `clockExtension` 10800 -> 1543. PreimageOracle `challengePeriod` 86400 -> 12343. DelayedWETH `delay` 302400 -> 43200.
 
 SystemConfig `batchInbox` changed.
+
+Version changes and implementation diffs:
+
+- OptimismPortal2 5.1.1 -> 5.6.1: https://disco.l2beat.com/diff/eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287/eth:0x1FeD97C63C44f0cC6F861a9Ba2E8AedFE466485c
+- SystemConfig 3.11.0 -> 3.14.2: https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9
+- DisputeGameFactory 1.3.0 -> 1.6.1: https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b
+- AnchorStateRegistry 3.5.0 -> 3.9.0: https://disco.l2beat.com/diff/eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431/eth:0x5020964201C4d65555f33FD9Bc281443d65f4C09
+- L1StandardBridge 2.8.0 -> 2.8.2: https://disco.l2beat.com/diff/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A/eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891
+- L1CrossDomainMessenger 2.11.0 -> 2.11.1: https://disco.l2beat.com/diff/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0/eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0
+- L1ERC721Bridge 2.9.0 -> 2.9.1: https://disco.l2beat.com/diff/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9/eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e
+- OptimismMintableERC20Factory 1.10.2 -> 1.11.0: https://disco.l2beat.com/diff/eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB/eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12
+- SuperchainConfig 2.4.0 -> 2.4.2: https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550
+- PermissionedDisputeGame 1.8.0 -> 2.4.0: https://disco.l2beat.com/diff/eth:0x15F80920C8Fec136e2A804E04f26203FF8dAd19A/eth:0x642d1cc835a81c738313EBe85ED61979a44897bF
+- MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xb6B6342ff75b4213cBF101c135f1fC33695acc13
+- PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x70A3e3112467E177585eF070B63521c9368F9aA1
+- DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xebC3681418136F7A9f6cB4B074B1B19fc85879e1
 
 Config: proposer and challenger permissions added on the DisputeGameFactory.
 

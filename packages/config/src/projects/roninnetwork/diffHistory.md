@@ -9,11 +9,25 @@ Generated with discovered.json: 0x417767543383716f7364b51cb6130af68416a965
 
 ## Description
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2 v5.2.0 to v5.6.1, SystemConfig v3.13.1 to v3.14.2, DisputeGameFactory v1.4.0 to v1.6.1, AnchorStateRegistry v3.7.0 to v3.9.0, SuperchainConfig v2.4.0 to v2.4.2, bridges, etc.), executed on 2026-09-21 by RoninConduitOwner via a Conduit-deployed OPContractsManagerV2 (v7.1.17).
+Upgrade 19b "Karst" (op-contracts/v7.0.0), executed on 2026-09-21 by RoninConduitOwner via a Conduit-deployed OPContractsManagerV2 (v7.1.17). Absolute prestate unchanged (op-program v1.3.1).
 
-PermissionedDisputeGame (v2.2.0 to v2.4.0), MIPS (v1.9.0 to v1.10.1), PreimageOracle (v1.1.4 to v1.1.5) and DelayedWETH (v1.5.0 to v1.5.1) replaced. Absolute prestate unchanged (op-program v1.3.1).
+Version changes and implementation diffs:
 
-Config: the pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWETH renamed with a `Historic` prefix.
+- OptimismPortal2 5.2.0 -> 5.6.1: https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2
+- SystemConfig 3.13.1 -> 3.14.2: https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9
+- DisputeGameFactory 1.4.0 -> 1.6.1: https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b
+- AnchorStateRegistry 3.7.0 -> 3.9.0: https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281
+- L1StandardBridge 2.8.0 -> 2.8.2: https://disco.l2beat.com/diff/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A/eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891
+- L1CrossDomainMessenger 2.11.0 -> 2.11.1: https://disco.l2beat.com/diff/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0/eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0
+- L1ERC721Bridge 2.9.0 -> 2.9.1: https://disco.l2beat.com/diff/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9/eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e
+- OptimismMintableERC20Factory 1.10.2 -> 1.11.0: https://disco.l2beat.com/diff/eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB/eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12
+- SuperchainConfig 2.4.0 -> 2.4.2: https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550
+- PermissionedDisputeGame 2.2.0 -> 2.4.0: https://disco.l2beat.com/diff/eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A/eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e
+- MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA
+- PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0
+- DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
+
+Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWETH renamed with a `Historic` prefix.
 
 ## Watched changes
 
