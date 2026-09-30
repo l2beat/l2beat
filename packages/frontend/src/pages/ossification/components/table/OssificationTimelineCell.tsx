@@ -177,7 +177,7 @@ function getDescription({
   valueSource,
   clockBeforeWindow,
 }: Props & { clockBeforeWindow: boolean }) {
-  const { from, to, clockStart, criticalChanges, values } = timeline
+  const { from, to, clockStart, values } = timeline
   const known = values?.filter((value) => value !== null) ?? []
   const current = known.at(-1)
   return {
@@ -185,12 +185,23 @@ function getDescription({
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
-      criticalChanges === 0
-        ? 'No critical change in this window.'
-        : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')} in this window.`,
+      getResetsLine(timeline),
       current !== undefined && valueSource
         ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
         : 'No value data.',
     ],
   }
+}
+
+// One tick per reset; deployments reset the clock too, so ticks outnumber
+// critical changes.
+function getResetsLine({ resets, criticalChanges }: Props['timeline']) {
+  if (resets.length === 0) {
+    return 'No reset in this window.'
+  }
+  const changes =
+    criticalChanges === 0
+      ? 'no critical change'
+      : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')}`
+  return `${resets.length} ${pluralize(resets.length, 'reset')} in this window (${changes}).`
 }
