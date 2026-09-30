@@ -3097,7 +3097,7 @@
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/ETHLockbox": "0xbca5a6b0a56b06aa96214339bdd4b866d129669b545b4d36c8c86bc684f2fc8b",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -3111,7 +3111,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25947098 },
-  "permissionsConfigHash": "0x877c17067464f6eee655833a1253eeed82784614c1f52cb2b8b52e8dc9256854",
+  "permissionsConfigHash": "0x316a0b581316b9f3cc93475559b30edb7998e9c8d4f86f124ea53076a1d4a301",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -3194,6 +3194,12 @@
     },
     "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70",

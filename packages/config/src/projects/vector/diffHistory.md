@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7f3db316c46b53b495425b65613185182c8774c8
+
+# Diff at Wed, 30 Sep 2026 07:45:39 GMT:
+
+- id: 4ebeb194
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789917678
+- current timestamp: 1789917678
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917678 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
 Generated with discovered.json: 0x30bf02573172bd77e3dd9f1a83d6de3a8060481a
 
 # Diff at Wed, 23 Sep 2026 05:50:12 GMT:

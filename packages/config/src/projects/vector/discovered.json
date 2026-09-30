@@ -261,7 +261,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x45828180bbE489350D621d002968A0585406d487": "TimelockController"
@@ -641,7 +644,7 @@
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
   "usedBlockNumbers": { "ethereum": 26019588 },
-  "permissionsConfigHash": "0x06660950581d2f3cbd344f65924c5b2608fd3621003893ee03bc43ad3065d19c",
+  "permissionsConfigHash": "0xb0fa542ce817a5f24aada35e92c0f612118a435c51f07db2283a2100def81c47",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },

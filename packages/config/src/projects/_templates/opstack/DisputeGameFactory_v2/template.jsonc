@@ -40,6 +40,14 @@
     }
   },
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the dispute game implementation and initial bond for any game type."
+        }
+      ]
+    },
     "game1337": {
       "severity": "HIGH",
       "handler": {

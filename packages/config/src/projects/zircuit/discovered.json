@@ -2410,7 +2410,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25947102, "zircuit": 34554232 },
-  "permissionsConfigHash": "0xf75c98e4c8fb05848f57f5baf24369bfe7bf47273ac815023c6c6f37fced5236",
+  "permissionsConfigHash": "0xd2f790d94996a1bb9492e051395e8aa55f40a30edf0cf0e01695fa377948a4a5",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {
       "receivedPermissions": [
@@ -2441,6 +2441,12 @@
           "from": "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",

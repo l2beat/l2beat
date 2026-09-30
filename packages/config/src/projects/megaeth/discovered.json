@@ -4089,7 +4089,7 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 25846603 },
-  "permissionsConfigHash": "0xf767fceb2e1ff383b05e1d39fe3d6ebcd0b5137886c043bfea61672d351b4d0c",
+  "permissionsConfigHash": "0x9ab1b4581981885c2a74be7de00d7e66a298f06c4dfc4a82b77536f7696a71df",
   "modelledAgainst": {
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },
@@ -5183,6 +5183,12 @@
           "permission": "interact",
           "from": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {
