@@ -207,6 +207,7 @@ function withArticle(noun: string) {
   return /^[aeiou]/i.test(noun) ? `an ${noun}` : `a ${noun}`
 }
 
+// Only layer 3s have a host chain other than Ethereum, hence the noun.
 // "on Arbitrum" states the host, "built on the Arbitrum Orbit stack" names
 // only the technology.
 function unlessHostStated(hostChain: string | undefined, description: string) {
@@ -220,7 +221,7 @@ function unlessHostStated(hostChain: string | undefined, description: string) {
       `\\bon ${escapeRegExp(firstWord ?? hostChain)}\\b(?! (stack|orbit|nitro))`,
       'i',
     ).test(description)
-  return stated ? undefined : `on ${hostChain}`
+  return stated ? undefined : `Layer 3 on ${hostChain}`
 }
 
 function unlessMentioned(fact: string | undefined, description: string) {

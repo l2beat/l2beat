@@ -52,7 +52,7 @@ describe(getScalingMetadataDescription.name, () => {
     })
 
     expect(description).toEqual(
-      'Optimium · on Arbitrum One · $1.2M TVS. Xai is a gaming chain.',
+      'Optimium · Layer 3 on Arbitrum One · $1.2M TVS. Xai is a gaming chain.',
     )
   })
 
@@ -69,7 +69,7 @@ describe(getScalingMetadataDescription.name, () => {
     expect(description).toEqual('Fuel Ignition is a fast chain.')
   })
 
-  it('hides a zero TVS and capitalizes a lead that starts with the host chain', () => {
+  it('hides a zero TVS and still names the host chain of an L3', () => {
     const description = getScalingMetadataDescription({
       name: 'Upcoming Chain',
       category: undefined,
@@ -79,7 +79,9 @@ describe(getScalingMetadataDescription.name, () => {
       description: 'Upcoming Chain launches soon.',
     })
 
-    expect(description).toEqual('On Base. Upcoming Chain launches soon.')
+    expect(description).toEqual(
+      'Layer 3 on Base. Upcoming Chain launches soon.',
+    )
   })
 
   // "on Arbitrum" states the host, while "Arbitrum Orbit stack" only names
@@ -104,7 +106,7 @@ describe(getScalingMetadataDescription.name, () => {
 
     expect(stated).toEqual('WINR is a Layer 3 on Arbitrum.')
     expect(technologyOnly).toEqual(
-      'On Arbitrum One. ApeChain is built on the Arbitrum Orbit stack.',
+      'Layer 3 on Arbitrum One. ApeChain is built on the Arbitrum Orbit stack.',
     )
   })
 
