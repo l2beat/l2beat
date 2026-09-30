@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
+import compact from 'lodash/compact'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { ps } from '~/server/projects'
@@ -127,12 +128,12 @@ export function getL2ProjectMetadata(
     openGraph: {
       image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
     },
-    structuredData: [
+    structuredData: compact([
       getL2ProjectStructuredData({
         ...project,
         hasTvsApi: project.tvsConfig !== undefined,
         hasActivityApi: project.activityConfig !== undefined,
       }),
-    ],
+    ]),
   })
 }

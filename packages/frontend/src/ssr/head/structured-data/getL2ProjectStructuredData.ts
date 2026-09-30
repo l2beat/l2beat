@@ -6,24 +6,28 @@ import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
 /**
  * A Dataset rather than a plain WebPage because the page's metrics are
  * published as machine-readable JSON, which `distribution` points at.
+ * Research-only projects publish no such JSON, so they get no Dataset.
  */
 export function getL2ProjectStructuredData(project: L2Project) {
+  const distribution = compact([
+    project.hasTvsApi &&
+      jsonApi(
+        `${project.name} Total Value Secured`,
+        `/api/scaling/tvs/${project.slug}`,
+      ),
+    project.hasActivityApi &&
+      jsonApi(
+        `${project.name} Activity`,
+        `/api/scaling/activity/${project.slug}`,
+      ),
+  ])
+  if (distribution.length === 0) return undefined
+
   return getDataset({
     pagePath: `/layer2s/projects/${project.slug}`,
     name: project.name,
     description: getProjectMetadataDescription(project),
-    distribution: compact([
-      project.hasTvsApi &&
-        jsonApi(
-          `${project.name} Total Value Secured`,
-          `/api/scaling/tvs/${project.slug}`,
-        ),
-      project.hasActivityApi &&
-        jsonApi(
-          `${project.name} Activity`,
-          `/api/scaling/activity/${project.slug}`,
-        ),
-    ]),
+    distribution,
   })
 }
 

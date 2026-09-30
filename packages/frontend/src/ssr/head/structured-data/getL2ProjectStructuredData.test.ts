@@ -55,9 +55,19 @@ describe(getL2ProjectStructuredData.name, () => {
       hasTvsApi: false,
     })
 
-    expect(dataset.distribution.map((d) => d.contentUrl)).toEqual([
+    expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
       'https://l2beat.com/api/scaling/activity/arbitrum',
     ])
+  })
+
+  it('emits no Dataset for a project without any API', () => {
+    const dataset = getL2ProjectStructuredData({
+      ...arbitrum,
+      hasTvsApi: false,
+      hasActivityApi: false,
+    })
+
+    expect(dataset).toEqual(undefined)
   })
 })
 
