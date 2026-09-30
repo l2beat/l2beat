@@ -7,6 +7,7 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
+import { getDeploymentsByVolume } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
   InteropTokenDeploymentView,
@@ -30,7 +31,7 @@ export function renderOnchainDeployments(
   ])
 }
 
-/** Columns and order of the protocols table on the token page. */
+/** Columns of the protocols table on the token page; entries arrive sorted by volume. */
 export function renderProtocolsTable(entries: ProtocolEntry[]) {
   if (entries.length === 0) return 'No protocol data for this token.'
   return table(
@@ -43,19 +44,17 @@ export function renderProtocolsTable(entries: ProtocolEntry[]) {
       'Last 24h avg. transfer time',
       'Last 24h avg. transfer value',
     ],
-    entries
-      .toSorted((a, b) => b.volume - a.volume)
-      .map((entry, i) => [
-        String(i + 1),
-        renderProtocolName(entry),
-        entry.type,
-        entry.volume ? formatUsd(entry.volume) : NO_DATA,
-        String(entry.transferCount),
-        entry.averageDuration
-          ? formatAverageDuration(entry.averageDuration)
-          : NO_DATA,
-        entry.averageValue ? formatUsd(entry.averageValue) : NO_DATA,
-      ]),
+    entries.map((entry, i) => [
+      String(i + 1),
+      renderProtocolName(entry),
+      entry.type,
+      entry.volume ? formatUsd(entry.volume) : NO_DATA,
+      String(entry.transferCount),
+      entry.averageDuration
+        ? formatAverageDuration(entry.averageDuration)
+        : NO_DATA,
+      entry.averageValue ? formatUsd(entry.averageValue) : NO_DATA,
+    ]),
   )
 }
 
@@ -98,9 +97,6 @@ export function interopProtocolUrl(slug: string) {
 const NO_DATA = 'No data'
 
 function renderDeploymentsTable(graph: InteropTokenRelationsGraph) {
-  const deployments = graph.nodes
-    .flatMap((node) => node.deployments)
-    .toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1))
   return table(
     [
       '#',
@@ -112,7 +108,7 @@ function renderDeploymentsTable(graph: InteropTokenRelationsGraph) {
       'Last 24h transfer count',
       'Last 24h avg. transfer time',
     ],
-    deployments.map((deployment, i) => [
+    getDeploymentsByVolume(graph).map((deployment, i) => [
       String(i + 1),
       deployment.chain.name,
       deployment.explorerUrl

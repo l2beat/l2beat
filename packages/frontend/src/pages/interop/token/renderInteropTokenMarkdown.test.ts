@@ -64,7 +64,7 @@ describe(renderInteropTokenMarkdown.name, () => {
     )
   })
 
-  it('tables the protocols by volume, linking each protocol page', () => {
+  it('tables the protocols in the order given, linking each protocol page', () => {
     const protocols = getSection(
       renderInteropTokenMarkdown(PAGE),
       'Top protocols',
@@ -146,7 +146,7 @@ function getSection(markdown: string, heading: string) {
 
 // A token page shaped like the one the HTML page renders: every section the
 // token page has, deployments in a burn-and-mint group and on an unsupported
-// chain, and protocols listed out of volume order.
+// chain, and protocols in volume order, as the dashboard data provides them.
 
 const ETHEREUM_USDC = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 const BASE_USDC = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
@@ -309,6 +309,12 @@ const TOKEN_DATA: InteropTokenDashboardData = {
   },
   topProtocols: [],
   entries: [
+    protocol('CCTP', {
+      volume: 8_000_000,
+      transferCount: 1_200,
+      averageValue: 6_667,
+      averageDuration: { type: 'single', duration: 900 },
+    }),
     protocol('Across', {
       type: 'intent',
       isAggregate: true,
@@ -322,12 +328,6 @@ const TOKEN_DATA: InteropTokenDashboardData = {
           { label: 'Slow', duration: null },
         ],
       },
-    }),
-    protocol('CCTP', {
-      volume: 8_000_000,
-      transferCount: 1_200,
-      averageValue: 6_667,
-      averageDuration: { type: 'single', duration: 900 },
     }),
   ],
   zeroTransferProtocols: [],

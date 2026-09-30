@@ -58,7 +58,7 @@ function getFacts(
   data: InteropTokenDashboardData | null,
 ) {
   const stats = data?.token
-  const protocols = sortByVolume(data?.entries ?? [])
+  const protocols = data?.entries ?? []
   return compact([
     token.issuer && {
       label: 'Issued by',
@@ -116,10 +116,6 @@ function withProtocolsTable(
         }
       : section,
   )
-}
-
-function sortByVolume(protocols: ProtocolEntry[]) {
-  return protocols.toSorted((a, b) => b.volume - a.volume)
 }
 
 /** Issuers and chains are lowercase ids, which the HTML page capitalizes with CSS. */

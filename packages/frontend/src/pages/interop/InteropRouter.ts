@@ -168,21 +168,12 @@ export function createInteropRouter(
     serveMarkdown(getTokenMarkdown),
   )
 
-  // A route of its own: the markdown handlers do not accept the optional
-  // query type the page route below validates.
-  router.get(
-    '/interop/tokens/:slug{/:issuer}{/:symbol}',
-    serveMarkdownIfPreferred(getTokenMarkdown),
-  )
-
   // The optional issuer and symbol segments only make the URL readable - the
   // token is resolved by the slug (its id), so they are validated away here.
   router.get(
     '/interop/tokens/:slug{/:issuer}{/:symbol}',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: InteropQuery,
-    }),
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdownIfPreferred(getTokenMarkdown),
     async (req, res) => {
       const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {

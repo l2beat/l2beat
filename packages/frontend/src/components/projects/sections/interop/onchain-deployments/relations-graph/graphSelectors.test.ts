@@ -5,6 +5,7 @@ import type {
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import {
   getActiveBacking,
+  getDeploymentsByVolume,
   getDirectlyBackedNodes,
   getRelationsPaths,
   getSameChainComparisons,
@@ -41,6 +42,14 @@ describe(hasTokenRelations.name, () => {
     expect(
       hasTokenRelations({ nodes: graph.nodes.slice(4, 5), edges: [] }),
     ).toEqual(true)
+  })
+})
+
+describe(getDeploymentsByVolume.name, () => {
+  it('flattens clusters and puts the unmeasured deployment last', () => {
+    expect(
+      getDeploymentsByVolume(graph).map((deployment) => deployment.address),
+    ).toEqual(['0xe1', '0xa1', '0xb1', '0xc1', '0x01', '0xb2', '0x11'])
   })
 })
 

@@ -14,7 +14,6 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import type { InteropQuery } from '../InteropRouter'
 import {
   getInteropTokenPagePath,
   getInteropTokenUrl,
@@ -24,7 +23,7 @@ import type { InteropSelection } from '../utils/types'
 import { renderInteropTokenMarkdown } from './renderInteropTokenMarkdown'
 
 export async function getInteropTokenPageData(
-  req: Request<{ slug: string }, unknown, unknown, InteropQuery>,
+  req: Request<{ slug: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
@@ -151,15 +150,9 @@ async function getCachedData({
     getRelationsGraph(token.id),
   ])
 
-  const deploymentsCount =
-    relationsGraph?.nodes.reduce(
-      (sum, node) => sum + node.deployments.length,
-      0,
-    ) ?? 0
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
-    deploymentsCount,
     relationsGraph,
   )
 
