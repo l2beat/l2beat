@@ -1,5 +1,6 @@
 import type { ProjectScalingContractsProgramHash } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { PROGRAM_HASHES_SECTION_INTRO } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ProgramHashesTable } from './table/ProgramHashesTable'
@@ -27,9 +28,7 @@ export function ProgramHashesSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:mb-6 md:text-paragraph-16">
-        List of known guest zkVM programs used by this prover. Each program
-        represents a piece of offchain execution that is verified onchain. The
-        program hash serves as the program's unique identifier.
+        {PROGRAM_HASHES_SECTION_INTRO}
       </p>
       <ProgramHashesTable entries={programHashes} />
     </ProjectSection>

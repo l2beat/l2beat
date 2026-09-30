@@ -1,7 +1,7 @@
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
-import { VERIFIER_STATUS_ORDER } from './VerifiedCountWithDetails'
+import { VERIFIER_STATUS_ORDER } from './zkCatalogUi'
 
 interface Props {
   data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['projectsUsedInByStatus']

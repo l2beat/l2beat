@@ -75,6 +75,7 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
       'https://l2beat.com/privacy/projects/{slug}.md',
       'https://l2beat.com/interop/protocols/{slug}.md',
+      'https://l2beat.com/zk-catalog/{slug}.md',
     ])
   })
 

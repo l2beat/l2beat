@@ -341,6 +341,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One bridge as markdown: last 24h volume, top tokens, chains and routes.',
     },
+    {
+      name: 'ZK catalog project',
+      path: '/zk-catalog/{slug}.md',
+      description:
+        'One proving system: trusted setup risks, verifier IDs and deployments, program hashes.',
+    },
     // Behind the same flag as the pages: listed while off, this would be a 404.
     ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),
   ],
