@@ -54,6 +54,17 @@ export function getPrivacyAdversaryTitle(label: string): string {
   return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
 }
 
+/**
+ * First sentence of an adversary's exposure: the gist shown under each verdict
+ * in the rosette tooltip, while the full text stays on the project page. A
+ * sentence only ends where the next one starts with a capital, a digit or a
+ * quote, so abbreviations like "e.g." do not cut it short.
+ */
+export function getPrivacyAdversaryGist(exposure: string): string {
+  const match = exposure.match(/^(.+?[.!?])\s+(?=[A-Z0-9"'(])/s)
+  return (match?.[1] ?? exposure).trim()
+}
+
 /** Points a cell contributes to the score; green is worth the most. */
 const PRIVACY_SENTIMENT_POINTS: Record<PrivacyAdversarySentiment, number> = {
   good: 2,
@@ -117,7 +128,11 @@ export function getPrivacyAdversariesTableValue(
   }
 }
 
-const ADVERSARY_ROSETTE_VALUE: Record<PrivacyAdversarySentiment, string> = {
+/** The verdict of one adversary, as the rosette and its tooltip word it. */
+export const PRIVACY_ADVERSARY_VERDICT: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
   good: 'Private',
   warning: 'At risk',
   bad: 'Exposed',
@@ -133,7 +148,7 @@ export function getPrivacyAdversaryRosetteValues(
 ): RosetteValue[] {
   return adversaries.cells.map((cell) => ({
     name: cell.label.replace(' ', '\n'),
-    value: ADVERSARY_ROSETTE_VALUE[cell.sentiment],
+    value: PRIVACY_ADVERSARY_VERDICT[cell.sentiment],
     sentiment: cell.sentiment,
     description: cell.exposure,
   }))

@@ -128,6 +128,7 @@ export function PrivacyProjectPage({
                         exitWindow={entry.exitWindow}
                         adversaries={adversaries}
                         href={entry.href}
+                        isUnderReview={entry.isUnderReview}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />

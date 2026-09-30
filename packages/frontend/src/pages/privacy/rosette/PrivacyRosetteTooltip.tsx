@@ -1,96 +1,75 @@
-import type { ReactNode } from 'react'
-import { useState } from 'react'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import { UnderReviewBadge } from '~/components/badge/UnderReviewBadge'
+import { TooltipVisualOnly } from '~/components/core/tooltip/Tooltip'
+import { RiskValue } from '~/components/rosette/RiskValue'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
-import { cn } from '~/utils/cn'
-import { PrivacyAdversaryTooltipContent } from '../adversaries/PrivacyAdversaryTooltipContent'
-import { getPrivacyAdversariesSentence } from '../adversaries/privacyAdversaryUi'
-import { getPrivacyRosetteSlices } from './privacyRosetteSlices'
+import {
+  getPrivacyAdversariesSentence,
+  getPrivacyAdversaryGist,
+  PRIVACY_ADVERSARY_VERDICT,
+} from '../adversaries/privacyAdversaryUi'
+import { PrivacyRosetteFigure } from './PrivacyRosetteFigure'
 
 interface Props {
   adversaries: PrivacyAdversariesSummary
-  /** The rosette, blown up beside the legend. */
-  rosette: ReactNode
+  isUnderReview?: boolean
 }
 
 /**
- * The rosette blown up beside a legend of the adversaries. Hovering a row
- * opens that adversary's full assessment underneath - the same detail each
- * adversary dot used to show on its own.
- *
- * The detail only ever grows the tooltip downward: the cell opens it to the
- * right, aligned to its top, so the rows under the pointer stay put.
+ * The privacy take on the L2 "Risk analysis" card: the same labelled rosette
+ * beside the verdicts, each with its gist alongside so the tooltip explains
+ * itself. The full assessment stays on the project page. On mobile the same
+ * content opens in a drawer instead, see PrivacyRosetteDrawer.
  */
-export function PrivacyRosetteTooltip({ adversaries, rosette }: Props) {
-  const [selectedId, setSelectedId] = useState<string>()
+export function PrivacyRosetteTooltip({ adversaries, isUnderReview }: Props) {
+  if (isUnderReview) {
+    return (
+      <div className="w-[300px] text-wrap">
+        <div className="mb-3">
+          <span className="text-heading-16">Privacy risk analysis</span> is{' '}
+          <UnderReviewBadge />
+        </div>
+        <p>
+          Projects under review might present uncompleted information & data.
+          <br />
+          L2BEAT Team is working to research & validate content before
+          publishing.
+        </p>
+      </div>
+    )
+  }
+
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-  const slices = getPrivacyRosetteSlices(adversaries)
-  const selected = slices.find((slice) => slice.id === selectedId)
 
   return (
-    // The tooltip inherits `white-space: pre` from the table, so the wrapping
-    // has to be asked for explicitly or every line runs past the panel.
-    <div className="flex w-[460px] max-w-full flex-col text-wrap">
-      <div className="font-bold text-label-value-15">Privacy risk analysis</div>
-      <div
-        className={cn(
-          'mt-3 flex items-center gap-5 border-divider border-t pt-3',
-          selected && 'border-b pb-3',
-        )}
-      >
-        {rosette}
-        <div
-          className="flex min-w-0 flex-1 flex-col gap-3"
-          onMouseLeave={() => setSelectedId(undefined)}
-        >
-          <div>
-            <div className="mb-1 font-medium text-[11px] text-secondary uppercase tracking-wide">
-              {adversaries.promiseLabel}
+    // The tooltip inherits `white-space: pre` from the table, so wrapping has
+    // to be asked for explicitly or the gists run past the panel.
+    <div className="flex w-[720px] max-w-full flex-col text-wrap">
+      <span className="text-heading-16">Privacy risk analysis</span>
+      <p className="mt-1 font-medium text-xs leading-normal">
+        {subject} is private against {held}/{total} adversaries.
+      </p>
+      <div className="mt-3 flex items-center gap-6">
+        <TooltipVisualOnly>
+          <PrivacyRosetteFigure adversaries={adversaries} />
+        </TooltipVisualOnly>
+        {/* One row per adversary: the verdict beside its gist rather than
+            above it, so each row is about two lines and the list stays level
+            with the rosette. */}
+        <div className="grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-start gap-x-4 gap-y-3">
+          {adversaries.cells.map((cell) => (
+            <div key={cell.id} className="col-span-2 grid grid-cols-subgrid">
+              <RiskValue
+                name={cell.label}
+                value={PRIVACY_ADVERSARY_VERDICT[cell.sentiment]}
+                sentiment={cell.sentiment}
+              />
+              <p className="line-clamp-2 text-secondary text-xs leading-snug">
+                {getPrivacyAdversaryGist(cell.exposure)}
+              </p>
             </div>
-            <ul className="-mx-1.5 grid grid-cols-[auto_minmax(0,1fr)_auto] text-xs">
-              {slices.map((slice) => (
-                <li
-                  key={slice.id}
-                  className={cn(
-                    'col-span-3 grid grid-cols-subgrid items-center gap-x-2 rounded px-1.5 py-0.5',
-                    slice.id === selectedId && 'bg-surface-secondary',
-                  )}
-                  onMouseEnter={() => setSelectedId(slice.id)}
-                >
-                  <TrustedSetupRiskDot
-                    risk={slice.risk}
-                    size="xs"
-                    className="shrink-0"
-                  />
-                  <span className="truncate font-medium">{slice.label}</span>
-                  <span className="whitespace-nowrap text-right text-secondary">
-                    {slice.value}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col gap-1.5 text-xs leading-normal">
-            <p className="text-secondary">{adversaries.promise.text}</p>
-            <p>
-              <span className="font-bold">{subject}</span> is private against{' '}
-              <span className="font-bold tabular-nums">
-                {held}/{total}
-              </span>{' '}
-              adversaries.
-            </p>
-            <p className="text-secondary">
-              Hover a row or slice for the full assessment, click for the
-              project page.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
-      {selected && (
-        <div className="mt-2.5">
-          <PrivacyAdversaryTooltipContent cell={selected.cell} />
-        </div>
-      )}
     </div>
   )
 }

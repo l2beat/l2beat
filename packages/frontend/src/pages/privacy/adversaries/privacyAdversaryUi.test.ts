@@ -8,6 +8,7 @@ import {
   getPrivacyAdversariesScore,
   getPrivacyAdversariesSentence,
   getPrivacyAdversariesTableValue,
+  getPrivacyAdversaryGist,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -80,6 +81,30 @@ describe(getPrivacyAdversaryTitle.name, () => {
   it('prefixes the label in lower case', () => {
     expect(getPrivacyAdversaryTitle('Public observer')).toEqual(
       'Against public observer',
+    )
+  })
+})
+
+describe(getPrivacyAdversaryGist.name, () => {
+  it('keeps the first sentence', () => {
+    expect(
+      getPrivacyAdversaryGist(
+        'Commitments use a Pedersen hash on an elliptic curve. A quantum computer could test them.',
+      ),
+    ).toEqual('Commitments use a Pedersen hash on an elliptic curve.')
+  })
+
+  it('does not split on decimals or abbreviations', () => {
+    expect(
+      getPrivacyAdversaryGist(
+        'The 0.1 ETH pool, e.g. its relayer, sees it. Nothing else.',
+      ),
+    ).toEqual('The 0.1 ETH pool, e.g. its relayer, sees it.')
+  })
+
+  it('returns a single sentence whole', () => {
+    expect(getPrivacyAdversaryGist('Only the amount is hidden.')).toEqual(
+      'Only the amount is hidden.',
     )
   })
 })

@@ -5,11 +5,16 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import { TableLink } from '~/components/table/TableLink'
+import { useDevice } from '~/hooks/useDevice'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
 } from '../adversaries/privacyAdversaryUi'
+import {
+  PrivacyRosetteDrawer,
+  PrivacyRosetteDrawerLink,
+} from './PrivacyRosetteDrawer'
 import { PrivacyRosetteTooltip } from './PrivacyRosetteTooltip'
 
 interface Props {
@@ -20,50 +25,61 @@ interface Props {
 }
 
 /**
- * The adversaries on the L2 risk rosette, one slice each. The tooltip is the
- * privacy one rather than the L2 "Risk analysis" card: it names the promise,
- * lists every adversary, and opens the full assessment on hover.
+ * The adversaries on the L2 risk rosette, one slice each. On desktop it links
+ * to the project page and opens a tooltip laid out like the L2 "Risk
+ * analysis" card; on mobile, where the tooltip is too wide, a tap slides the
+ * same analysis up in a drawer instead.
  */
 export function PrivacyAdversaryRosetteCell({
   adversaries,
   href,
   isUnderReview,
 }: Props) {
+  const { isMobile } = useDevice()
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
 
+  const icon = (
+    <PizzaRosetteIcon
+      values={values}
+      isUnderReview={isUnderReview}
+      background={false}
+      disableSectionLinking
+      className="size-6 md:size-8"
+      alt-text={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
+    />
+  )
+
+  if (isMobile) {
+    return (
+      <PrivacyRosetteDrawer
+        adversaries={adversaries}
+        isUnderReview={isUnderReview}
+        trigger={icon}
+        triggerLabel={`Privacy risk analysis: ${subject} is private against ${held}/${total} adversaries.`}
+        triggerClassName="size-full"
+      >
+        <PrivacyRosetteDrawerLink href={href}>
+          Open project page
+        </PrivacyRosetteDrawerLink>
+      </PrivacyRosetteDrawer>
+    )
+  }
+
   return (
-    // Hoverable so the pointer can move into the tooltip and pick a row.
-    <Tooltip disableHoverableContent={false}>
+    // The gists in the tooltip appear nowhere else on the page, so they are
+    // also rendered into the HTML for crawlers, as the L2 rosette does.
+    <Tooltip contentInHtml>
       <TooltipTrigger
         className="flex size-full items-center justify-center"
         disabledOnMobile
       >
-        <TableLink href={href}>
-          <PizzaRosetteIcon
-            values={values}
-            isUnderReview={isUnderReview}
-            background={false}
-            disableSectionLinking
-            className="size-6 md:size-8"
-            alt-text={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
-          />
-        </TableLink>
+        <TableLink href={href}>{icon}</TableLink>
       </TooltipTrigger>
-      {/* Opened to the right and top-aligned so the hover detail, which is
-          added at the bottom, grows the tooltip away from the pointer. */}
-      <TooltipContent fitContent side="right" align="start">
+      <TooltipContent fitContent>
         <PrivacyRosetteTooltip
           adversaries={adversaries}
-          rosette={
-            <PizzaRosetteIcon
-              values={values}
-              isUnderReview={isUnderReview}
-              background="surface"
-              disableSectionLinking
-              className="size-[104px] shrink-0"
-            />
-          }
+          isUnderReview={isUnderReview}
         />
       </TooltipContent>
     </Tooltip>
