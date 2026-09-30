@@ -19,5 +19,11 @@
     "address": "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "SuperchainConfig_v2_4_3": {
+    "hash": "0xb74ed3aa109bd981b095c02d6e3bda2b2467d40e9d1060b4c89b01de32ebad3a",
+    "address": "eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504",
+    "chain": "ethereum",
+    "blockNumber": 26084189
   }
 }

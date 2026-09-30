@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -19,8 +19,11 @@ export const bob: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   isPartOfSuperchain: true,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     aliases: ['Build on Bitcoin'],
     slug: 'bob',
     description:
@@ -50,9 +53,18 @@ export const bob: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: true,
-  nodeSourceLink: 'https://boundless-xyz.github.io/kailua/operate.html', // also the standard op stack op-node and op-geth but that is mentioned in the link
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   stateDerivation: DERIVATION.OPSTACK('BOB'),
   milestones: [
+    {
+      title: 'Withdrawals fall back to the permissioned game',
+      url: 'https://etherscan.io/tx/0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7',
+      date: '2026-09-16T00:00:00.00Z',
+      description:
+        'Guardian moves the respected game type back to the PermissionedDisputeGame; Kailua proposals stop.',
+      type: 'general',
+    },
     {
       title: 'Kona derivation bug',
       url: 'https://github.com/op-rs/kona/issues/3108',
