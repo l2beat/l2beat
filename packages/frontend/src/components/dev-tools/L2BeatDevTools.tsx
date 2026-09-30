@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
 import { Logo } from '../Logo'
+import { readJsonLd, readOpenGraph } from './headTags'
+import { JsonLdViewer } from './JsonLdViewer'
 import { JsonTreeNode } from './JsonTreeNode'
 import { MetricWithTooltip } from './MetricWithTooltip'
 import { getDevToolsMetrics } from './metrics'
+import { OpenGraphPreview } from './OpenGraphPreview'
 import { getSizeMetrics, type SizeMetrics } from './sizeMetrics'
 
 export function L2BeatDevTools() {
   const isClient = useIsClient()
   const [isOpen, setIsOpen] = useState(false)
+  const [tab, setTab] = useState<Tab>('ssr-data')
   const [copied, setCopied] = useState(false)
   const [sizeMetrics, setSizeMetrics] = useState<SizeMetrics | undefined>(
     undefined,
@@ -55,6 +59,17 @@ export function L2BeatDevTools() {
     }
   }, [isOpen])
 
+  const headTags = useMemo(
+    () =>
+      isOpen
+        ? {
+            openGraph: readOpenGraph(document.head),
+            jsonLd: readJsonLd(document.head),
+          }
+        : undefined,
+    [isOpen],
+  )
+
   if (!isClient) {
     return null
   }
@@ -62,9 +77,18 @@ export function L2BeatDevTools() {
   const ssrData = window.__SSR_DATA__
   const metrics = sizeMetrics ? getDevToolsMetrics(sizeMetrics) : []
 
+  const copyableJson =
+    tab === 'ssr-data'
+      ? ssrData
+      : tab === 'json-ld'
+        ? headTags?.jsonLd.map((block) =>
+            block.isValid ? block.data : block.raw,
+          )
+        : undefined
+
   async function copyData() {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(ssrData, null, 2))
+      await navigator.clipboard.writeText(JSON.stringify(copyableJson, null, 2))
       setCopied(true)
     } catch {}
   }
@@ -90,23 +114,27 @@ export function L2BeatDevTools() {
               >
                 Icons
               </a>
-              <button
-                type="button"
-                onClick={() => setSizeMetrics(getSizeMetrics(ssrData))}
-                className="rounded border border-divider px-2 py-1 text-3xs text-primary uppercase tracking-[0.08em]"
-              >
-                Refresh
-              </button>
-              <button
-                type="button"
-                onClick={copyData}
-                className={cn(
-                  'rounded border border-divider px-2 py-1 text-3xs text-primary uppercase tracking-[0.08em]',
-                  copied && 'border-positive text-positive',
-                )}
-              >
-                {copied ? 'Copied' : 'Copy JSON'}
-              </button>
+              {tab === 'ssr-data' && (
+                <button
+                  type="button"
+                  onClick={() => setSizeMetrics(getSizeMetrics(ssrData))}
+                  className="rounded border border-divider px-2 py-1 text-3xs text-primary uppercase tracking-[0.08em]"
+                >
+                  Refresh
+                </button>
+              )}
+              {copyableJson !== undefined && (
+                <button
+                  type="button"
+                  onClick={copyData}
+                  className={cn(
+                    'rounded border border-divider px-2 py-1 text-3xs text-primary uppercase tracking-[0.08em]',
+                    copied && 'border-positive text-positive',
+                  )}
+                >
+                  {copied ? 'Copied' : 'Copy JSON'}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
@@ -116,7 +144,22 @@ export function L2BeatDevTools() {
               </button>
             </div>
           </div>
-          {sizeMetrics && (
+          <div className="flex gap-1 border-divider border-b px-3 py-1.5">
+            {TABS.map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setTab(id)}
+                className={cn(
+                  'rounded px-2 py-1 text-3xs text-secondary uppercase tracking-[0.08em]',
+                  tab === id && 'bg-surface-secondary text-primary',
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {tab === 'ssr-data' && sizeMetrics && (
             <div className="grid grid-cols-2 gap-x-4 gap-y-1 border-divider border-b bg-background/35 px-3 py-2 font-mono text-3xs text-secondary md:grid-cols-3">
               {metrics.map((metric) => (
                 <MetricWithTooltip
@@ -129,7 +172,13 @@ export function L2BeatDevTools() {
             </div>
           )}
           <div className="max-h-[65vh] overflow-auto bg-background/40 px-3 py-2">
-            <JsonTreeNode value={ssrData} />
+            {tab === 'ssr-data' && <JsonTreeNode value={ssrData} />}
+            {tab === 'og-preview' && headTags && (
+              <OpenGraphPreview tags={headTags.openGraph} />
+            )}
+            {tab === 'json-ld' && headTags && (
+              <JsonLdViewer blocks={headTags.jsonLd} />
+            )}
           </div>
         </div>
       )}
@@ -146,3 +195,11 @@ export function L2BeatDevTools() {
     </div>
   )
 }
+
+type Tab = (typeof TABS)[number]['id']
+
+const TABS = [
+  { id: 'ssr-data', label: 'SSR data' },
+  { id: 'og-preview', label: 'OG preview' },
+  { id: 'json-ld', label: 'JSON-LD' },
+] as const
