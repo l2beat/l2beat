@@ -31,8 +31,7 @@ export async function getOssificationData(
           'How long the critical contracts of each project have gone unchanged, and how much value they secured meanwhile.',
         url,
         openGraph: {
-          // Placeholder until the page gets its own generated image.
-          image: '/meta-images/home/opengraph-image.png',
+          image: '/meta-images/ossification/opengraph-image.png',
         },
       }),
     },

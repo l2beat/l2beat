@@ -13,7 +13,7 @@ import {
 } from './getProjectOssification'
 import { sampleTimeline } from './sampleTimeline'
 
-export type OssificationCategory = 'Layer 2' | 'Layer 3' | 'Privacy' | 'DeFi'
+type OssificationCategory = 'Layer 2' | 'Layer 3' | 'Privacy' | 'DeFi'
 
 export interface OssificationEntry
   extends OssificationStats,
@@ -30,12 +30,12 @@ export interface OssificationEntry
   timeline: OssificationTimeline
 }
 
-export type OssificationExitWindow = Pick<
+type OssificationExitWindow = Pick<
   ExitWindowRisk,
-  'value' | 'sentiment' | 'description' | 'warning' | 'regular'
+  'value' | 'sentiment' | 'description' | 'warning' | 'regular' | 'orderHint'
 >
 
-export interface OssificationTimeline {
+interface OssificationTimeline {
   from: number
   to: number
   clockStart: number
@@ -134,8 +134,8 @@ function getExitWindow(
   if (!risk) {
     return undefined
   }
-  const { value, sentiment, description, warning, regular } = risk
-  return { value, sentiment, description, warning, regular }
+  const { value, sentiment, description, warning, regular, orderHint } = risk
+  return { value, sentiment, description, warning, regular, orderHint }
 }
 
 function getPlacement(

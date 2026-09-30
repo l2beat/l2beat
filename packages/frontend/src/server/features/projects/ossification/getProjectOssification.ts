@@ -38,7 +38,7 @@ export interface OssificationContractView {
   stateChangeCount: number
 }
 
-export interface OssificationProject extends OssificationSeriesProject {
+interface OssificationProject extends OssificationSeriesProject {
   ossification?: ProjectOssification
 }
 

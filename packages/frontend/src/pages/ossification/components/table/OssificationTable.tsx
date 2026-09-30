@@ -18,6 +18,10 @@ import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
@@ -124,7 +128,7 @@ const columns = [
       tooltip: OSSIFICATION_TOOLTIPS.criticalChangesPerYear,
     },
   }),
-  columnHelper.display({
+  columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
     id: 'exitWindow',
     header: 'Exit\nwindow',
     cell: (ctx) => {
@@ -135,6 +139,10 @@ const columns = [
         <TableValueCell value={undefined} emptyMode="n/a" />
       )
     },
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.exitWindow, b.original.exitWindow),
     meta: {
       tooltip: OSSIFICATION_TOOLTIPS.exitWindow,
     },

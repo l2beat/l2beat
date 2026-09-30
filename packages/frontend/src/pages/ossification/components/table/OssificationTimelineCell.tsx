@@ -22,11 +22,6 @@ const LINE_PROPS = {
 const SCALE_NOTE = "Height is scaled to each project's own peak"
 const CRISP = { shapeRendering: 'crispEdges' } as const
 
-/** Centers a 1px line on a device pixel, so it is not blurred over two. */
-function snap(x: number) {
-  return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
-}
-
 type Props = Pick<OssificationEntry, 'timeline' | 'valueSource'>
 
 export function OssificationTimelineCell({ timeline, valueSource }: Props) {
@@ -144,6 +139,11 @@ export function OssificationTimelineCell({ timeline, valueSource }: Props) {
       </TooltipContent>
     </Tooltip>
   )
+}
+
+/** Centers a 1px line on a device pixel, so it is not blurred over two. */
+function snap(x: number) {
+  return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
 }
 
 /** Area and line through the samples, from a zero baseline to the peak. */

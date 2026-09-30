@@ -11,6 +11,7 @@ describe(calculateExposure.name, () => {
       { timestamp: 2 * YEAR, value: 200 },
     ]
 
+    // 100 at the start and 200 at the end: (100 + 200) / 2 over one year
     expect(calculateExposure(series, YEAR, 2 * YEAR)).toEqual(150)
   })
 
@@ -20,6 +21,7 @@ describe(calculateExposure.name, () => {
       { timestamp: 2 * YEAR, value: 100 },
     ]
 
+    // Nothing in the first year, then 100 for one year
     expect(calculateExposure(series, 0, 2 * YEAR)).toEqual(100)
   })
 
@@ -30,5 +32,16 @@ describe(calculateExposure.name, () => {
     ]
 
     expect(calculateExposure(series, 2 * YEAR, 3 * YEAR)).toEqual(100)
+  })
+
+  it('returns null for an empty series', () => {
+    expect(calculateExposure([], 0, YEAR)).toEqual(null)
+  })
+
+  it('returns zero for an empty or reversed interval', () => {
+    const series = [{ timestamp: 0, value: 100 }]
+
+    expect(calculateExposure(series, YEAR, YEAR)).toEqual(0)
+    expect(calculateExposure(series, 2 * YEAR, YEAR)).toEqual(0)
   })
 })

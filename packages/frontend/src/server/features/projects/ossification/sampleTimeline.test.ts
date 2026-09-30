@@ -13,6 +13,7 @@ describe(sampleTimeline.name, () => {
       { timestamp: 20 * UnixTime.DAY, value: 7 },
     ]
 
+    // Days 0-10 precede the first sample, days 11-19 hold 5, the rest hold 7
     expect(sampleTimeline(series, from, to)).toEqual([
       ...Array(11).fill(null),
       ...Array(9).fill(5),
