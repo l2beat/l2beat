@@ -129,6 +129,12 @@
     },
     // Starkware Security Council: can upgrade the Starknet core, ETHBridge and STRKBridge and manage core governance (program/config hashes)
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
+      // First accepted as a Starknet governor in transaction 0x1f47ef738911d5125334e29a4f5f7d19089666d7c7bb25f6347e61c4bea6d0c6.
+      "critical": { "sinceTimestamp": 1738755371 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      },
       "references": [
         {
           "text": "Security Council - Starknet Docs",
@@ -138,6 +144,30 @@
     },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "ignoreDiscovery": true
+    },
+    "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": {
+      // Core proxy governor since transaction 0x2c4d976a5da00cbeafbac9741bd44659462c0d9a874348527515024d0707671c; now controls DelayedExecutor.
+      "critical": { "sinceTimestamp": 1672589267 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": {
+      // Can enable ETH withdrawal limits since transaction 0xc2da5d5d038c38ff298048afebcac1da9f612a62e4c7faa4a90d787079ce6867.
+      "critical": { "sinceTimestamp": 1727697611 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": {
+      // Can disable ETH withdrawal limits and appoint security agents since transaction 0xab161ac07e153979237f7fccb1ccdcca632abe037e55602fbfa8137881ca594e.
+      "critical": { "sinceTimestamp": 1746449747 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
     },
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": {
       "ignoreRelatives": ["cleareanceAddress"],

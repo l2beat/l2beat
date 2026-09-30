@@ -12,6 +12,10 @@ export interface EdgePath {
   midY: number
 }
 
+export function isAdjacentRow(backerRow: number, backedRow: number): boolean {
+  return backedRow === backerRow + 1
+}
+
 const BUS_OFFSET = 44
 const LANE_MARGIN = 22
 const LANE_STEP = 6
@@ -42,8 +46,10 @@ export function routeRelationsEdges(
     const busY = endY - BUS_OFFSET
 
     if (
-      layout.rowOf.get(edge.backed) ===
-      (layout.rowOf.get(edge.backer) ?? 0) + 1
+      isAdjacentRow(
+        layout.rowOf.get(edge.backer) ?? 0,
+        layout.rowOf.get(edge.backed) ?? 0,
+      )
     ) {
       result.set(edgeKey(edge), {
         path: `M ${startX} ${startY} V ${busY} H ${endX} V ${endY}`,

@@ -5,12 +5,6 @@
   "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most {{ mintCap }}% of supply per mint, with a minimum interval of {{ minimumTimeBetweenMintsFormatted }}. Votes count only when delegated.",
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
-    "minimumTimeBetweenMints": {
-      "severity": "HIGH"
-    },
-    "mintCap": {
-      "severity": "HIGH"
-    },
     "minimumTimeBetweenMintsFormatted": {
       "copy": "minimumTimeBetweenMints",
       "edit": ["format", "FormatSeconds"]

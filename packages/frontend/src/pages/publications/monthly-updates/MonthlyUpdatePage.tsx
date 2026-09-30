@@ -40,7 +40,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout childrenWrapperClassName="md:pt-0">
-        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 md:mb-6 lg:hidden">
+        <div className="md:-mx-5 sticky top-0 z-100 md:mb-6 lg:hidden">
           <MobileSectionNavigation sections={sections} />
         </div>
 

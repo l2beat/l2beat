@@ -52,6 +52,8 @@ describe(ManyChainMultiSigHandler.name, () => {
       summary: 'Root: 2-of-2, signers=2',
       summaryRoot: 'Root: 2-of-2, signers=2',
       summaryGroups: '',
+      quorumSummary:
+        'Flat 2-of-2 multisig: every signer belongs directly to the root group.',
       rootQuorum: 2,
       minSigs: 2,
       allMembers: [
@@ -108,6 +110,7 @@ describe(ManyChainMultiSigHandler.name, () => {
 
     const v = result.value as {
       summary: string
+      quorumSummary: string
       rootQuorum: number
       signerGroups: Record<
         string,
@@ -122,6 +125,9 @@ describe(ManyChainMultiSigHandler.name, () => {
 
     expect(v.summary).toEqual(
       'Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2',
+    )
+    expect(v.quorumSummary).toEqual(
+      'At least 4 of 8 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2].',
     )
     expect(v.rootQuorum).toEqual(2)
     expect(Object.keys(v.signerGroups)).toEqual([

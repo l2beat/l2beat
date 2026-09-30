@@ -50,10 +50,11 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "@types/mocha": "^10.0.6",
     "@types/lodash": "^4.14.198",
+    "@types/mocha": "^10.0.6",
     "@types/mock-fs": "^4.13.4",
     "@types/readline-sync": "^1.4.8",
+    "@xterm/headless": "^6.0.0",
     "earl": "^1.1.0",
     "mocha": "^10.2.0",
     "mock-fs": "^5.2.0",

@@ -4,7 +4,6 @@
   "fields": {
     "paused": { "severity": "MEDIUM" },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -13,7 +12,6 @@
       ]
     },
     "quotaManager": {
-      "severity": "HIGH",
       "description": "Quota manager that rate-limits ERC20 tokens released or minted by this vault."
     },
     "btokenDenylist": {

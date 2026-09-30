@@ -18,6 +18,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAdversaryRosetteCell } from '../../rosette/PrivacyAdversaryRosetteCell'
+import { toPrivacyProjectCellProject } from '../../toPrivacyProjectCellProject'
 import type { PrivacySummaryOptionalColumn } from '../privacyTypes'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
@@ -48,20 +49,7 @@ const leadingColumns: PrivacyColumn[] = [
     header: 'Name',
     enableHiding: false,
     cell: (ctx) => {
-      const project = {
-        name: ctx.row.original.name,
-        shortName: ctx.row.original.shortName,
-        slug: ctx.row.original.slug,
-        icon: ctx.row.original.icon,
-        backgroundColor: undefined,
-        description: ctx.row.original.description,
-        quantumResistance: ctx.row.original.quantumResistant
-          ? 'privacy'
-          : undefined,
-        statuses: {
-          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
-        },
-      } as const
+      const project = toPrivacyProjectCellProject(ctx.row.original)
 
       return (
         <ProjectNameInfoTooltip project={project}>

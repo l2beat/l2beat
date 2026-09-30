@@ -16,6 +16,7 @@ import {
 
 const discovery = new ProjectDiscovery('celo')
 const chainId = 42220
+const chainStart = UnixTime(1742960663)
 
 // Celo's L1 contracts are owned by CeloProxyAdminOwner, a 2/2 of the community
 // Security Council and cLabs. Only the shared SuperchainConfig stays under
@@ -124,7 +125,7 @@ export const celo: ScalingProject = opStackL2({
     chainId,
     explorerUrl: 'https://celoscan.io',
     coingeckoPlatform: 'celo',
-    sinceTimestamp: UnixTime(1742960663),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -146,6 +147,7 @@ export const celo: ScalingProject = opStackL2({
       },
     ],
   },
+  ossification: discovery.getOssification(chainStart),
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
   upgradesAndGovernance: {
     content: `Celo's L1 contracts are upgradable by a \`ProxyAdmin\` owned by the ${celoOwnerStats} \`CeloProxyAdminOwner\`, a nested Safe whose two signers are the ${celoCouncilStats} \`Celo Security Council\` and the ${cLabsStats} \`Celo cLabs Multisig\`. Both halves must approve, and there is no delay on upgrades. The shared \`SuperchainConfig\` is the exception: it remains under the ${superchainOwnerStats} \`SuperchainProxyAdminOwner\` controlled by the Optimism Foundation and the Optimism Security Council, outside Celo's control.\n\nPause powers sit apart from the upgrade path. The \`CeloSuperchainConfig\` guardian, which can pause Celo withdrawals, is the \`Celo cLabs Multisig\` acting alone; the shared \`SuperchainConfig\` guardian, which can pause the whole Superchain including Celo, resolves to the Optimism Security Council. The \`Celo Security Council\` holds no pause power at all. \`Celo cLabs Multisig\` also owns \`SystemConfig\` and the OP Succinct \`AccessManager\` on its own, so it sets the sequencer, gas configuration and the proposer and challenger allowlists without Council approval.`,

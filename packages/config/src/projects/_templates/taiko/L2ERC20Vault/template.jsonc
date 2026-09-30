@@ -12,16 +12,7 @@
     "paused": {
       "severity": "MEDIUM"
     },
-    "MIN_MIGRATION_DELAY": {
-      "severity": "HIGH"
-    },
     "addressManager": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
       "severity": "HIGH"
     }
   }

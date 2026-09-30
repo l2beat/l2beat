@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "timestamp": 1576528931,
+      "type": "state",
+      "contract": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+      "transaction": "0xaeec87fd640af3d14e2a4b7d5681c5f23db99a89bc30ba6a36dad3139a022cdf",
+      "reason": "Completed the one-time legacy 0.1 ETH pool state migration, permanently disabling its migration functions."
+    },
+    {
       "timestamp": 1589351616,
       "type": "state",
       "contract": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",

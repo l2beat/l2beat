@@ -3,17 +3,7 @@
   "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
   "ignoreInWatchMode": ["getLastProposalTimestamp"],
   "fields": {
-    "DISPUTE_GAME_FACTORY": {
-      "severity": "HIGH"
-    },
-    "isProposalPermissionlessMode": {
-      "severity": "HIGH"
-    },
-    "FALLBACK_TIMEOUT": {
-      "severity": "HIGH"
-    },
     "FALLBACK_TIMEOUT_fmt": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "FALLBACK_TIMEOUT",

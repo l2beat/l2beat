@@ -109,6 +109,7 @@ export const lido: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
   },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),

@@ -42,8 +42,10 @@ export const HARDCODED = {
     SET_SEQUENCER_COUNT: 3,
     // https://github.com/OffchainLabs/nitro/blob/master/execution/gethexec/sequencer.go
     L2_BLOCK_TIME_MILLISECONDS: 250,
-    // https://github.com/OffchainLabs/nitro/blob/master/timeboost/config.go
-    TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS: 200,
+    // Sequencer config execution.sequencer.pga.rounds-per-block (K). Not
+    // readable onchain and not part of the public Nitro releases.
+    // https://docs.arbitrum.io/how-arbitrum-works/priority-gas-auction/pga
+    PGA_ROUNDS_PER_BLOCK: 2,
     // BASIS is a literal in the DelayBuffer library and has no getter.
     // https://github.com/OffchainLabs/nitro-contracts/blob/main/src/bridge/DelayBuffer.sol
     DELAY_BUFFER_BASIS_POINTS: 10_000,

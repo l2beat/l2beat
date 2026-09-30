@@ -19,12 +19,6 @@
     "addressManager": {
       "severity": "HIGH"
     },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     // uses bytes32("signal_service"), e.g. https://tools.deth.net/string-bytes32-conversion
     "signalService": {
       "severity": "HIGH",

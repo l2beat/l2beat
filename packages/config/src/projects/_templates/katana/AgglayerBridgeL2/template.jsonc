@@ -23,19 +23,7 @@
     "isEmergencyState": {
       "severity": "MEDIUM"
     },
-    "getWrappedTokenBridgeImplementation": {
-      "severity": "HIGH"
-    },
     "WETHToken": {
-      "severity": "HIGH"
-    },
-    "bridgeLib": {
-      "severity": "HIGH"
-    },
-    "polygonRollupManager": {
-      "severity": "HIGH"
-    },
-    "globalExitRootManager": {
       "severity": "HIGH"
     },
     "$admin": {

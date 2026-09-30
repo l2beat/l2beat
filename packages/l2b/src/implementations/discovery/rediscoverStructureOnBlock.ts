@@ -16,13 +16,14 @@ export type Timing =
 export async function rediscoverStructureOnBlock(
   projectName: string,
   timing: Timing,
-  saveSources = false,
-  overwriteCache = false,
+  saveSources: boolean,
+  overwriteCache: boolean,
+  logger: Logger,
 ): Promise<DiscoveryOutput> {
   const timePoint =
     timing.blockNumber !== undefined ? timing.blockNumber : timing.timestamp
 
-  process.stdout.write(`Rediscovering ${projectName} at ${timePoint}... `)
+  logger.info(`Rediscovering ${projectName} at ${timePoint}`)
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const discoveryFolder = configReader.getProjectPath(projectName)
@@ -52,6 +53,5 @@ export async function rediscoverStructureOnBlock(
 
   // Remove discovered@... file, we don't need it
   await rimraf(`${discoveryFolder}/discovered@${timePoint}.json`)
-  process.stdout.write('done\n')
   return prevDiscovery
 }

@@ -10,18 +10,6 @@
   ],
   "ignoreInWatchMode": ["lastResolved"],
   "fields": {
-    "anchorStateRegistry": {
-      "severity": "HIGH"
-    },
-    "DISPUTE_GAME_FACTORY": {
-      "severity": "HIGH"
-    },
-    "OPTIMISM_PORTAL": {
-      "severity": "HIGH"
-    },
-    "KAILUA_VERIFIER": {
-      "severity": "HIGH"
-    },
     "vanguardAdvantage": {
       "severity": "HIGH"
     },
@@ -29,6 +17,7 @@
       "severity": "HIGH"
     },
     "participationBondFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function participationBond() view returns (uint256)",
@@ -37,6 +26,7 @@
       "edit": ["format", "Undecimal18"]
     },
     "vanguardAdvantageFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function vanguardAdvantage() view returns (uint256)",

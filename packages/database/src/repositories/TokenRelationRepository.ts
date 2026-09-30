@@ -298,38 +298,6 @@ export class TokenRelationRepository extends BaseRepository {
     return rows.map(toRoute)
   }
 
-  /** Relations with either endpoint in the set, without the transfer evidence. */
-  async getRelationsTouching(
-    tokens: DeployedTokenPrimaryKey[],
-  ): Promise<TokenRelationRoute[]> {
-    if (tokens.length === 0) return []
-
-    // A token has a few dozen deployments at most, so no batching is needed.
-    const endpoints = tokens.map((token) => ({
-      chain: token.chain,
-      address: token.address.toLowerCase(),
-    }))
-    const rows = await this.db
-      .selectFrom('TokenRelation')
-      .select(ROUTE_COLUMNS)
-      .where((eb) =>
-        eb.or(
-          (['A', 'B'] as const).map((slot) =>
-            eb(
-              eb.refTuple(`token${slot}Chain`, `token${slot}Address`),
-              'in',
-              endpoints.map((endpoint) =>
-                eb.tuple(endpoint.chain, endpoint.address),
-              ),
-            ),
-          ),
-        ),
-      )
-      .execute()
-
-    return rows.map(toRoute)
-  }
-
   /**
    * Every relation mentioning this token, on either endpoint. Endpoint order is
    * lexicographic rather than a direction, so there is nothing to split into

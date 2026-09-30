@@ -6,7 +6,6 @@
   "category": "core",
   "fields": {
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

@@ -1,12 +1,91 @@
 {
   "events": [
     {
+      "timestamp": 1710467267,
+      "type": "state",
+      "contract": "eth:0xca35F8338054739D138884685e08b39EE2217794",
+      "transaction": "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
+      "reason": "Configured ProxyAdmin's AddressManager and legacy upgrade routing for L1CrossDomainMessenger and L1StandardBridge (setAddressManager, setProxyType and setImplementationName)."
+    },
+    {
+      "timestamp": 1710490775,
+      "type": "code",
+      "contract": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+      "transaction": "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247",
+      "updateId": "5dc1a14e",
+      "reason": "Upgraded L1StandardBridge to its current implementation through the legacy L1ChugSplashProxy path (upgradeAndCall followed by upgrade); this proxy exposes no $pastUpgrades history."
+    },
+    {
+      "timestamp": 1758610559,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0x9eb33ca7075a3df711f5bf71b8d3501534aa5927e680731c7198eaf3fcaa4243",
+      "updateId": "d7e3f45d",
+      "reason": "Reduced the OP Succinct withdrawal finalization period from 7 days to 12 hours (FinalizationPeriodSecondsUpdated)."
+    },
+    {
+      "timestamp": 1767768479,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0xbcdfdc035616b46bff079879503b1608dd115f9435e7009612d49b931213a56b",
+      "updateId": "58e087bc",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys, rollup-config hash and verifier (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated, RollupConfigHashUpdated and VerifierUpdated)."
+    },
+    {
+      "timestamp": 1769160827,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0x77f8460740f919bfd4e526d4f36554a96409a0ec4b8f378a7bbbe1c690839a3c",
+      "updateId": "930cf6f5",
+      "reason": "Rotated the OP Succinct range verification-key commitment (RangeVkeyCommitmentUpdated)."
+    },
+    {
+      "timestamp": 1776322715,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a",
+      "updateId": "3460a30b",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys and rollup-config hash (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated and RollupConfigHashUpdated)."
+    },
+    {
+      "timestamp": 1776868559,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0x353a8d81a574fc09cdba9b1cde8789c334beb4ab315f2ccce81488b5bc30a7c5",
+      "updateId": "c3e9d0e9",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
+    },
+    {
+      "timestamp": 1777434335,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0xa29314393be594bcb4caad62ff4a282f108031aa8c58ff649bbfe82453903365",
+      "updateId": "d64f0885",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys and verifier (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated and VerifierUpdated)."
+    },
+    {
+      "timestamp": 1781079551,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0xec5ae0bba5c7961cd202e547984e81d084343c01767e0bce027b0cf38b9481b9",
+      "updateId": "32d5466d",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
+    },
+    {
+      "timestamp": 1785314135,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0xb62efa0113ade82adee0b62e098c7f70e1c5fb1c103c702a3234eb948bf59fc3",
+      "updateId": "7337d399",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys and rollup-config hash (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated and RollupConfigHashUpdated)."
+    },
+    {
       "timestamp": 1788925163,
       "type": "state",
       "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "transaction": "0x8acafda3cc768374758a53973e916dd550000e138dc4c76e564e11a7c0f63ad8",
       "updateId": "2437125d",
-      "reason": "OPSuccinctL2OutputOracle: aggregationVkey changed (0x0063d017f049d215e2cda7f7826d7c1a8176a678203d6f74a731fc331cc16377 -> 0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0)."
+      "reason": "Rotated the OP Succinct aggregation and range verification keys (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
     },
     {
       "timestamp": 1789615739,
@@ -14,7 +93,7 @@
       "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "transaction": "0x2411554fd5c233e7f428730bf9795d7e6ac6fbb5d1aac27c8df48faedf6cb396",
       "updateId": "706bc529",
-      "reason": "OPSuccinctL2OutputOracle: aggregationVkey (0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0dc9c5ed12913b407 -> 0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf) and rangeVkeyCommitment (0x2a928ed475bd7d8b7a54fac7666c68eb62d36fa15fafa8006b885b3237a7bd21 -> 0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb) updated to the mantle-v1.6.1 op-succinct release keys via MantleSecurityMultisig."
+      "reason": "Rotated the OP Succinct aggregation and range verification keys to the mantle-v1.6.1 release (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
     }
   ]
 }

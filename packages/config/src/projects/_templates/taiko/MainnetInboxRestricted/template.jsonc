@@ -4,11 +4,9 @@
   "fields": {
     "noForce": {
       "handler": { "type": "hardcoded", "value": [true] },
-      "description": "Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions.",
-      "severity": "HIGH"
+      "description": "Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions."
     },
     "paused": { "severity": "MEDIUM" },
-    "getCurrentForcedInclusionFee": { "severity": "HIGH" },
     "owner": {
       "permissions": [
         {

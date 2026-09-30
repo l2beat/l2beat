@@ -29,6 +29,9 @@ const COLORS = [
   'var(--chart-fuchsia)',
   'var(--chart-lime)',
   'var(--chart-orange)',
+  'var(--chart-stacked-blue)',
+  'var(--chart-yellow-lime)',
+  'var(--chart-stacked-purple)',
 ]
 
 type Series = PrivacyAnonymitySetChartResponse['series'][number]

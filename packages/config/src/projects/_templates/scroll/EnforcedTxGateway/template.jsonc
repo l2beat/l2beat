@@ -4,15 +4,6 @@
   "critical": true,
   "category": "core",
   "fields": {
-    "messageQueue": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "paused": {
       "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
       "severity": "MEDIUM"

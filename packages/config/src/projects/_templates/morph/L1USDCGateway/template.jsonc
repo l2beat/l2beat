@@ -14,24 +14,6 @@
     },
     "circleCaller": {
       "severity": "HIGH"
-    },
-    "l2USDC": {
-      "severity": "HIGH"
-    },
-    "router": {
-      "severity": "HIGH"
-    },
-    "messenger": {
-      "severity": "HIGH"
-    },
-    "counterpart": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      "severity": "HIGH"
     }
   }
 }

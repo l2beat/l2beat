@@ -6,7 +6,6 @@
   "fields": {
     "paused": { "severity": "MEDIUM" },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -24,11 +23,9 @@
       ]
     },
     "quotaManager": {
-      "severity": "HIGH",
       "description": "Quota manager that rate-limits ETH released by processed or recalled bridge messages."
     },
     "signalService": {
-      "severity": "HIGH",
       "description": "Signal service used to prove cross-chain message delivery and failure signals."
     },
     "proxiableUUID": {

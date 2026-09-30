@@ -10,12 +10,6 @@
     "defaultERC20Gateway": {
       "severity": "HIGH"
     },
-    "owner": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "gateways": {
       "severity": "HIGH",
       "handler": {

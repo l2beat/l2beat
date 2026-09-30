@@ -27,7 +27,6 @@
     },
     "$implementation": {
       "description": "Current Railgun smart wallet implementation.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE"
     },
     "owner": {
@@ -54,7 +53,7 @@
       ]
     },
     "treasury": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
     },
     "shieldFee": {
@@ -95,7 +94,6 @@
     },
     "proxyOwnershipChangeCount": {
       "description": "Number of proxy ownership transfers, including changes later reverted.",
-      "severity": "HIGH",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -125,7 +123,6 @@
     },
     "logicOwnershipChangeCount": {
       "description": "Number of logic ownership transfers, including changes later reverted.",
-      "severity": "HIGH",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -135,7 +132,6 @@
     },
     "feeChangeCount": {
       "description": "Number of fee schedule changes, including changes later reverted.",
-      "severity": "HIGH",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -165,7 +161,6 @@
     },
     "verificationKeyChangeCount": {
       "description": "Number of SNARK verification key changes, including keys later replaced or restored.",
-      "severity": "HIGH",
       "handler": {
         "type": "eventCount",
         "topics": [

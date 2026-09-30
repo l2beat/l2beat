@@ -1,6 +1,68 @@
 {
   "events": [
     {
+      "timestamp": 1742960075,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xba0596a785ee4770587d7d2f12d78f379e8ba43ff92decfb442bf795f634e0cd",
+      "reason": "Registered Celo's initial permissionless FaultDisputeGame implementation (game type 0)."
+    },
+    {
+      "timestamp": 1742960075,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x883a31a907189606ace0fdbab7baa3d45a711b2e99d10c443c9cec5dbc856982",
+      "reason": "Registered Celo's initial PermissionedDisputeGame implementation (game type 1)."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: the L1StandardBridge implementation slot changed to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: upgraded the DisputeGameFactory to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1751883851,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x14663947fe932e8ad6d57fe9aa61910d8d2e5fc37ac5e16e4345c3f8e2f7b2d2",
+      "updateId": "a6b1d9a2",
+      "reason": "First phase of the Celo Isthmus upgrade: temporarily replaced both permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: replaced the temporary L1StandardBridge implementation with the final v2.3.0 implementation."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: upgraded the DisputeGameFactory to the final v1.0.1 implementation."
+    },
+    {
+      "timestamp": 1751884031,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xa9816c6dcbbe126e3b5c56f26ecfeebcb2dc03ab78535a7d5ed2bcdeea7ccf39",
+      "updateId": "a6b1d9a2",
+      "reason": "Second phase of the Celo Isthmus upgrade: registered the final permissioned and permissionless dispute-game implementations."
+    },
+    {
       "timestamp": 1753378247,
       "type": "state",
       "contract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
@@ -44,6 +106,70 @@
       "transaction": "0xeb5a5286b0ccca1e8fcf58126fc828dd0e89622961fc31904346a22eac568ca7",
       "updateId": "953d9862",
       "reason": "Registered a new OPSuccinctFaultDisputeGame implementation, rotating the SP1 program verification keys."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: the L1StandardBridge implementation slot changed to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: upgraded the DisputeGameFactory to the temporary migration implementation."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "state",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: initialized the L1StandardBridge against the new CeloSuperchainConfig."
+    },
+    {
+      "timestamp": 1774940723,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x66a97a8a6934d37b3ed077e788fb02fbce53e02ad7d95d3159ba6347ede395c8",
+      "updateId": "616cc8c8",
+      "reason": "First phase of the op-contracts v5 migration: temporarily replaced both permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "code",
+      "contract": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: replaced the temporary L1StandardBridge implementation with the final v2.8.0 implementation."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "code",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: upgraded the DisputeGameFactory to the final v1.3.0 implementation."
+    },
+    {
+      "timestamp": 1774940891,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0xce8f5d953104dbe1a793fdcf76a16290f1c8765f87fcef729c2ad7e2e95a07dc",
+      "updateId": "616cc8c8",
+      "reason": "Second phase of the op-contracts v5 migration: registered the final permissioned and permissionless dispute-game implementations."
+    },
+    {
+      "timestamp": 1774941071,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x49fc2a34633400d01827e7326f7d12d99f61d0d3c73f27b0620f71a24fab1089",
+      "updateId": "616cc8c8",
+      "reason": "Completed the op-contracts v5 migration by registering the replacement OPSuccinctFaultDisputeGame (game type 42)."
     },
     {
       "timestamp": 1776164147,

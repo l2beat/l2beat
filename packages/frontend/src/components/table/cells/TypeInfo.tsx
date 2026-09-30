@@ -105,7 +105,7 @@ interface TypeTooltipProps {
 
 function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   return (
-    <Tooltip>
+    <Tooltip contentInHtml>
       <TooltipTrigger>
         <div className="relative ml-1 inline-block size-4">
           <Icon className="-top-0.5 absolute left-0 size-4" />

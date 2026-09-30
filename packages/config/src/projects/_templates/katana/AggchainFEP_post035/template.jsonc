@@ -25,34 +25,12 @@
     "rollupConfigHash": {
       "severity": "LOW"
     },
-    "gasTokenNetwork": {
-      "severity": "HIGH"
-    },
-    "gasTokenAddress": {
-      "severity": "HIGH"
-    },
     "submissionInterval": {
       "severity": "HIGH"
     },
-    "threshold": {
-      "severity": "HIGH"
-    },
-    "forceBatchTimeout": {
-      "severity": "HIGH"
-    },
-    "forceBatchAddress": {
-      "severity": "HIGH"
-    },
-    "bridgeAddress": {
-      "severity": "HIGH"
-    },
-    "globalExitRootManager": {
-      "severity": "HIGH"
-    },
-    "rollupManager": {
-      "severity": "HIGH"
-    },
-    "aggLayerGateway": {
+    // Effective threshold: reads either this contract or the AgglayerGateway,
+    // depending on useDefaultSigners.
+    "getThreshold": {
       "severity": "HIGH"
     },
     "$admin": {
@@ -76,8 +54,7 @@
       ]
     },
     "aggchainMultisigHash": {
-      "description:": "changes if anything in the aggchainSigners multisig changes",
-      "severity": "HIGH"
+      "description:": "changes if anything in the aggchainSigners multisig changes"
     },
     "admin": {
       // rollup admin: can change the trusted sequencer and forced-batch parameters.
@@ -108,14 +85,10 @@
     "selectedOpSuccinctConfig": {
       // the live OP-Succinct verification keys and rollup config hash: changing any
       // of them changes what counts as a valid state transition proof.
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
-        // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
-        "args": [
-          "0x0f30c0b6846b034a146a47c5185fb9a4321df3569376773238ef30c831019190"
-        ]
+        "args": ["{{ selectedOpSuccinctConfigName }}"]
       }
     },
     "aggregationVkey": {
@@ -135,8 +108,7 @@
       "severity": "HIGH"
     },
     "AGGCHAIN_TYPE": {
-      "description": "0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte",
-      "severity": "HIGH"
+      "description": "0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte"
     }
   }
 }

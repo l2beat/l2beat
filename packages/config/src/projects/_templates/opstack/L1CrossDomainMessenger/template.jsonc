@@ -7,34 +7,8 @@
   "ignoreRelatives": ["OTHER_MESSENGER", "otherMessenger"],
   "ignoreInWatchMode": ["messageNonce"],
   "fields": {
-    "ResolvedDelegateProxy_addressManager": {
-      // this proxy resolves its implementation through the AddressManager, so the
-      // manager is an upgrade path of its own
-      "severity": "HIGH"
-    },
-    "superchainConfig": {
-      "severity": "HIGH"
-    },
-    "systemConfig": {
-      "severity": "HIGH"
-    },
-    "portal": {
-      "severity": "HIGH"
-    },
-    "PORTAL": {
-      "severity": "HIGH"
-    },
-    "otherMessenger": {
-      "severity": "HIGH"
-    },
-    "OTHER_MESSENGER": {
-      "severity": "HIGH"
-    },
     "paused": {
       "severity": "MEDIUM"
-    },
-    "$admin": {
-      "severity": "HIGH"
     }
   },
   "category": "bridge-canonical"

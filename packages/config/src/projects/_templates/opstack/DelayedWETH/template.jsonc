@@ -5,21 +5,7 @@
   "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
-    "$admin": {
-      "severity": "HIGH"
-    },
-    "delay": {
-      // how long a bond withdrawal is held before it can be claimed
-      "severity": "HIGH"
-    },
-    "config": {
-      "severity": "HIGH"
-    },
-    "systemConfig": {
-      "severity": "HIGH"
-    },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

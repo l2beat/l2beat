@@ -77,6 +77,7 @@ export const lighter: ScalingProject = {
     chainId: undefined,
     apis: [],
   },
+  ossification: discovery.getOssification(),
   config: {
     associatedTokens: ['LIT'],
     escrows: [
@@ -331,7 +332,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE#code#F1#L54',
+            url: 'https://etherscan.io/address/0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',

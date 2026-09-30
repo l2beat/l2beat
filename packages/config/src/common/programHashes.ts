@@ -2133,6 +2133,24 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3.md',
     ),
   },
+  '0x006770fb0f71f20718b614c8c5d3fb39482f0527806e67b0ea00ab5508245655': {
+    ...SCROLL_BUNDLE_EXE('v0.9.1'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/v0.9.1/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x006770fb0f71f20718b614c8c5d3fb39482f0527806e67b0ea00ab5508245655.md',
+    ),
+  },
+  '0x00488b196ca5b2ea1fda4c960fe2e1b0b9715c0428a8ec6fb01a64684f8533f7': {
+    ...SCROLL_BUNDLE_CONFIG('v0.9.1'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/v0.9.1/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00488b196ca5b2ea1fda4c960fe2e1b0b9715c0428a8ec6fb01a64684f8533f7.md',
+    ),
+  },
   '0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269': {
     ...SCROLL_BUNDLE_EXE('v0.8.0'),
     programUrl:
@@ -2247,6 +2265,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x00f1b104202c89fe60d973cbf456a4e2e1ec1e7d63c61453b959dda153df798c.md',
+    ),
+  },
+  '0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63': {
+    title: 'Morph Guest program (v0.6.3 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM. The sequencer-set public input field is zero.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.6.3/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00b450ec2a1b8dfba81ade90afbcc96842055548b814c991bb13bdca34980c63.md',
     ),
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
@@ -2598,6 +2628,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x00022b9b7769bd21b7bc4171ba458ffc80b46cab6f5fbd5629fa2d873df676fc.md',
+    ),
+  },
+  '0x00f291835495d0af627923c963f18395bb9a7e6783b694497460f757866ea34b': {
+    title: 'Fluent Nitro TEE verifier v1.0.7',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.7/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00f291835495d0af627923c963f18395bb9a7e6783b694497460f757866ea34b.md',
     ),
   },
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {

@@ -35,9 +35,6 @@
     "addressManager": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "proxiableUUID": {
       "handler": {
         "type": "call",
@@ -47,7 +44,6 @@
       }
     },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

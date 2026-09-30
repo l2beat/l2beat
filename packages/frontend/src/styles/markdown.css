@@ -25,15 +25,15 @@
   @apply mb-0;
 }
 
-.mdc h1 {
+.mdc .mdc-h1 {
   @apply text-heading-24;
 }
 
-.mdc h2 {
+.mdc .mdc-h2 {
   @apply text-heading-20;
 }
 
-.mdc h3 {
+.mdc .mdc-h3 {
   @apply text-heading-18;
 }
 
@@ -115,18 +115,6 @@
   @apply dark:invert max-w-full align-[unset] my-4;
 }
 
-.mdc.sequencing-censorship-resistance h3 {
+.mdc.sequencing-censorship-resistance .mdc-h3 {
   @apply mt-5 mb-2 text-heading-16;
-}
-
-.mdc.zk-description h1 {
-  @apply text-xl font-bold;
-}
-
-.mdc.zk-description h2 {
-  @apply text-xl font-bold;
-}
-
-.mdc.zk-description h3 {
-  @apply text-xl font-bold;
 }

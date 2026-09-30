@@ -3,22 +3,17 @@
   "description": "Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.",
   // Canonical escrow for custom-mapped bridged ERC20s (counted in TVS without additional trust assumptions).
   "critical": true,
+  "ignoreRelatives": ["tokenMapping"],
   "fields": {
-    "router": {
-      "severity": "HIGH"
-    },
-    "messenger": {
-      "severity": "HIGH"
-    },
-    "counterpart": {
-      "severity": "HIGH"
-    },
-    "$admin": {
-      "severity": "HIGH"
-    },
-    "owner": {
-      // Can change L1 -> L2 token mappings, redirecting future deposits/withdrawals.
-      "severity": "HIGH"
+    "tokenMapping": {
+      "severity": "HIGH",
+      "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals.",
+      "handler": {
+        "type": "event",
+        "select": "newL2Token",
+        "groupBy": "l1Token",
+        "set": { "event": "UpdateTokenMapping" }
+      }
     }
   }
 }

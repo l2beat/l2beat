@@ -5,9 +5,6 @@
   "category": "core",
   "ignoreMethods": ["getVerifier"],
   "fields": {
-    "owner": {
-      "severity": "HIGH"
-    },
     "verifierVersions": {
       "handler": {
         "type": "event",

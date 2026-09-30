@@ -29,10 +29,35 @@
       "critical": true
     },
     // Active zk verifier (SP1) routed to by the MultipleVersionRollupVerifier for all
-    // non-finalized batches. The superseded route (eth:0x9774CE99...) only covers
-    // long-finalized batches and is intentionally not flagged.
-    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": {
+    // batches from the Submitter cutover onwards. The superseded route (eth:0x9774CE99...)
+    // only covers long-finalized batches and is intentionally not flagged.
+    "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": {
       "critical": true
+    },
+    // SP1 verifier used by version-2 batches until the current verifier was registered.
+    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": {
+      "critical": {
+        "sinceTimestamp": 1780559831,
+        "untilTimestamp": 1790063627
+      }
+    },
+    // Controller of the original core contracts and current proposer/canceller,
+    // staking, queue, forced-transaction and legacy-gateway authority paths.
+    "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": {
+      "critical": { "sinceTimestamp": 1729764539 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
+    },
+    // Current upgrade executor and controller of the rollup, verifier router,
+    // canonical messenger/router and active USDC/custom-token escrows.
+    "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": {
+      "critical": { "sinceTimestamp": 1737455087 },
+      "fields": {
+        "$threshold": { "severity": "HIGH" },
+        "GnosisSafe_modules": { "severity": "HIGH" }
+      }
     }
   }
 }

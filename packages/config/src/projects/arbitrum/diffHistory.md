@@ -1,3 +1,216 @@
+Generated with discovered.json: 0xe51381bbd960cab0ed85790b8e51a4a19f17a9ca
+
+# Diff at Tue, 29 Sep 2026 17:49:54 GMT:
+
+- id: f7dece68
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790601621
+- current timestamp: 1790601621
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601621 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      receivedPermissions.5.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      receivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+Generated with discovered.json: 0xf8dc802dfb21e1b06d3ebb9b1f308704e62cbaad
+
+# Diff at Mon, 28 Sep 2026 13:21:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d37f2e4fe0294b1155e49a05f47089330e10fe87 block: 1789727053
+- current timestamp: 1790601621
+
+## Description
+
+Timeboost is replaced by Priority Gas Auctions ([Constitutional AIP](https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942)). Tips are paid to the network fee account (L2SurplusFee). The TipCollectionToggler is immutable and can only call `setCollectTips`.
+
+Config related: the ArbOS chain owners are now discovered via `ArbOwnerPublic.getAllChainOwners()` on the L2UpgradeExecutor. This adds the time-limited, single-purpose chain owner contracts TipCollectionToggler, BaseFeeManager and ResourceConstraintManager with new templates, and their manager multisig.
+
+## Watched changes
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
++++ severity: HIGH
+      values.chainOwners.2:
++        "arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63"
+    }
+```
+
+```diff
+    contract Arbitrum L2 Multisig 1 (arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63","description":"toggle the collection of priority fees (tips).","role":".tipCollectionManagers"}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.144:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"","function":"0x481f8dbf","inputs":[{"name":"calldata","value":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63"}],"address":"arb1:0x0000000000000000000000000000000000000070","calldata":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a630000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.145:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"TipCollectionToggler","function":"activate","inputs":[],"address":"arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63","calldata":"0x0f15f4c0","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000084bca8c7b50000000000000000000000004323dab775cc15e386fdac591a39420db6226a63000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000040f15f4c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TipCollectionToggler (arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63) [orbitstack/layer2/TipCollectionToggler]
+    +++ description: ArbOS chain owner that can only toggle the collection of priority fees (tips), which enables PGA transaction ordering. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+## Source code changes
+
+```diff
+.../arbitrum/.flat/TipCollectionToggler.sol        | 1411 ++++++++++++++++++++
+ 1 file changed, 1411 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. It also receives the priority fees (tips) collected while ArbOS tip collection is enabled. They are withdrawable to a configurable set of recipients.
+      description:
+-        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. It also receives the priority fees (tips) collected while ArbOS tip collection is enabled. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
++++ severity: HIGH
+      values.chainOwners:
++        ["arb1:0x8F59C7A53b883563B34cbBb6fF021B03973e823a","arb1:0x6e031B6e9f667Ed6953E627276fBbEfa4c28529A"]
+      fieldMeta.chainOwners:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeManager (arb1:0x6e031B6e9f667Ed6953E627276fBbEfa4c28529A) [orbitstack/layer2/BaseFeeManager]
+    +++ description: ArbOS chain owner that can only set the L2 base fee and minimum base fee within 0.01-0.1 gwei. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (arb1:0x8F59C7A53b883563B34cbBb6fF021B03973e823a) [orbitstack/layer2/ResourceConstraintManager]
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum L2 Multisig 1 (arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x52f70e4fd9209964854c891a2adc7b8e6d25fa94
+
+# Diff at Wed, 23 Sep 2026 05:45:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789727053
+- current timestamp: 1789727053
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789727053 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x1c5d1d848ab70e442d957dfd893339e979a72372
 
 # Diff at Mon, 21 Sep 2026 11:23:57 GMT:

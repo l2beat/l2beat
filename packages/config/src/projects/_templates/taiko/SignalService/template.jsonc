@@ -9,12 +9,8 @@
     "resolver": {
       "severity": "HIGH"
     },
-    "$admin": {
-      "severity": "HIGH"
-    },
     "paused": { "severity": "MEDIUM" },
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
