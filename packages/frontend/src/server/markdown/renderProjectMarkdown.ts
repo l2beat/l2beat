@@ -11,16 +11,16 @@ import {
   bulletList,
   heading,
   joinBlocks,
-  link,
   subsection,
   textSubsection,
+  tidyMarkdown,
   warning,
-  withSentiment,
 } from './markdown'
 import {
   renderProjectSection,
   type SectionContext,
 } from './renderProjectSection'
+import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
 
 /**
  * A project page as markdown, independent of the project kind. A page kind
@@ -68,7 +68,8 @@ export function renderProjectMarkdown(page: ProjectMarkdown): string {
     renderHeader(page.header),
     ...page.sections.map((section) => renderProjectSection(section, 2, page)),
   ])
-  return `${absolutizeLinks(markdown, PRODUCTION_ORIGIN)}\n`
+  const linked = absolutizeLinks(markdown, PRODUCTION_ORIGIN)
+  return `${tidyMarkdown(linked, page.pageUrl)}\n`
 }
 
 /**
@@ -95,16 +96,7 @@ function renderSummary(summary: ProjectMarkdown['summary']): string {
     heading(2, 'Summary'),
     ...summary.warnings.map(warning),
     bulletList(summary.facts.map(renderFact)),
-    subsection(
-      3,
-      'Risks',
-      bulletList(
-        summary.risks.map(
-          (risk) =>
-            `${risk.name}: ${withSentiment(risk.value, risk.sentiment)}`,
-        ),
-      ),
-    ),
+    subsection(3, 'Risks', bulletList(summary.risks.map(renderSummaryRisk))),
     textSubsection(3, 'About', summary.description),
   ])
 }
@@ -114,13 +106,10 @@ function renderHeader(header: ProjectHeader | undefined): string {
   if (!header) return ''
   const links = [
     ...(header.links ?? []).map(
-      (group) =>
-        `${group.name}: ${group.links.map((url) => link(url, url)).join(', ')}`,
+      (group) => `${group.name}: ${group.links.join(', ')}`,
     ),
     ...(header.discoUiHref
-      ? [
-          `Contracts explorer (Disco): ${link(header.discoUiHref, header.discoUiHref)}`,
-        ]
+      ? [`Contracts explorer (Disco): ${header.discoUiHref}`]
       : []),
   ]
   return joinBlocks([
@@ -141,6 +130,13 @@ function renderHeader(header: ProjectHeader | undefined): string {
 
 /** Warnings nest under the fact they qualify, so they cannot be read as applying to the whole project. */
 function renderFact(fact: ProjectFact) {
-  const warnings = (fact.warnings ?? []).map((text) => `\n  - ${warning(text)}`)
+  const warnings = (fact.warnings ?? []).map((text) => `\n- ${warning(text)}`)
   return `${fact.label}: ${fact.value}${warnings.join('')}`
+}
+
+/** Nested like a fact warning, for the same reason. */
+function renderSummaryRisk(risk: RosetteValue) {
+  const riskWarning = formatRiskWarning(risk)
+  const nested = riskWarning ? `\n- ${riskWarning}` : ''
+  return `${risk.name}: ${formatRiskValue(risk)}${nested}`
 }

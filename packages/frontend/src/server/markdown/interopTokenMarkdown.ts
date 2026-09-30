@@ -6,8 +6,12 @@ import {
   formatSeconds,
   unique,
 } from '@l2beat/shared-pure'
+import upperFirst from 'lodash/upperFirst'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
-import { getDeploymentsByVolume } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
+import {
+  getDeploymentsByVolume,
+  isCluster,
+} from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
   InteropTokenDeploymentView,
@@ -18,6 +22,7 @@ import type {
   AverageDuration,
   ProtocolEntry,
 } from '~/server/features/layer2s/interop/types'
+import { formatTransferCount } from './interopMarkdown'
 import { bulletList, joinBlocks, link, subsection, table } from './markdown'
 
 /** The deployments table, then the backing relations the HTML page draws as a diagram. */
@@ -144,37 +149,76 @@ function noDeploymentData(deployment: InteropTokenDeploymentView) {
 
 /**
  * A group of several deployments is in a burn-and-mint relation; an edge means
- * the backed deployment is minted against the backer.
+ * the backed deployment is minted against the backer. Groups are listed once,
+ * with their deployments, and referred to by number in the edges, so a large
+ * group does not repeat its chains on every line.
  */
 function renderBackingRelations(graph: InteropTokenRelationsGraph) {
+  const groupNumbers = new Map(
+    graph.nodes.filter(isCluster).map((node, i) => [node.id, i + 1]),
+  )
   const nodes = new Map(graph.nodes.map((node) => [node.id, node]))
   const describe = (id: string) => {
     const node = nodes.get(id)
-    return node ? describeNode(node) : id
+    if (!node) return id
+    const groupNumber = groupNumbers.get(id)
+    return groupNumber !== undefined
+      ? `group ${groupNumber} (${describeGroup(node)})`
+      : describeDeployment(node)
   }
-  return bulletList([
-    ...graph.nodes
-      .filter((node) => node.deployments.length > 1)
-      .map(
-        (node) =>
-          `Burn and mint between ${describeNode(node)}${via(node.bridges)}`,
-      ),
-    ...graph.edges.map(
-      (edge) =>
-        `${describe(edge.backed)} is backed by ${describe(edge.backer)}${via(edge.bridges)}`,
+  const groups = graph.nodes.flatMap((node) => {
+    const groupNumber = groupNumbers.get(node.id)
+    return groupNumber !== undefined ? [renderGroup(node, groupNumber)] : []
+  })
+  const backing = graph.edges.map(
+    (edge) =>
+      `${upperFirst(describe(edge.backed))} is backed by ${describe(edge.backer)}${via(edge.bridges)}`,
+  )
+  return joinBlocks([
+    listWithLead(
+      'Burn-and-mint groups, whose deployments move between chains by burning on one and minting on another:',
+      groups,
+    ),
+    listWithLead(
+      'Backing, where a deployment is minted against the one backing it:',
+      backing,
     ),
   ])
 }
 
-/** Single deployments carry their address, as a chain can hold several deployments of the token. */
-function describeNode({ deployments }: InteropTokenRelationsNode) {
-  const [first] = deployments
-  if (deployments.length === 1 && first) {
-    return `${first.symbol} on ${first.chain.name} (${formatAddress(first.address)})`
-  }
+function listWithLead(lead: string, items: string[]) {
+  return items.length > 0 ? joinBlocks([lead, bulletList(items)]) : ''
+}
+
+/** The totals the HTML group card shows, then every member with its address. */
+function renderGroup(node: InteropTokenRelationsNode, groupNumber: number) {
+  const totals = [
+    node.volume !== null && `last 24h volume ${formatUsd(node.volume)}`,
+    node.transferCount !== null && formatTransferCount(node.transferCount),
+  ].filter(Boolean)
+  const members = node.deployments
+    .map(
+      (deployment) =>
+        `${deployment.chain.name} (${formatAddress(deployment.address)})`,
+    )
+    .join(', ')
+  return [
+    `Group ${groupNumber}: ${describeGroup(node)}, burned and minted${via(node.bridges)}`,
+    totals.length > 0 ? `; ${totals.join(', ')}` : '',
+    `; deployments: ${members}`,
+  ].join('')
+}
+
+function describeGroup({ deployments }: InteropTokenRelationsNode) {
   const symbols = unique(deployments.map((deployment) => deployment.symbol))
-  const chains = deployments.map((deployment) => deployment.chain.name)
-  return `${symbols.join('/')} on ${chains.join(', ')}`
+  return `${symbols.join('/')}, ${deployments.length} deployments`
+}
+
+/** With its address, as a chain can hold several deployments of the token. */
+function describeDeployment({ deployments }: InteropTokenRelationsNode) {
+  const [first] = deployments
+  if (!first) return 'unknown deployment'
+  return `${first.symbol} on ${first.chain.name} (${formatAddress(first.address)})`
 }
 
 function via(bridges: ProjectIconListItem[]) {

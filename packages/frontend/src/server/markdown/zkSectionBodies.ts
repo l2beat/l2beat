@@ -1,9 +1,10 @@
-import type { ZkCatalogTag } from '@l2beat/config'
+import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProgramHashesSectionProps } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
+import { externalLinks } from '~/consts/externalLinks'
 import {
   PROGRAM_HASHES_SECTION_INTRO,
   VERIFIER_ID_DEFAULT_DESCRIPTION,
@@ -30,19 +31,40 @@ export function renderTrustedSetups(
   { trustedSetups }: Pick<TrustedSetupSectionProps, 'trustedSetups'>,
   level: number,
 ) {
-  return joinBlocks(
-    trustedSetups.map((setup) =>
+  return joinBlocks([
+    TRUSTED_SETUP_RISK_LEVELS,
+    ...trustedSetups.map((setup) =>
       joinBlocks([
         heading(level, setup.name),
         bulletList([
-          `Risk: ${setup.risk}`,
+          `Risk: ${formatTrustedSetupRisk(setup.risk)}`,
           `Proof systems: ${setup.proofSystems.map(formatTag).join(', ')}`,
         ]),
         nestHeadings(setup.description, level + 1),
       ]),
     ),
-  )
+  ])
 }
+
+export const TRUSTED_SETUP_FRAMEWORK_LINK = link(
+  'Trusted Setups Risk Framework',
+  externalLinks.articles.trustedSetupFramework,
+)
+
+/** The HTML shows the risk as a coloured dot; the colour alone tells a reader nothing. */
+export function formatTrustedSetupRisk(risk: TrustedSetup['risk']) {
+  return TRUSTED_SETUP_RISK_LABELS[risk]
+}
+
+const TRUSTED_SETUP_RISK_LABELS: Record<TrustedSetup['risk'], string> = {
+  green: 'green (lowest risk)',
+  yellow: 'yellow (medium risk)',
+  red: 'red (highest risk)',
+  'N/A': 'N/A (no trusted setup)',
+}
+
+/** The criteria of the framework the ZK catalog links, so the levels can be read without it. */
+const TRUSTED_SETUP_RISK_LEVELS = `Risk levels follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}. Yellow (medium risk): all contributions are published and the final output can be verified, the ceremony client is open source, there were at least 30 contributions, participation was open to the public and announced, and participants are publicly identified. Green (lowest risk): everything required for yellow, with at least 150 contributions. Red (highest risk): at least one requirement for yellow is not met. N/A: the proof system needs no trusted setup.`
 
 export function renderVerifiers(
   {
@@ -83,7 +105,42 @@ export function renderProgramHashes(
 ) {
   return joinBlocks([
     PROGRAM_HASHES_SECTION_INTRO,
-    ...programHashes.map((program) =>
+    renderProgramHashList(programHashes, level, context),
+  ])
+}
+
+/**
+ * State validation and smart contracts show the hashes as a subsection,
+ * without the catalog intro, which speaks of "this prover".
+ */
+export function renderProgramHashesSubsection(
+  {
+    programHashes = [],
+    programHashesDescription,
+  }: {
+    programHashes?: ProgramHashesSectionProps['programHashes']
+    programHashesDescription?: string
+  },
+  level: number,
+  context: SectionContext,
+) {
+  return subsection(
+    level,
+    'Program Hashes',
+    joinBlocks([
+      renderProgramHashList(programHashes, level + 1, context),
+      nestHeadings(programHashesDescription, level + 1),
+    ]),
+  )
+}
+
+function renderProgramHashList(
+  programHashes: ProgramHashesSectionProps['programHashes'],
+  level: number,
+  context: SectionContext,
+) {
+  return joinBlocks(
+    programHashes.map((program) =>
       joinBlocks([
         heading(level, program.title),
         program.description ?? '',
@@ -96,7 +153,7 @@ export function renderProgramHashes(
         renderVerificationSteps(program.verificationSteps, level + 1),
       ]),
     ),
-  ])
+  )
 }
 
 /** Tags on the HTML page show the name and reveal the type on hover. */
@@ -121,7 +178,7 @@ export function renderVerificationStatus(
 ) {
   const by =
     attesters.length > 0
-      ? ` (by ${attesters.map((a) => link(a.name, a.link)).join(', ')})`
+      ? ` (${ATTESTER_ROLES[status]} ${attesters.map((a) => link(a.name, a.link)).join(', ')})`
       : ''
   return `${VERIFICATION_STATUS_LABELS[status]}${by}`
 }
@@ -131,6 +188,16 @@ const VERIFICATION_STATUS_LABELS: Record<VerifierStatus, string> = {
   successful: 'successful',
   notVerified: 'not verified',
   unsuccessful: 'unsuccessful',
+}
+
+/**
+ * The HTML puts a bare "by" before the attester icons; after "not verified"
+ * that would read as if the attester had verified it.
+ */
+const ATTESTER_ROLES: Record<VerifierStatus, string> = {
+  successful: 'verified by',
+  notVerified: 'status reported by',
+  unsuccessful: 'checked by',
 }
 
 function renderVerifier(
@@ -164,7 +231,7 @@ function renderKnownDeployments(
         const address = deployment.url
           ? link(deployment.address, deployment.url)
           : deployment.address
-        return `${address}, used in: ${renderUsedIn(deployment.projectsUsedIn, pageUrl)}`
+        return `${address} on ${deployment.chain}, used in: ${renderUsedIn(deployment.projectsUsedIn, pageUrl)}`
       }),
     ),
   ])

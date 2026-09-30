@@ -39,6 +39,8 @@ const LLMS_TXT = {
     'Important notes:',
     '',
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
+    '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
+    '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
     '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
@@ -51,6 +53,14 @@ const LLMS_TXT = {
     '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
     '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling and its infrastructure.',
   ].join('\n'),
+}
+
+/** Declared before PAGE_SECTIONS, which reads it while the module loads. */
+const DEFI_LIST_PAGE: MarkdownLink = {
+  name: 'All DeFi protocols',
+  path: markdownAlternate('/defi/summary.md'),
+  description:
+    'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
 }
 
 /** To list a new page, add one entry to the matching section. */
@@ -151,7 +161,7 @@ const PAGE_SECTIONS: MarkdownSection[] = [
         name: 'All data availability layers',
         path: markdownAlternate('/data-availability/summary.md'),
         description:
-          'Markdown list of every tracked data availability layer and bridge with page URL.',
+          'Markdown list of every tracked data availability layer and bridge, public and custom, with type, risks and page URL.',
       },
       {
         name: 'Summary',
@@ -193,6 +203,12 @@ const PAGE_SECTIONS: MarkdownSection[] = [
   {
     heading: 'Interoperability',
     links: [
+      {
+        name: 'All interop protocols',
+        path: markdownAlternate('/interop/summary.md'),
+        description:
+          'Markdown list of every tracked cross-chain protocol with type, bridge types and page URL.',
+      },
       {
         name: 'Summary',
         path: staticPagePath('/interop/summary'),
@@ -244,7 +260,7 @@ const PAGE_SECTIONS: MarkdownSection[] = [
         name: 'All privacy protocols',
         path: markdownAlternate('/privacy/summary.md'),
         description:
-          'Markdown list of every tracked privacy protocol with page URL.',
+          'Markdown list of every tracked privacy protocol with category, exit window and page URL.',
       },
       {
         name: 'ZK catalog',
@@ -256,8 +272,10 @@ const PAGE_SECTIONS: MarkdownSection[] = [
         name: 'All proving systems',
         path: markdownAlternate('/zk-catalog.md'),
         description:
-          'Markdown list of every proving system in the ZK catalog with creator and page URL.',
+          'Markdown list of every active proving system in the ZK catalog with creator, trusted setups, verifier counts and page URL.',
       },
+      // Behind the same flag as the page: listed while off, this would be a 404.
+      ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_LIST_PAGE] : []),
       {
         name: 'Governance',
         path: staticPagePath('/governance'),
@@ -311,7 +329,7 @@ const DEFI_PROJECT_MARKDOWN_PAGE: MarkdownLink = {
   name: 'DeFi project',
   path: '/defi/projects/{slug}.md',
   description:
-    'One DeFi protocol as markdown: warnings, description and external dependencies.',
+    'One DeFi protocol as markdown: TVL, category, warnings, description, external dependencies, permissions and contracts.',
 }
 
 const MARKDOWN_PAGES_SECTION: MarkdownSection = {
@@ -321,7 +339,7 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       name: 'Scaling project',
       path: '/layer2s/projects/{slug}.md',
       description:
-        'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
+        'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
       name: 'Data availability project',
@@ -339,7 +357,7 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       name: 'Interop protocol',
       path: '/interop/protocols/{slug}.md',
       description:
-        'One bridge as markdown: last 24h volume, top tokens, chains and routes.',
+        'One bridge as markdown: last 24h volume, transfers, top path, transfer time and top token, description, volume by chain, permissions and contracts. Canonical bridges of scaling projects redirect to /layer2s/projects/{slug}.md.',
     },
     {
       name: 'ZK catalog project',
@@ -351,7 +369,7 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       name: 'Interop token',
       path: '/interop/tokens/{slug}.md',
       description:
-        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the token id, the segment right after /interop/tokens/ in a token page URL.',
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /interop/tokens/ in a token page URL; interop protocol pages link their top token.',
     },
     // Behind the same flag as the pages: listed while off, this would be a 404.
     ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),

@@ -24,7 +24,7 @@ describe(getLinkHeader.name, () => {
 
   it('finds the alternate for every path Express routes to the page', () => {
     expect(getLinkHeader('/Layer2s/Summary/')).toEqual(
-      getLinkHeader('/layer2s/summary'),
+      '<https://l2beat.com/Layer2s/Summary.md>; rel="alternate"; type="text/markdown", <https://l2beat.com/llms.txt>; rel="describedby"',
     )
   })
 })

@@ -71,8 +71,8 @@ export function buildDefiSummaryEntries(
     .sort(compareDefiSummaryEntries)
 }
 
-async function getTotalValueLockedByProject(
-  projects: DefiProject[],
+export async function getTotalValueLockedByProject(
+  projects: Pick<DefiProject, 'id' | 'tvsConfig'>[],
 ): Promise<Map<string, number>> {
   const trackedIds = projects
     .filter((project) => project.tvsConfig !== undefined)

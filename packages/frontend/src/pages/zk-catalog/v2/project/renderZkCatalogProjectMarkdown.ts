@@ -2,15 +2,17 @@ import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
-import { formatChange, formatUsd } from '~/server/markdown/markdown'
+import { bulletList, formatChange, formatUsd } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import {
   formatTag,
+  formatTrustedSetupRisk,
   renderUsedIn,
   renderVerificationStatus,
+  TRUSTED_SETUP_FRAMEWORK_LINK,
 } from '~/server/markdown/zkSectionBodies'
 import { VERIFIER_STATUS_ORDER } from '../components/zkCatalogUi'
 
@@ -36,6 +38,7 @@ export function renderZkCatalogProjectMarkdown(
       risks: [],
       description: entry.header.description,
     },
+    header: { links: entry.header.links },
     sections: entry.sections,
     apiLinks: {},
   })
@@ -65,7 +68,12 @@ function getFacts({ creator, header }: ProjectZkCatalogEntry, pageUrl: string) {
   ])
 }
 
-/** One row of the "Trusted setups" table: the setups of one proof system, where it is used and how its verifiers checked out. */
+/**
+ * One row of the "Trusted setups" table: the setups of one proof system, with
+ * the tooltip text of each, where it is used and how its verifiers checked
+ * out. Named by the proof system tag, as a project can have several of one
+ * type (e.g. two Groth16 wraps).
+ */
 function getTrustedSetupsFact(
   {
     trustedSetups,
@@ -76,12 +84,17 @@ function getTrustedSetupsFact(
 ) {
   const proofSystem = trustedSetups[0]?.proofSystem
   if (!proofSystem) return undefined
-  const setups = trustedSetups
-    .map((setup) => `${setup.name} (risk: ${setup.risk})`)
-    .join(', ')
+  const details = bulletList([
+    ...trustedSetups.map(
+      (setup) =>
+        `${setup.name}, risk ${formatTrustedSetupRisk(setup.risk)} per the ${TRUSTED_SETUP_FRAMEWORK_LINK}: ${setup.shortDescription}`,
+    ),
+    `Used in: ${renderUsedIn(projectsUsedIn, pageUrl)}`,
+    `Verifiers: ${countVerifiers(verifiers)}`,
+  ])
   return {
-    label: `Trusted setups for ${proofSystem.type}`,
-    value: `${setups}; used in: ${renderUsedIn(projectsUsedIn, pageUrl)}; verifiers: ${countVerifiers(verifiers)}`,
+    label: `Trusted setups for ${formatTag(proofSystem)}`,
+    value: `\n${details}`,
   }
 }
 

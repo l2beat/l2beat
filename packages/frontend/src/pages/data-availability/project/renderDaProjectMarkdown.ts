@@ -1,10 +1,17 @@
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
+import type { RosetteValue } from '~/components/rosette/types'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
-import { formatUsd, link, withRegularSpaces } from '~/server/markdown/markdown'
+import {
+  formatUsd,
+  link,
+  withRegularSpaces,
+  withSentiment,
+} from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   type ProjectFact,
@@ -49,6 +56,7 @@ function getEthereumPage(entry: EthereumDaProjectPageEntry): PageDetails {
       risks: [],
       description: `**${header.callout.title}:** ${header.callout.description}`,
     },
+    header: { links: header.links },
     apiLinks: {
       activity: [
         {
@@ -68,18 +76,20 @@ function getRegularPage(entry: DaProjectPageEntry): PageDetails {
     summary: {
       // Same order as the banners above the summary on the HTML page.
       warnings: [
-        ...getOngoingAnomalyWarning(entry, pageUrl),
+        ...getOngoingAnomalyWarning(entry),
         ...getStatusWarnings(entry),
       ],
       facts: [
         ...getCommonFacts(entry),
         { label: 'DA Bridge', value: formatSelectedBridge(entry) },
-        ...getOtherBridges(entry),
         ...getUsedBy(entry),
+        ...getSelectedBridgeUsedBy(entry),
+        ...getOtherBridges(entry),
       ],
       risks: getSelectedBridgeRisks(entry),
       description: undefined,
     },
+    header: { links: entry.header.links, discoUiHref: entry.discoUiHref },
     apiLinks: {},
   }
 }
@@ -99,11 +109,11 @@ function getStatusWarnings(entry: DaProjectEntry) {
   })
 }
 
-function getOngoingAnomalyWarning(entry: DaProjectPageEntry, pageUrl: string) {
+function getOngoingAnomalyWarning(entry: DaProjectPageEntry) {
   const { ongoingAnomaly } = entry.header
   if (!ongoingAnomaly) return []
   return [
-    `${ongoingAnomaly === 'single' ? 'Ongoing anomaly' : 'Ongoing anomalies'} in the DA bridge liveness, see ${link('the HTML page', `${pageUrl}#da-bridge-liveness`)}.`,
+    `${ongoingAnomaly === 'single' ? 'Ongoing anomaly' : 'Ongoing anomalies'} in the DA bridge liveness, described in the Liveness section below.`,
   ]
 }
 
@@ -115,47 +125,98 @@ function getCommonFacts(entry: DaProjectEntry): ProjectFact[] {
   }))
 }
 
-function getUsedBy({ header }: DaProjectEntry): ProjectFact[] {
-  if (header.usedIn.length === 0) return []
+/** The HTML "Used by" stat covers the whole layer, whichever bridge is selected. */
+function getUsedBy(entry: DaProjectEntry): ProjectFact[] {
+  const { usedIn } = entry.header
+  if (usedIn.length === 0) return []
+  const hasSeveralBridges =
+    entry.entryType === 'common' && entry.bridges.length > 1
   return [
     {
-      label: 'Used by',
-      value: header.usedIn.map((project) => project.name).join(', '),
+      label: hasSeveralBridges
+        ? `Used by (${entry.name} with any DA bridge)`
+        : 'Used by',
+      value: formatUsedIn(usedIn),
     },
   ]
+}
+
+/** On a layer with several bridges, the layer-wide list does not say who uses the selected one. */
+function getSelectedBridgeUsedBy(entry: DaProjectPageEntry): ProjectFact[] {
+  const bridge = getSelectedBridge(entry)
+  if (!bridge || entry.bridges.length <= 1) return []
+  return [
+    {
+      label: `Used by (${entry.name} with ${bridge.name})`,
+      value: formatUsedIn(bridge.usedIn),
+    },
+  ]
+}
+
+function formatUsedIn(usedIn: UsedInProjectWithIcon[]) {
+  return usedIn.length > 0
+    ? usedIn.map((project) => project.name).join(', ')
+    : NO_SCALING_PROJECTS
+}
+
+/** The tooltip of the HTML "No L2" cell. */
+const NO_SCALING_PROJECTS =
+  'none (there are no scaling projects listed on L2BEAT that use this solution)'
+
+function getSelectedBridge(entry: DaProjectPageEntry) {
+  return entry.bridges.find(
+    (bridge) => bridge.slug === entry.selectedBridge.slug,
+  )
 }
 
 /** With its TVS, as listed for the other bridges. */
 function formatSelectedBridge(entry: DaProjectPageEntry) {
-  const { name, slug } = entry.selectedBridge
-  const bridge = entry.bridges.find((bridge) => bridge.slug === slug)
+  const bridge = getSelectedBridge(entry)
+  const { name } = entry.selectedBridge
   return bridge ? `${name} (TVS ${formatUsd(bridge.tvs)})` : name
 }
 
-/** The HTML page lets the reader switch bridges; here each one links to its own markdown page. */
+/**
+ * The HTML bridge selector shows each bridge with its TVS, users and risks;
+ * here each one also links to its own markdown page.
+ */
 function getOtherBridges(entry: DaProjectPageEntry): ProjectFact[] {
-  const others = entry.bridges.filter(
-    (bridge) => bridge.slug !== entry.selectedBridge.slug,
-  )
-  if (others.length === 0) return []
-  return [
-    {
-      label: 'Other DA bridges',
-      value: others
+  return entry.bridges
+    .filter((bridge) => bridge.slug !== entry.selectedBridge.slug)
+    .map((bridge) => {
+      const risks = (
+        bridge.isNoBridge ? [NO_BRIDGE_RISK] : bridge.grissiniValues
+      )
         .map(
-          (bridge) =>
-            `${link(bridge.name, `${getPageUrl(entry.slug, bridge.slug)}.md`)} (TVS ${formatUsd(bridge.tvs)})`,
+          (risk) =>
+            `${risk.name}: ${withSentiment(risk.value, risk.sentiment)}`,
         )
-        .join(', '),
-    },
+        .join(', ')
+      return {
+        label: 'Other DA bridge',
+        value: [
+          link(bridge.name, `${getPageUrl(entry.slug, bridge.slug)}.md`),
+          `(TVS ${formatUsd(bridge.tvs)}; used by ${formatUsedIn(bridge.usedIn)}${risks ? `; risks: ${risks}` : ''})`,
+        ].join(' '),
+      }
+    })
+}
+
+/** Labelled per layer and bridge, as the HTML groups them under their own headings. */
+function getSelectedBridgeRisks(entry: DaProjectPageEntry) {
+  const bridgeRisks = entry.selectedBridge.isNoBridge
+    ? [NO_BRIDGE_RISK]
+    : entry.header.daBridgeGrissiniValues.map((risk) =>
+        labelRisk(risk, `DA bridge ${entry.selectedBridge.name}`),
+      )
+  return [
+    ...entry.header.daLayerGrissiniValues.map((risk) =>
+      labelRisk(risk, `DA layer ${entry.name}`),
+    ),
+    ...bridgeRisks,
   ]
 }
 
-function getSelectedBridgeRisks(entry: DaProjectPageEntry) {
-  return [
-    ...entry.header.daLayerGrissiniValues,
-    ...(entry.selectedBridge.isNoBridge
-      ? [NO_BRIDGE_RISK]
-      : entry.header.daBridgeGrissiniValues),
-  ]
+function labelRisk(risk: RosetteValue, owner: string): RosetteValue {
+  return { ...risk, name: `${risk.name} (${owner})` }
 }

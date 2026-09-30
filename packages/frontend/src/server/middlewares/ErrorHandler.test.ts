@@ -2,6 +2,7 @@ import type { AddressInfo } from 'node:net'
 import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 import express from 'express'
+import { LLMS_TXT_LINK } from '../markdown/markdownAlternate'
 import { clientErrorStatus, ErrorHandler } from './ErrorHandler'
 
 const MALFORMED_SCAN_PATHS = [
@@ -34,6 +35,13 @@ describe(ErrorHandler.name, () => {
       const response = await fetch(`${baseUrl}/boom`)
       expect(response.status).toEqual(500)
       expect(await response.text()).toInclude('Internal Server Error')
+    })
+  })
+
+  it('does not advertise a markdown alternate of the failed page', async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/boom`)
+      expect(response.headers.get('link')).toEqual(LLMS_TXT_LINK)
     })
   })
 })
@@ -85,7 +93,8 @@ async function withServer(test: (baseUrl: string) => Promise<void>) {
   app.get('/layer2s/projects/:project', (_, res) => {
     res.status(200).send('ok')
   })
-  app.get('/boom', () => {
+  app.get('/boom', (_, res) => {
+    res.header('Link', '</boom.md>; rel="alternate"')
     throw new Error('database is down')
   })
   app.use(ErrorHandler(Logger.SILENT))

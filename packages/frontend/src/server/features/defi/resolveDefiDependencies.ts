@@ -36,7 +36,14 @@ export async function getDefiDependencyProjectsById(
   const [projects, daLayers] = await Promise.all([
     ps.getProjects({
       ids: trackedIds,
-      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
+      optional: [
+        'defiInfo',
+        'privacyInfo',
+        'daBridge',
+        'daLayer',
+        'scalingInfo',
+        'interopConfig',
+      ],
     }),
     ps.getProjects({ where: ['daLayer'] }),
   ])

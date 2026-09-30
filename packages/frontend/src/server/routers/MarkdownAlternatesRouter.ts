@@ -1,5 +1,18 @@
+import type {
+  DaBridgeRisks,
+  DaLayerRisks,
+  InteropConfig,
+  Project,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
+import { type KnownInteropBridgeType, pluralize } from '@l2beat/shared-pure'
 import express from 'express'
+import partition from 'lodash/partition'
+import uniq from 'lodash/uniq'
+import uniqBy from 'lodash/uniqBy'
+import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import { env } from '~/env'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
 import { ps } from '~/server/projects'
@@ -34,11 +47,14 @@ export interface MarkdownAlternate {
   path: MarkdownAlternatePath
   title: string
   summary: string
+  /** The intro the HTML page shows above its table. */
+  notes?: string
   getSections: () => Promise<MarkdownSection[]>
 }
 
 export interface MarkdownSection {
   heading: string
+  description?: string
   links: MarkdownLink[]
 }
 
@@ -59,23 +75,51 @@ export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
     path: '/data-availability/summary.md',
     title: 'L2BEAT data availability layers',
     summary:
-      'Every data availability layer tracked by L2BEAT, one entry per bridge to Ethereum plus one for use without a bridge.',
+      'Every data availability layer tracked by L2BEAT with its type and risks: public layers one entry per bridge to Ethereum plus one for use without a bridge, and custom solutions built for a single project.',
     getSections: getDaSections,
   },
   {
     path: '/zk-catalog.md',
     title: 'L2BEAT ZK catalog',
     summary:
-      'Zero-knowledge proving systems used by tracked projects, with their creators.',
+      'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
+    notes: [
+      'ZK Catalog by L2BEAT is a community-driven resource offering detailed insights into the ZK technology utilized by various blockchain projects. It aims to enhance transparency and understanding of ZK tech implementations across the industry.',
+      '',
+      `Trusted setup risks (green, yellow, red) follow the [Trusted Setups Risk Framework](${externalLinks.articles.trustedSetupFramework}).`,
+    ].join('\n'),
     getSections: getZkSections,
   },
   {
     path: '/privacy/summary.md',
     title: 'L2BEAT privacy protocols',
     summary:
-      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT.',
+      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
+    notes:
+      'Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).',
     getSections: getPrivacySections,
   },
+  {
+    path: '/interop/summary.md',
+    title: 'L2BEAT interoperability protocols',
+    summary:
+      'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
+    notes:
+      'Token pages live at /interop/tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
+    getSections: getInteropSections,
+  },
+  // Behind the same flag as the page: listed while off, this would be a 404.
+  ...(env.CLIENT_SIDE_DEFI_ENABLED
+    ? [
+        {
+          path: '/defi/summary.md',
+          title: 'L2BEAT DeFi protocols',
+          summary: 'DeFi protocols tracked by L2BEAT, with their category.',
+          notes: 'Overview of DeFi protocols tracked by L2BEAT.',
+          getSections: getDefiSections,
+        } satisfies MarkdownAlternate,
+      ]
+    : []),
 ]
 
 async function getScalingSections(): Promise<MarkdownSection[]> {
@@ -112,48 +156,104 @@ async function getScalingSections(): Promise<MarkdownSection[]> {
 }
 
 async function getDaSections(): Promise<MarkdownSection[]> {
-  const [layers, bridges] = await Promise.all([
+  const [layers, bridges, customSolutions] = await Promise.all([
     ps.getProjects({
       select: ['daLayer'],
       whereNot: ['archivedAt'],
       optional: ['display'],
     }),
     ps.getProjects({ select: ['daBridge'] }),
+    ps.getProjects({
+      select: ['customDa'],
+      whereNot: ['archivedAt'],
+      optional: ['display'],
+    }),
   ])
+  const daLayerLinks = (systemCategory: 'public' | 'custom') =>
+    layers
+      .filter((layer) => layer.daLayer.systemCategory === systemCategory)
+      .flatMap((layer) =>
+        daLayerLinksPerBridge(
+          layer,
+          bridges.filter((b) => b.daBridge.daLayer === layer.id),
+        ),
+      )
   return [
     {
-      heading: 'Layers (/data-availability/projects/{layer}/{bridge})',
-      links: layers.flatMap((layer) => {
-        const layerBridges = bridges.filter(
-          (b) => b.daBridge.daLayer === layer.id,
-        )
-        const description = withFacts(
-          firstSentence(
-            layer.display?.description ?? layer.daLayer.description ?? '',
-          ),
-          [layer.daLayer.type],
-        )
-        const links: MarkdownLink[] = layerBridges.map((bridge) => ({
-          name: `${layer.name} via ${bridge.daBridge.name}`,
-          path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
-          description,
-        }))
-        if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
-          links.push({
-            name: `${layer.name} without a bridge`,
-            path: `/data-availability/projects/${layer.slug}/no-bridge`,
-            description,
-          })
-        }
-        return links
-      }),
+      heading: 'Public layers (/data-availability/projects/{layer}/{bridge})',
+      description:
+        'Public DA layers are data availability solutions designed for broad, general use across multiple scaling projects.',
+      links: daLayerLinks('public'),
+    },
+    {
+      heading: 'Custom solutions (/layer2s/projects/{slug})',
+      description:
+        'Custom DA layers are data availability solutions tightly integrated with a single scaling project, so each links to the page of the project it serves.',
+      links: [...daLayerLinks('custom'), ...customSolutions.map(customDaLink)],
     },
   ]
+}
+
+function daLayerLinksPerBridge(
+  layer: Project<'daLayer', 'display'>,
+  layerBridges: Project<'daBridge'>[],
+): MarkdownLink[] {
+  const layerDescription = firstSentence(
+    layer.display?.description ?? layer.daLayer.description ?? '',
+  )
+  const layerFacts = [layer.daLayer.type, ...riskFacts(layer.daLayer.risks)]
+  const links: MarkdownLink[] = layerBridges.map((bridge) => ({
+    name: `${layer.name} via ${bridge.daBridge.name}`,
+    path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
+    description: withFacts(layerDescription, [
+      ...layerFacts,
+      ...riskFacts(bridge.daBridge.risks),
+    ]),
+  }))
+  if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
+    links.push({
+      name: `${layer.name} without a bridge`,
+      path: `/data-availability/projects/${layer.slug}/no-bridge`,
+      description: withFacts(layerDescription, layerFacts),
+    })
+  }
+  return links
+}
+
+function customDaLink(project: Project<'customDa', 'display'>): MarkdownLink {
+  const { customDa } = project
+  return {
+    name: customDa.name ?? `${project.name} DAC`,
+    path: `/layer2s/projects/${project.slug}`,
+    description: withFacts(
+      firstSentence(customDa.description ?? project.display?.description ?? ''),
+      [
+        customDa.type,
+        `used by ${project.name}`,
+        customDa.fallback && `fallback: ${customDa.fallback.value}`,
+        ...riskFacts(customDa.risks),
+      ],
+    ),
+  }
+}
+
+/** Config values only: economic security the HTML adjusts by TVS is shown unadjusted. */
+function riskFacts(risks: DaLayerRisks & DaBridgeRisks): string[] {
+  return [
+    ['DA layer', risks.daLayer?.value],
+    ['economic security', risks.economicSecurity?.value.value],
+    ['fraud detection', risks.fraudDetection?.value],
+    ['DA bridge', risks.daBridge?.value],
+    ['committee security', risks.committeeSecurity?.value],
+    ['upgradeability', risks.upgradeability?.value],
+    ['relayer failure', risks.relayerFailure?.value],
+  ].flatMap(([name, value]) => (value ? [`${name}: ${value}`] : []))
 }
 
 async function getZkSections(): Promise<MarkdownSection[]> {
   const projects = await ps.getProjects({
     select: ['zkCatalogInfo'],
+    whereNot: ['archivedAt'],
     optional: ['display'],
   })
   return [
@@ -164,15 +264,41 @@ async function getZkSections(): Promise<MarkdownSection[]> {
         path: `/zk-catalog/${p.slug}`,
         description: withFacts(firstSentence(p.display?.description ?? ''), [
           p.zkCatalogInfo.creator && `by ${p.zkCatalogInfo.creator}`,
+          p.zkCatalogInfo.quantumResistant && 'quantum resistant',
+          trustedSetupsFact(p.zkCatalogInfo.trustedSetups),
+          verifiersFact(p.zkCatalogInfo.verifierHashes),
         ]),
       })),
     },
   ]
 }
 
+function trustedSetupsFact(
+  setups: ProjectZkCatalogInfo['trustedSetups'],
+): string {
+  const unique = uniqBy(setups, (setup) => setup.id)
+  if (unique.length === 0) return 'no trusted setup'
+  return `trusted setups: ${unique.map((s) => `${s.name} (${s.risk})`).join(' / ')}`
+}
+
+function verifiersFact(verifiers: ProjectZkCatalogInfo['verifierHashes']) {
+  const count = (status: string) =>
+    verifiers.filter((v) => v.verificationStatus === status).length
+  const statuses = [
+    [count('successful'), 'independently regenerated'],
+    [count('unsuccessful'), 'failed regeneration'],
+    [count('notVerified'), 'not verified'],
+  ] as const
+  const breakdown = statuses
+    .filter(([n]) => n > 0)
+    .map(([n, label]) => `${n} ${label}`)
+    .join(' / ')
+  return `${verifiers.length} onchain ${pluralize(verifiers.length, 'verifier')}${breakdown && ` (${breakdown})`}`
+}
+
 async function getPrivacySections(): Promise<MarkdownSection[]> {
   const projects = await ps.getProjects({
-    where: ['privacyInfo'],
+    select: ['privacyInfo'],
     optional: ['display'],
   })
   return [
@@ -181,7 +307,89 @@ async function getPrivacySections(): Promise<MarkdownSection[]> {
       links: projects.map((p) => ({
         name: p.name,
         path: `/privacy/projects/${p.slug}`,
-        description: firstSentence(p.display?.description ?? ''),
+        description: withFacts(firstSentence(p.display?.description ?? ''), [
+          p.privacyInfo.category.label,
+          `exit window: ${p.privacyInfo.exitWindow.value}`,
+        ]),
+      })),
+    },
+  ]
+}
+
+async function getInteropSections(): Promise<MarkdownSection[]> {
+  const projects = await ps.getProjects({
+    select: ['interopConfig'],
+    optional: ['display', 'scalingInfo'],
+  })
+  const [scalingBridges, protocols] = partition(
+    projects,
+    (p) => p.scalingInfo !== undefined,
+  )
+  return [
+    {
+      heading: 'Protocols (/interop/protocols/{slug})',
+      links: protocols.map((p) =>
+        interopLink(p, `/interop/protocols/${p.slug}`),
+      ),
+    },
+    {
+      heading:
+        'Canonical bridges of scaling projects (/layer2s/projects/{slug})',
+      description:
+        'Their interop data is on the scaling project page: /interop/protocols/{slug} redirects there.',
+      links: scalingBridges.map((p) =>
+        interopLink(p, `/layer2s/projects/${p.slug}`),
+      ),
+    },
+  ]
+}
+
+function interopLink(
+  project: Project<'interopConfig', 'display'>,
+  path: `/${string}`,
+): MarkdownLink {
+  const config = project.interopConfig
+  const bridgeTypes = uniq(
+    config.plugins.map((plugin) => BRIDGE_TYPE_LABELS[plugin.bridgeType]),
+  )
+  return {
+    name: config.name ?? project.name,
+    path,
+    description: withFacts(
+      firstSentence(config.description ?? project.display?.description ?? ''),
+      [INTEROP_TYPE_LABELS[config.type], bridgeTypes.join(' / ')],
+    ),
+  }
+}
+
+const INTEROP_TYPE_LABELS: Record<InteropConfig['type'], string> = {
+  multichain: 'Multichain',
+  intent: 'Intent bridge',
+  canonical: 'Canonical bridge',
+  other: 'Other',
+}
+
+/** Named as the interop pages that list each bridge type. */
+const BRIDGE_TYPE_LABELS: Record<KnownInteropBridgeType, string> = {
+  nonMinting: 'non-minting',
+  lockAndMint: 'lock-and-mint',
+  burnAndMint: 'burn-and-mint',
+}
+
+async function getDefiSections(): Promise<MarkdownSection[]> {
+  const projects = await ps.getProjects({
+    select: ['defiInfo'],
+    optional: ['display'],
+  })
+  return [
+    {
+      heading: 'DeFi protocols (/defi/projects/{slug})',
+      links: projects.map((p) => ({
+        name: p.name,
+        path: `/defi/projects/${p.slug}`,
+        description: withFacts(firstSentence(p.display?.description ?? ''), [
+          p.defiInfo.category,
+        ]),
       })),
     },
   ]
@@ -234,6 +442,7 @@ export function renderMarkdown(
     [
       `## ${section.heading}`,
       '',
+      ...(section.description ? [section.description, ''] : []),
       ...section.links.map(
         (link) => `- [${link.name}](${linkUrl(link)}): ${link.description}`,
       ),

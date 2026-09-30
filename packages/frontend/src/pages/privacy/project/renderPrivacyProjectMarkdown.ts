@@ -46,6 +46,11 @@ export function renderPrivacyProjectMarkdown(
       risks: getRiskProfile(entry),
       description: entry.description,
     },
+    header: {
+      links: entry.projectLinks,
+      badges: entry.badges,
+      discoUiHref: entry.discoveryHref,
+    },
     sections: entry.sections,
     apiLinks: {},
   })

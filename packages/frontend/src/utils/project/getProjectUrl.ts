@@ -19,6 +19,9 @@ export function getProjectUrl(
     daLayer?: ProjectDaLayer | undefined
     privacyInfo?: ProjectPrivacyInfo | undefined
     defiInfo?: ProjectDefiInfo | undefined
+    // Only their presence decides the page kind.
+    scalingInfo?: unknown
+    interopConfig?: unknown
   },
   daLayers: { id: ProjectId; slug: string }[],
 ): string {
@@ -34,6 +37,10 @@ export function getProjectUrl(
   }
   if (project.defiInfo) {
     return `/defi/projects/${project.slug}`
+  }
+  // Scaling projects with a canonical bridge show its interop data on their own page.
+  if (project.interopConfig && !project.scalingInfo) {
+    return `/interop/protocols/${project.slug}`
   }
   return `/layer2s/projects/${project.slug}`
 }

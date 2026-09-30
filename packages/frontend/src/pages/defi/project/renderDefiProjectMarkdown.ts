@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
+import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
@@ -23,17 +24,26 @@ export function renderDefiProjectMarkdown(entry: ProjectDefiEntry): string {
       risks: [],
       description: entry.description,
     },
+    header: {
+      links: entry.projectLinks,
+      badges: entry.badges,
+      discoUiHref: entry.discoveryHref,
+    },
     sections: entry.sections,
     apiLinks: {},
   })
 }
 
-/** DeFi pages have no stats block; the summary card shows only badges and About. */
-function getFacts({ badges }: ProjectDefiEntry) {
+/**
+ * The project page has no stats block and its Value Locked chart is
+ * interactive, so the headline numbers come from the DeFi summary table.
+ */
+function getFacts({ category, totalValueLockedUsd }: ProjectDefiEntry) {
   return compact([
-    badges.length > 0 && {
-      label: 'Badges',
-      value: badges.map((badge) => badge.name).join(', '),
+    totalValueLockedUsd !== undefined && {
+      label: 'TVL',
+      value: `${formatUsd(totalValueLockedUsd)} (total USD value of assets locked in the protocol)`,
     },
+    category && { label: 'Category', value: category },
   ])
 }

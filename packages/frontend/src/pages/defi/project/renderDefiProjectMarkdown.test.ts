@@ -18,14 +18,32 @@ describe(renderDefiProjectMarkdown.name, () => {
     )
   })
 
-  it('summarizes badges and description, without a risk rosette', () => {
+  it('gives the TVL and category of the DeFi summary table, without a risk rosette', () => {
     const summary = getSection(renderDefiProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Badges: Ethereum, Chainlink',
+      '- TVL: $26.53 B (total USD value of assets locked in the protocol)\n- Category: Liquid Staking',
       '### About\n\nLido is a liquid staking protocol.',
     )
     expect(summary).not.toInclude('### Risks')
+  })
+
+  it('leaves out the TVL of a project whose value is not tracked', () => {
+    const summary = getSection(
+      renderDefiProjectMarkdown({ ...ENTRY, totalValueLockedUsd: undefined }),
+      'Summary',
+    )
+
+    expect(summary).not.toInclude('- TVL:')
+  })
+
+  it('lists the header links, badges with their descriptions and the contracts explorer', () => {
+    const summary = getSection(renderDefiProjectMarkdown(ENTRY), 'Summary')
+
+    expect(summary).toInclude(
+      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
+      '### Badges\n\n- Ethereum: Ethereum badge.\n- Chainlink: Chainlink badge.',
+    )
   })
 
   it('surfaces the under review status and warnings before the facts', () => {
@@ -49,7 +67,7 @@ describe(renderDefiProjectMarkdown.name, () => {
       '**Warning:** Withdrawals are paused.',
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
-      summary.indexOf('- Badges:'),
+      summary.indexOf('- TVL:'),
     )
   })
 
@@ -269,8 +287,11 @@ const ENTRY: ProjectDefiEntry = {
   name: 'Lido',
   icon: '/icons/lido.png',
   description: 'Lido is a liquid staking protocol.',
+  category: 'Liquid Staking',
+  totalValueLockedUsd: 26_530_000_000,
   badges: [badge('ethereum', 'Ethereum'), badge('chainlink', 'Chainlink')],
-  projectLinks: [],
+  projectLinks: [{ name: 'Website', links: ['https://lido.fi'] }],
+  discoveryHref: DISCO_UI.href,
   discoUi: DISCO_UI,
   isUnderReview: false,
   warnings: {},

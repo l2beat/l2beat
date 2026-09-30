@@ -1,4 +1,4 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -13,6 +13,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getTotalValueLockedByProject } from '../getDefiSummaryEntries'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
@@ -25,6 +26,9 @@ export interface ProjectDefiEntry {
   shortName?: string
   icon: string
   description: string
+  category?: ProjectDefiCategory
+  /** Latest value, as the DeFi summary table shows it. */
+  totalValueLockedUsd?: number
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref?: string
@@ -49,8 +53,7 @@ export async function getDefiProjectEntry(
 ): Promise<ProjectDefiEntry | undefined> {
   const project = await ps.getProject({
     slug,
-    where: ['defiInfo'],
-    select: ['display', 'statuses'],
+    select: ['display', 'statuses', 'defiInfo'],
     optional: ['contracts', 'permissions', 'tvsConfig', 'externalDependencies'],
   })
 
@@ -60,12 +63,17 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
-    await Promise.all([
-      getContractUtils(),
-      getProjectsChangeReport(),
-      getDefiDependencyProjectsById(project.externalDependencies),
-    ])
+  const [
+    contractUtils,
+    projectsChangeReport,
+    dependencyProjectsById,
+    tvlByProject,
+  ] = await Promise.all([
+    getContractUtils(),
+    getProjectsChangeReport(),
+    getDefiDependencyProjectsById(project.externalDependencies),
+    getTotalValueLockedByProject([project]),
+  ])
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
@@ -183,6 +191,8 @@ export async function getDefiProjectEntry(
     shortName: project.shortName,
     icon,
     description: project.display.description,
+    category: project.defiInfo.category,
+    totalValueLockedUsd: tvlByProject.get(project.id),
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []

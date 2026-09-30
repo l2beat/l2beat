@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { STATUS_CODES } from 'node:http'
 import type { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
+import { dropMarkdownAlternateLink } from '../markdown/markdownAlternate'
 import { getRequestIp } from '../utils/getRequestIp'
 import { getRequestId } from './RequestIdMiddleware'
 
@@ -16,6 +17,7 @@ export function ErrorHandler(baseLogger: Logger) {
 
     const errorId = randomUUID()
     res.status(clientErrorStatus(error) ?? INTERNAL_SERVER_ERROR)
+    dropMarkdownAlternateLink(res)
 
     const body = {
       requestId: getRequestId(req),

@@ -1,10 +1,14 @@
 import { expect } from 'earl'
 import {
   absolutizeLinks,
+  bulletList,
+  formatChange,
   markCritical,
   nestHeadings,
+  numberedList,
   subsection,
   table,
+  tidyMarkdown,
 } from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
@@ -72,6 +76,15 @@ describe(markCritical.name, () => {
     )
   })
 
+  it('puts the marker before a trailing comma, colon or semicolon too', () => {
+    expect(markCritical('There is no delay on code upgrades,', true)).toEqual(
+      'There is no delay on code upgrades (CRITICAL),',
+    )
+    expect(markCritical('Funds can be stolen if:', true)).toEqual(
+      'Funds can be stolen if (CRITICAL):',
+    )
+  })
+
   it('appends the marker to text without closing punctuation', () => {
     expect(markCritical('Program hashes are unverified', true)).toEqual(
       'Program hashes are unverified (CRITICAL)',
@@ -96,5 +109,115 @@ describe(table.name, () => {
     expect(table(['Asset', 'Value'], [['A\nB', '$1']])).toEqual(
       '| Asset | Value |\n| --- | --- |\n| A B | $1 |',
     )
+  })
+})
+
+describe(formatChange.name, () => {
+  it('signs the change as the HTML arrow does', () => {
+    expect(formatChange(0.025, '7D')).toEqual(
+      '+2.50% compared to seven days ago',
+    )
+    expect(formatChange(-0.03, 'last7d')).toEqual(
+      '-3.00% compared to the previous seven days',
+    )
+  })
+
+  it('leaves a change too small to show unsigned', () => {
+    expect(formatChange(-0.00001, '7D')).toEqual(
+      '0.00% compared to seven days ago',
+    )
+    expect(formatChange(0.00001, '7D')).toEqual(
+      '0.00% compared to seven days ago',
+    )
+  })
+
+  it('spells out the cap the HTML shows for huge changes', () => {
+    expect(formatChange(25, '7D')).toEqual(
+      'more than +1K% compared to seven days ago',
+    )
+  })
+})
+
+describe(bulletList.name, () => {
+  it('indents the continuation of a multi-paragraph item so it stays in the list', () => {
+    expect(bulletList(['First.\n\nMore on first.', 'Second.'])).toEqual(
+      '- First.\n\n  More on first.\n- Second.',
+    )
+  })
+
+  it('nests a list inside an item', () => {
+    expect(bulletList(['Parent:\n- child'])).toEqual('- Parent:\n  - child')
+  })
+})
+
+describe(numberedList.name, () => {
+  it('indents continuation lines to the item text, past the number', () => {
+    expect(numberedList(['First.\n\nMore.'], 9)).toEqual(
+      '9. First.\n\n   More.',
+    )
+    expect(numberedList(['Tenth.\nMore.'], 10)).toEqual('10. Tenth.\n    More.')
+  })
+})
+
+describe(tidyMarkdown.name, () => {
+  const PAGE_URL = 'https://l2beat.com/scaling/projects/x'
+
+  it('resolves fragment links against the HTML page', () => {
+    expect(tidyMarkdown('See [permissions](#permissions).', PAGE_URL)).toEqual(
+      'See [permissions](https://l2beat.com/scaling/projects/x#permissions).',
+    )
+  })
+
+  it('turns br tags, raw or HTML-escaped, into line breaks', () => {
+    expect(
+      tidyMarkdown(
+        '1. a\n<br>\n## Next\n\nOne.<br />Two. &lt;br/&gt; Three.',
+        PAGE_URL,
+      ),
+    ).toEqual('1. a\n\n## Next\n\nOne.\nTwo.\nThree.')
+  })
+
+  it('keeps table rows on one line when a cell has a br tag', () => {
+    expect(tidyMarkdown('| a<br>b | c |', PAGE_URL)).toEqual('| a b | c |')
+  })
+
+  it('trims trailing spaces and collapses blank-line runs', () => {
+    expect(tidyMarkdown('One.  \n\n\n\nTwo. ', PAGE_URL)).toEqual(
+      'One.\n\nTwo.',
+    )
+  })
+
+  it('collapses runs of spaces in prose, but not in inline code or tables', () => {
+    expect(
+      tidyMarkdown('Too  many   spaces in `a  b`.\n| x  | y |', PAGE_URL),
+    ).toEqual('Too many spaces in `a  b`.\n| x  | y |')
+  })
+
+  it('uses one bullet marker', () => {
+    expect(tidyMarkdown('* one\n  * nested\n**bold**', PAGE_URL)).toEqual(
+      '- one\n  - nested\n**bold**',
+    )
+  })
+
+  it('aligns wrapped lines of template-literal text with the text they continue', () => {
+    expect(
+      tidyMarkdown(
+        'It delivers\n      limitless scale.\n\n- An item\n      wrapped.\n    - nested',
+        PAGE_URL,
+      ),
+    ).toEqual(
+      'It delivers\nlimitless scale.\n\n- An item\n  wrapped.\n    - nested',
+    )
+  })
+
+  it('keeps indented code after a blank line', () => {
+    const code = 'Run:\n\n    make  build\n    make  test'
+    expect(tidyMarkdown(code, PAGE_URL)).toEqual(code)
+  })
+
+  it('leaves fenced code verbatim', () => {
+    const code =
+      '```\n* not a bullet\n\n\n\nx  =  1 <br> [a](#b)\n      indented\n```'
+    expect(tidyMarkdown(code, PAGE_URL)).toEqual(code)
   })
 })

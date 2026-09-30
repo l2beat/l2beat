@@ -67,6 +67,7 @@ async function getContractUsageMap() {
         'daBridge',
         'privacyInfo',
         'defiInfo',
+        'interopConfig',
       ],
       whereNot: ['archivedAt'],
     }),

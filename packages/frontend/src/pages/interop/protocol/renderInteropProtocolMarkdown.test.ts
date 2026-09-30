@@ -36,11 +36,64 @@ describe(renderInteropProtocolMarkdown.name, () => {
       '- Last 24h top path: Ethereum ↔ Arbitrum One ($900.00 K)',
       '- Last 24h avg. transfer time: 1m 30s',
       '- Last 24h avg. transfer value: $1.25 K',
-      '- Tokens by volume: USDC ($800.00 K), WETH ($500.00 K), USDT ($100.00 K), and 12 more',
-      '- Top token: [USDC](https://l2beat.com/interop/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
-      '- Transfer size: Under $100: 600 transfers, $100-$1K: 400 transfers, $1K-$10K: 150 transfers, $10K-$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
-      '- Transfer type distribution: Lock & Mint: $150.00 K, Non-minting: $1.35 M',
+      '- Last 24h tokens by volume: [USDC](https://l2beat.com/interop/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://l2beat.com/interop/tokens/weth-id/weth) ($500.00 K), [USDT](https://l2beat.com/interop/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
+      '- Last 24h top token: [USDC](https://l2beat.com/interop/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
+      '- Last 24h transfer size: Under $100: 600 transfers, $100-$1K: 400 transfers, $1K-$10K: 150 transfers, $10K-$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
+      '- Last 24h transfer type distribution: Lock & Mint: $150.00 K, Non-minting: $1.35 M',
       'Across is an intent-based bridge.',
+    )
+  })
+
+  it('counts a single transfer in the singular', () => {
+    const summary = getSection(
+      renderInteropProtocolMarkdown({
+        ...PAGE,
+        protocolData: {
+          ...PROTOCOL_DATA,
+          topToken: PROTOCOL_DATA.topToken && {
+            ...PROTOCOL_DATA.topToken,
+            transferCount: 1,
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('($800.00 K volume, 1 transfer)')
+  })
+
+  it('says a minimum transfer size that rounds to $0.00 is under a cent', () => {
+    const summary = getSection(
+      renderInteropProtocolMarkdown({
+        ...PAGE,
+        protocolData: {
+          ...PROTOCOL_DATA,
+          transferSize: PROTOCOL_DATA.transferSize && {
+            ...PROTOCOL_DATA.transferSize,
+            minTransferValueUsd: 0.0001,
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('(min under $0.01, average $1.25 K')
+  })
+
+  it('lists the project links', () => {
+    const markdown = renderInteropProtocolMarkdown({
+      ...PAGE,
+      projectEntry: {
+        ...PAGE.projectEntry,
+        header: {
+          ...PAGE.projectEntry.header,
+          links: [{ name: 'Website', links: ['https://across.to'] }],
+        },
+      },
+    })
+
+    expect(markdown).toInclude(
+      '### Links\n\n- Website: https://across.to',
     )
   })
 
@@ -168,8 +221,8 @@ describe(renderInteropProtocolMarkdown.name, () => {
     )
 
     expect(volume).toInclude(
-      '### Top chains by volume\n\n- Ethereum: $1.40 M (1.10 K transfers)\n- Arbitrum One: $1.10 M (900 transfers)\n- Base: $50.00 K (40 transfers)\n- and 2 more',
-      '### Top routes by volume\n\n- Ethereum → Arbitrum One: $700.00 K\n- Arbitrum One → Ethereum: $200.00 K\n- Base → Ethereum: $50.00 K\n\n',
+      '### Top chains by volume (last 24h)\n\nA transfer counts toward the volume of both its source and its destination chain, so the chain volumes add up to more than the total volume.\n\n- Ethereum: $1.40 M (1.10 K transfers)\n- Arbitrum One: $1.10 M (900 transfers)\n- Base: $50.00 K (40 transfers)\n- and 2 more',
+      '### Top routes by volume (last 24h)\n\n- Ethereum → Arbitrum One: $700.00 K\n- Arbitrum One → Ethereum: $200.00 K\n- Base → Ethereum: $50.00 K\n\n',
       'https://l2beat.com/interop/protocols/across#interop-volume',
     )
   })
