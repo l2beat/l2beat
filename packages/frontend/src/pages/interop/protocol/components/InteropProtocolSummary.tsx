@@ -5,14 +5,13 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { EM_DASH } from '~/consts/characters'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
-import type { ByBridgeTypeData } from '~/server/features/layer2s/interop/types'
-import type { TransferTypeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { InteropTransferSizeBreakdown } from '../../components/InteropTransferSizeBreakdown'
 import { InteropTransferTypeBreakdown } from '../../components/InteropTransferTypeBreakdown'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
+import { getBridgeTypeVolumes } from '../../utils/getBridgeTypeVolumes'
 import type { InteropSelection } from '../../utils/types'
 
 export function InteropProtocolSummary({
@@ -101,7 +100,7 @@ export function InteropProtocolSummary({
       <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
       <HorizontalSeparator className="my-4" />
       <InteropTransferTypeBreakdown
-        byType={bridgeTypeVolumes(protocolData?.entry?.byBridgeType)}
+        byType={getBridgeTypeVolumes(protocolData?.entry?.byBridgeType)}
       />
       {protocol.header.description && (
         <div className="max-md:hidden">
@@ -111,18 +110,6 @@ export function InteropProtocolSummary({
       )}
     </section>
   )
-}
-
-function bridgeTypeVolumes(
-  byBridgeType: ByBridgeTypeData | undefined,
-): TransferTypeDataPoint {
-  const volumes: TransferTypeDataPoint = {}
-  for (const [type, stats] of Object.entries(byBridgeType ?? {})) {
-    if (stats) {
-      volumes[type as keyof ByBridgeTypeData] = stats.volume
-    }
-  }
-  return volumes
 }
 
 function StatsItem({ title, value }: { title: string; value: ReactNode }) {

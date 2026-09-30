@@ -86,6 +86,9 @@ export async function getInteropProtocolEntry(
           entry: data.entry,
           interopChains: sortedChains,
           defaultSelectedChains,
+          topRoutes: data.flows
+            .filter((flow) => flow.volume > 0)
+            .slice(0, MAX_TOP_ROUTES),
         },
       })
     }
@@ -215,6 +218,9 @@ export async function getInteropProtocolEntry(
     sections,
   }
 }
+
+/** Capped because the routes travel to the browser with the section props. */
+const MAX_TOP_ROUTES = 10
 
 function sortChainsByFlowVolume(
   chains: InteropChainWithIcon[],
