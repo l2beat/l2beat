@@ -1,6 +1,3 @@
-import { formatBpsToMbps, formatNumber, UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
-import round from 'lodash/round'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
@@ -10,39 +7,23 @@ import type {
 import { formatUsd, link, withRegularSpaces } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
+  type ProjectFact,
+  type ProjectMarkdown,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+
+import { getCommonDaProjectStats } from './utils/getCommonDaProjectStats'
 
 type DaProjectEntry = DaProjectPageEntry | EthereumDaProjectPageEntry
 
 /** The markdown alternate of the DA project page, from the entry the HTML page renders. */
 export function renderDaProjectMarkdown(entry: DaProjectEntry): string {
-  // Production URLs, like the canonical link: the document is meant to be
-  // cited, whichever deployment rendered it.
-  const pageUrl = `${PRODUCTION_ORIGIN}${getDaProjectPagePath(entry.slug, getBridgeSlug(entry))}`
   return renderProjectMarkdown({
     name: entry.name,
-    pageUrl,
-    summary: {
-      warnings: getWarnings(entry, pageUrl),
-      facts: getFacts(entry),
-      risks:
-        entry.entryType === 'ethereum' ? [] : getSelectedBridgeRisks(entry),
-      description:
-        entry.entryType === 'ethereum' ? renderCallout(entry) : undefined,
-    },
     sections: entry.sections,
-    apiLinks:
-      entry.entryType === 'ethereum'
-        ? {
-            activity: [
-              {
-                title: 'Activity chart (JSON)',
-                url: `${PRODUCTION_ORIGIN}/api/scaling/activity/${entry.slug}`,
-              },
-            ],
-          }
-        : {},
+    ...(entry.entryType === 'ethereum'
+      ? getEthereumPage(entry)
+      : getRegularPage(entry)),
   })
 }
 
@@ -50,85 +31,98 @@ export function getDaProjectPagePath(layerSlug: string, bridgeSlug: string) {
   return `/data-availability/projects/${layerSlug}/${bridgeSlug}`
 }
 
-/** Ethereum's DA bridge is enshrined: the bridge is the layer project itself. */
-function getBridgeSlug(entry: DaProjectEntry) {
-  return entry.entryType === 'ethereum' ? entry.slug : entry.selectedBridge.slug
-}
+type PageDetails = Omit<ProjectMarkdown, 'name' | 'sections'>
 
-/** The banners above the summary on the HTML page, in the same order. */
-function getWarnings(entry: DaProjectEntry, pageUrl: string) {
-  const ongoingAnomaly =
-    entry.entryType === 'common' ? entry.header.ongoingAnomaly : undefined
-  return compact([
-    ongoingAnomaly &&
-      `${ongoingAnomaly === 'single' ? 'Ongoing anomaly' : 'Ongoing anomalies'} in the DA bridge liveness, see ${link('the HTML page', `${pageUrl}#da-bridge-liveness`)}.`,
-    ...getProjectStatusWarnings({
-      archivedAt: entry.archivedAt,
-      underReviewStatus: entry.isUnderReview ? 'config' : undefined,
-    }),
-  ])
-}
-
-/** Labels follow the stats block at the top of the HTML page; tooltips become parentheticals. */
-function getFacts(entry: DaProjectEntry) {
+/** Mirrors EthereumDaProjectSummary: the enshrined bridge is explained instead of rated. */
+function getEthereumPage(entry: EthereumDaProjectPageEntry): PageDetails {
   const { header } = entry
-  return compact([
-    { label: 'Type', value: entry.type },
+  return {
+    // Ethereum's DA bridge is enshrined: the bridge is the layer project itself.
+    pageUrl: getPageUrl(entry.slug, entry.slug),
+    summary: {
+      warnings: getStatusWarnings(entry),
+      facts: [
+        ...getCommonFacts(entry),
+        { label: 'DA Bridge', value: header.bridgeName },
+        ...getUsedBy(entry),
+      ],
+      risks: [],
+      description: `**${header.callout.title}:** ${header.callout.description}`,
+    },
+    apiLinks: {
+      activity: [
+        {
+          title: 'Activity chart (JSON)',
+          url: `${PRODUCTION_ORIGIN}/api/scaling/activity/${entry.slug}`,
+        },
+      ],
+    },
+  }
+}
+
+/** Mirrors RegularDaProjectSummary: the stats, then the selected bridge and its risks. */
+function getRegularPage(entry: DaProjectPageEntry): PageDetails {
+  const pageUrl = getPageUrl(entry.slug, entry.selectedBridge.slug)
+  return {
+    pageUrl,
+    summary: {
+      // Same order as the banners above the summary on the HTML page.
+      warnings: [
+        ...getOngoingAnomalyWarning(entry, pageUrl),
+        ...getStatusWarnings(entry),
+      ],
+      facts: [
+        ...getCommonFacts(entry),
+        { label: 'DA Bridge', value: formatSelectedBridge(entry) },
+        ...getOtherBridges(entry),
+        ...getUsedBy(entry),
+      ],
+      risks: getSelectedBridgeRisks(entry),
+      description: undefined,
+    },
+    apiLinks: {},
+  }
+}
+
+/**
+ * Production URLs, like the canonical link: the document is meant to be
+ * cited, whichever deployment rendered it.
+ */
+function getPageUrl(layerSlug: string, bridgeSlug: string) {
+  return `${PRODUCTION_ORIGIN}${getDaProjectPagePath(layerSlug, bridgeSlug)}`
+}
+
+function getStatusWarnings(entry: DaProjectEntry) {
+  return getProjectStatusWarnings({
+    archivedAt: entry.archivedAt,
+    underReviewStatus: entry.isUnderReview ? 'config' : undefined,
+  })
+}
+
+function getOngoingAnomalyWarning(entry: DaProjectPageEntry, pageUrl: string) {
+  const { ongoingAnomaly } = entry.header
+  if (!ongoingAnomaly) return []
+  return [
+    `${ongoingAnomaly === 'single' ? 'Ongoing anomaly' : 'Ongoing anomalies'} in the DA bridge liveness, see ${link('the HTML page', `${pageUrl}#da-bridge-liveness`)}.`,
+  ]
+}
+
+/** The stats block at the top of the HTML page; tooltips become parentheticals. */
+function getCommonFacts(entry: DaProjectEntry): ProjectFact[] {
+  return getCommonDaProjectStats(entry).map(({ title, value, tooltip }) => ({
+    label: title,
+    value: withRegularSpaces(tooltip ? `${value} (${tooltip})` : value),
+  }))
+}
+
+function getUsedBy({ header }: DaProjectEntry): ProjectFact[] {
+  if (header.usedIn.length === 0) return []
+  return [
     {
-      label: 'Total Value Secured',
-      value: `${formatUsd(header.tvs)} (across the L2s and L3s listed on L2BEAT that use this DA layer, excluding sovereign rollups)`,
-    },
-    !!header.economicSecurity && {
-      label: 'Economic security',
-      value: `${formatUsd(header.economicSecurity)} (slashable in case of a data withholding attack)`,
-    },
-    !!header.numberOfValidators && {
-      label: 'Secured by',
-      value: formatSecuredBy(entry, header.numberOfValidators),
-    },
-    getDurationOfStorage(entry),
-    !!header.maxThroughputPerSecond && {
-      label: 'Max throughput',
-      value: formatBpsToMbps(header.maxThroughputPerSecond),
-    },
-    {
-      label: 'DA Bridge',
-      value:
-        entry.entryType === 'ethereum'
-          ? entry.header.bridgeName
-          : formatSelectedBridge(entry),
-    },
-    entry.entryType === 'common' && getOtherBridges(entry),
-    header.usedIn.length > 0 && {
       label: 'Used by',
       value: header.usedIn.map((project) => project.name).join(', '),
     },
-  ])
-}
-
-function formatSecuredBy(entry: DaProjectEntry, numberOfValidators: number) {
-  if (entry.slug === 'ethereum') {
-    return `${withRegularSpaces(formatNumber(numberOfValidators))} validators`
-  }
-  return entry.type === 'Public Blockchain'
-    ? `${numberOfValidators} validators`
-    : `${numberOfValidators} operators`
-}
-
-function getDurationOfStorage({ kind, header }: DaProjectEntry) {
-  const label = 'Duration of storage'
-  if (kind === 'DA Service' && !header.durationStorage) {
-    return {
-      label,
-      value: 'Flexible (depends on the offchain configuration of the DAC)',
-    }
-  }
-  return (
-    !!header.durationStorage && {
-      label,
-      value: `${round(header.durationStorage / UnixTime.DAY, 2)} days`,
-    }
-  )
+  ]
 }
 
 /** With its TVS, as listed for the other bridges. */
@@ -139,21 +133,22 @@ function formatSelectedBridge(entry: DaProjectPageEntry) {
 }
 
 /** The HTML page lets the reader switch bridges; here each one links to its own markdown page. */
-function getOtherBridges(entry: DaProjectPageEntry) {
+function getOtherBridges(entry: DaProjectPageEntry): ProjectFact[] {
   const others = entry.bridges.filter(
     (bridge) => bridge.slug !== entry.selectedBridge.slug,
   )
-  return (
-    others.length > 0 && {
+  if (others.length === 0) return []
+  return [
+    {
       label: 'Other DA bridges',
       value: others
         .map(
           (bridge) =>
-            `${link(bridge.name, `${PRODUCTION_ORIGIN}${getDaProjectPagePath(entry.slug, bridge.slug)}.md`)} (TVS ${formatUsd(bridge.tvs)})`,
+            `${link(bridge.name, `${getPageUrl(entry.slug, bridge.slug)}.md`)} (TVS ${formatUsd(bridge.tvs)})`,
         )
         .join(', '),
-    }
-  )
+    },
+  ]
 }
 
 function getSelectedBridgeRisks(entry: DaProjectPageEntry) {
@@ -163,9 +158,4 @@ function getSelectedBridgeRisks(entry: DaProjectPageEntry) {
       ? [NO_BRIDGE_RISK]
       : entry.header.daBridgeGrissiniValues),
   ]
-}
-
-/** The Ethereum summary has no risk rosette; it explains the enshrined bridge instead. */
-function renderCallout({ header }: EthereumDaProjectPageEntry) {
-  return `**${header.callout.title}:** ${header.callout.description}`
 }

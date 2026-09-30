@@ -28,8 +28,8 @@ describe(renderDaProjectMarkdown.name, () => {
 
     expect(summary).toInclude(
       '- Type: Public Blockchain',
-      '- Total Value Secured: $1.50 B (across the L2s and L3s listed on L2BEAT that use this DA layer, excluding sovereign rollups)',
-      '- Economic security: $800.00 M (slashable in case of a data withholding attack)',
+      '- Total Value Secured: $1.50 B (Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.)',
+      '- Economic security: $800.00 M (The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.)',
       '- Secured by: 100 validators',
       '- Duration of storage: 30 days',
       '- Max throughput: 2 MiB/s',
@@ -100,7 +100,26 @@ describe(renderDaProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '- Duration of storage: Flexible (depends on the offchain configuration of the DAC)',
+      '- Duration of storage: Flexible (The duration depends on the offchain configuration of the DAC.)',
+    )
+  })
+
+  it('keeps the stats the HTML page shows as a dash when their value is missing', () => {
+    const summary = getSection(
+      renderDaProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          economicSecurity: undefined,
+          durationStorage: undefined,
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Economic security: \u2014 (The assets that are slashable',
+      '- Duration of storage: \u2014\n',
     )
   })
 
