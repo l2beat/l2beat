@@ -10,6 +10,9 @@ import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
 
+export const HANDLER_OR_COPY_MESSAGE =
+  'handler and copy cannot both be defined at the same time. They are mutually exclusive.'
+
 export type StructureContractField = v.infer<typeof StructureContractField>
 export const _StructureContractField = {
   handler: UserHandlerDefinition.optional(),
@@ -22,10 +25,14 @@ export const _StructureContractField = {
 }
 export const StructureContractField = v
   .object(_StructureContractField)
-  .check(
-    (data) => data.handler === undefined || data.copy === undefined,
-    'handler and copy cannot both be defined at the same time. They are mutually exclusive.',
-  )
+  .check(hasHandlerOrCopy, HANDLER_OR_COPY_MESSAGE)
+
+export function hasHandlerOrCopy(field: {
+  handler?: unknown
+  copy?: unknown
+}): boolean {
+  return field.handler === undefined || field.copy === undefined
+}
 
 export type DiscoveryCustomType = v.infer<typeof DiscoveryCustomType>
 export const DiscoveryCustomType = v
