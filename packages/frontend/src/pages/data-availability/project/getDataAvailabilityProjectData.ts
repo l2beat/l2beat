@@ -32,8 +32,6 @@ export async function getDataAvailabilityProjectData(
       metadata: getMetadata(manifest, {
         title: `${projectEntry.name} - L2BEAT`,
         description: getDaMetadataDescription({
-          name: projectEntry.name,
-          type: projectEntry.type,
           tvs: projectEntry.header.tvs,
           economicSecurity: projectEntry.header.economicSecurity,
           description: projectEntry.description,

@@ -8,24 +8,38 @@ import {
 } from './projectMetaDescriptions'
 
 describe(getScalingMetadataDescription.name, () => {
-  it('leads with the type, stage and TVS of an L2, then the description', () => {
+  it('leads with the stage, type and TVS of an L2, then the description', () => {
     const description = getScalingMetadataDescription({
-      name: 'Arbitrum One',
       category: 'Optimistic Rollup',
       stage: 'Stage 1',
       hostChain: undefined,
       tvs: 16_203_000_000,
-      description: 'Arbitrum is a general-purpose rollup.',
+      description: 'Arbitrum One is a general-purpose chain.',
     })
 
     expect(description).toEqual(
-      'Arbitrum One is a Stage 1 Optimistic Rollup securing $16.20B. Arbitrum is a general-purpose rollup.',
+      'Stage 1 Optimistic Rollup · $16B TVS. Arbitrum One is a general-purpose chain.',
+    )
+  })
+
+  // The description names the type in a different case than the config
+  // category, which must still count as a mention.
+  it('leaves out the type when the description already states it', () => {
+    const description = getScalingMetadataDescription({
+      category: 'Optimistic Rollup',
+      stage: 'Stage 1',
+      hostChain: undefined,
+      tvs: 16_203_000_000,
+      description: 'Arbitrum One is a general-purpose optimistic rollup.',
+    })
+
+    expect(description).toEqual(
+      'Stage 1 · $16B TVS. Arbitrum One is a general-purpose optimistic rollup.',
     )
   })
 
   it('names the host chain of an L3 and skips a stage under review', () => {
     const description = getScalingMetadataDescription({
-      name: 'Xai',
       category: 'Optimium',
       stage: 'UnderReview',
       hostChain: 'Arbitrum One',
@@ -34,13 +48,12 @@ describe(getScalingMetadataDescription.name, () => {
     })
 
     expect(description).toEqual(
-      'Xai is an Optimium on Arbitrum One securing $1.23M. Xai is a gaming chain.',
+      'Optimium · built on Arbitrum One · $1.2M TVS. Xai is a gaming chain.',
     )
   })
 
-  it('reads naturally for the Other category and without TVS', () => {
+  it('returns the bare description when there is no fact to state', () => {
     const description = getScalingMetadataDescription({
-      name: 'Fuel Ignition',
       category: 'Other',
       stage: 'NotApplicable',
       hostChain: undefined,
@@ -48,14 +61,11 @@ describe(getScalingMetadataDescription.name, () => {
       description: 'Fuel Ignition is a fast chain.',
     })
 
-    expect(description).toEqual(
-      'Fuel Ignition is a scaling project. Fuel Ignition is a fast chain.',
-    )
+    expect(description).toEqual('Fuel Ignition is a fast chain.')
   })
 
-  it('falls back to a generic noun and hides a zero TVS for an upcoming chain', () => {
+  it('hides a zero TVS and capitalizes a lead that starts with the host chain', () => {
     const description = getScalingMetadataDescription({
-      name: 'Upcoming Chain',
       category: undefined,
       stage: 'NotApplicable',
       hostChain: 'Base',
@@ -63,74 +73,51 @@ describe(getScalingMetadataDescription.name, () => {
       description: 'Upcoming Chain launches soon.',
     })
 
-    expect(description).toEqual(
-      'Upcoming Chain is a scaling project on Base. Upcoming Chain launches soon.',
-    )
+    expect(description).toEqual('Built on Base. Upcoming Chain launches soon.')
   })
 
-  // The facts sentence is 61 chars plus a separating space, leaving 98 of
-  // the 160-char budget: sixteen 5-letter words (95 chars) and the ellipsis
-  // fit, a seventeenth word would not.
-  it('cuts a long description on a word boundary to fit 160 chars', () => {
+  // The lead is 19 chars plus a separating space, leaving 280 of the 300-char
+  // budget: ten 27-char sentences joined by spaces take 279, an eleventh
+  // would not fit.
+  it('drops the sentences of a long description that do not fit 300 chars', () => {
+    const sentence = 'Lorem ipsum dolor sit amet.'
     const description = getScalingMetadataDescription({
-      name: 'Arbitrum One',
-      category: 'Optimistic Rollup',
+      category: undefined,
       stage: 'Stage 1',
       hostChain: undefined,
       tvs: 16_203_000_000,
-      description: 'lorem '.repeat(30).trim(),
+      description: Array(12).fill(sentence).join(' '),
     })
 
     expect(description).toEqual(
-      `Arbitrum One is a Stage 1 Optimistic Rollup securing $16.20B. ${'lorem '.repeat(16).trim()}…`,
+      `Stage 1 · $16B TVS. ${Array(10).fill(sentence).join(' ')}`,
     )
-    expect(description.length).toBeLessThanOrEqual(160)
-  })
-
-  // Same budget as above, but the 16th word ends with a comma: the cut must
-  // drop it so the text reads "ipsu…" rather than "ipsu,…".
-  it('drops trailing punctuation before the ellipsis', () => {
-    const description = getScalingMetadataDescription({
-      name: 'Arbitrum One',
-      category: 'Optimistic Rollup',
-      stage: 'Stage 1',
-      hostChain: undefined,
-      tvs: 16_203_000_000,
-      description: `${'lorem '.repeat(15)}ipsu, ${'lorem '.repeat(14).trim()}`,
-    })
-
-    expect(description).toEqual(
-      `Arbitrum One is a Stage 1 Optimistic Rollup securing $16.20B. ${'lorem '.repeat(15)}ipsu…`,
-    )
+    expect(description.length).toBeLessThanOrEqual(300)
   })
 })
 
 describe(getDaMetadataDescription.name, () => {
-  it('leads with the layer type, TVS and economic security', () => {
+  it('leads with TVS and economic security', () => {
     const description = getDaMetadataDescription({
-      name: 'Celestia',
-      type: 'Public Blockchain',
       tvs: 1_500_000_000,
-      economicSecurity: 2_250_000_000,
-      description: 'Celestia is a modular DA network.',
+      economicSecurity: 2_300_000_000,
+      description: 'Celestia is a modular data availability network.',
     })
 
     expect(description).toEqual(
-      'Celestia is a DA layer (Public Blockchain) securing $1.50B, with $2.25B in economic security. Celestia is a modular DA network.',
+      'DA layer · $1.5B TVS · $2.3B economic security. Celestia is a modular data availability network.',
     )
   })
 
   it('omits economic security when the layer has none', () => {
     const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      type: 'DA Service',
       tvs: 1_500_000_000,
       economicSecurity: undefined,
-      description: 'EigenDA is a DA service.',
+      description: 'EigenDA is a data availability service.',
     })
 
     expect(description).toEqual(
-      'EigenDA is a DA layer (DA Service) securing $1.50B. EigenDA is a DA service.',
+      'DA layer · $1.5B TVS. EigenDA is a data availability service.',
     )
   })
 })
@@ -138,72 +125,67 @@ describe(getDaMetadataDescription.name, () => {
 describe(getZkCatalogMetadataDescription.name, () => {
   it('leads with the creator and the TVS the proof system secures', () => {
     const description = getZkCatalogMetadataDescription({
-      name: 'SP1',
       creator: 'Succinct',
       tvs: 2_100_000_000,
       description: 'SP1 is a zkVM.',
     })
 
     expect(description).toEqual(
-      'SP1 is a ZK proof system by Succinct securing $2.10B. SP1 is a zkVM.',
+      'ZK proof system by Succinct · $2.1B TVS. SP1 is a zkVM.',
     )
   })
 
   it('omits the creator when unknown', () => {
     const description = getZkCatalogMetadataDescription({
-      name: 'Boojum',
       creator: undefined,
       tvs: 5_000_000,
       description: 'Boojum is a STARK prover.',
     })
 
     expect(description).toEqual(
-      'Boojum is a ZK proof system securing $5.00M. Boojum is a STARK prover.',
+      'ZK proof system · $5M TVS. Boojum is a STARK prover.',
     )
   })
 })
 
 describe(getInteropMetadataDescription.name, () => {
-  it('leads with the protocol type, bridge types and 24h volume', () => {
+  it('leads with the protocol type', () => {
     const description = getInteropMetadataDescription({
-      name: 'Across',
       type: 'intent',
-      bridgeTypeLabels: ['Non-minting', 'Burn & Mint'],
-      last24hVolume: 42_000_000,
       description: 'Across is a crosschain intents protocol.',
     })
 
     expect(description).toEqual(
-      'Across is an intent bridge (Non-minting, Burn & Mint) with $42.00M volume in the last 24h. Across is a crosschain intents protocol.',
+      'Intent bridge. Across is a crosschain intents protocol.',
     )
   })
 
-  it('states only the type when there is no volume, bridge type or description', () => {
+  it('states only the type when there is no description', () => {
     const description = getInteropMetadataDescription({
-      name: 'Hop',
       type: 'multichain',
-      bridgeTypeLabels: [],
-      last24hVolume: 0,
       description: undefined,
     })
 
-    expect(description).toEqual('Hop is a multichain interop protocol.')
+    expect(description).toEqual('Multichain interop protocol.')
   })
 })
 
 describe(getProjectMetadataDescription.name, () => {
-  // The lead is 44 chars plus a space, leaving 115 of the 160-char budget:
-  // nineteen 5-letter words (113 chars) and the ellipsis fit, a twentieth
-  // would not.
-  it('caps the generic description used by pages without key facts', () => {
-    const description = getProjectMetadataDescription({
-      name: 'Aztec',
-      display: { description: 'lorem '.repeat(40).trim() },
-    })
-
-    expect(description).toEqual(
-      `Explore Aztec metrics and in-depth research. ${'lorem '.repeat(19).trim()}…`,
+  it('passes a short description through unchanged', () => {
+    expect(getProjectMetadataDescription('Aztec is a privacy chain.')).toEqual(
+      'Aztec is a privacy chain.',
     )
-    expect(description.length).toBeLessThanOrEqual(160)
+  })
+
+  // A single 479-char sentence has no sentence boundary to stop at, so the
+  // cut falls back to whole words: fifty 5-letter words take 299 chars and
+  // the ellipsis fills the 300-char budget.
+  it('cuts one overlong sentence on a word boundary with an ellipsis', () => {
+    const description = getProjectMetadataDescription(
+      'lorem '.repeat(80).trim(),
+    )
+
+    expect(description).toEqual(`${'lorem '.repeat(50).trim()}…`)
+    expect(description.length).toBeLessThanOrEqual(300)
   })
 })

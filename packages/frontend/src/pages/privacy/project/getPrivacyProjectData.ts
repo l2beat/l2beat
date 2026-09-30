@@ -55,7 +55,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       manifest,
       metadata: getMetadata(manifest, {
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
-        description: getProjectMetadataDescription(details),
+        description: getProjectMetadataDescription(details.display.description),
         url,
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,

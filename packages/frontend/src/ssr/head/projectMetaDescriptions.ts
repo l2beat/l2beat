@@ -3,108 +3,115 @@ import type {
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
-import { formatCurrency } from '@l2beat/shared-pure'
 import { isAssignedStage } from '~/utils/project/isAssignedStage'
 
 export function getScalingMetadataDescription(project: {
-  name: string
   category: ProjectScalingCategory | undefined
   stage: ProjectScalingStage['stage']
   hostChain: string | undefined
   tvs: number | undefined
   description: string
 }) {
-  const category =
-    project.category === undefined || project.category === 'Other'
-      ? 'scaling project'
-      : project.category
   const stage = isAssignedStage(project.stage) ? project.stage : undefined
-  const kind = withArticle([stage, category].filter(Boolean).join(' '))
-  const host = project.hostChain ? ` on ${project.hostChain}` : ''
-  const tvs = optionalUsd(' securing ', project.tvs)
-  return joinWithinLimit(
-    `${project.name} is ${kind}${host}${tvs}.`,
+  const category = project.category === 'Other' ? undefined : project.category
+  return leadWithFacts(
+    [
+      joinWords(stage, unlessMentioned(category, project.description)),
+      project.hostChain && `built on ${project.hostChain}`,
+      usd(project.tvs, 'TVS'),
+    ],
     project.description,
   )
 }
 
 export function getDaMetadataDescription(project: {
-  name: string
-  type: string
   tvs: number
   economicSecurity: number | undefined
   description: string
 }) {
-  const tvs = optionalUsd(' securing ', project.tvs)
-  const economicSecurity = optionalUsd(
-    ', with ',
-    project.economicSecurity,
-    ' in economic security',
-  )
-  return joinWithinLimit(
-    `${project.name} is a DA layer (${project.type})${tvs}${economicSecurity}.`,
+  return leadWithFacts(
+    [
+      unlessMentioned('DA layer', project.description),
+      usd(project.tvs, 'TVS'),
+      usd(project.economicSecurity, 'economic security'),
+    ],
     project.description,
   )
 }
 
 export function getZkCatalogMetadataDescription(project: {
-  name: string
   creator: string | undefined
   tvs: number
   description: string
 }) {
-  const creator = project.creator ? ` by ${project.creator}` : ''
-  const tvs = optionalUsd(' securing ', project.tvs)
-  return joinWithinLimit(
-    `${project.name} is a ZK proof system${creator}${tvs}.`,
+  return leadWithFacts(
+    [
+      joinWords(
+        unlessMentioned('ZK proof system', project.description),
+        project.creator && `by ${project.creator}`,
+      ),
+      usd(project.tvs, 'TVS'),
+    ],
     project.description,
   )
 }
 
 export function getInteropMetadataDescription(project: {
-  name: string
   type: InteropType
-  bridgeTypeLabels: string[]
-  last24hVolume: number | undefined
   description: string | undefined
 }) {
-  const bridgeTypes =
-    project.bridgeTypeLabels.length > 0
-      ? ` (${project.bridgeTypeLabels.join(', ')})`
-      : ''
-  const volume = optionalUsd(
-    ' with ',
-    project.last24hVolume,
-    ' volume in the last 24h',
-  )
-  return joinWithinLimit(
-    `${project.name} is ${withArticle(INTEROP_TYPE_NOUN[project.type])}${bridgeTypes}${volume}.`,
+  return leadWithFacts(
+    [unlessMentioned(INTEROP_TYPE_NOUN[project.type], project.description)],
     project.description,
   )
 }
 
 /** For project pages that have no key facts to lead with. */
-export function getProjectMetadataDescription(project: {
-  name: string
-  display: { description: string }
-}) {
-  return joinWithinLimit(
-    `Explore ${project.name} metrics and in-depth research.`,
-    project.display.description,
-  )
+export function getProjectMetadataDescription(description: string) {
+  return leadWithFacts([], description)
 }
 
-// Search engines cut snippets at roughly 155-160 chars mid-word; ending on our
-// own word boundary keeps the key facts intact and the cut readable.
-const MAX_LENGTH = 160
+type Fact = string | undefined | false
+
+// A fragment, not an "X is a…" sentence: the hand-written description already
+// opens that way, so a sentence lead would say the same thing twice.
+function leadWithFacts(facts: Fact[], description: string | undefined) {
+  const stated = facts.filter(Boolean)
+  const lead =
+    stated.length > 0 ? `${capitalize(stated.join(' · '))}.` : undefined
+  return [lead, fitWholeSentences(description, lead)].filter(Boolean).join(' ')
+}
+
+// Search engines have no length limit and pick the part matching the query,
+// so the cap only guards against the few essay-length descriptions.
+const MAX_LENGTH = 300
 const ELLIPSIS = '…'
 
-function joinWithinLimit(facts: string, description: string | undefined) {
-  const full = description ? `${facts} ${description}` : facts
-  if (full.length <= MAX_LENGTH) {
-    return full
+function fitWholeSentences(
+  description: string | undefined,
+  lead: string | undefined,
+) {
+  if (!description) {
+    return undefined
   }
-  const fitting = full.slice(0, MAX_LENGTH - ELLIPSIS.length + 1)
+  const budget = MAX_LENGTH - (lead ? lead.length + 1 : 0)
+  if (description.length <= budget) {
+    return description
+  }
+  const sentences = description.split(/(?<=[.!?])\s+/)
+  let fitting = ''
+  for (const sentence of sentences) {
+    const next = fitting ? `${fitting} ${sentence}` : sentence
+    if (next.length > budget) {
+      break
+    }
+    fitting = next
+  }
+  return fitting || cutOnWordBoundary(description, budget)
+}
+
+function cutOnWordBoundary(text: string, budget: number) {
+  const fitting = text.slice(0, budget - ELLIPSIS.length + 1)
   const wholeWords = fitting.slice(0, fitting.lastIndexOf(' '))
   return wholeWords.replace(/[\s,;:.]+$/, '') + ELLIPSIS
 }
@@ -116,18 +123,31 @@ const INTEROP_TYPE_NOUN: Record<InteropType, string> = {
   other: 'interop protocol',
 }
 
-function withArticle(noun: string) {
-  return /^[aeiou]/i.test(noun) ? `an ${noun}` : `a ${noun}`
+function unlessMentioned(fact: string | undefined, description = '') {
+  const mentioned =
+    fact !== undefined && description.toLowerCase().includes(fact.toLowerCase())
+  return mentioned ? undefined : fact
+}
+
+function joinWords(...words: Fact[]) {
+  return words.filter(Boolean).join(' ') || undefined
+}
+
+function capitalize(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
 // A zero amount (upcoming or archived projects) says nothing useful, so it is
 // left out like a missing one.
-function optionalUsd(prefix: string, value: number | undefined, suffix = '') {
-  return value ? `${prefix}${formatCompactUsd(value)}${suffix}` : ''
+function usd(value: number | undefined, label: string) {
+  return value ? `${COMPACT_USD.format(value)} ${label}` : undefined
 }
 
-// The site's hair space between number and unit renders inconsistently in
-// search snippets.
-function formatCompactUsd(value: number) {
-  return formatCurrency(value, 'usd').replace(/\s/g, '')
-}
+// Two significant digits: a search index holds the snippet for days or weeks,
+// and "$16B" stays true far longer than "$16.20B".
+const COMPACT_USD = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  notation: 'compact',
+  maximumSignificantDigits: 2,
+})

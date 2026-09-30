@@ -10,7 +10,6 @@ import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
@@ -96,12 +95,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
       name: project.name,
       slug: project.slug,
       metaDescription: getInteropMetadataDescription({
-        name: project.name,
         type: project.interopConfig.type,
-        bridgeTypeLabels: (protocolData.entry?.bridgeTypes ?? []).map(
-          (type) => TRANSFER_TYPE_DISPLAY[type].label,
-        ),
-        last24hVolume: protocolData.entry?.volume,
         description: project.interopConfig.description,
       }),
     },
