@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { cn } from '~/utils/cn'
 import { Logo } from '../Logo'
 import { readJsonLd, readOpenGraph } from './headTags'
@@ -12,8 +13,10 @@ import { getSizeMetrics, type SizeMetrics } from './sizeMetrics'
 
 export function L2BeatDevTools() {
   const isClient = useIsClient()
-  const [isOpen, setIsOpen] = useState(false)
-  const [tab, setTab] = useState<Tab>('ssr-data')
+  // Persisted, because every navigation is a full page load: checking the
+  // same tab across several pages would otherwise mean reopening it each time.
+  const [isOpen, setIsOpen] = useLocalStorage('dev-tools-is-open', false)
+  const [tab, setTab] = useLocalStorage('dev-tools-tab', 'ssr-data')
   const [copied, setCopied] = useState(false)
   const [sizeMetrics, setSizeMetrics] = useState<SizeMetrics | undefined>(
     undefined,
@@ -57,7 +60,7 @@ export function L2BeatDevTools() {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('load', updateMetrics)
     }
-  }, [isOpen])
+  }, [isOpen, setIsOpen])
 
   const headTags = useMemo(
     () =>
@@ -196,7 +199,7 @@ export function L2BeatDevTools() {
   )
 }
 
-type Tab = (typeof TABS)[number]['id']
+export type DevToolsTab = (typeof TABS)[number]['id']
 
 const TABS = [
   { id: 'ssr-data', label: 'SSR data' },
