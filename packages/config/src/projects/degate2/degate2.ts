@@ -74,7 +74,7 @@ export const degate2: ScalingProject = {
     slug: 'degate2',
     headerWarning: 'This project is in shutdown mode and no longer active.',
     description:
-      'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
+      'DeGate V1 Legacy is a shut down deployment of DeGate, an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange'],
     stacks: ['Loopring'],
     links: {

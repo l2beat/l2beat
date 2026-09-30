@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
+import { LIST_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
 import {
   createMarkdownAlternatesRouter,
   MARKDOWN_ALTERNATES,
@@ -7,7 +8,8 @@ import {
 } from './MarkdownAlternatesRouter'
 
 // Method: serve an alternate with injected sections and read it back over
-// HTTP; the real alternates are only checked for having a page counterpart.
+// HTTP; the real alternates are only checked against the list pages
+// registered as having a markdown version, which is what gets advertised.
 describe(createMarkdownAlternatesRouter.name, () => {
   const ALTERNATE: MarkdownAlternate = {
     path: '/layer2s/summary.md',
@@ -37,7 +39,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
-      'text/markdown; charset=utf-8',
+      'text/plain; charset=utf-8',
     )
     expect(response.headers.get('link')).toEqual(
       '<https://l2beat.com/llms.txt>; rel="describedby"',
@@ -56,9 +58,10 @@ describe(createMarkdownAlternatesRouter.name, () => {
     )
   })
 
-  it('places every alternate at its page URL plus .md', () => {
-    for (const alternate of MARKDOWN_ALTERNATES) {
-      expect(alternate.path).toMatchRegex(/^\/[a-z0-9/-]+\.md$/)
-    }
+  it('serves exactly the list pages registered as having markdown', () => {
+    const served: string[] = MARKDOWN_ALTERNATES.map((a) => a.path)
+    const registered = LIST_PAGES_WITH_MARKDOWN.map((page) => `${page}.md`)
+
+    expect(served.toSorted()).toEqual(registered.toSorted())
   })
 })

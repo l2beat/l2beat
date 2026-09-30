@@ -31,7 +31,7 @@ export const chainlink: BaseProject = {
   },
   display: {
     description:
-      'The Chainlink price feeds that onchain protocols read for asset prices. Each feed is a proxy in front of an OCR2 aggregator whose reported price is the median of reports signed by a quorum of oracle nodes, all administered by a Chainlink multisig that can swap the aggregator behind any feed or reconfigure the node set and the quorum size.',
+      'Chainlink price feeds provide the asset prices that onchain protocols read. Each feed is a proxy in front of an OCR2 aggregator whose reported price is the median of reports signed by a quorum of oracle nodes, all administered by a Chainlink multisig that can swap the aggregator behind any feed or reconfigure the node set and the quorum size.',
     detailedDescription: readProjectMarkdown(
       'chainlink',
       'detailedDescription',

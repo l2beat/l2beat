@@ -44,6 +44,7 @@ jobs:
       - name: Set up Docker.io mirror
         uses: docker/setup-buildx-action@v4
         with:
+          cleanup: false
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]

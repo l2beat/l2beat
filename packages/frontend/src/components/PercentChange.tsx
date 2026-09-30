@@ -1,7 +1,7 @@
 import { EM_DASH } from '~/consts/characters'
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
 import {
-  COMPARISON_PERIOD_LABELS,
+  COMPARED_TO_PERIOD,
   formatPercent,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
@@ -18,7 +18,7 @@ export function PercentageChangeTooltipContent({
 }: {
   period: PercentageChangePeriod
 }) {
-  return <>Percentage change compared to {COMPARISON_PERIOD_LABELS[period]}.</>
+  return <>Percentage change compared to {COMPARED_TO_PERIOD[period]}.</>
 }
 
 interface Props {

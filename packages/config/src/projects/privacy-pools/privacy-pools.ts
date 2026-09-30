@@ -13,7 +13,6 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getOssification } from '../../ossification/getOssification'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
@@ -71,7 +70,7 @@ export const privacyPools: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: getOssification('privacy-pools'),
+  ossification: discovery.getOssification(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

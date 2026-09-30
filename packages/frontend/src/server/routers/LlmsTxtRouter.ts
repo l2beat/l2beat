@@ -1,5 +1,6 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
   type MarkdownAlternatePath,
@@ -22,7 +23,7 @@ export function createLlmsTxtRouter() {
   ])
 
   router.get('/llms.txt', (_req, res) => {
-    res.header('Content-Type', 'text/markdown; charset=utf-8').send(body)
+    res.header('Content-Type', MARKDOWN_CONTENT_TYPE).send(body)
   })
 
   return router
@@ -314,10 +315,16 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
     {
+      name: 'Privacy protocol',
+      path: '/privacy/projects/{slug}.md',
+      description:
+        'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
+    },
+    {
       name: 'Interop protocol',
       path: '/interop/protocols/{slug}.md',
       description:
-        'One bridge or cross-chain protocol as markdown: last 24h volume, transfer count, time and size, top tokens, chains and routes, permissions and contracts. Protocols that are also scaling projects redirect to the scaling project markdown.',
+        'One bridge as markdown: last 24h volume, top tokens, chains and routes.',
     },
   ],
 }
