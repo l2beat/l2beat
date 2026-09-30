@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf31b6bca84b139a1d2d374f7929937640c6f85d4
+Generated with discovered.json: 0xe9387a3ce38f6741e2a2525e72e80d7cab44cf66
 
-# Diff at Wed, 30 Sep 2026 07:47:45 GMT:
+# Diff at Wed, 30 Sep 2026 10:32:35 GMT:
 
 - id: 7f6faff1
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@9c43493732e65a2ed2bef6bc68b94a253c304480 block: 1790671700
+- comparing to: main@fd631e84d28f970cf24b92bfa73a6d23f516b81d block: 1790671700
 - current timestamp: 1790671700
 
 ## Description
@@ -18,8 +18,38 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1790671700 (main branch discovery), not current.
 
 ```diff
-    contract Safe (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe] {
+    contract Robinhood Multisig 3 (eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac) [GnosisSafe] {
     +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 3"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 4 (eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 4"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 1 (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 1"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 2 (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 2"
       receivedPermissions.0:
 +        {"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
       receivedPermissions.2:
@@ -86,8 +116,20 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SafeL2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe] {
+    contract Robinhood L2 Multisig 3 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
     +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 3"
+    }
+```
+
+```diff
+    contract Robinhood L2 Multisig 2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 2"
       receivedPermissions.0:
 +        {"permission":"interact","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","description":"Can add or remove transaction filterers and change ArbOS configuration on the L2.","role":".chainOwners","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
       receivedPermissions.2:
@@ -112,6 +154,15 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Robinhood L2 Multisig 4 (robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 4"
+    }
+```
+
+```diff
     contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [orbitstack/layer2/ResourceConstraintManager] {
     +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
       receivedPermissions.0.description:
@@ -130,8 +181,11 @@ discovery. Values are for block 1790671700 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    contract Robinhood L2 Multisig 1 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
     +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 1"
       receivedPermissions.0.description:
 -        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
 +        "Can add or remove transaction filterers and change ArbOS configuration on the L2."

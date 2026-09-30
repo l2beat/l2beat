@@ -14,7 +14,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Robinhood Multisig 3",
       "address": "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -129,7 +129,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Robinhood Multisig 4",
       "address": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -612,7 +612,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Robinhood Multisig 1",
       "address": "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -816,7 +816,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Safe",
+      "name": "Robinhood Multisig 2",
       "address": "eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1325,7 +1325,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "SafeL2",
+      "name": "Robinhood L2 Multisig 3",
       "address": "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1369,7 +1369,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SafeL2",
+      "name": "Robinhood L2 Multisig 2",
       "address": "robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1486,7 +1486,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SafeL2",
+      "name": "Robinhood L2 Multisig 4",
       "address": "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1592,7 +1592,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SafeL2",
+      "name": "Robinhood L2 Multisig 1",
       "address": "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC",
       "type": "Contract",
       "template": "GnosisSafe",
