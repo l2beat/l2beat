@@ -136,7 +136,13 @@ function Flower({ delay }: { delay: number }) {
               fill="currentColor"
             />
           ))}
-          <circle cx="17" cy="9" r="2.05" className="fill-garden-sun" />
+          {/* The dark-mode green is as bright as the sun yellow, so a dark ring carries the contrast there. */}
+          <circle
+            cx="17"
+            cy="9"
+            r="2.05"
+            className="fill-garden-bloom stroke-garden-bloom-ring [paint-order:stroke] [stroke-width:0.9px]"
+          />
         </g>
       </g>
     </g>

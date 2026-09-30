@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x0484c4934eeb6e5b3019470449f801047d9dbcd9
+Generated with discovered.json: 0x1ef9b2122a5a2c3d91ce2e1b767acc45c53567d3
 
 # Diff at Wed, 12 Aug 2026 09:20:27 GMT:
 
@@ -7,7 +7,7 @@ Generated with discovered.json: 0x0484c4934eeb6e5b3019470449f801047d9dbcd9
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of Polymarket contracts on Polygon.
 
 ## Initial discovery
 

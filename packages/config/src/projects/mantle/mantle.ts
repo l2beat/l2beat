@@ -10,11 +10,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
+const genesisTimestamp = UnixTime(1688314886)
 
 export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   discovery,
-  genesisTimestamp: UnixTime(1688314886),
+  genesisTimestamp,
   display: {
     name: 'Mantle',
     aliases: ['BitDAO'],
@@ -42,7 +43,7 @@ export const mantle: ScalingProject = opStackL2({
     name: 'mantle',
     chainId: 5000,
     explorerUrl: 'https://explorer.mantle.xyz',
-    sinceTimestamp: UnixTime(1688314886),
+    sinceTimestamp: genesisTimestamp,
     gasTokens: ['MNT'],
     multicallContracts: [
       {
@@ -59,12 +60,14 @@ export const mantle: ScalingProject = opStackL2({
         url: 'https://rpc.mantle.xyz',
         callsPerMinute: 300,
       },
+      { type: 'etherscan', chainId: 5000 },
       {
         type: 'blockscout',
         url: 'https://explorer.mantle.xyz/api',
       },
     ],
   },
+  ossification: discovery.getOssification(genesisTimestamp),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],

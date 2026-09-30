@@ -2,6 +2,11 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { functionalUpdate, getCoreRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
+import {
+  InfiniteScrollTrigger,
+  LoadingMoreText,
+  useInfiniteScrollTrigger,
+} from '~/components/InfiniteScroll'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type {
@@ -11,11 +16,6 @@ import type {
 import { useTRPC } from '~/trpc/React'
 import type { InteropSelection } from '../../utils/types'
 import { getTopTokensColumns, type TokenRow } from './columns'
-import {
-  InfiniteScrollTrigger,
-  LoadingMoreText,
-  useInfiniteScrollTrigger,
-} from './infiniteScroll'
 
 const DEFAULT_SORTING: InteropTopItemsSorting = [
   {

@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xcef9146772c90e04c0c65b42fc7328df051abe68
+Generated with discovered.json: 0xee46ac5e8fdba59ba75e21ace048355280569400
 
 # Diff at Fri, 12 Jun 2026 10:18:50 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcef9146772c90e04c0c65b42fc7328df051abe68
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Replace controlsMajorityOfUpgradePermissions with eoaWithUpgradePermissions.
 
 ## Config/verification related changes
 

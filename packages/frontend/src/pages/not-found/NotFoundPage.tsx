@@ -2,11 +2,8 @@ import { Button } from '~/components/core/Button'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PlainLink } from '~/components/PlainLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { env } from '~/env'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-
-const HOME_LINK = env.CLIENT_SIDE_HOME_PAGE ? '/' : '/layer2s/summary'
 
 export function NotFoundPage(props: AppLayoutProps) {
   return (
@@ -22,7 +19,7 @@ export function NotFoundPage(props: AppLayoutProps) {
             </p>
           </div>
           <Button variant="fill" asChild>
-            <PlainLink href={HOME_LINK}>Go to main page</PlainLink>
+            <PlainLink href="/">Go to main page</PlainLink>
           </Button>
         </PrimaryCard>
       </SideNavLayout>

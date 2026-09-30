@@ -6,10 +6,7 @@ import type {
 import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import {
-  createInteropProjectResolver,
-  type InteropProjectResolver,
-} from '../utils/createInteropProjectResolver'
+import type { InteropProjectResolver } from '../utils/createInteropProjectResolver'
 import {
   deploymentTransferKey,
   type Endpoint,
@@ -20,7 +17,7 @@ import {
   buildTokenRelationsGraph,
   type TokenRelationsGraphSource,
 } from './buildTokenRelationsGraph'
-import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+import type { InteropTokenOnchainDeployment } from './toInteropTokenDeployments'
 
 export interface InteropTokenRelations {
   /** Relations with both endpoints among the token's deployments. */
@@ -67,10 +64,9 @@ export function getInteropTokenRelationsGraph(
   deployments: InteropTokenOnchainDeployment[],
   relations: InteropTokenRelations,
   projectsWithChains: Project<'chainConfig'>[],
-  interopProjects: Project<'interopConfig'>[],
+  resolveProjects: InteropProjectResolver,
 ): InteropTokenRelationsGraph {
   const graph = buildTokenRelationsGraph(deployments, relations.routes)
-  const resolveProjects = createInteropProjectResolver(interopProjects)
 
   const resolveBridges = (sources: TokenRelationsGraphSource[]) =>
     toInteropProjectIconListItems(

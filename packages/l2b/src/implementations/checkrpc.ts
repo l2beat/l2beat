@@ -1,6 +1,6 @@
 import type { Logger, LogLevel } from '@l2beat/backend-tools'
 import chalk from 'chalk'
-import { getPlainLogger } from './common/getPlainLogger'
+import type { CliLogger } from './common/CliLogger'
 
 enum FailureReason {
   Timeout = 'Response took too long',
@@ -258,6 +258,7 @@ async function runBatch(
   callRate: number,
   blockNumber: number,
   config: BatchConfiguration,
+  cli: CliLogger,
   logger: Logger,
 ): Promise<{
   successes: number
@@ -275,7 +276,7 @@ async function runBatch(
   let totalCalls = 0
   let aborted = false
 
-  const logProgress = () => {
+  const formatProgress = () => {
     const totalFailures =
       failures[FailureReason.Timeout] +
       failures[FailureReason.Status429] +
@@ -284,19 +285,16 @@ async function runBatch(
     const failureRate = totalFailures / (totalCalls || 1)
     const successRate = successes / totalCalls
 
-    process.stdout.write(
-      `\r  ${chalk.bold(callRate.toString())} calls/min | ` +
-        `${chalk.green(
-          (successRate * 100).toFixed(1).padStart(5),
-        )}% success | ` +
-        `${chalk.red((failureRate * 100).toFixed(1).padStart(5))}% fail | ` +
-        `${totalCalls.toString().padStart(4)}/${callRate
-          .toString()
-          .padStart(4)} calls`,
+    return (
+      `  ${chalk.bold(callRate.toString())} calls/min | ` +
+      `${chalk.green((successRate * 100).toFixed(1).padStart(5))}% success | ` +
+      `${chalk.red((failureRate * 100).toFixed(1).padStart(5))}% fail | ` +
+      `${totalCalls.toString().padStart(4)}/${callRate.toString().padStart(4)} calls`
     )
   }
 
-  process.stdout.write('\n  ')
+  cli.log('')
+  const progress = cli.status()
 
   const promises = Array.from({ length: callRate }, (_, i) => {
     return new Promise<void>((resolve) => {
@@ -321,7 +319,10 @@ async function runBatch(
             failures[result]++
           }
 
-          logProgress()
+          if (aborted) {
+            return resolve()
+          }
+          progress.update(formatProgress())
 
           const totalFailures =
             failures[FailureReason.Timeout] +
@@ -335,10 +336,10 @@ async function runBatch(
             failureRate >= config.maxFailureRatio
           ) {
             aborted = true
-            process.stdout.write(
-              `\r  ${chalk.red('ABORTED')} after ${totalCalls} calls (${Math.floor(
+            progress.done(
+              `  ${chalk.red('ABORTED')} after ${totalCalls} calls (${Math.floor(
                 failureRate * 100,
-              )}% failures)\n`,
+              )}% failures)`,
             )
           }
 
@@ -352,8 +353,7 @@ async function runBatch(
   await Promise.all(promises)
 
   if (!aborted) {
-    logProgress()
-    process.stdout.write('\n')
+    progress.done(formatProgress())
   }
 
   return { successes, failures, aborted }
@@ -374,8 +374,9 @@ export interface RateLimitResults {
 
 export async function findRateLimit(
   config: Configuration,
+  cli: CliLogger,
 ): Promise<RateLimitResults> {
-  const logger = getPlainLogger()
+  const logger = cli.toLogger(config.logLevel)
 
   logger.info(chalk.bold('RPC Rate Limit Checker\n'))
 
@@ -400,6 +401,7 @@ export async function findRateLimit(
     upperRate,
     blockNumber,
     config,
+    cli,
     logger,
   )
   if (!aborted && isBatchSuccessful(successes, upperRate, config)) {
@@ -419,6 +421,7 @@ export async function findRateLimit(
     lowerRate,
     blockNumber,
     config,
+    cli,
     logger,
   ))
   if (aborted || !isBatchSuccessful(successes, lowerRate, config)) {
@@ -434,6 +437,7 @@ export async function findRateLimit(
       testRate,
       blockNumber,
       config,
+      cli,
       logger,
     ))
     blockNumber += testRate

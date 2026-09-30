@@ -978,6 +978,9 @@ importers:
       '@types/readline-sync':
         specifier: ^1.4.8
         version: 1.4.8
+      '@xterm/headless':
+        specifier: ^6.0.0
+        version: 6.0.0
       earl:
         specifier: ^1.1.0
         version: 1.3.0
@@ -4815,6 +4818,9 @@ packages:
   '@waku/utils@0.0.27':
     resolution: {integrity: sha512-kIS/EN9Xoc5ik2c4MweqcvV3NEcl+CDmg09jpVUVG7fB2/yxVRakBlROytGn+vALR4pcHom1tW2dW1vtofCfFw==}
     engines: {node: '>=22'}
+
+  '@xterm/headless@6.0.0':
+    resolution: {integrity: sha512-5Yj1QINYCyzrZtf8OFIHi47iQtI+0qYFPHmouEfG8dHNxbZ9Tb9YGSuLcsEwj9Z+OL75GJqPyJbyoFer80a2Hw==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -12476,6 +12482,8 @@ snapshots:
       uint8arrays: 5.1.1
     transitivePeerDependencies:
       - supports-color
+
+  '@xterm/headless@6.0.0': {}
 
   abbrev@1.1.1:
     optional: true

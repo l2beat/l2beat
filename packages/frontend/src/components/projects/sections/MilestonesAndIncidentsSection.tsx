@@ -101,7 +101,7 @@ function MilestonesBase(props: {
                 <div
                   className={cn(
                     'absolute top-3 left-[-1.445rem] h-full w-[1.7px] transition-opacity duration-300 dark:w-px',
-                    'bg-linear-to-b from-transparent to-gray-100 dark:to-zinc-900',
+                    'bg-linear-to-b from-transparent to-gray-100 dark:to-surface-primary',
                     props.isOpen === true && 'opacity-0',
                   )}
                 />

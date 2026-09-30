@@ -1,5 +1,6 @@
-import { readdirSync, statSync } from 'fs'
-import { basename, dirname } from 'path'
+import { assert } from '@l2beat/shared-pure'
+import { lstatSync, readdirSync, statSync } from 'fs'
+import { basename, dirname, join } from 'path'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
 // NTFS the path names are not case sensitive. So while you can have a file
@@ -17,10 +18,13 @@ export function fileExistsCaseSensitive(path: string): boolean {
 // Every project lookup lists the same large projects directory, which
 // dominated config loading. A directory's mtime changes whenever an entry is
 // added, removed or renamed, so a stat is enough to know the listing is fresh.
+// Coarse clocks can give a change right after the listing the same mtime, so
+// like git's racy timestamp rule, a recently changed directory is not cached.
 const directoryListings = new Map<
   string,
   { mtimeMs: number; names: Set<string> }
 >()
+const RACY_MTIME_WINDOW_MS = 2_000
 
 function listDirectory(directory: string): Set<string> {
   const { mtimeMs } = statSync(directory)
@@ -29,6 +33,31 @@ function listDirectory(directory: string): Set<string> {
     return cached.names
   }
   const names = new Set(readdirSync(directory))
-  directoryListings.set(directory, { mtimeMs, names })
+  if (Date.now() - mtimeMs >= RACY_MTIME_WINDOW_MS) {
+    directoryListings.set(directory, { mtimeMs, names })
+  }
   return names
+}
+
+// A directory's mtime only changes when its entries change, not when a file
+// inside it is edited, so every file has to be stat'ed. Contents are not hashed
+// because that means reading every file on each call, so a rewrite that keeps
+// both the size and the exact mtime goes unnoticed. That is accepted.
+// Symlinks are rejected because following them has too many edge cases.
+export function fingerprintDirectoryTree(root: string): string {
+  const files: string[] = []
+  const pending = [root]
+  for (let dir = pending.pop(); dir !== undefined; dir = pending.pop()) {
+    for (const name of listDirectory(dir)) {
+      const path = join(dir, name)
+      const stat = lstatSync(path)
+      assert(!stat.isSymbolicLink(), `Symlinks are not supported: ${path}`)
+      if (stat.isDirectory()) {
+        pending.push(path)
+      } else {
+        files.push(`${path}:${stat.mtimeMs}:${stat.size}`)
+      }
+    }
+  }
+  return files.join('\n')
 }

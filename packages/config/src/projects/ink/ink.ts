@@ -137,6 +137,7 @@ export const ink: ScalingProject = opStackL2({
       },
     ],
   },
+  ossification: discovery.getOssification(genesisTimestamp),
   milestones: [
     {
       title: 'Ink becomes Stage 1',

@@ -278,7 +278,7 @@ function APIChecker() {
       }
     }
     if (selectorsToFetch.length === 0) return
-    API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
+    void API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
       store.addSignatures(res),
     )
   }, [requestedSignatures, store.addSignatures])
@@ -295,7 +295,7 @@ function APIChecker() {
       const [left, right] = prefixed.split(':')
       const chainId = Number(left)
       const address = right as `0x${string}`
-      API.lookupAddress(chainId, address).then((res) => {
+      void API.lookupAddress(chainId, address).then((res) => {
         if (res.name) store.setName(chainId, address, res.name)
         if (res.alias) store.setAlias(chainId, address, res.alias)
         if (res.abi.length > 0) {
@@ -320,11 +320,13 @@ function APIChecker() {
         apiRequested.add(hash)
       }
     }
-    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then((res) => {
-      for (const { hash, preimage } of res) {
-        store.setPreimage(hash, preimage)
-      }
-    })
+    void API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
+      (res) => {
+        for (const { hash, preimage } of res) {
+          store.setPreimage(hash, preimage)
+        }
+      },
+    )
   }, [requestedPreimages, store.setPreimage])
 
   return null

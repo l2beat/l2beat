@@ -1,4 +1,4 @@
-import type { Node, State } from '../State'
+import type { Node, State, Tool } from '../State'
 import {
   getGraphProjection,
   hideItems,
@@ -38,6 +38,10 @@ export function setPreferences(
       ...preferences,
     },
   }
+}
+
+export function setTool(_state: State, tool: Tool): Partial<State> {
+  return { tool }
 }
 
 // One hiding mechanism, one full reset: showing hidden means showing every

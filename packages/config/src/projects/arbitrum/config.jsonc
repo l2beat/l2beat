@@ -50,6 +50,8 @@
     "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
     "arb1:0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
     "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias",
+    // same six signers and 4/6 threshold as eth "Arbitrum Multisig 1"
+    "arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b": "Arbitrum L2 Multisig 1",
     "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Bridge",
     "eth:0xcEe284F754E854890e311e3280b767F80797180d": "L1CustomGateway",
     "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": "L1WethGateway",
@@ -128,8 +130,32 @@
             "value": "arb1:0x0000000000000000000000000000000000000074"
           },
           "template": "orbitstack/ArbFilteredTransactionsManager"
+        },
+        // ArbOS chain owners enumerated by the ArbOwnerPublic precompile
+        // (0x..6b), seeding them as relatives. Chain owners can call every
+        // ArbOwner (0x..70) method, e.g. add chain owners or transaction
+        // filterers (which can fail force-included txs), so a new entry is a
+        // new authority path. The list omits this UpgradeExecutor although
+        // isChainOwner() is true for it (the enumeration has been out of sync
+        // since at least 2024), so it currently holds only the time-limited,
+        // single-purpose wrapper contracts. Hosted here for the same reason as
+        // transactionFilteringPrecompile.
+        "chainOwners": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b"
+          }
         }
       }
+    },
+    "arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": {
+      // Network fee account of Arbitrum One. Project override because tip
+      // collection is a per-chain ArbOS setting: it was enabled here in
+      // 2026-09 for the Priority Gas Auction ordering policy.
+      "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. It also receives the priority fees (tips) collected while ArbOS tip collection is enabled. They are withdrawable to a configurable set of recipients."
     },
     "arb1:0x0000000000000000000000000000000000000074": {
       // The precompile is a 0xfe stub once ArbOS 61 activates (no code before

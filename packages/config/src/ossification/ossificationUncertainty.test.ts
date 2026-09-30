@@ -3,7 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { loadOssificationInput, readPatch } from './loadOssification'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { readPatch } from './loadOssificationInput'
 import { getUncertainNewestChange } from './measureOssification'
 
 /** The newest change sets the project clock and with it the whole score. A
@@ -19,19 +20,25 @@ describe('ossification newest change', () => {
     for (const project of readdirSync(root)) {
       const projectPath = join(root, project)
       if (!existsSync(join(projectPath, 'discovered.json'))) continue
-      const input = loadOssificationInput(project, now)
+      const discovery = new ProjectDiscovery(project)
+      const input = discovery.getOssificationInput(now)
       if (input === undefined) continue
       const uncertain = getUncertainNewestChange(input)
       if (uncertain === undefined) continue
-      const patch = readPatch(join(projectPath, 'ossification.json'))
+      const acceptedIntervals = discovery.configReader
+        .readDiscoveryWithReferences(project)
+        .flatMap(
+          ({ name }) =>
+            readPatch(join(root, name, 'ossification.json')).acceptedIntervals,
+        )
       if (
         uncertain.updateId !== undefined &&
-        patch.acceptedIntervals.includes(uncertain.updateId)
+        acceptedIntervals.includes(uncertain.updateId)
       ) {
         continue
       }
       problems.push(
-        `${project}: the newest change (${uncertain.type}, update ${uncertain.updateId ?? 'unknown'}) is only known to lie between ${uncertain.earliest ?? 'unknown'} and ${uncertain.timestamp}. Add a reviewed event with the exact time, or list the update in acceptedIntervals.`,
+        `${project}: the newest change (${uncertain.type}, update ${uncertain.updateId ?? 'unknown'}) is only known to lie between ${uncertain.earliest ?? 'unknown'} and ${uncertain.timestamp}. Add a reviewed event with the exact time, or list the update in acceptedIntervals of the discovery whose diffHistory.md has it.`,
       )
     }
     expect(problems).toEqual([])

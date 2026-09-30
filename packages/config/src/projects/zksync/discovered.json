@@ -1114,9 +1114,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25595172 },
-  "permissionsConfigHash": "0x12f2f23203ef0f79a6f7cf788a694c8f703a3a7cb17cfc277916d13597c2ecea",
+  "permissionsConfigHash": "0x4e2a40c142dd08b05ac6ff2277f43f56fbb58c3657bbfb86de73edc6fdf6a8d3",
   "modelledAgainst": {
-    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
