@@ -1,16 +1,13 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { PercentChange } from '~/components/PercentChange'
-import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
-import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import {
   adjustTableValue,
   sortTableValues,
@@ -21,11 +18,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAdversaryRosetteCell } from '../../rosette/PrivacyAdversaryRosetteCell'
-import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
-import type {
-  PrivacySummaryOptionalColumn,
-  PrivacySummaryView,
-} from '../privacySummaryViews'
+import type { PrivacySummaryOptionalColumn } from '../privacyTypes'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -34,9 +27,6 @@ const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
 // biome-ignore lint/suspicious/noExplicitAny: column value types differ per column
 type PrivacyColumn = ColumnDef<PrivacySummaryEntry, any>
-
-/** The layouts rendered as a table; cards have their own component. */
-export type PrivacyTableView = Exclude<PrivacySummaryView, 'cards'>
 
 function MetricCell({ children }: { children: React.ReactNode }) {
   if (children === undefined || children === null) {
@@ -47,16 +37,10 @@ function MetricCell({ children }: { children: React.ReactNode }) {
 }
 
 const OPTIONAL_COLUMN_IDS: Record<PrivacySummaryOptionalColumn, string[]> = {
-  tvl: ['totalValueLockedUsd', 'totalValueLockedUsdChange'],
+  tvl: ['totalValueLockedUsd'],
   trustedSetup: ['trustedSetup'],
+  anonymitySet: ['anonymitySet'],
 }
-
-/** Left out of the half-width tables of the grid, which only fit the essentials. */
-const COMPACT_HIDDEN_COLUMN_IDS = [
-  'totalValueLockedUsdChange',
-  'totalDeposits',
-  'attributes',
-]
 
 const leadingColumns: PrivacyColumn[] = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
@@ -103,56 +87,18 @@ const leadingColumns: PrivacyColumn[] = [
 ].map((column) => column as PrivacyColumn)
 
 const metricColumns: PrivacyColumn[] = [
-  ...withChangeSort(
-    columnHelper,
-    columnHelper.accessor('totalValueLockedUsd', {
-      id: 'totalValueLockedUsd',
-      header: 'TVL',
-      cell: (ctx) => {
-        if (!ctx.row.original.hasTvl) {
-          return <NotApplicableBadge />
-        }
-
-        const value = ctx.getValue()
-        return (
-          <MetricCell>
-            {value === undefined ? undefined : (
-              <div className="flex items-center justify-end gap-2">
-                {formatCurrency(value, 'usd')}
-                {/* Only alongside the 7D% column; compact tables leave both out. */}
-                {ctx.table
-                  .getAllLeafColumns()
-                  .some((c) => c.id === 'totalValueLockedUsdChange') &&
-                  ctx.row.original.totalValueLockedChange7d !== undefined && (
-                    <PercentChange
-                      value={ctx.row.original.totalValueLockedChange7d}
-                      period="7D"
-                    />
-                  )}
-              </div>
-            )}
-          </MetricCell>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'Total USD value currently held across all tracked assets for the protocol.',
-      },
-    }),
-    (row) => ({
-      change: row.totalValueLockedChange7d,
-      period: '7D',
-    }),
-  ),
-  columnHelper.accessor('totalDeposits', {
-    header: 'Deposits',
+  columnHelper.accessor('totalValueLockedUsd', {
+    id: 'totalValueLockedUsd',
+    header: 'TVL',
     cell: (ctx) => {
+      if (!ctx.row.original.hasTvl) {
+        return <NotApplicableBadge />
+      }
+
       const value = ctx.getValue()
       return (
         <MetricCell>
-          {value === undefined ? undefined : formatInteger(value)}
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
         </MetricCell>
       )
     },
@@ -160,7 +106,7 @@ const metricColumns: PrivacyColumn[] = [
     meta: {
       align: 'right',
       tooltip:
-        'Total deposit count aggregated across all tracked tokens and buckets.',
+        'Total USD value currently held across all tracked assets for the protocol.',
     },
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
@@ -188,7 +134,7 @@ const metricColumns: PrivacyColumn[] = [
         : undefined,
     {
       id: 'anonymitySet',
-      header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,
+      header: 'Anon. set',
       cell: (ctx) => (
         <AnonymitySetCell
           anonymitySet={ctx.row.original.anonymitySet}
@@ -204,39 +150,6 @@ const metricColumns: PrivacyColumn[] = [
   ),
 ].map((column) => column as PrivacyColumn)
 
-const attributesColumn: PrivacyColumn = columnHelper.display({
-  id: 'attributes',
-  header: 'Attributes',
-  cell: (ctx) => {
-    const attributes = ctx.row.original.attributes
-
-    if (attributes.length === 0) {
-      return <NoDataBadge />
-    }
-
-    const half = Math.ceil(attributes.length / 2)
-    const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
-      (row) => row.length > 0,
-    )
-
-    return (
-      <div className="flex w-max flex-col gap-1">
-        {rows.map((row, index) => (
-          <div key={index} className="flex gap-1">
-            {row.map((attribute) => (
-              <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-            ))}
-          </div>
-        ))}
-      </div>
-    )
-  },
-  enableSorting: false,
-  meta: {
-    tooltip: 'Protocol attributes and capabilities.',
-  },
-})
-
 const privacyAccessor = (entry: PrivacySummaryEntry) =>
   getPrivacyAdversariesTableValue(entry.adversaries)
 
@@ -250,47 +163,10 @@ const privacySortingFn = (
     getPrivacyAdversariesTableValue(b.original.adversaries),
   )
 
-/** V3 and V4: one rosette over the adversaries and the protocol risks. */
-const getRosetteColumn = (compact: boolean): PrivacyColumn =>
-  columnHelper.accessor(privacyAccessor, {
-    // Also the label in the columns picker, which shows the id whenever the
-    // header is not a plain string.
-    id: 'privacy',
-    header: () =>
-      compact ? (
-        <>
-          Privacy
-          <br />& risks
-        </>
-      ) : (
-        <>
-          Privacy and
-          <br />
-          protocol risks
-        </>
-      ),
-    cell: (ctx) => (
-      <PrivacyRosetteCell
-        adversaries={ctx.row.original.adversaries}
-        trustedSetup={ctx.row.original.trustedSetup}
-        exitWindow={ctx.row.original.exitWindow}
-        reproducibility={ctx.row.original.reproducibility}
-        href={ctx.row.original.href}
-        isUnderReview={ctx.row.original.isUnderReview}
-      />
-    ),
-    sortDescFirst: true,
-    sortingFn: privacySortingFn,
-    meta: {
-      align: 'center',
-      tooltip: PRIVACY_ASSESSMENT.rosetteTooltip,
-    },
-  })
-
 /**
- * V1 and V2: the adversaries alone on the L2 risk rosette - five adversaries,
- * five slices. It still sorts by the score behind it; the count itself is in
- * the rosette's tooltip.
+ * The adversaries alone on the L2 risk rosette - five adversaries, five
+ * slices. It still sorts by the score behind it; the count itself is in the
+ * rosette's tooltip.
  */
 const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
   privacyAccessor,
@@ -300,9 +176,6 @@ const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
     cell: (ctx) => (
       <PrivacyAdversaryRosetteCell
         adversaries={ctx.row.original.adversaries}
-        trustedSetup={ctx.row.original.trustedSetup}
-        exitWindow={ctx.row.original.exitWindow}
-        reproducibility={ctx.row.original.reproducibility}
         href={ctx.row.original.href}
         isUnderReview={ctx.row.original.isUnderReview}
       />
@@ -316,7 +189,7 @@ const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
   },
 )
 
-/** V1 and V2: the protocol risks as they were on main, shaded as one group. */
+/** The protocol risks as they were on main, shaded as one group. */
 const protocolRiskColumns: PrivacyColumn = columnHelper.group({
   id: 'protocolRisks',
   // No group title: the shaded, rounded background already sets the three
@@ -375,61 +248,26 @@ const protocolRiskColumns: PrivacyColumn = columnHelper.group({
 })
 
 export function getPrivacySummaryColumns({
-  view,
   hiddenColumns,
-  compact,
 }: {
-  view: PrivacyTableView
   hiddenColumns: PrivacySummaryOptionalColumn[]
-  /** Leaves out the columns a half-width table has no room for. */
-  compact?: boolean
 }): PrivacyColumn[] {
-  const assessment: Record<
-    PrivacyTableView,
-    { afterName: PrivacyColumn[]; afterMetrics: PrivacyColumn[] }
-  > = {
-    grid: { afterName: [getRosetteColumn(!!compact)], afterMetrics: [] },
-    gridSplit: {
-      afterName: [adversaryRosetteColumn],
-      afterMetrics: [protocolRiskColumns],
-    },
-    rosette: { afterName: [getRosetteColumn(false)], afterMetrics: [] },
-    split: {
-      afterName: [adversaryRosetteColumn],
-      afterMetrics: [protocolRiskColumns],
-    },
-  }
-
   const hiddenIds = [
     ...hiddenColumns.flatMap((column) => OPTIONAL_COLUMN_IDS[column]),
-    ...(compact ? COMPACT_HIDDEN_COLUMN_IDS : []),
-    // One headline number per compact table: TVL where funds sit in the
-    // protocol, the 30-day volume where they only pass through.
-    ...(compact && !hiddenColumns.includes('tvl')
-      ? ['totalValueDeposited30dUsd']
-      : []),
+    // One headline number per table: TVL where funds sit in the protocol, the
+    // 30-day volume where they only pass through.
+    ...(hiddenColumns.includes('tvl') ? [] : ['totalValueDeposited30dUsd']),
   ]
 
   return withoutHiddenColumns(
     [
       ...leadingColumns,
-      ...assessment[view].afterName,
+      adversaryRosetteColumn,
       ...metricColumns,
-      ...assessment[view].afterMetrics,
-      attributesColumn,
+      protocolRiskColumns,
     ],
     hiddenIds,
   )
-    .map((column) => withoutMissingChangeSort(column, hiddenIds))
-    .map((column) => {
-      const header = compact ? COMPACT_HEADERS[getColumnId(column)] : undefined
-      return header ? { ...column, header } : column
-    })
-}
-
-/** Shorter headers where a half-width table would otherwise clip a column. */
-const COMPACT_HEADERS: Record<string, string> = {
-  anonymitySet: 'Anon. set',
 }
 
 /** Drops the hidden columns, including those inside a group. */
@@ -447,21 +285,6 @@ function withoutHiddenColumns(
           }
         : column,
     )
-}
-
-/**
- * A value column whose 7D% companion was left out becomes a plain column: its
- * header would otherwise look for the companion and fail.
- */
-function withoutMissingChangeSort(
-  column: PrivacyColumn,
-  hiddenIds: string[],
-): PrivacyColumn {
-  const changeSortColumnId = column.meta?.changeSortColumnId
-  if (!changeSortColumnId || !hiddenIds.includes(changeSortColumnId)) {
-    return column
-  }
-  return { ...column, meta: { ...column.meta, changeSortColumnId: undefined } }
 }
 
 function getColumnId(column: PrivacyColumn): string {

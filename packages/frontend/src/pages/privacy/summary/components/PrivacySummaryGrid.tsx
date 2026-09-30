@@ -2,79 +2,48 @@ import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { cn } from '~/utils/cn'
-import {
-  groupByPrivacyType,
-  type PrivacyTypeGroup,
-} from '../privacySummaryViews'
+import { groupByPrivacyType, type PrivacyTypeGroup } from '../privacyTypes'
 import { PrivacyBestPracticesBanner } from './PrivacyBestPracticesBanner'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
 /**
- * V1 and V3: every kind of privacy at once, as compact tables instead of tabs.
- * V1 puts link privacy across the top and the other two below it, with the
- * best practices banner under everything as on main. V3 is a 2x2 grid where,
- * with three kinds, the banner takes the fourth cell.
+ * Every kind of privacy at once, as compact tables instead of tabs: link
+ * privacy across the top, the other two side by side below it, and the best
+ * practices banner under everything as on main.
  */
 export function PrivacySummaryGrid({
   entries,
-  view,
   bestPracticesBannerImageUrl,
 }: {
   entries: PrivacySummaryEntry[]
-  /** `gridSplit` splits the protocol risks off into columns of their own. */
-  view: 'grid' | 'gridSplit'
   bestPracticesBannerImageUrl: string
 }) {
   const groups = groupByPrivacyType(entries)
-
-  if (view === 'gridSplit') {
-    const top = groups.filter((group) => group.field === 'linkage')
-    const bottom = groups.filter((group) => group.field !== 'linkage')
-    return (
-      <>
-        <div className="mt-4 flex flex-col gap-4">
-          {top.map((group) => (
-            <PrivacyTypeCard key={group.field} group={group} view={view} />
-          ))}
-          {/* No height cap: the row grows to the longer table and the card
-              beside it stretches to match. */}
-          <PrivacyTypeCardRow>
-            {bottom.map((group) => (
-              <PrivacyTypeCard
-                key={group.field}
-                group={group}
-                view={view}
-                className={SUBGRID_CARD_CLASS_NAME}
-              />
-            ))}
-          </PrivacyTypeCardRow>
-        </div>
-        <PrivacyBestPracticesBanner
-          backgroundImage={bestPracticesBannerImageUrl}
-        />
-      </>
-    )
-  }
+  const top = groups.filter((group) => group.field === 'linkage')
+  const bottom = groups.filter((group) => group.field !== 'linkage')
 
   return (
-    <PrivacyTypeCardRow className="mt-4">
-      {groups.map((group) => (
-        <PrivacyTypeCard
-          key={group.field}
-          group={group}
-          view={view}
-          className={SUBGRID_CARD_CLASS_NAME}
-          // The header plus five rows, then it scrolls, so a long table
-          // cannot stretch the card past the one beside it.
-          tableClassName="max-h-[324px] overflow-y-auto"
-        />
-      ))}
+    <>
+      <div className="mt-4 flex flex-col gap-4">
+        {top.map((group) => (
+          <PrivacyTypeCard key={group.field} group={group} />
+        ))}
+        {/* No height cap: the row grows to the longer table and the card
+            beside it stretches to match. */}
+        <PrivacyTypeCardRow>
+          {bottom.map((group) => (
+            <PrivacyTypeCard
+              key={group.field}
+              group={group}
+              className={SUBGRID_CARD_CLASS_NAME}
+            />
+          ))}
+        </PrivacyTypeCardRow>
+      </div>
       <PrivacyBestPracticesBanner
         backgroundImage={bestPracticesBannerImageUrl}
-        backgroundFit="stretch"
-        className="mt-0 h-full min-h-[200px] xl:row-span-3"
       />
-    </PrivacyTypeCardRow>
+    </>
   )
 }
 
@@ -88,20 +57,9 @@ const SUBGRID_CARD_CLASS_NAME =
  * cards of a row start their table on the same line whatever their
  * description runs to.
  */
-function PrivacyTypeCardRow({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
+function PrivacyTypeCardRow({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={cn(
-        'grid gap-4 xl:grid-cols-2 xl:grid-rows-[auto_auto_1fr]',
-        className,
-      )}
-    >
+    <div className="grid gap-4 xl:grid-cols-2 xl:grid-rows-[auto_auto_1fr]">
       {children}
     </div>
   )
@@ -109,14 +67,10 @@ function PrivacyTypeCardRow({
 
 function PrivacyTypeCard({
   group,
-  view,
   className,
-  tableClassName,
 }: {
   group: PrivacyTypeGroup
-  view: 'grid' | 'gridSplit'
   className?: string
-  tableClassName?: string
 }) {
   return (
     <PrimaryCard className={cn('flex min-w-0 flex-col', className)}>
@@ -128,12 +82,10 @@ function PrivacyTypeCard({
       <p className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         {group.shortDescription}
       </p>
-      <div className={cn('mt-2 min-w-0', tableClassName)}>
+      <div className="mt-2 min-w-0">
         <PrivacySummaryTable
-          view={view}
           entries={group.entries}
           hiddenColumns={group.hiddenColumns}
-          compact
         />
       </div>
     </PrimaryCard>

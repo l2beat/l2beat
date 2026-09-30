@@ -1,52 +1,11 @@
 import type { PrivacyField } from '@l2beat/config'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 
-/**
- * Alternative layouts of the summary, picked with the switch at the top of the
- * page and kept in `?view=` so a layout can be linked to while they are being
- * compared. The comments say what each one does; the switch shows labels only.
- */
-export const PRIVACY_SUMMARY_VIEWS = [
-  {
-    id: 'gridSplit',
-    label: 'V1 · Split grid',
-    // Every kind of privacy at once - link privacy across the top, the other two side by side below - each table with the L2 risk rosette for the adversaries and the protocol risks grouped beside it.
-  },
-  {
-    id: 'split',
-    label: 'V2 · Split',
-    // A tab per kind of privacy, the L2 risk rosette for the adversaries alone, and the protocol risks in columns of their own.
-  },
-  {
-    id: 'grid',
-    label: 'V3 · Grid',
-    // One compact table per kind of privacy, side by side, each with a single rosette over the privacy and protocol risks.
-  },
-  {
-    id: 'rosette',
-    label: 'V4 · Rosette',
-    // A tab per kind of privacy and a single rosette: adversaries on the left half, protocol risks on the right.
-  },
-  {
-    id: 'cards',
-    label: 'V5 · Cards',
-    // A card per protocol with its rosette, the verdict in words, key numbers and attributes.
-  },
-] as const
-
-export type PrivacySummaryView = (typeof PRIVACY_SUMMARY_VIEWS)[number]['id']
-
-export const DEFAULT_PRIVACY_SUMMARY_VIEW: PrivacySummaryView = 'gridSplit'
-
-export function toPrivacySummaryView(value: string): PrivacySummaryView {
-  return (
-    PRIVACY_SUMMARY_VIEWS.find((view) => view.id === value)?.id ??
-    DEFAULT_PRIVACY_SUMMARY_VIEW
-  )
-}
-
 /** Columns a kind of privacy can leave out. */
-export type PrivacySummaryOptionalColumn = 'tvl' | 'trustedSetup'
+export type PrivacySummaryOptionalColumn =
+  | 'tvl'
+  | 'trustedSetup'
+  | 'anonymitySet'
 
 /**
  * One group per kind of privacy a protocol promises, keyed by the field its
@@ -86,8 +45,9 @@ export const PRIVACY_TYPES = [
     description:
       'Amount privacy hides how much is moved. Balances and transfer values are encrypted so only the parties involved can read them, while who pays whom stays public.',
     // None of these protocols has a ZK proving system, so every setup reads
-    // 'No setup'.
-    hiddenColumns: ['trustedSetup'],
+    // 'No setup'. The anonymity set counts the crowd a deposit hides in, which
+    // says nothing about how well an amount is hidden.
+    hiddenColumns: ['trustedSetup', 'anonymitySet'],
   },
 ] as const satisfies {
   field: PrivacyField

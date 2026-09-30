@@ -1,34 +1,24 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import type { PrivacySummaryOptionalColumn } from '../privacySummaryViews'
-import {
-  getPrivacySummaryColumns,
-  type PrivacyTableView,
-} from './privacySummaryColumns'
+import type { PrivacySummaryOptionalColumn } from '../privacyTypes'
+import { getPrivacySummaryColumns } from './privacySummaryColumns'
 
 export function PrivacySummaryTable({
   entries,
-  view,
   hiddenColumns = [],
-  compact,
 }: {
   entries: PrivacySummaryEntry[]
-  view: PrivacyTableView
   hiddenColumns?: PrivacySummaryOptionalColumn[]
-  compact?: boolean
 }) {
   const columns = useMemo(
-    () => getPrivacySummaryColumns({ view, hiddenColumns, compact }),
-    [view, hiddenColumns, compact],
+    () => getPrivacySummaryColumns({ hiddenColumns }),
+    [hiddenColumns],
   )
 
-  // One persisted column selection per layout: the layouts have different
-  // columns, and hiding one in the matrix should not hide it in the grid.
-  const table = useTable(`PrivacySummaryTable-${view}`, {
+  const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -39,16 +29,14 @@ export function PrivacySummaryTable({
       sorting: [{ id: 'privacy', desc: true }],
     },
     state: {
+      // No column picker, so nothing to persist: a selection saved from the
+      // old single table's picker would otherwise hide columns for good.
+      columnVisibility: {},
       columnPinning: {
         left: ['#', 'logo'],
       },
     },
   })
 
-  return (
-    <>
-      {!compact && <ColumnsControls columns={table.getAllColumns()} />}
-      <BasicTable table={table} />
-    </>
-  )
+  return <BasicTable table={table} />
 }

@@ -5,17 +5,15 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import { TableLink } from '~/components/table/TableLink'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
 } from '../adversaries/privacyAdversaryUi'
 import { PrivacyRosetteTooltip } from './PrivacyRosetteTooltip'
-import {
-  getPrivacyRosetteGroups,
-  type PrivacyRosetteInput,
-} from './privacyRosetteSlices'
 
-interface Props extends PrivacyRosetteInput {
+interface Props {
+  adversaries: PrivacyAdversariesSummary
   /** Project page the rosette links into. */
   href: string
   isUnderReview?: boolean
@@ -27,15 +25,12 @@ interface Props extends PrivacyRosetteInput {
  * lists every adversary, and opens the full assessment on hover.
  */
 export function PrivacyAdversaryRosetteCell({
+  adversaries,
   href,
   isUnderReview,
-  ...input
 }: Props) {
-  const groups = getPrivacyRosetteGroups(input)
-  const values = getPrivacyAdversaryRosetteValues(input.adversaries)
-  const { subject, held, total } = getPrivacyAdversariesSentence(
-    input.adversaries,
-  )
+  const values = getPrivacyAdversaryRosetteValues(adversaries)
+  const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
 
   return (
     // Hoverable so the pointer can move into the tooltip and pick a row.
@@ -59,10 +54,7 @@ export function PrivacyAdversaryRosetteCell({
           added at the bottom, grows the tooltip away from the pointer. */}
       <TooltipContent fitContent side="right" align="start">
         <PrivacyRosetteTooltip
-          groups={groups}
-          adversaries={input.adversaries}
-          isUnderReview={isUnderReview}
-          adversariesOnly
+          adversaries={adversaries}
           rosette={
             <PizzaRosetteIcon
               values={values}
