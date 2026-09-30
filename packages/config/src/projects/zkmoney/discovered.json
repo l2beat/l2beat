@@ -451,7 +451,7 @@
         "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
       ],
       "proxyType": "immutable",
-      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, after which funds exit through refunds that need a zk proof and a TEE signature.",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.",
       "critical": true,
       "ignoreInWatchMode": [
         "_$cachedAvailable",
@@ -514,7 +514,7 @@
         },
         "_$frozen": {
           "severity": "HIGH",
-          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits and pays out only through refunds."
+          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
         },
         "REGISTRY": {
           "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."

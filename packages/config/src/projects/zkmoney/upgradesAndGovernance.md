@@ -3,7 +3,7 @@ No zk.money contract on Ethereum or Aztec can be upgraded. The contracts that ho
 
 The approved enclave image is fixed. Anyone can register a TEE signer with a fresh (at most {{attestationMaxAge}} old) AWS Nitro attestation of that image. Registrations are permanent. {{teeSignerCount}} signers are currently registered.
 
-Aztec governance can move the Aztec Network to a new rollup. This does not touch escrowed funds, but it lets anyone freeze the portal, after which funds can only exit.
+Aztec governance can move the Aztec Network to a new rollup. In such a case, anyone can permanently freeze the portal, stopping new L1 deposits and fixing a state snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available. L2 transfers are not disabled but do not change refundable ownership.
 
 ### Changeable by Aztec Labs
 The name layer is configured by two EOAs:

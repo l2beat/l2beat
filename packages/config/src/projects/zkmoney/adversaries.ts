@@ -72,7 +72,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
-          note: 'Bounded by the public deposits into an account.',
+          note: 'Public entry and exit amounts and timing can support correlations. Private incoming payments let an account spend more than its own public deposits.',
         },
         asset: 'exposed',
         linkage: {
@@ -84,6 +84,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         { contract: 'ZkMoneyPortal' },
         { contract: 'RegistrationSIPA' },
         { contract: 'PlainWithdrawalExecutor' },
+        {
+          title: 'Private transfers credit the recipient with new notes',
+          url: `${OX}noir-projects/oxide_token_contract/src/main.nr#L133-L167`,
+        },
         {
           title: 'Resolver notifies the recipient of each deposit address',
           url: `${OX}noir-projects/oxide_token_contract/src/main.nr#L236-L251`,

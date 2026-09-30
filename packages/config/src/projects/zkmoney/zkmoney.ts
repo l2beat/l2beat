@@ -209,7 +209,7 @@ export const zkmoney: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The portal, the zk.money token contract on Aztec and the fee-paying contract have no owner and cannot be upgraded, and the approved enclave image is fixed. Aztec governance can only move the network to a new rollup, which lets anyone freeze the portal into an exit-only mode.',
+        'The core contracts are immutable, and the approved enclave image is fixed. Aztec governance can move the network to a new rollup, which lets anyone freeze the portal, stopping new L1 deposits and fixing a state snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available. L2 transfers are not disabled but do not change refundable ownership.',
       walkawayTest: {
         passed: false,
         reason:
