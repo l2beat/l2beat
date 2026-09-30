@@ -8,8 +8,10 @@ import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import { useDevice } from '~/hooks/useDevice'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
+  getPrivacyAdversariesSectionHref,
   getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
+  PRIVACY_ADVERSARIES_SECTION_ID,
 } from '../adversaries/privacyAdversaryUi'
 import {
   PrivacyRosetteDrawer,
@@ -17,8 +19,6 @@ import {
 } from './PrivacyRosetteDrawer'
 import { PrivacyRosetteTooltip } from './PrivacyRosetteTooltip'
 
-/** Id of the adversaries section, as set in getPrivacyProjectEntry. */
-const ADVERSARIES_SECTION_ID = 'privacy-adversaries'
 /** How long vaul takes to slide the drawer out, in milliseconds. */
 const DRAWER_CLOSE_DURATION = 500
 
@@ -46,7 +46,7 @@ export function PrivacyProjectRosette({
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
   const summary = `${subject} is private against ${held}/${total} adversaries.`
-  const sectionHref = `${href}#${ADVERSARIES_SECTION_ID}`
+  const sectionHref = getPrivacyAdversariesSectionHref(href)
 
   const content = (
     <span className="flex items-center gap-2 text-left">
@@ -83,7 +83,7 @@ export function PrivacyProjectRosette({
             setOpen(false)
             setTimeout(() => {
               document
-                .getElementById(ADVERSARIES_SECTION_ID)
+                .getElementById(PRIVACY_ADVERSARIES_SECTION_ID)
                 ?.scrollIntoView({ behavior: 'smooth' })
             }, DRAWER_CLOSE_DURATION)
           }}

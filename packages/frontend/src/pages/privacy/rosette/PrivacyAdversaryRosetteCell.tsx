@@ -8,6 +8,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useDevice } from '~/hooks/useDevice'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
+  getPrivacyAdversariesSectionHref,
   getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
 } from '../adversaries/privacyAdversaryUi'
@@ -19,16 +20,17 @@ import { PrivacyRosetteTooltip } from './PrivacyRosetteTooltip'
 
 interface Props {
   adversaries: PrivacyAdversariesSummary
-  /** Project page the rosette links into. */
+  /** Project page, whose privacy section the rosette links into. */
   href: string
   isUnderReview?: boolean
 }
 
 /**
  * The adversaries on the L2 risk rosette, one slice each. On desktop it links
- * to the project page and opens a tooltip laid out like the L2 "Risk
- * analysis" card; on mobile, where the tooltip is too wide, a tap slides the
- * same analysis up in a drawer instead.
+ * to the privacy section of the project page and opens a tooltip laid out
+ * like the L2 "Risk analysis" card; on mobile, where the tooltip is too wide,
+ * a tap slides the same analysis up in a drawer, whose button leads to the
+ * same section.
  */
 export function PrivacyAdversaryRosetteCell({
   adversaries,
@@ -38,6 +40,7 @@ export function PrivacyAdversaryRosetteCell({
   const { isMobile } = useDevice()
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
+  const sectionHref = getPrivacyAdversariesSectionHref(href)
 
   const icon = (
     <PizzaRosetteIcon
@@ -59,7 +62,7 @@ export function PrivacyAdversaryRosetteCell({
         triggerLabel={`Privacy risk analysis: ${subject} is private against ${held}/${total} adversaries.`}
         triggerClassName="size-full"
       >
-        <PrivacyRosetteDrawerLink href={href}>
+        <PrivacyRosetteDrawerLink href={sectionHref}>
           Open project page
         </PrivacyRosetteDrawerLink>
       </PrivacyRosetteDrawer>
@@ -74,7 +77,7 @@ export function PrivacyAdversaryRosetteCell({
         className="flex size-full items-center justify-center"
         disabledOnMobile
       >
-        <TableLink href={href}>{icon}</TableLink>
+        <TableLink href={sectionHref}>{icon}</TableLink>
       </TooltipTrigger>
       <TooltipContent fitContent>
         <PrivacyRosetteTooltip

@@ -61,7 +61,13 @@ export function PrivacyProjectRiskProfile({
       <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."
-        value={<RiskValue value={trustedSetup} risk={trustedSetup.risk} />}
+        value={
+          <RiskValue
+            value={trustedSetup}
+            label={trustedSetup.label}
+            risk={trustedSetup.risk}
+          />
+        }
       />
       <ProjectSummaryStat
         title="Exit window"
@@ -69,6 +75,7 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={exitWindow}
+            label={exitWindow.value}
             risk={sentimentToRiskDot(exitWindow.sentiment)}
             walkawayTest={exitWindow.walkawayTest}
           />
@@ -80,6 +87,7 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={reproducibility}
+            label={reproducibility.value}
             risk={sentimentToRiskDot(reproducibility.sentiment)}
           />
         }
@@ -90,10 +98,13 @@ export function PrivacyProjectRiskProfile({
 
 function RiskValue({
   value,
+  label,
   risk,
   walkawayTest,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
+  /** Beside the dot, which stands alone without one. */
+  label: string | undefined
   risk: TrustedSetupRisk
   walkawayTest?: PrivacyWalkawayTest
 }) {
@@ -101,10 +112,10 @@ function RiskValue({
     <Tooltip>
       <TooltipTrigger
         className="flex items-center gap-2 text-left"
-        aria-label={value.value}
+        aria-label={label ?? value.value}
       >
         <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
-        <span>{value.value}</span>
+        {label && <span>{label}</span>}
         {walkawayTest && (
           <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
         )}

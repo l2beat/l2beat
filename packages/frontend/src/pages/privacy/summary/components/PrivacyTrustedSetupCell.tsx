@@ -1,11 +1,13 @@
-import { formatInteger } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
-import type { PrivacyTrustedSetup } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
+import {
+  getTrustedSetupLabel,
+  type PrivacyTrustedSetup,
+} from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { DotWithLabel } from './DotWithLabel'
 
 export function PrivacyTrustedSetupCell({
@@ -24,14 +26,7 @@ export function PrivacyTrustedSetupCell({
               className="shrink-0"
             />
           }
-          // A setup with no participants to count still needs a word under
-          // its dot: without one the two icon variants are unlabelled anywhere
-          // on the page.
-          label={
-            trustedSetup.participantCount === undefined
-              ? trustedSetup.name
-              : `${formatInteger(trustedSetup.participantCount)} participants`
-          }
+          label={getTrustedSetupLabel(trustedSetup)}
         />
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">

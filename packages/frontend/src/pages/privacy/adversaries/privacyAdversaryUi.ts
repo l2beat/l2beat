@@ -154,7 +154,15 @@ export function getPrivacyAdversaryRosetteValues(
   }))
 }
 
+/** Id of the project page section, as set in getPrivacyProjectEntry. */
+export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
+
+/** Link to the adversaries section of a project page. */
+export function getPrivacyAdversariesSectionHref(projectHref: string): string {
+  return `${projectHref}#${PRIVACY_ADVERSARIES_SECTION_ID}`
+}
+
 /** Anchor of an adversary block inside the project page section. */
 export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
-  return `privacy-adversaries-${id}`
+  return `${PRIVACY_ADVERSARIES_SECTION_ID}-${id}`
 }
