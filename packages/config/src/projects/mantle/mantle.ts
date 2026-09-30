@@ -60,6 +60,7 @@ export const mantle: ScalingProject = opStackL2({
         url: 'https://rpc.mantle.xyz',
         callsPerMinute: 300,
       },
+      { type: 'etherscan', chainId: 5000 },
       {
         type: 'blockscout',
         url: 'https://explorer.mantle.xyz/api',
