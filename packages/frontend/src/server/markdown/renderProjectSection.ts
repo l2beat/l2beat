@@ -18,6 +18,7 @@ import type {
 } from '~/components/projects/sections/types'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { renderInteropVolumeSection } from './interopMarkdown'
 import {
@@ -162,6 +163,14 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       nestHeadings(props.detailedDescription, level),
       renderReferences(props.references ?? []),
     ]),
+  ExternalDependenciesSection: ({ dependencies }, _level, context) =>
+    dependencies.length === 0
+      ? 'This project has no external dependencies: no oracle, bridge, or other third-party contract is required for its contracts to operate.'
+      : bulletList(
+          dependencies.map((dependency) =>
+            renderDependency(dependency, context.pageUrl),
+          ),
+        ),
   MilestonesAndIncidentsSection: ({ milestones }) =>
     bulletList(milestones.map(renderMilestone)),
   StateDerivationSection: (props, level) =>
@@ -275,7 +284,6 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   ActivitySection: linkToHtmlPage,
   CostsSection: linkToHtmlPage,
   DataPostedSection: linkToHtmlPage,
-  ExternalDependenciesSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
   InteropFlowsSection: linkToHtmlPage,
   InteropTokenOnchainDeploymentsSection: linkToHtmlPage,
@@ -403,6 +411,15 @@ function renderRiskGroups(groups: RiskGroup[], level: number) {
       ),
     ),
   )
+}
+
+/** Project links on the HTML page are site-relative; the markdown is read off-site. */
+function renderDependency(dependency: DefiDependency, pageUrl: string) {
+  const name = dependency.href
+    ? link(dependency.name, new URL(dependency.href, pageUrl).href)
+    : dependency.name
+  const notReviewed = dependency.reviewed ? '' : ' (not reviewed)'
+  return `${name}${notReviewed}: ${dependency.description}`
 }
 
 function renderRiskValues(values: RosetteValue[], level: number) {
