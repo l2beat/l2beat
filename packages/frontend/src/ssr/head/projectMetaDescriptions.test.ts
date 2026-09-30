@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import {
   getDaMetadataDescription,
   getInteropMetadataDescription,
+  getPrivacyMetadataDescription,
   getProjectMetadataDescription,
   getScalingMetadataDescription,
   getZkCatalogMetadataDescription,
@@ -139,21 +140,24 @@ describe(getScalingMetadataDescription.name, () => {
   })
 
   // The lead is 19 chars plus a separating space, leaving 280 of the 300-char
-  // budget: ten 27-char sentences joined by spaces take 279, an eleventh
-  // would not fit.
+  // budget: nine 28-char sentences joined by spaces take 260, a tenth would
+  // need 289. The sentences are numbered because repeated ones are dropped.
   it('drops the sentences of a long description that do not fit 300 chars', () => {
-    const sentence = 'Lorem ipsum dolor sit amet.'
+    const sentences = Array.from(
+      { length: 12 },
+      (_, i) => `Lorem ipsum dolor sit no ${i + 10}.`,
+    )
     const description = getScalingMetadataDescription({
       name: 'Lorem',
       category: undefined,
       stage: 'Stage 1',
       hostChain: undefined,
       tvs: 16_203_000_000,
-      description: Array(12).fill(sentence).join(' '),
+      description: sentences.join(' '),
     })
 
     expect(description).toEqual(
-      `Stage 1 · $16B TVS. ${Array(10).fill(sentence).join(' ')}`,
+      `Stage 1 · $16B TVS. ${sentences.slice(0, 9).join(' ')}`,
     )
     expect(description.length).toBeLessThanOrEqual(300)
   })
@@ -163,6 +167,7 @@ describe(getDaMetadataDescription.name, () => {
   it('leads with TVS and economic security', () => {
     const description = getDaMetadataDescription({
       name: 'Celestia',
+      bridge: undefined,
       tvs: 1_500_000_000,
       economicSecurity: 2_300_000_000,
       description: 'Celestia is a modular data availability network.',
@@ -176,6 +181,7 @@ describe(getDaMetadataDescription.name, () => {
   it('omits economic security when the layer has none', () => {
     const description = getDaMetadataDescription({
       name: 'EigenDA',
+      bridge: undefined,
       tvs: 1_500_000_000,
       economicSecurity: undefined,
       description: 'EigenDA is a data availability service.',
@@ -183,6 +189,54 @@ describe(getDaMetadataDescription.name, () => {
 
     expect(description).toEqual(
       'DA layer · $1.5B TVS. EigenDA is a data availability service.',
+    )
+  })
+})
+
+describe('DA bridge pages', () => {
+  // The page joins the layer's and the bridge's descriptions; a layer's own
+  // bridge repeats the layer text word for word.
+  it('names the bridge and drops a repeated sentence', () => {
+    const description = getDaMetadataDescription({
+      name: 'EigenDA',
+      bridge: { name: 'EigenDA', isNoBridge: false },
+      tvs: 20_000_000,
+      economicSecurity: undefined,
+      description:
+        'EigenDA is a data availability solution. EigenDA is a data availability solution.',
+    })
+
+    expect(description).toEqual(
+      'DA layer · EigenDA bridge · $20M TVS. EigenDA is a data availability solution.',
+    )
+  })
+
+  it('says so when the page is for the layer without a bridge', () => {
+    const description = getDaMetadataDescription({
+      name: 'EigenDA',
+      bridge: { name: 'No bridge', isNoBridge: true },
+      tvs: 20_000_000,
+      economicSecurity: undefined,
+      description: 'EigenDA is a data availability solution.',
+    })
+
+    expect(description).toEqual(
+      'DA layer · no DA bridge · $20M TVS. EigenDA is a data availability solution.',
+    )
+  })
+
+  it('leaves out a bridge the description already names', () => {
+    const description = getDaMetadataDescription({
+      name: 'Celestia',
+      bridge: { name: 'Blobstream', isNoBridge: false },
+      tvs: 20_000_000,
+      economicSecurity: undefined,
+      description:
+        'Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
+    })
+
+    expect(description).toEqual(
+      'DA layer · $20M TVS. Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
     )
   })
 })
@@ -285,6 +339,42 @@ describe(getInteropMetadataDescription.name, () => {
     })
 
     expect(description).toEqual('Axelar is a multichain interop protocol.')
+  })
+})
+
+describe(getPrivacyMetadataDescription.name, () => {
+  it('leads with the privacy category', () => {
+    const description = getPrivacyMetadataDescription({
+      name: 'Railgun',
+      category: 'Shielded ledger',
+      description: 'An onchain privacy system for Ethereum.',
+    })
+
+    expect(description).toEqual(
+      'Shielded ledger. Railgun – An onchain privacy system for Ethereum.',
+    )
+  })
+
+  // "stealth-address" is the hyphenated spelling of the category, and
+  // "Privacy Pools" carries the "Pool" category in its name.
+  it('leaves out a category the description or the name already states', () => {
+    const hyphenated = getPrivacyMetadataDescription({
+      name: 'Umbra Cash',
+      category: 'Stealth address',
+      description: 'A stealth-address payment protocol.',
+    })
+    const inName = getPrivacyMetadataDescription({
+      name: 'Privacy Pools',
+      category: 'Pool',
+      description: 'A selective-disclosure privacy system.',
+    })
+
+    expect(hyphenated).toEqual(
+      'Umbra Cash – A stealth-address payment protocol.',
+    )
+    expect(inName).toEqual(
+      'Privacy Pools – A selective-disclosure privacy system.',
+    )
   })
 })
 

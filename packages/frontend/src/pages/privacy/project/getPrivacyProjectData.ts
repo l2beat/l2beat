@@ -3,7 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
+import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -55,8 +55,9 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       manifest,
       metadata: getMetadata(manifest, {
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
-        description: getProjectMetadataDescription({
+        description: getPrivacyMetadataDescription({
           name: details.name,
+          category: details.category.label,
           description: details.display.description,
         }),
         url,

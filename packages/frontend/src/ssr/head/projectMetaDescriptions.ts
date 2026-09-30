@@ -27,6 +27,7 @@ export function getScalingMetadataDescription(project: {
 
 export function getDaMetadataDescription(project: {
   name: string
+  bridge: { name: string; isNoBridge: boolean } | undefined
   tvs: number
   economicSecurity: number | undefined
   description: string
@@ -34,11 +35,24 @@ export function getDaMetadataDescription(project: {
   return describe(
     [
       unlessMentioned('DA layer', project.description),
+      unlessMentioned(bridgeFact(project.bridge), project.description),
       usd(project.tvs, 'TVS'),
       usd(project.economicSecurity, 'economic security'),
     ],
     project,
   )
+}
+
+// A layer has one page per bridge, all sharing the layer's description; the
+// bridge tells them apart.
+function bridgeFact(bridge: { name: string; isNoBridge: boolean } | undefined) {
+  if (!bridge) {
+    return undefined
+  }
+  if (bridge.isNoBridge) {
+    return 'no DA bridge'
+  }
+  return /bridge$/i.test(bridge.name) ? bridge.name : `${bridge.name} bridge`
 }
 
 export function getZkCatalogMetadataDescription(project: {
@@ -70,6 +84,24 @@ export function getInteropMetadataDescription(project: {
   return describe([], project)
 }
 
+// The category check also looks at the name: "Privacy Pools" already says
+// "pool".
+export function getPrivacyMetadataDescription(project: {
+  name: string
+  category: string
+  description: string
+}) {
+  return describe(
+    [
+      unlessMentioned(
+        project.category,
+        `${project.name} ${project.description}`,
+      ),
+    ],
+    project,
+  )
+}
+
 /** For project pages that have no key facts to lead with. */
 export function getProjectMetadataDescription(project: {
   name: string
@@ -91,7 +123,7 @@ function describe(
     stated.length > 0 ? `${capitalize(stated.join(' · '))}.` : undefined
   const description = withName(
     project.name,
-    collapseWhitespace(project.description),
+    withoutRepeatedSentences(collapseWhitespace(project.description)),
   )
   const budget = MAX_LENGTH - (lead ? lead.length + 1 : 0)
   return [lead, description && fitWholeSentences(description, budget)]
@@ -131,7 +163,7 @@ function fitWholeSentences(text: string, budget: number) {
   if (text.length <= budget) {
     return text
   }
-  const sentences = text.split(/(?<=[.!?])\s+/)
+  const sentences = splitSentences(text)
   let fitting = ''
   for (const sentence of sentences) {
     const next = fitting ? `${fitting} ${sentence}` : sentence
@@ -147,6 +179,16 @@ function cutOnWordBoundary(text: string, budget: number) {
   const fitting = text.slice(0, budget - ELLIPSIS.length + 1)
   const wholeWords = fitting.slice(0, fitting.lastIndexOf(' '))
   return wholeWords.replace(/[\s,;:.]+$/, '') + ELLIPSIS
+}
+
+// A DA page joins the layer's and the bridge's descriptions, which are the
+// same text for a layer's own bridge.
+function withoutRepeatedSentences(text: string | undefined) {
+  return text && [...new Set(splitSentences(text))].join(' ')
+}
+
+function splitSentences(text: string) {
+  return text.split(/(?<=[.!?])\s+/)
 }
 
 // Multi-line config strings carry their newlines and indentation.
@@ -185,10 +227,14 @@ function unlessMentioned(fact: string | undefined, description: string) {
   return fact !== undefined && mentions(description, fact) ? undefined : fact
 }
 
-// Whole words only, so that "Base" is not found in "based"; a plural still
-// counts ("ZK Rollups").
+// Whole words only, so that "Base" is not found in "based"; a plural
+// ("ZK Rollups") or hyphenated spelling ("stealth-address") still counts.
 function mentions(text: string, phrase: string) {
-  return new RegExp(`(^|\\W)${escapeRegExp(phrase)}s?(\\W|$)`, 'i').test(text)
+  const unhyphenated = (value: string) => value.replaceAll('-', ' ')
+  return new RegExp(
+    `(^|\\W)${escapeRegExp(unhyphenated(phrase))}s?(\\W|$)`,
+    'i',
+  ).test(unhyphenated(text))
 }
 
 function escapeRegExp(text: string) {

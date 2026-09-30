@@ -33,6 +33,10 @@ export async function getDataAvailabilityProjectData(
         title: `${projectEntry.name} - L2BEAT`,
         description: getDaMetadataDescription({
           name: projectEntry.name,
+          bridge:
+            projectEntry.entryType === 'common'
+              ? projectEntry.selectedBridge
+              : undefined,
           tvs: projectEntry.header.tvs,
           economicSecurity: projectEntry.header.economicSecurity,
           description: projectEntry.description,
