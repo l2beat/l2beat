@@ -347,6 +347,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One proving system: trusted setup risks, verifier IDs and deployments, program hashes.',
     },
+    {
+      name: 'Interop token',
+      path: '/interop/tokens/{slug}.md',
+      description:
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the token id, the segment right after /interop/tokens/ in a token page URL.',
+    },
     // Behind the same flag as the pages: listed while off, this would be a 404.
     ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),
   ],

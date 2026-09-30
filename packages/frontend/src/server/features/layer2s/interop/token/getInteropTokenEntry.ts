@@ -1,3 +1,4 @@
+import { getDeploymentsByVolume } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import type { InteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
@@ -10,7 +11,6 @@ export interface InteropTokenEntry {
 export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
-  deploymentsCount: number,
   relationsGraph: InteropTokenRelationsGraph | undefined,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
@@ -53,5 +53,10 @@ export function getInteropTokenEntry(
     },
   })
 
-  return { sections, deploymentsCount }
+  return {
+    sections,
+    deploymentsCount: relationsGraph
+      ? getDeploymentsByVolume(relationsGraph).length
+      : 0,
+  }
 }

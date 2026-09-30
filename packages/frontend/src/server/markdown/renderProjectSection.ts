@@ -21,6 +21,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { renderInteropVolumeSection } from './interopMarkdown'
+import { renderOnchainDeployments } from './interopTokenMarkdown'
 import {
   bulletList,
   heading,
@@ -291,7 +292,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   DataPostedSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
   InteropFlowsSection: linkToHtmlPage,
-  InteropTokenOnchainDeploymentsSection: linkToHtmlPage,
+  InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
   InteropTokenProtocolsSection: linkToHtmlPage,
   InteropTokenTransfersSection: linkToHtmlPage,
   InteropTokenVolumeSection: linkToHtmlPage,
