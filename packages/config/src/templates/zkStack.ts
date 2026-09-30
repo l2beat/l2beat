@@ -373,7 +373,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     interopConfig: templateVars.interopConfig
       ? {
           description:
-            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled',
+            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled.',
           ...templateVars.interopConfig,
         }
       : undefined,

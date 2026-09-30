@@ -18,7 +18,7 @@ export const superlumio: ScalingProject = opStackL2({
     name: 'SuperLumio',
     slug: 'superlumio',
     description:
-      'SuperLumio (сanary mainnet) marks the initial phase of the Lumio Layer 2 on the Optimism Superchain, launched as a pure Ethereum Virtual Machine fork with the support of Conduit technology. This platform is designed to serve as a testnet-in-production. Lumio is a rollup technology suite that enables developers to build with any VM on any chain.',
+      'SuperLumio (canary mainnet) marks the initial phase of the Lumio Layer 2 on the Optimism Superchain, launched as a pure Ethereum Virtual Machine fork with the support of Conduit technology. This platform is designed to serve as a testnet-in-production. Lumio is a rollup technology suite that enables developers to build with any VM on any chain.',
     links: {
       websites: ['https://lumio.io/'],
       documentation: ['https://docs.lumio.io/'],
