@@ -1,5 +1,5 @@
 import type { ZkCatalogTag } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -67,6 +67,25 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     expect(
       summary.indexOf('**Warning:** The verifier is unverified.'),
     ).toBeLessThan(summary.indexOf('- Creator:'))
+  })
+
+  it('leads the warnings with the archived and under review banners', () => {
+    const summary = getSection(
+      renderZkCatalogProjectMarkdown({
+        ...ENTRY,
+        archivedAt: UnixTime(1700000000),
+        underReviewStatus: 'config',
+        header: {
+          ...ENTRY.header,
+          redWarning: { text: 'The verifier is unverified.' },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toMatchRegex(
+      /^\n\*\*Warning:\*\* [^\n]*archived[^\n]*\n\n\*\*Warning:\*\* [^\n]*under review[^\n]*\n\n\*\*Warning:\*\* The verifier is unverified\./,
+    )
   })
 
   it('follows the HTML page outline with one H2 per section', () => {

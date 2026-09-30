@@ -3,13 +3,16 @@ import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { formatChange, formatUsd } from '~/server/markdown/markdown'
-import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+import {
+  getProjectStatusWarnings,
+  renderProjectMarkdown,
+} from '~/server/markdown/renderProjectMarkdown'
 import {
   formatTag,
   renderUsedIn,
   renderVerificationStatus,
-  VERIFICATION_STATUSES,
 } from '~/server/markdown/zkSectionBodies'
+import { VERIFIER_STATUS_ORDER } from '../components/zkCatalogUi'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -23,6 +26,7 @@ export function renderZkCatalogProjectMarkdown(
     pageUrl,
     summary: {
       warnings: compact([
+        ...getProjectStatusWarnings(entry),
         entry.header.emergencyWarning,
         entry.header.redWarning?.text,
         entry.header.warning,
@@ -84,7 +88,7 @@ function getTrustedSetupsFact(
 function countVerifiers(
   verifiers: TrustedSetupsByProofSystem[string]['verifiers'],
 ) {
-  const counts = VERIFICATION_STATUSES.flatMap((status) => {
+  const counts = VERIFIER_STATUS_ORDER.flatMap((status) => {
     const group = verifiers[status]
     return group && group.count > 0
       ? [`${group.count} ${renderVerificationStatus(status, group.attesters)}`]

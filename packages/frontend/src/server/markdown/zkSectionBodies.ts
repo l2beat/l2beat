@@ -5,6 +5,12 @@ import type { ProgramHashesSectionProps } from '~/components/projects/sections/p
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import {
+  PROGRAM_HASHES_SECTION_INTRO,
+  VERIFIER_ID_DEFAULT_DESCRIPTION,
+  VERIFIERS_SECTION_INTRO,
+  type VerifierStatus,
+} from '~/pages/zk-catalog/v2/components/zkCatalogUi'
+import {
   bulletList,
   heading,
   joinBlocks,
@@ -57,11 +63,11 @@ export function renderVerifiers(
     )
   }
   return joinBlocks([
-    'List of different onchain verifiers for this proving system. Unique ID distinguishes different deployments of the same verifier from different verifiers (e.g. different versions).',
+    VERIFIERS_SECTION_INTRO,
     ...proofSystemVerifiers.map(({ proofSystem, verifierHashes }) =>
       joinBlocks([
         heading(level, `${proofSystem.type}: ${proofSystem.name}`),
-        proofSystem.description,
+        proofSystem.description ?? VERIFIER_ID_DEFAULT_DESCRIPTION,
         ...verifierHashes.map((verifier) =>
           renderVerifier(verifier, level + 1, context),
         ),
@@ -76,7 +82,7 @@ export function renderProgramHashes(
   context: SectionContext,
 ) {
   return joinBlocks([
-    "List of known guest zkVM programs used by this prover. Each program represents a piece of offchain execution that is verified onchain. The program hash serves as the program's unique identifier.",
+    PROGRAM_HASHES_SECTION_INTRO,
     ...programHashes.map((program) =>
       joinBlocks([
         heading(level, program.title),
@@ -109,17 +115,8 @@ export function renderUsedIn(
     .join(', ')
 }
 
-export type VerificationStatus = keyof typeof VERIFICATION_STATUS_LABELS
-
-/** In the order the HTML page lists them. */
-export const VERIFICATION_STATUSES = [
-  'successful',
-  'notVerified',
-  'unsuccessful',
-] as const satisfies VerificationStatus[]
-
 export function renderVerificationStatus(
-  status: VerificationStatus,
+  status: VerifierStatus,
   attesters: ZkCatalogAttester[] = [],
 ) {
   const by =
@@ -129,7 +126,8 @@ export function renderVerificationStatus(
   return `${VERIFICATION_STATUS_LABELS[status]}${by}`
 }
 
-const VERIFICATION_STATUS_LABELS = {
+/** Worded to follow "Verification:" or a count, unlike the tooltips of the HTML icons. */
+const VERIFICATION_STATUS_LABELS: Record<VerifierStatus, string> = {
   successful: 'successful',
   notVerified: 'not verified',
   unsuccessful: 'unsuccessful',

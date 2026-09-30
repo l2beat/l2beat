@@ -10,20 +10,13 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import { VerifiedIcon } from '~/icons/Verified'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { cn } from '~/utils/cn'
+import { VERIFIER_STATUS_ORDER, type VerifierStatus } from './zkCatalogUi'
 
 interface Props {
   data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['verifiers']
   horizontal?: boolean
   hideCount?: boolean
 }
-
-export const VERIFIER_STATUS_ORDER = [
-  'successful',
-  'notVerified',
-  'unsuccessful',
-] as const
-
-export type VerifierStatus = (typeof VERIFIER_STATUS_ORDER)[number]
 
 export function VerifiedCountWithDetails({
   data,
