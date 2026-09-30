@@ -1,9 +1,4 @@
-import {
-  formatBpsToMbps,
-  formatCurrency,
-  formatNumber,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { formatBpsToMbps, formatNumber, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import round from 'lodash/round'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
@@ -12,7 +7,7 @@ import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
-import { link } from '~/server/markdown/markdown'
+import { formatUsd, link, withRegularSpaces } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
@@ -98,7 +93,7 @@ function getFacts(entry: DaProjectEntry) {
       value:
         entry.entryType === 'ethereum'
           ? entry.header.bridgeName
-          : entry.selectedBridge.name,
+          : formatSelectedBridge(entry),
     },
     entry.entryType === 'common' && getOtherBridges(entry),
     header.usedIn.length > 0 && {
@@ -133,6 +128,13 @@ function getDurationOfStorage({ kind, header }: DaProjectEntry) {
   )
 }
 
+/** With its TVS, as listed for the other bridges. */
+function formatSelectedBridge(entry: DaProjectPageEntry) {
+  const { name, slug } = entry.selectedBridge
+  const bridge = entry.bridges.find((bridge) => bridge.slug === slug)
+  return bridge ? `${name} (TVS ${formatUsd(bridge.tvs)})` : name
+}
+
 /** The HTML page lets the reader switch bridges; here each one links to its own markdown page. */
 function getOtherBridges(entry: DaProjectPageEntry) {
   const others = entry.bridges.filter(
@@ -163,13 +165,4 @@ function getSelectedBridgeRisks(entry: DaProjectPageEntry) {
 /** The Ethereum summary has no risk rosette; it explains the enshrined bridge instead. */
 function renderCallout({ header }: EthereumDaProjectPageEntry) {
   return `**${header.callout.title}:** ${header.callout.description}`
-}
-
-function formatUsd(value: number) {
-  return withRegularSpaces(formatCurrency(value, 'usd'))
-}
-
-/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function withRegularSpaces(text: string) {
-  return text.replaceAll('\u200A', ' ')
 }

@@ -1,12 +1,8 @@
-import {
-  formatActivityCount,
-  formatCurrency,
-  pluralize,
-} from '@l2beat/shared-pure'
+import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import { withSentiment } from '~/server/markdown/markdown'
+import { formatUsd, withSentiment } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   type ProjectFact,
@@ -139,9 +135,4 @@ const ADDITIONAL_TRUST_ASSUMPTIONS =
 function formatChange(change: number, period: PercentageChangePeriod) {
   const sign = change > 0 ? '+' : change < 0 ? '-' : ''
   return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARED_TO_PERIOD[period]}`
-}
-
-/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function formatUsd(value: number) {
-  return formatCurrency(value, 'usd').replaceAll('\u200A', ' ')
 }

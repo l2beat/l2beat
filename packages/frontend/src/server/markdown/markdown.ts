@@ -1,4 +1,5 @@
 import type { Sentiment } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 
 /** Separates blocks with a blank line and drops empty ones, so an optional part is just '' when absent. */
 export function joinBlocks(blocks: string[]) {
@@ -104,4 +105,13 @@ function findHeadingDepthByLine(lines: string[]) {
     }
   }
   return depths
+}
+
+export function formatUsd(value: number) {
+  return withRegularSpaces(formatCurrency(value, 'usd'))
+}
+
+/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
+export function withRegularSpaces(text: string) {
+  return text.replaceAll('\u200A', ' ')
 }

@@ -33,7 +33,7 @@ describe(renderDaProjectMarkdown.name, () => {
       '- Secured by: 100 validators',
       '- Duration of storage: 30 days',
       '- Max throughput: 2 MiB/s',
-      '- DA Bridge: Blobstream',
+      '- DA Bridge: Blobstream (TVS $1.20 B)',
       '- Used by: Eclipse, Manta Pacific',
     )
   })
