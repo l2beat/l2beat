@@ -154,6 +154,7 @@ describe(measureOssification.name, () => {
       NOW - YEAR,
       NOW - DAY,
     ])
+    expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - DAY])
   })
 
   it('tags each discovery update once, mixed updates as code', () => {

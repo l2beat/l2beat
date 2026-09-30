@@ -36,7 +36,7 @@ export interface OssificationTimeline {
   clockStart: number
   /** Perimeter resets inside the window, up to the clock start */
   resets: number[]
-  /** Critical updates dated inside the window */
+  /** Critical changes inside the window, up to the clock start */
   criticalChanges: number
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
@@ -44,12 +44,7 @@ export interface OssificationTimeline {
 
 type OssificationEntryProject = Project<
   'ossification',
-  | 'scalingInfo'
-  | 'scalingRisks'
-  | 'privacyInfo'
-  | 'defiInfo'
-  | 'tvsConfig'
-  | 'discoveryUpdates'
+  'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
 const TIMELINE_WINDOW = 365 * UnixTime.DAY
@@ -63,7 +58,6 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
       'privacyInfo',
       'defiInfo',
       'tvsConfig',
-      'discoveryUpdates',
     ],
     whereNot: ['archivedAt'],
   })
@@ -80,6 +74,9 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
 
       const { ossification } = project
       const clockStart = ossification.projectClockStart
+      // Later ones belong to contracts that have left the perimeter.
+      const isInTimeline = (timestamp: number) =>
+        timestamp >= from && timestamp <= clockStart
       const series = await getOssificationSeries(
         project,
         Math.min(from, clockStart),
@@ -97,11 +94,9 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
           from,
           to: now,
           clockStart,
-          // Later resets belong to contracts that have left the perimeter.
-          resets: ossification.perimeterResets.filter(
-            (reset) => reset >= from && reset <= clockStart,
-          ),
-          criticalChanges: countCriticalChanges(project, from, now),
+          resets: ossification.perimeterResets.filter(isInTimeline),
+          criticalChanges:
+            ossification.criticalChanges.filter(isInTimeline).length,
           values: series ? sampleTimeline(series.points, from, now) : null,
         },
       }
@@ -113,21 +108,6 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
     .sort(
       (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
     )
-}
-
-// Critical updates carry only the diffHistory id; the update has the date.
-function countCriticalChanges(
-  project: OssificationEntryProject,
-  from: number,
-  to: number,
-): number {
-  const timestamps = new Map(
-    project.discoveryUpdates?.map((update) => [update.id, update.timestamp]),
-  )
-  return project.ossification.criticalUpdates.filter(({ id }) => {
-    const timestamp = timestamps.get(id)
-    return timestamp != null && timestamp >= from && timestamp <= to
-  }).length
 }
 
 function getExitWindow(
