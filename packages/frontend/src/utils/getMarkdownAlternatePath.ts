@@ -1,3 +1,4 @@
+import { env } from '~/env'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 
 /**
@@ -23,10 +24,18 @@ export const LIST_PAGES_WITH_MARKDOWN = [
   '/privacy/summary',
 ] as const satisfies StaticPagePath[]
 
-/** Express route patterns, where `:name` stands for one path segment. */
+/**
+ * Express route patterns, where `:name` stands for one path segment and
+ * `{...}` for a part the URL may leave out.
+ */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
+  '/data-availability/projects/:layer/:bridge',
   '/privacy/projects/:slug',
+  '/interop/protocols/:slug',
+  '/zk-catalog/:slug',
+  '/interop/tokens/:slug{/:issuer}{/:symbol}',
+  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/projects/:slug'] as const) : []),
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
@@ -42,10 +51,20 @@ const PAGES_WITH_MARKDOWN: readonly string[] = [
 
 /** Express routing is neither strict nor case-sensitive, so `/Layer2s/Summary/` serves the same page. */
 function toRoutedPath(pagePath: string) {
-  return pagePath.replace(/\/+$/, '').toLowerCase()
+  return trimTrailingSlashes(pagePath).toLowerCase()
+}
+
+/** A loop, not `/\/+$/`: the regex is quadratic on a request path of many slashes, and every page request goes through here. */
+function trimTrailingSlashes(path: string) {
+  let end = path.length
+  while (end > 0 && path[end - 1] === '/') end--
+  return path.slice(0, end)
 }
 
 function matchesPage(page: string, routedPath: string) {
-  const segments = page.replaceAll(/:\w+/g, '[^/]+')
-  return new RegExp(`^${segments}$`).test(routedPath)
+  const pattern = page
+    .replaceAll('{', '(?:')
+    .replaceAll('}', ')?')
+    .replaceAll(/:\w+/g, '[^/]+')
+  return new RegExp(`^${pattern}$`).test(routedPath)
 }

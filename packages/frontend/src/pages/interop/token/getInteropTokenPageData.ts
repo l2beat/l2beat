@@ -14,47 +14,22 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import type { InteropQuery } from '../InteropRouter'
 import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
+import { renderInteropTokenMarkdown } from './renderInteropTokenMarkdown'
 
 export async function getInteropTokenPageData(
-  req: Request<{ slug: string }, unknown, unknown, InteropQuery>,
+  req: Request<{ slug: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const activeInteropChains = getActiveInteropChains()
-  const activeInteropChainIds = activeInteropChains.map((chain) => chain.id)
-  const interopChainsWithIcons = mapInteropChainsToWithIcons(
-    manifest,
-    activeInteropChains,
-  )
-
-  // Token pages do not honor chain selection from query params; an empty
-  // selection makes the backend default to all active chains.
-  const initialSelection: InteropSelection = { from: [], to: [] }
-
-  const data = await cache.get(
-    {
-      key: [
-        'interop',
-        'tokens',
-        req.params.slug,
-        initialSelection.from.join(','),
-        initialSelection.to.join(','),
-      ],
-      ttl: 5 * 60,
-      staleWhileRevalidate: 25 * 60,
-    },
-    () =>
-      getCachedData({
-        slug: req.params.slug,
-        initialSelection,
-        activeInteropChainIds,
-        interopChainsWithIcons,
-      }),
+  const interopChainsWithIcons = getInteropChainsWithIcons(manifest)
+  const data = await getCachedInteropTokenPage(
+    req.params.slug,
+    interopChainsWithIcons,
+    cache,
   )
 
   if (!data) return undefined
@@ -86,10 +61,59 @@ export async function getInteropTokenPageData(
         tokenData: data.tokenData,
         apiSelection: data.apiSelection,
         interopChains: interopChainsWithIcons,
-        initialSelection,
+        initialSelection: ALL_CHAINS_SELECTION,
       },
     },
   }
+}
+
+/** The markdown alternate of the page, built from the same cached data as the HTML. */
+export async function getInteropTokenMarkdown(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+): Promise<string | undefined> {
+  const data = await getCachedInteropTokenPage(
+    slug,
+    getInteropChainsWithIcons(manifest),
+    cache,
+  )
+  return data && renderInteropTokenMarkdown(data)
+}
+
+// Token pages do not honor chain selection from query params; an empty
+// selection makes the backend default to all active chains.
+const ALL_CHAINS_SELECTION: InteropSelection = { from: [], to: [] }
+
+function getInteropChainsWithIcons(manifest: Manifest) {
+  return mapInteropChainsToWithIcons(manifest, getActiveInteropChains())
+}
+
+function getCachedInteropTokenPage(
+  slug: string,
+  interopChainsWithIcons: InteropChainWithIcon[],
+  cache: InMemoryCache,
+) {
+  return cache.get(
+    {
+      key: [
+        'interop',
+        'tokens',
+        slug,
+        ALL_CHAINS_SELECTION.from.join(','),
+        ALL_CHAINS_SELECTION.to.join(','),
+      ],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () =>
+      getCachedData({
+        slug,
+        initialSelection: ALL_CHAINS_SELECTION,
+        activeInteropChainIds: interopChainsWithIcons.map((chain) => chain.id),
+        interopChainsWithIcons,
+      }),
+  )
 }
 
 async function getCachedData({
@@ -122,15 +146,9 @@ async function getCachedData({
     getRelationsGraph(token.id),
   ])
 
-  const deploymentsCount =
-    relationsGraph?.nodes.reduce(
-      (sum, node) => sum + node.deployments.length,
-      0,
-    ) ?? 0
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
-    deploymentsCount,
     relationsGraph,
   )
 

@@ -3,7 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
+import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -74,7 +74,11 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       metadata: getMetadata(manifest, {
         name: details.name,
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
-        description: getProjectMetadataDescription(details),
+        description: getPrivacyMetadataDescription({
+          name: details.name,
+          category: details.category.label,
+          description: details.display.description,
+        }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
         url: `/privacy/projects/${details.slug}`,

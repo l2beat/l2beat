@@ -23,5 +23,10 @@
     "hash": "0x2f718e8f9028fd6ca3bfa90dbf6f309f933824cd21d199579903acd45da577f5",
     "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
     "blockNumber": 24878444
+  },
+  "TimelockController_OZv5.7": {
+    "hash": "0x3d36d493b22d28ce536d4901653b65ba94a6a7389499578f0298434341ba8fbf",
+    "address": "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6",
+    "blockNumber": 25979879
   }
 }

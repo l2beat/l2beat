@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x5c05953b400f15f4319498a44d66c6f4b431282d
+
+# Diff at Tue, 29 Sep 2026 17:46:59 GMT:
+
+- id: b9d9711d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1765550969
+- current timestamp: 1765550969
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765550969 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xF014d8028A7028352baD6226A4894Ae596e2846c","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752"}]}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0xF014d8028A7028352baD6226A4894Ae596e2846c","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x7c275335425ff25b3c2f0bc1fe4aff4e6cce1534
 
 # Diff at Wed, 23 Sep 2026 05:48:38 GMT:

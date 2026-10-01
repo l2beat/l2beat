@@ -1,9 +1,11 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { env } from '~/env'
 import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
   type MarkdownAlternatePath,
+  type MarkdownLink,
   type MarkdownSection,
   renderMarkdown,
 } from './MarkdownAlternatesRouter'
@@ -305,6 +307,13 @@ const PAGE_SECTIONS: MarkdownSection[] = [
   },
 ]
 
+const DEFI_PROJECT_MARKDOWN_PAGE: MarkdownLink = {
+  name: 'DeFi project',
+  path: '/defi/projects/{slug}.md',
+  description:
+    'One DeFi protocol as markdown: warnings, description and external dependencies.',
+}
+
 const MARKDOWN_PAGES_SECTION: MarkdownSection = {
   heading: 'Markdown pages',
   links: [
@@ -315,11 +324,37 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts. Prefer this URL: the HTML page URL also answers Accept: text/markdown, but an edge cache may serve it HTML.',
     },
     {
+      name: 'Data availability project',
+      path: '/data-availability/projects/{layer}/{bridge}.md',
+      description:
+        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
+    },
+    {
       name: 'Privacy protocol',
       path: '/privacy/projects/{slug}.md',
       description:
         'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
+    {
+      name: 'Interop protocol',
+      path: '/interop/protocols/{slug}.md',
+      description:
+        'One bridge as markdown: last 24h volume, top tokens, chains and routes.',
+    },
+    {
+      name: 'ZK catalog project',
+      path: '/zk-catalog/{slug}.md',
+      description:
+        'One proving system: trusted setup risks, verifier IDs and deployments, program hashes.',
+    },
+    {
+      name: 'Interop token',
+      path: '/interop/tokens/{slug}.md',
+      description:
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the token id, the segment right after /interop/tokens/ in a token page URL.',
+    },
+    // Behind the same flag as the pages: listed while off, this would be a 404.
+    ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),
   ],
 }
 

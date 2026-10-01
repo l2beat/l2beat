@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xdd2cf4e50f735676bd9df76faf6aed14a0e8be1a
+
+# Diff at Wed, 30 Sep 2026 13:53:29 GMT:
+
+- id: b58d30a9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1790078329
+- current timestamp: 1790776285
+
+## Description
+
+New proposal, reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8c49f2c8bbf29 added reproduced program hashes.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        40
++        41
+      values.proposalIds.40:
++        "609192021977025249345447570106396801273767657512"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
+      values.proposalCount:
+-        25
++        27
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
++        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
+Generated with discovered.json: 0xfc11d74360ada478a3dbe79ae86e4e2667feca2a
+
+# Diff at Wed, 30 Sep 2026 07:45:37 GMT:
+
+- id: 5c7a9937
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790078329
+- current timestamp: 1790078329
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790078329 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
 Generated with discovered.json: 0x7240d255bb31e3d673fd8580c9e25aff1fc3e122
 
 # Diff at Tue, 22 Sep 2026 13:48:20 GMT:

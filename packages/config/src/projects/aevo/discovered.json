@@ -2231,7 +2231,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -2244,7 +2244,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25846594 },
-  "permissionsConfigHash": "0xaa2bdff83508ab4d5e4ba83c7c8113d22cc6a616665e50861ec22059217119c0",
+  "permissionsConfigHash": "0xf137245ec7e08861b387eac22e4db9ef3dbbc221ecb02716b3c28687eab6037a",
   "permissions": {
     "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019": {
       "directlyReceivedPermissions": [
@@ -2308,6 +2308,12 @@
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
           "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "interact",

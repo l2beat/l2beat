@@ -32,6 +32,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_GARDEN_ENABLED: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
   CLIENT_SIDE_TOKENS_PAGE: featureFlag.default(false),
+  CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)
@@ -150,5 +151,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
     CLIENT_SIDE_TOKENS_PAGE: process.env.CLIENT_SIDE_TOKENS_PAGE,
+    CLIENT_SIDE_OSSIFICATION_ENABLED:
+      process.env.CLIENT_SIDE_OSSIFICATION_ENABLED,
   }
 }

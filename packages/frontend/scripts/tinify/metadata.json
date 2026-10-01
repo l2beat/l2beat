@@ -1660,5 +1660,6 @@
   "static/meta-images/zk-catalog/projects/zcash/opengraph-image.png": "185a512253f4a84f3d46983eb96928d8",
   "static/meta-images/publications/privacy-adversaries-banner.png": "4ab7682964e699e8790fcb94b287ceff",
   "static/icons/monero-cake-wallet.png": "f89fb53c67150ccce59166c7487dc75c",
-  "static/meta-images/privacy/projects/monero-cake-wallet/opengraph-image.png": "408c06b6fcef8db017ce810943f61114"
+  "static/meta-images/privacy/projects/monero-cake-wallet/opengraph-image.png": "408c06b6fcef8db017ce810943f61114",
+  "static/meta-images/ossification/opengraph-image.png": "91a3ca4a8e017d0f4d0096cdd2ecc930"
 }

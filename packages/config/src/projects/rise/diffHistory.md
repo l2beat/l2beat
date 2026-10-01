@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x4af7062c99306a996411eed4f36c2e50126e2a0e
+
+# Diff at Tue, 29 Sep 2026 17:46:59 GMT:
+
+- id: 9fa99172
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1785249452
+- current timestamp: 1785249452
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785249452 (main branch discovery), not current.
+
+```diff
+    contract Rise ProxyAdminOwner Multisig (eth:0x9196464e3F828A50233C20732fa6898F4317002c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xa0866ca593e7894e3b793519d62d6ec1e11a9dc3
 
 # Diff at Wed, 23 Sep 2026 05:49:05 GMT:
