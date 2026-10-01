@@ -186,7 +186,7 @@ function NotTrackedStat({
       className={className}
       title={title}
       value={
-        <div className="flex flex-col md:gap-1">
+        <div className="flex flex-col max-md:items-end max-md:text-right md:gap-1">
           <span>{COPY.notTracked}</span>
           <span className="font-medium text-paragraph-12 text-secondary leading-normal">
             {description}
