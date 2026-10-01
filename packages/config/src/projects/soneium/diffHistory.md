@@ -1,29 +1,25 @@
-Generated with discovered.json: 0x1cd515d5817e0ad789ad9fa0d09980788c127c14
+Generated with discovered.json: 0x6354f627e97971c1d8fd070469bf67f8a8a2c401
 
-# Diff at Wed, 30 Sep 2026 22:47:39 GMT:
+# Diff at Thu, 01 Oct 2026 13:47:05 GMT:
 
 - id: 21232ddf
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789044630
-- current timestamp: 1790808247
+- current timestamp: 1790862358
 
 ## Description
 
-OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed in a single transaction on 2026-09-24. `lastUsedOPCMVersion` 7.1.17 → 8.0.1.
+OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed 2026-09-24.
 
-The respected game type changed 1 → 5 (PERMISSIONED_CANNON → SUPER_PERMISSIONED). The factory's type 0, 1 and 8 implementations were cleared and type 5 (SuperPermissionedDisputeGame v1.1.0, no bond) was registered as the only game type; no permissionless game type is installed. Super games commit to a super root anchored to an L2 timestamp instead of an output root at a block number, so the starting anchor sequence number changed from 5084269 to 1788848425.
+State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 5084269 to 1788848425. The format carries per-chain roots for a future interop set; today each game commits only to this chain.
 
-The type 5 game exposes only a proposer and an anchor state registry. It runs no VM, so the MIPS and PreimageOracle contracts are no longer referenced, and it has no challenger, so the OP Foundation Operations Safe no longer holds a challenger role. The old FaultDisputeGame and PermissionedDisputeGame implementations were deregistered.
+The respected game type changed 1 → 5, PERMISSIONED_CANNON to SUPER_PERMISSIONED. Game types 0, 1 and 8 were cleared and type 5 is the only type registered; no permissionless type is installed.
 
-SystemConfig v3.14.2 → v4.0.0: the `batchInbox()` getter and `setGasConfig()` were removed, and the batch inbox address now lives only in the rollup config.
+The type 5 game defines only a proposer and an anchor state registry. It carries no bond, runs no VM and has no challenger, so proposals cannot be disputed by execution and the OP Foundation Operations Safe no longer holds a challenger role. Validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.
 
-OptimismPortal2 v5.6.1 → v5.8.0: `SUPER_PERMISSIONED_CANNON` was renamed to `SUPER_PERMISSIONED` with game type 5 unchanged, and zero-address and lockbox-authorization checks were added on migration.
+SystemConfig v3.14.2 → v4.0.0 removes the `batchInbox()` getter; the batch inbox address now lives only in the rollup config.
 
-SuperchainConfig v2.4.2 → v2.4.3: version bump only.
-
-Each upgraded proxy was routed through a StorageSetter and back within the same transaction.
-
-The Soneium Multisig moved from Safe 1.4.1 to Safe 1.5.0 and its signer set was replaced: 6 members reduced to 5, threshold unchanged at 3 (3 of 6 → 3 of 5).
+The Soneium Multisig moved from Safe 1.4.1 to Safe 1.5.0 and its signer set was replaced: 6 members reduced to 5, threshold unchanged at 3.
 
 Version changes and implementation diffs:
 
@@ -31,6 +27,7 @@ Version changes and implementation diffs:
 - SystemConfig 3.14.2 -> 4.0.0: https://disco.l2beat.com/diff/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9/eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA
 - OptimismPortal2 5.6.1 -> 5.8.0: https://disco.l2beat.com/diff/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2/eth:0x1005217ad392DC64CEf501FA1777A27D42166748
 - SuperchainConfig 2.4.2 -> 2.4.3: https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504
+
 ## Watched changes
 
 ```diff

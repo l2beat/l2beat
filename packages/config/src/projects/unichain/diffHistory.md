@@ -1,23 +1,27 @@
-Generated with discovered.json: 0xfdaa3515a26002760d2f96efc21bfac5fb49889d
+Generated with discovered.json: 0xce28dfd9537905567b136b895cb008fa836dde5b
 
-# Diff at Thu, 01 Oct 2026 09:48:09 GMT:
+# Diff at Thu, 01 Oct 2026 13:47:11 GMT:
 
 - id: cd925ce0
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1783324564
-- current timestamp: 1790848022
+- current timestamp: 1790862365
 
 ## Description
 
-OP Contracts Upgrade 19b "Karst" (op-contracts/v7.0.0) on 2026-07-06, L1: ETHLockbox v1.2.0 → v1.3.1, OptimismPortal2 to v5.6.1, AnchorStateRegistry v3.7.0 → v3.9.0, DisputeGameFactory v1.4.0 → v1.6.1, SystemConfig v3.13.1 → v3.14.2, L1CrossDomainMessenger v2.11.0 → v2.11.1, L1ERC721Bridge v2.9.0 → v2.9.1, L1StandardBridge v2.8.0 → v2.8.2 and OptimismMintableERC20Factory v1.10.2 → v1.11.0.
+OP Contracts Upgrade 19b "Karst" (op-contracts/v7.0.0) on 2026-07-06 upgraded the L1 contracts to their v7 implementations.
 
-Karst L2 hardfork activation on 2026-07-08 16:00:01 UTC: every L2 predeploy was upgraded. Most now inherit `ProxyAdminOwnedBase`, gating privileged functions to the proxy's ProxyAdmin or its owner. L2CrossDomainMessenger v2.1.1-beta.1 → v2.2.1, L2StandardBridge v1.11.1-beta.1 → v1.13.2, L2ToL1MessagePasser v1.1.1-beta.1 → v1.2.0, L2ERC721Bridge v1.7.1-beta.2 → v1.10.1, OptimismMintableERC20Factory v1.10.1-beta.2 → v1.11.0, OptimismMintableERC721Factory v1.4.1-beta.1 → v1.5.1, SequencerFeeVault and both fee vaults v1.5.0-beta.2 → v1.6.1, SchemaRegistry v1.3.1-beta.1 → v1.3.1-beta.2 and EAS v1.4.1-beta.1 → v1.4.1-beta.3.
+The Karst L2 hardfork activated on 2026-07-08 16:00:01 UTC. Every L2 predeploy was upgraded, and most now inherit `ProxyAdminOwnedBase`, which gates privileged functions to the proxy's ProxyAdmin or its owner.
 
-OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3) on 2026-09-24. `lastUsedOPCMVersion` became 8.0.1. The respected game type changed 0 → 9 (CANNON → SUPER_CANNON_KONA). The factory's type 0, 1 and 8 implementations were cleared and two super games were registered: type 9 (SuperFaultDisputeGame v0.8.0, 0.08 ETH bond, max game depth 73, split depth 30, 3.5 day clock) and type 5 (SuperPermissionedDisputeGame v1.1.0, no bond). Super games commit to a super root anchored to an L2 timestamp instead of an output root at a block number, so the starting anchor sequence number changed from 22024228 to 1788848651. SystemConfig reached v4.0.0, dropping the `batchInbox()` getter and `setGasConfig()`; OptimismPortal2 reached v5.8.0; SuperchainConfig v2.4.2 → v2.4.3.
+OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3) followed on 2026-09-24. State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 22024228 to 1788848651. The format carries per-chain roots for a future interop set; today each game commits only to this chain.
 
-The chain moved onto the shared Superchain fault proof contracts: the MIPS VM, the PreimageOracle and the DelayedWETH bond vault are now the same instances OP Mainnet uses, replacing Unichain's own. The two previous DelayedWETH contracts were replaced by one. The old FaultDisputeGame and PermissionedDisputeGame implementations were deregistered, and because the type 5 game has no challenger, the OP Foundation Operations Safe no longer holds a challenger role.
+The respected game type changed 0 → 9, CANNON to SUPER_CANNON_KONA. Proposing and challenging remain permissionless, with a 0.08 ETH bond, a 3.5 day clock, max game depth 73 and split depth 30. The fault proof program is the interop variant of kona v1.7.0-rc.2. Game types 0, 1 and 8 were cleared; the permissioned fallback is now type 5, SUPER_PERMISSIONED, which carries no bond, defines only a proposer and has no challenger.
 
-The ProxyAdmin owner moved from the UnichainProxyAdminOwner to the SuperchainProxyAdminOwner, which now holds upgrade rights over the L1 contracts. The Unichain-specific owner Safe, its LivenessModule and LivenessGuard are no longer part of the permission graph.
+The chain moved onto the shared Superchain MIPS, PreimageOracle and DelayedWETH instances, replacing its own, and the two previous DelayedWETH contracts were replaced by one.
+
+SystemConfig reached v4.0.0, removing the `batchInbox()` getter; the batch inbox address now lives only in the rollup config.
+
+The ProxyAdmin owner moved from the UnichainProxyAdminOwner to the SuperchainProxyAdminOwner, on L1 and through its L2 alias. The Unichain-specific owner Safe, its LivenessModule and LivenessGuard are no longer part of the permission graph.
 
 Version changes and implementation diffs:
 
@@ -1244,7 +1248,7 @@ Version changes and implementation diffs:
 ```diff
 +   Status: CREATED
     contract SuperFaultDisputeGame (eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208) [opstack/SuperFaultDisputeGame]
-    +++ description: Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, which commits to the state of every chain in the interop set at a given L2 timestamp, rather than a single chain's output root at a block number. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.
+    +++ description: Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, a state commitment addressed by an L2 timestamp rather than by a block number. The format carries per-chain roots for a future interop set; today each game commits only to its own chain. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.
 ```
 
 ```diff

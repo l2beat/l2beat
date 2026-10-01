@@ -1,33 +1,30 @@
-Generated with discovered.json: 0x35500636e62f29dbf6b42e0b5f38048fbfb68ad8
+Generated with discovered.json: 0xb0c84a29a199a5716eee766539b20d7741eb8503
 
-# Diff at Wed, 30 Sep 2026 22:47:36 GMT:
+# Diff at Thu, 01 Oct 2026 13:46:52 GMT:
 
 - id: 637b2364
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789044333
-- current timestamp: 1790808234
+- current timestamp: 1790862344
 
 ## Description
 
-OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed in a single transaction on 2026-09-24. `lastUsedOPCMVersion` 7.1.17 → 8.0.1.
+OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed 2026-09-24.
 
-The respected game type changed 8 → 9 (CANNON_KONA → SUPER_CANNON_KONA). The factory's type 0, 1 and 8 implementations were cleared and two super games were registered: type 9 (SuperFaultDisputeGame v0.8.0, 0.08 ETH bond, max game depth 73, split depth 30, 3.5 day clock) and type 5 (SuperPermissionedDisputeGame v1.1.0, no bond). Super games commit to a super root anchored to an L2 timestamp instead of an output root at a block number, so the starting anchor sequence number changed from 138585637 to 1788842855. The type 9 game runs the same MIPS VM and PreimageOracle and uses the same DelayedWETH as before.
+State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 138585637 to 1788842855. The format carries per-chain roots for a future interop set; today each game commits only to this chain.
 
-The old FaultDisputeGame and PermissionedDisputeGame implementations were deregistered. The type 5 game exposes only a proposer and an anchor state registry: it has no challenger, so the OP Foundation Operations Safe no longer holds a challenger role in the dispute system.
+The respected game type changed 8 → 9, CANNON_KONA to SUPER_CANNON_KONA. Proposing and challenging remain permissionless, with a 0.08 ETH bond, a 3.5 day clock, max game depth 73 and split depth 30. The fault proof program is the interop variant of kona v1.7.0-rc.2.
 
-SystemConfig v3.14.2 → v4.0.0: the `batchInbox()` getter and `setGasConfig()` were removed, and the batch inbox address now lives only in the rollup config.
+Game types 0, 1 and 8 were cleared. The permissioned fallback is now type 5, SUPER_PERMISSIONED, which carries no bond and defines only a proposer. It has no challenger, so the OP Foundation Operations Safe no longer holds a challenger role.
 
-OptimismPortal2 v5.6.1 → v5.8.0: `SUPER_PERMISSIONED_CANNON` was renamed to `SUPER_PERMISSIONED` with game type 5 unchanged, and zero-address and lockbox-authorization checks were added on migration.
-
-SuperchainConfig v2.4.2 → v2.4.3: version bump only.
-
-Each upgraded proxy was routed through a StorageSetter and back within the same transaction.
+SystemConfig v3.14.2 → v4.0.0 removes the `batchInbox()` getter; the batch inbox address now lives only in the rollup config.
 
 Version changes and implementation diffs:
 
 - SystemConfig 3.14.2 -> 4.0.0: https://disco.l2beat.com/diff/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9/eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA
 - SuperchainConfig 2.4.2 -> 2.4.3: https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504
 - OptimismPortal2 5.6.1 -> 5.8.0: https://disco.l2beat.com/diff/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2/eth:0x1005217ad392DC64CEf501FA1777A27D42166748
+
 ## Watched changes
 
 ```diff
@@ -416,7 +413,7 @@ Version changes and implementation diffs:
 ```diff
 +   Status: CREATED
     contract SuperFaultDisputeGame (eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208) [opstack/SuperFaultDisputeGame]
-    +++ description: Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, which commits to the state of every chain in the interop set at a given L2 timestamp, rather than a single chain's output root at a block number. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.
+    +++ description: Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, a state commitment addressed by an L2 timestamp rather than by a block number. The format carries per-chain roots for a future interop set; today each game commits only to its own chain. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.
 ```
 
 ```diff

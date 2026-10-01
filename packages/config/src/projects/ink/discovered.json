@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1790808242,
+  "timestamp": 1790862352,
   "configHash": "0x2c1bd7f05a41f7bd0efb53da6c070cbc3ac95a07fd962110eafe7bee4a80f556",
   "entries": [
     {
@@ -189,7 +189,7 @@
         "game9Args": "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea0000000000000000000000000000000000000000000000000000000000000000",
         "game9Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "game9Weth": "eth:0x57b4C29DAee99a28E6E86778b499361294c134eA",
-        "gameCount": 2536,
+        "gameCount": 2537,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -261,7 +261,7 @@
         "0x52b8c2fffc7402103092119f948300df046a65a04eb1c6ed82e57b7f89423dd4"
       ],
       "proxyType": "immutable",
-      "description": "Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, which commits to the state of every chain in the interop set at a given L2 timestamp, rather than a single chain's output root at a block number. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.",
+      "description": "Logic of the permissionless dispute game introduced in Upgrade 20. It proves a super root, a state commitment addressed by an L2 timestamp rather than by a block number. The format carries per-chain roots for a future interop set; today each game commits only to its own chain. When a state root is proposed, a game contract is cloned from this implementation; anyone posting the bond can challenge it.",
       "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1788049679,
@@ -644,7 +644,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26093320
+          "prevBlockNum": 26097740
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1073,7 +1073,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651392",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651421",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1857,7 +1857,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621345",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621347",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1917,7 +1917,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 5843286,
+        "blobBaseFee": 20988573,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -1926,7 +1926,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 110774789,
+        "l1BaseFee": 358869314,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2184,10 +2184,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 110774789,
+        "basefee": 358869314,
         "baseFeeScalar": 4424,
         "batcherHash": "0x0000000000000000000000006db6161fc5662450e801398bad62dd9921216b98",
-        "blobBaseFee": 5843286,
+        "blobBaseFee": 20988573,
         "blobBaseFeeScalar": 810831,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2197,17 +2197,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x73360a72acb197ae32d9c73ba094feb13b36adeb038dec4fcef984947c9bed31",
+        "hash": "0x0d3854e10c386ef91dfc18d2f594cca122d7460ee68c390a70031f17def6a294",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26093352,
+        "number": 26097846,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-        "sequenceNumber": 18,
-        "timestamp": 1790808155,
+        "sequenceNumber": 7,
+        "timestamp": 1790862275,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -4150,7 +4150,7 @@
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26093359, "ink": 57309831 },
+  "usedBlockNumbers": { "ethereum": 26097852, "ink": 57363941 },
   "permissionsConfigHash": "0xd69698c3f40a689e4c19f71253945c349c824205612f4c006722f4a20e6c5bea",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
