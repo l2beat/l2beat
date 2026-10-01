@@ -10,7 +10,7 @@ import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
 
-export const HANDLER_OR_COPY_MESSAGE =
+export const HANDLER_AND_COPY_EXCLUSIVE_MESSAGE =
   'handler and copy cannot both be defined at the same time. They are mutually exclusive.'
 
 export type StructureContractField = v.infer<typeof StructureContractField>
@@ -25,9 +25,9 @@ export const _StructureContractField = {
 }
 export const StructureContractField = v
   .object(_StructureContractField)
-  .check(hasHandlerOrCopy, HANDLER_OR_COPY_MESSAGE)
+  .check(handlerAndCopyAreExclusive, HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
 
-export function hasHandlerOrCopy(field: {
+export function handlerAndCopyAreExclusive(field: {
   handler?: unknown
   copy?: unknown
 }): boolean {

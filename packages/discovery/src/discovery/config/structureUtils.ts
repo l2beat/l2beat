@@ -9,8 +9,8 @@ import {
   unionStrings,
 } from './mergeUtils'
 import {
-  HANDLER_OR_COPY_MESSAGE,
-  hasHandlerOrCopy,
+  HANDLER_AND_COPY_EXCLUSIVE_MESSAGE,
+  handlerAndCopyAreExclusive,
   type StructureConfig,
   StructureContract,
   type StructureContractField,
@@ -60,7 +60,7 @@ export const structureFieldPolicy: MergePolicy<StructureContractField> = {
 }
 
 export function assertHandlerOrCopy(field: StructureContractField): void {
-  assert(hasHandlerOrCopy(field), HANDLER_OR_COPY_MESSAGE)
+  assert(handlerAndCopyAreExclusive(field), HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
 }
 
 function mergeStructureField(

@@ -26,8 +26,8 @@ import {
   _StructureConfig,
   _StructureContract,
   _StructureContractField,
-  HANDLER_OR_COPY_MESSAGE,
-  hasHandlerOrCopy,
+  HANDLER_AND_COPY_EXCLUSIVE_MESSAGE,
+  handlerAndCopyAreExclusive,
 } from './StructureConfig'
 import { assertHandlerOrCopy, structureFieldPolicy } from './structureUtils'
 
@@ -38,7 +38,7 @@ export const FieldLayer = v
     ..._ColorContractField,
     ..._ContractPermissionField,
   })
-  .check(hasHandlerOrCopy, HANDLER_OR_COPY_MESSAGE)
+  .check(handlerAndCopyAreExclusive, HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
 
 export type ContractLayer = v.infer<typeof ContractLayer>
 export const ContractLayer = v.object({
