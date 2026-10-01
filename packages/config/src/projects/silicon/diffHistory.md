@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x794b877da428738a19c3d6124f8880d06270ad53
+Generated with discovered.json: 0xc7473b40198ab975182b97527ce0db918bf6a881
 
 # Diff at Thu, 01 Oct 2026 12:51:16 GMT:
 
@@ -101,7 +101,7 @@ Silicon (rollupID 10) migrated from Validium to AggchainECDSAMultisig: https://d
 +        ["eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D"]
       values.aggLayerGateway:
 +        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
-+++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
++++ description: Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only).
 +++ severity: HIGH
       values.CONSENSUS_TYPE:
 +        1
@@ -130,7 +130,7 @@ Silicon (rollupID 10) migrated from Validium to AggchainECDSAMultisig: https://d
       values.version:
 +        "v1.0.0"
       fieldMeta.CONSENSUS_TYPE:
-+        {"severity":"HIGH","description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
++        {"severity":"HIGH","description":"Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."}
       fieldMeta.aggchainMultisigHash:
 +        {"severity":"HIGH"}
       fieldMeta.useDefaultSigners:

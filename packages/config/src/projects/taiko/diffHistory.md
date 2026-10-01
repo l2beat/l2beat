@@ -11,7 +11,7 @@ Generated with discovered.json: 0x4bb43a3e4f908b7a7f26772432ec7858abebc5db
 
 - Two new standard DAO proposals (25 and 26), both still open in their veto period:
   - veto ends 2026-10-04: upgrades MainnetBridge, MainnetERC20Vault, MainnetERC721Vault, MainnetERC1155Vault, registers addresses in DefaultResolver and sends an L1->L2 message.
-  - veto ends 2026-10-10: upgrades MainnetInbox, changes trusted RISC Zero image IDs and SP1 programs, changes MrEnclave values in both AutomataDcapV3Attestation contracts and deletes SGX instances in both SecureSgxVerifiers.
+  - veto ends 2026-10-10: upgrades MainnetInbox, changes trusted RISC Zero image IDs and SP1 programs, changes MrEnclave values in both AutomataDcapV3Attestation contracts and deletes SGX instances in both SecureSgxVerifiers. Reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8c49f2c8bbf29.
 
 ## Watched changes
 

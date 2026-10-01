@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xb155599ad82e7f44d33f8d8ce9b01649c95f92bd
+Generated with discovered.json: 0xd316a9db5756bee777832d253adbecf8b1a6ee95
 
 # Diff at Thu, 01 Oct 2026 12:51:36 GMT:
 
@@ -9,7 +9,7 @@ Generated with discovered.json: 0xb155599ad82e7f44d33f8d8ce9b01649c95f92bd
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template.
+Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template and its CONSENSUS_TYPE field description was clarified.
 
 ## Config/verification related changes
 
@@ -22,6 +22,15 @@ discovery. Values are for block 1767608184 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.8:
 +        {"permission":"interact","from":"eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) [polygon-cdk/AggchainECDSAMultisig] {
+    +++ description: System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.CONSENSUS_TYPE.description:
+-        "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
++        "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."
     }
 ```
 
