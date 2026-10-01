@@ -25,7 +25,7 @@ export function AddressSelectionPage() {
   const [submitted, setSubmitted] = useState(false)
 
   function changeBefore(next: ChainAddress) {
-    if (after.chain === before.chain) {
+    if (after.address.trim() === '' && after.chain === before.chain) {
       setAfter({ ...after, chain: next.chain })
     }
     setBefore(next)
