@@ -1,7 +1,8 @@
-import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -40,8 +41,30 @@ export function DaFlowsStats({
             isLoading={isLoading}
           />
           <Stat
-            title="Projects posting"
-            value={formatInteger(graph?.posters.length ?? 0)}
+            title="Projects tracked"
+            value={
+              <ProjectIconList
+                projects={(graph?.posters ?? []).flatMap((poster) =>
+                  poster.iconUrl
+                    ? [
+                        {
+                          id: poster.id,
+                          name: poster.name,
+                          iconUrl: poster.iconUrl,
+                          href: poster.href,
+                        },
+                      ]
+                    : [],
+                )}
+                dialog={{
+                  title: 'Projects tracked',
+                  description: `Search for projects posting to ${daLayerName}`,
+                  searchPlaceholder: 'Start typing to find project...',
+                  emptyText: 'No projects found.',
+                }}
+                className="h-7 font-medium text-sm"
+              />
+            }
             isLoading={isLoading}
           />
         </div>

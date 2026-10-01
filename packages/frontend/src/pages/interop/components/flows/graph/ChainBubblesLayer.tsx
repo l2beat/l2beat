@@ -11,6 +11,7 @@ import type {
   FlowsGraphLayout,
 } from './utils/computeGraphLayout'
 import { useFlowsGraph } from './utils/FlowsGraphContext'
+import { getCenterSquare } from './utils/getCenterSquare'
 import { getChainColor } from './utils/getChainColor'
 
 interface ChainBubblesLayerProps {
@@ -187,7 +188,7 @@ interface CenterBubbleProps {
 
 /**
  * The hub of the graph. Every spoke meets it, so there is no free space
- * around it for a label: the icon and the value sit inside the disc.
+ * around it for a label: the icon and the value sit inside its square.
  */
 function CenterBubble({
   chain,
@@ -197,16 +198,19 @@ function CenterBubble({
   isSmallScreen,
 }: CenterBubbleProps) {
   const { x, y, radius } = layout
+  const square = getCenterSquare(layout)
   const iconSize = radius * (caption ? 0.8 : 1.1)
   const iconY = caption ? y - radius * 0.62 : y - iconSize / 2
 
   return (
     <g>
       <title>{chain.name}</title>
-      <circle
-        cx={x}
-        cy={y}
-        r={radius}
+      <rect
+        x={square.x}
+        y={square.y}
+        width={square.size}
+        height={square.size}
+        rx={square.cornerRadius}
         fill={color}
         stroke={color}
         fillOpacity={0.15}

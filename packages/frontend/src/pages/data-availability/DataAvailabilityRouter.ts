@@ -5,12 +5,8 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
-import { getDataAvailabilityLivenessData } from './liveness/getDataAvailabilityLivenessData'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
-import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
-import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabilityThroughputData'
 
 export function createDataAvailabilityRouter(
   manifest: Manifest,
@@ -19,70 +15,33 @@ export function createDataAvailabilityRouter(
 ) {
   const router = express.Router()
 
-  router.get('/data-availability', (_req, res) => {
-    res.redirect(301, '/data-availability/summary')
+  // The section became Blobs and kept only its summary, so every page it
+  // used to have sends to it
+  router.get(
+    [
+      '/data-availability',
+      '/data-availability/summary',
+      '/data-availability/risk',
+      '/data-availability/throughput',
+      '/data-availability/liveness',
+      '/data-availability/archived',
+    ],
+    (_req, res) => {
+      res.redirect(301, '/blobs')
+    },
+  )
+  router.get('/data-availability/summary.md', (_req, res) => {
+    res.redirect(301, '/blobs.md')
   })
 
-  router.get('/data-availability/summary', async (req, res) => {
+  router.get('/blobs', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['data-availability', 'summary'],
+        key: ['blobs'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
-    )
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/data-availability/risk', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['data-availability', 'risk'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getDataAvailabilityRiskData(manifest, req.originalUrl),
-    )
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/data-availability/throughput', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['data-availability', 'throughput'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
-    )
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/data-availability/liveness', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['data-availability', 'liveness'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getDataAvailabilityLivenessData(manifest, req.originalUrl),
-    )
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/data-availability/archived', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['data-availability', 'archived'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)

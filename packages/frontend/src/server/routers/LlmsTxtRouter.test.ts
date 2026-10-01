@@ -38,7 +38,7 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/layer2s/liveness',
       'https://l2beat.com/layer2s/costs',
       'https://l2beat.com/stages',
-      'https://l2beat.com/data-availability/summary',
+      'https://l2beat.com/blobs',
       'https://l2beat.com/interop/summary',
       'https://l2beat.com/privacy/summary',
       'https://l2beat.com/zk-catalog',

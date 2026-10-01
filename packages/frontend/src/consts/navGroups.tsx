@@ -145,41 +145,13 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ),
   },
   {
-    type: 'multiple',
-    title: 'Data Availability',
-    match: 'data-availability',
+    type: 'single',
+    title: 'Blobs',
+    match: 'blobs',
+    href: '/blobs',
     icon: (
       <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
     ),
-    links: [
-      [
-        {
-          title: 'Summary',
-          href: '/data-availability/summary',
-        },
-        {
-          title: 'Risk Analysis',
-          shortTitle: 'Risks',
-          href: '/data-availability/risk',
-        },
-        {
-          title: 'Throughput',
-          shortTitle: 'Throughput',
-          href: '/data-availability/throughput',
-        },
-        {
-          title: 'Liveness',
-          shortTitle: 'Liveness',
-          href: '/data-availability/liveness',
-        },
-      ],
-      [
-        {
-          title: 'Archived',
-          href: '/data-availability/archived',
-        },
-      ],
-    ],
   },
   {
     type: 'single',

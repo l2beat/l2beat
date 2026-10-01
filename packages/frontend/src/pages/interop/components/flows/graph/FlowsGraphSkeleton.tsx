@@ -3,6 +3,7 @@ import { BackgroundRoads } from './BackgroundRoads'
 import { FlowsLogo } from './FlowsLogo'
 import { computeGraphLayout } from './utils/computeGraphLayout'
 import { useFlowsGraph } from './utils/FlowsGraphContext'
+import { getCenterSquare } from './utils/getCenterSquare'
 
 interface FlowsGraphSkeletonProps {
   size: number
@@ -57,6 +58,20 @@ export function FlowsGraphSkeleton({
       {selectedChains.map((chainId) => {
         const nodeLayout = layout.get(chainId)
         if (!nodeLayout) return null
+        if (chainId === centerChainId) {
+          const square = getCenterSquare(nodeLayout)
+          return (
+            <rect
+              key={chainId}
+              x={square.x}
+              y={square.y}
+              width={square.size}
+              height={square.size}
+              rx={square.cornerRadius}
+              className="fill-zinc-100 dark:fill-zinc-900"
+            />
+          )
+        }
         return (
           <circle
             key={chainId}

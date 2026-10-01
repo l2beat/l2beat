@@ -68,24 +68,9 @@ export const pageLoaders = {
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
-  DataAvailabilityRiskPage: async () =>
-    (await import('./data-availability/risk/DataAvailabilityRiskPage'))
-      .DataAvailabilityRiskPage,
-  DataAvailabilityThroughputPage: async () =>
-    (
-      await import(
-        './data-availability/throughput/DataAvailabilityThroughputPage'
-      )
-    ).DataAvailabilityThroughputPage,
-  DataAvailabilityLivenessPage: async () =>
-    (await import('./data-availability/liveness/DataAvailabilityLivenessPage'))
-      .DataAvailabilityLivenessPage,
   DataAvailabilityProjectPage: async () =>
     (await import('./data-availability/project/DataAvailabilityProjectPage'))
       .DataAvailabilityProjectPage,
-  DataAvailabilityArchivedPage: async () =>
-    (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
-      .DataAvailabilityArchivedPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>

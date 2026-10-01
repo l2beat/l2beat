@@ -57,7 +57,7 @@ export function HomeStatsStrip({
     {
       label: 'Data Availability',
       metric: { count: counts.dataAvailability, unit: 'projects' },
-      href: '/data-availability/summary',
+      href: '/blobs',
       icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
       iconBgClassName: 'bg-blue-500/10',
     },

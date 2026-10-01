@@ -6,7 +6,6 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { useIncludeL2Only } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -17,6 +16,7 @@ import {
 } from '~/utils/range/range'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
+import { useIncludeL2Only } from './DaThroughputContext'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 import {
   type ProjectChartDataWithConfiguredThroughput,

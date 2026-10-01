@@ -145,38 +145,15 @@ const PAGE_SECTIONS: MarkdownSection[] = [
     links: [
       {
         name: 'All data availability layers',
-        path: markdownAlternate('/data-availability/summary.md'),
+        path: markdownAlternate('/blobs.md'),
         description:
           'Markdown list of every tracked data availability layer and bridge with page URL.',
       },
       {
-        name: 'Summary',
-        path: staticPagePath('/data-availability/summary'),
+        name: 'Blobs',
+        path: staticPagePath('/blobs'),
         description:
-          'Data availability layers and their bridges to Ethereum, with economic security, throughput and the projects using each.',
-      },
-      {
-        name: 'Risk analysis',
-        path: staticPagePath('/data-availability/risk'),
-        description:
-          'Per-layer and per-bridge risks: economic security, fraud detection, committee security, upgradeability and relayer failure.',
-      },
-      {
-        name: 'Throughput',
-        path: staticPagePath('/data-availability/throughput'),
-        description:
-          'Data posted per day to each layer, its maximum capacity and which projects post the most.',
-      },
-      {
-        name: 'Liveness',
-        path: staticPagePath('/data-availability/liveness'),
-        description:
-          'How regularly data is posted to each layer and whether its bridge keeps up.',
-      },
-      {
-        name: 'Archived layers',
-        path: staticPagePath('/data-availability/archived'),
-        description: 'Data availability layers no longer tracked.',
+          'Ethereum blobs: value secured by the L2s that post to Ethereum, data posted per day against the blob target, and which projects post it.',
       },
       {
         name: 'Data availability risk framework',

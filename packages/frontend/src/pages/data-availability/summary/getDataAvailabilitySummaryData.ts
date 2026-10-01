@@ -13,25 +13,31 @@ export async function getDataAvailabilitySummaryData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, { publicSystems }, daFlows, ethereum] =
-    await Promise.all([
-      getAppLayoutProps(),
-      getDaSummaryEntries(),
-      getDaFlowsProjects(ProjectId.ETHEREUM),
-      ps.getProject({
-        id: ProjectId.ETHEREUM,
-        select: ['daLayer'],
-        optional: ['milestones'],
-      }),
-    ])
+  const [
+    appLayoutProps,
+    { publicSystems },
+    daFlows,
+    ethereum,
+    projectsWithColors,
+  ] = await Promise.all([
+    getAppLayoutProps(),
+    getDaSummaryEntries(),
+    getDaFlowsProjects(ProjectId.ETHEREUM),
+    ps.getProject({
+      id: ProjectId.ETHEREUM,
+      select: ['daLayer'],
+      optional: ['milestones'],
+    }),
+    ps.getProjects({ select: ['colors'] }),
+  ])
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability Summary - L2BEAT',
+        title: 'Blobs - L2BEAT',
         description:
-          'Get an overview of the data availability solutions powering Ethereum scaling projects.',
+          'See how much data L2s post to Ethereum blobs, against the blob target, and the value they secure.',
         url,
         openGraph: {
           image: '/meta-images/data-availability/summary/opengraph-image.png',
@@ -42,12 +48,17 @@ export async function getDataAvailabilitySummaryData(
       page: 'DataAvailabilitySummaryPage',
       props: {
         ...appLayoutProps,
-        ethereum: publicSystems.find((s) => s.id === ProjectId.ETHEREUM),
+        slashable: publicSystems.find((s) => s.id === ProjectId.ETHEREUM)
+          ?.economicSecurity,
         tvsProjectIds: getDaTvsProjectIds(publicSystems),
         throughput: ethereum && {
           project: toChartProject(ethereum),
           configuredThroughputs: ethereum.daLayer.throughput ?? [],
           milestones: ethereum.milestones ?? [],
+          // the per-project chart keys its series by project name
+          customColors: Object.fromEntries(
+            projectsWithColors.map((p) => [p.name, p.colors.primary.light]),
+          ),
         },
         daFlows,
       },

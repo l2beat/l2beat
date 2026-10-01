@@ -3,15 +3,15 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import {
+  IncludeL2OnlyProvider,
+  useIncludeL2Only,
+} from '~/components/chart/data-availability/DaThroughputContext'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
-import {
-  IncludeL2OnlyProvider,
-  useIncludeL2Only,
-} from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'

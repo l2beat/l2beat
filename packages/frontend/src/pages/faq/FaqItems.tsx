@@ -77,7 +77,7 @@ export const faqItems: FaqItem[] = [
     question: 'What about data availability? Why is it important?',
     answer: [
       "To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata).",
-      "For more details on data availability and its importance in security of scaling protocols, see our [DA page](https://l2beat.com/data-availability/summary), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
+      "For more details on data availability and its importance in security of scaling protocols, see our [Blobs page](https://l2beat.com/blobs), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
     ],
   },
   {

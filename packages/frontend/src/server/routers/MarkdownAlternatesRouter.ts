@@ -57,7 +57,7 @@ export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
     getSections: getScalingSections,
   },
   {
-    path: '/data-availability/summary.md',
+    path: '/blobs.md',
     title: 'L2BEAT data availability layers',
     summary:
       'Every data availability layer tracked by L2BEAT, one entry per bridge to Ethereum plus one for use without a bridge.',

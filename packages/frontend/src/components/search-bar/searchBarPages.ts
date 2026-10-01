@@ -84,33 +84,9 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'da',
-    name: 'Summary',
-    tags: ['pages', 'da', 'data', 'availability'],
-    href: '/data-availability/summary',
-  },
-  {
-    category: 'da',
-    name: 'Risk Analysis',
-    tags: ['pages', 'da', 'data', 'availability', 'risks'],
-    href: '/data-availability/risk',
-  },
-  {
-    category: 'da',
-    name: 'Throughput',
-    tags: ['pages', 'da', 'data', 'availability', 'throughput'],
-    href: '/data-availability/throughput',
-  },
-  {
-    category: 'da',
-    name: 'Liveness',
-    tags: ['pages', 'da', 'data', 'availability', 'liveness'],
-    href: '/data-availability/liveness',
-  },
-  {
-    category: 'da',
-    name: 'Archived',
-    tags: ['pages', 'da', 'data', 'availability', 'archived'],
-    href: '/data-availability/archived',
+    name: 'Blobs',
+    tags: ['pages', 'da', 'data', 'availability', 'blobs', 'throughput'],
+    href: '/blobs',
   },
   {
     category: 'interop',
