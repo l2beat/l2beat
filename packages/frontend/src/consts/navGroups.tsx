@@ -8,6 +8,7 @@ import { DefiIcon } from '~/icons/pages/Defi'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
+import { OssificationIcon } from '~/icons/pages/Ossification'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
@@ -92,6 +93,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
       ],
     ]),
+  },
+  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
+    type: 'single',
+    title: 'Ossification',
+    match: 'ossification',
+    href: '/ossification',
+    icon: (
+      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
   },
   {
     type: 'multiple',

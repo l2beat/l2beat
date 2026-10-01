@@ -38,6 +38,7 @@ export function measureOssification(
     criticalChangesPerYear: clusteredEventCount / (windowSeconds / YEAR),
     clusteredEventCount,
     windowSeconds,
+    criticalChanges: clusterStarts(timestamps),
     perimeterResets: clusterStarts(
       [...timestamps, ...input.resets].sort((a, b) => a - b),
     ),
