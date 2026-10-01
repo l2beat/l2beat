@@ -37,7 +37,7 @@ export function ChainPicker(props: {
         title={chain.displayName}
         className="flex items-center gap-2 border-coffee-600 border-r px-3 transition-colors hover:bg-coffee-800 data-[state=open]:bg-coffee-800 sm:w-44"
       >
-        <ChainIcon chain={chain} />
+        <ChainIcon key={chain.shortName} chain={chain} />
         <span className="hidden truncate text-sm sm:inline">
           {chain.displayName}
         </span>
