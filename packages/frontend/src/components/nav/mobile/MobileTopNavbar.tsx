@@ -22,23 +22,31 @@ export function MobileTopNavbar({
 }) {
   return (
     <div className={cn('z-10 lg:hidden', className)}>
-      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
-        {/* Left side */}
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="py-4">
-            <a href={logoLink} aria-label="Go to home">
-              <Logo className="block h-8 w-auto" />
-            </a>
+      {/*
+        iOS Safari tints its status bar like the sticky element at the top and
+        keeps that tint until another one arrives. Sticky inside a wrapper of
+        its own height, the navbar never moves, but takes the tint back when
+        the page returns to the top.
+      */}
+      <div className="sticky top-0">
+        <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
+          {/* Left side */}
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="py-4">
+              <a href={logoLink} aria-label="Go to home">
+                <Logo className="block h-8 w-auto" />
+              </a>
+            </div>
+            <MobileSelectedLink groups={groups} sideLinks={sideLinks} />
           </div>
-          <MobileSelectedLink groups={groups} sideLinks={sideLinks} />
+          {/* Right side */}
+          <div className="flex shrink-0 flex-row items-center gap-2 md:gap-3">
+            <SmallSearchBarButton />
+            <MobileNavTriggerOpen />
+          </div>
         </div>
-        {/* Right side */}
-        <div className="flex shrink-0 flex-row items-center gap-2 md:gap-3">
-          <SmallSearchBarButton />
-          <MobileNavTriggerOpen />
-        </div>
+        <MobileNavTabs groups={groups} />
       </div>
-      <MobileNavTabs groups={groups} />
     </div>
   )
 }
