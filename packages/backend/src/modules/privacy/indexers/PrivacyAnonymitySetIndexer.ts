@@ -15,7 +15,6 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { utils } from 'ethers'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -28,25 +27,17 @@ import type {
   PrivacyAnonymitySetIndexerConfig,
   PrivacyAnonymitySetIndexerConfigProperties,
 } from '../types'
-import { ERC20_TRANSFER_TOPIC, erc20Interface } from '../utils/erc20'
 import {
   extractPrivacyAnonymitySetDeposit,
   type PrivacyAnonymitySetDeposit,
 } from '../utils/extractPrivacyAnonymitySetDeposit'
 import {
-  getPrivacyTransactions,
-  type PrivacyTransaction,
-} from '../utils/getPrivacyTransactions'
-import {
   buildPrivacyLogConfigMap,
   buildPrivacyLogFilter,
   getPrivacyLogKey,
-  groupByTopics,
 } from '../utils/privacyLogIndexerUtils'
 
-/** How far before an update a deposit address may have been funded. */
-const FUNDING_LOOKBACK = 30 * UnixTime.DAY
-const FUNDING_TOPIC_BATCH_SIZE = 100
+const TRANSACTION_LOOKUP_BATCH_SIZE = 25
 
 interface PrivacyAnonymitySetIndexerDeps
   extends Omit<
@@ -177,27 +168,16 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     // atOrBefore can make adjacent time ranges share boundary blocks. Filtering
     // by timestamp below keeps the exact range; repository upserts deduplicate
     // any boundary logs fetched again by the following update.
-    // eth_getLogs ANDs topic positions, so configurations with different
-    // indexed-arg filters cannot share a query.
-    const rawRecords = (
-      await Promise.all(
-        groupByTopics(configurations).map(
-          async ({ topics, configurations }) => {
-            const { addresses, events } = buildPrivacyLogFilter(configurations)
-            const logs = await this.$.logsProvider.getLogs(
-              blockFrom,
-              blockTo,
-              addresses,
-              [events, ...topics],
-            )
-            return extractRawRecords(
-              logs,
-              buildPrivacyLogConfigMap(configurations),
-            )
-          },
-        ),
-      )
-    ).flat()
+    const { addresses, events } = buildPrivacyLogFilter(configurations)
+    const logs = await this.$.logsProvider.getLogs(
+      blockFrom,
+      blockTo,
+      addresses,
+      [events],
+    )
+
+    const configMap = buildPrivacyLogConfigMap(configurations)
+    const rawRecords = extractRawRecords(logs, configMap)
     if (rawRecords.length === 0) return []
 
     const blockTimestamps = await this.$.blockProvider.getBlockTimestamps(
@@ -216,27 +196,15 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     })
     if (recordsInRange.length === 0) return []
 
-    const transactions = await getPrivacyTransactions(
-      this.$.rpcClient,
+    const transactionSenders = await this.getTransactionSenders(
       unique(
         recordsInRange
           .filter((record) => record.origin.type === 'transaction')
           .map((record) => record.log.transactionHash.toLowerCase()),
       ),
     )
-    const withSenders = recordsInRange.map((record) => ({
-      ...record,
-      sender: resolveSender(record, transactions),
-    }))
-    const funders = await this.getDepositAddressFunders(
-      withSenders.filter(
-        (record) => record.configuration.properties.fundingTokens !== undefined,
-      ),
-      from,
-      blockTo,
-    )
 
-    return withSenders.map((record) => {
+    return recordsInRange.map((record) => {
       const config = record.configuration.properties
       return {
         configurationId: record.configuration.id,
@@ -247,83 +215,64 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
         blockNumber: record.log.blockNumber,
         txHash: record.log.transactionHash,
         logIndex: record.log.logIndex,
-        sender: funders.get(getRecordKey(record.log)) ?? record.sender,
+        sender: this.resolveSender(record, transactionSenders),
         amount: record.amount,
       }
     })
   }
 
-  /**
-   * For deposits from one-time deposit addresses: the earliest funding
-   * transfer into each address before its deposit, keyed by the deposit log.
-   * Transfers inside the deposit transaction itself, such as swap output,
-   * do not count. Without a funding transfer the deposit address stays the
-   * depositor.
-   */
-  private async getDepositAddressFunders(
-    records: (RawRecord & { sender: string })[],
-    from: number,
-    blockTo: number,
+  private resolveSender(
+    record: RawRecord,
+    transactionSenders: Map<string, string>,
+  ): string {
+    if (record.origin.type === 'event') {
+      return record.origin.sender.toString()
+    }
+
+    const sender = transactionSenders.get(
+      record.log.transactionHash.toLowerCase(),
+    )
+    assert(
+      sender !== undefined,
+      `Missing transaction sender for ${record.log.transactionHash}`,
+    )
+    return sender
+  }
+
+  private async getTransactionSenders(
+    transactionHashes: string[],
   ): Promise<Map<string, string>> {
-    const funders = new Map<string, string>()
-    if (records.length === 0) return funders
+    const result = new Map<string, string>()
 
-    const lookbackBlock =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        UnixTime(from - FUNDING_LOOKBACK),
-        this.$.chain,
-      )
-    const tokens = unique(
-      records.flatMap((record) =>
-        (record.configuration.properties.fundingTokens ?? []).map((token) =>
-          token.toString(),
-        ),
-      ),
-    )
-    const depositAddresses = unique(
-      records.map((record) => record.sender.toLowerCase()),
-    )
-    const logs: Log[] = []
     for (
-      let i = 0;
-      i < depositAddresses.length;
-      i += FUNDING_TOPIC_BATCH_SIZE
+      let start = 0;
+      start < transactionHashes.length;
+      start += TRANSACTION_LOOKUP_BATCH_SIZE
     ) {
-      const batch = depositAddresses.slice(i, i + FUNDING_TOPIC_BATCH_SIZE)
-      logs.push(
-        ...(await this.$.logsProvider.getLogs(lookbackBlock, blockTo, tokens, [
-          [ERC20_TRANSFER_TOPIC],
-          null,
-          batch.map((address) => utils.hexZeroPad(address, 32)),
-        ])),
+      const batch = transactionHashes.slice(
+        start,
+        start + TRANSACTION_LOOKUP_BATCH_SIZE,
       )
-    }
-    const fundings = logs
-      .map((log) => {
-        const { from, to } = erc20Interface.parseLog(log).args
-        return {
-          log,
-          from: EthereumAddress(from).toString(),
-          to: String(to).toLowerCase(),
-        }
-      })
-      .sort(
-        (a, b) =>
-          a.log.blockNumber - b.log.blockNumber ||
-          a.log.logIndex - b.log.logIndex,
+      const transactions = await Promise.all(
+        batch.map((hash) => this.$.rpcClient.getTransaction(hash)),
       )
 
-    for (const record of records) {
-      const funding = fundings.find(
-        ({ log, to }) =>
-          to === record.sender.toLowerCase() &&
-          log.blockNumber <= record.log.blockNumber &&
-          log.transactionHash.toLowerCase() !==
-            record.log.transactionHash.toLowerCase(),
-      )
-      if (funding) funders.set(getRecordKey(record.log), funding.from)
+      for (let i = 0; i < batch.length; i++) {
+        const requestedHash = batch[i]
+        const transaction = transactions[i]
+        assert(requestedHash !== undefined && transaction !== undefined)
+        assert(
+          transaction.hash.toLowerCase() === requestedHash.toLowerCase(),
+          `Transaction hash mismatch for ${requestedHash}`,
+        )
+        result.set(
+          requestedHash.toLowerCase(),
+          EthereumAddress(transaction.from).toString(),
+        )
+      }
     }
-    return funders
+
+    return result
   }
 
   static idToConfigurationId(
@@ -370,24 +319,4 @@ function extractRawRecords(
   }
 
   return records
-}
-
-function resolveSender(
-  record: RawRecord,
-  transactions: Map<string, PrivacyTransaction>,
-): string {
-  if (record.origin.type === 'event') {
-    return record.origin.sender.toString()
-  }
-
-  const transaction = transactions.get(record.log.transactionHash.toLowerCase())
-  assert(
-    transaction !== undefined,
-    `Missing transaction sender for ${record.log.transactionHash}`,
-  )
-  return transaction.from.toString()
-}
-
-function getRecordKey(log: Pick<Log, 'transactionHash' | 'logIndex'>): string {
-  return `${log.transactionHash.toLowerCase()}:${log.logIndex}`
 }

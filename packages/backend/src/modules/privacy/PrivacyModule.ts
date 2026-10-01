@@ -224,9 +224,6 @@ export function createPrivacyModule({
             logsProvider: providers.logs.getLogsProvider(
               blockTimestampConfig.chain,
             ),
-            rpcClient: providers.clients.getRpcClient(
-              blockTimestampConfig.chain,
-            ),
             configurations: relayerConfigs.map((relayerConfig) => ({
               id: relayerConfig.id,
               minHeight: relayerConfig.sinceTimestamp,

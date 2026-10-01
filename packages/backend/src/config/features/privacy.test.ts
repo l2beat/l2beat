@@ -4,7 +4,6 @@ import {
   type ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
-import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
@@ -249,81 +248,6 @@ describe(getPrivacyConfig.name, () => {
       expect(deposit.topics).toEqual([
         `0x${'00'.repeat(12)}${TOKEN.slice(2).toLowerCase()}`,
         POOL_TOPIC,
-      ])
-    })
-
-    it('keeps the anonymity set id on the pool while querying the token', async () => {
-      const project = await ps.getProject({
-        slug: 'privacy-pools',
-        select: ['privacyInfo'],
-      })
-      if (!project) throw new Error('Privacy Pools project not found')
-      const deposit = {
-        event: ERC20_TRANSFER_TOPIC,
-        extractor: 'erc20Transfer' as const,
-        params: { to: POOL },
-      }
-      const token: ProjectPrivacyToken = {
-        token: {
-          address: TOKEN,
-          iconUrl: undefined,
-          symbol: 'TKN',
-          decimals: 18,
-          priceId: 'tkn',
-          sinceTimestamp: UnixTime(1000),
-        },
-        buckets: [
-          {
-            id: 'bucket',
-            type: 'pool',
-            label: 'TKN',
-            address: ChainSpecificAddress.fromLong('ethereum', POOL),
-            sinceTimestamp: UnixTime(1000),
-            anonymitySet: { minimumAmounts: ['1'], fundingTokens: [TOKEN] },
-            deposit,
-            withdrawal: {
-              event: ERC20_TRANSFER_TOPIC,
-              extractor: 'erc20Transfer',
-              params: { from: POOL },
-            },
-          },
-        ],
-      }
-      const projectService = mockObject<ProjectService>({
-        getProjects: mockFn().resolvesToOnce([
-          {
-            ...project,
-            privacyInfo: {
-              ...project.privacyInfo,
-              relayerTracking: undefined,
-              tokens: [token],
-            },
-          },
-        ]),
-      })
-
-      const config = await getPrivacyConfig(
-        projectService,
-        env,
-        new FeatureFlags('privacy'),
-        [],
-      )
-      if (!config) throw new Error('Privacy config not created')
-
-      expect(config.anonymitySetConfigs).toEqual([
-        expect.subset({
-          // The frontend derives this id from the bucket address.
-          id: createPrivacyAnonymitySetConfigurationId({
-            projectId: project.id,
-            bucketId: 'bucket',
-            chain: 'ethereum',
-            address: POOL.toString(),
-            ...deposit,
-          }),
-          address: TOKEN,
-          topics: [null, POOL_TOPIC],
-          fundingTokens: [TOKEN],
-        }),
       ])
     })
 

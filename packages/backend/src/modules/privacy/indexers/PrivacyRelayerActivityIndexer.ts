@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyRelayerActivityRecord } from '@l2beat/database'
-import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
+import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
-import { EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -14,7 +14,6 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
-import { getPrivacyTransactions } from '../utils/getPrivacyTransactions'
 import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyRelayerActivityIndexerDeps
@@ -25,7 +24,6 @@ interface PrivacyRelayerActivityIndexerDeps
   chain: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
-  rpcClient: IRpcClient
   db: Database
 }
 
@@ -135,38 +133,13 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       logger: this.logger,
     })
 
-    const activities = matches.flatMap((match) => {
-      const activity = extractPrivacyRelayerActivity(
-        match.configuration.properties,
-        match.log,
-      )
-      return activity ? [{ ...match, activity }] : []
-    })
-    const transactions = await getPrivacyTransactions(
-      this.$.rpcClient,
-      unique(
-        activities
-          .filter(({ activity }) => 'transactionSender' in activity)
-          .map(({ log }) => log.transactionHash.toLowerCase()),
-      ),
-    )
-
     const records: PrivacyRelayerActivityRecord[] = []
-    for (const { log, timestamp, configuration, activity } of activities) {
-      let relayerAddress: EthereumAddress
-      if ('transactionSender' in activity) {
-        const transaction = transactions.get(log.transactionHash.toLowerCase())
-        // A direct call to the emitting contract is not relayed.
-        if (
-          transaction?.to === undefined ||
-          transaction.to === EthereumAddress(log.address)
-        ) {
-          continue
-        }
-        relayerAddress = transaction.from
-      } else {
-        relayerAddress = activity.relayerAddress
-      }
+    for (const { log, timestamp, configuration } of matches) {
+      const activity = extractPrivacyRelayerActivity(
+        configuration.properties,
+        log,
+      )
+      if (!activity) continue
 
       records.push({
         configurationId: configuration.id,
@@ -176,7 +149,7 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
         blockNumber: log.blockNumber,
         txHash: log.transactionHash,
         logIndex: log.logIndex,
-        relayerAddress,
+        relayerAddress: activity.relayerAddress,
       })
     }
 

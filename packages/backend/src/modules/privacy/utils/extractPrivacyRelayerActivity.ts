@@ -15,10 +15,6 @@ const tornadoCashInterface = new utils.Interface([
   'event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)',
 ])
 
-const zkMoneyInterface = new utils.Interface([
-  'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
-])
-
 type RelayerExtractor = ProjectPrivacyOnchainRelayerSource['extractor']
 
 interface RelayerExtractorDefinition {
@@ -50,13 +46,6 @@ const tornadoCashWithdrawal: RelayerExtractorDefinition = {
   },
 }
 
-// The portal event does not name the relayer: whoever sent the transaction
-// through another contract, such as the zk.money OperationExecutor, relayed it.
-const zkMoneyWithdrawal: RelayerExtractorDefinition = {
-  event: zkMoneyInterface.getEventTopic('WithdrawalOrRefund'),
-  extract: () => ({ transactionSender: true }),
-}
-
 export function getPrivacyRelayerExtractor(
   extractor: RelayerExtractor,
 ): RelayerExtractorDefinition {
@@ -65,8 +54,6 @@ export function getPrivacyRelayerExtractor(
       return privacyPoolsWithdrawalRelayed
     case 'tornadoCashWithdrawal':
       return tornadoCashWithdrawal
-    case 'zkMoneyWithdrawal':
-      return zkMoneyWithdrawal
     default:
       assertUnreachable(extractor)
   }
