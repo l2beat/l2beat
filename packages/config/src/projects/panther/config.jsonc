@@ -1,0 +1,577 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "panther",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "matic:0x008DeCe35c2920F08961f493ad7F543Fb796F4de",
+    "matic:0x372803EFb7F9738CA837E8Ec431C7F0679572aFE",
+    "matic:0xDD1fD1a7b4482Dce1287aFFE6Ca8EA128C7a9046",
+    "matic:0x7aF2a1b6f0C1358624D3047264cFB883FddADF01",
+    "matic:0xc845067EBc2Ff84Ea1AD7f2741b5C202c9cd0c84",
+    "matic:0xfDB8F7021Bf685e50138003A93B5f5A8aD016e93",
+    "eth:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C",
+    "eth:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75",
+    "eth:0x70c69bB8501b30cf112403139a383BF978f4A31e",
+    "eth:0xa007e723E464967702DEA0D8D1c994d55e24e371",
+    "eth:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb",
+    "eth:0xef22AaE67c7dF6844FDF1CCF440497bdAc56d4F1",
+    "eth:0x505796f5Bc290269D2522cf19135aD7Aa60dfd77",
+    "eth:0xa3c955d317E2E13B490f71c20AD248f91F5d5511",
+    "base:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C",
+    "base:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75",
+    "base:0x70c69bB8501b30cf112403139a383BF978f4A31e",
+    "base:0xa007e723E464967702DEA0D8D1c994d55e24e371",
+    "base:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb",
+    "base:0x46eFb3E980b7802f7f01eEdD5B84EA65Cf5d8d6a",
+    "base:0x4ce69e77A8806B51f15b8D0FC38A9c1f66A851b4"
+  ],
+  "names": {
+    "matic:0x008DeCe35c2920F08961f493ad7F543Fb796F4de": "PantherPool",
+    "matic:0x372803EFb7F9738CA837E8Ec431C7F0679572aFE": "PantherTrees",
+    "matic:0xDD1fD1a7b4482Dce1287aFFE6Ca8EA128C7a9046": "Vault",
+    "matic:0x7aF2a1b6f0C1358624D3047264cFB883FddADF01": "FeeMaster",
+    "matic:0xc845067EBc2Ff84Ea1AD7f2741b5C202c9cd0c84": "PayMaster",
+    "matic:0xfDB8F7021Bf685e50138003A93B5f5A8aD016e93": "PantherAccount",
+    "matic:0x026a024b13B4Ca23897ad578264C0ec543f904b9": "PantherOwnerSafe",
+    "matic:0x208Fb9169BBec5915722e0AfF8B0eeEdaBf8a6f0": "PantherDaoSafe",
+    "matic:0x4A4FC40d2475f493EcA3Ec436b924237AA1b0a76": "MaticBridgeModule",
+    "matic:0xC107e47Ae09639161e71AFc0d0b488227437A6E9": "Treasury",
+    "matic:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": "ComplianceTreasury",
+    "matic:0xE454ba38c6d358c8018dFA2cBA9a6096B2420ECD": "PantherTreasuryMultisig",
+    "eth:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": "PantherPool",
+    "eth:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75": "PantherTrees",
+    "eth:0x70c69bB8501b30cf112403139a383BF978f4A31e": "Vault",
+    "eth:0xa007e723E464967702DEA0D8D1c994d55e24e371": "FeeMaster",
+    "eth:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb": "PayMaster",
+    "eth:0xef22AaE67c7dF6844FDF1CCF440497bdAc56d4F1": "PantherAccount",
+    "eth:0xb16283A233D5b010A7b290d593847207495F0284": "PantherDeploymentSafe",
+    "eth:0x505796f5Bc290269D2522cf19135aD7Aa60dfd77": "PantherDaoMultisig",
+    "eth:0xa3c955d317E2E13B490f71c20AD248f91F5d5511": "RealityModule",
+    "base:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": "PantherPool",
+    "base:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75": "PantherTrees",
+    "base:0x70c69bB8501b30cf112403139a383BF978f4A31e": "Vault",
+    "base:0xa007e723E464967702DEA0D8D1c994d55e24e371": "FeeMaster",
+    "base:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb": "PayMaster",
+    "base:0x46eFb3E980b7802f7f01eEdD5B84EA65Cf5d8d6a": "PantherAccount",
+    "base:0xb16283A233D5b010A7b290d593847207495F0284": "PantherDaoSafe",
+    "base:0x4ce69e77A8806B51f15b8D0FC38A9c1f66A851b4": "RealityModule"
+  },
+  "overrides": {
+    "matic:0x026a024b13B4Ca23897ad578264C0ec543f904b9": {
+      "description": "Owns all Panther contracts on Polygon. Its only signer is the PantherDaoSafe."
+    },
+    "matic:0x208Fb9169BBec5915722e0AfF8B0eeEdaBf8a6f0": {
+      "description": "Panther DAO Safe on Polygon and sole owner of PantherOwnerSafe. Receives governance calls from the Ethereum DAO multisig through the MaticBridgeModule."
+    },
+    "matic:0x4A4FC40d2475f493EcA3Ec436b924237AA1b0a76": {
+      "description": "Lets the Ethereum DAO multisig (controller) execute transactions on the PantherDaoSafe through the Polygon FxPortal bridge."
+    },
+    "matic:0xC107e47Ae09639161e71AFc0d0b488227437A6E9": {
+      "description": "Receives the protocol fees collected by FeeMaster. Only the claimer can withdraw ZKP; the owner can only rescue other tokens."
+    },
+    "matic:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": {
+      "description": "Holds the trust provider role in FeeMaster. The trust provider set by the owner can claim the accrued KYT and KYC fees in ZKP."
+    },
+    "matic:0xE454ba38c6d358c8018dFA2cBA9a6096B2420ECD": {
+      "description": "Panther DAO treasury multisig, allowed to withdraw protocol fees from the Treasury."
+    },
+    "matic:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa": {
+      "ignoreDiscovery": true
+    },
+    "matic:0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270": {
+      "ignoreDiscovery": true
+    },
+    "matic:0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789": {
+      "ignoreDiscovery": true
+    },
+    "matic:0x8397259c983751DAf40400790063935a11afa28a": {
+      "ignoreDiscovery": true
+    },
+    "matic:0x008DeCe35c2920F08961f493ad7F543Fb796F4de": {
+      "description": "Core EIP-2535 diamond of Panther Protocol. Its facets register and renew zAccounts, verify the Groth16 proofs of deposits, withdrawals, internal transfers, swaps and PRP conversions, and instruct the Vault to lock or release assets.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["zAccountIdTracker"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the pool diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "replace the verifying key of any circuit, blacklist master EOAs, spending keys and zAccount IDs, whitelist swap plugins and set PRP voucher terms."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "zAccountIdTracker": {
+          "description": "Number of zAccounts registered so far."
+        },
+        "maxBlockTimeOffset": {
+          "description": "Maximum difference in seconds between a proof's creation time and the block timestamp.",
+          "handler": {
+            "type": "call",
+            "method": "function getMaxBlockTimeOffset() view returns (uint32)",
+            "args": []
+          }
+        },
+        "circuitIdZAccountActivation": {
+          "description": "Address whose bytecode holds the verifying key for zAccount activation proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [256]
+          }
+        },
+        "circuitIdZAccountRenewal": {
+          "description": "Address whose bytecode holds the verifying key for zAccount renewal proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [258]
+          }
+        },
+        "circuitIdPrpConversion": {
+          "description": "Address whose bytecode holds the verifying key for PRP accounting and conversion proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [260]
+          }
+        },
+        "circuitIdMainTransaction": {
+          "description": "Address whose bytecode holds the verifying key for deposit, withdrawal and internal transfer proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [261]
+          }
+        },
+        "circuitIdZSwap": {
+          "description": "Address whose bytecode holds the verifying key for swap proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [262]
+          }
+        }
+      }
+    },
+    "matic:0x372803EFb7F9738CA837E8Ec431C7F0679572aFE": {
+      "description": "EIP-2535 diamond holding Panther's Merkle trees: the forest (taxi, bus and ferry trees) of UTXO commitments, and the static tree of zAssets, zZones, zNetworks, provider keys and blacklisted zAccount IDs. Every proof must reference the current static root.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["busTreeStats"],
+      "ignoreMethods": ["leafs"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the trees diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "add or change zZones (KYC/KYT rules, limits, data escrow keys), zNetworks (DAO data escrow key), zAssets and provider keys, and blacklist zAccount IDs. Changing the static root invalidates proofs built against the previous one."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "staticRoot": {
+          "description": "Root of the static tree that every proof must reference.",
+          "handler": {
+            "type": "call",
+            "method": "function getStaticRoot() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "busTreeStats": {
+          "handler": {
+            "type": "call",
+            "method": "function getBusTreeStats() view returns (uint32 numBatchesInBusTree, uint32 numUtxosInBusTree, uint40 latestBranchFirstBatchBlock, uint40 latestBatchBlock)",
+            "args": []
+          }
+        }
+      }
+    },
+    "matic:0xDD1fD1a7b4482Dce1287aFFE6Ca8EA128C7a9046": {
+      "description": "Holds all assets deposited into Panther. Only the pool diamond can lock (deposit) or unlock (withdraw) assets.",
+      "critical": true,
+      "category": "core"
+    },
+    "matic:0x7aF2a1b6f0C1358624D3047264cFB883FddADF01": {
+      "description": "Accounts protocol fees, KYT and KYC fees, miner rewards and paymaster compensation, and converts collected fees to ZKP.",
+      "category": "core",
+      "ignoreMethods": ["getNativeRateInZkp", "getZkpRateInNative"],
+      "fields": {
+        "feeParams": {
+          "description": "Per-UTXO miner reward, KYT fee and KYC fee (in ZKP, divided by 1e12), and the protocol fee charged on withdrawals (in basis points)."
+        }
+      }
+    },
+    "matic:0xc845067EBc2Ff84Ea1AD7f2741b5C202c9cd0c84": {
+      "description": "ERC-4337 paymaster that sponsors gas for Panther transactions sent through the PantherAccount and is repaid in ZKP from inside the proof. It only sponsors user operations submitted by allowlisted bundlers."
+    },
+    "matic:0xfDB8F7021Bf685e50138003A93B5f5A8aD016e93": {
+      "description": "ERC-4337 account used to submit Panther transactions without revealing the user's EOA. It performs no signature check: only whitelisted Panther calls are allowed, and the zk proof authorizes the action."
+    },
+    "eth:0xb16283A233D5b010A7b290d593847207495F0284": {
+      "description": "Deployment Safe of the Panther team. Owns all Panther contracts on Ethereum while the deployment is configured and tested, before ownership is handed over to the Panther DAO through a PIP."
+    },
+    "eth:0x505796f5Bc290269D2522cf19135aD7Aa60dfd77": {
+      "description": "Panther DAO multisig. Executes passed Snapshot proposals through its Reality.eth module and sends governance calls to Polygon through the FxPortal bridge."
+    },
+    "eth:0xa3c955d317E2E13B490f71c20AD248f91F5d5511": {
+      "description": "Zodiac Reality.eth module connecting the Panther Snapshot space to the PantherDaoMultisig. It is enabled on the Safe only around the execution of passed proposals (PIP-25)."
+    },
+    "eth:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": {
+      "description": "Core EIP-2535 diamond of Panther Protocol. Its facets register and renew zAccounts, verify the Groth16 proofs of deposits, withdrawals, internal transfers, swaps and PRP conversions, and instruct the Vault to lock or release assets.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["zAccountIdTracker"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the pool diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "replace the verifying key of any circuit, blacklist master EOAs, spending keys and zAccount IDs, whitelist swap plugins and set PRP voucher terms."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "zAccountIdTracker": {
+          "description": "Number of zAccounts registered so far."
+        },
+        "maxBlockTimeOffset": {
+          "description": "Maximum difference in seconds between a proof's creation time and the block timestamp.",
+          "handler": {
+            "type": "call",
+            "method": "function getMaxBlockTimeOffset() view returns (uint32)",
+            "args": []
+          }
+        },
+        "circuitIdZAccountActivation": {
+          "description": "Address whose bytecode holds the verifying key for zAccount activation proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [256]
+          }
+        },
+        "circuitIdZAccountRenewal": {
+          "description": "Address whose bytecode holds the verifying key for zAccount renewal proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [258]
+          }
+        },
+        "circuitIdPrpConversion": {
+          "description": "Address whose bytecode holds the verifying key for PRP accounting and conversion proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [260]
+          }
+        },
+        "circuitIdMainTransaction": {
+          "description": "Address whose bytecode holds the verifying key for deposit, withdrawal and internal transfer proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [261]
+          }
+        },
+        "circuitIdZSwap": {
+          "description": "Address whose bytecode holds the verifying key for swap proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [262]
+          }
+        }
+      }
+    },
+    "eth:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75": {
+      "description": "EIP-2535 diamond holding Panther's Merkle trees: the forest (taxi, bus and ferry trees) of UTXO commitments, and the static tree of zAssets, zZones, zNetworks, provider keys and blacklisted zAccount IDs. Every proof must reference the current static root.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["busTreeStats"],
+      "ignoreMethods": ["leafs"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the trees diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "add or change zZones (KYC/KYT rules, limits, data escrow keys), zNetworks (DAO data escrow key), zAssets and provider keys, and blacklist zAccount IDs. Changing the static root invalidates proofs built against the previous one."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "staticRoot": {
+          "description": "Root of the static tree that every proof must reference.",
+          "handler": {
+            "type": "call",
+            "method": "function getStaticRoot() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "busTreeStats": {
+          "handler": {
+            "type": "call",
+            "method": "function getBusTreeStats() view returns (uint32 numBatchesInBusTree, uint32 numUtxosInBusTree, uint40 latestBranchFirstBatchBlock, uint40 latestBatchBlock)",
+            "args": []
+          }
+        }
+      }
+    },
+    "eth:0x70c69bB8501b30cf112403139a383BF978f4A31e": {
+      "description": "Holds all assets deposited into Panther. Only the pool diamond can lock (deposit) or unlock (withdraw) assets.",
+      "critical": true,
+      "category": "core"
+    },
+    "eth:0xa007e723E464967702DEA0D8D1c994d55e24e371": {
+      "description": "Accounts protocol fees, KYT and KYC fees, miner rewards and paymaster compensation, and converts collected fees to ZKP.",
+      "category": "core",
+      "ignoreMethods": ["getNativeRateInZkp", "getZkpRateInNative"],
+      "fields": {
+        "feeParams": {
+          "description": "Per-UTXO miner reward, KYT fee and KYC fee (in ZKP, divided by 1e12), and the protocol fee charged on withdrawals (in basis points)."
+        }
+      }
+    },
+    "eth:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb": {
+      "description": "ERC-4337 paymaster that sponsors gas for Panther transactions sent through the PantherAccount and is repaid in ZKP from inside the proof. It only sponsors user operations submitted by allowlisted bundlers."
+    },
+    "eth:0xef22AaE67c7dF6844FDF1CCF440497bdAc56d4F1": {
+      "description": "ERC-4337 account used to submit Panther transactions without revealing the user's EOA. It performs no signature check: only whitelisted Panther calls are allowed, and the zk proof authorizes the action."
+    },
+    "eth:0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
+    "base:0xb16283A233D5b010A7b290d593847207495F0284": {
+      "description": "Panther DAO Safe on Base. Owns all Panther contracts on Base and executes passed Snapshot proposals through its Reality.eth module."
+    },
+    "base:0x4ce69e77A8806B51f15b8D0FC38A9c1f66A851b4": {
+      "description": "Zodiac Reality.eth module connecting the Panther Snapshot space to the Base PantherDaoSafe. It is enabled on the Safe only around the execution of passed proposals (PIP-25)."
+    },
+    "base:0x5335839b374e6B2C8b9F0b4930e7EAE3192Ce16C": {
+      "description": "Core EIP-2535 diamond of Panther Protocol. Its facets register and renew zAccounts, verify the Groth16 proofs of deposits, withdrawals, internal transfers, swaps and PRP conversions, and instruct the Vault to lock or release assets.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["zAccountIdTracker"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the pool diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "replace the verifying key of any circuit, blacklist master EOAs, spending keys and zAccount IDs, whitelist swap plugins and set PRP voucher terms."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "zAccountIdTracker": {
+          "description": "Number of zAccounts registered so far."
+        },
+        "maxBlockTimeOffset": {
+          "description": "Maximum difference in seconds between a proof's creation time and the block timestamp.",
+          "handler": {
+            "type": "call",
+            "method": "function getMaxBlockTimeOffset() view returns (uint32)",
+            "args": []
+          }
+        },
+        "circuitIdZAccountActivation": {
+          "description": "Address whose bytecode holds the verifying key for zAccount activation proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [256]
+          }
+        },
+        "circuitIdZAccountRenewal": {
+          "description": "Address whose bytecode holds the verifying key for zAccount renewal proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [258]
+          }
+        },
+        "circuitIdPrpConversion": {
+          "description": "Address whose bytecode holds the verifying key for PRP accounting and conversion proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [260]
+          }
+        },
+        "circuitIdMainTransaction": {
+          "description": "Address whose bytecode holds the verifying key for deposit, withdrawal and internal transfer proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [261]
+          }
+        },
+        "circuitIdZSwap": {
+          "description": "Address whose bytecode holds the verifying key for swap proofs.",
+          "handler": {
+            "type": "call",
+            "method": "function getCircuitIds(uint16) view returns (uint160)",
+            "args": [262]
+          }
+        }
+      }
+    },
+    "base:0xD56a3B1073eACEb7947A5061D9E03554bD5e9B75": {
+      "description": "EIP-2535 diamond holding Panther's Merkle trees: the forest (taxi, bus and ferry trees) of UTXO commitments, and the static tree of zAssets, zZones, zNetworks, provider keys and blacklisted zAccount IDs. Every proof must reference the current static root.",
+      "critical": true,
+      "category": "core",
+      "ignoreInWatchMode": ["busTreeStats"],
+      "ignoreMethods": ["leafs"],
+      "fields": {
+        "owner": {
+          "description": "Owner of the diamond.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "storage",
+            "slot": "0x727bf440e01434e77993b7e90f004fc30e73d97686694c4ace34badd87948d44",
+            "returnType": "address"
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "add, replace or remove facets of the trees diamond (diamondCut)."
+            },
+            {
+              "type": "interact",
+              "description": "add or change zZones (KYC/KYT rules, limits, data escrow keys), zNetworks (DAO data escrow key), zAssets and provider keys, and blacklist zAccount IDs. Changing the static root invalidates proofs built against the previous one."
+            }
+          ]
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "staticRoot": {
+          "description": "Root of the static tree that every proof must reference.",
+          "handler": {
+            "type": "call",
+            "method": "function getStaticRoot() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "busTreeStats": {
+          "handler": {
+            "type": "call",
+            "method": "function getBusTreeStats() view returns (uint32 numBatchesInBusTree, uint32 numUtxosInBusTree, uint40 latestBranchFirstBatchBlock, uint40 latestBatchBlock)",
+            "args": []
+          }
+        }
+      }
+    },
+    "base:0x70c69bB8501b30cf112403139a383BF978f4A31e": {
+      "description": "Holds all assets deposited into Panther. Only the pool diamond can lock (deposit) or unlock (withdraw) assets.",
+      "critical": true,
+      "category": "core"
+    },
+    "base:0xa007e723E464967702DEA0D8D1c994d55e24e371": {
+      "description": "Accounts protocol fees, KYT and KYC fees, miner rewards and paymaster compensation, and converts collected fees to ZKP.",
+      "category": "core",
+      "ignoreMethods": ["getNativeRateInZkp", "getZkpRateInNative"],
+      "fields": {
+        "feeParams": {
+          "description": "Per-UTXO miner reward, KYT fee and KYC fee (in ZKP, divided by 1e12), and the protocol fee charged on withdrawals (in basis points)."
+        }
+      }
+    },
+    "base:0x84166C4007A7cf32165C90C6c783D3dE9DB1d6eb": {
+      "description": "ERC-4337 paymaster that sponsors gas for Panther transactions sent through the PantherAccount and is repaid in ZKP from inside the proof. It only sponsors user operations submitted by allowlisted bundlers."
+    },
+    "base:0x46eFb3E980b7802f7f01eEdD5B84EA65Cf5d8d6a": {
+      "description": "ERC-4337 account used to submit Panther transactions without revealing the user's EOA. It performs no signature check: only whitelisted Panther calls are allowed, and the zk proof authorizes the action."
+    },
+    "base:0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789": {
+      "ignoreDiscovery": true
+    },
+    "base:0x4200000000000000000000000000000000000006": {
+      "ignoreDiscovery": true
+    },
+    "base:0x4200000000000000000000000000000000000010": {
+      "ignoreDiscovery": true
+    }
+  }
+}

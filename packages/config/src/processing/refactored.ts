@@ -49,6 +49,7 @@ import { monad } from '../projects/monad/monad'
 import { moneroCakeWallet } from '../projects/monero-cake-wallet/monero-cake-wallet'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { panther } from '../projects/panther/panther'
 import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
@@ -168,4 +169,5 @@ export const refactored: BaseProject[] = [
   moneroCakeWallet,
   zcashNearIntents,
   privacyBoost,
+  panther,
 ]
