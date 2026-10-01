@@ -53,17 +53,20 @@ export function resolveConfig<
   defaults: { [P in K]-?: NonNullable<L[P]> },
   resolveOverride: (override: NonNullable<L['overrides']>[string]) => R,
 ): Omit<WithDefaults<L, K>, 'overrides'> & { overrides?: Record<string, R> } {
+  const { overrides, ...rest } = layer
   const config: Omit<WithDefaults<L, K>, 'overrides'> = resolveByShape(
     shape,
-    layer,
+    rest as L,
     defaults,
   )
-  const overrides = layer.overrides as
-    | Record<string, NonNullable<L['overrides']>[string]>
-    | undefined
   return {
     ...config,
-    ...(overrides && { overrides: mapRecord(overrides, resolveOverride) }),
+    ...(overrides && {
+      overrides: mapRecord(
+        overrides as Record<string, NonNullable<L['overrides']>[string]>,
+        resolveOverride,
+      ),
+    }),
   }
 }
 
