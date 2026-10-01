@@ -1,10 +1,7 @@
 import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
 import { GrissiniStick } from './GrissiniStick'
-
-const TITLE = 'No bridge'
-const DESCRIPTION =
-  'Without a DA Bridge, Ethereum has no proof of data availability for this project.'
+import { NO_BRIDGE_RISK } from './noBridgeRisk'
 
 export function NoBridgeGrissiniDetailsPlaceholder({
   className,
@@ -23,7 +20,7 @@ export function NoBridgeGrissiniDetailsPlaceholder({
       )}
     >
       <GrissiniStick
-        sentiment="neutral"
+        sentiment={NO_BRIDGE_RISK.sentiment}
         className="h-[unset] shrink-0 self-stretch max-md:w-1"
       />
       <div className={cn('flex flex-col justify-center p-4', contentClassName)}>
@@ -34,15 +31,15 @@ export function NoBridgeGrissiniDetailsPlaceholder({
             size === 'large' && 'text-sm md:text-lg',
           )}
         >
-          {TITLE}
+          {NO_BRIDGE_RISK.value}
         </div>
         <div
           className={cn(
             'font-medium text-paragraph-12',
-            sentimentToTextColor('neutral'),
+            sentimentToTextColor(NO_BRIDGE_RISK.sentiment),
           )}
         >
-          {DESCRIPTION}
+          {NO_BRIDGE_RISK.description}
         </div>
       </div>
     </div>

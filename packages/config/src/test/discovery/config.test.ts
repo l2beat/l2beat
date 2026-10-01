@@ -126,50 +126,44 @@ describe('discovery config.jsonc', () => {
     }
   }).timeout(10_000)
 
-  describe('shape addresses are unique', () => {
-    const shapes = templateService.listAllTemplates()
-
-    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
-      it(`shape ${templateId}:${shapePath} has unique addresses`, () => {
-        const shape = templateService.readShapeSchema(shapePath)
-        const addresses = Object.values(shape).map((x) => x.address)
-
-        const asKey = (
-          address: ChainSpecificAddress | ChainSpecificAddress[],
-        ) => {
-          const array = Array.isArray(address) ? address : [address]
-          return JSON.stringify(array.sort())
-        }
-
-        const uniqueAddresses = unique(addresses, asKey)
-        expect(addresses).toHaveLength(uniqueAddresses.length)
-      })
+  it('shape addresses are unique', () => {
+    const asKey = (address: ChainSpecificAddress | ChainSpecificAddress[]) => {
+      const array = Array.isArray(address) ? address : [address]
+      return JSON.stringify(array.sort())
     }
+
+    const invalid: string[] = []
+    const shapes = templateService.listAllTemplates()
+    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
+      const shape = templateService.readShapeSchema(shapePath)
+      const addresses = Object.values(shape).map((x) => x.address)
+      if (unique(addresses, asKey).length !== addresses.length) {
+        invalid.push(`${templateId}:${shapePath}`)
+      }
+    }
+    expect(invalid).toEqual([])
   })
 
-  describe('shape addresses are not proxies', () => {
+  it('shape addresses are not proxies', () => {
     const proxies: Set<ChainSpecificAddress> = new Set()
-
     for (const c of configs.filter((c) => !c.archived)) {
-      const discovery = discoveryOf(c.name)
-      const addresses = discovery.entries
-        .filter((e) => get$Implementations(e.values).length > 0)
-        .map((e) => e.address)
-
-      for (const a of addresses) proxies.add(a)
+      for (const e of discoveryOf(c.name).entries) {
+        if (get$Implementations(e.values).length > 0) proxies.add(e.address)
+      }
     }
 
+    const invalid: string[] = []
     const shapes = templateService.listAllTemplates()
     for (const [templateId, { shapePath }] of Object.entries(shapes)) {
-      it(`shape ${templateId}:${shapePath} addresses are not proxies`, () => {
-        const shape = templateService.readShapeSchema(shapePath)
-        const addresses = Object.values(shape).flatMap((x) =>
-          Array.isArray(x.address) ? x.address : [x.address],
-        )
-
-        expect(addresses.every((a) => !proxies.has(a))).toBeTruthy()
-      })
+      const shape = templateService.readShapeSchema(shapePath)
+      const addresses = Object.values(shape).flatMap((x) =>
+        Array.isArray(x.address) ? x.address : [x.address],
+      )
+      for (const address of addresses.filter((a) => proxies.has(a))) {
+        invalid.push(`${templateId}:${shapePath} ${address}`)
+      }
     }
+    expect(invalid).toEqual([])
   })
 
   interface TemplateMatchMismatch {
@@ -266,25 +260,27 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  describe('description is not default', () => {
+  it("every project has a change description in diffHistory.md that's not the default one", () => {
     const archivedIds = new Set(
       [...layer2s, ...layer3s, ...refactored]
         .filter((p) => p.archivedAt !== undefined)
         .map((p) => p.id.toString()),
     )
+    const defaultDescriptions = [
+      'Provide description of changes. This section will be preserved.',
+      'Discovery rerun on the same block number with only config-related changes.',
+    ]
 
-    for (const c of configs.filter((c) => !archivedIds.has(c.name)))
-      it(`project ${c.name} has a change descripition in diffHistory.md that's not the default one`, () => {
+    const invalid = configs
+      .filter((c) => !archivedIds.has(c.name))
+      .filter((c) => {
         const description = configReader.readDiffLastDescription(c.name)
-
-        const defaultDescriptionDiscover =
-          'Provide description of changes. This section will be preserved.'
-        const defaultDescriptionRediscover =
-          'Discovery rerun on the same block number with only config-related changes.'
-
-        expect(description).not.toEqual(defaultDescriptionDiscover)
-        expect(description).not.toEqual(defaultDescriptionRediscover)
+        return (
+          description !== undefined && defaultDescriptions.includes(description)
+        )
       })
+      .map((c) => c.name)
+    expect(invalid).toEqual([])
   })
 
   it('discovery.json does not include errors', () => {
@@ -301,39 +297,41 @@ describe('discovery config.jsonc', () => {
   describe('overrides', () => {
     // this test ensures that every named override resolves to an address
     // do not remove it unless you know what you are doing
-    describe('every override correspond to existing contract', () => {
-      for (const c of configs ?? []) {
+    it('every override correspond to existing contract', () => {
+      const invalid: string[] = []
+      for (const c of configs) {
         for (const key of Object.keys(c.structure.overrides ?? {})) {
-          it(`${c.name} with the override ${key}`, () => {
-            expect(() =>
-              makeEntryStructureConfig(c.structure, ChainSpecificAddress(key)),
-            ).not.toThrow()
-          })
+          try {
+            makeEntryStructureConfig(c.structure, ChainSpecificAddress(key))
+          } catch (error) {
+            invalid.push(`${c.name} ${key}: ${error}`)
+          }
         }
       }
+      expect(invalid).toEqual([])
     })
 
     // inversion logic depends on this
-    describe('all accessControl fields keys are accessControl', () => {
-      for (const c of configs ?? []) {
-        const discovery = discoveryOf(c.name)
-        it(c.name, () => {
-          for (const entry of discovery.entries) {
-            const fields = makeEntryStructureConfig(
-              c.structure,
-              entry.address,
-            ).fields
-            for (const [key, value] of Object.entries(fields)) {
-              if (
-                value.handler?.type === 'accessControl' &&
-                value.handler.pickRoleMembers === undefined
-              ) {
-                expect(key).toEqual('accessControl')
-              }
+    it('all accessControl fields keys are accessControl', () => {
+      const invalid: string[] = []
+      for (const c of configs) {
+        for (const entry of discoveryOf(c.name).entries) {
+          const fields = makeEntryStructureConfig(
+            c.structure,
+            entry.address,
+          ).fields
+          for (const [key, value] of Object.entries(fields)) {
+            if (
+              value.handler?.type === 'accessControl' &&
+              value.handler.pickRoleMembers === undefined &&
+              key !== 'accessControl'
+            ) {
+              invalid.push(`${c.name} ${entry.address}: ${key}`)
             }
           }
-        })
+        }
       }
+      expect(invalid).toEqual([])
     })
   })
 

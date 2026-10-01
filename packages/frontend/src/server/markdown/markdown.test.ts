@@ -4,6 +4,7 @@ import {
   markCritical,
   nestHeadings,
   subsection,
+  table,
 } from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
@@ -80,6 +81,20 @@ describe(markCritical.name, () => {
   it('leaves non-critical text alone', () => {
     expect(markCritical('Funds can be stolen.', false)).toEqual(
       'Funds can be stolen.',
+    )
+  })
+})
+
+describe(table.name, () => {
+  it('escapes pipes so a cell cannot split into two columns', () => {
+    expect(table(['Asset', 'Value'], [['A|B', '$1']])).toEqual(
+      '| Asset | Value |\n| --- | --- |\n| A\\|B | $1 |',
+    )
+  })
+
+  it('joins the lines of a cell so it cannot split into two rows', () => {
+    expect(table(['Asset', 'Value'], [['A\nB', '$1']])).toEqual(
+      '| Asset | Value |\n| --- | --- |\n| A B | $1 |',
     )
   })
 })

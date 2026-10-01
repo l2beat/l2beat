@@ -1,3 +1,251 @@
+Generated with discovered.json: 0xe9387a3ce38f6741e2a2525e72e80d7cab44cf66
+
+# Diff at Wed, 30 Sep 2026 10:32:35 GMT:
+
+- id: 7f6faff1
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd631e84d28f970cf24b92bfa73a6d23f516b81d block: 1790671700
+- current timestamp: 1790671700
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract Robinhood Multisig 3 (eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 3"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 4 (eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 4"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 1 (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 1"
+    }
+```
+
+```diff
+    contract Robinhood Multisig 2 (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "Robinhood Multisig 2"
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800,"role":".Proposer"}]
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"},{"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+    EOA (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      directlyReceivedPermissions.2.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract Robinhood L2 Multisig 3 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 3"
+    }
+```
+
+```diff
+    contract Robinhood L2 Multisig 2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 2"
+      receivedPermissions.0:
++        {"permission":"interact","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","description":"Can add or remove transaction filterers and change ArbOS configuration on the L2.","role":".chainOwners","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","role":"admin","via":[{"address":"robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","role":"admin","via":[{"address":"robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","delay":604800,"role":".Proposer"}]
+    }
+```
+
+```diff
+    contract TimelockController (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
+```diff
+    contract Robinhood L2 Multisig 4 (robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 4"
+    }
+```
+
+```diff
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [orbitstack/layer2/ResourceConstraintManager] {
+    +++ description: ArbOS chain owner that can only set the gas pricing constraints of the L2 base fee model within hardcoded bounds. Anyone can remove it from the chain owners after the expiry timestamp.
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    EOA (robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+```diff
+    contract Robinhood L2 Multisig 1 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "Robinhood L2 Multisig 1"
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Can add or remove transaction filterers and change ArbOS configuration on the L2."
+    }
+```
+
+Generated with discovered.json: 0xc8d541c0d136149d0271fad1d2c1994ddad4be12
+
+# Diff at Tue, 29 Sep 2026 17:50:01 GMT:
+
+- id: b5e390ee
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790671700
+- current timestamp: 1790671700
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0xc9e6bbc805a39054c1a1cd82732f1a47f655d41f
 
 # Diff at Tue, 29 Sep 2026 09:01:45 GMT:

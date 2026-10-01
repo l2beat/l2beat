@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express, { type Request } from 'express'
-import { env } from '~/env'
 import {
   serveMarkdown,
   serveMarkdownIfPreferred,
@@ -102,15 +101,13 @@ export function createL2Router(
     res.status(200).send(html)
   })
 
-  if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
-    // No validateRoute: the compare page parses and sanitizes its query
-    // params itself (unknown values fall back to defaults, never 400).
-    router.get('/layer2s/compare', async (req, res) => {
-      const data = await getL2CompareData(req, manifest, cache)
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    })
-  }
+  // No validateRoute: the compare page parses and sanitizes its query
+  // params itself (unknown values fall back to defaults, never 400).
+  router.get('/layer2s/compare', async (req, res) => {
+    const data = await getL2CompareData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   router.get(
     '/layer2s/costs',

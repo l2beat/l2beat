@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x99969f6c26a9f1d41754c4428bb0dd52ad77a875
+
+# Diff at Wed, 30 Sep 2026 07:45:43 GMT:
+
+- id: 51a48b89
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1782911432
+- current timestamp: 1789554702
+
+## Description
+
+New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is proposer and canceller, anyone can execute.
+
+`DisputeGameFactory` owner changed from `OwnerContract` to the `TimelockController`, and its proxy admin moved to a new `ProxyAdmin` owned by the `TimelockController`. All other proxies stay under the old `ProxyAdmin`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.$admin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
++++ severity: HIGH
+      values.owner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      values.proxyAdmin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.proxyAdminOwner:
+-        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+    }
+```
+
+```diff
+    contract Xlayer Multisig (eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.7.via.0.address:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      receivedPermissions.7.via.0.delay:
++        3600
+      receivedPermissions.7.via.0:
++        {"address":"eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600,"role":".Proposer"}
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1h.
+```
+
+## Source code changes
+
+```diff
+...:0xE8b516B3Bf9A6593696462953d98991202f890Ee.sol |  427 +++++++
+ .../projects/xlayer/.flat/TimelockController.sol   | 1264 ++++++++++++++++++++
+ 2 files changed, 1691 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"},{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091","role":".owner"}]
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      template:
++        "opstack/Transactor"
+      description:
++        "A minimal contract that lets its owner send arbitrary calls and delegatecalls."
+    }
+```
+
 Generated with discovered.json: 0x57f86e0e20ba4f4b1dbfbb35e9ecdd5dea2fc667
 
 # Diff at Fri, 25 Sep 2026 12:13:37 GMT:

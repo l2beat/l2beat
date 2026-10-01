@@ -41,12 +41,14 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
     <Sidebar>
-      <SidebarHeader>
-        <div className="flex h-[38px] flex-row items-center justify-between">
+      {/* On mobile the header mirrors MobileTopNavbar's geometry, so the logo
+          and icons stay put when the sidebar covers the navbar. */}
+      <SidebarHeader className="max-lg:h-16 max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
+        <div className="flex h-[38px] flex-row items-center justify-between max-lg:h-full">
           <a href={logoLink} onClick={closeMobileSidebar}>
             <Logo className="block h-8 w-auto" />
           </a>
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4 max-lg:gap-2 md:max-lg:gap-3">
             <DarkThemeToggle />
             <div className="size-6 lg:hidden">
               <MobileNavTriggerClose />

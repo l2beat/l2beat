@@ -27,7 +27,7 @@ export function MobileTopNavbar({
         <div className="flex min-w-0 items-center gap-3">
           <div className="py-4">
             <a href={logoLink} aria-label="Go to home">
-              <Logo className="h-8 w-auto" />
+              <Logo className="block h-8 w-auto" />
             </a>
           </div>
           <MobileSelectedLink groups={groups} sideLinks={sideLinks} />
