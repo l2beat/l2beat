@@ -21,10 +21,7 @@ export function PizzaRosetteCell(props: Props) {
 
   return (
     <Tooltip contentInHtml>
-      <TooltipTrigger
-        className="flex size-full items-center justify-center"
-        disabledOnMobile
-      >
+      <TooltipTrigger asChild disabledOnMobile>
         <TableLink href={props.href}>
           <PizzaRosetteIcon
             values={props.values}
