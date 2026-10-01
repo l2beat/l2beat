@@ -88,7 +88,13 @@ function Sidebar({
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
-          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
+          // iOS Safari tints its toolbars from the overlay and swaps the tint in
+          // one frame, so a full-width sheet needs a matching overlay and no
+          // animation. The 1% see-through keeps Chrome drawing the page beneath,
+          // so closing isn't delayed on Android. From `sm` the sheet is
+          // `max-w-sm`, so the page beside it stays dimmed.
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary [&>button]:hidden"
+          overlayClassName="animate-none! max-sm:bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
