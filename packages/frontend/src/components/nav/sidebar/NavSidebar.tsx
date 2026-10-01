@@ -139,9 +139,7 @@ function NavGroupItem({
           >
             {!small && group.icon}
             <span className="whitespace-nowrap">{group.title}</span>
-            <span className="shrink-0 rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] uppercase leading-none tracking-wider">
-              Soon
-            </span>
+            <SoonBadge />
           </div>
         </SidebarGroupItem>
       )}
@@ -217,17 +215,28 @@ function NavCollapsibleItem({
               {index > 0 && <SidebarSeparator />}
               {section.map((item) => (
                 <Fragment key={item.title}>
-                  <SidebarGroupSubButton
-                    href={item.href}
-                    isActive={isLinkActive({
-                      href: item.href,
-                      pathname,
-                      exact: item.exactMatch,
-                    })}
-                    onClick={closeMobileSidebar}
-                  >
-                    <span className="leading-tight">{item.title}</span>
-                  </SidebarGroupSubButton>
+                  {item.disabled ? (
+                    // Not out yet: drawn like Liquid staking, not a link.
+                    <SidebarGroupSubButton
+                      aria-disabled
+                      className="text-secondary hover:bg-transparent hover:text-secondary aria-disabled:opacity-100"
+                    >
+                      <span className="leading-tight">{item.title}</span>
+                      <SoonBadge />
+                    </SidebarGroupSubButton>
+                  ) : (
+                    <SidebarGroupSubButton
+                      href={item.href}
+                      isActive={isLinkActive({
+                        href: item.href,
+                        pathname,
+                        exact: item.exactMatch,
+                      })}
+                      onClick={closeMobileSidebar}
+                    >
+                      <span className="leading-tight">{item.title}</span>
+                    </SidebarGroupSubButton>
+                  )}
                   {item.subLinks && item.subLinks.length > 0 && (
                     <SidebarGroupSub className="mt-1 mb-1.5 gap-2">
                       {item.subLinks.map((subItem) => (
@@ -253,5 +262,14 @@ function NavCollapsibleItem({
         </SidebarGroupSub>
       </CollapsibleContent>
     </Collapsible>
+  )
+}
+
+/** Marks a section or page that is listed but not out yet. */
+function SoonBadge() {
+  return (
+    <span className="shrink-0 rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] uppercase leading-none tracking-wider">
+      Soon
+    </span>
   )
 }

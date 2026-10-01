@@ -62,8 +62,9 @@ export function HomeStatsStrip({
 
   const more: MoreItem[] = [
     { label: 'Interop', href: '/interop/summary' },
-    { label: 'Data Availability', href: '/data-availability/summary' },
-    { label: 'ZK Catalog', href: '/zk-catalog' },
+    { label: 'Blobs', href: '/data-availability/summary' },
+    // ZK Catalog is the only Security page out so far.
+    { label: 'Security', href: '/zk-catalog' },
   ]
 
   return (
