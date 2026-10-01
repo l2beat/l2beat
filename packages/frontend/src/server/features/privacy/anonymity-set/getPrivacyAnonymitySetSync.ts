@@ -14,6 +14,7 @@ export function getPrivacyAnonymitySetSyncStatus(
   series: PrivacyAnonymitySetSeries[],
   configurations: IndexerConfigurationRecord[],
   target: UnixTime,
+  requireFullHistory = false,
 ) {
   const configurationsById = new Map(
     configurations.map((configuration) => [configuration.id, configuration]),
@@ -26,6 +27,7 @@ export function getPrivacyAnonymitySetSyncStatus(
     const destination =
       configuration !== undefined &&
       configuration.maxHeight === null &&
+      (!requireFullHistory || configuration.minHeight <= item.sinceTimestamp) &&
       configuration.currentHeight !== null &&
       configuration.currentHeight >= target
         ? syncedSeries

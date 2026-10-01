@@ -15,6 +15,21 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     await repository.deleteAll()
   })
 
+  it('sums operations for active configurations in the half-open window', async () => {
+    await repository.upsertMany([
+      flowEvent('a', START - 1, 99, 'deposit', 1, 100n, 0, 'a'),
+      flowEvent('a', START, 100, 'deposit', 3, 100n, 0, 'a'),
+      flowEvent('a', START + UnixTime.DAY, 101, 'deposit', 1, 100n, 0, 'a'),
+      flowEvent('b', START, 102, 'deposit', 9, 100n, 0, 'b'),
+    ])
+    expect(
+      await repository.getOperationCount(['a'], START, START + UnixTime.DAY),
+    ).toEqual(3)
+    expect(
+      await repository.getOperationCount([], START, START + UnixTime.DAY),
+    ).toEqual(0)
+  })
+
   describe(PrivacyFlowEventRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       const records = [

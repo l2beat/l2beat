@@ -180,6 +180,22 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getOperationCount(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ) {
+    if (configurationIds.length === 0) return 0
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select(sql<number>`COALESCE(SUM("count"), 0)`.as('operations'))
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+    return Number(row.operations)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

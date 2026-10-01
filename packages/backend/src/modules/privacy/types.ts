@@ -1,8 +1,8 @@
 import type {
   PrivacyAnonymitySetDepositSource,
   PrivacyFlowExtractorConfig,
+  PrivacyRelayerExtractorConfig,
   ProjectPrivacyInfo,
-  ProjectPrivacyOnchainRelayerSource,
 } from '@l2beat/config'
 import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
@@ -92,8 +92,7 @@ export type PrivacyRelayerActivityIndexerConfig = {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   event: string
-  extractor: ProjectPrivacyOnchainRelayerSource['extractor']
-}
+} & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerSampleConfig = {
   id: string

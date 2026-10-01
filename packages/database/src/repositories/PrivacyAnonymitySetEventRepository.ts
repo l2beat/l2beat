@@ -77,8 +77,9 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     projectIds: string[],
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    configurationIds?: string[],
   ): Promise<PrivacyAnonymitySetSenderDayRecord[]> {
-    if (projectIds.length === 0) return []
+    if (projectIds.length === 0 || configurationIds?.length === 0) return []
 
     const day = sql<Date>`date_trunc('day', "timestamp")`
     const rows = await this.db
@@ -91,6 +92,9 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
         eb.fn.max('amount').as('maximumAmount'),
       ])
       .where('projectId', 'in', projectIds)
+      .$if(configurationIds !== undefined, (query) =>
+        query.where('configurationId', 'in', configurationIds ?? []),
+      )
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
       .groupBy(['projectId', 'bucketId', 'sender', day])
@@ -104,6 +108,22 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
       sender: row.sender,
       maximumAmount: BigInt(row.maximumAmount),
     }))
+  }
+
+  async getOperationCount(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ) {
+    if (configurationIds.length === 0) return 0
+    const row = await this.db
+      .selectFrom('PrivacyAnonymitySetEvent')
+      .select(sql<number>`COUNT(*)`.as('operations'))
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+    return Number(row.operations)
   }
 
   async deleteByConfigInTimeRange(

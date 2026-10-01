@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
@@ -69,6 +69,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     const indexer = new PrivacyRelayerActivityIndexer(
       {
         chain: 'ethereum',
+        rpcClient: mockObject<IRpcClient>({}),
         configurations,
         blockProvider,
         logsProvider,

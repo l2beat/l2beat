@@ -33,6 +33,22 @@ describe(getAnonymitySetSteps.name, () => {
     ])
   })
 
+  it('explains funding addresses as an activity proxy with attribution exclusions', () => {
+    const summary = {
+      ...makeSummary({ bucketType: 'pool' }),
+      fundingAddresses: true,
+    }
+    expect(getAnonymitySetDescription(summary)).toInclude(
+      'Distinct funding addresses',
+    )
+    expect(getAnonymitySetDescription(summary)).toInclude(
+      'Mixed and unresolved funding is excluded',
+    )
+    expect(getAnonymitySetDescription(summary)).toInclude(
+      'not a guarantee of anonymity',
+    )
+  })
+
   it('explains which series are excluded while syncing', () => {
     const summary = makeSummary({
       bucketType: 'pool',

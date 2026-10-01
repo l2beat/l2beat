@@ -56,6 +56,32 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     ])
   })
 
+  it('counts only active configurations within the half-open window', async () => {
+    await repository.upsertMany([
+      event('aaaaaaaaaaaa', 1, START - 1, 'alice', 10n),
+      event('aaaaaaaaaaaa', 2, START, 'alice', 10n),
+      event('aaaaaaaaaaaa', 3, START + UnixTime.DAY, 'alice', 10n),
+      event('bbbbbbbbbbbb', 4, START, 'bob', 10n),
+    ])
+    expect(
+      await repository.getOperationCount(
+        ['aaaaaaaaaaaa'],
+        START,
+        START + UnixTime.DAY,
+      ),
+    ).toEqual(1)
+    expect(
+      await repository.getOperationCount([], START, START + UnixTime.DAY),
+    ).toEqual(0)
+    const days = await repository.getSenderDaysByProjectIds(
+      ['project-a'],
+      START,
+      START + UnixTime.DAY,
+      ['aaaaaaaaaaaa'],
+    )
+    expect(days.map((row) => row.sender)).toEqual(['alice'])
+  })
+
   it('trims only the selected configuration and inclusive time range', async () => {
     await repository.upsertMany([
       event('aaaaaaaaaaaa', 1, START, 'alice', 1n),

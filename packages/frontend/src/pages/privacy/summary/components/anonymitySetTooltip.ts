@@ -9,6 +9,8 @@ type AvailableAnonymitySetSummary = Extract<
 export function getAnonymitySetDescription(
   anonymitySet: AvailableAnonymitySetSummary,
 ): string {
+  if (anonymitySet.fundingAddresses)
+    return `Distinct funding addresses associated with deposits of at least ${anonymitySet.formattedAmount} ${anonymitySet.token} during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days. Counts addresses, not people or private balances. Mixed and unresolved funding is excluded. This is an activity proxy, not a guarantee of anonymity.`
   if (anonymitySet.bucketType === 'denomination') {
     return `Number of unique depositors in the ${anonymitySet.formattedAmount} ${anonymitySet.token} bucket during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`
   }

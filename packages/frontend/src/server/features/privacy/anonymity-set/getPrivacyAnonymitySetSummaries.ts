@@ -5,6 +5,8 @@ import type {
 import { UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import type { PrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
+import { getPrivacyMetricCoverage } from '../getPrivacyMetricCoverage'
 import type { PrivacyProject } from '../types'
 import {
   ANONYMITY_SET_WINDOW_DAYS,
@@ -23,6 +25,8 @@ import {
 export type PrivacyAnonymitySetSummary =
   | ({
       status: 'available'
+      fundingAddresses?: boolean
+      coverage?: PrivacyMetricCoverage
       value: number
       label: string
       /** Labels of configured series excluded from the value while their history is indexed. */
@@ -61,21 +65,40 @@ export async function getPrivacyAnonymitySetSummaries(
       trackedProjectIds,
       cutoff,
       currentDay,
+      unique(allSeries.map((series) => series.configurationId)),
     ),
   ])
 
-  return new Map(
-    projects.map((project) => [
-      project.id,
-      getPrivacyAnonymitySetSummary(
-        project,
-        seriesByProject.get(project.id) ?? [],
-        configurations,
-        rows,
-        currentDay,
-      ),
-    ]),
+  const summaries = await Promise.all(
+    projects.map(
+      async (project): Promise<[string, PrivacyAnonymitySetSummary]> => {
+        const summary = getPrivacyAnonymitySetSummary(
+          project,
+          seriesByProject.get(project.id) ?? [],
+          configurations,
+          rows,
+          currentDay,
+        )
+        if (summary.status === 'available' && summary.fundingAddresses) {
+          const result = await getPrivacyMetricCoverage(
+            db,
+            project,
+            'fundingAddresses',
+            cutoff,
+            currentDay,
+          )
+          return [
+            project.id,
+            result
+              ? { ...summary, coverage: result.coverage }
+              : { status: 'syncing' },
+          ]
+        }
+        return [project.id, summary]
+      },
+    ),
   )
+  return new Map(summaries)
 }
 
 export function getPrivacyAnonymitySetSummary(
@@ -97,6 +120,7 @@ export function getPrivacyAnonymitySetSummary(
     series,
     configurations,
     currentDay,
+    state?.type === 'fundingAddresses',
   )
   const [point] = calculateAnonymitySetHistory(rows, syncedSeries, [currentDay])
   const largest = pickLargestSeries(syncedSeries, point?.slice(1) ?? [])
@@ -106,6 +130,7 @@ export function getPrivacyAnonymitySetSummary(
 
   return {
     status: 'available',
+    ...(state?.type === 'fundingAddresses' && { fundingAddresses: true }),
     value: largest.value,
     label: largest.series.label,
     syncingLabels,
@@ -153,6 +178,10 @@ function getMockSummaries(
           project.id,
           {
             status: 'available',
+            ...(state?.type === 'fundingAddresses' && {
+              fundingAddresses: true,
+              coverage: { attributed: 90, total: 100 },
+            }),
             value: Math.round(Math.random() * 1_000),
             label: series.label,
             syncingLabels: [],

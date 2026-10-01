@@ -9,6 +9,7 @@ import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/c
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
+import { describePrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -39,6 +40,7 @@ export function PrivacyAnonymitySetSection({
       ),
     [data],
   )
+  const fundingAddresses = data?.fundingAddresses
   const hasSyncedSeries = (data?.series.length ?? 0) > 0
 
   return (
@@ -51,13 +53,37 @@ export function PrivacyAnonymitySetSection({
       ) : (
         <>
           <h3 className="mb-2 font-bold text-heading-20">
-            {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
+            {fundingAddresses
+              ? 'Funding addresses over time'
+              : `${ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set`}
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            How many unique addresses you could have blended in with if you
-            withdrew on a particular day after depositing during the previous{' '}
-            {ANONYMITY_SET_WINDOW_DAYS} days. This metric is a proxy for the
-            historic anonymity set and shows how it developed over time.
+            {fundingAddresses ? (
+              <>
+                Distinct funding addresses associated with qualifying deposits
+                during the preceding {ANONYMITY_SET_WINDOW_DAYS} complete UTC
+                days. Mixed and unresolved funding is excluded. This is an
+                activity proxy. It does not measure people, private balances or
+                a guaranteed anonymity set.
+              </>
+            ) : (
+              <>
+                How many unique addresses you could have blended in with if you
+                withdrew on a particular day after depositing during the
+                previous {ANONYMITY_SET_WINDOW_DAYS} days. This metric is a
+                proxy for the historic anonymity set and shows how it developed
+                over time.
+              </>
+            )}
+            {data?.coverage && (
+              <>
+                {' '}
+                {describePrivacyMetricCoverage(
+                  data.coverage,
+                  'deposits in the latest 30-day window',
+                )}
+              </>
+            )}
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
             <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
@@ -82,26 +108,40 @@ export function PrivacyAnonymitySetSection({
             syncedUntil={data?.syncedUntil}
             isLoading={isLoading}
             project={project}
+            fundingAddresses={fundingAddresses}
             type="history"
           />
-          <p className="mt-4 text-paragraph-14 text-secondary">
-            The metric looks backwards: it counts deposits that already
-            happened, including from addresses that have since withdrawn. Your
-            real anonymity also depends on deposits made after yours, which
-            cannot be known in advance.
-          </p>
+          {!fundingAddresses && (
+            <p className="mt-4 text-paragraph-14 text-secondary">
+              The metric looks backwards: it counts deposits that already
+              happened, including from addresses that have since withdrawn. Your
+              real anonymity also depends on deposits made after yours, which
+              cannot be known in advance.
+            </p>
+          )}
 
           <h3 className="mt-4 mb-2 font-bold text-heading-20">
-            Estimated anonymity set by holding duration
+            {fundingAddresses
+              ? 'Funding addresses by lookback period'
+              : 'Estimated anonymity set by holding duration'}
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            An estimate of how many unique addresses you blend in with,
-            depending on how long you leave your deposit in the pool. It is
-            based on historic data of past deposits: each point counts
-            depositors from the preceding period, so holding for up to{' '}
-            {ANONYMITY_SET_WINDOW_DAYS} days effectively means blending in with
-            everyone who deposited during the last {ANONYMITY_SET_WINDOW_DAYS}{' '}
-            days.
+            {fundingAddresses ? (
+              <>
+                Distinct funding addresses associated with qualifying deposits
+                during each preceding period.
+              </>
+            ) : (
+              <>
+                An estimate of how many unique addresses you blend in with,
+                depending on how long you leave your deposit in the pool. It is
+                based on historic data of past deposits: each point counts
+                depositors from the preceding period, so holding for up to{' '}
+                {ANONYMITY_SET_WINDOW_DAYS} days effectively means blending in
+                with everyone who deposited during the last{' '}
+                {ANONYMITY_SET_WINDOW_DAYS} days.
+              </>
+            )}
             {data?.syncedUntil !== undefined && (
               <>
                 {' '}
@@ -115,6 +155,7 @@ export function PrivacyAnonymitySetSection({
             series={data?.series}
             isLoading={isLoading}
             project={project}
+            fundingAddresses={fundingAddresses}
             type="holding-duration"
           />
         </>

@@ -75,6 +75,28 @@ describe(PrivacyProjectStats.name, () => {
     expect(html).not.toInclude('Active Relayers 30D')
   })
 
+  it('labels observed payouts as paid finalizers and displays indexing separately from zero', () => {
+    const html = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        relayerStat: {
+          kind: 'paidFinalizers',
+          value: 3,
+          coverage: { attributed: 9, total: 10 },
+        },
+      }),
+    )
+    expect(html).toInclude('Paid finalizers 30D')
+    expect(html).toInclude('>3</span>')
+    const syncing = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        relayerStat: { kind: 'paidFinalizers', value: 0, syncing: true },
+      }),
+    )
+    expect(syncing).toInclude('Syncing')
+  })
+
   it('hides the metric when relayer tracking is not configured', () => {
     const html = render(createElement(PrivacyProjectStats, BASE_PROPS))
 

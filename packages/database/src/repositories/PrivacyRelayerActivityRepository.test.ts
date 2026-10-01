@@ -14,6 +14,26 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
     await repository.deleteAll()
   })
 
+  it('returns scoped payout operations and distinct addresses in a half-open window', async () => {
+    await repository.upsertMany([
+      activity(1, START - 1),
+      activity(2, START),
+      activity(3, START),
+      activity(4, START + UnixTime.DAY),
+      { ...activity(5, START), configurationId: 'other-config' },
+    ])
+    expect(
+      await repository.getAttributedStats(
+        [activity(2, START).configurationId],
+        START,
+        START + UnixTime.DAY,
+      ),
+    ).toEqual({ operations: 2, addresses: 1 })
+    expect(
+      await repository.getAttributedStats([], START, START + UnixTime.DAY),
+    ).toEqual({ operations: 0, addresses: 0 })
+  })
+
   describe(PrivacyRelayerActivityRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const initial = activity(1, START)

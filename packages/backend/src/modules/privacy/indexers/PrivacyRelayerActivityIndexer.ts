@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyRelayerActivityRecord } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
-import { createPrivacyConfigurationId } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
+import { createPrivacyRelayerConfigurationId } from '@l2beat/shared'
+import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -16,6 +16,11 @@ import type { PrivacyRelayerActivityIndexerConfig } from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
 import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 
+import {
+  extractZkMoneyWithdrawalPayout,
+  ZkMoneyMetrics,
+} from '../utils/zkMoneyMetrics'
+
 interface PrivacyRelayerActivityIndexerDeps
   extends Omit<
     ManagedMultiIndexerOptions<PrivacyRelayerActivityIndexerConfig>,
@@ -23,6 +28,7 @@ interface PrivacyRelayerActivityIndexerDeps
   > {
   chain: string
   blockProvider: BlockProvider
+  rpcClient: IRpcClient
   logsProvider: LogsProvider
   db: Database
 }
@@ -133,12 +139,22 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       logger: this.logger,
     })
 
+    const metrics = new ZkMoneyMetrics(this.$.rpcClient)
     const records: PrivacyRelayerActivityRecord[] = []
     for (const { log, timestamp, configuration } of matches) {
-      const activity = extractPrivacyRelayerActivity(
-        configuration.properties,
-        log,
-      )
+      const source = configuration.properties
+      let activity: EthereumAddress | undefined
+      if (source.extractor === 'zkMoneyDepositPayout') {
+        activity = await metrics.depositFinalizer(log, source.params)
+      } else if (source.extractor === 'zkMoneyWithdrawalPayout') {
+        activity = extractZkMoneyWithdrawalPayout(
+          await metrics.receipt(log.transactionHash),
+          log,
+          source.params,
+        )
+      } else {
+        activity = extractPrivacyRelayerActivity(source, log)?.relayerAddress
+      }
       if (!activity) continue
 
       records.push({
@@ -149,7 +165,7 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
         blockNumber: log.blockNumber,
         txHash: log.transactionHash,
         logIndex: log.logIndex,
-        relayerAddress: activity.relayerAddress,
+        relayerAddress: activity,
       })
     }
 
@@ -159,13 +175,9 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
   static idToConfigurationId(
     config: Omit<PrivacyRelayerActivityIndexerConfig, 'id'>,
   ): string {
-    return createPrivacyConfigurationId([
-      'privacy-relayer-activity',
-      config.projectId,
-      config.chain,
-      config.address.toString(),
-      config.event,
-      config.extractor,
-    ])
+    return createPrivacyRelayerConfigurationId({
+      ...config,
+      address: config.address.toString(),
+    })
   }
 }

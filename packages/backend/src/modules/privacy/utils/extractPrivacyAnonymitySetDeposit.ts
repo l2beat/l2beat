@@ -10,7 +10,10 @@ import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
 export type PrivacyAnonymitySetDeposit = {
   amount: bigint
-  origin: { type: 'event'; sender: EthereumAddress } | { type: 'transaction' }
+  origin:
+    | { type: 'event'; sender: EthereumAddress }
+    | { type: 'transaction' }
+    | { type: 'zkMoney' }
 }
 
 export function extractPrivacyAnonymitySetDeposit(
@@ -31,6 +34,8 @@ export function extractPrivacyAnonymitySetDeposit(
   if (result === undefined) return undefined
 
   switch (source.extractor) {
+    case 'zkMoneyDeposit':
+      return { amount: result.amount, origin: { type: 'zkMoney' } }
     case 'fixedAmount':
     case 'railgunShield':
       return {

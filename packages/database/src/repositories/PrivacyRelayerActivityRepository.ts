@@ -77,6 +77,26 @@ export class PrivacyRelayerActivityRepository extends BaseRepository {
     return Number(row.relayerCount)
   }
 
+  async getAttributedStats(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ) {
+    if (configurationIds.length === 0) return { operations: 0, addresses: 0 }
+    const row = await this.db
+      .selectFrom('PrivacyRelayerActivity')
+      .select(sql<number>`COUNT(*)`.as('operations'))
+      .select(sql<number>`COUNT(DISTINCT "relayerAddress")`.as('addresses'))
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+    return {
+      operations: Number(row.operations),
+      addresses: Number(row.addresses),
+    }
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

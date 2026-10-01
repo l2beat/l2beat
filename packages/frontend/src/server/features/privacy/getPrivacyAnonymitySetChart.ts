@@ -1,10 +1,11 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, unique } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import type { PrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
 import { ChartRange } from '~/utils/range/range'
 import type {
   PrivacyAnonymitySetHistoryPoint,
@@ -23,6 +24,7 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
+import { getPrivacyMetricCoverage } from './getPrivacyMetricCoverage'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
@@ -42,6 +44,8 @@ export interface PrivacyAnonymitySetChartResponse {
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
   /** Labels of configured series excluded from the charts while their history is indexed. */
   syncingLabels: string[]
+  fundingAddresses?: boolean
+  coverage?: PrivacyMetricCoverage
   syncedUntil: number | undefined
 }
 
@@ -76,7 +80,12 @@ export async function getPrivacyAnonymitySetChart(
       )
 
   return selectPrivacyAnonymitySetChartRange(
-    orderAnonymitySetSeriesByCurrentSize(snapshot),
+    orderAnonymitySetSeriesByCurrentSize({
+      ...snapshot,
+      ...(project.privacyInfo.anonymitySet?.type === 'fundingAddresses' && {
+        fundingAddresses: true,
+      }),
+    }),
     params.range,
   )
 }
@@ -92,6 +101,7 @@ async function getPrivacyAnonymitySetSnapshot(
     series,
     configurations,
     currentDay,
+    project.privacyInfo.anonymitySet?.type === 'fundingAddresses',
   )
   if (syncedSeries.length === 0) {
     return {
@@ -99,6 +109,23 @@ async function getPrivacyAnonymitySetSnapshot(
       syncingLabels,
     }
   }
+
+  const fundingAddresses =
+    project.privacyInfo.anonymitySet?.type === 'fundingAddresses'
+  const coverage = fundingAddresses
+    ? await getPrivacyMetricCoverage(
+        db,
+        project,
+        'fundingAddresses',
+        currentDay - 30 * UnixTime.DAY,
+        currentDay,
+      )
+    : undefined
+  if (fundingAddresses && !coverage)
+    return {
+      ...emptyResponse(),
+      syncingLabels: syncedSeries.map((series) => series.label),
+    }
 
   const firstSeriesDay = UnixTime.toStartOf(
     Math.min(...syncedSeries.map((item) => item.sinceTimestamp)),
@@ -126,12 +153,16 @@ async function getPrivacyAnonymitySetSnapshot(
         [project.id],
         from,
         to,
+        unique(syncedSeries.map((series) => series.configurationId)),
       ),
   )
 
   return {
     series: toResponseSeries(syncedSeries),
-    history: trimLeadingEmptyAnonymitySetHistory(history),
+    history: fundingAddresses
+      ? history
+      : trimLeadingEmptyAnonymitySetHistory(history),
+    ...(coverage && { coverage: coverage.coverage }),
     holdingDuration,
     syncingLabels,
     syncedUntil: holdingEndpoint,

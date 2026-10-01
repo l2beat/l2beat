@@ -1,15 +1,22 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
+import { describePrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
 
 const RELAYER_STAT_COPY: Record<
   PrivacyRelayerStat['kind'],
   { title: string; tooltip: string }
 > = {
+  paidFinalizers: {
+    title: 'Paid finalizers 30D',
+    tooltip:
+      'Distinct addresses paid to finalize deposits, withdrawals or refunds during the last 30 complete UTC days. Includes users finalizing their own operations. Addresses do not establish independent relayer services. Zero-tip withdrawals and unsupported or ambiguous payouts are excluded.',
+  },
   activeRelayers: {
     title: 'Active Relayers 30D',
     tooltip:
@@ -51,8 +58,22 @@ export function PrivacyProjectStats({
   const relayerStatElement = hasRelayerTracking ? (
     <ProjectSummaryStat
       title={RELAYER_STAT_COPY[relayerStat.kind].title}
-      value={formatInteger(relayerStat.value)}
-      tooltip={RELAYER_STAT_COPY[relayerStat.kind].tooltip}
+      value={
+        relayerStat.syncing ? (
+          <Badge type="gray" size="small">
+            Syncing
+          </Badge>
+        ) : (
+          formatInteger(relayerStat.value)
+        )
+      }
+      tooltip={
+        RELAYER_STAT_COPY[relayerStat.kind].tooltip +
+        (relayerStat.coverage
+          ? ' ' +
+            describePrivacyMetricCoverage(relayerStat.coverage, 'operations')
+          : '')
+      }
     />
   ) : undefined
 

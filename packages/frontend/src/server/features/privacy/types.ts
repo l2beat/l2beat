@@ -30,10 +30,14 @@ export interface PrivacyRelayerStat {
   /**
    * activeRelayers - unique relayer addresses seen in onchain withdrawals
    * over the last 30 days.
+   * paidFinalizers - distinct fee recipients from supported operations,
+   * including users finalizing their own operations.
    * avgDailyRelayers - average count of unique relayers seen in daily
    * network observations over the last 30 days.
    */
-  kind: 'activeRelayers' | 'avgDailyRelayers'
+  kind: 'activeRelayers' | 'avgDailyRelayers' | 'paidFinalizers'
+  coverage?: { attributed: number; total: number }
+  syncing?: boolean
   value: number
 }
 

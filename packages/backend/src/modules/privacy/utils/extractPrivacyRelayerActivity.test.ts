@@ -104,7 +104,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
 })
 
 function config(
-  extractor: PrivacyRelayerActivityIndexerConfig['extractor'],
+  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal',
 ): PrivacyRelayerActivityIndexerConfig {
   return {
     id: 'test-id',
