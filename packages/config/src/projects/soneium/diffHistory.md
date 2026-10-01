@@ -11,7 +11,7 @@ Generated with discovered.json: 0x6354f627e97971c1d8fd070469bf67f8a8a2c401
 
 OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed 2026-09-24.
 
-State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 5084269 to 1788848425. The format carries per-chain roots for a future interop set; today each game commits only to this chain.
+State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 5084269 to 1788848425. The format carries per-chain roots for a future interop set; today each game commits only to this chain. Proving a withdrawal now requires a game whose sequence number is at or after the timestamp of the initiating block rather than its block number; `proveWithdrawalTransaction` is unchanged, as the portal reads this chain's output root out of the super root.
 
 The respected game type changed 1 → 5, PERMISSIONED_CANNON to SUPER_PERMISSIONED. Game types 0, 1 and 8 were cleared and type 5 is the only type registered; no permissionless type is installed.
 

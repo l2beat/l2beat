@@ -11,7 +11,7 @@ Generated with discovered.json: 0xe59178877feaa1fa4fecee29ec5ecdc85c2d8a3a
 
 OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed 2026-09-24.
 
-State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 19265297 to 1788848282. The format carries per-chain roots for a future interop set; today each game commits only to this chain.
+State roots are now proposed as super roots, which are addressed by an L2 timestamp rather than by a block number on this chain. The starting anchor sequence number is therefore a timestamp, changing from 19265297 to 1788848282. The format carries per-chain roots for a future interop set; today each game commits only to this chain. Proving a withdrawal now requires a game whose sequence number is at or after the timestamp of the initiating block rather than its block number; `proveWithdrawalTransaction` is unchanged, as the portal reads this chain's output root out of the super root.
 
 The respected game type changed 8 → 9, CANNON_KONA to SUPER_CANNON_KONA. Proposing and challenging remain permissionless, with a 0.08 ETH bond, a 3.5 day clock, max game depth 73 and split depth 30. The fault proof program is the interop variant of kona v1.7.0-rc.2.
 
