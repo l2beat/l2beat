@@ -211,6 +211,7 @@ export class ConfigReader {
       let parsed = this.importedCache.get(resolvedPath)
       if (parsed === undefined) {
         parsed = parseLayer(readJsonc(resolvedPath), importPath)
+        deepFreeze(parsed)
         this.importedCache.set(resolvedPath, parsed)
       }
 
@@ -261,4 +262,16 @@ export function getReferencedProjects(discovery: DiscoveryOutput): string[] {
       .filter(notUndefined)
       .sort(),
   )
+}
+
+function deepFreeze(value: unknown): void {
+  const pending = [value]
+  while (pending.length > 0) {
+    const item = pending.pop()
+    if (typeof item !== 'object' || item === null || Object.isFrozen(item)) {
+      continue
+    }
+    Object.freeze(item)
+    pending.push(...Object.values(item))
+  }
 }

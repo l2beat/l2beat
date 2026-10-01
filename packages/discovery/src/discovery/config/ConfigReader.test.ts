@@ -99,6 +99,16 @@ describe('readConfig layering', () => {
     const config = new ConfigReader('/layered').readConfig('proj')
     expect(config.structure.overrides?.[ADDRESS]?.ignoreDiscovery).toEqual(true)
   })
+
+  it('shares imported layers read-only across projects', () => {
+    const reader = new ConfigReader('/layered')
+    const names = reader.readConfig('proj').color.names ?? {}
+
+    expect(() => {
+      names[ADDRESS] = 'Changed'
+    }).toThrow(TypeError)
+    expect(reader.readConfig('proj').color.names?.[ADDRESS]).toEqual('Global')
+  })
 })
 
 describe('config and discovery resolution', () => {
