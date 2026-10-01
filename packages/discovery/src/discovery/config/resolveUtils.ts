@@ -3,7 +3,7 @@ export type WithDefaults<L, K extends keyof L> = Omit<L, K> & {
 }
 
 export function resolveByShape<L extends object, K extends keyof L = never>(
-  shape: object,
+  shape: Record<keyof L, unknown>,
   layer: L,
   defaults: { [P in K]-?: NonNullable<L[P]> },
 ): WithDefaults<L, K> {
@@ -19,7 +19,10 @@ export function resolveByShape<L extends object, K extends keyof L = never>(
   return result as WithDefaults<L, K>
 }
 
-export function pickByShape<L extends object>(shape: object, layer: L): L {
+export function pickByShape<L extends object>(
+  shape: Record<keyof L, unknown>,
+  layer: L,
+): L {
   return resolveByShape(shape, layer, {})
 }
 
