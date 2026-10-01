@@ -56,16 +56,20 @@ const DialogContent = ({
 }) => (
   <DialogPortal>
     {/* iOS Safari tints its toolbars from a fixed full-width layer like this
-        overlay; without one the page shows through around a full-screen dialog. */}
+        overlay; without one the page shows through around a full-screen dialog.
+        Safari skips the layer while it fades in from zero and may not look
+        again, so the full-screen variant doesn't animate. */}
     <DialogOverlay
-      className={cn(fullScreenMobile && 'max-md:bg-surface-primary')}
+      className={cn(
+        fullScreenMobile && 'max-md:animate-none! max-md:bg-surface-primary',
+      )}
     />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
         '-translate-x-1/2 -translate-y-1/2 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-999 grid w-full gap-4 overscroll-none border border-divider bg-surface-secondary p-6 shadow-popover duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in md:rounded-lg',
         fullScreenMobile &&
-          'max-md:inset-0 max-md:h-screen max-md:translate-x-0 max-md:translate-y-0 max-md:rounded-none',
+          'max-md:inset-0 max-md:h-screen max-md:translate-x-0 max-md:translate-y-0 max-md:animate-none! max-md:rounded-none',
         !fullScreenMobile && 'max-md:w-[calc(100%-1rem)] max-md:rounded-md',
         className,
       )}
