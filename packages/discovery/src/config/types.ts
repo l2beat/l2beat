@@ -15,6 +15,12 @@ export interface DiscoveryModuleConfig {
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
   readonly templateSimilarityCutoff?: number
+  /** Author a template with a model for every contract no template matches. Local runs only. */
+  readonly ai?: boolean
+  /** `opencode/<model>` for opencode, anything else is a Codex model; Codex's default when unset. */
+  readonly aiModel?: string
+  /** Model turns per contract, the first included. */
+  readonly aiRounds?: number
 }
 
 export interface DiscoveryChainConfig {

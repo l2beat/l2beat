@@ -86,6 +86,24 @@ export const DiscoverCommandArgs = {
     long: 'overwrite-cache',
     description: 'overwrite the cache entries',
   }),
+  ai: flag({
+    type: boolean,
+    long: 'ai',
+    description:
+      'author a template with a model for every verified contract no template matches (writes into _templates; review before committing)',
+  }),
+  aiModel: option({
+    type: optional(string),
+    long: 'ai-model',
+    description:
+      'model for --ai: a Codex model name (default: Codex default), or opencode/<model>, e.g. opencode/deepseek-v4.1-flash for the cheap option',
+  }),
+  aiRounds: option({
+    type: optional(number),
+    long: 'ai-rounds',
+    description:
+      'model turns per contract for --ai, the first included (default 3)',
+  }),
 }
 
 export const DiscoverCommand = command({

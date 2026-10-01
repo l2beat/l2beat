@@ -27,6 +27,8 @@ import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
+import type { TemplatizerSettings } from './templatizer/Templatizer'
+import { getTemplatizerSettings } from './templatizer/templatizerSettings'
 
 function getTimestamp(
   configReader: ConfigReader,
@@ -72,6 +74,7 @@ export async function runDiscovery(
       timestampDate,
       http,
       config.overwriteCache,
+      getTemplatizerSettings(config, paths, configReader),
     )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
@@ -231,6 +234,7 @@ export async function discover(
   timestampDate: Date | undefined,
   http: HttpClient,
   overwriteCache: boolean,
+  templatizerSettings?: TemplatizerSettings,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
@@ -250,6 +254,8 @@ export async function discover(
     cache,
     http,
     logger,
+    undefined,
+    templatizerSettings,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
   const { analyses: result, stats: addressStats } =

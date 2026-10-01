@@ -11,12 +11,15 @@ import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
+import type { ProxyResult } from '../proxies/types'
 import { getImplementationNames } from '../source/getDerivedName'
 import { getLibraries } from '../source/getLibraries'
 import type {
+  ContractSources,
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import type { Templatizer } from '../templatizer/Templatizer'
 import {
   get$Beacons,
   get$Implementations,
@@ -79,6 +82,7 @@ export class AddressAnalyzer {
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
     private readonly templateService: TemplateService,
+    private readonly templatizer?: Templatizer,
   ) {}
 
   async analyze(
@@ -138,6 +142,18 @@ export class AddressAnalyzer {
         sources,
         address,
       )
+      if (matchingTemplates.length === 0 && !isEOA) {
+        const authored = await this.authorTemplate(
+          provider,
+          address,
+          config,
+          sources,
+          proxy,
+        )
+        if (authored !== undefined) {
+          matchingTemplates.push(authored)
+        }
+      }
       const template = matchingTemplates[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works
@@ -216,5 +232,42 @@ export class AddressAnalyzer {
     } as Analysis
 
     return analysis
+  }
+
+  /**
+   * Runs only with `--ai`. The handlers run untemplatized first because
+   * their values are the baseline the model builds on; the analyzer then
+   * runs them again with the template, from the provider's cache.
+   */
+  private async authorTemplate(
+    provider: IProvider,
+    address: ChainSpecificAddress,
+    config: StructureContractConfig,
+    sources: ContractSources,
+    proxy: ProxyResult,
+  ): Promise<string | undefined> {
+    if (
+      this.templatizer === undefined ||
+      !this.templatizer.canTemplatize(sources, proxy.type)
+    ) {
+      return undefined
+    }
+    const { values, errors } = await this.handlerExecutor.execute(
+      provider,
+      address,
+      sources.abi,
+      config,
+    )
+    return await this.templatizer.templateFor({
+      provider,
+      address,
+      sources,
+      proxyType: proxy.type,
+      proxyValues: proxy.values,
+      implementationNames: getImplementationNames(address, sources) ?? {},
+      values: values ?? {},
+      errors,
+      ignoreMethods: config.ignoreMethods,
+    })
   }
 }
