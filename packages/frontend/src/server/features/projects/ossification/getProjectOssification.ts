@@ -4,27 +4,13 @@ import type {
 } from '@l2beat/config'
 import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { calculateExposure } from './calculateExposure'
 import {
-  getOssificationSeries,
-  type OssificationSeries,
-  type OssificationSeriesProject,
-  type OssificationValueSource,
-} from './getOssificationSeries'
-
-/** Shared by the detail block and the ossification table. */
-export interface OssificationStats {
-  score: number
-  isUnverified: boolean
-  criticalChangesPerYear: number
-  clusteredEventCount: number
-  /** USD·years; null without a value series */
-  exposure: number | null
-  valueSource: OssificationValueSource | null
-}
+  getOssificationStats,
+  type OssificationStats,
+  type OssificationStatsProject,
+} from './getOssificationStats'
 
 export interface ProjectOssificationView extends OssificationStats {
-  lastChangeAgeSeconds: number
   contracts: OssificationContractView[]
   criticalUpdates: ProjectOssificationCriticalUpdate[]
 }
@@ -38,7 +24,7 @@ export interface OssificationContractView {
   stateChangeCount: number
 }
 
-interface OssificationProject extends OssificationSeriesProject {
+interface OssificationProject extends OssificationStatsProject {
   ossification?: ProjectOssification
 }
 
@@ -51,15 +37,8 @@ export async function getProjectOssification(
   }
 
   const now = UnixTime.now()
-  const series = await getOssificationSeries(
-    project,
-    ossification.projectClockStart,
-  )
-
   return {
-    ...getOssificationStats(ossification, series, now),
-    lastChangeAgeSeconds:
-      now - (ossification.lastCriticalChange ?? ossification.projectClockStart),
+    ...(await getOssificationStats(project, ossification, now)),
     contracts: ossification.contracts.map(
       ({ ossifyingSince, ...contract }) => ({
         ...contract,
@@ -67,26 +46,5 @@ export async function getProjectOssification(
       }),
     ),
     criticalUpdates: ossification.criticalUpdates,
-  }
-}
-
-export function getOssificationStats(
-  ossification: ProjectOssification,
-  series: OssificationSeries | null,
-  now: UnixTime,
-): OssificationStats {
-  const clockStart = ossification.projectClockStart
-  const isUnverified = ossification.contracts.some((c) => !c.isVerified)
-  return {
-    score: ossification.score,
-    isUnverified,
-    criticalChangesPerYear: ossification.criticalChangesPerYear,
-    clusteredEventCount: ossification.clusteredEventCount,
-    exposure: isUnverified
-      ? 0
-      : series
-        ? calculateExposure(series.points, clockStart, now)
-        : null,
-    valueSource: series?.source ?? null,
   }
 }

@@ -6,7 +6,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
-import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
+import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 
 const WIDTH = 132
@@ -22,9 +23,13 @@ const LINE_PROPS = {
 const SCALE_NOTE = "Height is scaled to each project's own peak"
 const CRISP = { shapeRendering: 'crispEdges' } as const
 
-type Props = Pick<OssificationEntry, 'timeline' | 'valueSource'>
+type Props = Pick<OssificationStats, 'timeline' | 'valueSource'>
 
-export function OssificationTimelineCell({ timeline, valueSource }: Props) {
+export function OssificationTimelineChart({
+  timeline,
+  valueSource,
+  className,
+}: Props & { className?: string }) {
   const id = useId()
   const { from, to, clockStart, resets, values } = timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
@@ -39,7 +44,7 @@ export function OssificationTimelineCell({ timeline, valueSource }: Props) {
 
   return (
     <Tooltip>
-      <TooltipTrigger className="ml-auto block">
+      <TooltipTrigger className={cn('block', className)}>
         <svg
           width={WIDTH}
           height={HEIGHT}

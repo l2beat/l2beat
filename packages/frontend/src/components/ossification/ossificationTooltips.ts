@@ -9,6 +9,4 @@ export const OSSIFICATION_TOOLTIPS = {
     'Critical change events per year over the trailing 36 months, or since the project launched if that is more recent, and the number of contracts in the critical perimeter as classified by our research team.',
   exitWindow:
     'How much time users have to exit before a permitted critical change takes effect. This does not directly affect ossification.',
-  lastChange:
-    'Time since the last critical change, or since the newest deployment if there was none.',
 }

@@ -3,22 +3,30 @@ import {
   formatAddress,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { formatCriticalChangesPerYear } from '~/components/ossification/formatCriticalChangesPerYear'
+import {
+  formatContractCount,
+  formatCriticalChangesPerYear,
+} from '~/components/ossification/formatCriticalChangesPerYear'
 import { OssificationExposure } from '~/components/ossification/OssificationExposure'
 import { OssificationScore } from '~/components/ossification/OssificationScore'
+import { OssificationTimelineChart } from '~/components/ossification/OssificationTimelineChart'
 import { OssificationUnverifiedBadge } from '~/components/ossification/OssificationUnverifiedBadge'
 import { OSSIFICATION_TOOLTIPS } from '~/components/ossification/ossificationTooltips'
+import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
+import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
   OssificationContractView,
   ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
+import { formatTimestamp } from '~/utils/dates'
 import { SubsectionHeading } from '../Subsection'
 
 export function OssificationDetails({
@@ -42,14 +50,27 @@ export function OssificationDetails({
         than this perimeter is today. Battle-tested exposure is the value
         secured, summed over that unchanged period.
       </p>
-      <ChartStats>
+      {/* The same values as a row of the ossification table. */}
+      <ChartStats className="lg:grid-cols-3">
         <ChartStatsItem
-          label="Ossification score"
+          label="Ossification %"
           tooltip={OSSIFICATION_TOOLTIPS.score}
         >
           <OssificationScore
             score={ossification.score}
             isUnverified={ossification.isUnverified}
+          />
+          <SecondLine>
+            last reset {formatTimestamp(ossification.timeline.clockStart)}
+          </SecondLine>
+        </ChartStatsItem>
+        <ChartStatsItem
+          label={`${OSSIFICATION_VALUE_LABELS[ossification.valueSource ?? 'tvs'].short} & changes (1Y)`}
+          tooltip={OSSIFICATION_TOOLTIPS.timeline}
+        >
+          <OssificationTimelineChart
+            timeline={ossification.timeline}
+            valueSource={ossification.valueSource}
           />
         </ChartStatsItem>
         <ChartStatsItem
@@ -62,20 +83,33 @@ export function OssificationDetails({
           />
         </ChartStatsItem>
         <ChartStatsItem
-          label="Last change"
-          tooltip={OSSIFICATION_TOOLTIPS.lastChange}
-        >
-          {formatSeconds(ossification.lastChangeAgeSeconds)} ago
-        </ChartStatsItem>
-        <ChartStatsItem
-          label="Critical changes per year"
+          label="Critical changes / year"
           tooltip={OSSIFICATION_TOOLTIPS.criticalChangesPerYear}
         >
           {formatCriticalChangesPerYear(ossification)}
+          <SecondLine>
+            {formatContractCount(ossification.contractCount)}
+          </SecondLine>
+        </ChartStatsItem>
+        <ChartStatsItem
+          label="Exit window"
+          tooltip={OSSIFICATION_TOOLTIPS.exitWindow}
+        >
+          {ossification.exitWindow ? (
+            <ExitWindowCell value={ossification.exitWindow} />
+          ) : (
+            <NotApplicableBadge />
+          )}
         </ChartStatsItem>
       </ChartStats>
       <CriticalContracts contracts={ossification.contracts} />
     </div>
+  )
+}
+
+function SecondLine({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="block font-normal text-secondary text-xs">{children}</span>
   )
 }
 

@@ -1,4 +1,3 @@
-import { pluralize } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -6,9 +5,13 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { formatCriticalChangesPerYear } from '~/components/ossification/formatCriticalChangesPerYear'
+import {
+  formatContractCount,
+  formatCriticalChangesPerYear,
+} from '~/components/ossification/formatCriticalChangesPerYear'
 import { OssificationExposure } from '~/components/ossification/OssificationExposure'
 import { OssificationScore } from '~/components/ossification/OssificationScore'
+import { OssificationTimelineChart } from '~/components/ossification/OssificationTimelineChart'
 import { OSSIFICATION_TOOLTIPS } from '~/components/ossification/ossificationTooltips'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -26,7 +29,6 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 import { formatTimestamp } from '~/utils/dates'
-import { OssificationTimelineCell } from './OssificationTimelineCell'
 
 const columnHelper = createColumnHelper<OssificationEntry>()
 
@@ -85,9 +87,10 @@ const columns = [
     id: 'timeline',
     header: 'TVS &\nchanges (1Y)',
     cell: (ctx) => (
-      <OssificationTimelineCell
+      <OssificationTimelineChart
         timeline={ctx.row.original.timeline}
         valueSource={ctx.row.original.valueSource}
+        className="ml-auto"
       />
     ),
     meta: {
@@ -119,8 +122,7 @@ const columns = [
           {formatCriticalChangesPerYear(ctx.row.original)}
         </TwoRowCell.First>
         <TwoRowCell.Second>
-          across {ctx.row.original.contractCount}{' '}
-          {pluralize(ctx.row.original.contractCount, 'contract')}
+          {formatContractCount(ctx.row.original.contractCount)}
         </TwoRowCell.Second>
       </TwoRowCell>
     ),

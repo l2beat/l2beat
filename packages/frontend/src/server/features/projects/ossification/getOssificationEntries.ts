@@ -1,4 +1,4 @@
-import type { ExitWindowRisk, Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { env } from '~/env'
@@ -6,12 +6,10 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
-import { getOssificationSeries } from './getOssificationSeries'
 import {
   getOssificationStats,
   type OssificationStats,
-} from './getProjectOssification'
-import { sampleTimeline } from './sampleTimeline'
+} from './getOssificationStats'
 
 type OssificationCategory = 'Layer 2' | 'Layer 3' | 'Privacy' | 'DeFi'
 
@@ -24,35 +22,12 @@ export interface OssificationEntry
   category: OssificationCategory
   /** Project page; absent for DeFi projects while DeFi pages are disabled */
   href?: string
-  contractCount: number
-  /** Absent for DeFi, which has no exit window in config yet */
-  exitWindow?: OssificationExitWindow
-  timeline: OssificationTimeline
-}
-
-type OssificationExitWindow = Pick<
-  ExitWindowRisk,
-  'value' | 'sentiment' | 'description' | 'warning' | 'regular' | 'orderHint'
->
-
-interface OssificationTimeline {
-  from: number
-  to: number
-  clockStart: number
-  /** Perimeter resets inside the window, up to the clock start */
-  resets: number[]
-  /** Critical changes inside the window, up to the clock start */
-  criticalChanges: number
-  /** Evenly spread from `from` to `to`, see sampleTimeline */
-  values: (number | null)[] | null
 }
 
 type OssificationEntryProject = Project<
   'ossification' | 'statuses',
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
-
-const TIMELINE_WINDOW = 365 * UnixTime.DAY
 
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
@@ -68,7 +43,6 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   })
 
   const now = UnixTime.now()
-  const from = now - TIMELINE_WINDOW
 
   const entries = await Promise.all(
     projects.map(async (project): Promise<OssificationEntry | undefined> => {
@@ -77,15 +51,6 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         return undefined
       }
 
-      const { ossification } = project
-      const clockStart = ossification.projectClockStart
-      // Later ones belong to contracts that have left the perimeter.
-      const isInTimeline = (timestamp: number) =>
-        timestamp >= from && timestamp <= clockStart
-      const series = await getOssificationSeries(
-        project,
-        Math.min(from, clockStart),
-      )
       const statuses = {
         yellowWarning: project.statuses.yellowWarning,
         redWarning: project.statuses.redWarning,
@@ -102,18 +67,7 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         backgroundColor: getRowBackgroundColor(statuses),
         statuses,
         ...placement,
-        ...getOssificationStats(ossification, series, now),
-        contractCount: ossification.contracts.length,
-        exitWindow: getExitWindow(project),
-        timeline: {
-          from,
-          to: now,
-          clockStart,
-          resets: ossification.perimeterResets.filter(isInTimeline),
-          criticalChanges:
-            ossification.criticalChanges.filter(isInTimeline).length,
-          values: series ? sampleTimeline(series.points, from, now) : null,
-        },
+        ...(await getOssificationStats(project, project.ossification, now)),
       }
     }),
   )
@@ -123,19 +77,6 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
     .sort(
       (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
     )
-}
-
-function getExitWindow(
-  project: OssificationEntryProject,
-): OssificationExitWindow | undefined {
-  const risk = project.scalingRisks
-    ? (project.scalingRisks.stacked ?? project.scalingRisks.self).exitWindow
-    : project.privacyInfo?.exitWindow
-  if (!risk) {
-    return undefined
-  }
-  const { value, sentiment, description, warning, regular, orderHint } = risk
-  return { value, sentiment, description, warning, regular, orderHint }
 }
 
 function getPlacement(

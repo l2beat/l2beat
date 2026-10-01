@@ -31,7 +31,7 @@ export async function getUpdatesSection(
     type: 'UpdatesSection',
     props: {
       id: 'updates',
-      title: 'Updates',
+      title: ossification ? 'Ossification & Updates' : 'Updates',
       projectId,
       updates: updates.map(({ sections: _, ...summary }) => summary),
       ossification,
