@@ -5,7 +5,12 @@ import {
   parsePastUpgrades,
   type Upgrade,
 } from '@l2beat/discovery'
-import { assert, notUndefined, type UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  notUndefined,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import type { ProjectOssificationContract } from '../types'
 import type { OssificationChange, OssificationInput } from './OssificationInput'
 import type { OssificationPatch } from './OssificationPatch'
@@ -38,7 +43,7 @@ export interface OssificationJudgement {
 }
 
 interface Member {
-  address: string
+  address: ChainSpecificAddress
   name: string
   isVerified: boolean
   deployedAt?: number
@@ -162,7 +167,7 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
   const members = new Map<string, Member>()
 
   for (const entry of sources.entries) {
-    const address = entry.address.toString()
+    const address = entry.address
     const flag = overrides.get(key(address))?.critical ?? entry.critical
     if (flag === undefined) continue
     assert(
@@ -197,11 +202,15 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
       change.addressType === 'Contract' &&
       !members.has(key(change.address.toString())),
   )
-  const deletions = new Map<string, { timestamp: number; template?: string }>()
+  const deletions = new Map<
+    string,
+    { address: ChainSpecificAddress; timestamp: number; template?: string }
+  >()
   for (const change of deleted) {
     const address = key(change.address.toString())
     const seen = deletions.get(address)
     deletions.set(address, {
+      address: change.address,
       timestamp: Math.max(change.timestamp, seen?.timestamp ?? 0),
       template: seen?.template ?? change.template,
     })
@@ -216,8 +225,8 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
         key(change.address.toString()) === address,
     )
     members.set(address, {
-      address,
-      name: address,
+      address: deletion.address,
+      name: deletion.address,
       isVerified: true,
       deployedAt: earliest(...created.map((change) => change.timestamp)),
       since,
@@ -233,9 +242,10 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
         override.critical.untilTimestamp !== undefined,
       `${override.address} is neither in discovered.json nor deleted in diffHistory.md: bound it with untilTimestamp`,
     )
-    members.set(key(override.address), {
-      address: override.address,
-      name: override.name ?? override.address,
+    const address = ChainSpecificAddress(override.address)
+    members.set(key(address), {
+      address,
+      name: override.name ?? address,
       isVerified: true,
       ...bounds(override.critical),
       upgrades: [],

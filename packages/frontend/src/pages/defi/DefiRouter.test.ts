@@ -61,7 +61,7 @@ describe(createDefiRouter.name, () => {
 
 function createRouter() {
   const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, ssr: { props: { entry: ENTRY } } }
+  const cachedPage = { head: {}, props: { entry: ENTRY } }
   const cache = mockObject<InMemoryCache>({
     get: (async () => cachedPage) as InMemoryCache['get'],
   })

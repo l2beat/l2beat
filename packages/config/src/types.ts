@@ -1946,7 +1946,7 @@ export interface ProjectOssificationCriticalUpdate {
 
 export interface ProjectOssificationContract {
   name: string
-  address: string
+  address: ChainSpecificAddress
   isVerified: boolean
   /** Start of the battle-tested clock: last critical change, or deployment
    *  if the contract never changed. */
@@ -1977,6 +1977,8 @@ export interface ProjectOssification {
   criticalChangesPerYear: number
   clusteredEventCount: number
   windowSeconds: number
+  /** 24h-clustered timestamps of every critical change, ascending */
+  criticalChanges: number[]
   /** 24h-clustered timestamps of every perimeter reset, ascending: critical
    *  changes plus deployments of critical contracts. */
   perimeterResets: number[]
