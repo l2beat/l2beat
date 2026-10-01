@@ -1,20 +1,19 @@
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-
-/** A schema.org JSON-LD block, rendered as one `<script>` in the page head. */
+/**
+ * A schema.org JSON-LD block, rendered as one `<script>` in the page head.
+ * Head adds the `@context`, so builders only describe the thing itself.
+ */
 export interface StructuredData {
-  '@context': 'https://schema.org'
   '@type': string
   [property: string]: unknown
 }
 
-export function withSchemaOrgContext<T extends { '@type': string }>(data: T) {
-  return { '@context': 'https://schema.org' as const, ...data }
-}
-
 /**
- * Canonical and structured data links name the production page, even when
- * staging or a preview rendered it.
+ * What getMetadata resolved for the page, handed to the page's builders so
+ * the JSON-LD names the same URL, description and image as the meta tags.
  */
-export function toProductionUrl(path: string) {
-  return PRODUCTION_ORIGIN + path
+export interface StructuredDataPage {
+  /** The canonical, production URL. */
+  url: string
+  description: string
+  image: string
 }

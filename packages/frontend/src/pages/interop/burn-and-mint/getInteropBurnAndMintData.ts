@@ -51,6 +51,7 @@ export async function getInteropBurnAndMintData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: 'Burn & Mint',
         title: 'Interoperability - L2BEAT',
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
@@ -58,7 +59,6 @@ export async function getInteropBurnAndMintData(
         openGraph: {
           image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
         },
-        breadcrumb: { name: 'Burn & Mint' },
       }),
     },
     ssr: {

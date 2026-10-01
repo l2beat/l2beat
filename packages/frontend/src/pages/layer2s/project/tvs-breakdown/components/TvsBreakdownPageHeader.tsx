@@ -1,7 +1,6 @@
 import { Breadcrumbs } from '~/components/Breadcrumbs'
 import { SearchBarButton } from '~/components/search-bar/SearchBarButton'
 import { formatTimestampToDateWithHour } from '~/utils/dates'
-import { getTvsBreakdownBreadcrumbs } from '../getTvsBreakdownBreadcrumbs'
 
 interface Props {
   title: string
@@ -16,7 +15,6 @@ export function TvsBreakdownPageHeader({
   icon,
   tvsBreakdownTimestamp,
 }: Props) {
-  const crumbs = getTvsBreakdownBreadcrumbs({ name: title, slug })
   return (
     <div className="flex flex-col border-divider px-4 py-6 max-md:mt-px max-md:border-b max-md:bg-header-primary md:px-0">
       <div className="mb-4 flex items-center justify-between">
@@ -31,13 +29,13 @@ export function TvsBreakdownPageHeader({
                     src={icon}
                     alt={`${title} logo`}
                   />
-                  <span className="leading-none">{crumbs.project.name}</span>
+                  <span className="leading-none">{title}</span>
                 </div>
               ),
-              href: crumbs.project.path,
+              href: `/layer2s/projects/${slug}`,
             },
             {
-              content: crumbs.pageName,
+              content: 'TVS Breakdown',
             },
           ]}
         />

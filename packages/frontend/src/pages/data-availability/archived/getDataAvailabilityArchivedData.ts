@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDaArchivedEntries } from '~/server/features/data-availability/archived/getDaArchivedEntries'
-import { getMetadata } from '~/ssr/head/getMetadata'
+import { getMetadata, SITE_TITLE } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -21,7 +21,8 @@ export async function getDataAvailabilityArchivedData(
         openGraph: {
           image: '/meta-images/data-availability/archived/opengraph-image.png',
         },
-        breadcrumb: { name: 'Archived' },
+        name: 'Archived',
+        title: SITE_TITLE,
       }),
     },
     ssr: {

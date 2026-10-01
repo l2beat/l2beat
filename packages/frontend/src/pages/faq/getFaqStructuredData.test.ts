@@ -1,13 +1,12 @@
 import { expect } from 'earl'
 import { faqItems } from '~/pages/faq/FaqItems'
-import { getFaqPageStructuredData } from './getFaqPageStructuredData'
+import { getFaqStructuredData } from './getFaqStructuredData'
 
 // Runs against the real FAQ content so the test also guards what ships.
-describe(getFaqPageStructuredData.name, () => {
-  const faqPage = getFaqPageStructuredData(faqItems)
+describe(getFaqStructuredData.name, () => {
+  const faqPage = getFaqStructuredData(faqItems)
 
   it('is an FAQPage with one Question per FAQ entry', () => {
-    expect(faqPage['@context']).toEqual('https://schema.org')
     expect(faqPage['@type']).toEqual('FAQPage')
     expect(faqPage.mainEntity.length).toEqual(faqItems.length)
   })

@@ -71,7 +71,7 @@ export async function getHomeData(
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
         },
-        structuredData: [getOrganizationStructuredData()],
+        structuredData: () => [getOrganizationStructuredData()],
       }),
     },
     ssr: {

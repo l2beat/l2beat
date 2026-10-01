@@ -1,16 +1,14 @@
-import type { Project } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
-import compact from 'lodash/compact'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
-import { getL2ProjectStructuredData } from '~/ssr/head/structured-data/getL2ProjectStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
 export async function getL2ProjectData(
@@ -102,7 +100,24 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
   return {
     head: {
       manifest,
-      metadata: getL2ProjectMetadata(manifest, project),
+      metadata: getMetadata(manifest, {
+        name: project.name,
+        description: getProjectMetadataDescription(project),
+        // Derived from the slug, not the request URL: the cache entry is
+        // shared by every request for the project, including the .md one.
+        url: `/layer2s/projects/${project.slug}`,
+        openGraph: {
+          image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
+        },
+        structuredData: (page) => [
+          getL2ProjectStructuredData(page, {
+            name: project.name,
+            slug: project.slug,
+            hasTvsApi: project.tvsConfig !== undefined,
+            hasActivityApi: project.activityConfig !== undefined,
+          }),
+        ],
+      }),
     },
     props: {
       ...appLayoutProps,
@@ -110,30 +125,4 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       queryState: helpers.dehydrate(),
     },
   }
-}
-
-export function getL2ProjectMetadata(
-  manifest: Manifest,
-  project: Pick<
-    Project<never, 'tvsConfig' | 'activityConfig'>,
-    'name' | 'slug' | 'tvsConfig' | 'activityConfig'
-  > & { display: { description: string } },
-) {
-  return getMetadata(manifest, {
-    title: `${project.name} - L2BEAT`,
-    description: getProjectMetadataDescription(project),
-    // Derived from the slug, not the request URL: the cache entry is
-    // shared by every request for the project, including the .md one.
-    url: `/layer2s/projects/${project.slug}`,
-    openGraph: {
-      image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
-    },
-    structuredData: compact([
-      getL2ProjectStructuredData({
-        ...project,
-        hasTvsApi: project.tvsConfig !== undefined,
-        hasActivityApi: project.activityConfig !== undefined,
-      }),
-    ]),
-  })
 }

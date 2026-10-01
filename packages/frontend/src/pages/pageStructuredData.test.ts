@@ -2,14 +2,12 @@ import { expect } from 'earl'
 import { getCollectionEntry } from '~/content/getCollection'
 import { getFaqData } from '~/pages/faq/getFaqData'
 import { getGlossaryData } from '~/pages/glossary/getGlossaryData'
-import { getL2ProjectMetadata } from '~/pages/layer2s/project/getL2ProjectData'
 import { getGovernancePublicationData } from '~/pages/publications/governance/getGovernancePublicationData'
-import { ps } from '~/server/projects'
 import { identityManifest as manifest } from '~/test/identityManifest'
 
 // The builders are tested on their own; these check each page loader hands
-// its block to the head. They call the real loaders with real content and
-// projects, then read the types back out of the metadata the head renders.
+// its block to the head. They call the real loaders with real content, then
+// read the blocks back out of the metadata the head renders.
 describe('page structured data', () => {
   it('FAQ page emits a FAQPage', async () => {
     const data = await getFaqData(manifest, '/faq')
@@ -26,7 +24,7 @@ describe('page structured data', () => {
     ])
   })
 
-  it('governance publication page emits an Article', async () => {
+  it('governance publication page emits an Article of the real post', async () => {
     const post = getCollectionEntry(
       'governance-publications',
       'governance-review-1',
@@ -40,30 +38,20 @@ describe('page structured data', () => {
     )
 
     expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
-  })
-
-  it('L2 project page emits a Dataset linking its JSON APIs', async () => {
-    const project = await ps.getProject({
-      slug: 'arbitrum',
-      select: ['display'],
-      optional: ['tvsConfig', 'activityConfig'],
-    })
-    if (!project) throw new Error('arbitrum is missing')
-
-    const metadata = getL2ProjectMetadata(manifest, project)
-
-    expect(getTypes(metadata)).toEqual(['BreadcrumbList', 'Dataset'])
-    const [, dataset] = metadata.structuredData
-    expect(dataset).toEqual(
+    expect(data.head.metadata.structuredData[1]).toEqual(
       expect.subset({
-        distribution: [
-          expect.subset({
-            contentUrl: 'https://l2beat.com/api/scaling/tvs/arbitrum',
-          }),
-          expect.subset({
-            contentUrl: 'https://l2beat.com/api/scaling/activity/arbitrum',
-          }),
-        ],
+        url: 'https://l2beat.com/publications/governance-review-1',
+        headline: 'Governance Review #01',
+        description:
+          'L2BEAT provides weekly updates on governance in concise articles.',
+        image:
+          'https://l2beat.com/meta-images/publications/governance-review-1.png',
+        datePublished: '2024-01-19',
+        author: {
+          '@type': 'Person',
+          name: 'Anastassis Oikonomopoulos',
+          jobTitle: 'Governance Representative',
+        },
       }),
     )
   })

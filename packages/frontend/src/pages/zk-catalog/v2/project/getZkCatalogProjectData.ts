@@ -28,7 +28,7 @@ export async function getZkCatalogProjectData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
+        name: project.name,
         description: project.display.description,
         url,
         openGraph: {

@@ -1,9 +1,9 @@
 import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
+import { getArticleStructuredData } from '~/pages/publications/utils/getArticleStructuredData'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getMonthlyUpdateArticleStructuredData } from '~/ssr/head/structured-data/getArticleStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -29,6 +29,7 @@ export async function getMonthlyUpdateData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: monthlyUpdateEntry.title,
         title: `${monthlyUpdateEntry.title} Update - L2BEAT`,
         description:
           "L2BEAT's monthly overview of the Ethereum scaling ecosystem: key news, protocol updates, and metrics.",
@@ -36,9 +37,12 @@ export async function getMonthlyUpdateData(
         openGraph: {
           image: `/meta-images/publications/${monthlyUpdateEntry.id}.png`,
         },
-        breadcrumb: { name: monthlyUpdateEntry.title },
-        structuredData: [
-          getMonthlyUpdateArticleStructuredData(manifest, monthlyUpdate),
+        structuredData: (page) => [
+          getArticleStructuredData(page, {
+            headline: monthlyUpdate.data.title,
+            publishedOn: monthlyUpdate.data.publishedOn,
+            description: monthlyUpdate.data.description,
+          }),
         ],
       }),
     },

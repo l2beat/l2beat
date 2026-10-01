@@ -25,6 +25,7 @@ export async function getDefiProjectData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: entry.name,
         title: `${entry.name} - DeFi - L2BEAT`,
         description: getProjectMetadataDescription({
           name: entry.name,
@@ -36,7 +37,6 @@ export async function getDefiProjectData(
         openGraph: {
           image: `/meta-images/defi/projects/${entry.slug}/opengraph-image.png`,
         },
-        breadcrumb: { name: entry.name },
       }),
     },
     ssr: {

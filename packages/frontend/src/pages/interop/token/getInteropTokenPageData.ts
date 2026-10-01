@@ -63,7 +63,7 @@ export async function getInteropTokenPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${data.token.symbol} - L2BEAT`,
+        name: data.token.symbol,
         description: `Interoperability activity for ${data.token.symbol} across the Ethereum ecosystem.`,
         // The page is reachable by id alone, so point metadata at the full
         // issuer/symbol URL to keep a single canonical address per token.

@@ -1,22 +1,22 @@
 import type { CollectionEntry } from '~/content/getCollection'
-import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
+import type { StructuredDataPage } from '~/ssr/head/structured-data/StructuredData'
 
 export function getGlossaryStructuredData(
+  page: StructuredDataPage,
   entries: CollectionEntry<'glossary'>[],
 ) {
-  const glossaryUrl = toProductionUrl('/glossary')
-  return withSchemaOrgContext({
+  return {
     '@type': 'DefinedTermSet',
-    '@id': glossaryUrl,
+    '@id': page.url,
     name: 'L2BEAT Glossary',
-    url: glossaryUrl,
+    url: page.url,
     hasDefinedTerm: entries.map((entry) => ({
       '@type': 'DefinedTerm',
       name: entry.data.term,
       ...(entry.data.match && { alternateName: entry.data.match }),
       description: entry.data.definition,
-      url: `${glossaryUrl}#${entry.id}`,
-      inDefinedTermSet: glossaryUrl,
+      url: `${page.url}#${entry.id}`,
+      inDefinedTermSet: page.url,
     })),
-  })
+  }
 }

@@ -30,7 +30,7 @@ export async function getDataAvailabilityProjectData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${projectEntry.name} - L2BEAT`,
+        name: projectEntry.name,
         description: getProjectMetadataDescription({
           name: projectEntry.name,
           display: {

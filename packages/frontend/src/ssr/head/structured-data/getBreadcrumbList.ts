@@ -1,19 +1,16 @@
 import compact from 'lodash/compact'
-import {
-  type StructuredData,
-  toProductionUrl,
-  withSchemaOrgContext,
-} from './StructuredData'
+import { toProductionUrl } from '~/consts/productionOrigin'
+import type { StructuredData } from './StructuredData'
 
 export function getBreadcrumbList(
   path: string,
-  title: string | undefined,
-  page: PageBreadcrumb = {},
+  name: string | undefined,
+  parents: Breadcrumb[] = [],
 ): StructuredData | undefined {
-  const trail = getTrail(path, page.name ?? getNameFromTitle(title), page)
+  const trail = getTrail(path, name, parents)
   if (!trail) return undefined
 
-  return withSchemaOrgContext({
+  return {
     '@type': 'BreadcrumbList',
     itemListElement: trail.map((crumb, i) => ({
       '@type': 'ListItem',
@@ -21,7 +18,7 @@ export function getBreadcrumbList(
       name: crumb.name,
       item: toProductionUrl(crumb.path),
     })),
-  })
+  }
 }
 
 export interface Breadcrumb {
@@ -29,17 +26,12 @@ export interface Breadcrumb {
   path: string
 }
 
-export interface PageBreadcrumb {
-  /** Defaults to the page title without the " - L2BEAT" suffix. */
-  name?: string
-  /** Pages between the section and this one, e.g. the project of a subpage. */
-  parents?: Breadcrumb[]
-}
-
 const HOME: Breadcrumb = { name: 'Home', path: '/' }
 
 // Keyed by the first path segment. Only sections with a landing page are
-// listed, so every crumb links to a page that renders.
+// listed, so every crumb links to a page that renders. Not derived from the
+// nav groups: those lack Publications and Governance, and include Ecosystems,
+// which has no landing page.
 const SECTIONS: Record<string, Breadcrumb> = {
   layer2s: { name: 'Layer 2s', path: '/layer2s/summary' },
   interop: { name: 'Interop', path: '/interop/summary' },
@@ -57,7 +49,7 @@ const SECTIONS: Record<string, Breadcrumb> = {
 function getTrail(
   path: string,
   name: string | undefined,
-  page: PageBreadcrumb,
+  parents: Breadcrumb[],
 ): Breadcrumb[] | undefined {
   if (path === HOME.path) return undefined
 
@@ -66,9 +58,5 @@ function getTrail(
   // Without a name the last crumb could not say which page it is.
   if (!name) return undefined
 
-  return compact([HOME, section, ...(page.parents ?? []), { name, path }])
-}
-
-function getNameFromTitle(title: string | undefined) {
-  return title?.replace(/ - L2BEAT$/, '')
+  return compact([HOME, section, ...parents, { name, path }])
 }

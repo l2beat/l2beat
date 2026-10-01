@@ -1,17 +1,21 @@
 import compact from 'lodash/compact'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import { PRODUCTION_ORIGIN, toProductionUrl } from '~/consts/productionOrigin'
 import { env } from '~/env'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 import {
+  type Breadcrumb,
   getBreadcrumbList,
-  type PageBreadcrumb,
 } from './structured-data/getBreadcrumbList'
-import {
-  type StructuredData,
-  toProductionUrl,
+import type {
+  StructuredData,
+  StructuredDataPage,
 } from './structured-data/StructuredData'
+
+export const SITE_TITLE = 'L2BEAT - The state of the layer two ecosystem'
+const SITE_DESCRIPTION =
+  'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.'
 
 type OpenGraph = {
   type: 'article' | 'website'
@@ -30,6 +34,9 @@ export interface Metadata {
 }
 
 type PartialMetadata = {
+  /** What the page is called: its last breadcrumb and, by default, its title. */
+  name?: string
+  /** For titles that say more than "<name> - L2BEAT". */
   title?: string
   description?: string
   url: string
@@ -40,9 +47,10 @@ type PartialMetadata = {
     dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
-  breadcrumb?: PageBreadcrumb
+  /** Pages between the section and this one, e.g. the project of a subpage. */
+  breadcrumbParents?: Breadcrumb[]
   /** Page-specific JSON-LD; the BreadcrumbList is added for every page. */
-  structuredData?: StructuredData[]
+  structuredData?: (page: StructuredDataPage) => (StructuredData | undefined)[]
 }
 
 export function getMetadata(
@@ -50,25 +58,32 @@ export function getMetadata(
   metadata: PartialMetadata,
 ): Metadata {
   const {
+    name,
     title,
-    description,
+    description = SITE_DESCRIPTION,
     url,
     openGraph,
-    breadcrumb,
+    breadcrumbParents,
     structuredData,
     ...rest
   } = metadata ?? {}
   const strippedPath = stripQueryParams(url)
   const baseUrl = getBaseUrl()
   const markdownAlternatePath = getMarkdownAlternatePath(strippedPath)
+  const imagePath = openGraph.dynamic
+    ? openGraph.image
+    : manifest.getUrl(openGraph.image)
+  // Production, whatever host rendered the page
+  const canonicalUrl = toProductionUrl(strippedPath)
   return {
-    title: title ?? 'L2BEAT - The state of the layer two ecosystem',
-    description:
-      description ??
-      'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
+    title: title ?? (name ? `${name} - L2BEAT` : SITE_TITLE),
+    description,
     url: baseUrl + strippedPath,
-    openGraph: getOpenGraph(manifest, baseUrl, openGraph),
-    canonicalUrl: toProductionUrl(strippedPath),
+    openGraph: {
+      image: baseUrl + imagePath,
+      type: openGraph.type ?? 'website',
+    },
+    canonicalUrl,
     // Production, like canonical: the markdown cites production URLs too
     markdownAlternateUrl: markdownAlternatePath
       ? toProductionUrl(markdownAlternatePath)
@@ -77,21 +92,14 @@ export function getMetadata(
     structuredData: rest.excludeFromSearchEngines
       ? []
       : compact([
-          getBreadcrumbList(strippedPath, title, breadcrumb),
-          ...(structuredData ?? []),
+          getBreadcrumbList(strippedPath, name, breadcrumbParents),
+          ...(structuredData?.({
+            url: canonicalUrl,
+            description,
+            image: toProductionUrl(imagePath),
+          }) ?? []),
         ]),
     ...rest,
-  }
-}
-
-function getOpenGraph(
-  manifest: Manifest,
-  baseUrl: string,
-  { image, type, dynamic }: PartialMetadata['openGraph'],
-): OpenGraph {
-  return {
-    image: baseUrl + (dynamic ? image : manifest.getUrl(image)),
-    type: type ?? 'website',
   }
 }
 

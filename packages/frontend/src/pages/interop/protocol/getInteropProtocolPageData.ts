@@ -34,7 +34,7 @@ export async function getInteropProtocolPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${data.project.name} - L2BEAT`,
+        name: data.project.name,
         description: data.project.description,
         url: req.originalUrl,
         openGraph: {

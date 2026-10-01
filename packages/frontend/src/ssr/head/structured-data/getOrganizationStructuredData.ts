@@ -1,5 +1,5 @@
 import { externalLinks } from '~/consts/externalLinks'
-import { toProductionUrl, withSchemaOrgContext } from './StructuredData'
+import { toProductionUrl } from '~/consts/productionOrigin'
 
 /** L2BEAT as the author or publisher embedded in other blocks. */
 export const L2BEAT_ORGANIZATION = {
@@ -12,7 +12,7 @@ export const L2BEAT_ORGANIZATION = {
 }
 
 export function getOrganizationStructuredData() {
-  return withSchemaOrgContext({
+  return {
     ...L2BEAT_ORGANIZATION,
     sameAs: [
       externalLinks.x,
@@ -21,5 +21,5 @@ export function getOrganizationStructuredData() {
       externalLinks.youTube,
       externalLinks.medium,
     ],
-  })
+  }
 }

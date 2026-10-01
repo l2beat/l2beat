@@ -3,14 +3,21 @@ import { getCollection } from '~/content/getCollection'
 import { getGlossaryStructuredData } from './getGlossaryStructuredData'
 
 // Runs against the real glossary content so the test also guards what ships.
+// The page is what getMetadata would resolve for /glossary.
 describe(getGlossaryStructuredData.name, () => {
   const entries = getCollection('glossary')
-  const termSet = getGlossaryStructuredData(entries)
+  const termSet = getGlossaryStructuredData(
+    {
+      url: 'https://l2beat.com/glossary',
+      description: 'Glossary description',
+      image: 'https://l2beat.com/og.png',
+    },
+    entries,
+  )
 
   it('is a DefinedTermSet naming the glossary page', () => {
     expect(termSet).toEqual(
       expect.subset({
-        '@context': 'https://schema.org',
         '@type': 'DefinedTermSet',
         '@id': 'https://l2beat.com/glossary',
         name: 'L2BEAT Glossary',

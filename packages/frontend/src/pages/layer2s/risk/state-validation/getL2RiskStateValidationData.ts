@@ -27,6 +27,7 @@ export async function getL2RiskStateValidationData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: 'State Validation',
         title: 'Risk Analysis - L2BEAT',
         description:
           'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
@@ -35,7 +36,6 @@ export async function getL2RiskStateValidationData(
           image:
             '/meta-images/layer2s/risks/state-validation/opengraph-image.png',
         },
-        breadcrumb: { name: 'State Validation' },
       }),
     },
     ssr: {

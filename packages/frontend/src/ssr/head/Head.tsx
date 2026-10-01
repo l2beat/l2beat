@@ -63,7 +63,12 @@ export function Head({ manifest, metadata }: HeadProps) {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonForInlineScript(data) }}
+          dangerouslySetInnerHTML={{
+            __html: jsonForInlineScript({
+              '@context': 'https://schema.org',
+              ...data,
+            }),
+          }}
         />
       ))}
       {env.CLIENT_SIDE_OPENPANEL_CLIENT_ID && (

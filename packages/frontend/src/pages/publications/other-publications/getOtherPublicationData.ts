@@ -1,8 +1,8 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getOtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
+import { getArticleStructuredData } from '~/pages/publications/utils/getArticleStructuredData'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import { getPublicationArticleStructuredData } from '~/ssr/head/structured-data/getArticleStructuredData'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -17,15 +17,19 @@ export async function getOtherPublicationData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${publication.shortTitle ?? publication.title} - L2BEAT`,
+        name: publication.shortTitle ?? publication.title,
         description: publication.description ?? publication.excerpt,
         url,
         openGraph: {
           image: `/meta-images/publications/${publication.id}.png`,
           type: 'article',
         },
-        structuredData: [
-          getPublicationArticleStructuredData(manifest, publicationEntry),
+        structuredData: (page) => [
+          getArticleStructuredData(page, {
+            headline: publication.title,
+            publishedOn: publicationEntry.data.publishedOn,
+            author: publication.author,
+          }),
         ],
       }),
     },

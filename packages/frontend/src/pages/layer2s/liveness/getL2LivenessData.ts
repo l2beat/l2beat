@@ -33,7 +33,7 @@ export async function getL2LivenessData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Liveness - L2BEAT',
+        name: 'Liveness',
         description:
           'Monitor liveness metrics of Ethereum scaling projects and recent anomalies.',
         url: req.originalUrl,

@@ -6,7 +6,6 @@ import { getOrganizationStructuredData } from './getOrganizationStructuredData'
 describe(getOrganizationStructuredData.name, () => {
   it('identifies L2BEAT with its logo and social profiles', () => {
     expect(getOrganizationStructuredData()).toEqual({
-      '@context': 'https://schema.org',
       '@type': 'Organization',
       '@id': 'https://l2beat.com/#organization',
       name: 'L2BEAT',

@@ -11,32 +11,31 @@ import { Head } from './Head'
 describe(Head.name, () => {
   it('renders every structured data block as a JSON-LD script', () => {
     const metadata = getMetadata(manifest, {
-      title: 'FAQ - L2BEAT',
+      name: 'FAQ',
       url: '/faq',
       openGraph: { image: '/meta-images/og.png' },
-      structuredData: [
-        { '@context': 'https://schema.org', '@type': 'FAQPage' },
-      ],
+      structuredData: () => [{ '@type': 'FAQPage' }],
     })
 
     const html = renderToStaticMarkup(
       createElement(Head, { manifest, metadata }),
     )
 
-    expect(readJsonLd(html)).toEqual(metadata.structuredData)
+    expect(readJsonLd(html)).toEqual(
+      metadata.structuredData.map((data) => ({
+        '@context': 'https://schema.org',
+        ...data,
+      })),
+    )
   })
 
   it('keeps text from closing the script tag early', () => {
     const metadata = getMetadata(manifest, {
-      title: 'FAQ - L2BEAT',
+      name: 'FAQ',
       url: '/faq',
       openGraph: { image: '/meta-images/og.png' },
-      structuredData: [
-        {
-          '@context': 'https://schema.org',
-          '@type': 'Answer',
-          text: '</script><script>alert(1)</script>',
-        },
+      structuredData: () => [
+        { '@type': 'Answer', text: '</script><script>alert(1)</script>' },
       ],
     })
 
@@ -45,7 +44,10 @@ describe(Head.name, () => {
     )
 
     expect(html).not.toInclude('<script>alert(1)')
-    expect(readJsonLd(html)[1]).toEqual(metadata.structuredData[1])
+    expect(readJsonLd(html)[1]).toEqual({
+      '@context': 'https://schema.org',
+      ...metadata.structuredData[1],
+    })
   })
 
   it('links the markdown alternate of project and list pages', () => {

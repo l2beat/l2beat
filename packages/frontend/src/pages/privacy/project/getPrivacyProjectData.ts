@@ -72,6 +72,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: details.name,
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
         description: getProjectMetadataDescription(details),
         // Derived from the slug, not the request URL: the cache entry is
@@ -80,7 +81,6 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
-        breadcrumb: { name: details.name },
       }),
     },
     props: {
