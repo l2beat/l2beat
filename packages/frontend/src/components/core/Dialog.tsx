@@ -55,7 +55,11 @@ const DialogContent = ({
   fullScreenMobile?: boolean
 }) => (
   <DialogPortal>
-    <DialogOverlay className={cn(fullScreenMobile && 'max-md:hidden')} />
+    {/* iOS Safari tints its toolbars from a fixed full-width layer like this
+        overlay; without one the page shows through around a full-screen dialog. */}
+    <DialogOverlay
+      className={cn(fullScreenMobile && 'max-md:bg-surface-primary')}
+    />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
