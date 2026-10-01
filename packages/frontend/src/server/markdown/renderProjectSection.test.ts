@@ -480,6 +480,32 @@ describe(renderProjectSection.name, () => {
     )
   })
 
+  it('names the DA layers a project posts to, or posted to once it stopped', () => {
+    const dataPosted = (
+      currentDaLayers: { name: string; logo: string; href: string }[],
+    ) =>
+      render({
+        type: 'DataPostedSection',
+        props: {
+          id: 'data-posted',
+          title: 'Data posted',
+          project: CHART_PROJECT,
+          currentDaLayers,
+          pastDaLayers: [CELESTIA],
+          milestones: [],
+          defaultRange: [null, 1_788_000_000],
+          daTrackingConfig: [],
+        },
+      })
+
+    expect(dataPosted([ETHEREUM])).toInclude(
+      'The project currently posts data to [Ethereum](https://l2beat.com/data-availability/projects/ethereum/ethereum); previously it posted to [Celestia](https://l2beat.com/data-availability/projects/celestia/no-bridge).',
+    )
+    expect(dataPosted([])).toInclude(
+      'The project no longer posts data; previously it posted to [Celestia](https://l2beat.com/data-availability/projects/celestia/no-bridge).',
+    )
+  })
+
   it('points client-loaded widgets to the HTML page without calling tables charts', () => {
     const markdown = render({
       type: 'InteropTokensSection',
@@ -651,6 +677,18 @@ const GROTH16 = {
   type: 'Groth16' as const,
   name: 'Groth16',
   description: 'A SNARK.',
+}
+
+const ETHEREUM = {
+  name: 'Ethereum',
+  logo: '/icons/ethereum.png',
+  href: '/data-availability/projects/ethereum/ethereum',
+}
+
+const CELESTIA = {
+  name: 'Celestia',
+  logo: '/icons/celestia.png',
+  href: '/data-availability/projects/celestia/no-bridge',
 }
 
 const CHART_PROJECT = {

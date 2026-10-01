@@ -89,19 +89,9 @@ export function renderDataPostedSection(
   level: number,
   context: SectionContext,
 ) {
-  const daLayerLinks = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers
-      .map((layer) =>
-        link(layer.name, resolveSiteUrl(layer.href, context.pageUrl)),
-      )
-      .join(', ')
-  const previously =
-    props.pastDaLayers.length > 0
-      ? `; previously it posted to ${daLayerLinks(props.pastDaLayers)}`
-      : ''
   const allLayers = [...props.pastDaLayers, ...props.currentDaLayers]
   return joinBlocks([
-    `This section shows how much data the project publishes to its data-availability (DA) layer over time. The project currently posts data to ${daLayerLinks(props.currentDaLayers)}${previously}.`,
+    `This section shows how much data the project publishes to its data-availability (DA) layer over time. ${describeDaLayers(props, context.pageUrl)}`.trimEnd(),
     renderDataSource(
       allLayers.some((layer) => layer.name === 'EigenDA')
         ? 'API provided by EigenLayer'
@@ -205,6 +195,33 @@ export function renderPrivacyAnonymitySetSection(
     ),
     htmlPagePointer('The interactive charts are shown', props.id, context),
   ])
+}
+
+/**
+ * A project whose tracking has all ended has no current layer: the HTML
+ * sentence then names nothing after "posts data to", so it is reworded.
+ */
+function describeDaLayers(
+  {
+    currentDaLayers,
+    pastDaLayers,
+  }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>,
+  pageUrl: string,
+) {
+  const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
+    layers
+      .map((layer) => link(layer.name, resolveSiteUrl(layer.href, pageUrl)))
+      .join(', ')
+  if (currentDaLayers.length === 0) {
+    return pastDaLayers.length > 0
+      ? `The project no longer posts data; previously it posted to ${links(pastDaLayers)}.`
+      : ''
+  }
+  const previously =
+    pastDaLayers.length > 0
+      ? `; previously it posted to ${links(pastDaLayers)}`
+      : ''
+  return `The project currently posts data to ${links(currentDaLayers)}${previously}.`
 }
 
 /** `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
