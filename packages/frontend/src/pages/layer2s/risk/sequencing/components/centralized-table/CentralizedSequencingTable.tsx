@@ -44,7 +44,7 @@ export function CentralizedSequencingTable({ entries }: Props) {
         </div>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </>
   )
 }

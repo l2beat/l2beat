@@ -65,6 +65,7 @@ export function IntentBridgesTable({
           isLoading={isLoading}
           skeletonCount={8}
           tableWrapperClassName="pb-0"
+          stickyHeader
         />
       </div>
     </PrimaryCard>

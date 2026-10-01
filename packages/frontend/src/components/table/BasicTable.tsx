@@ -1,6 +1,7 @@
 import { unique } from '@l2beat/shared-pure'
 import type {
   Cell,
+  Column,
   Header,
   HeaderGroup,
   Row,
@@ -28,6 +29,10 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import {
+  STICKY_TABLE_COLUMNS_ROW_ATTRIBUTE,
+  stickyTableHeaderClassNames,
+} from './useStickyTableHeader'
 import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
 import {
   getBasicTableBodyCellClassName,
@@ -35,7 +40,10 @@ import {
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
 } from './utils/classNames'
-import { getCommonPinningStyles } from './utils/commonPinningStyles'
+import {
+  getCommonPinningStyles,
+  getStickyHeaderPinningStyles,
+} from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
 import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
 import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
@@ -72,6 +80,12 @@ export interface BasicTableProps<T extends BasicTableRow> {
   renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
+  /**
+   * Keeps the header in view while the table scrolls under the top of the
+   * viewport. For long, page-level tables; a clipping or scrolling ancestor
+   * would hold the header instead of the page.
+   */
+  stickyHeader?: boolean
   /**
    * Trims the row and header heights. For tables shown alongside other content
    * rather than as a page's main subject.
@@ -121,19 +135,31 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
       )}
       <Table
         tableWrapperClassName={props.tableWrapperClassName}
+        stickyHeader={
+          props.stickyHeader ? (
+            <>
+              <StickyHeaderColGroup
+                groupedHeader={groupedHeader}
+                actualHeader={actualHeader}
+              />
+              <BasicTableHeader
+                groupedHeader={groupedHeader}
+                actualHeader={actualHeader}
+                compact={props.compact}
+                isStickyCopy
+              />
+            </>
+          ) : undefined
+        }
         {...getPersistedTableAttributes(props.table)}
       >
         {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader>
-          {groupedHeader && (
-            <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
-          )}
-          <BasicTableActualHeaderRow
-            actualHeader={actualHeader}
-            compact={props.compact}
-          />
-          <BasicTableHeaderDividerRow />
-        </TableHeader>
+        <BasicTableHeader
+          groupedHeader={groupedHeader}
+          actualHeader={actualHeader}
+          compact={props.compact}
+          isStickyCopy={false}
+        />
         <TableBody>
           {rows.map((row) => (
             <BasicTableRow row={row} key={row.id} {...props} />
@@ -156,10 +182,58 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   )
 }
 
+/**
+ * Rendered twice for a sticky header: in the table, where it sizes the columns,
+ * and in the visible copy (`isStickyCopy`), whose pinned cells cannot be
+ * `position: sticky`.
+ */
+function BasicTableHeader<T>({
+  groupedHeader,
+  actualHeader,
+  compact,
+  isStickyCopy,
+}: {
+  groupedHeader: HeaderGroup<T> | undefined
+  actualHeader: HeaderGroup<T>
+  compact: boolean | undefined
+  isStickyCopy: boolean
+}) {
+  return (
+    <TableHeader>
+      {groupedHeader && (
+        <BasicTableGroupedHeaderRow
+          groupedHeader={groupedHeader}
+          isStickyCopy={isStickyCopy}
+        />
+      )}
+      <BasicTableActualHeaderRow
+        actualHeader={actualHeader}
+        compact={compact}
+        isStickyCopy={isStickyCopy}
+      />
+      <BasicTableHeaderDividerRow />
+    </TableHeader>
+  )
+}
+
+function getHeaderPinning<T>(column: Column<T>, isStickyCopy: boolean) {
+  if (!isStickyCopy) {
+    return { className: undefined, style: getCommonPinningStyles(column) }
+  }
+  return {
+    className: column.getIsPinned()
+      ? stickyTableHeaderClassNames.pinnedCell
+      : undefined,
+    style: getStickyHeaderPinningStyles(column),
+  }
+}
+
 function BasicTableGroupedHeaderRow<T>({
   groupedHeader,
+  isStickyCopy,
 }: {
   groupedHeader: HeaderGroup<T>
+  isStickyCopy: boolean
 }) {
   const shouldRenderGroupedHeaderRow = groupedHeader.headers.some(
     (header) => !header.isPlaceholder && !!header.column.columnDef.header,
@@ -173,16 +247,20 @@ function BasicTableGroupedHeaderRow<T>({
       {getRenderedHeaders(groupedHeader.headers).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
+          const pinning = getHeaderPinning(header.column, isStickyCopy)
           return (
             <React.Fragment key={header.id}>
               <th
                 colSpan={getRenderedColSpan(header)}
-                className={getBasicTableGroupedHeaderCellClassName({
-                  isPlaceholder: header.isPlaceholder,
-                  hasHeader: !!header.column.columnDef.header,
-                  isPinned: header.column.getIsPinned() !== false,
-                })}
-                style={getCommonPinningStyles(header.column)}
+                className={cn(
+                  getBasicTableGroupedHeaderCellClassName({
+                    isPlaceholder: header.isPlaceholder,
+                    hasHeader: !!header.column.columnDef.header,
+                    isPinned: header.column.getIsPinned() !== false,
+                  }),
+                  pinning.className,
+                )}
+                style={pinning.style}
               >
                 {!header.isPlaceholder &&
                   !!header.column.columnDef.header &&
@@ -205,29 +283,35 @@ function BasicTableGroupedHeaderRow<T>({
 function BasicTableActualHeaderRow<T>({
   actualHeader,
   compact,
+  isStickyCopy,
 }: {
   actualHeader: HeaderGroup<T>
   compact: boolean | undefined
+  isStickyCopy: boolean
 }) {
   return (
-    <TableHeaderRow>
+    <TableHeaderRow {...{ [STICKY_TABLE_COLUMNS_ROW_ATTRIBUTE]: '' }}>
       {getRenderedHeaders(actualHeader.headers).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
           const groupParams = getBasicTableGroupParams(header.column)
+          const pinning = getHeaderPinning(header.column, isStickyCopy)
           return (
             <React.Fragment key={`${actualHeader.id}-${header.id}`}>
               <TableHead
                 colSpan={getRenderedColSpan(header)}
-                className={getBasicTableHeaderCellClassName({
-                  groupParams,
-                  isPinned: header.column.getIsPinned() !== false,
-                  headClassName: header.column.columnDef.meta?.headClassName,
-                  compact,
-                })}
+                className={cn(
+                  getBasicTableHeaderCellClassName({
+                    groupParams,
+                    isPinned: header.column.getIsPinned() !== false,
+                    headClassName: header.column.columnDef.meta?.headClassName,
+                    compact,
+                  }),
+                  pinning.className,
+                )}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
-                style={getCommonPinningStyles(header.column)}
+                style={pinning.style}
                 {...getPersistedColumnAttributes(header.column)}
               >
                 {header.isPlaceholder ? null : (
@@ -460,6 +544,29 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
       </React.Fragment>
     )
   })
+}
+
+/**
+ * The sticky header copy has a fixed layout that needs one width slot per
+ * column. A grouped table already has them (and its group tints) in `ColGroup`.
+ */
+function StickyHeaderColGroup<T>({
+  groupedHeader,
+  actualHeader,
+}: {
+  groupedHeader: HeaderGroup<T> | undefined
+  actualHeader: HeaderGroup<T>
+}) {
+  if (groupedHeader) {
+    return <ColGroup headers={groupedHeader.headers} />
+  }
+  return (
+    <colgroup>
+      {getRenderedHeaders(actualHeader.headers).map((header) => (
+        <col key={header.id} />
+      ))}
+    </colgroup>
+  )
 }
 
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {

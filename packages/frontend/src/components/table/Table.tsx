@@ -1,10 +1,16 @@
 import type * as React from 'react'
+import { useRef } from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import { StickyTableHeader } from './StickyTableHeader'
 import { TableTooltip } from './TableTooltip'
+import {
+  stickyTableHeaderClassNames,
+  useStickyTableHeader,
+} from './useStickyTableHeader'
 import {
   getTableElementClassName,
   getTableOuterWrapperClassName,
@@ -14,20 +20,55 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  stickyHeader,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  /**
+   * A copy of the table's column groups and `thead`, shown in place of the real
+   * header so it stays in view while the page scrolls. See
+   * `useStickyTableHeader`.
+   */
+  stickyHeader?: React.ReactNode
 }) => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const isSticky = stickyHeader !== undefined
+  useStickyTableHeader(rootRef, isSticky)
+
   return (
-    <div className={getTableOuterWrapperClassName()}>
-      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
+    <div
+      ref={rootRef}
+      className={cn(
+        getTableOuterWrapperClassName(),
+        isSticky && stickyTableHeaderClassNames.root,
+      )}
+    >
+      {isSticky && (
+        <StickyTableHeader
+          tableProps={{
+            ...props,
+            className: getTableElementClassName(cn(className, 'table-fixed')),
+          }}
+        >
+          {stickyHeader}
+        </StickyTableHeader>
+      )}
+      <div
+        className={cn(
+          getTableScrollWrapperClassName(tableWrapperClassName),
+          isSticky && stickyTableHeaderClassNames.scroller,
+        )}
+      >
         <HighlightedTableRowProvider>
           <table
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
             {...props}
-          />
+          >
+            {children}
+          </table>
         </HighlightedTableRowProvider>
       </div>
     </div>

@@ -21,7 +21,7 @@ export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </>
   )
 }
