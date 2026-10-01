@@ -21,7 +21,7 @@ export function getDatasetStructuredData(
   }
 }
 
-export type DataDownload = ReturnType<typeof jsonDownload>
+type DataDownload = ReturnType<typeof jsonDownload>
 
 export function jsonDownload(name: string, contentUrl: string) {
   return {

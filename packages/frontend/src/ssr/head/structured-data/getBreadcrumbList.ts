@@ -29,9 +29,8 @@ export interface Breadcrumb {
 const HOME: Breadcrumb = { name: 'Home', path: '/' }
 
 // Keyed by the first path segment. Only sections with a landing page are
-// listed, so every crumb links to a page that renders. Not derived from the
-// nav groups: those lack Publications and Governance, and include Ecosystems,
-// which has no landing page.
+// listed, so every crumb links to a page that renders. The nav groups differ:
+// they lack Publications and Governance, and Ecosystems has no landing page.
 const SECTIONS: Record<string, Breadcrumb> = {
   layer2s: { name: 'Layer 2s', path: '/layer2s/summary' },
   interop: { name: 'Interop', path: '/interop/summary' },
