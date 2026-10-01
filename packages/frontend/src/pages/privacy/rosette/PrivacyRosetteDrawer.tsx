@@ -12,7 +12,6 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
 import {
-  getPrivacyAdversariesSentence,
   getPrivacyAdversaryGist,
   PRIVACY_ADVERSARY_VERDICT,
 } from '../adversaries/privacyAdversaryUi'
@@ -44,8 +43,6 @@ export function PrivacyRosetteDrawer({
   children,
   ...props
 }: Props) {
-  const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-
   return (
     <Drawer {...props}>
       <DrawerTrigger
@@ -62,11 +59,11 @@ export function PrivacyRosetteDrawer({
           <DrawerTitle className="mb-0 text-heading-20">
             Privacy risk analysis
           </DrawerTitle>
-          <DrawerDescription className="font-medium text-paragraph-14">
-            {isUnderReview
-              ? 'Under review.'
-              : `${subject} is private against ${held}/${total} adversaries.`}
-          </DrawerDescription>
+          {isUnderReview && (
+            <DrawerDescription className="font-medium text-paragraph-14">
+              Under review.
+            </DrawerDescription>
+          )}
         </DrawerHeader>
         <div className="flex min-h-0 flex-col gap-4 overflow-y-auto px-4 pb-6">
           {isUnderReview ? (

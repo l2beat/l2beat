@@ -85,8 +85,6 @@ export interface PrivacyAdversariesSummary {
   promise: PrivacyPromise
   /** Caption under the dots, e.g. "Link privacy". */
   promiseLabel: string
-  /** Subject noun of the promised field, e.g. "Link" in "Link is private". */
-  promiseSubject: string
   /** In spine order: public observer, chain analyst, network observer, insider, future. */
   cells: PrivacyAdversarySummaryCell[]
 }

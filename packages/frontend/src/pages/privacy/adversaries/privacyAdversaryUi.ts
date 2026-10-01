@@ -74,9 +74,8 @@ const PRIVACY_SENTIMENT_POINTS: Record<PrivacyAdversarySentiment, number> = {
 
 /**
  * Every adversary summed, two points for green and one for yellow, so a higher
- * score is a better protocol. Orders the summary table. Unlike the folded
- * value below it counts the future adversary too, because the count in the
- * cell sentence covers all five and the ranking has to agree with it.
+ * score is a better protocol. Unlike the folded value below it counts the
+ * future adversary too.
  */
 export function getPrivacyAdversariesScore(
   adversaries: PrivacyAdversariesSummary,
@@ -85,22 +84,6 @@ export function getPrivacyAdversariesScore(
     (score, cell) => score + PRIVACY_SENTIMENT_POINTS[cell.sentiment],
     0,
   )
-}
-
-/**
- * The summary cell headline, e.g. "Link is private against 4 of 5
- * adversaries". Split into parts so the subject and the count can be
- * emphasised; `held` counts only green cells, and the dots beside the
- * sentence carry the difference between yellow and red.
- */
-export function getPrivacyAdversariesSentence(
-  adversaries: PrivacyAdversariesSummary,
-): { subject: string; held: number; total: number } {
-  return {
-    subject: adversaries.promiseSubject,
-    held: adversaries.cells.filter((c) => c.sentiment === 'good').length,
-    total: adversaries.cells.length,
-  }
 }
 
 /**
@@ -136,6 +119,17 @@ export const PRIVACY_ADVERSARY_VERDICT: Record<
   good: 'Private',
   warning: 'At risk',
   bad: 'Exposed',
+}
+
+/** What each rosette colour means, as the legend above the tables words it. */
+export const PRIVACY_ADVERSARY_LEGEND: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
+  good: "An average user's privacy can't be compromised by this adversary.",
+  warning:
+    'Privacy can be compromised, but a careful user taking extra steps can avoid it.',
+  bad: 'Privacy can be compromised and there is no way around it.',
 }
 
 /**

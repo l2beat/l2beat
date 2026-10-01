@@ -6,7 +6,6 @@ import { expect } from 'earl'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesScore,
-  getPrivacyAdversariesSentence,
   getPrivacyAdversariesTableValue,
   getPrivacyAdversaryGist,
   getPrivacyAdversaryTitle,
@@ -26,7 +25,6 @@ function summary(
   return {
     promise: { protects: 'linkage', text: '' },
     promiseLabel: 'Link privacy',
-    promiseSubject: 'Link',
     cells: sentiments.map((sentiment, i) => ({
       id: IDS[i] ?? 'publicObserver',
       label: IDS[i] ?? 'publicObserver',
@@ -130,24 +128,5 @@ describe(getPrivacyAdversariesScore.name, () => {
     expect(score('good', 'good', 'bad', 'bad', 'bad')).toBeGreaterThan(
       score('warning', 'warning', 'warning', 'bad', 'bad'),
     )
-  })
-})
-
-describe(getPrivacyAdversariesSentence.name, () => {
-  const sentence = (...s: PrivacyAdversarySentiment[]) =>
-    getPrivacyAdversariesSentence(summary(...s))
-
-  it('counts only the green cells', () => {
-    expect(sentence('good', 'good', 'good', 'good', 'warning')).toEqual({
-      subject: 'Link',
-      held: 4,
-      total: 5,
-    })
-  })
-
-  it('reports zero for a protocol that holds against nobody', () => {
-    expect(
-      sentence('warning', 'warning', 'warning', 'bad', 'bad').held,
-    ).toEqual(0)
   })
 })

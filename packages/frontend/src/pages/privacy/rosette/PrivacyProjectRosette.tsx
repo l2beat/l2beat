@@ -9,7 +9,6 @@ import { useDevice } from '~/hooks/useDevice'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesSectionHref,
-  getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
   PRIVACY_ADVERSARIES_SECTION_ID,
 } from '../adversaries/privacyAdversaryUi'
@@ -44,8 +43,6 @@ export function PrivacyProjectRosette({
   const { isMobile } = useDevice()
   const [open, setOpen] = useState(false)
   const values = getPrivacyAdversaryRosetteValues(adversaries)
-  const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-  const summary = `${subject} is private against ${held}/${total} adversaries.`
   const sectionHref = getPrivacyAdversariesSectionHref(href)
 
   const content = (
@@ -58,7 +55,7 @@ export function PrivacyProjectRosette({
         background={false}
         disableSectionLinking
         className="-my-1 size-8 shrink-0"
-        alt-text={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
+        alt-text="Privacy risk summary"
       />
       <span>{adversaries.promiseLabel}</span>
     </span>
@@ -70,7 +67,7 @@ export function PrivacyProjectRosette({
         adversaries={adversaries}
         isUnderReview={isUnderReview}
         trigger={content}
-        triggerLabel={`Privacy risk analysis: ${summary}`}
+        triggerLabel="Privacy risk analysis"
         open={open}
         onOpenChange={setOpen}
       >
@@ -100,7 +97,7 @@ export function PrivacyProjectRosette({
         <a
           href={sectionHref}
           className="flex w-fit"
-          aria-label={`Privacy risk analysis: ${summary}`}
+          aria-label="Privacy risk analysis"
         >
           {content}
         </a>

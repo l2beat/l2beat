@@ -2,14 +2,15 @@ import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { cn } from '~/utils/cn'
+import { PrivacyRosetteLegend } from '../../rosette/PrivacyRosetteLegend'
 import { groupByPrivacyType, type PrivacyTypeGroup } from '../privacyTypes'
 import { PrivacyBestPracticesBanner } from './PrivacyBestPracticesBanner'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
 /**
- * Every kind of privacy at once, as compact tables instead of tabs: link
- * privacy across the top, the other two side by side below it, and the best
- * practices banner under everything as on main.
+ * Every kind of privacy at once, as compact tables instead of tabs: the
+ * rosette legend first, link privacy across the top, the other two side by
+ * side below it, and the best practices banner under everything as on main.
  */
 export function PrivacySummaryGrid({
   entries,
@@ -25,6 +26,7 @@ export function PrivacySummaryGrid({
   return (
     <>
       <div className="mt-4 flex flex-col gap-4">
+        <PrivacyRosetteLegend />
         {top.map((group) => (
           <PrivacyTypeCard key={group.field} group={group} />
         ))}

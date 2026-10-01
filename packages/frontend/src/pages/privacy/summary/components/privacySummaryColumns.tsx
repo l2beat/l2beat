@@ -153,8 +153,8 @@ const privacySortingFn = (
 
 /**
  * The adversaries alone on the L2 risk rosette - five adversaries, five
- * slices. It still sorts by the score behind it; the count itself is in the
- * rosette's tooltip.
+ * slices, sorted by the folded value behind them. The legend above the tables
+ * says what the colours mean.
  */
 const adversaryRosetteColumn: PrivacyColumn = columnHelper.accessor(
   privacyAccessor,

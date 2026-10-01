@@ -9,7 +9,6 @@ import { useDevice } from '~/hooks/useDevice'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesSectionHref,
-  getPrivacyAdversariesSentence,
   getPrivacyAdversaryRosetteValues,
 } from '../adversaries/privacyAdversaryUi'
 import {
@@ -39,7 +38,6 @@ export function PrivacyAdversaryRosetteCell({
 }: Props) {
   const { isMobile } = useDevice()
   const values = getPrivacyAdversaryRosetteValues(adversaries)
-  const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
   const sectionHref = getPrivacyAdversariesSectionHref(href)
 
   const icon = (
@@ -49,7 +47,7 @@ export function PrivacyAdversaryRosetteCell({
       background={false}
       disableSectionLinking
       className="size-6 md:size-8"
-      alt-text={`Privacy risk summary: ${subject} is private against ${held} of ${total} adversaries`}
+      alt-text="Privacy risk summary"
     />
   )
 
@@ -59,7 +57,7 @@ export function PrivacyAdversaryRosetteCell({
         adversaries={adversaries}
         isUnderReview={isUnderReview}
         trigger={icon}
-        triggerLabel={`Privacy risk analysis: ${subject} is private against ${held}/${total} adversaries.`}
+        triggerLabel="Privacy risk analysis"
         triggerClassName="size-full"
       >
         <PrivacyRosetteDrawerLink href={sectionHref}>

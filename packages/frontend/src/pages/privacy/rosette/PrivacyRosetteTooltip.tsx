@@ -3,7 +3,6 @@ import { TooltipVisualOnly } from '~/components/core/tooltip/Tooltip'
 import { RiskValue } from '~/components/rosette/RiskValue'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
-  getPrivacyAdversariesSentence,
   getPrivacyAdversaryGist,
   PRIVACY_ADVERSARY_VERDICT,
 } from '../adversaries/privacyAdversaryUi'
@@ -45,16 +44,11 @@ export function PrivacyRosetteTooltip({
     )
   }
 
-  const { subject, held, total } = getPrivacyAdversariesSentence(adversaries)
-
   return (
     // The tooltip inherits `white-space: pre` from the table, so wrapping has
     // to be asked for explicitly or the gists run past the panel.
     <div className="flex w-[720px] max-w-full flex-col text-wrap">
       <span className="text-heading-16">Privacy risk analysis</span>
-      <p className="mt-1 font-medium text-xs leading-normal">
-        {subject} is private against {held}/{total} adversaries.
-      </p>
       <div className="mt-3 flex items-center gap-6">
         <TooltipVisualOnly>
           <PrivacyRosetteFigure adversaries={adversaries} />
