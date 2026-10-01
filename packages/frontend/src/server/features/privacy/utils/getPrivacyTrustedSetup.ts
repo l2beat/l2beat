@@ -13,6 +13,8 @@ export type PrivacyTrustedSetup = Omit<TrustedSetup, 'risk'> & {
 
 export type PrivacyTrustedSetupSummary = PrivacySummaryValue & {
   risk: TrustedSetupRisk
+  /** Shown beside the dot, see getTrustedSetupLabel. */
+  label: string | undefined
 }
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
@@ -48,16 +50,30 @@ export function getPrivacyTrustedSetup(
   return result
 }
 
+/**
+ * The participant count. The no-setup and transparent-setup dots are named
+ * instead, and a ceremony without a published count is left unlabelled.
+ */
+export function getTrustedSetupLabel(
+  trustedSetup: PrivacyTrustedSetup,
+): string | undefined {
+  if (trustedSetup.participantCount !== undefined) {
+    return `${formatInteger(trustedSetup.participantCount)} participants`
+  }
+  return trustedSetup.risk === 'None' || trustedSetup.risk === 'N/A'
+    ? trustedSetup.name
+    : undefined
+}
+
 export function toTrustedSetupSummaryValue(
   trustedSetup: PrivacyTrustedSetup,
 ): PrivacyTrustedSetupSummary {
+  const label = getTrustedSetupLabel(trustedSetup)
   return {
-    value:
-      trustedSetup.participantCount !== undefined
-        ? `${formatInteger(trustedSetup.participantCount)} participants`
-        : trustedSetup.name,
+    value: label ?? trustedSetup.name,
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
     risk: trustedSetup.risk,
+    label,
   }
 }

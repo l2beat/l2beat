@@ -8,7 +8,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
-import { PrivacySummaryTable } from './components/PrivacySummaryTable'
+import { PrivacySummaryTables } from './components/PrivacySummaryTables'
 
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]
@@ -37,7 +37,7 @@ export function PrivacySummaryPage({
               .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl }))}
             defaultRange={defaultChartRange}
           />
-          <PrivacySummaryTable entries={entries} />
+          <PrivacySummaryTables entries={entries} />
           <PrivacyBestPracticesBanner
             backgroundImage={bestPracticesBannerImageUrl}
           />

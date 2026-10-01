@@ -9,6 +9,7 @@ import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
@@ -315,7 +316,7 @@ export async function getPrivacyProjectEntry(
   sections.splice(adversariesSectionIndex, 0, {
     type: 'PrivacyAdversariesSection',
     props: {
-      id: 'privacy-adversaries',
+      id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },

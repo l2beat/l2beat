@@ -80,7 +80,7 @@ const ENTRY: ProjectPrivacyEntry = {
   attributes: [],
   trackedOn: [],
   exitWindow: { ...RISK, walkawayTest: { passed: true } },
-  trustedSetup: { ...RISK, risk: 'green' },
+  trustedSetup: { ...RISK, risk: 'green', label: RISK.value },
   reproducibility: RISK,
   summary: {
     totalValueLockedUsd: undefined,

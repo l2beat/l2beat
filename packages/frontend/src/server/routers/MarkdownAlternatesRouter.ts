@@ -3,6 +3,7 @@ import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
 import { ps } from '~/server/projects'
+import { firstSentence } from '~/utils/firstSentence'
 import type { ListPageWithMarkdown } from '~/utils/getMarkdownAlternatePath'
 
 /**
@@ -217,12 +218,6 @@ function withFacts(description: string, facts: unknown[]): string {
     (fact): fact is string => typeof fact === 'string' && fact !== '',
   )
   return [known.join(', '), description].filter(Boolean).join('. ')
-}
-
-function firstSentence(text: string): string {
-  const oneLine = text.replaceAll(/\s+/g, ' ').trim()
-  const match = oneLine.match(/^.+?[.!?](?=\s|$)/)
-  return match?.[0] ?? oneLine
 }
 
 /** Same shape as llms.txt (H1, blockquote, H2 link lists) so one parser reads both. */

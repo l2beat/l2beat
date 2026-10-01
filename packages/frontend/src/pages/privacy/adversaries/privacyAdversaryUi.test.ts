@@ -26,11 +26,9 @@ function summary(
     cells: sentiments.map((sentiment, i) => ({
       id: IDS[i] ?? 'publicObserver',
       label: IDS[i] ?? 'publicObserver',
-      description: '',
       value: '',
       sentiment,
-      exposure: '',
-      alsoExposed: [],
+      reason: '',
     })),
   }
 }
