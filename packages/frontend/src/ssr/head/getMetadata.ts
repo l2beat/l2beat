@@ -96,7 +96,9 @@ export function getMetadata(
           ...(structuredData?.({
             url: canonicalUrl,
             description,
-            image: toProductionUrl(imagePath),
+            // Unfingerprinted, unlike og:image: crawlers keep JSON-LD longer
+            // than a deploy keeps an old fingerprint around.
+            image: toProductionUrl(openGraph.image),
           }) ?? []),
         ]),
     ...rest,

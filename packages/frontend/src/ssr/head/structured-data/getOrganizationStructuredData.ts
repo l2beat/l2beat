@@ -7,7 +7,6 @@ export const L2BEAT_ORGANIZATION = {
   '@id': toProductionUrl('/#organization'),
   name: 'L2BEAT',
   url: toProductionUrl(''),
-  // The unfingerprinted copy, so the URL stays stable across deploys.
   logo: toProductionUrl('/logo.png'),
 }
 

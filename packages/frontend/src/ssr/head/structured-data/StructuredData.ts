@@ -15,5 +15,6 @@ export interface StructuredDataPage {
   /** The canonical, production URL. */
   url: string
   description: string
+  /** The og:image, unfingerprinted. */
   image: string
 }

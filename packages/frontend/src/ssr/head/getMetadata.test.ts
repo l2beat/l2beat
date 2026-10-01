@@ -121,8 +121,8 @@ describe(getMetadata.name, () => {
   })
 
   // The manifest fingerprints URLs like the production build does, which
-  // proves the image points at the served asset rather than its source path.
-  it('hands page builders the URL, description and image of the meta tags', () => {
+  // proves the JSON-LD image keeps the source path while og:image does not.
+  it('hands page builders the canonical URL, description and unfingerprinted image', () => {
     const fingerprinting: Manifest = {
       ...manifest,
       getUrl: (url) => url.replace('.png', '-abc123.png'),
@@ -144,7 +144,7 @@ describe(getMetadata.name, () => {
       {
         url: 'https://l2beat.com/glossary',
         description: 'Terms explained.',
-        image: 'https://l2beat.com/meta-images/og-abc123.png',
+        image: 'https://l2beat.com/meta-images/og.png',
       },
     ])
   })
