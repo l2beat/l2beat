@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x65cdd285505e7537980b70b57d48310261cff958
+
+# Diff at Thu, 01 Oct 2026 17:21:17 GMT:
+
+- id: aede9633
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@f2656072394a0d215412884ecfaf57f4f0941ea0 block: 1790592527
+- current timestamp: 1790875197
+
+## Description
+
+One signer (0xccD5) was removed from the Cartesi Multisig, which is now 3 of 5 (was 3 of 6).
+
+## Watched changes
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [N/A] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.getOwners.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+      values.nonce:
+-        335
++        339
+    }
+```
+
 Generated with discovered.json: 0xff8a9c8d640049921e7348f9808c39c0158a290d
 
 # Diff at Mon, 28 Sep 2026 13:34:22 GMT:
