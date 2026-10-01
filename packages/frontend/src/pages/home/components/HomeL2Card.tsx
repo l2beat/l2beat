@@ -4,7 +4,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { StageBadge } from '~/components/badge/StageBadge'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomeTopL2Project } from '../getHomeData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
@@ -17,6 +16,7 @@ import {
   HomeRankedTable,
   HomeRankedValue,
 } from './HomeRankedTable'
+import { HomeStageBadge } from './HomeStageBadge'
 
 interface Props {
   charts: HomeL2Charts
@@ -102,10 +102,9 @@ export function HomeL2Card({ charts, topProjects, className }: Props) {
               id: 'stage',
               middle: true,
               cell: (project) => (
-                <StageBadge
+                <HomeStageBadge
                   stage={project.stage}
                   isAppchain={project.isAppchain}
-                  inline
                 />
               ),
             },

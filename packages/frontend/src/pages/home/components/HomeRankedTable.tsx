@@ -58,7 +58,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
     // move in from the figures.
     <div className={cn('@container min-w-0', className)}>
       <ol
-        className="grid @min-[480px]:grid-cols-(--ranked-columns-wide) grid-cols-(--ranked-columns) content-start gap-x-2.5 divide-y divide-divider"
+        className="grid @min-[480px]:grid-cols-(--ranked-columns-wide) grid-cols-(--ranked-columns) content-start gap-x-2 divide-y divide-divider"
         style={
           {
             '--ranked-columns': `auto minmax(0,1fr) ${rest}`,
@@ -118,7 +118,11 @@ function Name({ row }: { row: HomeRankedTableRow }) {
   )
 }
 
-/** A USD value with its metric named in front, e.g. "TVS $1.2B". */
+/**
+ * A USD value with its metric named in front, e.g. "TVS $1.2B". It fills its
+ * column: the label keeps to the start, so every row's lines up, and the
+ * value to the end.
+ */
 export function HomeRankedValue({
   label,
   value,
@@ -127,9 +131,16 @@ export function HomeRankedValue({
   value: number | undefined
 }) {
   return (
-    <span className="flex items-baseline gap-1.5 whitespace-nowrap">
+    <span className="flex w-full items-baseline gap-1.5 whitespace-nowrap">
       <span className={cn(HOME_TEXT.meta, '@max-[360px]:hidden')}>{label}</span>
-      <span className={HOME_TEXT.value}>
+      {/* No value is drawn like no change: the same grey dash. */}
+      <span
+        className={cn(
+          'ml-auto',
+          HOME_TEXT.value,
+          value === undefined && 'text-secondary',
+        )}
+      >
         {value !== undefined ? formatCurrency(value, 'usd') : EM_DASH}
       </span>
     </span>
@@ -144,7 +155,9 @@ export function HomeRankedValue({
 export function HomeRankedChange({ change }: { change: number | undefined }) {
   if (change === undefined) {
     return (
-      <span className={cn('@max-[360px]:hidden', HOME_TEXT.meta)}>
+      <span
+        className={cn('@max-[360px]:hidden', HOME_TEXT.value, 'text-secondary')}
+      >
         {EM_DASH}
       </span>
     )

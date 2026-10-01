@@ -49,11 +49,11 @@ export function HomeKpiTile({
           <span className="shrink-0 tabular-nums">{labelAccessory}</span>
         )}
       </span>
-      <span className="mt-1 flex min-w-0 items-baseline gap-x-1.5 whitespace-nowrap">
+      <span className="mt-1 flex min-w-0 items-baseline @max-[140px]:gap-x-1 gap-x-1.5 whitespace-nowrap">
         <span
           className={cn(
             HOME_TEXT.number,
-            '@max-[160px]:text-heading-18 @max-[220px]:text-heading-20',
+            '@max-[140px]:text-heading-16 @max-[160px]:text-heading-18 @max-[220px]:text-heading-20',
           )}
         >
           {value ?? EM_DASH}

@@ -6,12 +6,15 @@ import { HomeTitleLink } from './HomeCardHeader'
 // mission, stands in until then.
 const MANDATE_HREF = '/about-us'
 
-/** A small banner beside CROPS, framed like it but without the scenery. */
+/**
+ * From lg a small banner beside CROPS, framed like it but without the
+ * scenery; below lg, where CROPS opens the menu instead, a plain section.
+ */
 export function HomeMandateBanner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex flex-col justify-center gap-1 border-divider border-y p-4 md:rounded-lg md:border-x md:px-6 md:py-5',
+        'flex flex-col justify-center gap-1 border-divider border-t px-(--home-gutter) py-5 lg:rounded-lg lg:border lg:px-6',
         className,
       )}
     >

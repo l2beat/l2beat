@@ -42,13 +42,13 @@ const STROKE = 'var(--chart-pink)'
  * settled-size box and on the recharts wrapper. Filling an absolutely
  * positioned box instead lets the sparkline take its wrapper's height, and
  * keeps the svg from ever pushing that wrapper taller. The container also
- * pins series strokes to 1.75px; a sparkline wants a bolder line.
+ * pins series strokes to 1.75px; a sparkline wants a finer one.
  */
 const FILL_HEIGHT_CLASS = cn(
   'absolute inset-0 [&>div]:h-full',
   '[&>div>div:first-child]:h-full! [&>div>div:first-child]:min-h-0!',
   '[&_.recharts-wrapper]:aspect-auto! [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0!',
-  '[&_.recharts-area-curve]:stroke-[2.5px]!',
+  '[&_.recharts-area-curve]:stroke-[1.5px]!',
 )
 
 /** A chart reduced to its line: no axes, no grid, a dot on the latest value. */
@@ -91,7 +91,7 @@ export function HomeSparkline({
           >
             <defs>
               <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={STROKE} stopOpacity={0.28} />
+                <stop offset="0%" stopColor={STROKE} stopOpacity={0.12} />
                 <stop offset="100%" stopColor={STROKE} stopOpacity={0} />
               </linearGradient>
             </defs>
@@ -106,13 +106,13 @@ export function HomeSparkline({
               dot={false}
               isAnimationActive={false}
               connectNulls={false}
-              activeDot={{ r: 4, stroke: 'none', fill: STROKE }}
+              activeDot={{ r: 3.5, stroke: 'none', fill: STROKE }}
             />
             {last && last.value !== null && (
               <ReferenceDot
                 x={last.timestamp}
                 y={last.value}
-                r={4.5}
+                r={3}
                 fill={STROKE}
                 stroke="none"
               />

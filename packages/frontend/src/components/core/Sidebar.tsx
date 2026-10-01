@@ -87,20 +87,23 @@ function Sidebar({
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        {/* From the left, where the desktop sidebar sits: the whole screen
+            on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
-          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
+          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+              '--sidebar-width-desktop': SIDEBAR_WIDTH,
             } as React.CSSProperties
           }
-          side="right"
+          side="left"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex size-full flex-col gap-4">{children}</div>
+          <div className="flex size-full flex-col gap-6">{children}</div>
         </SheetContent>
       </Sheet>
     )

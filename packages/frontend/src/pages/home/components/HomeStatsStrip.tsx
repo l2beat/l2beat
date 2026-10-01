@@ -1,11 +1,9 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import { CropsMiniBanner } from '~/components/garden/CropsMiniBanner'
 import { ChevronIcon } from '~/icons/Chevron'
-import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
-import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
+import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import type { HomeProjectCounts } from '../getHomeProjectCounts'
 import { HomeCard } from './HomeCard'
@@ -17,12 +15,25 @@ interface TileMetric {
 
 interface Tile {
   label: string
-  metric: TileMetric
-  secondaryMetric?: TileMetric
-  href: string
+  /** None for a section that is not out yet. */
+  metric?: TileMetric
+  href?: string
   icon: React.ReactNode
 }
 
+interface MoreItem {
+  label: string
+  href: string
+}
+
+/** The icons take the charts' pink, so the menu reads with the cards. */
+const ICON_CLASS = 'size-5 stroke-(--chart-pink)'
+
+/**
+ * The desktop sidebar's menu, for the screens where it hides behind the menu
+ * button, in its order: the garden and the domains as tiles, then the rest a
+ * size down, as small boxes.
+ */
 export function HomeStatsStrip({
   counts,
   className,
@@ -30,52 +41,51 @@ export function HomeStatsStrip({
   counts: HomeProjectCounts
   className?: string
 }) {
-  const tiles: Tile[] = [
-    {
-      label: 'Layer 2s',
-      metric: { count: counts.l2, unit: 'projects' },
-      href: '/layer2s/summary',
-      icon: <L2Icon className="size-5 stroke-secondary" />,
-    },
-    {
-      label: 'Interop',
-      metric: { count: counts.interop, unit: 'chains' },
-      secondaryMetric: { count: counts.interopProtocols, unit: 'protocols' },
-      href: '/interop/summary',
-      icon: <BridgesIcon className="size-5 stroke-secondary" />,
-    },
+  const domains: Tile[] = [
     {
       label: 'Privacy',
       metric: { count: counts.privacy, unit: 'projects' },
       href: '/privacy',
-      icon: <PrivacyIcon className="size-5 stroke-secondary" />,
+      icon: <PrivacyIcon className={ICON_CLASS} />,
     },
     {
-      label: 'Data Availability',
-      metric: { count: counts.dataAvailability, unit: 'projects' },
-      href: '/data-availability/summary',
-      icon: <DataAvailabilityIcon className="size-5 fill-secondary" />,
+      label: 'Layer 2s',
+      metric: { count: counts.l2, unit: 'projects' },
+      href: '/layer2s/summary',
+      icon: <L2Icon className={ICON_CLASS} />,
     },
     {
-      label: 'ZK Catalog',
-      metric: { count: counts.zkCatalog, unit: 'projects' },
-      href: '/zk-catalog',
-      icon: <ZkCatalogIcon className="size-5 stroke-secondary" />,
-    },
-    {
-      label: 'Ecosystems',
-      metric: { count: counts.ecosystems, unit: 'ecosystems' },
-      href: '/ecosystems/agglayer',
-      icon: <EcosystemsIcon className="size-5 stroke-secondary" />,
+      label: 'Liquid staking',
+      icon: <LiquidStakingIcon className="size-5 stroke-secondary" />,
     },
   ]
 
+  const more: MoreItem[] = [
+    { label: 'Interop', href: '/interop/summary' },
+    { label: 'Data Availability', href: '/data-availability/summary' },
+    { label: 'ZK Catalog', href: '/zk-catalog' },
+  ]
+
   return (
-    <HomeCard className={className}>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
-        {tiles.map((tile) => (
+    <HomeCard className={cn('flex flex-col gap-2', className)}>
+      <ul className="grid grid-cols-2 gap-2 md:grid-cols-4">
+        <li>
+          <CropsMiniBanner
+            className="h-full rounded-lg"
+            plantClassName="right-6"
+          />
+        </li>
+        {domains.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />
+          </li>
+        ))}
+      </ul>
+      {/* The full width between them, evenly where the names allow. */}
+      <ul className="flex gap-2">
+        {more.map((item) => (
+          <li key={item.label} className="flex-1">
+            <MoreLink item={item} />
           </li>
         ))}
       </ul>
@@ -84,55 +94,74 @@ export function HomeStatsStrip({
 }
 
 function StatTile({ tile }: { tile: Tile }) {
+  const content = (
+    <>
+      <div className="flex shrink-0 transition-transform duration-200 group-hover:scale-110">
+        {tile.icon}
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col justify-center">
+        <span
+          className={cn(
+            'truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors',
+            tile.href && 'group-hover:text-link',
+          )}
+        >
+          {tile.label}
+        </span>
+        {tile.metric ? (
+          <span className="font-semibold text-label-value-16 leading-tight">
+            <TileMetricValue metric={tile.metric} />
+          </span>
+        ) : (
+          // As in the sidebar: a section that is not out yet.
+          <span className="mt-0.5 w-fit rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] text-secondary uppercase leading-none tracking-wider">
+            Soon
+          </span>
+        )}
+      </div>
+      {tile.href && (
+        <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+      )}
+    </>
+  )
+  const className =
+    'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2'
+  if (!tile.href) {
+    return (
+      <div aria-disabled className={className}>
+        {content}
+      </div>
+    )
+  }
   return (
     <a
       href={tile.href}
       className={cn(
-        'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
+        className,
         'transition-colors duration-200 hover:border-link-stroke',
-        'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
     >
-      <div
-        className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md bg-surface-secondary transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
-        )}
-      >
-        {tile.icon}
-      </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center xl:flex-row xl:items-baseline xl:gap-2 2xl:gap-3">
-        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
-          {tile.label}
-        </span>
-        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
-          <TileMetricValue
-            metric={tile.metric}
-            className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
-          />
-          {tile.secondaryMetric && (
-            <>
-              <span className="hidden font-medium text-label-value-12 text-secondary sm:inline">
-                ·
-              </span>
-              <TileMetricValue metric={tile.secondaryMetric} />
-            </>
-          )}
-        </span>
-      </div>
-      <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+      {content}
     </a>
   )
 }
 
-function TileMetricValue({
-  metric,
-  className,
-}: {
-  metric: TileMetric
-  className?: string
-}) {
+/** A secondary section: a small box with just its name. */
+function MoreLink({ item }: { item: MoreItem }) {
   return (
-    <span className={cn('whitespace-nowrap', className)}>
+    <a
+      href={item.href}
+      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-13 transition-colors duration-200 hover:border-link-stroke"
+    >
+      {item.label}
+      <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+    </a>
+  )
+}
+
+function TileMetricValue({ metric }: { metric: TileMetric }) {
+  return (
+    <span className="whitespace-nowrap">
       {formatInteger(metric.count)}{' '}
       <span className="font-medium text-label-value-12 text-secondary">
         {metric.unit}

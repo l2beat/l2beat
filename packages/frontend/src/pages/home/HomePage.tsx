@@ -83,21 +83,25 @@ export function HomePage({
                 column's content lines up down the page. A last hairline
                 closes it above the footer, where the column line ends. */}
             <div className="@container/home grid grid-cols-1 border-divider border-b lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,280px)] lg:grid-rows-[auto_auto_auto_1fr_auto_auto] xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(340px,400px)]">
-              {/* CROPS and the mandate. From lg they split at the column
-                  line, 8px either side of it, the outer edges level with the
-                  content below. */}
-              <div className="flex flex-col md:mx-(--home-gutter) md:mb-6 md:flex-row md:gap-4 lg:col-span-full lg:mx-0 lg:grid lg:grid-cols-subgrid lg:gap-0">
-                <HomeCropsBanner
-                  projects={cropsProjects}
-                  className="md:flex-1 lg:col-span-2 lg:mr-2 lg:ml-(--home-gutter)"
-                />
-                <HomeMandateBanner className="max-md:border-t-0 md:w-80 md:shrink-0 lg:mr-(--home-gutter) lg:ml-2 lg:w-auto" />
-              </div>
-              {/* On phones the CROPS band's own border is the line above. */}
+              {/* Below lg, where the sidebar hides behind the menu button,
+                  its menu opens the page, CROPS first; the big CROPS banner
+                  stays a desktop thing. It comes right under the top bar, so
+                  it draws no line of its own. */}
               <HomeStatsStrip
                 counts={projectCounts}
-                className="max-md:border-t-0 lg:hidden"
+                className="border-t-0 pt-4 md:pt-0 lg:hidden"
               />
+              {/* CROPS and the mandate. From lg they split at the column
+                  line, 8px either side of it, the outer edges level with the
+                  content below; below lg only the mandate shows, under the
+                  menu. */}
+              <div className="flex flex-col lg:col-span-full lg:mb-6 lg:grid lg:grid-cols-subgrid">
+                <HomeCropsBanner
+                  projects={cropsProjects}
+                  className="max-lg:hidden lg:col-span-2 lg:mr-2 lg:ml-(--home-gutter)"
+                />
+                <HomeMandateBanner className="lg:mr-(--home-gutter) lg:ml-2" />
+              </div>
               {/* From lg the page has six rows: CROPS; the domain cards'
                   title, charts and rankings; Ethereum; what follows it. */}
               {/* The right column: what's new. From lg it shares the domain

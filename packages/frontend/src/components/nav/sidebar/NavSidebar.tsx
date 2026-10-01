@@ -25,8 +25,7 @@ import {
   useSidebar,
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
-import { CropPlant } from '../../garden/CropPlant'
-import { GardenScenery } from '../../garden/GardenSky'
+import { CropsMiniBanner } from '../../garden/CropsMiniBanner'
 import { Logo } from '../../Logo'
 import { SocialLinks } from '../../SocialLinks'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
@@ -60,7 +59,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
       <SidebarContent>
         {env.CLIENT_SIDE_GARDEN_ENABLED && (
           <SidebarGroup className="mb-2">
-            <CropsLink
+            <CropsMiniBanner
               isActive={pathname.startsWith(GARDEN_PATH)}
               onClick={closeMobileSidebar}
             />
@@ -105,7 +104,8 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
 
 /**
  * `small` draws the secondary sections, under "And more", a size down: no
- * icon, smaller text and tighter rows.
+ * icon, smaller text and tighter rows; in the mobile menu the rows keep
+ * enough height to tap.
  */
 function NavGroupItem({
   group,
@@ -134,7 +134,7 @@ function NavGroupItem({
             aria-disabled
             className={cn(
               'flex h-8 items-center gap-2 p-1.5 text-base text-secondary [&>svg]:shrink-0 [&>svg]:stroke-secondary',
-              small && 'h-6 py-1 text-sm',
+              small && 'h-6 py-1 text-sm max-lg:h-8',
             )}
           >
             {!small && group.icon}
@@ -151,7 +151,7 @@ function NavGroupItem({
             href={group.href}
             isActive={isLinkActive({ href: group.href, pathname })}
             onClick={closeMobileSidebar}
-            className={cn(small && 'h-6 py-1 text-sm')}
+            className={cn(small && 'h-6 py-1 text-sm max-lg:h-8')}
           >
             {!small && group.icon}
             <span>{group.title}</span>
@@ -159,39 +159,6 @@ function NavGroupItem({
         </SidebarGroupItem>
       )}
     </SidebarGroup>
-  )
-}
-
-/** The garden, set apart above the sections as a small highlighted banner. */
-function CropsLink({
-  isActive,
-  onClick,
-}: {
-  isActive: boolean
-  onClick: () => void
-}) {
-  return (
-    <a
-      href={GARDEN_PATH}
-      onClick={onClick}
-      data-active={isActive}
-      className="group relative flex items-center overflow-hidden rounded-md border border-garden-border px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60"
-    >
-      <GardenScenery compact />
-      <CropPlant
-        status="reviewed"
-        sentiment="good"
-        delay={0.3}
-        width={16}
-        className="absolute right-11 bottom-0.5"
-      />
-      <span className="relative flex min-w-0 flex-col gap-1">
-        <span className="font-bold text-sm leading-none">CROPS</span>
-        <span className="truncate font-medium text-2xs text-secondary leading-none">
-          The Infinite Garden
-        </span>
-      </span>
-    </a>
   )
 }
 
@@ -220,7 +187,7 @@ function NavCollapsibleItem({
       <CollapsibleTrigger
         className={cn(
           'group flex items-center gap-1.5 p-1.5',
-          small && 'h-6 py-1',
+          small && 'h-6 py-1 max-lg:h-8',
         )}
         data-active={isGroupActive}
       >
