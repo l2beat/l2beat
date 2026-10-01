@@ -38,8 +38,7 @@
       "typeCaster": "SliceAddress",
       "arg": { "offset": 32 }
     },
-    // Type-5 (SUPER_PERMISSIONED) args are only 40 bytes:
-    // anchorStateRegistry(20) | proposer(20). No prestate, vm, weth or chain ID.
+    // Type-5 args, 40 bytes: anchorStateRegistry(20) | proposer(20).
     "AnchorStateRegistryFromGame5Args": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 0 }
@@ -106,9 +105,6 @@
         "args": [8]
       }
     },
-    // Upgrade 20 super games: 9 = SUPER_CANNON_KONA (permissionless),
-    // 5 = SUPER_PERMISSIONED. Both prove super roots and anchor to an L2
-    // timestamp rather than a block number.
     "game9": {
       "severity": "HIGH",
       "handler": {
@@ -267,10 +263,9 @@
       },
       "edit": ["format", "ChainIdFromArgs"]
     },
-    // CWIA clone args of the type-9 game (124 bytes):
-    // absolutePrestate(32) | vm(20) | anchorStateRegistry(20) | weth(20), then
-    // 32 zero bytes where the legacy games carry the L2 chain ID — super roots
-    // are not scoped to a single chain. Same offsets as the type-8 game.
+    // Type-9 args, 124 bytes: absolutePrestate(32) | vm(20) |
+    // anchorStateRegistry(20) | weth(20), then 32 bytes that are zero where the
+    // legacy games carry the L2 chain ID. Same offsets as type 8.
     "game9Args": {
       "handler": {
         "type": "call",

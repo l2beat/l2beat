@@ -88,8 +88,8 @@ import {
   getOracleChallengePeriod,
   getPermissionedDisputeGameName,
   getPermissionedGameBond,
-  getPermissionedGameClock,
   getPermissionlessGameBond,
+  isSuperPermissionedOnly,
 } from './opStack/faultDisputeGame'
 import {
   getOpStackCentralizedSequencing,
@@ -685,13 +685,10 @@ function getProgramHashes(
           portal.name ?? portal.address,
           'respectedGameType',
         )
-      // The type-5 super permissioned game runs no VM and has no prestate.
-      if (respectedGameType === 5) {
-        return []
-      }
+      // Type 5 runs no VM, so there is no prestate.
+      if (respectedGameType === 5) return []
       if (respectedGameType === 8 || respectedGameType === 9) {
-        // Upgrade 20's type-9 super game keeps its prestate in gameArgs[9] at
-        // the same offset as the type-8 game.
+        // gameArgs[9] holds the prestate at the same offset as type 8.
         const argsField = respectedGameType === 9 ? 'game9Args' : 'game8Args'
         const konaPrestate = templateVars.discovery.hasContract(
           'DisputeGameFactory',
@@ -876,12 +873,9 @@ function getStateValidation(
     }
     case 'Permissioned': {
       const permissionedGame = getPermissionedDisputeGameName(templateVars)
-      const permissionedClock = getPermissionedGameClock(templateVars)
 
-      // Upgrade 20's type-5 super permissioned game exposes only a proposer and
-      // an anchor state registry, so there are no bonds, clocks or depths to
-      // describe and the old fault-proof wording would not hold.
-      if (permissionedClock === undefined) {
+      // No bonds, clocks or depths exist to describe for type 5.
+      if (isSuperPermissionedOnly(templateVars)) {
         return {
           description:
             'State roots are proposed as super roots by a permissioned proposer. The respected game type is the super permissioned game, which carries no bond and exposes no challenge mechanics: validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.',
@@ -897,7 +891,10 @@ function getStateValidation(
         }
       }
 
-      const maxClockDuration = permissionedClock
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        permissionedGame,
+        'maxClockDuration',
+      )
 
       const permissionedDisputeGameBonds = getPermissionedGameBond(templateVars)
 
@@ -1506,6 +1503,17 @@ function getRiskViewStateValidation(
       }
     }
     case 'Permissioned': {
+      // Type 5 has no interactive dispute process, so it must not render as a
+      // fault proof with a challenge window.
+      if (isSuperPermissionedOnly(templateVars)) {
+        return {
+          ...RISK_VIEW.STATE_NONE,
+          description:
+            'State roots are proposed as super roots by a permissioned proposer. The respected game type exposes no challenger, VM or challenge clock, so proposals cannot be disputed by execution. Validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.',
+          permissioned: true,
+          defenderAdvantage: 'not-applicable',
+        }
+      }
       return {
         ...RISK_VIEW.STATE_FP_INT(
           getChallengePeriod(templateVars),
@@ -1992,18 +2000,18 @@ function getTechnologyExitMechanism(
           'proofMaturityDelaySeconds',
         )
 
-      const maxClockDuration =
-        fraudProofType === 'Permissionless'
-          ? templateVars.discovery.getContractValue<number>(
-              getFaultDisputeGameName(templateVars),
-              'maxClockDuration',
-            )
-          : getPermissionedGameClock(templateVars)
+      const noChallengeProcess = isSuperPermissionedOnly(templateVars)
+      const maxClockDuration = noChallengeProcess
+        ? undefined
+        : templateVars.discovery.getContractValue<number>(
+            fraudProofType === 'Permissionless'
+              ? getFaultDisputeGameName(templateVars)
+              : getPermissionedDisputeGameName(templateVars),
+            'maxClockDuration',
+          )
 
       result.push({
         name: 'Regular exits',
-        // Upgrade 20's type-5 super permissioned game has no challenge process,
-        // so the wording must not quote a challenge period.
         description:
           maxClockDuration === undefined
             ? readMarkdown('templates/opStack/regularExitsNoChallenge.md', {
@@ -2620,15 +2628,10 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'Permissioned': {
-      const clock = getPermissionedGameClock(templateVars)
-      if (clock !== undefined) return clock
-      // Upgrade 20: the type-5 super permissioned game has no clock because it
-      // has no challenges. Settlement is governed by the portal's dispute game
-      // finality delay instead.
-      const portal = getOptimismPortal(templateVars)
+      // Type 5 has no challenge period; its risk view branches before here.
       return templateVars.discovery.getContractValue<number>(
-        portal.name ?? portal.address,
-        'disputeGameFinalityDelaySeconds',
+        getPermissionedDisputeGameName(templateVars),
+        'maxClockDuration',
       )
     }
     case 'Permissionless': {

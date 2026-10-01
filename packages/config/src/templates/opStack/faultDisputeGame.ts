@@ -53,6 +53,24 @@ export type FraudProofType =
   | 'OpSuccinctFDP'
   | 'AggregateProof'
 
+export function getRespectedGameType(
+  templateVars: OpStackGameContext,
+): number | undefined {
+  const portal = getOptimismPortal(templateVars)
+  return templateVars.discovery.getContractValueOrUndefined<number>(
+    portal.name ?? portal.address,
+    'respectedGameType',
+  )
+}
+
+// Type 5 exposes only a proposer and an anchor state registry: no challenger,
+// VM, bond or clock, so nothing can be disputed by execution.
+export function isSuperPermissionedOnly(
+  templateVars: OpStackGameContext,
+): boolean {
+  return getRespectedGameType(templateVars) === 5
+}
+
 export function getFraudProofType(
   templateVars: OpStackGameContext,
 ): FraudProofType {
@@ -80,16 +98,13 @@ export function getFraudProofType(
   if (respectedGameType === 8) {
     return 'Permissionless'
   }
-  // 9 = SUPER_CANNON_KONA (Upgrade 20): permissionless super-root game, same
-  // trust model as type 8 — it proves a super root anchored to an L2 timestamp
-  // instead of an output root anchored to a block number.
+  // 9 = SUPER_CANNON_KONA: same trust model as type 8.
   if (respectedGameType === 9) {
     return 'Permissionless'
   }
   if (respectedGameType === 1) {
     return 'Permissioned'
   }
-  // 5 = SUPER_PERMISSIONED (Upgrade 20): super-root analogue of type 1.
   if (respectedGameType === 5) {
     return 'Permissioned'
   }
@@ -146,21 +161,12 @@ export function getPermissionlessGameBond(
 export function getPermissionedGameBond(
   templateVars: OpStackGameContext,
 ): number {
-  const portal = getOptimismPortal(templateVars)
-  const respectedGameType =
-    templateVars.discovery.getContractValueOrUndefined<number>(
-      portal.name ?? portal.address,
-      'respectedGameType',
+  // initBondGame1 is zeroed for type 5; the bond lives in initBondGame5.
+  if (isSuperPermissionedOnly(templateVars)) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame5',
     )
-  // Upgrade 20: the respected permissioned game is type 5 and initBondGame1 is
-  // zeroed, so the bond lives in initBondGame5.
-  if (respectedGameType === 5) {
-    const superBond =
-      templateVars.discovery.getContractValueOrUndefined<number>(
-        'DisputeGameFactory',
-        'initBondGame5',
-      )
-    if (superBond !== undefined) return superBond
   }
   const perType = templateVars.discovery.getContractValueOrUndefined<number>(
     'DisputeGameFactory',
@@ -187,49 +193,28 @@ export function getOptimismPortal(
   }
 }
 
-// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2, and Upgrade 20
-// replaced the permissionless game with SuperFaultDisputeGame (type 9).
+// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2.
 export function getFaultDisputeGameName(
   templateVars: OpStackGameContext,
 ): string {
+  if (getRespectedGameType(templateVars) === 9) {
+    return 'SuperFaultDisputeGame'
+  }
   if (templateVars.discovery.hasContract('FaultDisputeGame')) {
     return 'FaultDisputeGame'
-  }
-  if (templateVars.discovery.hasContract('SuperFaultDisputeGame')) {
-    return 'SuperFaultDisputeGame'
   }
   return 'FaultDisputeGameV2'
 }
 
-// The permissioned game's challenge clock, or undefined when the respected game
-// is Upgrade 20's type-5 super permissioned game, which has no challenge
-// mechanics at all (no clock, depth, bond, VM, WETH or absolute prestate).
-export function getPermissionedGameClock(
-  templateVars: OpStackGameContext,
-): number | undefined {
-  const name = getPermissionedDisputeGameName(templateVars)
-  if (!templateVars.discovery.hasContract(name)) {
-    return undefined
-  }
-  return templateVars.discovery.getContractValueOrUndefined<number>(
-    name,
-    'maxClockDuration',
-  )
-}
-
-// Upgrade 20 replaced the permissioned game with SuperPermissionedDisputeGame
-// (type 5). Unlike type 1 it exposes only a proposer and an anchor state
-// registry — it has no challenger, VM, WETH or absolute prestate.
 export function getPermissionedDisputeGameName(
   templateVars: OpStackGameContext,
 ): string {
-  if (templateVars.discovery.hasContract('PermissionedDisputeGame')) {
-    return 'PermissionedDisputeGame'
-  }
-  if (templateVars.discovery.hasContract('SuperPermissionedDisputeGame')) {
+  // Every other type keeps the legacy lookup, which throws when the game is
+  // missing rather than silently falling through to different wording.
+  if (getRespectedGameType(templateVars) === 5) {
     return 'SuperPermissionedDisputeGame'
   }
-  return 'PermissionedDisputeGameV2'
+  return 'PermissionedDisputeGame'
 }
 
 // V2 dispute games don't discover PreimageOracle (VM address is zero
