@@ -10,8 +10,8 @@ export interface ChainAddress {
   address: string
 }
 
-const CHAINS_BY_NAME = AVAILABLE_CHAINS.toSorted((a, b) =>
-  a.name.localeCompare(b.name),
+const CHAINS_BY_DISPLAY_NAME = AVAILABLE_CHAINS.toSorted((a, b) =>
+  a.displayName.localeCompare(b.displayName),
 )
 
 export function ChainAddressField(props: {
@@ -53,9 +53,9 @@ export function ChainAddressField(props: {
               props.onChange({ ...props.value, chain: e.target.value })
             }
           >
-            {CHAINS_BY_NAME.map((c) => (
+            {CHAINS_BY_DISPLAY_NAME.map((c) => (
               <option key={c.chainId} value={c.shortName}>
-                {c.name}
+                {c.displayName}
               </option>
             ))}
           </select>
