@@ -112,6 +112,37 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   {
     type: 'multiple',
     section: 'more',
+    title: 'Security',
+    // ZK Catalog is its only page so far.
+    match: 'zk-catalog',
+    // One page to switch between is no tab row.
+    disableMobileTabs: true,
+    icon: (
+      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+    links: [
+      [
+        {
+          title: 'ZK Catalog',
+          href: '/zk-catalog',
+        },
+        // Not built yet: listed, but not links.
+        {
+          title: 'Audits',
+          href: '/security/audits',
+          disabled: true,
+        },
+        {
+          title: 'Ossification',
+          href: '/security/ossification',
+          disabled: true,
+        },
+      ],
+    ],
+  },
+  {
+    type: 'multiple',
+    section: 'more',
     title: 'Interop',
     match: 'interop',
     icon: (
@@ -188,37 +219,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         {
           title: 'Archived',
           href: '/data-availability/archived',
-        },
-      ],
-    ],
-  },
-  {
-    type: 'multiple',
-    section: 'more',
-    title: 'Security',
-    // ZK Catalog is its only page so far.
-    match: 'zk-catalog',
-    // One page to switch between is no tab row.
-    disableMobileTabs: true,
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      [
-        {
-          title: 'ZK Catalog',
-          href: '/zk-catalog',
-        },
-        // Not built yet: listed, but not links.
-        {
-          title: 'Audits',
-          href: '/security/audits',
-          disabled: true,
-        },
-        {
-          title: 'Ossification',
-          href: '/security/ossification',
-          disabled: true,
         },
       ],
     ],
