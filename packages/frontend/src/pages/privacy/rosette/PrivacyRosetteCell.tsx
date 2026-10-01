@@ -41,11 +41,10 @@ export function PrivacyRosetteCell({
     <>
       {/* The reasons appear nowhere else on the summary page. */}
       <Tooltip contentInHtml>
-        <TooltipTrigger
-          className="flex size-full items-center justify-center max-md:hidden"
-          disabledOnMobile
-        >
-          <TableLink href={sectionHref}>{icon}</TableLink>
+        <TooltipTrigger asChild disabledOnMobile>
+          <TableLink href={sectionHref} className="max-md:hidden">
+            {icon}
+          </TableLink>
         </TooltipTrigger>
         <TooltipContent fitContent>
           <PrivacyRosetteAnalysis
