@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   getL2ProjectStructuredData,
@@ -25,6 +26,7 @@ describe(getL2ProjectStructuredData.name, () => {
   const arbitrum = {
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    archivedAt: undefined,
     hasTvsApi: true,
     hasActivityApi: true,
   }
@@ -67,6 +69,18 @@ describe(getL2ProjectStructuredData.name, () => {
     ])
   })
 
+  it('asks for the full range of an archived project, whose last 30d are empty', () => {
+    const dataset = getL2ProjectStructuredData(page, {
+      ...arbitrum,
+      archivedAt: UnixTime(1_700_000_000),
+    })
+
+    expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
+      'https://l2beat.com/api/scaling/tvs/arbitrum?range=max',
+      'https://l2beat.com/api/scaling/activity/arbitrum?range=max',
+    ])
+  })
+
   it('emits no Dataset for a project without any API', () => {
     const dataset = getL2ProjectStructuredData(page, {
       ...arbitrum,
@@ -90,7 +104,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
           "See a detailed breakdown of Arbitrum One's TVS on L2BEAT.",
         image: 'https://l2beat.com/og.png',
       },
-      { name: 'Arbitrum One', slug: 'arbitrum' },
+      { name: 'Arbitrum One', slug: 'arbitrum', archivedAt: undefined },
     )
 
     expect(dataset).toEqual({

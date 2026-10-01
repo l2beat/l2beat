@@ -17,7 +17,7 @@ import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
-  const api = getL2ProjectApiUrls(entry.slug)
+  const api = getL2ProjectApiUrls(entry)
   return renderProjectMarkdown({
     name: entry.name,
     // Production URLs, like the canonical link: the document is meant to be

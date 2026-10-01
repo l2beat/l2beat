@@ -1,3 +1,4 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import {
   getDatasetStructuredData,
@@ -11,7 +12,7 @@ export function getL2ProjectStructuredData(
   page: StructuredDataPage,
   project: L2Project & { hasTvsApi: boolean; hasActivityApi: boolean },
 ) {
-  const api = getL2ProjectApiUrls(project.slug)
+  const api = getL2ProjectApiUrls(project)
   const distribution = compact([
     project.hasTvsApi &&
       jsonDownload(`${project.name} Total Value Secured`, api.tvs),
@@ -31,7 +32,7 @@ export function getL2ProjectTvsBreakdownStructuredData(
   return getDatasetStructuredData(page, {
     name,
     distribution: [
-      jsonDownload(name, getL2ProjectApiUrls(project.slug).tvsBreakdown),
+      jsonDownload(name, getL2ProjectApiUrls(project).tvsBreakdown),
     ],
   })
 }
@@ -39,4 +40,5 @@ export function getL2ProjectTvsBreakdownStructuredData(
 interface L2Project {
   name: string
   slug: string
+  archivedAt: UnixTime | undefined
 }
