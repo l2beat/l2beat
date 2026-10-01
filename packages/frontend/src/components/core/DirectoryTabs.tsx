@@ -13,6 +13,7 @@ const DirectoryTabs = ({
   ref,
   defaultValue,
   onValueChange,
+  className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root> & {
   defaultValue: string
@@ -25,6 +26,11 @@ const DirectoryTabs = ({
   return (
     <TabsPrimitive.Root
       ref={ref}
+      // Sticky table headers in the tabs stop right below the tabs bar.
+      className={cn(
+        '[--sticky-table-header-top:--spacing(10)] md:[--sticky-table-header-top:--spacing(14)]',
+        className,
+      )}
       value={selectedTab}
       onValueChange={(value) => {
         onValueChange?.(value)
@@ -44,7 +50,7 @@ const DirectoryTabsList = ({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) => (
-  <div className="sticky top-0 z-50 bg-background pt-2 max-md:mt-2 md:pt-4">
+  <div className="sticky top-0 z-50 h-(--sticky-table-header-top) bg-background pt-2 max-md:mt-2 md:pt-4">
     <OverflowWrapper className="pr-4">
       <TabsPrimitive.List
         ref={ref}

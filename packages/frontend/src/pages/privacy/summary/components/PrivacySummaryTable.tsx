@@ -303,7 +303,7 @@ export function PrivacySummaryTable({
   return (
     <PrimaryCard className="mt-4">
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} stickyHeader />
     </PrimaryCard>
   )
 }
