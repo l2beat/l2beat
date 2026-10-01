@@ -1,7 +1,7 @@
 import { UnderReviewBadge } from '~/components/badge/UnderReviewBadge'
 import { TooltipVisualOnly } from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteWithLabels } from '~/components/rosette/pizza/PizzaRosetteWithLabels'
-import { RiskValue } from '~/components/rosette/RiskValue'
+import { SentimentText } from '~/components/SentimentText'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversaryRosetteValues,
@@ -46,18 +46,22 @@ export function PrivacyRosetteAnalysis({
             values={getPrivacyAdversaryRosetteValues(adversaries)}
           />
         </TooltipVisualOnly>
-        <ul className="grid w-full gap-x-4 gap-y-3 md:grid-cols-[auto_minmax(0,1fr)]">
+        <ul className="w-full min-w-0 flex-1 divide-y divide-divider">
           {adversaries.cells.map((cell) => (
-            <li
-              key={cell.id}
-              className="grid gap-1 md:col-span-2 md:grid-cols-subgrid"
-            >
-              <RiskValue
-                name={cell.label}
-                value={PRIVACY_ADVERSARY_VERDICT[cell.sentiment]}
-                sentiment={cell.sentiment}
-              />
-              <p className="text-secondary text-xs leading-snug">
+            <li key={cell.id} className="py-2.5 first:pt-0 last:pb-0">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-semibold text-label-value-14">
+                  {cell.label}
+                </span>
+                <SentimentText
+                  sentiment={cell.sentiment}
+                  vibrant
+                  className="shrink-0 font-semibold text-label-value-13"
+                >
+                  {PRIVACY_ADVERSARY_VERDICT[cell.sentiment]}
+                </SentimentText>
+              </div>
+              <p className="mt-1 font-normal text-paragraph-13 text-secondary">
                 {cell.reason}
               </p>
             </li>
