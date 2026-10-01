@@ -101,6 +101,8 @@ export function AddressSelectionPage() {
                 const temp = addressA
                 setAddressA(addressB)
                 setAddressB(temp)
+                setChainA(chainB)
+                setChainB(chainA)
 
                 const { addressA: tempA, addressB: tempB } = errors
                 setErrors({ addressA: tempB, addressB: tempA })
