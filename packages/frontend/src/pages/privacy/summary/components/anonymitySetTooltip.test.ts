@@ -51,9 +51,10 @@ function makeSummary({
 }: {
   bucketType: 'pool' | 'denomination'
   syncingLabels?: string[]
-}): Extract<PrivacyAnonymitySetSummary, { status: 'available' }> {
+}): Extract<PrivacyAnonymitySetSummary, { type: 'deposits' }> {
   return {
     status: 'available',
+    type: 'deposits',
     value: 69,
     label: bucketType === 'pool' ? '≥0.1 ETH' : '0.1 ETH',
     syncingLabels,

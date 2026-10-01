@@ -11,6 +11,10 @@ import type {
   PrivacyAnonymitySetHoldingDurationPoint,
 } from './anonymity-set/calculateAnonymitySets'
 import {
+  getKeyRegistrationAnonymitySet,
+  KEY_REGISTRATION_ANONYMITY_SET_LABEL,
+} from './anonymity-set/getKeyRegistrationAnonymitySet'
+import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
   type PrivacyAnonymitySetSeries,
@@ -34,10 +38,7 @@ export type PrivacyAnonymitySetChartParams = v.infer<
 >
 
 export interface PrivacyAnonymitySetChartResponse {
-  series: Pick<
-    PrivacyAnonymitySetSeries,
-    'id' | 'label' | 'token' | 'minimumAmount'
-  >[]
+  series: Pick<PrivacyAnonymitySetSeries, 'id' | 'label'>[]
   history: PrivacyAnonymitySetHistoryPoint[]
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
   /** Labels of configured series excluded from the charts while their history is indexed. */
@@ -55,6 +56,28 @@ export async function getPrivacyAnonymitySetChart(
     select: ['privacyInfo'],
   })
   if (!project) return emptyResponse()
+
+  const state = project.privacyInfo.anonymitySet
+  if (state?.type === 'keyRegistrations') {
+    // Registrations come from a file, so mock mode can show the real data.
+    const anonymitySet = getKeyRegistrationAnonymitySet(project.id, state)
+    if (anonymitySet === undefined) return emptyResponse()
+    return selectPrivacyAnonymitySetChartRange(
+      {
+        series: [
+          {
+            id: 'keyRegistrations',
+            label: KEY_REGISTRATION_ANONYMITY_SET_LABEL,
+          },
+        ],
+        history: anonymitySet.history,
+        holdingDuration: anonymitySet.holdingDuration,
+        syncingLabels: [],
+        syncedUntil: anonymitySet.syncedUntil,
+      },
+      params.range,
+    )
+  }
 
   const series = getPrivacyAnonymitySetSeries(project)
   if (series.length === 0) return emptyResponse()
@@ -191,12 +214,7 @@ export function selectPrivacyAnonymitySetChartRange(
 }
 
 function toResponseSeries(series: PrivacyAnonymitySetSeries[]) {
-  return series.map(({ id, label, token, minimumAmount }) => ({
-    id,
-    label,
-    token,
-    minimumAmount,
-  }))
+  return series.map(({ id, label }) => ({ id, label }))
 }
 
 function emptyResponse(): PrivacyAnonymitySetChartResponse {

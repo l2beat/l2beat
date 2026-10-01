@@ -95,6 +95,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
 
     expect(result).toEqual({
       status: 'available',
+      type: 'deposits',
       value: 3,
       label: '≥1 ETH',
       syncingLabels: ['≥200 DAI'],
@@ -122,6 +123,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
 
     expect(result).toEqual({
       status: 'available',
+      type: 'deposits',
       value: 2,
       label: '≥1 ETH',
       syncingLabels: [],

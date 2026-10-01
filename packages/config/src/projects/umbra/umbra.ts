@@ -16,6 +16,8 @@ const UMBRA_ANNOUNCEMENT_EVENT =
   '0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219'
 const UMBRA_TOKEN_WITHDRAWAL_EVENT =
   '0x30eb3583ad09933b693a45452ab07512244cdbc5868701aa004c27b7b267c249'
+const STEALTH_KEY_CHANGED_EVENT =
+  '0xe879dede910dd3b22239a11044df83c95adcd4b54003516f42866cc1fe4f0a19'
 
 const ETH_TOKEN_PLACEHOLDER = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
@@ -28,6 +30,7 @@ const TRACKED_TOKENS = [
 ]
 
 const umbraCore = discovery.getContract('Umbra')
+const stealthKeyRegistry = discovery.getContract('StealthKeyRegistry')
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((address) => {
   const resolved = getTokenByAddress(address)
@@ -109,6 +112,13 @@ export const umbra: BaseProject = {
     category: PRIVACY_CATEGORIES.stealthAddress,
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
+    anonymitySet: {
+      type: 'keyRegistrations',
+      registry: stealthKeyRegistry.address,
+      event: STEALTH_KEY_CHANGED_EVENT,
+      // The past year of history plus one extra 30-day window.
+      sinceTimestamp: UnixTime.fromDate(new Date('2025-08-01T00:00:00Z')),
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

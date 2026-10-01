@@ -12,6 +12,7 @@ import { UserIcon } from '~/icons/User'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import {
   getAnonymitySetDescription,
+  getAnonymitySetOpsecNote,
   getAnonymitySetSteps,
   getAnonymitySetSyncingNote,
 } from './anonymitySetTooltip'
@@ -37,6 +38,20 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
       <Tooltip>
         <TooltipTrigger asChild>
           <NotApplicableBadge />
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[320px]">
+          {anonymitySet.description}
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
+  if (anonymitySet.status === 'too-small') {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Badge type="warning" size="small">
+            Too small
+          </Badge>
         </TooltipTrigger>
         <TooltipContent className="max-w-[320px]">
           {anonymitySet.description}
@@ -90,11 +105,7 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Practical privacy also depends on the timing of deposits and
-                withdrawals, the underlying network and browser used to interact
-                with the frontend (if used), and the RPC providers used to send
-                transactions and query public blockchain state. Users are
-                advised to research OPSEC best practices.
+                {getAnonymitySetOpsecNote(anonymitySet)}
               </p>
             </div>
           }

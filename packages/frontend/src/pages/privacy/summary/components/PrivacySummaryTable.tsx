@@ -191,7 +191,7 @@ const columns = [
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+        tooltip: `Largest configured anonymity set: unique deposit senders, or stealth key registrants for stealth-address protocols, during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       },
     },
   ),

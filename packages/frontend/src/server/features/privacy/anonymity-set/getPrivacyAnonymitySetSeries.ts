@@ -68,10 +68,18 @@ export function getPrivacyAnonymitySetSeries(
   )
 }
 
-export function hasPrivacyAnonymitySet(
+/** Deposit sets are configured per bucket, key registration sets per project. */
+export type PrivacyAnonymitySetType = 'deposits' | 'keyRegistrations'
+
+export function getPrivacyAnonymitySetType(
   project: PrivacyAnonymitySetProject,
-): boolean {
+): PrivacyAnonymitySetType | undefined {
+  if (project.privacyInfo.anonymitySet?.type === 'keyRegistrations') {
+    return 'keyRegistrations'
+  }
   return getPrivacyAnonymitySetSeries(project).length > 0
+    ? 'deposits'
+    : undefined
 }
 
 function formatTokenAmount(amount: string, decimals: number): string {

@@ -1104,10 +1104,17 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    | {
+        /** Tracked, but too few users for the number to be meaningful. */
+        type: 'too-small'
+        description: string
+      }
+    | ProjectPrivacyKeyRegistrationAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1127,6 +1134,21 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
+}
+
+/**
+ * Stealth-address protocols have no shared pool, so their anonymity set is the
+ * distinct addresses that registered stealth keys during the window instead
+ * of the distinct depositors. Registrations are collected from the registry
+ * into a data file by `pnpm privacy-key-registrations` in packages/backend.
+ */
+export interface ProjectPrivacyKeyRegistrationAnonymitySet {
+  type: 'keyRegistrations'
+  registry: ChainSpecificAddress
+  /** topic0 of the registration event, which has the registrant as topic1. */
+  event: string
+  /** First registration timestamp collected. */
+  sinceTimestamp: UnixTime
 }
 
 export type ProjectPrivacyRelayerTracking =

@@ -30,7 +30,10 @@ import {
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
+import {
+  getPrivacyAnonymitySetType,
+  type PrivacyAnonymitySetType,
+} from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
   PrivacyAsset,
@@ -64,7 +67,7 @@ export interface PrivacyProjectDetails {
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
-  hasAnonymitySet: boolean
+  anonymitySetType: PrivacyAnonymitySetType | undefined
   hasTvl: boolean
   detailedDescription?: string
   riskSummary?: string
@@ -285,7 +288,7 @@ export async function getPrivacyProjectDetails(
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,
-    hasAnonymitySet: hasPrivacyAnonymitySet(project),
+    anonymitySetType: getPrivacyAnonymitySetType(project),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
