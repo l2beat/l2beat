@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { ProjectOssification } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -53,7 +54,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectOssification,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingContractsProgramHash,

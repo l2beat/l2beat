@@ -97,7 +97,6 @@ const patch = (overrides: Partial<OssificationPatch>): OssificationPatch => ({
 
 function derive(overrides: Partial<OssificationSources>) {
   return getOssificationInput({
-    now: NOW,
     entries: [entry()],
     overrides: [],
     changes: [],

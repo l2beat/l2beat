@@ -1,10 +1,11 @@
-import { assert, clamp } from '@l2beat/shared-pure'
+import { assert, clamp, type UnixTime } from '@l2beat/shared-pure'
+import { knots as EXPLOIT_AGES } from './ossificationCurve.json'
 import type {
+  OssificationChange,
+  OssificationInput,
   ProjectOssification,
   ProjectOssificationCriticalUpdate,
-} from '../types'
-import type { OssificationChange, OssificationInput } from './OssificationInput'
-import { knots as EXPLOIT_AGES } from './ossificationCurve.json'
+} from './types'
 
 const DAY = 24 * 60 * 60
 const YEAR = 365 * DAY
@@ -14,6 +15,7 @@ const RATE_WINDOW_MIN = 30 * DAY
 
 export function measureOssification(
   input: OssificationInput,
+  now: UnixTime,
 ): ProjectOssification {
   assert(input.contracts.length > 0, 'a measured perimeter has a contract')
   const changes = sortedChanges(input)
@@ -21,11 +23,11 @@ export function measureOssification(
 
   const projectClockStart = getProjectClockStart(input)
   const maturity = input.contracts.every((contract) => contract.isVerified)
-    ? exploitAgePercentile(Math.max(0, input.now - projectClockStart))
+    ? exploitAgePercentile(Math.max(0, now - projectClockStart))
     : 0
 
-  const from = Math.max(input.now - RATE_WINDOW, input.observedSince)
-  const windowSeconds = Math.max(input.now - from, RATE_WINDOW_MIN)
+  const from = Math.max(now - RATE_WINDOW, input.observedSince)
+  const windowSeconds = Math.max(now - from, RATE_WINDOW_MIN)
   const clusteredEventCount = clusterStarts(
     timestamps.filter((timestamp) => timestamp >= from),
   ).length

@@ -1,10 +1,11 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import type {
+  OssificationInput,
+  ProjectOssificationContract,
+} from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ProjectOssificationContract } from '../types'
 import { mergeOssificationInputs } from './mergeOssificationInputs'
-import type { OssificationInput } from './OssificationInput'
 
-const NOW = UnixTime(1_800_000_000)
 const ADDRESS_A = 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f'
 const ADDRESS_B = 'eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b'
 
@@ -24,7 +25,6 @@ function input(
   overrides: Partial<OssificationInput> = {},
 ): OssificationInput {
   return {
-    now: NOW,
     contracts: [contract(address)],
     changes: [],
     resets: [],
@@ -48,7 +48,6 @@ describe(mergeOssificationInputs.name, () => {
       }),
     ])
     expect(merged).toEqual({
-      now: NOW,
       contracts: [contract(ADDRESS_A), contract(ADDRESS_B)],
       changes: [
         { timestamp: 300, type: 'code' },

@@ -1,9 +1,9 @@
 import type {
   ExitWindowRisk,
-  ProjectOssification,
   ProjectPrivacyInfo,
   ProjectScalingRisks,
 } from '@l2beat/config'
+import type { ProjectOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { calculateExposure } from './calculateExposure'
 import {

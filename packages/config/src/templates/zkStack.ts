@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { ProjectOssification } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -43,7 +44,6 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectGovernanceInfo,
-  ProjectOssification,
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingProofSystem,

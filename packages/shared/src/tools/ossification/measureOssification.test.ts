@@ -5,15 +5,18 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ProjectOssificationContract } from '../types'
 import {
   exploitAgePercentile,
   getUncertainNewestChange,
   measureOssification,
   toDisplayScore,
 } from './measureOssification'
-import type { OssificationChange, OssificationInput } from './OssificationInput'
 import ossificationCurve from './ossificationCurve.json'
+import type {
+  OssificationChange,
+  OssificationInput,
+  ProjectOssificationContract,
+} from './types'
 
 const NOW = UnixTime(1_800_000_000)
 const YEAR = 365 * 24 * 60 * 60
@@ -48,7 +51,6 @@ function change(
 
 function input(overrides: Partial<OssificationInput> = {}): OssificationInput {
   return {
-    now: NOW,
     contracts: [row()],
     changes: [],
     resets: [],
@@ -59,13 +61,13 @@ function input(overrides: Partial<OssificationInput> = {}): OssificationInput {
 
 describe(measureOssification.name, () => {
   it('refuses an input without a critical contract', () => {
-    expect(() => measureOssification(input({ contracts: [] }))).toThrow(
+    expect(() => measureOssification(input({ contracts: [] }), NOW)).toThrow(
       'has a contract',
     )
   })
 
   it('scores an old unchanged perimeter as mature', () => {
-    const result = measureOssification(input({ resets: [NOW - 3 * YEAR] }))
+    const result = measureOssification(input({ resets: [NOW - 3 * YEAR] }), NOW)
     expect(result?.score).toEqual(scoreAt(3 * YEAR))
     expect(result?.projectClockStart).toEqual(NOW - 3 * YEAR)
     expect(result?.lastCriticalChange).toEqual(undefined)
@@ -78,6 +80,7 @@ describe(measureOssification.name, () => {
       input({
         contracts: [row(), row({ name: 'B', ossifyingSince: NOW - YEAR })],
       }),
+      NOW,
     )
     expect(result?.projectClockStart).toEqual(NOW - YEAR)
     expect(result?.score).toEqual(scoreAt(YEAR))
@@ -87,13 +90,17 @@ describe(measureOssification.name, () => {
   it('scores zero while any critical contract is unverified', () => {
     const result = measureOssification(
       input({ contracts: [row(), row({ isVerified: false })] }),
+      NOW,
     )
     expect(result?.score).toEqual(0)
     expect(result?.maturity).toEqual(0)
   })
 
   it('counts changes against the observed window', () => {
-    const result = measureOssification(input({ changes: [change(NOW - YEAR)] }))
+    const result = measureOssification(
+      input({ changes: [change(NOW - YEAR)] }),
+      NOW,
+    )
     expect(result?.lastCriticalChange).toEqual(NOW - YEAR)
     expect(result?.clusteredEventCount).toEqual(1)
     expect(result?.windowSeconds).toEqual(3 * YEAR)
@@ -109,6 +116,7 @@ describe(measureOssification.name, () => {
           change(NOW - YEAR + 2 * DAY),
         ],
       }),
+      NOW,
     )
     expect(result?.clusteredEventCount).toEqual(2)
   })
@@ -119,6 +127,7 @@ describe(measureOssification.name, () => {
         observedSince: NOW - YEAR,
         changes: [change(NOW - 2 * YEAR), change(NOW - DAY)],
       }),
+      NOW,
     )
     expect(result?.windowSeconds).toEqual(YEAR)
     expect(result?.clusteredEventCount).toEqual(1)
@@ -131,6 +140,7 @@ describe(measureOssification.name, () => {
         observedSince: NOW - YEAR,
         changes: [change(NOW - YEAR - HOUR), change(NOW - YEAR + HOUR)],
       }),
+      NOW,
     )
     expect(result?.clusteredEventCount).toEqual(1)
   })
@@ -138,6 +148,7 @@ describe(measureOssification.name, () => {
   it('never divides by less than thirty days', () => {
     const result = measureOssification(
       input({ observedSince: NOW - DAY, changes: [change(NOW - HOUR)] }),
+      NOW,
     )
     expect(result?.windowSeconds).toEqual(30 * DAY)
   })
@@ -148,6 +159,7 @@ describe(measureOssification.name, () => {
         resets: [NOW - 3 * YEAR, NOW - YEAR + HOUR],
         changes: [change(NOW - YEAR), change(NOW - DAY)],
       }),
+      NOW,
     )
     expect(result?.perimeterResets).toEqual([
       NOW - 3 * YEAR,
@@ -167,6 +179,7 @@ describe(measureOssification.name, () => {
           change(NOW - HOUR),
         ],
       }),
+      NOW,
     )
     expect(result?.criticalUpdates).toEqual([
       { id: 'u1', type: 'code' },
@@ -177,6 +190,7 @@ describe(measureOssification.name, () => {
   it('accepts changes in any order', () => {
     const result = measureOssification(
       input({ changes: [change(NOW - DAY), change(NOW - YEAR)] }),
+      NOW,
     )
     expect(result?.lastCriticalChange).toEqual(NOW - DAY)
     expect(result?.clusteredEventCount).toEqual(2)

@@ -14,6 +14,11 @@ import {
   toAddressArray,
 } from '@l2beat/discovery'
 import {
+  measureOssification,
+  type OssificationInput,
+  type ProjectOssification,
+} from '@l2beat/shared'
+import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
@@ -28,14 +33,11 @@ import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { loadOssificationInput } from '../ossification/loadOssificationInput'
-import { measureOssification } from '../ossification/measureOssification'
 import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
-import type { OssificationInput } from '../ossification/OssificationInput'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
   ProjectEscrow,
-  ProjectOssification,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -1096,14 +1098,13 @@ export class ProjectDiscovery {
   }
 
   getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
-    const input = this.getOssificationInput(buildTime, projectStart)
-    return input === undefined ? undefined : measureOssification(input)
+    const input = this.getOssificationInput(projectStart)
+    return input === undefined
+      ? undefined
+      : measureOssification(input, buildTime)
   }
 
-  getOssificationInput(
-    now: UnixTime,
-    projectStart?: UnixTime,
-  ): OssificationInput | undefined {
+  getOssificationInput(projectStart?: UnixTime): OssificationInput | undefined {
     return mergeOssificationInputs(
       this.discoveries
         .map((discovery) =>
@@ -1111,7 +1112,6 @@ export class ProjectDiscovery {
             discovery,
             this.reachableAddresses,
             this.configReader,
-            now,
             projectStart,
           ),
         )

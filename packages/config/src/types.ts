@@ -1,4 +1,5 @@
 import type {
+  ProjectOssification,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -1881,57 +1882,6 @@ export interface ProjectEscrow {
     warning?: string
   }
   sharedEscrow?: SharedEscrow
-}
-
-export type OssificationChangeType = 'code' | 'state'
-
-export interface ProjectOssificationCriticalUpdate {
-  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
-  id: string
-  type: OssificationChangeType
-}
-
-export interface ProjectOssificationContract {
-  name: string
-  address: ChainSpecificAddress
-  isVerified: boolean
-  /** Start of the battle-tested clock: last critical change, or deployment
-   *  if the contract never changed. */
-  ossifyingSince: number
-  codeChangeCount: number
-  stateChangeCount: number
-}
-
-/** Score, change rate and clock timestamps of the critical perimeter. Ages
- *  are not stored: the frontend subtracts the timestamps from the request
- *  time. Score and change rate are measured against the config build time,
- *  which lags the request by at most the age of the deploy. The TVS exposure
- *  needs the database and is added by the frontend. */
-export interface ProjectOssification {
-  /** 0-100: the share of recorded code-bug exploits (published, versioned
-   *  incident dataset, see ossificationCurve.json) whose exploited code was
-   *  younger than this perimeter's age. 0 while any critical contract is
-   *  unverified. */
-  score: number
-  /** score as a 0..1 fraction; 0 gates exposure when unverified */
-  maturity: number
-  /** Start of the unchanged period: the newest deployment or critical change
-   *  anywhere in the perimeter. */
-  projectClockStart: number
-  /** Timestamp of the last critical change, absent if none ever */
-  lastCriticalChange?: number
-  /** 24h-clustered critical change events per year, trailing window */
-  criticalChangesPerYear: number
-  clusteredEventCount: number
-  windowSeconds: number
-  /** 24h-clustered timestamps of every critical change, ascending */
-  criticalChanges: number[]
-  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
-   *  changes plus deployments of critical contracts. */
-  perimeterResets: number[]
-  /** Youngest clock first. */
-  contracts: ProjectOssificationContract[]
-  criticalUpdates: ProjectOssificationCriticalUpdate[]
 }
 
 export interface ProjectDiscoveryInfo {

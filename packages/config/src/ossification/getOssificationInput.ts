@@ -5,18 +5,15 @@ import {
   parsePastUpgrades,
   type Upgrade,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  notUndefined,
-  type UnixTime,
-} from '@l2beat/shared-pure'
-import type { ProjectOssificationContract } from '../types'
-import type { OssificationChange, OssificationInput } from './OssificationInput'
+import type {
+  OssificationChange,
+  OssificationInput,
+  ProjectOssificationContract,
+} from '@l2beat/shared'
+import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import type { OssificationPatch } from './OssificationPatch'
 
 export interface OssificationSources {
-  now: UnixTime
   projectStart?: number
   entries: EntryParameters[]
   overrides: CriticalOverride[]
@@ -84,7 +81,6 @@ export function getOssificationInput(
     .map((member) => toRow(member, events, perimeteredChanges))
 
   return {
-    now: sources.now,
     contracts,
     changes: perimeteredChanges.map(toChange),
     resets: [...members.values()]

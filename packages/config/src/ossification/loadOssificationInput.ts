@@ -12,11 +12,8 @@ import {
   makeEntryColorConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import type { OssificationInput } from '@l2beat/shared'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import {
@@ -24,7 +21,6 @@ import {
   getOssificationInput,
   type OssificationJudgement,
 } from './getOssificationInput'
-import type { OssificationInput } from './OssificationInput'
 import {
   EMPTY_OSSIFICATION_PATCH,
   OssificationPatch,
@@ -36,7 +32,6 @@ export function loadOssificationInput(
   discovery: DiscoveryOutput,
   reachable: ReadonlySet<ChainSpecificAddress>,
   configReader: ConfigReader,
-  now: UnixTime,
   projectStart?: number,
 ): OssificationInput | undefined {
   const outOfReach = new Set(
@@ -66,7 +61,6 @@ export function loadOssificationInput(
   const projectPath = configReader.getProjectPath(discovery.name)
   const patch = readPatch(join(projectPath, 'ossification.json'))
   return getOssificationInput({
-    now,
     projectStart,
     entries,
     overrides,

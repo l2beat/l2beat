@@ -1,3 +1,4 @@
+import type { ProjectOssification } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -43,7 +44,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectOssification,
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectRisk,

@@ -1,7 +1,7 @@
 import type {
   ProjectOssification,
   ProjectOssificationCriticalUpdate,
-} from '@l2beat/config'
+} from '@l2beat/shared/frontend'
 import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import {

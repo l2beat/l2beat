@@ -1,8 +1,8 @@
 import type {
-  OssificationChangeType,
   ProjectDiscoveryUpdateSection,
   ProjectDiscoveryUpdateSectionKind,
 } from '@l2beat/config'
+import type { OssificationChangeType } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type MouseEvent, useState } from 'react'

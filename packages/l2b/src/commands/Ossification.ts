@@ -1,6 +1,6 @@
 import { ProjectDiscovery } from '@l2beat/config/build/discovery/ProjectDiscovery'
-import { measureOssification } from '@l2beat/config/build/ossification/measureOssification'
 import { getDiscoveryPaths } from '@l2beat/discovery'
+import { measureOssification } from '@l2beat/shared'
 import { formatJson, UnixTime } from '@l2beat/shared-pure'
 import { boolean, command, flag, positional, string } from 'cmd-ts'
 import { existsSync } from 'fs'
@@ -25,13 +25,15 @@ export const Ossification = command({
       'discovered.json',
     )
     const input = existsSync(discovered)
-      ? new ProjectDiscovery(args.project).getOssificationInput(UnixTime.now())
+      ? new ProjectDiscovery(args.project).getOssificationInput()
       : undefined
     if (input === undefined) {
       console.log(`${args.project} has no critical perimeter`)
       return
     }
-    const output = args.input ? input : measureOssification(input)
+    const output = args.input
+      ? input
+      : measureOssification(input, UnixTime.now())
     console.log(formatJson(output))
   },
 })

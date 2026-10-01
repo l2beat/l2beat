@@ -1,4 +1,7 @@
-import type { TrackedTxFunctionCallGrouping } from '@l2beat/shared'
+import type {
+  ProjectOssification,
+  TrackedTxFunctionCallGrouping,
+} from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
@@ -25,7 +28,6 @@ import type {
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
-  ProjectOssification,
   ProjectPermissions,
   ProjectPrivacyInfo,
   ProjectRedWarning,
