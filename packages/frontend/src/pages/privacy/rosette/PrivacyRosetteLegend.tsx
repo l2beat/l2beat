@@ -1,5 +1,7 @@
 import type { PrivacyAdversarySentiment } from '@l2beat/config'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
+import type { RosetteValue } from '~/components/rosette/types'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 import {
@@ -9,10 +11,19 @@ import {
 
 const SENTIMENTS: PrivacyAdversarySentiment[] = ['good', 'warning', 'bad']
 
+/** A made-up rosette beside the heading, with every colour in it. */
+const EXAMPLE_ROSETTE: RosetteValue[] = (
+  ['good', 'warning', 'good', 'bad', 'good'] as const
+).map((sentiment, i) => ({
+  name: `Adversary ${i + 1}`,
+  value: PRIVACY_ADVERSARY_VERDICT[sentiment],
+  sentiment,
+}))
+
 /**
  * What the rosette colours mean, said once above all the tables in a slim
- * card of its own: the heading on the left, one column per colour beside it.
- * Swatches use the rosette's own fills.
+ * card of its own: an example rosette and the heading on the left, one
+ * column per colour beside them. Swatches use the rosette's own fills.
  */
 export function PrivacyRosetteLegend({ className }: { className?: string }) {
   return (
@@ -22,13 +33,21 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="lg:w-64 lg:shrink-0">
-        <h2 className="font-bold text-heading-16">
-          How to read the privacy rosette
-        </h2>
-        <p className="mt-1 font-medium text-label-value-12 text-secondary">
-          Each slice is one adversary trying to break the protocol's privacy.
-        </p>
+      <div className="flex items-center gap-3 lg:w-80 lg:shrink-0">
+        <PizzaRosetteIcon
+          values={EXAMPLE_ROSETTE}
+          background={false}
+          disableSectionLinking
+          className="size-10 shrink-0"
+        />
+        <div>
+          <h2 className="font-bold text-heading-16">
+            How to read the privacy rosette
+          </h2>
+          <p className="mt-1 font-medium text-label-value-12 text-secondary">
+            Each slice is one adversary trying to break the protocol's privacy.
+          </p>
+        </div>
       </div>
       <ul className="grid min-w-0 flex-1 gap-x-6 gap-y-2 md:grid-cols-3">
         {SENTIMENTS.map((sentiment) => (
