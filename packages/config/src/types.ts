@@ -1,5 +1,5 @@
 import type {
-  ProjectOssification,
+  OssificationInput,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -281,9 +281,10 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
-  /** Ossification factor measured at config build time, for projects with a
-   *  critical contract in their discovery config. */
-  ossification?: ProjectOssification
+  /** Ossification perimeter and history, for projects with a critical
+   *  contract in their discovery config. Measured by the frontend at request
+   *  time with measureOssification. */
+  ossification?: OssificationInput
 
   // tags
   archivedAt?: UnixTime

@@ -1,6 +1,7 @@
-import type {
-  ProjectOssification,
-  ProjectOssificationCriticalUpdate,
+import {
+  measureOssification,
+  type OssificationInput,
+  type ProjectOssificationCriticalUpdate,
 } from '@l2beat/shared/frontend'
 import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
@@ -25,18 +26,18 @@ export interface OssificationContractView {
 }
 
 interface OssificationProject extends OssificationStatsProject {
-  ossification?: ProjectOssification
+  ossification?: OssificationInput
 }
 
 export async function getProjectOssification(
   project: OssificationProject,
 ): Promise<ProjectOssificationView | undefined> {
-  const { ossification } = project
-  if (!env.CLIENT_SIDE_OSSIFICATION_ENABLED || !ossification) {
+  if (!env.CLIENT_SIDE_OSSIFICATION_ENABLED || !project.ossification) {
     return undefined
   }
 
   const now = UnixTime.now()
+  const ossification = measureOssification(project.ossification, now)
   return {
     ...(await getOssificationStats(project, ossification, now)),
     contracts: ossification.contracts.map(

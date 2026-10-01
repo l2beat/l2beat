@@ -13,11 +13,7 @@ import {
   getReachableEntries,
   toAddressArray,
 } from '@l2beat/discovery'
-import {
-  measureOssification,
-  type OssificationInput,
-  type ProjectOssification,
-} from '@l2beat/shared'
+import type { OssificationInput } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -56,7 +52,6 @@ import {
 } from './utils'
 
 const paths = getDiscoveryPaths()
-const buildTime = UnixTime.now()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -1097,14 +1092,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
-    const input = this.getOssificationInput(projectStart)
-    return input === undefined
-      ? undefined
-      : measureOssification(input, buildTime)
-  }
-
-  getOssificationInput(projectStart?: UnixTime): OssificationInput | undefined {
+  getOssification(projectStart?: UnixTime): OssificationInput | undefined {
     return mergeOssificationInputs(
       this.discoveries
         .map((discovery) =>

@@ -1,4 +1,4 @@
-import type { ProjectOssification } from '@l2beat/shared'
+import type { OssificationInput } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -95,7 +95,7 @@ interface AgglayerBaseConfig {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossification?: OssificationInput
   stateDerivation?: ProjectScalingStateDerivation
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateRiskView?: Partial<ScalingProject['riskView']>

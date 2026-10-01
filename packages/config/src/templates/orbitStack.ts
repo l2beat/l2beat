@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import type { ProjectOssification } from '@l2beat/shared'
+import type { OssificationInput } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -153,7 +153,7 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossification?: OssificationInput
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation

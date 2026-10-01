@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import type { ProjectOssification } from '@l2beat/shared'
+import type { OssificationInput } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -97,7 +97,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossification?: OssificationInput
   chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage

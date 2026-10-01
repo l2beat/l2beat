@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import type { ProjectOssification } from '@l2beat/shared'
+import type { OssificationInput } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -249,7 +249,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossification?: OssificationInput
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage

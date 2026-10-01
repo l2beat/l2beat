@@ -208,15 +208,16 @@ diffHistory entry, and re-check that link after rediscovery.
   tests over every project's diffHistory.md pin them. `CriticalFlag` in
   `ColorConfig.ts` is the shape of `critical`.
 - `packages/config/src/ossification/`: `getOssificationInput`
-  calculates the input. `measureOssification` calculates the result.
-  `loadOssificationInput` reads the files. `ProjectDiscovery` exposes both
-  steps as `getOssificationInput` and `getOssification`. A project opts in by
+  calculates the input. `loadOssificationInput` reads the files.
+  `ProjectDiscovery` exposes it as `getOssification`. A project opts in by
   setting `ossification: discovery.getOssification(chainStart)` in its config,
-  so
-  ossification can be switched off per project without touching the discovery
-  data. All calls share one `now` value. The build stores the result in the
-  `ossification` column of the SQLite database. The clocks are timestamps. The
-  frontend calculates the ages at request time.
+  so ossification can be switched off per project without touching the
+  discovery data. The build stores the input in the `ossification` column of
+  the SQLite database. The input has no `now`, so it only changes when the
+  files it is read from change.
+- `packages/shared/src/tools/ossification/`: `measureOssification(input, now)`
+  calculates the result, together with the input and output types. The
+  frontend calls it with the request time.
 - `l2b ossification <project> [--input]`: Shows the result for a project. With
   `--input`, it shows the perimeter and the events. Build `packages/config`
   first.
