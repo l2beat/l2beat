@@ -5,6 +5,7 @@
   "initialAddresses": [
     "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449", // ZkMoneyPortal
     "eth:0xC2363b7155EE8391C5395B72C46a6d22BF49151c", // PlainWithdrawalExecutor
+    "eth:0xe883686d9ec4e0430f2233a6bf12b2d226a39e19", // OperationExecutor
     "eth:0x03b21bba8e75a1bd0354c5ecbec078cf59c85343", // SwapEscrowFactory
     "eth:0xc357e34d4c7520a83c9ec0a242ba52b4ecaba1fc" // SIPAFactory
   ],

@@ -2,17 +2,23 @@ import type { ContractValue } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
-import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import type {
+  BaseProject,
+  ProjectPrivacyToken,
+  ZkMoneyDepositConfig,
+} from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyAdversaries } from './adversaries'
 
@@ -141,6 +147,61 @@ const governanceValues = {
   teeSignerCount: String(teeSigners.length),
 }
 
+const factory = discovery.getContract('SIPAFactory')
+assert(factory.sinceBlock !== undefined, 'SIPAFactory needs sinceBlock')
+const depositMetrics: ZkMoneyDepositConfig = {
+  tokenAddress: underlyingAddress,
+  factoryAddress: ChainSpecificAddress.address(factory.address),
+  depositImplementation: ChainSpecificAddress.address(
+    discovery.getContract('DepositSIPA').address,
+  ),
+  registrationImplementation: ChainSpecificAddress.address(
+    discovery.getContract('RegistrationSIPA').address,
+  ),
+  fundingTokens: [
+    underlyingAddress,
+    EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
+    EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
+  ],
+  exchangeAddress: EthereumAddress(
+    '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7',
+  ),
+  historyFromBlock: factory.sinceBlock,
+  fundingCut: fpcFundingCut.toString(),
+  depositFee: depositFee.toString(),
+  registrationSweepFee: registrationSweepFee.toString(),
+  operationExecutor: ChainSpecificAddress.address(
+    discovery.getContract('OperationExecutor').address,
+  ),
+}
+// The verified SIPA sources pin the supported swap tokens and 3pool address.
+for (const name of ['DepositSIPA', 'RegistrationSIPA']) {
+  const contract = discovery.getContract(name)
+  const expected =
+    name === 'DepositSIPA'
+      ? '0x41c845473c02b812629402016668d06e82153233892bc7f22f03f64308dde979'
+      : '0xa7b397e987e86f54ad05cdab6542e576fa6dda31466b5da09bb56ad2f0590dbe'
+  assert(
+    contract.sourceHashes?.includes(expected),
+    `${name} source changed, recheck funding attribution`,
+  )
+}
+assert(
+  discovery
+    .getContract('OperationExecutor')
+    .sourceHashes?.includes(
+      '0x24befa5b26bdd108306046f44b47342a9326d9611f779b223a2ff299f324c3bd',
+    ),
+  'OperationExecutor source changed, recheck fee forwarding',
+)
+const minimumAmounts = (
+  PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[underlying.symbol] ?? []
+).filter((amount) => BigInt(amount) <= transactionAmountCap)
+assert(
+  minimumAmounts.length > 0,
+  'zk.money needs an applicable funding-address threshold',
+)
+
 const privacyTokens: ProjectPrivacyToken[] = [
   {
     token: {
@@ -158,12 +219,11 @@ const privacyTokens: ProjectPrivacyToken[] = [
         label: underlying.symbol,
         address: portal.address,
         sinceTimestamp: PORTAL_SINCE,
-        // Depositor and relayer counts remain untracked: SIPAs can be reused
-        // or have multiple funders, and finalization callers need not be relayers.
+        anonymitySet: { minimumAmounts },
         deposit: {
           event: DEPOSIT_EVENT,
           extractor: 'zkMoneyDeposit',
-          params: {},
+          params: depositMetrics,
         },
         withdrawal: {
           event: WITHDRAWAL_EVENT,
@@ -222,6 +282,31 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    anonymitySet: { type: 'fundingAddresses' },
+    relayerTracking: {
+      type: 'onchainEvents',
+      metric: 'paidFinalizers',
+      sources: [
+        {
+          address: portal.address,
+          sinceTimestamp: PORTAL_SINCE,
+          extractor: 'zkMoneyDepositPayout',
+          params: depositMetrics,
+        },
+        {
+          address: portal.address,
+          sinceTimestamp: PORTAL_SINCE,
+          extractor: 'zkMoneyWithdrawalPayout',
+          params: {
+            tokenAddress: underlyingAddress,
+            executorAddress: ChainSpecificAddress.address(
+              discovery.getContract('PlainWithdrawalExecutor').address,
+            ),
+            operationExecutor: depositMetrics.operationExecutor,
+          },
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),

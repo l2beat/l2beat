@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0a04d6b9b42853bebd2f73fc1afbe0be244103be
+Generated with discovered.json: 0x86ff4d71f651c62d1c8c8bdee886eb88ecbf0e7a
 
-# Diff at Wed, 30 Sep 2026 19:15:24 GMT:
+# Diff at Thu, 01 Oct 2026 07:49:42 GMT:
 
 - id: 1225e8f9
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1790759581
+- current timestamp: 1790840907
 
 ## Description
 
@@ -118,6 +118,12 @@ Initial full discovery of zk.money.
 +   Status: CREATED
     contract CertManager (eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875) [zkmoney/CertManager]
     +++ description: Verifies and caches AWS Nitro attestation certificates. The only trust anchor is the hardcoded AWS Nitro root certificate.
+```
+
+```diff
++   Status: CREATED
+    contract OperationExecutor (eth:0xe883686d9EC4E0430f2233A6BF12B2D226a39e19) [zkmoney/OperationExecutor]
+    +++ description: Permissionless helper that executes a call and forwards the resulting token payout to the caller. Used by finalizers to collect fees and subsidies.
 ```
 
 ```diff

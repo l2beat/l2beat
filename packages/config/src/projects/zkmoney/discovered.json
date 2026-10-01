@@ -1,7 +1,7 @@
 {
   "name": "zkmoney",
-  "timestamp": 1790759581,
-  "configHash": "0xb0e63923e823eb618982a76660a077c0bb65937fa60e2dd539f7ee08b25b242c",
+  "timestamp": 1790840907,
+  "configHash": "0xaafee78a54b9b2e6a9097c1fcc7bc7bfc1f17d6533225ad61a739d68f9082737",
   "entries": [
     {
       "name": "NitroValidator",
@@ -206,7 +206,7 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "1000000000000000000",
+          "balance": "300000000000000000",
           "bounty": 0
         }
       },
@@ -521,7 +521,7 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49994487527849187076802",
+        "_$cachedAvailable": "49995513486223862279561",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -529,7 +529,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1790759147,
+        "_$lastUpdatedTime": 1790840267,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -625,6 +625,25 @@
       },
       "implementationNames": {
         "eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875": "CertManager"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OperationExecutor",
+      "address": "eth:0xe883686d9EC4E0430f2233A6BF12B2D226a39e19",
+      "type": "Contract",
+      "template": "zkmoney/OperationExecutor",
+      "sourceHashes": [
+        "0x24befa5b26bdd108306046f44b47342a9326d9611f779b223a2ff299f324c3bd"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless helper that executes a call and forwards the resulting token payout to the caller. Used by finalizers to collect fees and subsidies.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298695,
+      "sinceBlock": 26051102,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe883686d9EC4E0430f2233A6BF12B2D226a39e19": "OperationExecutor"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1235,6 +1254,15 @@
       "function verifyCACert(bytes cert, bytes32 parentCertHash) returns (bytes32)",
       "function verifyClientCert(bytes cert, bytes32 parentCertHash) returns (tuple(bool ca, uint64 notAfter, int64 maxPathLen, bytes32 subjectHash, bytes pubKey))"
     ],
+    "eth:0xe883686d9EC4E0430f2233A6BF12B2D226a39e19": [
+      "error AddressEmptyCode(address target)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OperationExecutor__InsufficientPayout(uint256 payout, uint256 minPayout)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "function execute(address _target, bytes _data, address _payoutToken, uint256 _minPayout) returns (uint256 payout)"
+    ],
     "eth:0xf16Fd140036925e3a0630d0F743204a4c7d8ccaf": [
       "constructor(address _dai, address _usdc, address _usdt, address _weth, address _router, address _threePool, address _ethUsdFeed)",
       "error EthUsdMinOut__InvalidPrice(int256 answer)",
@@ -1321,6 +1349,7 @@
     "zkmoney/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/NameRegistry": "0xcc308907a5c5ed94f6121c00402d22a02660efdff665990c0e58c85ab97d4444",
     "zkmoney/NitroValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkmoney/OperationExecutor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/OxideAccount": "0x1f1e8032b3c9ffe720d9da775c6550d9b715e7f93127cf74763edc1844e5d46c",
     "zkmoney/OxideAccountFactory": "0x60424d9a287a8f7dd55505a3b0153a40208f7163a3214b14e6eb598888af3738",
     "zkmoney/PlainWithdrawalExecutor": "0x911e8e59c1909f8c418151892ea82bad4130d80f7209e9b398bb0585c2089357",
@@ -1332,8 +1361,8 @@
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
-  "usedBlockNumbers": { "ethereum": 26089322 },
-  "permissionsConfigHash": "0xf1681b610715b3e08a32ba554eea277baa97a5dcacf212a8c23a95699c1ce16d",
+  "usedBlockNumbers": { "ethereum": 26096074 },
+  "permissionsConfigHash": "0x9d63bc911344a8a2834cf06399afadbb434f9a78804bac69594959f84cd5b066",
   "permissions": {
     "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {
       "receivedPermissions": [
