@@ -1,15 +1,17 @@
-Generated with discovered.json: 0xdd2cf4e50f735676bd9df76faf6aed14a0e8be1a
+Generated with discovered.json: 0x4bb43a3e4f908b7a7f26772432ec7858abebc5db
 
-# Diff at Wed, 30 Sep 2026 13:53:29 GMT:
+# Diff at Thu, 01 Oct 2026 11:11:03 GMT:
 
-- id: b58d30a9
+- id: 8abd4ccf
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1790078329
-- current timestamp: 1790776285
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790078329
+- current timestamp: 1790850875
 
 ## Description
 
-New proposal, reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8c49f2c8bbf29 added reproduced program hashes.
+- Two new standard DAO proposals (25 and 26), both still open in their veto period:
+  - veto ends 2026-10-04: upgrades MainnetBridge, MainnetERC20Vault, MainnetERC721Vault, MainnetERC1155Vault, registers addresses in DefaultResolver and sends an L1->L2 message.
+  - veto ends 2026-10-10: upgrades MainnetInbox, changes trusted RISC Zero image IDs and SP1 programs, changes MrEnclave values in both AutomataDcapV3Attestation contracts and deletes SGX instances in both SecureSgxVerifiers.
 
 ## Watched changes
 
@@ -18,9 +20,11 @@ New proposal, reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8
     +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
       values.proposalCount:
 -        40
-+        41
++        42
       values.proposalIds.40:
 +        "609192021977025249345447570106396801273767657512"
+      values.proposalIds.41:
++        "609381197194961808191081799941267350559458852905"
     }
 ```
 

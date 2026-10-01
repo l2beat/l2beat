@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd28096c21188062bcb93ebf960294e1ac11a2606
+
+# Diff at Thu, 01 Oct 2026 11:11:08 GMT:
+
+- id: 0f767d21
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790080832
+- current timestamp: 1790851379
+
+## Description
+
+A Safe that is one of the signers of ZamaGovMultisigA (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) lowered its own threshold from 3/5 to 2/5.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x9c2337f1349f40843ba0ec25bcd58fd329d73baa
 
 # Diff at Thu, 17 Sep 2026 07:51:47 GMT:

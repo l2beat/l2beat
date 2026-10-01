@@ -2,7 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "interfold",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 130,
+  "maxAddresses": 160,
   "initialAddresses": [
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715", // E3 coordinator
     "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7", // ciphernode registry

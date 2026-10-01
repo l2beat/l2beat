@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xda844c79639fbb79868b8afc70101e181228aef6
+
+# Diff at Thu, 01 Oct 2026 12:51:18 GMT:
+
+- id: e78a9992
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1777962030
+- current timestamp: 1777962030
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: aggchainManager permission added to the AggchainECDSAMultisig template and the unused zkProver Verifier removed from initialAddresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777962030 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) [polygon-cdk/Verifier]
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0xa95b1c49021cf34117b893ba3b100165b981c1c5
 
 # Diff at Mon, 07 Sep 2026 08:37:55 GMT:

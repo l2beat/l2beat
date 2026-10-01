@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0d59c0f9c2d3d7e98a7987547da740a554b622bb
+
+# Diff at Thu, 01 Oct 2026 12:51:55 GMT:
+
+- id: 9b0ec090
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
 Generated with discovered.json: 0x99969f6c26a9f1d41754c4428bb0dd52ad77a875
 
 # Diff at Wed, 30 Sep 2026 07:45:43 GMT:

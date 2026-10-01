@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb155599ad82e7f44d33f8d8ce9b01649c95f92bd
+
+# Diff at Thu, 01 Oct 2026 12:51:36 GMT:
+
+- id: b4f8ce00
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    external contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
 Generated with discovered.json: 0x525f298551a0b12e7faced0904cb7b39a4669119
 
 # Diff at Mon, 07 Sep 2026 08:37:55 GMT:

@@ -1,73 +1,19 @@
 {
   "name": "silicon",
-  "timestamp": 1762264428,
-  "configHash": "0x4a0061e264c8d046f3433b8b1bdbde3ca701cb97c1fd37c37ff65a8538ebbf7c",
+  "timestamp": 1790850865,
+  "configHash": "0xf825cbeeab3186cc637fe1e3e9abbbd984963f73deb10b8e50c512fc9627323e",
   "entries": [
     {
-      "address": "eth:0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x113958b2E9FFDECC74EEDb206A12b5f1168164fb",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "AgglayerGateway",
+      "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "address": "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PolygonDataCommittee",
-      "address": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-      "type": "Contract",
-      "template": "polygon-cdk/PolygonDataCommittee",
-      "sourceHashes": [
-        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).",
-      "deployerAddress": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-      "sinceTimestamp": 1724259359,
-      "sinceBlock": 20578326,
-      "values": {
-        "$admin": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-        "$implementation": "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608",
-        "$pastUpgrades": [
-          [
-            "2024-08-21T16:55:59.000Z",
-            "0xee62b099c28e601917f60c0abff8441d48a2e7aee41711ff89a9ae0cc2fc647c",
-            ["eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "committeeHash": "0x6a72452343c27af9cfd36812714ec5c293ae843cac115b41f7b422f8e237c83f",
-        "getAmountOfMembers": 3,
-        "getProcotolName": "DataAvailabilityCommittee",
-        "members": [
-          {
-            "url": "http://silicon-mainnet-da-3.nodeinfra.com:8444",
-            "addr": "eth:0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
-          },
-          {
-            "url": "http://da1.silicon.network:8444",
-            "addr": "eth:0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
-          },
-          {
-            "url": "http://da2.silicon.network:8444",
-            "addr": "eth:0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
-          }
-        ],
-        "owner": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-        "requiredAmountOfSignatures": 2
-      },
-      "implementationNames": {
-        "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": "TransparentUpgradeableProxy",
-        "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": "PolygonDataCommittee"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "AgglayerBridge",
@@ -77,43 +23,25 @@
       "targetProject": "shared-polygon-cdk"
     },
     {
-      "name": "ProxyAdmin",
-      "address": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
-      ],
-      "proxyType": "immutable",
-      "deployerAddress": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-      "sinceTimestamp": 1724259347,
-      "sinceBlock": 20578325,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
-      },
-      "implementationNames": {
-        "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "Validium",
+      "name": "AggchainECDSAMultisig",
       "address": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonZkEVM",
+      "template": "polygon-cdk/AggchainECDSAMultisig",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
+        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.",
+      "description": "System contract defining the silicon-zk Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "deployerAddress": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "sinceTimestamp": 1724183531,
       "sinceBlock": 20572039,
       "values": {
+        "_legacypendingVKeyManager": "eth:0x0000000000000000000000000000000000000000",
+        "_legacyvKeyManager": "eth:0x0000000000000000000000000000000000000000",
         "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+        "$implementation": "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21",
         "$pastUpgrades": [
           [
             "2024-08-20T19:52:11.000Z",
@@ -124,51 +52,77 @@
             "2025-04-29T13:09:35.000Z",
             "0xdadc987a1a0f2da5a24bcf9c6958c3e4bbe015686cfd2f954ba4f3ee4884dc07",
             ["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
+          ],
+          [
+            "2026-09-23T08:30:47.000Z",
+            "0xa5a1c5e3c627e972e6c3656017e900007567f9e8b7ecbd9cebd15d317c3c173d",
+            ["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "admin": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "AGGCHAIN_ECDSA_MULTISIG_VERSION": "v1.0.0",
+        "AGGCHAIN_TYPE": "0x0000",
+        "aggchainManager": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "aggchainMetadataManager": "eth:0x0000000000000000000000000000000000000000",
+        "aggchainMultisigHash": "0xdeb4738af69bba13c53cafd89af8aa09f7068cbb6ad1a36f6105a7a6378a03d7",
+        "aggchainSigners": ["eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D"],
+        "aggLayerGateway": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+        "CONSENSUS_TYPE": 1,
         "forceBatchAddress": "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
         "forceBatchTimeout": 432000,
         "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "getAggchainMultisigHash": "0xdeb4738af69bba13c53cafd89af8aa09f7068cbb6ad1a36f6105a7a6378a03d7",
+        "getAggchainSignerInfos": [
+          {
+            "addr": "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
+            "url": "https://rpc.silicon.network"
+          }
+        ],
+        "getAggchainSigners": [
+          "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D"
+        ],
+        "getAggchainSignersCount": 1,
+        "getThreshold": 1,
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-        "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
-        "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA": "0x80b8",
-        "INITIALIZE_TX_CONSTANT_BYTES": 32,
-        "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
-        "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
-        "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x856cb899550502d5d2e4050648c195c5f863991aad54abb876929a2508958da4",
+        "lastAccInputHash": "0x7ada95a9d7f3dff33b436c3ae18eff733ded525c3e06a8736a932f3f1501f7fa",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
+        "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "silicon-zk",
         "pendingAdmin": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "pendingAggchainManager": "eth:0x0000000000000000000000000000000000000000",
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
-        "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
-        "SIGNATURE_INITIALIZE_TX_V": 27,
-        "TIMESTAMP_RANGE": 36,
+        "threshold": 1,
         "trustedSequencer": "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
-        "trustedSequencerURL": "https://rpc.silicon.network"
+        "trustedSequencerURL": "https://rpc.silicon.network",
+        "useDefaultSigners": false,
+        "useDefaultVkeys": false,
+        "version": "v1.0.0"
       },
       "fieldMeta": {
+        "CONSENSUS_TYPE": {
+          "severity": "HIGH",
+          "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
+        },
         "forceBatchAddress": {
           "severity": "HIGH",
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
+        },
+        "aggchainMultisigHash": { "severity": "HIGH" },
+        "useDefaultSigners": { "severity": "HIGH" },
+        "useDefaultVkeys": { "severity": "HIGH" },
+        "AGGCHAIN_TYPE": {
+          "severity": "HIGH",
+          "description": "0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"
         }
       },
       "implementationNames": {
         "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "PolygonTransparentProxy",
-        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
+        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21": "AggchainECDSAMultisig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -192,67 +146,23 @@
       "targetProject": "shared-polygon-cdk"
     },
     {
-      "address": "eth:0x88eb99475d70cCdB891171344c7Ee90688Fa134c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Verifier",
-      "address": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-      "type": "Contract",
-      "template": "polygon-cdk/Verifier",
-      "sourceHashes": [
-        "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
-      "deployerAddress": "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6",
-      "sinceTimestamp": 1729157663,
-      "sinceBlock": 20984421,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
       "address": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
-      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
+    "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21": [
+      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager, address _aggLayerGateway)",
+      "error AdminCannotBeZeroAddress()",
+      "error AggchainManagerAlreadyInitialized()",
+      "error AggchainManagerCannotBeZero()",
+      "error AggchainSignersHashNotInitialized()",
+      "error AggchainSignersTooHigh()",
+      "error AggchainVKeyNotFound()",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
+      "error ConflictingDefaultSignersConfiguration()",
       "error ExceedMaxVerifyBatches()",
       "error FinalAccInputHashDoesNotMatch()",
       "error FinalNumBatchBelowLastVerifiedBatch()",
@@ -265,21 +175,31 @@
       "error ForceBatchesNotAllowedOnEmergencyState()",
       "error ForceBatchesOverflow()",
       "error ForcedDataDoesNotMatch()",
+      "error FunctionNotSupported()",
       "error GasTokenNetworkMustBeZeroOnEther()",
       "error GlobalExitRootNotExist()",
       "error HaltTimeoutNotExpired()",
       "error HaltTimeoutNotExpiredAfterEmergencyState()",
       "error HugeTokenMetadataNotSupported()",
+      "error IndicesNotInDescendingOrder()",
       "error InitNumBatchAboveLastVerifiedBatch()",
       "error InitNumBatchDoesNotMatchPendingState()",
       "error InitSequencedBatchDoesNotMatch()",
+      "error InvalidAggchainDataLength()",
+      "error InvalidAggchainType()",
+      "error InvalidInitAggchainVKey()",
+      "error InvalidInitializeFunction()",
       "error InvalidInitializeTransaction()",
+      "error InvalidInitializer()",
       "error InvalidProof()",
       "error InvalidRangeBatchTimeTarget()",
       "error InvalidRangeForceBatchTimeout()",
       "error InvalidRangeMultiplierBatchFee()",
+      "error InvalidThreshold()",
+      "error InvalidZeroAddress()",
       "error L1InfoTreeLeafCountInvalid()",
       "error MaxTimestampSequenceInvalid()",
+      "error MetadataArrayLengthMismatch()",
       "error NewAccInputHashDoesNotExist()",
       "error NewPendingStateTimeoutMustBeLower()",
       "error NewStateRootNotInsidePrime()",
@@ -289,124 +209,138 @@
       "error OldAccInputHashDoesNotExist()",
       "error OldStateRootDoesNotExist()",
       "error OnlyAdmin()",
+      "error OnlyAggchainManager()",
+      "error OnlyAggchainMetadataManager()",
       "error OnlyPendingAdmin()",
+      "error OnlyPendingAggchainManager()",
       "error OnlyRollupManager()",
       "error OnlyTrustedAggregator()",
       "error OnlyTrustedSequencer()",
+      "error OwnedAggchainVKeyAlreadyAdded()",
+      "error OwnedAggchainVKeyNotFound()",
       "error PendingStateDoesNotExist()",
       "error PendingStateInvalid()",
       "error PendingStateNotConsolidable()",
       "error PendingStateTimeoutExceedHaltAggregationTimeout()",
-      "error SequenceWithDataAvailabilityNotAllowed()",
       "error SequenceZeroBatches()",
       "error SequencedTimestampBelowForcedTimestamp()",
       "error SequencedTimestampInvalid()",
+      "error SignerAlreadyExists()",
+      "error SignerCannotBeZero()",
+      "error SignerDoesNotExist()",
+      "error SignerURLCannotBeEmpty()",
       "error StoredRootMustBeDifferentThanNewRoot()",
-      "error SwitchToSameValue()",
       "error TransactionsLengthAboveMax()",
       "error TrustedAggregatorTimeoutExceedHaltAggregationTimeout()",
       "error TrustedAggregatorTimeoutNotExpired()",
+      "error UseDefaultSignersAlreadyDisabled()",
+      "error UseDefaultSignersAlreadyEnabled()",
+      "error UseDefaultVkeysAlreadyDisabled()",
+      "error UseDefaultVkeysAlreadyEnabled()",
+      "error ZeroValueAggchainVKey()",
       "event AcceptAdminRole(address newAdmin)",
-      "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
-      "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
+      "event AcceptAggchainManagerRole(address oldAggchainManager, address newAggchainManager)",
+      "event AddAggchainVKey(bytes4 selector, bytes32 newAggchainVKey)",
+      "event AggchainMetadataSet(string indexed key, string value)",
+      "event DisableUseDefaultSignersFlag()",
+      "event DisableUseDefaultVkeysFlag()",
+      "event EnableUseDefaultSignersFlag()",
+      "event EnableUseDefaultVkeysFlag()",
       "event Initialized(uint8 version)",
-      "event RollbackBatches(uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
-      "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
-      "event SequenceForceBatches(uint64 indexed numBatch)",
-      "event SetDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
-      "event SetForceBatchAddress(address newForceBatchAddress)",
-      "event SetForceBatchTimeout(uint64 newforceBatchTimeout)",
+      "event OnVerifyPessimisticECDSAMultisig()",
+      "event SetAggchainMetadataManager(address oldAggchainMetadataManager, address newAggchainMetadataManager)",
       "event SetTrustedSequencer(address newTrustedSequencer)",
       "event SetTrustedSequencerURL(string newTrustedSequencerURL)",
-      "event SwitchSequenceWithDataAvailability()",
+      "event SignersAndThresholdUpdated(address[] aggchainSigners, uint256 newThreshold, bytes32 newAggchainMultisigHash)",
       "event TransferAdminRole(address newPendingAdmin)",
-      "event VerifyBatches(uint64 indexed numBatch, bytes32 stateRoot, address indexed aggregator)",
-      "function GLOBAL_EXIT_ROOT_MANAGER_L2() view returns (address)",
-      "function INITIALIZE_TX_BRIDGE_LIST_LEN_LEN() view returns (uint8)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS() view returns (bytes)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS() view returns (bytes)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA() view returns (bytes)",
-      "function INITIALIZE_TX_CONSTANT_BYTES() view returns (uint16)",
-      "function INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA() view returns (uint16)",
-      "function INITIALIZE_TX_DATA_LEN_EMPTY_METADATA() view returns (uint8)",
-      "function INITIALIZE_TX_EFFECTIVE_PERCENTAGE() view returns (bytes1)",
-      "function SIGNATURE_INITIALIZE_TX_R() view returns (bytes32)",
-      "function SIGNATURE_INITIALIZE_TX_S() view returns (bytes32)",
-      "function SIGNATURE_INITIALIZE_TX_V() view returns (uint8)",
-      "function TIMESTAMP_RANGE() view returns (uint256)",
+      "event TransferAggchainManagerRole(address currentAggchainManager, address newPendingAggchainManager)",
+      "event UpdateAggchainVKey(bytes4 selector, bytes32 previousAggchainVKey, bytes32 newAggchainVKey)",
+      "function AGGCHAIN_ECDSA_MULTISIG_VERSION() view returns (string)",
+      "function AGGCHAIN_TYPE() view returns (bytes2)",
+      "function CONSENSUS_TYPE() view returns (uint32)",
+      "function MAX_AGGCHAIN_SIGNERS() view returns (uint256)",
+      "function _legacypendingVKeyManager() view returns (address)",
+      "function _legacyvKeyManager() view returns (address)",
       "function acceptAdminRole()",
+      "function acceptAggchainManagerRole()",
+      "function addOwnedAggchainVKey(bytes4, bytes32) view",
       "function admin() view returns (address)",
+      "function aggLayerGateway() view returns (address)",
+      "function aggchainManager() view returns (address)",
+      "function aggchainMetadata(string) view returns (string)",
+      "function aggchainMetadataManager() view returns (address)",
+      "function aggchainMultisigHash() view returns (bytes32)",
+      "function aggchainSigners(uint256) view returns (address)",
+      "function batchSetAggchainMetadata(string[] keys, string[] values)",
       "function bridgeAddress() view returns (address)",
-      "function calculatePolPerForceBatch() view returns (uint256)",
-      "function dataAvailabilityProtocol() view returns (address)",
-      "function forceBatch(bytes transactions, uint256 polAmount)",
+      "function disableUseDefaultSignersFlag()",
+      "function disableUseDefaultVkeysFlag() view",
+      "function enableUseDefaultSignersFlag()",
+      "function enableUseDefaultVkeysFlag() view",
       "function forceBatchAddress() view returns (address)",
       "function forceBatchTimeout() view returns (uint64)",
       "function forcedBatches(uint64) view returns (bytes32)",
       "function gasTokenAddress() view returns (address)",
       "function gasTokenNetwork() view returns (uint32)",
-      "function generateInitializeTransaction(uint32 networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, bytes _gasTokenMetadata) view returns (bytes)",
+      "function getAggchainHash(bytes aggchainData) view returns (bytes32)",
+      "function getAggchainMultisigHash() view returns (bytes32)",
+      "function getAggchainSignerInfos() view returns (tuple(address addr, string url)[])",
+      "function getAggchainSigners() view returns (address[])",
+      "function getAggchainSignersCount() view returns (uint256)",
+      "function getAggchainTypeFromSelector(bytes4 aggchainVKeySelector) pure returns (bytes2)",
+      "function getAggchainVKey(bytes4) pure returns (bytes32 aggchainVKey)",
+      "function getAggchainVKeySelector(bytes2 aggchainVKeyVersion, bytes2 aggchainType) pure returns (bytes4)",
+      "function getAggchainVKeyVersionFromSelector(bytes4 aggchainVKeySelector) pure returns (bytes2)",
+      "function getThreshold() view returns (uint256)",
+      "function getVKeyAndAggchainParams(bytes aggchainData) pure returns (bytes32, bytes32)",
       "function globalExitRootManager() view returns (address)",
-      "function initialize(address _admin, address sequencer, uint32 networkID, address _gasTokenAddress, string sequencerURL, string _networkName)",
-      "function isSequenceWithDataAvailabilityAllowed() view returns (bool)",
+      "function initAggchainManager(address newAggchainManager)",
+      "function initialize(address _admin, address _trustedSequencer, address _gasTokenAddress, string _trustedSequencerURL, string _networkName, bool _useDefaultSigners, tuple(address addr, string url)[] _signersToAdd, uint256 _newThreshold)",
+      "function initialize(address, address, uint32, address, string, string) pure",
+      "function isSigner(address _signer) view returns (bool)",
       "function lastAccInputHash() view returns (bytes32)",
       "function lastForceBatch() view returns (uint64)",
       "function lastForceBatchSequenced() view returns (uint64)",
+      "function migrateFromLegacyConsensus()",
       "function networkName() view returns (string)",
-      "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
+      "function onVerifyPessimistic(bytes aggchainData)",
+      "function ownedAggchainVKeys(bytes4 aggchainVKeySelector) view returns (bytes32 ownedAggchainVKey)",
       "function pendingAdmin() view returns (address)",
+      "function pendingAggchainManager() view returns (address)",
       "function pol() view returns (address)",
-      "function rollbackBatches(uint64 targetBatch, bytes32 accInputHashToRollback)",
       "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)",
-      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase, bytes dataAvailabilityMessage)",
-      "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
-      "function setDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
-      "function setForceBatchAddress(address newForceBatchAddress)",
-      "function setForceBatchTimeout(uint64 newforceBatchTimeout)",
+      "function setAggchainMetadata(string key, string value)",
+      "function setAggchainMetadataManager(address newAggchainMetadataManager)",
       "function setTrustedSequencer(address newTrustedSequencer)",
       "function setTrustedSequencerURL(string newTrustedSequencerURL)",
-      "function switchSequenceWithDataAvailability(bool newIsSequenceWithDataAvailabilityAllowed)",
+      "function signerToURLs(address) view returns (string)",
+      "function threshold() view returns (uint256)",
       "function transferAdminRole(address newPendingAdmin)",
+      "function transferAggchainManagerRole(address newAggchainManager)",
       "function trustedSequencer() view returns (address)",
-      "function trustedSequencerURL() view returns (string)"
+      "function trustedSequencerURL() view returns (string)",
+      "function updateOwnedAggchainVKey(bytes4, bytes32) view",
+      "function updateSignersAndThreshold(tuple(address addr, uint256 index)[] _signersToRemove, tuple(address addr, string url)[] _signersToAdd, uint256 _newThreshold)",
+      "function useDefaultSigners() view returns (bool)",
+      "function useDefaultVkeys() view returns (bool)",
+      "function version() pure returns (string)"
     ],
-    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
-    ],
-    "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
-      "constructor()",
-      "error CommitteeAddressDoesNotExist()",
-      "error EmptyURLNotAllowed()",
-      "error TooManyRequiredSignatures()",
-      "error UnexpectedAddrsAndSignaturesSize()",
-      "error UnexpectedAddrsBytesLength()",
-      "error UnexpectedCommitteeHash()",
-      "error WrongAddrOrder()",
-      "event CommitteeUpdated(bytes32 committeeHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function committeeHash() view returns (bytes32)",
-      "function getAmountOfMembers() view returns (uint256)",
-      "function getProcotolName() pure returns (string)",
-      "function initialize()",
-      "function members(uint256) view returns (string url, address addr)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requiredAmountOfSignatures() view returns (uint256)",
-      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
-      "function transferOwnership(address newOwner)",
-      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
+    "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "polygon-cdk/PolygonDataCommittee": "0x09dff653651e4e4f737268c33f60834e82e0b7640f4e80059ddbe9544dd978bb",
-    "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
-    "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "polygon-cdk/AggchainECDSAMultisig": "0x167d25843b059c8a66e8ca209f4229f723b0321f20d52e190e4f658aed063690"
   },
-  "usedBlockNumbers": { "ethereum": 23726379 },
-  "permissionsConfigHash": "0x8371aa6d47a0cebc095f921559fb5ef30223542966a7c59e1737b1ac56ff0aa0",
+  "usedBlockNumbers": { "ethereum": 26096901 },
+  "permissionsConfigHash": "0xd8561893ee7c6138b075ea6d0a23ac719168a08e0d029e276461b5603be998c6",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -622,22 +556,13 @@
         }
       ]
     },
-    "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "role": "admin"
-        }
-      ]
-    },
     "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".trustedSequencer"
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
         }
       ]
     },
@@ -706,33 +631,17 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
+          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "description": "replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.",
+          "role": ".aggchainManager"
         },
         {
           "permission": "interact",
           "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "description": "set the trusted sequencer address.",
           "role": ".admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }
-          ]
         }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-          "role": ".owner"
-        }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     }
   }
 }

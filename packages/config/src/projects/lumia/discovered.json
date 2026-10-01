@@ -337,10 +337,10 @@
     ]
   },
   "usedTemplates": {
-    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
+    "polygon-cdk/AggchainECDSAMultisig": "0x167d25843b059c8a66e8ca209f4229f723b0321f20d52e190e4f658aed063690"
   },
   "usedBlockNumbers": { "ethereum": 23695838 },
-  "permissionsConfigHash": "0x754372e423dbdf39f11d4817c9373af2e4255189f8ce325c09e94277d1220644",
+  "permissionsConfigHash": "0x160676d82b1cdbea44752af38e140a29f4585df45913e93b91a23a196e6216c8",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -538,6 +538,12 @@
     },
     "eth:0x258862dec9a77db57b398c441390783293E2a7A1": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.",
+          "role": ".aggchainManager"
+        },
         {
           "permission": "interact",
           "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",

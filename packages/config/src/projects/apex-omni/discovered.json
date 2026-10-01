@@ -1,6 +1,6 @@
 {
   "name": "apex-omni",
-  "timestamp": 1784715866,
+  "timestamp": 1790850905,
   "configHash": "0x1a087ee27a7ac688e1811238e3afce5a54ce5e0f39f0c7cc174b1a64f0806320",
   "entries": [
     {
@@ -103,10 +103,10 @@
         "networkGovernor": "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
         "periphery": "arb1:0x3203E813930bD710043c1d899fE38dD359307352",
         "syncServices": {
-          "3": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
-          "4": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
-          "11": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
-          "12": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
+          "3": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "4": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "11": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "12": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
         },
         "validators": ["arb1:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
         "verifier": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F"
@@ -215,7 +215,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -235,29 +235,70 @@
     },
     {
       "name": "LayerZeroBridge",
-      "address": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+      "address": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "template": "apex-omni/LZSyncHashBridge",
-      "sourceHashes": [
-        "0xf50b0277e3b7bfdb5540824fb20e147e3ca8fad9cc9c7557aaf3a26a3fcf9292"
-      ],
+      "unverified": true,
+      "template": "apex-omni/LZSyncHashBridgeV2",
       "proxyType": "immutable",
-      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
-      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "sinceTimestamp": 1717731751,
-      "sinceBlock": 219222978,
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "deployerAddress": "arb1:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
+      "sinceTimestamp": 1785955854,
+      "sinceBlock": 491451298,
       "values": {
         "$immutable": true,
-        "ALL_CHAINS": 268,
+        "ALL_CHAINS": 3340,
         "CHAIN_ID": 9,
         "DEFAULT_FEE_ADDRESS": "arb1:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
         "endpoint": "arb1:0x3c2269811836af69497E5F486A85D7316753cf62",
+        "governor": "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
         "MASTER_CHAIN_ID": 9,
-        "MAX_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
         "MIN_CHAIN_ID": 1,
+        "minDstGas": {
+          "101": 250000,
+          "102": 250000,
+          "181": 300000,
+          "184": 250000
+        },
+        "trustedRemotes": {
+          "3": {
+            "lzChainId": 102,
+            "destination": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          },
+          "4": {
+            "lzChainId": 101,
+            "destination": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          },
+          "11": {
+            "lzChainId": 184,
+            "destination": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          },
+          "12": {
+            "lzChainId": 181,
+            "destination": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          }
+        },
         "zklink": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a"
       },
       "fieldMeta": {
+        "governor": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."
+        },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "trustedRemotes": {
+          "severity": "HIGH",
+          "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
+        },
+        "minDstGas": {
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+        },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
         },
@@ -265,21 +306,14 @@
         "DEFAULT_FEE_ADDRESS": {
           "description": "Default fee account in the zkLink state."
         },
-        "endpoint": {
-          "description": "LayerZero endpoint used to send and receive cross-chain messages."
-        },
         "MASTER_CHAIN_ID": {
           "description": "zkLink chain ID of the master chain."
         },
         "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
-        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
-        "zklink": {
-          "severity": "HIGH",
-          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
-        }
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D": "LayerZeroBridge"
+        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
       }
     },
     {
@@ -395,7 +429,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -412,55 +446,6 @@
       "address": "base:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LayerZeroBridge",
-      "address": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3",
-      "type": "Contract",
-      "template": "apex-omni/LZSyncHashBridge",
-      "sourceHashes": [
-        "0xb22a01a05a19c0fe5299fd65fe53ea410c5ead01e971b0add159bbe0f51146c8"
-      ],
-      "proxyType": "immutable",
-      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
-      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "sinceTimestamp": 1720251747,
-      "sinceBlock": 16731200,
-      "values": {
-        "$immutable": true,
-        "ALL_CHAINS": 3340,
-        "CHAIN_ID": 11,
-        "DEFAULT_FEE_ADDRESS": "base:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
-        "endpoint": "base:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
-        "MASTER_CHAIN_ID": 9,
-        "MAX_CHAIN_ID": 12,
-        "MIN_CHAIN_ID": 1,
-        "zklink": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7"
-      },
-      "fieldMeta": {
-        "ALL_CHAINS": {
-          "description": "Bitmask of zkLink chain IDs participating in the network."
-        },
-        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
-        "DEFAULT_FEE_ADDRESS": {
-          "description": "Default fee account in the zkLink state."
-        },
-        "endpoint": {
-          "description": "LayerZero endpoint used to send and receive cross-chain messages."
-        },
-        "MASTER_CHAIN_ID": {
-          "description": "zkLink chain ID of the master chain."
-        },
-        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
-        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
-        "zklink": {
-          "severity": "HIGH",
-          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
-        }
-      },
-      "implementationNames": {
-        "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3": "LayerZeroBridge"
-      }
     },
     {
       "name": "ZkLink Base",
@@ -497,7 +482,7 @@
         "networkGovernor": "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
         "periphery": "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12",
         "syncServices": {
-          "9": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3"
+          "9": "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
         },
         "validators": ["base:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
         "verifier": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563"
@@ -554,6 +539,72 @@
         "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7": "Proxy",
         "base:0xD923B6479006623303f180fA149A3b5C3bf5ff66": "ZkLink",
         "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+      "type": "Contract",
+      "unverified": true,
+      "template": "apex-omni/LZSyncHashBridgeV2",
+      "proxyType": "immutable",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "deployerAddress": "base:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
+      "sinceTimestamp": 1785955881,
+      "sinceBlock": 49583267,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 11,
+        "DEFAULT_FEE_ADDRESS": "base:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "base:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+        "governor": "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "minDstGas": { "110": 300000 },
+        "trustedRemotes": {
+          "9": {
+            "lzChainId": 110,
+            "destination": "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          }
+        },
+        "zklink": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7"
+      },
+      "fieldMeta": {
+        "governor": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."
+        },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "trustedRemotes": {
+          "severity": "HIGH",
+          "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
+        },
+        "minDstGas": {
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+        },
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
+      },
+      "implementationNames": {
+        "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
       }
     },
     {
@@ -679,7 +730,7 @@
         "networkGovernor": "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
         "periphery": "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716",
         "syncServices": {
-          "9": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"
+          "9": "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
         },
         "validators": ["bnb:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
         "verifier": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB"
@@ -768,61 +819,12 @@
         "getChainId": 56,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": "GnosisSafeProxy",
         "bnb:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
-      }
-    },
-    {
-      "name": "LayerZeroBridge",
-      "address": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e",
-      "type": "Contract",
-      "template": "apex-omni/LZSyncHashBridge",
-      "sourceHashes": [
-        "0xde341a7da4f09deb4f8c8035945780f47e32a5344614a4a55efd82194b3bbd38"
-      ],
-      "proxyType": "immutable",
-      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
-      "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "sinceTimestamp": 1717732048,
-      "sinceBlock": 39393774,
-      "values": {
-        "$immutable": true,
-        "ALL_CHAINS": 268,
-        "CHAIN_ID": 3,
-        "DEFAULT_FEE_ADDRESS": "bnb:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
-        "endpoint": "bnb:0x3c2269811836af69497E5F486A85D7316753cf62",
-        "MASTER_CHAIN_ID": 9,
-        "MAX_CHAIN_ID": 9,
-        "MIN_CHAIN_ID": 1,
-        "zklink": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
-      },
-      "fieldMeta": {
-        "ALL_CHAINS": {
-          "description": "Bitmask of zkLink chain IDs participating in the network."
-        },
-        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
-        "DEFAULT_FEE_ADDRESS": {
-          "description": "Default fee account in the zkLink state."
-        },
-        "endpoint": {
-          "description": "LayerZero endpoint used to send and receive cross-chain messages."
-        },
-        "MASTER_CHAIN_ID": {
-          "description": "zkLink chain ID of the master chain."
-        },
-        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
-        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
-        "zklink": {
-          "severity": "HIGH",
-          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
-        }
-      },
-      "implementationNames": {
-        "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e": "LayerZeroBridge"
       }
     },
     {
@@ -834,6 +836,72 @@
       "address": "bnb:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+      "type": "Contract",
+      "unverified": true,
+      "template": "apex-omni/LZSyncHashBridgeV2",
+      "proxyType": "immutable",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "deployerAddress": "bnb:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
+      "sinceTimestamp": 1785955792,
+      "sinceBlock": 114212168,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 3,
+        "DEFAULT_FEE_ADDRESS": "bnb:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "bnb:0x3c2269811836af69497E5F486A85D7316753cf62",
+        "governor": "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "minDstGas": { "110": 300000 },
+        "trustedRemotes": {
+          "9": {
+            "lzChainId": 110,
+            "destination": "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          }
+        },
+        "zklink": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
+      },
+      "fieldMeta": {
+        "governor": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."
+        },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "trustedRemotes": {
+          "severity": "HIGH",
+          "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
+        },
+        "minDstGas": {
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+        },
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
+      },
+      "implementationNames": {
+        "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+      }
     },
     {
       "address": "eth:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
@@ -880,7 +948,7 @@
         "networkGovernor": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
         "periphery": "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F",
         "syncServices": {
-          "9": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E"
+          "9": "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
         },
         "validators": ["eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
         "verifier": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba"
@@ -979,55 +1047,6 @@
       }
     },
     {
-      "name": "LayerZeroBridge",
-      "address": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E",
-      "type": "Contract",
-      "template": "apex-omni/LZSyncHashBridge",
-      "sourceHashes": [
-        "0xd60f50351716d5714b021ecd66edf6d942a9dada25a1f4bbc0e0ef1159ddb93a"
-      ],
-      "proxyType": "immutable",
-      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
-      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "sinceTimestamp": 1717731515,
-      "sinceBlock": 20037313,
-      "values": {
-        "$immutable": true,
-        "ALL_CHAINS": 268,
-        "CHAIN_ID": 4,
-        "DEFAULT_FEE_ADDRESS": "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
-        "endpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "MASTER_CHAIN_ID": 9,
-        "MAX_CHAIN_ID": 9,
-        "MIN_CHAIN_ID": 1,
-        "zklink": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82"
-      },
-      "fieldMeta": {
-        "ALL_CHAINS": {
-          "description": "Bitmask of zkLink chain IDs participating in the network."
-        },
-        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
-        "DEFAULT_FEE_ADDRESS": {
-          "description": "Default fee account in the zkLink state."
-        },
-        "endpoint": {
-          "description": "LayerZero endpoint used to send and receive cross-chain messages."
-        },
-        "MASTER_CHAIN_ID": {
-          "description": "zkLink chain ID of the master chain."
-        },
-        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
-        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
-        "zklink": {
-          "severity": "HIGH",
-          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
-        }
-      },
-      "implementationNames": {
-        "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E": "LayerZeroBridge"
-      }
-    },
-    {
       "address": "eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1114,6 +1133,72 @@
       }
     },
     {
+      "name": "LayerZeroBridge",
+      "address": "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+      "type": "Contract",
+      "unverified": true,
+      "template": "apex-omni/LZSyncHashBridgeV2",
+      "proxyType": "immutable",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "deployerAddress": "eth:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
+      "sinceTimestamp": 1785955823,
+      "sinceBlock": 25690628,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 4,
+        "DEFAULT_FEE_ADDRESS": "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "governor": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "minDstGas": { "110": 300000 },
+        "trustedRemotes": {
+          "9": {
+            "lzChainId": 110,
+            "destination": "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          }
+        },
+        "zklink": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82"
+      },
+      "fieldMeta": {
+        "governor": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."
+        },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "trustedRemotes": {
+          "severity": "HIGH",
+          "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
+        },
+        "minDstGas": {
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+        },
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
+      },
+      "implementationNames": {
+        "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+      }
+    },
+    {
       "name": "GnosisSafe",
       "address": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
       "type": "Contract",
@@ -1143,7 +1228,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1184,55 +1269,6 @@
       "address": "mantle:0x0000000000000000000000000000000000000000",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LayerZeroBridge",
-      "address": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e",
-      "type": "Contract",
-      "template": "apex-omni/LZSyncHashBridge",
-      "sourceHashes": [
-        "0x6b130c9503f9b52ae1b02e6167f3b93ebb26654da97d6303a05a2722e1cc1399"
-      ],
-      "proxyType": "immutable",
-      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
-      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "sinceTimestamp": 1720251334,
-      "sinceBlock": 66060511,
-      "values": {
-        "$immutable": true,
-        "ALL_CHAINS": 3340,
-        "CHAIN_ID": 12,
-        "DEFAULT_FEE_ADDRESS": "mantle:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
-        "endpoint": "mantle:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
-        "MASTER_CHAIN_ID": 9,
-        "MAX_CHAIN_ID": 12,
-        "MIN_CHAIN_ID": 1,
-        "zklink": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
-      },
-      "fieldMeta": {
-        "ALL_CHAINS": {
-          "description": "Bitmask of zkLink chain IDs participating in the network."
-        },
-        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
-        "DEFAULT_FEE_ADDRESS": {
-          "description": "Default fee account in the zkLink state."
-        },
-        "endpoint": {
-          "description": "LayerZero endpoint used to send and receive cross-chain messages."
-        },
-        "MASTER_CHAIN_ID": {
-          "description": "zkLink chain ID of the master chain."
-        },
-        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
-        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
-        "zklink": {
-          "severity": "HIGH",
-          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
-        }
-      },
-      "implementationNames": {
-        "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e": "LayerZeroBridge"
-      }
     },
     {
       "name": "EmptyVerifier",
@@ -1337,7 +1373,7 @@
         "networkGovernor": "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
         "periphery": "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2",
         "syncServices": {
-          "9": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"
+          "9": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
         },
         "validators": ["mantle:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
         "verifier": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0"
@@ -1441,7 +1477,7 @@
         "getChainId": 5000,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1458,6 +1494,72 @@
       "address": "mantle:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+      "type": "Contract",
+      "unverified": true,
+      "template": "apex-omni/LZSyncHashBridgeV2",
+      "proxyType": "immutable",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "deployerAddress": "mantle:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
+      "sinceTimestamp": 1785955966,
+      "sinceBlock": 98912827,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 12,
+        "DEFAULT_FEE_ADDRESS": "mantle:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "mantle:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+        "governor": "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "minDstGas": { "110": 300000 },
+        "trustedRemotes": {
+          "9": {
+            "lzChainId": 110,
+            "destination": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+          }
+        },
+        "zklink": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+      },
+      "fieldMeta": {
+        "governor": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."
+        },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "trustedRemotes": {
+          "severity": "HIGH",
+          "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
+        },
+        "minDstGas": {
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+        },
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
+      },
+      "implementationNames": {
+        "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+      }
     }
   ],
   "abis": {
@@ -1704,35 +1806,6 @@
     "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
       "constructor(address _singleton)"
     ],
-    "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D": [
-      "constructor(address _zklink, address _endpoint)",
-      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
-      "function ALL_CHAINS() view returns (uint256)",
-      "function CHAIN_ID() view returns (uint8)",
-      "function DEFAULT_FEE_ADDRESS() view returns (address)",
-      "function MASTER_CHAIN_ID() view returns (uint8)",
-      "function MAX_CHAIN_ID() view returns (uint8)",
-      "function MIN_CHAIN_ID() view returns (uint8)",
-      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
-      "function destinations(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
-      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
-      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
-      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
-      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
-      "function sendSyncHash(bytes32 syncHash) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
-      "function setReceiveVersion(uint16 _version)",
-      "function setSendVersion(uint16 _version)",
-      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
-      "function zklink() view returns (address)"
-    ],
     "base:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1962,35 +2035,6 @@
       "function totalOpenPriorityRequests() view returns (uint64)",
       "function validators(address) view returns (bool)",
       "function verifier() view returns (address)"
-    ],
-    "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3": [
-      "constructor(address _zklink, address _endpoint)",
-      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
-      "function ALL_CHAINS() view returns (uint256)",
-      "function CHAIN_ID() view returns (uint8)",
-      "function DEFAULT_FEE_ADDRESS() view returns (address)",
-      "function MASTER_CHAIN_ID() view returns (uint8)",
-      "function MAX_CHAIN_ID() view returns (uint8)",
-      "function MIN_CHAIN_ID() view returns (uint8)",
-      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
-      "function destinations(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
-      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
-      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
-      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
-      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
-      "function sendSyncHash(bytes32 syncHash) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
-      "function setReceiveVersion(uint16 _version)",
-      "function setSendVersion(uint16 _version)",
-      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
-      "function zklink() view returns (address)"
     ],
     "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7": [
       "constructor(address target, bytes targetInitializationParameters)",
@@ -2238,35 +2282,6 @@
     "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
       "constructor(address _singleton)"
     ],
-    "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e": [
-      "constructor(address _zklink, address _endpoint)",
-      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
-      "function ALL_CHAINS() view returns (uint256)",
-      "function CHAIN_ID() view returns (uint8)",
-      "function DEFAULT_FEE_ADDRESS() view returns (address)",
-      "function MASTER_CHAIN_ID() view returns (uint8)",
-      "function MAX_CHAIN_ID() view returns (uint8)",
-      "function MIN_CHAIN_ID() view returns (uint8)",
-      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
-      "function destinations(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
-      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
-      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
-      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
-      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
-      "function sendSyncHash(bytes32 syncHash) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
-      "function setReceiveVersion(uint16 _version)",
-      "function setSendVersion(uint16 _version)",
-      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
-      "function zklink() view returns (address)"
-    ],
     "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F": [
       "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
       "event BlockCommit(uint32 indexed blockNumber)",
@@ -2354,35 +2369,6 @@
     ],
     "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E": [
-      "constructor(address _zklink, address _endpoint)",
-      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
-      "function ALL_CHAINS() view returns (uint256)",
-      "function CHAIN_ID() view returns (uint8)",
-      "function DEFAULT_FEE_ADDRESS() view returns (address)",
-      "function MASTER_CHAIN_ID() view returns (uint8)",
-      "function MAX_CHAIN_ID() view returns (uint8)",
-      "function MIN_CHAIN_ID() view returns (uint8)",
-      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
-      "function destinations(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
-      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
-      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
-      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
-      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
-      "function sendSyncHash(bytes32 syncHash) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
-      "function setReceiveVersion(uint16 _version)",
-      "function setSendVersion(uint16 _version)",
-      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
-      "function zklink() view returns (address)"
     ],
     "eth:0xa9B4AB2E78f93B340Bbd6541B713B29B6B3BEe3c": [
       "constructor(address _periphery)",
@@ -2535,35 +2521,6 @@
       "function transferMastership(address _newMaster)",
       "function upgradeStatus() view returns (uint8)",
       "function versionId() view returns (uint256)"
-    ],
-    "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e": [
-      "constructor(address _zklink, address _endpoint)",
-      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
-      "function ALL_CHAINS() view returns (uint256)",
-      "function CHAIN_ID() view returns (uint8)",
-      "function DEFAULT_FEE_ADDRESS() view returns (address)",
-      "function MASTER_CHAIN_ID() view returns (uint8)",
-      "function MAX_CHAIN_ID() view returns (uint8)",
-      "function MIN_CHAIN_ID() view returns (uint8)",
-      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
-      "function destinations(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
-      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
-      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
-      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
-      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
-      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
-      "function sendSyncHash(bytes32 syncHash) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
-      "function setReceiveVersion(uint16 _version)",
-      "function setSendVersion(uint16 _version)",
-      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
-      "function zklink() view returns (address)"
     ],
     "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": [
       "constructor(address _periphery)",
@@ -2805,19 +2762,19 @@
     ]
   },
   "usedTemplates": {
-    "apex-omni/LZSyncHashBridge": "0xe4b6bef6d8eb46b2dc59ca16c8a39144163571cb5fbdef9a2c963b5cda5cda82",
-    "apex-omni/ZkLink_LZEscrow": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
-    "apex-omni/ZkLink_main": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "apex-omni/LZSyncHashBridgeV2": "0x9f46b397ef0511c51d078fe6b5d01c2fbb9ee12837f6ed16126d10c4fffddf5b",
+    "apex-omni/ZkLink_LZEscrow": "0x329ad7a46ec16a130ac208f8c2f97194df30ff99e7790b5e624ab7279f170af8",
+    "apex-omni/ZkLink_main": "0x329ad7a46ec16a130ac208f8c2f97194df30ff99e7790b5e624ab7279f170af8",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 486499024,
-    "base": 48963259,
-    "bsc": 111458296,
-    "ethereum": 25587657,
-    "mantle": 98292777
+    "arbitrum": 510633521,
+    "base": 52030779,
+    "bsc": 125085405,
+    "ethereum": 26096904,
+    "mantle": 101360296
   },
-  "permissionsConfigHash": "0x1e95195262887334bc912da03d9f02d1e9dd03e2be5f1eaffd9ddb930bd54e26",
+  "permissionsConfigHash": "0x30bf35d1bfbf0698a1732703d396ae60fa76ccdee6be6b114265fe97072745d4",
   "permissions": {
     "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": {
       "receivedPermissions": [
@@ -2862,6 +2819,12 @@
           "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
           "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.",
+          "role": ".governor"
         }
       ]
     },
@@ -2908,6 +2871,12 @@
           "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
           "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.",
+          "role": ".governor"
         }
       ]
     },
@@ -2954,6 +2923,12 @@
           "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
           "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.",
+          "role": ".governor"
         }
       ]
     },
@@ -2980,6 +2955,12 @@
           "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
           "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.",
+          "role": ".governor"
         }
       ]
     },
@@ -3046,6 +3027,12 @@
           "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
           "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.",
+          "role": ".governor"
         }
       ]
     }
