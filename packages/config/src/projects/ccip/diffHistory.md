@@ -12,6 +12,7 @@ Generated with discovered.json: 0xb72e38702619162aee619a933e50581cfaeed979
 - 16 more Ethereum lanes moved to CCIP 2.0 in both directions (zkSync, Sonic, Berachain, Katana, MegaETH, arc, Rootstock, Etherlink and others): the MainRouter now selects EthereumOnRamp_v2_0 for them, and EthereumOffRamp_v2_0 routes their inbound messages through the MainRouter instead of the DeprecatedRouter. The FeeQuoter limits for these destinations were updated accordingly.
 - New TAC lane configured on the v2.0 OnRamp, OffRamp, CommitteeVerifier (9-of-16 signers) and Executor, wired to the DeprecatedRouter like previous lanes before their cutover.
 - USDC to Monad and Pharos now uses the CCTP-through-CCV path (Pharos was lock/release). USDCTokenPoolCCTPV2 ownership moved from the deployer EOA (0x062f) to ARMTimelock.
+- The FeeQuoter flat fee for WETH transfers rose to $45 on the Linea and Optimism lanes (from $0.50) and on the Arbitrum and Base lanes (from $42.50).
 - Circle added a new USDC minter, an unverified upgradeable proxy (0xA669) deployed on Sep 28, and two MasterMinter controllers. It is discovered only because CCIP follows the USDC minter list.
 - No allowed finality config changed: the CommitteeVerifier still accepts only full finality or a block depth, so the safe (FCR) mode remains unavailable on Ethereum.
 
