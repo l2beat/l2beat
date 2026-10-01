@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x417767543383716f7364b51cb6130af68416a965
+Generated with discovered.json: 0xf02a290485dbd2251e3010f0b35457ac4966bac3
 
-# Diff at Wed, 30 Sep 2026 11:03:00 GMT:
+# Diff at Thu, 01 Oct 2026 09:46:07 GMT:
 
-- id: 7b0a5979
+- id: 9e1121b6
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789077777
-- current timestamp: 1790766108
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789077777
+- current timestamp: 1790847900
 
 ## Description
 
@@ -26,8 +26,6 @@ Version changes and implementation diffs:
 - MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA
 - PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0
 - DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
-
-Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWETH renamed with a `Historic` prefix.
 
 ## Watched changes
 
@@ -86,6 +84,12 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
       usedTypes.0.arg.8:
 +        "FaultDisputeGame"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
@@ -287,6 +291,18 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
 ```
 
 ```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
     contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
       sourceHashes.1:
@@ -313,6 +329,12 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
 ```
 
 ```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
     contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
 +++ severity: HIGH
@@ -327,6 +349,8 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
     +++ description: None
       directlyReceivedPermissions.2:
 +        {"permission":"upgrade","from":"eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d","role":"admin"}
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434","role":"admin"}
     }
 ```
 
@@ -392,8 +416,10 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
 ```diff
     contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
     +++ description: 5-of-6 joint Ronin/Conduit Safe.
-      receivedPermissions.4:
+      receivedPermissions.5:
 +        {"permission":"upgrade","from":"eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d","role":"admin","via":[{"address":"eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434","role":"admin","via":[{"address":"eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"}]}
     }
 ```
 
@@ -476,22 +502,34 @@ Config: pre-upgrade PermissionedDisputeGame, MIPS, PreimageOracle and DelayedWET
 ## Source code changes
 
 ```diff
-.../AnchorStateRegistry/AnchorStateRegistry.sol    | 1141 +---
- .../roninnetwork/.flat/DelayedWETH/DelayedWETH.sol | 1122 ++++
- .../roninnetwork/.flat/DelayedWETH/Proxy.p.sol     | 1389 +++++
+.../AnchorStateRegistry/AnchorStateRegistry.sol    | 1141 +-------------
+ .../DelayedWETH/DelayedWETH.sol                    |   54 +-
  .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
- .../L1CrossDomainMessenger.sol                     | 1619 ++----
- .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 +-
- .../L1StandardBridge/L1StandardBridge.sol          |  212 +-
- .../src/projects/roninnetwork/.flat/MIPS.sol       | 3261 +++++++++++
- .../OptimismMintableERC20Factory.sol               |  341 +-
- .../OptimismPortal2/OptimismPortal2.sol            | 1375 ++---
- .../roninnetwork/.flat/PermissionedDisputeGame.sol | 5742 ++++++++++++++++++++
- .../projects/roninnetwork/.flat/PreimageOracle.sol | 1463 +++++
+ .../L1CrossDomainMessenger.sol                     | 1619 ++++++--------------
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 ++-
+ .../L1StandardBridge/L1StandardBridge.sol          |  212 ++-
+ .../{.flat@1789077777 => .flat}/MIPS.sol           |   43 +-
+ .../OptimismMintableERC20Factory.sol               |  341 ++++-
+ .../OptimismPortal2/OptimismPortal2.sol            | 1375 +++++------------
+ .../PermissionedDisputeGame.sol                    |  605 ++++----
+ .../{.flat@1789077777 => .flat}/PreimageOracle.sol |   20 +-
  .../SuperchainConfig/SuperchainConfig.sol          |   34 +-
- .../SystemConfig/SystemConfig.sol                  | 1580 ++----
- 14 files changed, 15011 insertions(+), 4532 deletions(-)
+ .../SystemConfig/SystemConfig.sol                  | 1580 +++++--------------
+ 13 files changed, 2377 insertions(+), 4911 deletions(-)
 ```
+
+Generated with discovered.json: 0x8155a67ce3d6643faad9dce9171039f456e002c8
+
+# Diff at Wed, 30 Sep 2026 07:45:38 GMT:
+
+- id: a37891d5
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
 
 ## Config/verification related changes
 
@@ -500,38 +538,18 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1789077777 (main branch discovery), not current.
 
 ```diff
-    contract HistoricPreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
-    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
-      name:
--        "PreimageOracle"
-+        "HistoricPreimageOracle"
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
     }
 ```
 
 ```diff
-    contract HistoricPermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
-    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
-      name:
--        "PermissionedDisputeGame"
-+        "HistoricPermissionedDisputeGame"
-    }
-```
-
-```diff
-    contract HistoricMIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
-    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
-      name:
--        "MIPS"
-+        "HistoricMIPS"
-    }
-```
-
-```diff
-    contract HistoricDelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH] {
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      name:
--        "DelayedWETH"
-+        "HistoricDelayedWETH"
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
 ```
 

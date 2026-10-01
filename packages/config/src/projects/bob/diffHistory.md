@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xf710d2788c4b4b048607abbdd0b708a512a4d74e
+Generated with discovered.json: 0x9d96051d23f6af496f646514ab7b8e111e4f92c0
 
-# Diff at Wed, 30 Sep 2026 11:02:47 GMT:
+# Diff at Thu, 01 Oct 2026 09:46:00 GMT:
 
-- id: 42cd3e5b
+- id: 70f73b96
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1783498944
-- current timestamp: 1790766100
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1783498944
+- current timestamp: 1790847894
 
 ## Description
 
@@ -32,8 +32,6 @@ Version changes and implementation diffs:
 - MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xb6B6342ff75b4213cBF101c135f1fC33695acc13
 - PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x70A3e3112467E177585eF070B63521c9368F9aA1
 - DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xebC3681418136F7A9f6cB4B074B1B19fc85879e1
-
-Config: proposer and challenger permissions added on the DisputeGameFactory.
 
 ## Watched changes
 
@@ -399,7 +397,7 @@ Config: proposer and challenger permissions added on the DisputeGameFactory.
     +++ description: None
       receivedPermissions.0:
 +        {"permission":"interact","from":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
-      receivedPermissions.3.from:
+      receivedPermissions.4.from:
 -        "eth:0x1A08BA77CB95184Ea0C31e56f199Db068eb6B35d"
 +        "eth:0x048D0cfF3F0729117F44da6494Dbf4d78e593D95"
     }
@@ -571,6 +569,41 @@ Config: proposer and challenger permissions added on the DisputeGameFactory.
  .../SuperchainConfig/SuperchainConfig.sol          |   34 +-
  .../SystemConfig/SystemConfig.sol                  | 1615 ++------
  13 files changed, 4457 insertions(+), 6840 deletions(-)
+```
+
+Generated with discovered.json: 0x4fa68960dc17318bac93a976f29c4bda2781dbc0
+
+# Diff at Wed, 30 Sep 2026 07:45:36 GMT:
+
+- id: debd263e
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1783498944
+- current timestamp: 1783498944
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783498944 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
 ```
 
 Generated with discovered.json: 0x0244e00290149fb8d7828119051c6a2501891121

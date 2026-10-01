@@ -2006,7 +2006,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25575012 },
-  "permissionsConfigHash": "0x1772e1be8d6702b1ec8e81772a5d8bdc732edd3c7263946280358d6e63e64924",
+  "permissionsConfigHash": "0x2c018d697645ee50ed984dfa0a9641ab57ce3e2acfb6b30a2459b9d29749bc3f",
   "permissions": {
     "eth:0x1b99D8a4CE6883FA9Fc3538Ea518a4628aaC6135": {
       "receivedPermissions": [
@@ -2168,6 +2168,12 @@
           "permission": "interact",
           "from": "eth:0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9394679d0f0676E4a2dE99F8ed6B4aCb16c5f0f",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {

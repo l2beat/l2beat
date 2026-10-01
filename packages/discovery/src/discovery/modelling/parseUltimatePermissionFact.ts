@@ -31,10 +31,6 @@ export function parseUltimatePermissionFact(
   }
 }
 
-export type ParsedUltimatePermissionFact = ReturnType<
-  typeof parseUltimatePermissionFact
->
-
 export function parseUltimatePermissionVia(
   via: ClingoFact,
   modelIdRegistry: ModelIdRegistry,

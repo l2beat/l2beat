@@ -145,7 +145,7 @@ export function PrivacyProjectPage({
                           <ProjectSummaryStat
                             title="Attributes"
                             tooltip="Protocol attributes and capabilities."
-                            valueClassName="flex flex-wrap justify-start gap-1"
+                            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
                             value={entry.attributes.map((attribute) => (
                               <PrivacyAttributeTag
                                 key={attribute.id}

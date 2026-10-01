@@ -9,13 +9,19 @@ import type {
   TechnologyContract,
   TechnologyContractAddress,
 } from '~/components/projects/sections/ContractEntry'
+import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
+import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import type {
   ProjectDetailsSection,
   ProjectSectionId,
 } from '~/components/projects/sections/types'
+import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
+import { renderInteropVolumeSection } from './interopMarkdown'
+import { renderOnchainDeployments } from './interopTokenMarkdown'
 import {
   bulletList,
   heading,
@@ -33,6 +39,11 @@ import {
   renderPrivacyAdversaries,
   renderPrivacyAssetsBreakdown,
 } from './renderPrivacySections'
+import {
+  renderProgramHashes,
+  renderTrustedSetups,
+  renderVerifiers,
+} from './zkSectionBodies'
 
 export interface SectionContext {
   /** Absolute URL of the HTML page, for sections markdown cannot express. */
@@ -83,17 +94,43 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
         props.redWarning?.text,
         props.warning,
       ),
-      ...props.riskGroups.map((group) =>
-        subsection(
-          level,
-          group.name,
-          numberedList(
-            group.items.map((item) => markCritical(item.text, item.isCritical)),
-            group.start,
-          ),
-        ),
-      ),
+      renderRiskGroups(props.riskGroups, level),
     ]),
+  DaRiskSummarySection: (props, level) => {
+    const { layer, bridge } = props
+    const bridgeTitle = `${bridge.name}${bridge.name === layer.name ? ' bridge' : ''} risks`
+    return joinBlocks([
+      renderWarnings(
+        props.isVerified === false
+          ? markCritical('This project includes unverified contracts.', true)
+          : undefined,
+        props.redWarning?.text,
+        props.warning,
+      ),
+      subsection(
+        level,
+        `${layer.name} risks`,
+        renderRiskGroups(layer.risks, level + 1),
+      ),
+      bridge.risks.length > 0
+        ? subsection(
+            level,
+            bridgeTitle,
+            joinBlocks([
+              renderWarnings(
+                bridge.isVerified
+                  ? undefined
+                  : markCritical(
+                      'This bridge includes unverified contracts.',
+                      true,
+                    ),
+              ),
+              renderRiskGroups(bridge.risks, level + 1),
+            ]),
+          )
+        : '',
+    ])
+  },
   RiskAnalysisSection: (props, level) =>
     joinBlocks([
       renderWarnings(props.redWarning?.text, props.warning),
@@ -113,6 +150,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       nestHeadings(props.description, level),
       renderRiskValues(props.layerGrissiniValues ?? [], level),
       renderRiskValues(props.bridgeGrissiniValues ?? [], level),
+      props.isNoBridge ? renderRiskValues([NO_BRIDGE_RISK], level) : '',
     ]),
   Group: (props, level, context) =>
     joinBlocks([
@@ -131,6 +169,14 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       nestHeadings(props.detailedDescription, level),
       renderReferences(props.references ?? []),
     ]),
+  ExternalDependenciesSection: ({ dependencies }, _level, context) =>
+    dependencies.length === 0
+      ? 'This project has no external dependencies: no oracle, bridge, or other third-party contract is required for its contracts to operate.'
+      : bulletList(
+          dependencies.map((dependency) =>
+            renderDependency(dependency, context.pageUrl),
+          ),
+        ),
   MilestonesAndIncidentsSection: ({ milestones }) =>
     bulletList(milestones.map(renderMilestone)),
   StateDerivationSection: (props, level) =>
@@ -217,9 +263,10 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
         ]),
       ),
     ),
-  PermissionsSection: ({ permissionsByChain }, level) =>
-    joinBlocks(
-      Object.entries(permissionsByChain).map(([chain, permissions]) =>
+  PermissionsSection: ({ permissionsByChain, permissionedEntities }, level) =>
+    joinBlocks([
+      renderCommitteeMembers(permissionedEntities ?? []),
+      ...Object.entries(permissionsByChain).map(([chain, permissions]) =>
         subsection(
           level,
           chain,
@@ -229,7 +276,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
           ]),
         ),
       ),
-    ),
+    ]),
   ContractsSection: (props, level) =>
     joinBlocks([
       ...Object.entries(props.contracts).map(([chain, contracts]) =>
@@ -242,30 +289,29 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
     ]),
   ActivitySection: linkToHtmlPage,
   CostsSection: linkToHtmlPage,
-  DaRiskSummarySection: linkToHtmlPage,
   DataPostedSection: linkToHtmlPage,
-  ExternalDependenciesSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
   InteropFlowsSection: linkToHtmlPage,
-  InteropTokenOnchainDeploymentsSection: linkToHtmlPage,
+  InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
   InteropTokenProtocolsSection: linkToHtmlPage,
   InteropTokenTransfersSection: linkToHtmlPage,
   InteropTokenVolumeSection: linkToHtmlPage,
   InteropTokensSection: linkToHtmlPage,
   InteropTransfersSection: linkToHtmlPage,
-  InteropVolumeSection: linkToHtmlPage,
+  InteropVolumeSection: (props, level, context) =>
+    renderInteropVolumeSection(props, level, `${context.pageUrl}#${props.id}`),
   L2TvsSection: linkToHtmlPage,
   LivenessSection: linkToHtmlPage,
   PrivacyAdversariesSection: renderPrivacyAdversaries,
   PrivacyAnonymitySetSection: linkToHtmlPage,
   PrivacyAssetsBreakdownSection: renderPrivacyAssetsBreakdown,
   PrivacyFlowsSection: linkToHtmlPage,
-  ProgramHashesSection: linkToHtmlPage,
+  ProgramHashesSection: renderProgramHashes,
   ThroughputSection: linkToHtmlPage,
-  TrustedSetupSection: linkToHtmlPage,
+  TrustedSetupSection: renderTrustedSetups,
   TvsValueSection: linkToHtmlPage,
   UpdatesSection: linkToHtmlPage,
-  VerifiersSection: linkToHtmlPage,
+  VerifiersSection: renderVerifiers,
   ZkCatalogTvsSection: linkToHtmlPage,
 }
 
@@ -358,6 +404,30 @@ function renderScopeOfAssessment(
 const INCOMPLETE_NOTE =
   '**Note:** This section requires more research and might not present accurate information.'
 
+function renderRiskGroups(groups: RiskGroup[], level: number) {
+  return joinBlocks(
+    groups.map((group) =>
+      subsection(
+        level,
+        group.name,
+        numberedList(
+          group.items.map((item) => markCritical(item.text, item.isCritical)),
+          group.start,
+        ),
+      ),
+    ),
+  )
+}
+
+/** Project links on the HTML page are site-relative; the markdown is read off-site. */
+function renderDependency(dependency: DefiDependency, pageUrl: string) {
+  const name = dependency.href
+    ? link(dependency.name, new URL(dependency.href, pageUrl).href)
+    : dependency.name
+  const notReviewed = dependency.reviewed ? '' : ' (not reviewed)'
+  return `${name}${notReviewed}: ${dependency.description}`
+}
+
 function renderRiskValues(values: RosetteValue[], level: number) {
   return joinBlocks(
     values.map((risk) =>
@@ -368,6 +438,24 @@ function renderRiskValues(values: RosetteValue[], level: number) {
       ]),
     ),
   )
+}
+
+type PermissionedEntity = NonNullable<
+  PermissionsSectionProps['permissionedEntities']
+>[number]
+
+/** Known DA committee members, which the HTML page lists above the permissions. */
+function renderCommitteeMembers(members: PermissionedEntity[]) {
+  if (members.length === 0) return ''
+  return joinBlocks([
+    'The DA committee has the following members:',
+    bulletList(
+      members.map((member) => {
+        const key = member.key ? ` (key: ${member.key})` : ''
+        return `${link(member.name, member.href)}${key}`
+      }),
+    ),
+  ])
 }
 
 function renderMilestone(milestone: Milestone) {

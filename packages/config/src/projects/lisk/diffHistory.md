@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x5a1e7e2787415117ea417fbd3d4f1d78b87052e1
+
+# Diff at Tue, 29 Sep 2026 17:46:55 GMT:
+
+- id: 1ab73024
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789917496
+- current timestamp: 1789917496
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917496 (main branch discovery), not current.
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+    }
+```
+
+```diff
+    contract Lisk Multisig (eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x40e7e971ee455d65576dcd004d087804db765b1c
 
 # Diff at Wed, 23 Sep 2026 05:47:44 GMT:

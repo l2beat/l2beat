@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xaed86dfcf9ac7b745f7b46598634e53d1dadf8c2
+Generated with discovered.json: 0xfc7dfe099cb5651525c72d3511a02bb6bc010860
 
-# Diff at Tue, 29 Sep 2026 22:30:43 GMT:
+# Diff at Thu, 01 Oct 2026 09:46:15 GMT:
 
-- id: 9a719347
+- id: ba9d2094
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789562974
-- current timestamp: 1790720976
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789562974
+- current timestamp: 1790847907
 
 ## Description
 
@@ -26,8 +26,6 @@ Version changes and implementation diffs:
 - MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA
 - PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0
 - DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
-
-Config: OPContractsManagerV2 ignored in discovery; proposer and challenger permissions moved to the DisputeGameFactory.
 
 ## Watched changes
 
@@ -241,7 +239,7 @@ Config: OPContractsManagerV2 ignored in discovery; proposer and challenger permi
 ```diff
     contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) [GnosisSafe] {
     +++ description: None
-      receivedPermissions.3.from:
+      receivedPermissions.4.from:
 -        "eth:0x3f1cE63c69d437FDd9F5d5Ad294f677a1b7Db08B"
 +        "eth:0x378B79fA4336111818Bb97162374EDF4C289D966"
     }
@@ -531,6 +529,33 @@ discovery. Values are for block 1789562974 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
+    }
+```
+
+Generated with discovered.json: 0x9f51ed4285b73d54c983a9b0c4f1f234008cccc1
+
+# Diff at Tue, 29 Sep 2026 17:47:01 GMT:
+
+- id: df488b71
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789562974
+- current timestamp: 1789562974
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789562974 (main branch discovery), not current.
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
 ```
 

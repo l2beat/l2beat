@@ -759,7 +759,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -5350,7 +5353,7 @@
     "opstack/AggregateVerifier": "0x81754fdafe6192d4454c14c2e5ebb15c616a3e439e1e5fb4d605153ccc3b4ca8",
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -5385,7 +5388,7 @@
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "base": 49218391, "ethereum": 25630023 },
-  "permissionsConfigHash": "0xdd40ddf31aeaf5989f675d8d729962bf4bc12b39db9a43ede13b2f93c2d26be8",
+  "permissionsConfigHash": "0xaf5831f13c932eded5c81e83908717393773a55414a4bf9cc35d67ece8e61f6d",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [
@@ -5796,6 +5799,12 @@
     },
     "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",

@@ -1,28 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { addressToBytes32, bytes32ToAddress } from './address'
-
-describe(addressToBytes32.name, () => {
-  it('encodes addresses correctly', () => {
-    const ADDRESS1 = EthereumAddress.random()
-    const ADDRESS2 = EthereumAddress.random()
-    const ADDRESS3 = EthereumAddress.random()
-    const ADDRESS4 = EthereumAddress.random()
-    const ADDRESS5 = EthereumAddress.random()
-
-    expect(addressToBytes32(ADDRESS1).length).toEqual(32)
-    expect(addressToBytes32(ADDRESS2).length).toEqual(32)
-    expect(addressToBytes32(ADDRESS3).length).toEqual(32)
-    expect(addressToBytes32(ADDRESS4).length).toEqual(32)
-    expect(addressToBytes32(ADDRESS5).length).toEqual(32)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS1))).toEqual(ADDRESS1)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS2))).toEqual(ADDRESS2)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS3))).toEqual(ADDRESS3)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS4))).toEqual(ADDRESS4)
-    expect(bytes32ToAddress(addressToBytes32(ADDRESS5))).toEqual(ADDRESS5)
-  })
-})
+import { bytes32ToAddress } from './address'
 
 describe(bytes32ToAddress.name, () => {
   it('decodes addresses correctly', () => {

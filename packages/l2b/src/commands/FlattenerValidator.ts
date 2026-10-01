@@ -1,9 +1,5 @@
 import { AuxdataStyle, splitAuxdata } from '@ethereum-sourcify/bytecode-utils'
-import {
-  type ICompilersLogger,
-  setCompilersLogger,
-  useSolidityCompiler,
-} from '@ethereum-sourcify/compilers'
+import type { ICompilersLogger } from '@ethereum-sourcify/compilers'
 import type {
   Libraries,
   SolidityJsonInput,
@@ -72,6 +68,7 @@ export const FlattenerValidator = command({
     assertPositiveInteger(concurrency, 'concurrency')
 
     const cli = createCliLogger({ output: process.stdout, quiet: false })
+    const { setCompilersLogger } = await import('@ethereum-sourcify/compilers')
     setCompilersLogger(getCompilersLogger(cli))
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
@@ -362,6 +359,7 @@ async function compile(
     } catch {}
   }
 
+  const { useSolidityCompiler } = await import('@ethereum-sourcify/compilers')
   const output = await useSolidityCompiler(
     join(dirname(paths.cache), 'solc'),
     join(dirname(paths.cache), 'soljson'),

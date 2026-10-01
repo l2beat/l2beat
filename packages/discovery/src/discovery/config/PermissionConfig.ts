@@ -1,11 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export type PermissionConfiguration = RawPermissionConfiguration & {
-  target: ChainSpecificAddress
-  delay: number
-}
-
 export const BasePermissionEntries = [
   'member',
   'act',

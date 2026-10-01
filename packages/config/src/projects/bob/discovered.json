@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1790766100,
+  "timestamp": 1790847894,
   "configHash": "0xdaa10f5f3b0c285bd42d95c7e6ff081bcbf3355abc170959d20b058349db6468",
   "entries": [
     {
@@ -480,6 +480,9 @@
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
         "callsScheduled": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
         },
@@ -1271,7 +1274,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 26085309
+          "prevBlockNum": 26095414
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1423,7 +1426,7 @@
         "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
         "game8Weth": "UNRESOLVED",
-        "gameCount": 971,
+        "gameCount": 978,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1432,7 +1435,7 @@
         "initVersion": 1,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6b6b6342ff75b4213cbf101c135f1fc33695acc13c9ac21acd8696b64270716528bf83630ea7a293c048d0cff3f0729117f44da6494dbf4d78e593d95000000000000000000000000000000000000000000000000000000000000ed887cb1022d30b9860c36b243e7b181a1d46f618c69c91482a96e9c2a104d9298d1980eccf8c4dc764e",
-        "permissionedGamesTotal": 113,
+        "permissionedGamesTotal": 120,
         "proposerFromDGF": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "proxyAdmin": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "proxyAdminOwner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -1979,13 +1982,13 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0xbb15475d1100C35d6A071fb2302EB570b78d1f06",
+        "anchorGame": "eth:0x34678f5458F5Bfc961b9DC5ADFBA3b5e5ef9D582",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "disputeGameFinalityDelaySeconds": 43200,
         "getAnchorRoot": [
-          "0x84bb7a3677ea70a53ec5326bbed67944260bff7a5690c2ac52cefe194d72c5c1",
-          38905552
+          "0x4bd07692ed35268a576baf06514e43f500f50903943b8659bfbeddec5e3d0346",
+          38944630
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -3827,7 +3830,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -3846,8 +3849,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26089862 },
-  "permissionsConfigHash": "0x196d41fa1eb507796cefd3a69a03ce61e773adf0ba645e75985cf3b6d66c4545",
+  "usedBlockNumbers": { "ethereum": 26096653 },
+  "permissionsConfigHash": "0x56f2a398d07dccd05419b1018f03b1c81663823b7d1e5d142a31ee063bdf9d18",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {
       "receivedPermissions": [
@@ -4037,6 +4040,12 @@
           "from": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengerFromDGF"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
