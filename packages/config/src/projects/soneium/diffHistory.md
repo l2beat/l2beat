@@ -23,7 +23,7 @@ SuperchainConfig v2.4.2 → v2.4.3: version bump only.
 
 Each upgraded proxy was routed through a StorageSetter and back within the same transaction.
 
-Unrelated to the upgrade, the Soneium Multisig moved from Safe 1.4.1 to Safe 1.5.0 and its signer set was replaced: 6 members reduced to 5, threshold unchanged at 3 (3 of 6 → 3 of 5).
+The Soneium Multisig moved from Safe 1.4.1 to Safe 1.5.0 and its signer set was replaced: 6 members reduced to 5, threshold unchanged at 3 (3 of 6 → 3 of 5).
 
 Version changes and implementation diffs:
 

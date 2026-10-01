@@ -9,8 +9,6 @@ Generated with discovered.json: 0xfdaa3515a26002760d2f96efc21bfac5fb49889d
 
 ## Description
 
-Three upgrades, not previously recorded here.
-
 OP Contracts Upgrade 19b "Karst" (op-contracts/v7.0.0) on 2026-07-06, L1: ETHLockbox v1.2.0 → v1.3.1, OptimismPortal2 to v5.6.1, AnchorStateRegistry v3.7.0 → v3.9.0, DisputeGameFactory v1.4.0 → v1.6.1, SystemConfig v3.13.1 → v3.14.2, L1CrossDomainMessenger v2.11.0 → v2.11.1, L1ERC721Bridge v2.9.0 → v2.9.1, L1StandardBridge v2.8.0 → v2.8.2 and OptimismMintableERC20Factory v1.10.2 → v1.11.0.
 
 Karst L2 hardfork activation on 2026-07-08 16:00:01 UTC: every L2 predeploy was upgraded. Most now inherit `ProxyAdminOwnedBase`, gating privileged functions to the proxy's ProxyAdmin or its owner. L2CrossDomainMessenger v2.1.1-beta.1 → v2.2.1, L2StandardBridge v1.11.1-beta.1 → v1.13.2, L2ToL1MessagePasser v1.1.1-beta.1 → v1.2.0, L2ERC721Bridge v1.7.1-beta.2 → v1.10.1, OptimismMintableERC20Factory v1.10.1-beta.2 → v1.11.0, OptimismMintableERC721Factory v1.4.1-beta.1 → v1.5.1, SequencerFeeVault and both fee vaults v1.5.0-beta.2 → v1.6.1, SchemaRegistry v1.3.1-beta.1 → v1.3.1-beta.2 and EAS v1.4.1-beta.1 → v1.4.1-beta.3.
