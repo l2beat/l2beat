@@ -88,10 +88,11 @@ function Sidebar({
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
-          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
-          // iOS Safari tints its floating toolbars with the overlay color, so a
-          // dark overlay makes the full-width sidebar look cut off at both ends.
-          overlayClassName="bg-background"
+          // iOS Safari tints its toolbars from the overlay's color and swaps that
+          // tint in a single frame, so a dark or animated sheet looks cut off
+          // by the address bar. Matching color + no animation keeps them in sync.
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background p-0 text-primary [&>button]:hidden"
+          overlayClassName="animate-none! bg-background"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
