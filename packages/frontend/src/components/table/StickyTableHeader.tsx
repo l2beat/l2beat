@@ -1,6 +1,10 @@
 import type * as React from 'react'
+import type { RefObject } from 'react'
 import { cn } from '~/utils/cn'
-import { stickyTableHeaderClassNames } from './useStickyTableHeader'
+import {
+  type StickyTableRefs,
+  stickyTableHeaderClassNames,
+} from './useStickyTableHeader'
 import { STICKY_OVERLAP_PX } from './utils/commonPinningStyles'
 
 /**
@@ -21,14 +25,16 @@ const PINNED_LAYER_STYLE = {
  * `div`s are animated; animated table cells run on the main thread in WebKit.
  */
 export function StickyTableHeader({
+  track,
+  pinned,
   tableProps,
   children,
-}: {
+}: Pick<StickyTableRefs, 'track' | 'pinned'> & {
   tableProps: React.TableHTMLAttributes<HTMLTableElement>
   children: React.ReactNode
 }) {
-  const table = (
-    <table cellSpacing={0} cellPadding={0} {...tableProps}>
+  const renderCopy = (ref: RefObject<HTMLTableElement | null>) => (
+    <table ref={ref} cellSpacing={0} cellPadding={0} {...tableProps}>
       {children}
     </table>
   )
@@ -37,12 +43,14 @@ export function StickyTableHeader({
     <div
       className={cn(stickyTableHeaderClassNames.header, 'bg-surface-primary')}
     >
-      <div className={stickyTableHeaderClassNames.track}>{table}</div>
+      <div className={stickyTableHeaderClassNames.track}>
+        {renderCopy(track)}
+      </div>
       <div
         className={stickyTableHeaderClassNames.pinnedLayer}
         style={PINNED_LAYER_STYLE}
       >
-        {table}
+        {renderCopy(pinned)}
       </div>
     </div>
   )

@@ -2,6 +2,7 @@
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
+@import "./sticky-table.css";
 
 @plugin "tailwindcss-animate";
 
@@ -768,114 +769,6 @@
   }
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
-}
-
-/*
-  Sticky table header, driven by `useStickyTableHeader` (see there for why it
-  is built this way). The hook sets `data-sticky-table-ready` and the lengths
-  once the header copy matches the real columns; until then the copy is hidden.
-  `--sticky-table-header-top` is set by whatever sticks above the table.
-*/
-@utility sticky-table {
-  timeline-scope: --sticky-table-scroll;
-}
-
-@utility sticky-table-scroller {
-  scroll-timeline: --sticky-table-scroll inline;
-  overscroll-behavior-x: none;
-
-  [data-sticky-table-ready] > & {
-    margin-top: calc(
-      -1 *
-      (
-        var(--sticky-table-header-height) +
-        var(--sticky-table-header-bottom-gap)
-      )
-    );
-  }
-
-  [data-sticky-table-ready] > & > table > thead {
-    visibility: hidden;
-  }
-}
-
-/*
-  The bottom margin stops the header at the table's last row rather than the
-  scroller's padding below it; the scroller's negative top margin gives that
-  space back, along with the header's own height.
-*/
-@utility sticky-table-header {
-  display: none;
-
-  [data-sticky-table-ready] > & {
-    display: block;
-    position: sticky;
-    top: var(--sticky-table-header-top, 0px);
-    z-index: 20;
-    overflow: clip;
-    height: var(--sticky-table-header-height);
-    margin-bottom: var(--sticky-table-header-bottom-gap);
-  }
-}
-
-@utility sticky-table-header-track {
-  animation: sticky-table-header-track linear both;
-  animation-timeline: --sticky-table-scroll;
-
-  @supports not (animation-timeline: scroll()) {
-    animation: none;
-    transform: translateX(calc(-1 * var(--sticky-table-scroll, 0px)));
-  }
-}
-
-/*
-  The pinned columns again, clipped to their width and not sliding.
-  `StickyTableHeader` sets the overlap and the matching `animation-range`.
-*/
-@utility sticky-table-header-pinned-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--sticky-table-pinned-width, 0px);
-  overflow: clip;
-  animation: sticky-table-header-pinned-layer linear both;
-  animation-timeline: --sticky-table-scroll;
-
-  @supports not (animation-timeline: scroll()) {
-    animation: none;
-    transform: translateX(
-      calc(
-        -1 *
-        min(
-          var(--sticky-table-scroll, 0px),
-          var(--sticky-table-pinned-overlap, 0px)
-        )
-      )
-    );
-  }
-}
-
-/* Each cell is shown, and interactive, in one layer only. */
-@utility sticky-table-header-pinned {
-  .sticky-table-header-track & {
-    visibility: hidden;
-  }
-
-  .sticky-table-header-pinned-layer th:not(&) {
-    visibility: hidden;
-  }
-}
-
-@keyframes sticky-table-header-track {
-  to {
-    transform: translateX(calc(-1 * var(--sticky-table-max-scroll, 0px)));
-  }
-}
-
-@keyframes sticky-table-header-pinned-layer {
-  to {
-    transform: translateX(calc(-1 * var(--sticky-table-pinned-overlap, 0px)));
-  }
 }
 
 /* Theme toggle view transition */

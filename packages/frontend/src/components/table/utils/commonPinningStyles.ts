@@ -11,6 +11,12 @@ const EDGE_FADE_WIDTH_PX = 6
 export const STICKY_OVERLAP_PX = 1
 
 /**
+ * Pinned cells stick unless an ancestor sets this to `static`, as the sticky
+ * header copy does: it lives outside the scroller, so it pins its cells itself.
+ */
+const PINNED_POSITION_VARIABLE = '--sticky-table-pinned-position'
+
+/**
  * Where a left-pinned column sticks, set by `useStickyTableHeader` from the
  * rendered column widths. Without it the offset comes from the declared sizes,
  * which drift from the real ones whenever content makes a column wider.
@@ -24,6 +30,11 @@ export function getCommonPinningStyles<T>(
 ): CSSProperties | undefined {
   const isPinned = column.getIsPinned()
   if (!isPinned) return undefined
+  const isLastPinned = column.getIsLastColumn('left')
+    ? 'left'
+    : column.getIsLastColumn('right')
+      ? 'right'
+      : undefined
 
   return {
     left:
@@ -36,38 +47,24 @@ export function getCommonPinningStyles<T>(
       isPinned === 'right'
         ? `${column.getAfter('right') - STICKY_OVERLAP_PX}px`
         : undefined,
-    position: 'sticky',
+    position:
+      `var(${PINNED_POSITION_VARIABLE}, sticky)` as CSSProperties['position'],
     width: column.getSize(),
-    maskImage: getEdgeFadeMask(column),
+    maskImage:
+      isLastPinned &&
+      `linear-gradient(to ${
+        isLastPinned === 'left' ? 'right' : 'left'
+      }, transparent 0, black 0px, black calc(100% - ${EDGE_FADE_WIDTH_PX}px), transparent 100%)`,
     zIndex: 10,
   }
 }
 
-/**
- * Pinned cells of the sticky header copy (see `useStickyTableHeader`) live
- * outside the scroller, so `position: sticky` cannot pin them; the copy's
- * pinned layer holds them in place instead.
- */
-export function getStickyHeaderPinningStyles<T>(
-  column: Column<T>,
-): CSSProperties | undefined {
-  if (!column.getIsPinned()) return undefined
+/** Marks pinned header cells, for the sticky header copy to tell them apart. */
+export const PINNED_CELL_ATTRIBUTE = 'data-pinned'
 
+export function getPinnedHeaderCellProps<T>(column: Column<T>) {
   return {
-    width: column.getSize(),
-    maskImage: getEdgeFadeMask(column),
+    style: getCommonPinningStyles(column),
+    [PINNED_CELL_ATTRIBUTE]: column.getIsPinned() ? '' : undefined,
   }
-}
-
-function getEdgeFadeMask<T>(column: Column<T>) {
-  const isLastPinned = column.getIsLastColumn('left')
-    ? 'left'
-    : column.getIsLastColumn('right')
-      ? 'right'
-      : undefined
-  if (!isLastPinned) return undefined
-
-  return `linear-gradient(to ${
-    isLastPinned === 'left' ? 'right' : 'left'
-  }, transparent 0, black 0px, black calc(100% - ${EDGE_FADE_WIDTH_PX}px), transparent 100%)`
 }

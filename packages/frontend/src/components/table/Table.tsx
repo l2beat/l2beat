@@ -1,5 +1,4 @@
 import type * as React from 'react'
-import { useRef } from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
@@ -32,13 +31,12 @@ const Table = ({
    */
   stickyHeader?: React.ReactNode
 }) => {
-  const rootRef = useRef<HTMLDivElement>(null)
   const isSticky = stickyHeader !== undefined
-  useStickyTableHeader(rootRef, isSticky)
+  const sticky = useStickyTableHeader(isSticky)
 
   return (
     <div
-      ref={rootRef}
+      ref={sticky.root}
       className={cn(
         getTableOuterWrapperClassName(),
         isSticky && stickyTableHeaderClassNames.root,
@@ -46,6 +44,8 @@ const Table = ({
     >
       {isSticky && (
         <StickyTableHeader
+          track={sticky.track}
+          pinned={sticky.pinned}
           tableProps={{
             ...props,
             className: getTableElementClassName(cn(className, 'table-fixed')),
@@ -55,6 +55,7 @@ const Table = ({
         </StickyTableHeader>
       )}
       <div
+        ref={sticky.scroller}
         className={cn(
           getTableScrollWrapperClassName(tableWrapperClassName),
           isSticky && stickyTableHeaderClassNames.scroller,
@@ -62,6 +63,7 @@ const Table = ({
       >
         <HighlightedTableRowProvider>
           <table
+            ref={sticky.table}
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}

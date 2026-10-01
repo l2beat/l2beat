@@ -1,6 +1,7 @@
-import { type RefObject, useLayoutEffect } from 'react'
+import { type RefObject, useLayoutEffect, useRef } from 'react'
 import {
   getPinnedLeftVariable,
+  PINNED_CELL_ATTRIBUTE,
   STICKY_OVERLAP_PX,
 } from './utils/commonPinningStyles'
 
@@ -24,12 +25,18 @@ export const stickyTableHeaderClassNames = {
   header: 'sticky-table-header',
   track: 'sticky-table-header-track',
   pinnedLayer: 'sticky-table-header-pinned-layer',
-  pinnedCell: 'sticky-table-header-pinned',
 }
 
-/** Attribute for the header row that has exactly one cell per column. */
-export const STICKY_TABLE_COLUMNS_ROW_ATTRIBUTE =
-  'data-sticky-table-columns-row'
+/** The elements the caller renders and attaches these refs to. */
+export interface StickyTableRefs {
+  /** Wraps the copy and the scroller; carries the layout variables. */
+  root: RefObject<HTMLDivElement | null>
+  scroller: RefObject<HTMLDivElement | null>
+  table: RefObject<HTMLTableElement | null>
+  /** The copy in the sliding track and in the pinned layer. */
+  track: RefObject<HTMLTableElement | null>
+  pinned: RefObject<HTMLTableElement | null>
+}
 
 /**
  * Keeps a table header in view while the table scrolls under the top of the
@@ -49,32 +56,42 @@ export const STICKY_TABLE_COLUMNS_ROW_ATTRIBUTE =
  *   frame as the scroll. The scroller does not rubber-band, because the
  *   timeline stops at the scroll edges and the header would stay behind.
  *
- * This hook copies the real column widths onto the copy and feeds the CSS in
- * `globals.css` the lengths it cannot know. Until it has, the copy stays hidden
- * and the real header shows, so the server-rendered HTML looks unchanged.
+ * This hook copies the real column widths onto the copy and feeds
+ * `sticky-table.css` the lengths it cannot know. Until it has, the copy stays
+ * hidden and the real header shows, so the server-rendered HTML looks
+ * unchanged.
+ *
+ * Call it in the component that renders all the elements: a parent's layout
+ * effect runs once every child's ref is attached.
  */
-export function useStickyTableHeader(
-  rootRef: RefObject<HTMLDivElement | null>,
-  enabled: boolean,
-) {
+export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  const tableRef = useRef<HTMLTableElement>(null)
+  const trackRef = useRef<HTMLTableElement>(null)
+  const pinnedRef = useRef<HTMLTableElement>(null)
+
   useLayoutEffect(() => {
+    if (!enabled) return
     const root = rootRef.current
-    if (!enabled || !root) return
-    const parts = getStickyTableParts(root)
-    if (!parts) return
-    const { scroller, table, thead, copies } = parts
+    const scroller = scrollerRef.current
+    const table = tableRef.current
+    const thead = table?.tHead
+    const track = trackRef.current
+    const pinned = pinnedRef.current
+    if (!root || !scroller || !table || !thead || !track || !pinned) return
 
     let pinnedVariables: string[] = []
     const update = () => {
-      const widths = getLeafHeaderCells(table).map(
+      const widths = getColumnCells(table).map(
         (cell) => cell.getBoundingClientRect().width,
       )
-      const isAligned = copies.every((copy) =>
+      const isAligned = [track, pinned].every((copy) =>
         alignColumns(table, copy, widths),
       )
       root.toggleAttribute(READY_ATTRIBUTE, isAligned)
       if (!isAligned) return
-      publishLayout(root, scroller, table)
+      publishLayout(root, scroller, table, thead)
       pinnedVariables = publishPinnedColumns(root, table, widths)
     }
 
@@ -84,7 +101,7 @@ export function useStickyTableHeader(
       resizeObserver.observe(root)
       resizeObserver.observe(scroller)
       resizeObserver.observe(table)
-      for (const cell of getLeafHeaderCells(table)) {
+      for (const cell of getColumnCells(table)) {
         resizeObserver.observe(cell)
       }
     }
@@ -115,7 +132,15 @@ export function useStickyTableHeader(
         root.style.removeProperty(variable)
       }
     }
-  }, [rootRef, enabled])
+  }, [enabled])
+
+  return {
+    root: rootRef,
+    scroller: scrollerRef,
+    table: tableRef,
+    track: trackRef,
+    pinned: pinnedRef,
+  }
 }
 
 /** Lengths the CSS needs to place the copy and stop it at the table's end. */
@@ -123,10 +148,9 @@ function publishLayout(
   root: HTMLElement,
   scroller: HTMLElement,
   table: HTMLTableElement,
+  thead: HTMLTableSectionElement,
 ) {
-  const header = table.tHead
-  if (!header) return
-  setVariable(root, HEIGHT_VARIABLE, header.getBoundingClientRect().height)
+  setVariable(root, HEIGHT_VARIABLE, thead.getBoundingClientRect().height)
   setVariable(
     root,
     BOTTOM_GAP_VARIABLE,
@@ -160,30 +184,14 @@ function publishPinnedColumns(
     })
 }
 
-function getStickyTableParts(root: HTMLDivElement) {
-  const { scroller, header } = stickyTableHeaderClassNames
-  const scrollerElement = root.querySelector<HTMLElement>(
-    `:scope > .${scroller}`,
-  )
-  const table =
-    scrollerElement?.querySelector<HTMLTableElement>(':scope > table')
-  const copies = Array.from(
-    root.querySelectorAll<HTMLTableElement>(`:scope > .${header} table`),
-  )
-  if (!scrollerElement || !table?.tHead || copies.length === 0) {
-    return undefined
-  }
-  return {
-    scroller: scrollerElement,
-    table,
-    thead: table.tHead,
-    copies,
-  }
-}
-
-function getLeafHeaderCells(table: HTMLTableElement) {
-  const row = table.tHead?.querySelector<HTMLTableRowElement>(
-    `:scope > [${STICKY_TABLE_COLUMNS_ROW_ATTRIBUTE}]`,
+/**
+ * The cells of the header row that has one cell per column, so they measure
+ * the columns. Grouped rows span several columns and the divider spans all.
+ */
+function getColumnCells(table: HTMLTableElement) {
+  const columnCount = table.querySelectorAll(':scope > colgroup > col').length
+  const row = Array.from(table.tHead?.rows ?? []).find(
+    (row) => row.cells.length === columnCount,
   )
   return row ? Array.from(row.cells) : []
 }
@@ -199,28 +207,22 @@ function alignColumns(
   copy: HTMLTableElement,
   widths: number[],
 ) {
-  const slots = getColumnSlots(copy)
-  if (widths.length === 0 || widths.length !== slots.length) return false
+  const cols = copy.querySelectorAll('col')
+  if (widths.length === 0 || widths.length !== cols.length) return false
 
-  slots.forEach((slot, i) => {
-    slot.style.width = `${widths[i]}px`
+  cols.forEach((col, i) => {
+    col.style.width = `${widths[i]}px`
   })
   copy.style.width = `${table.getBoundingClientRect().width}px`
   return true
 }
 
-/** One element per column: a `col`, or a `colgroup` without any. */
-function getColumnSlots(copy: HTMLTableElement) {
-  return Array.from(copy.querySelectorAll('colgroup')).flatMap((group) => {
-    const cols = Array.from(group.querySelectorAll('col'))
-    return cols.length > 0 ? cols : [group]
-  })
-}
-
-/** Pinned columns lead the table, their cells are `position: sticky`. */
+/** Pinned columns lead the table. */
 function countPinnedColumns(table: HTMLTableElement) {
-  const cells = getLeafHeaderCells(table)
-  const count = cells.findIndex((cell) => cell.style.position !== 'sticky')
+  const cells = getColumnCells(table)
+  const count = cells.findIndex(
+    (cell) => !cell.hasAttribute(PINNED_CELL_ATTRIBUTE),
+  )
   return count === -1 ? cells.length : count
 }
 
