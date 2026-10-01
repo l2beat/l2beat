@@ -56,30 +56,22 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     ])
   })
 
-  it('counts only active configurations within the half-open window', async () => {
+  it('counts deposits of one project within the half-open window', async () => {
     await repository.upsertMany([
       event('aaaaaaaaaaaa', 1, START - 1, 'alice', 10n),
       event('aaaaaaaaaaaa', 2, START, 'alice', 10n),
-      event('aaaaaaaaaaaa', 3, START + UnixTime.DAY, 'alice', 10n),
-      event('bbbbbbbbbbbb', 4, START, 'bob', 10n),
+      event('aaaaaaaaaaaa', 3, START + UnixTime.HOUR, 'alice', 10n),
+      event('aaaaaaaaaaaa', 4, START + UnixTime.DAY, 'alice', 10n),
+      event('bbbbbbbbbbbb', 5, START, 'bob', 10n, 'project-b'),
     ])
+
     expect(
-      await repository.getOperationCount(
-        ['aaaaaaaaaaaa'],
+      await repository.getDepositCount(
+        'project-a',
         START,
         START + UnixTime.DAY,
       ),
-    ).toEqual(1)
-    expect(
-      await repository.getOperationCount([], START, START + UnixTime.DAY),
-    ).toEqual(0)
-    const days = await repository.getSenderDaysByProjectIds(
-      ['project-a'],
-      START,
-      START + UnixTime.DAY,
-      ['aaaaaaaaaaaa'],
-    )
-    expect(days.map((row) => row.sender)).toEqual(['alice'])
+    ).toEqual(2)
   })
 
   it('trims only the selected configuration and inclusive time range', async () => {

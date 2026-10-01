@@ -105,6 +105,35 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
     })
   })
 
+  it('attaches coverage to an available summary', () => {
+    const project = makeProject()
+    const series = getPrivacyAnonymitySetSeries(project)
+    const configurations = series.map((item) =>
+      configuration(item.configurationId, CURRENT_DAY),
+    )
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      series,
+      configurations,
+      [senderDay('eth', 'a', 10n)],
+      CURRENT_DAY,
+      { attributed: 8, total: 10 },
+    )
+
+    expect(result).toEqual({
+      status: 'available',
+      value: 1,
+      label: '≥1 ETH',
+      syncingLabels: [],
+      coverage: { attributed: 8, total: 10 },
+      bucketType: 'pool',
+      chain: 'ethereum',
+      formattedAmount: '1',
+      token: 'ETH',
+    })
+  })
+
   it('keeps the earlier series when depositor counts tie', () => {
     const project = makeProject()
     const series = getPrivacyAnonymitySetSeries(project)

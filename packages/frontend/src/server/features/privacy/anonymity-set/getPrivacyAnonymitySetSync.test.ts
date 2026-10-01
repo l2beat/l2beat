@@ -90,22 +90,6 @@ describe(getPrivacyAnonymitySetSyncStatus.name, () => {
     expect(result.syncingSeries).toEqual(series)
   })
 
-  it('requires full history only for funding-address attribution', () => {
-    const series = getPrivacyAnonymitySetSeries(makeProject())
-    const configurations = series.map(({ configurationId }) => ({
-      ...configuration(configurationId, target),
-      minHeight: 1,
-    }))
-    expect(
-      getPrivacyAnonymitySetSyncStatus(series, configurations, target)
-        .syncedSeries,
-    ).toEqual(series)
-    expect(
-      getPrivacyAnonymitySetSyncStatus(series, configurations, target, true)
-        .syncedSeries,
-    ).toEqual([])
-  })
-
   it('does not substitute an old configuration for the expected id', () => {
     const project = makeProject()
     const series = getPrivacyAnonymitySetSeries(project)

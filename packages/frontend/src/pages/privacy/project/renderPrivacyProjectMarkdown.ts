@@ -88,7 +88,7 @@ function getFacts(entry: ProjectPrivacyEntry) {
         ]),
     relayerStat && {
       label: RELAYER_STAT_COPY[relayerStat.kind].title,
-      value: relayerStat.syncing ? 'Syncing' : formatCount(relayerStat.value),
+      value: formatCount(relayerStat.value),
     },
     entry.trackedOn.length > 0 && {
       label: 'Tracked on',

@@ -282,7 +282,7 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    anonymitySet: { type: 'fundingAddresses' },
+    anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',
       metric: 'paidFinalizers',
