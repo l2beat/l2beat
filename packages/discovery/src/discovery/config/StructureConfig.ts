@@ -128,15 +128,15 @@ export const _EntrypointsFile = {
 export const EntrypointsFile = v.object(_EntrypointsFile)
 export type EntrypointsFile = v.infer<typeof EntrypointsFile>
 
+export const ConfigName = v.string().check((v) => v.length >= 1)
+export const InitialAddresses = v.array(
+  v.string().transform((v) => ChainSpecificAddress(v)),
+)
+
 export const _StructureConfig = {
-  name: v
-    .string()
-    .check((v) => v.length >= 1)
-    .optional(),
+  name: ConfigName.optional(),
   discoverLibraries: v.boolean().optional(),
-  initialAddresses: v
-    .array(v.string().transform((v) => ChainSpecificAddress(v)))
-    .optional(),
+  initialAddresses: InitialAddresses.optional(),
   maxAddresses: v
     .number()
     .check((x) => x >= 0)
