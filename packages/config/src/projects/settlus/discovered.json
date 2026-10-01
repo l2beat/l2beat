@@ -2528,7 +2528,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25990142 },
-  "permissionsConfigHash": "0xa8a9a543e4bb05b4dbb8f6ef2e70999e66d8ca4721205851d307f32bd0eb772a",
+  "permissionsConfigHash": "0x71bbd792c504a4bcada095084b8c9bce178883eaba7b90ac25c353deebcfae14",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -2683,6 +2683,12 @@
           "via": [
             { "address": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",

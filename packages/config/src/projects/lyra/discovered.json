@@ -2171,7 +2171,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -2184,7 +2184,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25846602 },
-  "permissionsConfigHash": "0x2bc474e5c5bce09e14f2abdedc97954caf55fbcb1f893952e0cd47f21f75dc13",
+  "permissionsConfigHash": "0xe7f3bf07cb67677768a8d72ab4bcbe018046c7b742503c420bc256b0a5f40ef1",
   "permissions": {
     "eth:0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e": {
       "receivedPermissions": [
@@ -2263,6 +2263,12 @@
           "permission": "interact",
           "from": "eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {

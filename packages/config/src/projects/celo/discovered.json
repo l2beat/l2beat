@@ -3473,7 +3473,7 @@
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
   "usedBlockNumbers": { "celo": 77143640, "ethereum": 25947079 },
-  "permissionsConfigHash": "0x95381a3bf0df3e982cae170884fc3ea5b923983c7d0fde8be8c2567fb2c26323",
+  "permissionsConfigHash": "0x6d73448dc7350d9687886e73bb98ba166a08513c3a6f42da6848b1971d5639a7",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
@@ -3586,6 +3586,12 @@
           "via": [
             { "address": "eth:0x783A434532Ee94667979213af1711505E8bFE374" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",

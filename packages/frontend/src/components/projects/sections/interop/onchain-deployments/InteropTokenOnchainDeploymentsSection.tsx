@@ -22,7 +22,10 @@ import {
   type DeploymentRow,
   interopTokenOnchainDeploymentsColumns,
 } from './columns'
-import { hasTokenRelations } from './relations-graph/graphSelectors'
+import {
+  getDeploymentsByVolume,
+  hasTokenRelations,
+} from './relations-graph/graphSelectors'
 import { TokenRelationsGraphView } from './relations-graph/TokenRelationsGraphView'
 
 const DEPLOYMENTS_PER_PAGE = 8
@@ -36,13 +39,7 @@ export function InteropTokenOnchainDeploymentsSection({
   graph,
   ...sectionProps
 }: InteropTokenOnchainDeploymentsSectionProps) {
-  const deployments = useMemo(
-    () =>
-      graph.nodes
-        .flatMap((node) => node.deployments)
-        .toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
-    [graph],
-  )
+  const deployments = useMemo(() => getDeploymentsByVolume(graph), [graph])
   const table = useTable<DeploymentRow>(
     'InteropTokenOnchainDeploymentsSection',
     {

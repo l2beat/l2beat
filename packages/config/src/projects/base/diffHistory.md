@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xe39a65fcf978dde460e767e94773f8d538aeed08
+
+# Diff at Wed, 30 Sep 2026 07:45:35 GMT:
+
+- id: 468329b6
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1785226129
+- current timestamp: 1785226129
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xd3856df25b04596eb6c2eb8757dd8c976ac167ed
 
 # Diff at Wed, 23 Sep 2026 05:45:28 GMT:

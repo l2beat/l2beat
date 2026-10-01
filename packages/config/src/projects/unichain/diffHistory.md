@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x1e3d0331bebd1da0eb6ee1253efdcc4dfce6af29
+
+# Diff at Tue, 29 Sep 2026 17:47:06 GMT:
+
+- id: 0188fdc9
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1783324564
+- current timestamp: 1783324564
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783324564 (main branch discovery), not current.
+
+```diff
+    contract UnichainProxyAdminOwner (eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2F12d621a16e2d3285929C9996f478508951dFe4","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x6f04ad7d50d03ba7d938ac729234f673fb4e8aa6
 
 # Diff at Wed, 23 Sep 2026 05:56:12 GMT:

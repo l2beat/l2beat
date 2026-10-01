@@ -17,10 +17,8 @@ import { useTable } from '~/hooks/useTable'
 import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
-import {
-  CountWithAttesters,
-  VERIFIER_STATUS_ORDER,
-} from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
+import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
+import { VERIFIER_STATUS_ORDER } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import type { HomeTopZkProver } from '../toHomeTopZkProver'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'

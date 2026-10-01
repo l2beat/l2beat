@@ -75,6 +75,8 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
       'https://l2beat.com/privacy/projects/{slug}.md',
       'https://l2beat.com/interop/protocols/{slug}.md',
+      'https://l2beat.com/zk-catalog/{slug}.md',
+      'https://l2beat.com/interop/tokens/{slug}.md',
     ])
   })
 
@@ -82,7 +84,7 @@ describe(createLlmsTxtRouter.name, () => {
     const body = await getLlmsTxt()
 
     const links = getAllLinks(body)
-    expect(body.length).toBeLessThan(11_000)
+    expect(body.length).toBeLessThan(12_000)
     expect(links.length).toBeLessThan(60)
     expect(links.map((l) => l.url)).not.toInclude(
       'https://l2beat.com/layer2s/projects/arbitrum',
@@ -158,8 +160,9 @@ function parseLink(line: string) {
 }
 
 /** Express writes a path parameter as `:slug`, llms.txt as `{slug}`. */
+/** llms.txt documents the shortest URL of a page, without its optional segments. */
 function toUrlTemplate(routePath: string) {
-  return routePath.replaceAll(/:(\w+)/g, '{$1}')
+  return routePath.replaceAll(/\{[^}]*\}/g, '').replaceAll(/:(\w+)/g, '{$1}')
 }
 
 function getRegisteredPaths(router: express.Router) {

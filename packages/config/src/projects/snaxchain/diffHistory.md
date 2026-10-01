@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x5315a5d5182760167940d9ad2082dec00b87553c
+
+# Diff at Tue, 29 Sep 2026 17:47:03 GMT:
+
+- id: c027a742
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1784563638
+- current timestamp: 1784563638
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784563638 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0fD13C7f11d95070cE5CF31BAf1aCf9355BF4578","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xd264bdd0f506f816f5b7c1962dc42403bc96cf9e
 
 # Diff at Wed, 23 Sep 2026 05:49:44 GMT:

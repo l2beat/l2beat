@@ -24,7 +24,10 @@ import {
 } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
-import { getInteropTokenPageData } from './token/getInteropTokenPageData'
+import {
+  getInteropTokenMarkdown,
+  getInteropTokenPageData,
+} from './token/getInteropTokenPageData'
 import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
@@ -167,14 +170,23 @@ export function createInteropRouter(
     },
   )
 
+  const getTokenMarkdown = (req: Request<{ slug: string }>) =>
+    getInteropTokenMarkdown(req.params.slug, manifest, cache)
+
+  // `.md` ends whichever segment is last, like the page URL it stands for.
+  // Registered first: the page route would take "usdc01.md" as the slug.
+  router.get(
+    '/interop/tokens/:slug{/:issuer}{/:symbol}.md',
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdown(getTokenMarkdown),
+  )
+
   // The optional issuer and symbol segments only make the URL readable - the
   // token is resolved by the slug (its id), so they are validated away here.
   router.get(
     '/interop/tokens/:slug{/:issuer}{/:symbol}',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-      query: InteropQuery,
-    }),
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    serveMarkdownIfPreferred(getTokenMarkdown),
     async (req, res) => {
       const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {
