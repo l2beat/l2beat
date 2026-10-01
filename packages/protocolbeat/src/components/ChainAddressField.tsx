@@ -1,18 +1,13 @@
 import clsx from 'clsx'
 import { useState } from 'react'
-import { AVAILABLE_CHAINS } from '../config/chains'
-import { IconChevronDown } from '../icons/IconChevronDown'
 import { isValidEthereumAddress } from '../utils/isValidEthereumAddress'
 import { splitChainPrefix } from '../utils/splitChainPrefix'
+import { ChainPicker } from './ChainPicker'
 
 export interface ChainAddress {
   chain: string
   address: string
 }
-
-const CHAINS_BY_DISPLAY_NAME = AVAILABLE_CHAINS.toSorted((a, b) =>
-  a.displayName.localeCompare(b.displayName),
-)
 
 export function ChainAddressField(props: {
   id: string
@@ -44,23 +39,12 @@ export function ChainAddressField(props: {
             : 'border-coffee-600 focus-within:border-coffee-400',
         )}
       >
-        <div className="relative shrink-0 border-coffee-600 border-r">
-          <select
-            aria-label={`${props.label} chain`}
-            className="h-full w-28 cursor-pointer appearance-none bg-transparent py-2 pr-7 pl-3 text-sm focus:outline-none sm:w-36"
-            value={props.value.chain}
-            onChange={(e) =>
-              props.onChange({ ...props.value, chain: e.target.value })
-            }
-          >
-            {CHAINS_BY_DISPLAY_NAME.map((c) => (
-              <option key={c.chainId} value={c.shortName}>
-                {c.displayName}
-              </option>
-            ))}
-          </select>
-          <IconChevronDown className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-2 text-coffee-400" />
-        </div>
+        <ChainPicker
+          label={props.label}
+          value={props.value.chain}
+          onChange={(chain) => props.onChange({ ...props.value, chain })}
+          onPicked={() => document.getElementById(props.id)?.focus()}
+        />
         <input
           id={props.id}
           type="text"

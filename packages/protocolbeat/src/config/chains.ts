@@ -3,6 +3,7 @@ export interface Chain {
   displayName: string
   chainId: number
   shortName: string
+  iconSlug?: string
 }
 
 export const AVAILABLE_CHAINS: Chain[] = [
@@ -30,6 +31,7 @@ export const AVAILABLE_CHAINS: Chain[] = [
     displayName: 'Polygon PoS',
     chainId: 137,
     shortName: 'matic',
+    iconSlug: 'polygon-pos',
   },
   {
     name: 'bsc',
@@ -58,12 +60,14 @@ export const AVAILABLE_CHAINS: Chain[] = [
     displayName: 'ZKsync Era',
     chainId: 324,
     shortName: 'zksync',
+    iconSlug: 'zksync-era',
   },
   {
     name: 'sepolia',
     displayName: 'Sepolia',
     chainId: 11155111,
     shortName: 'sep',
+    iconSlug: 'ethereum',
   },
   { name: 'scroll', displayName: 'Scroll', chainId: 534352, shortName: 'scr' },
   { name: 'mantle', displayName: 'Mantle', chainId: 5000, shortName: 'mantle' },
@@ -142,3 +146,15 @@ export const AVAILABLE_CHAINS: Chain[] = [
     shortName: 'robinhood',
   },
 ].toSorted((a, b) => a.chainId - b.chainId)
+
+export function getChain(shortName: string): Chain {
+  const chain = AVAILABLE_CHAINS.find((c) => c.shortName === shortName)
+  if (chain === undefined) {
+    throw new Error(`Unknown chain short name: ${shortName}`)
+  }
+  return chain
+}
+
+export function getChainIconUrl(chain: Chain): string {
+  return `https://l2beat.com/icons/${chain.iconSlug ?? chain.name}.png`
+}
