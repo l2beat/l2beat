@@ -82,6 +82,11 @@ export function DaFlowsCard({
     () => new Set(graph?.nodes.map((node) => node.id)),
     [graph],
   )
+  // posters without a bubble of their own are part of "Others"
+  const getNodeId = useCallback(
+    (posterId: string) => (ringIds.has(posterId) ? posterId : OTHERS_ID),
+    [ringIds],
+  )
 
   return (
     <FlowsGraphContext.Provider
@@ -103,9 +108,12 @@ export function DaFlowsCard({
             particleScale={unit.scale}
             timeScale={TIME_SCALE}
             getCaption={getCaption}
-            className="pt-4 pb-4 max-lg:order-none"
-            // the labels beside the ring need room outside its square
-            maxSizeClassName="max-w-[max(min(70svh,calc(100svh-20rem)),30rem)] lg:h-full lg:w-auto lg:max-w-[calc(100%-5rem)]"
+            className="pt-4 pb-4 max-md:pt-8 max-lg:order-none"
+            // Above the list, the graph has the screen to itself once
+            // scrolled to, so it may be as tall as the screen less the room
+            // for the card and the legend. Beside the list, the labels beside
+            // the ring need room outside its square
+            maxSizeClassName="max-w-[max(calc(100svh-9rem),30rem)] lg:h-full lg:w-auto lg:max-w-[calc(100%-5rem)]"
           />
           <DaFlowsLegend
             totalPosted={graph?.totalPosted ?? 0}
@@ -122,8 +130,7 @@ export function DaFlowsCard({
             isLoading={isLoading}
             highlighted={highlighted}
             unit={unit}
-            // posters without a bubble of their own are part of "Others"
-            getNodeId={(id) => (ringIds.has(id) ? id : OTHERS_ID)}
+            getNodeId={getNodeId}
             onSelect={toggleHighlightedChain}
           />
         </div>

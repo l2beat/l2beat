@@ -14,6 +14,9 @@ const RING_RADIUS_RATIO = 0.4
 // A hub keeps its labels outside the ring, away from the spokes, so the
 // ring is pulled in to leave them room
 const HUB_RING_RADIUS_RATIO = 0.33
+// On a small screen the labels go above and below the bubbles instead, so
+// the ring can spread out towards the sides
+const SMALL_SCREEN_HUB_RING_RADIUS_RATIO = 0.38
 
 /**
  * Places chains evenly around a circle and sizes each bubble
@@ -67,8 +70,7 @@ export function computeGraphLayout(
 
   const centerX = size / 2
   const centerY = size / 2
-  const circleRadius =
-    size * (hasCenter ? HUB_RING_RADIUS_RATIO : RING_RADIUS_RATIO)
+  const circleRadius = size * getRingRadiusRatio(hasCenter, isSmallScreen)
 
   if (hasCenter) {
     layout.set(centerChainId, {
@@ -103,6 +105,13 @@ export function computeGraphLayout(
   }
 
   return layout
+}
+
+function getRingRadiusRatio(hasCenter: boolean, isSmallScreen: boolean) {
+  if (!hasCenter) return RING_RADIUS_RATIO
+  return isSmallScreen
+    ? SMALL_SCREEN_HUB_RING_RADIUS_RATIO
+    : HUB_RING_RADIUS_RATIO
 }
 
 /**

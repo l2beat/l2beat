@@ -1,7 +1,9 @@
 import { formatInteger, formatSeconds, pluralize } from '@l2beat/shared-pure'
-import { type RefObject, useEffect, useRef } from 'react'
+import { type RefObject, useEffect, useRef, useState } from 'react'
+import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ViewDetailsLink } from '~/components/ViewDetailsLink'
+import { ChevronIcon } from '~/icons/Chevron'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import type { DaFlowsPoster } from './buildDaFlowsGraph'
@@ -24,6 +26,10 @@ interface Props {
 const ROW_GRID =
   'grid grid-cols-[1.25rem_1.25rem_minmax(0,1fr)_4.5rem_3rem] items-center gap-x-2'
 
+// Where the list is not cut to the height of the graph beside it, it would
+// run on for every project, so it starts with the largest ones
+const COLLAPSED_COUNT = 10
+
 /**
  * The exact numbers behind the graph. Particles show who posts a lot and who
  * posts little; nobody can read a byte count off a stream of dots. The same
@@ -42,6 +48,14 @@ export function DaFlowsPosters({
   const listRef = useRef<HTMLOListElement>(null)
   useScrollToHighlighted(listRef, highlighted)
   useBottomFade(listRef, posters)
+
+  const [expanded, setExpanded] = useState(false)
+  // What was picked on the graph has to be in the list to be seen there
+  useEffect(() => {
+    if (highlighted === undefined || !posters) return
+    const first = posters.findIndex((p) => getNodeId(p.id) === highlighted)
+    if (first >= COLLAPSED_COUNT) setExpanded(true)
+  }, [highlighted, posters, getNodeId])
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
@@ -86,7 +100,9 @@ export function DaFlowsPosters({
       </div>
       <ol
         ref={listRef}
-        className="-mx-2 mt-1 min-h-0 flex-1 overflow-y-auto"
+        // two columns where it spans a tablet, so its rows are not stretched
+        // across it with nothing in the middle
+        className="-mx-2 mt-1 min-h-0 flex-1 overflow-y-auto md:max-lg:columns-2 md:max-lg:gap-x-6"
         style={{
           maskImage: `linear-gradient(to bottom, black calc(100% - var(${FADE_VAR}, 0px)), transparent)`,
         }}
@@ -100,7 +116,14 @@ export function DaFlowsPosters({
           : posters.map((poster, index) => {
               const nodeId = getNodeId(poster.id)
               return (
-                <li key={poster.id} data-node-id={nodeId}>
+                <li
+                  key={poster.id}
+                  data-node-id={nodeId}
+                  className={cn(
+                    'break-inside-avoid',
+                    !expanded && index >= COLLAPSED_COUNT && 'max-lg:hidden',
+                  )}
+                >
                   <button
                     type="button"
                     onClick={() => onSelect(nodeId)}
@@ -143,6 +166,19 @@ export function DaFlowsPosters({
               )
             })}
       </ol>
+      {posters && posters.length > COLLAPSED_COUNT && (
+        <Button
+          variant="outline"
+          className="group mx-auto mt-3 flex w-max items-center gap-2.5 lg:hidden"
+          data-state={expanded ? 'open' : 'closed'}
+          onClick={() => setExpanded((current) => !current)}
+        >
+          <span className="font-bold text-sm">
+            {expanded ? 'Show less' : `Show all ${posters.length} projects`}
+          </span>
+          <ChevronIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
+        </Button>
+      )}
     </div>
   )
 }
