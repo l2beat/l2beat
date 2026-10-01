@@ -110,6 +110,8 @@ function ChainBubble({
 }: ChainBubbleProps) {
   const { x, y, radius } = layout
   const iconSize = radius * 1.1
+  // A full ring around a hub on a small screen packs its labels closest
+  const isCompact = isSmallScreen && awayFrom !== undefined
   const nameLines = getChainNameLines(chain.name, isSmallScreen)
   const nameLineHeight = isSmallScreen ? 11 : 12
   const { labelX, nameY, captionY, textAnchor } = getLabelPosition(
@@ -152,7 +154,11 @@ function ChainBubble({
         textAnchor={textAnchor}
         className={cn(
           'fill-primary font-medium',
-          isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
+          isCompact
+            ? 'text-label-value-12'
+            : isSmallScreen
+              ? 'text-label-value-13'
+              : 'text-label-value-14',
         )}
       >
         {nameLines.map((line, index) => (
@@ -167,7 +173,8 @@ function ChainBubble({
           y={captionY}
           textAnchor={textAnchor}
           className={cn(
-            'font-medium text-label-value-12',
+            'font-medium',
+            isCompact ? 'text-subtitle-11' : 'text-label-value-12',
             CAPTION_TONE_CLASS_NAMES[caption.tone],
           )}
         >
@@ -359,13 +366,16 @@ const CAPTION_LINE_HEIGHT = 14
 // Below this share of the direction being horizontal, a bubble counts as
 // sitting at the top or bottom of the ring rather than on its side
 const SIDE_THRESHOLD = 0.35
+// A small screen has less room above and below than a full ring needs, so
+// only the bubbles right at the top and bottom take their labels there
+const SMALL_SCREEN_SIDE_THRESHOLD = 0.12
 
 /**
  * Under the bubble by default. Around a hub that spot lies on the spoke, so
  * the label moves to the outside of the ring: above or below the bubbles at
- * the top and bottom, next to the ones on the sides.
- * A small screen has no room beside the ring, so there every label goes
- * above or below its bubble, whichever is further from the hub.
+ * the top and bottom, next to the ones on the sides. A full ring leaves no
+ * room between neighbours for labels above and below them, so this holds on
+ * a small screen too, with even fewer labels above and below.
  */
 export function getLabelPosition(
   { x, y, radius }: ChainNodeLayout,
@@ -395,7 +405,10 @@ export function getLabelPosition(
   const dirX = (x - awayFrom.x) / distance
   const dirY = (y - awayFrom.y) / distance
 
-  if (isSmallScreen || Math.abs(dirX) < SIDE_THRESHOLD) {
+  const sideThreshold = isSmallScreen
+    ? SMALL_SCREEN_SIDE_THRESHOLD
+    : SIDE_THRESHOLD
+  if (Math.abs(dirX) < sideThreshold) {
     const nameY =
       dirY < 0
         ? y - radius - 10 - CAPTION_LINE_HEIGHT - namesHeight

@@ -2,7 +2,6 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
@@ -15,9 +14,6 @@ import { buildDaFlowsGraph, OTHERS_ID } from './buildDaFlowsGraph'
 import { DaFlowsPosters } from './DaFlowsPosters'
 import { type DaFlowsUnit, getDaFlowsUnit, TIME_SCALE } from './daFlowsUnit'
 import { formatPosted } from './formatPosted'
-
-// A phone has room for the labels of this many bubbles, and no more
-const SMALL_SCREEN_RING_SIZE = 7
 
 const getCaption: GetFlowsGraphCaption = (node) =>
   node ? { text: formatPosted(node.totalVolume), tone: 'neutral' } : undefined
@@ -37,8 +33,7 @@ export function DaFlowsCard({
 
   const unit = getDaFlowsUnit(daLayer.id)
   // the DA layer takes the middle, so the whole ring is free
-  const ringSize =
-    useBreakpoint() === 'xs' ? SMALL_SCREEN_RING_SIZE : MAX_SELECTED_CHAINS
+  const ringSize = MAX_SELECTED_CHAINS
 
   const graph = useMemo(
     () =>

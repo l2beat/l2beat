@@ -8,15 +8,16 @@ export type FlowsGraphLayout = Map<string, ChainNodeLayout>
 const MIN_BUBBLE_RADIUS = 8
 const MAX_BUBBLE_RADIUS = 50
 const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
+// Around a hub a small screen still holds a full ring, labels beside it
+const SMALL_SCREEN_HUB_MAX_BUBBLE_RADIUS = 26
 const CENTER_BUBBLE_RADIUS = 58
 const SMALL_SCREEN_CENTER_BUBBLE_RADIUS = 42
 const RING_RADIUS_RATIO = 0.4
 // A hub keeps its labels outside the ring, away from the spokes, so the
 // ring is pulled in to leave them room
 const HUB_RING_RADIUS_RATIO = 0.33
-// On a small screen the labels go above and below the bubbles instead, so
-// the ring can spread out towards the sides
-const SMALL_SCREEN_HUB_RING_RADIUS_RATIO = 0.38
+// and more so on a small screen, where the labels take up more of the width
+const SMALL_SCREEN_HUB_RING_RADIUS_RATIO = 0.26
 
 /**
  * Places chains evenly around a circle and sizes each bubble
@@ -60,9 +61,11 @@ export function computeGraphLayout(
       .filter((cv) => !hasCenter || cv.chainId !== centerChainId)
       .map((cv) => cv.totalVolume),
   )
-  const maxBubbleRadius = isSmallScreen
-    ? SMALL_SCREEN_MAX_BUBBLE_RADIUS
-    : MAX_BUBBLE_RADIUS
+  const maxBubbleRadius = !isSmallScreen
+    ? MAX_BUBBLE_RADIUS
+    : hasCenter
+      ? SMALL_SCREEN_HUB_MAX_BUBBLE_RADIUS
+      : SMALL_SCREEN_MAX_BUBBLE_RADIUS
 
   const orderedIds = hasCenter
     ? startFrom(ringIds, topChainId)
