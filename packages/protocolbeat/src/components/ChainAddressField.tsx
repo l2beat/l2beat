@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { AVAILABLE_CHAINS } from '../config/chains'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { isValidEthereumAddress } from '../utils/isValidEthereumAddress'
+import { splitChainPrefix } from '../utils/splitChainPrefix'
 
 export interface ChainAddress {
   chain: string
@@ -66,13 +67,13 @@ export function ChainAddressField(props: {
           autoFocus={props.autoFocus}
           autoComplete="off"
           spellCheck={false}
-          placeholder="0x…"
+          placeholder="0x… or eth:0x…"
           className="min-w-0 flex-1 bg-transparent px-3 py-2 font-mono text-sm placeholder:font-sans placeholder:text-coffee-400/60 focus:outline-none"
           value={props.value.address}
           onBlur={() => setBlurred(true)}
           onChange={(e) => {
             setBlurred(false)
-            props.onChange({ ...props.value, address: e.target.value })
+            props.onChange(withChainFromInput(props.value, e.target.value))
           }}
         />
       </div>
@@ -85,4 +86,12 @@ export function ChainAddressField(props: {
       )}
     </div>
   )
+}
+
+function withChainFromInput(current: ChainAddress, input: string) {
+  const parsed = splitChainPrefix(input)
+  if (parsed.chain === undefined) {
+    return { chain: current.chain, address: input }
+  }
+  return { chain: parsed.chain, address: parsed.address }
 }
