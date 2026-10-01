@@ -1,4 +1,3 @@
-import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { AddressKey } from './AddressKey'
 import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
