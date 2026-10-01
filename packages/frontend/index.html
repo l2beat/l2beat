@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- iOS Safari tints its status bar with the root background, so on mobile it matches the top navbar. -->
+<!-- iOS Safari tints its status bar with html + body backgrounds blended, so on mobile they match the top navbar.
+     The page gray comes from SidebarProvider instead, which is why body has no background. -->
 <html lang="en" class="has-[.smooth-scroll]:scroll-smooth bg-header-primary lg:bg-background">
 
 <head>
@@ -8,7 +9,7 @@
 </head>
 
 <body
-  class="bg-background text-base text-primary md:text-lg font-roboto selection:bg-brand/30 dark:selection:bg-brand/50">
+  class="text-base text-primary md:text-lg font-roboto selection:bg-brand/30 dark:selection:bg-brand/50">
   <script><!--ssr-data--></script>
   <script><!--env-data--></script>
   <div id="root"><!--app-html--></div>
