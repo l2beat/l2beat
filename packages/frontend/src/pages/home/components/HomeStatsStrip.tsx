@@ -21,7 +21,6 @@ interface Tile {
   secondaryMetric?: TileMetric
   href: string
   icon: React.ReactNode
-  iconBgClassName: string
 }
 
 export function HomeStatsStrip({
@@ -36,46 +35,38 @@ export function HomeStatsStrip({
       label: 'Layer 2s',
       metric: { count: counts.l2, unit: 'projects' },
       href: '/layer2s/summary',
-      icon: <L2Icon className="size-5 stroke-pink-100" />,
-      iconBgClassName: 'bg-pink-100/10',
+      icon: <L2Icon className="size-5 stroke-secondary" />,
     },
     {
       label: 'Interop',
       metric: { count: counts.interop, unit: 'chains' },
       secondaryMetric: { count: counts.interopProtocols, unit: 'protocols' },
       href: '/interop/summary',
-      icon: <BridgesIcon className="size-5 stroke-orange-500" />,
-      iconBgClassName: 'bg-orange-500/10',
+      icon: <BridgesIcon className="size-5 stroke-secondary" />,
     },
     {
       label: 'Privacy',
       metric: { count: counts.privacy, unit: 'projects' },
       href: '/privacy',
-      icon: <PrivacyIcon className="size-5 stroke-green-450" />,
-      iconBgClassName: 'bg-green-450/10',
+      icon: <PrivacyIcon className="size-5 stroke-secondary" />,
     },
     {
       label: 'Data Availability',
       metric: { count: counts.dataAvailability, unit: 'projects' },
       href: '/data-availability/summary',
-      icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
-      iconBgClassName: 'bg-blue-500/10',
+      icon: <DataAvailabilityIcon className="size-5 fill-secondary" />,
     },
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
       href: '/zk-catalog',
-      icon: (
-        <ZkCatalogIcon className="size-5 stroke-purple-500 dark:stroke-purple-450" />
-      ),
-      iconBgClassName: 'bg-purple-500/10 dark:bg-purple-450/10',
+      icon: <ZkCatalogIcon className="size-5 stroke-secondary" />,
     },
     {
       label: 'Ecosystems',
       metric: { count: counts.ecosystems, unit: 'ecosystems' },
       href: '/ecosystems/agglayer',
-      icon: <EcosystemsIcon className="size-5 stroke-teal-500" />,
-      iconBgClassName: 'bg-teal-500/10',
+      icon: <EcosystemsIcon className="size-5 stroke-secondary" />,
     },
   ]
 
@@ -104,8 +95,7 @@ function StatTile({ tile }: { tile: Tile }) {
     >
       <div
         className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
-          tile.iconBgClassName,
+          'flex size-6 shrink-0 items-center justify-center rounded-md bg-surface-secondary transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
         )}
       >
         {tile.icon}

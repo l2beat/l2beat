@@ -1,22 +1,21 @@
-import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
+import type { Stage } from '@l2beat/config'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   getChangelogEntries,
   selectActiveWhatsNewEntry,
 } from '~/server/features/changelog/getChangelogEntries'
-import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeL2Charts } from '~/server/features/home/getHomeL2Charts'
-import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getHomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import { TOP_PROTOCOLS_LIMIT } from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
-import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
-import { getL2SummaryData } from '~/server/features/layer2s/summary/getL2SummaryEntries'
-import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
-import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
+import {
+  getL2SummaryData,
+  type L2SummaryEntry,
+} from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
-import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -28,19 +27,18 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
-import type { HomeL2CategoryCounts } from './components/HomeL2Card'
-import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
+import type { HomeWhatsNewItem } from './components/HomeWhatsNewSection'
+import { getHomeCropsProjects } from './getHomeCropsProjects'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
+import { getHomeResearch } from './getHomeResearch'
 import { HOME_CHART_RANGE } from './homeChartRanges'
-import { toHomeTopZkProver } from './toHomeTopZkProver'
 
-const TOP_CHAINS_COUNT = 5
-const TOP_PRIVACY_PROTOCOLS_COUNT = 5
-const TOP_ZK_PROVERS_COUNT = 5
-const RECENT_PROJECTS_COUNT = 6
+const TOP_L2_PROJECTS_COUNT = 5
+const RECENT_PROJECTS_COUNT = 5
 
 export async function getHomeData(
   req: Request,
@@ -65,7 +63,7 @@ export async function getHomeData(
       metadata: getMetadata(manifest, {
         title: 'L2BEAT',
         description:
-          'Track the Ethereum ecosystem in one view: L2s and Ethereum metrics, interoperability flows, privacy protocols and ZK provers, ongoing anomalies, new projects, and the latest additions to L2BEAT.',
+          'Track the Ethereum ecosystem in one view: Layer 2s, privacy protocols, Ethereum and its interoperability flows, projects evaluated across the CROPS framework, and our latest research.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
@@ -90,35 +88,23 @@ async function getCachedData(manifest: Manifest) {
   })
   const l2ProjectSlugById = new Map(l2Projects.map((p) => [p.id, p.slug]))
 
-  const interopChainsRaw = getInteropChains()
-  const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
-    (chain) => ({
+  const interopChains: InteropChainWithIcon[] = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
       href: getInteropChainHref(chain.id, l2ProjectSlugById),
+    }))
+  const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
+  const flowProtocols: InteropFlowsProtocol[] = interopProtocols.map(
+    (protocol) => ({
+      id: protocol.id,
+      name: protocol.interopConfig.name ?? protocol.name,
+      slug: protocol.slug,
+      iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
     }),
   )
-  const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
 
-  const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
-  const protocolIds = interopProtocols.map((protocol) => protocol.id)
-
-  // Order chains and pick defaults the same way as the interop summary page
-  // (top chains by 24h volume) so both flows charts show the same data.
-  const activeChainIds = activeInteropChains.map((chain) => chain.id)
-  const defaultFlowChainOrder =
-    activeChainIds.length > 0 && protocolIds.length > 0
-      ? await getFlowChainOrderByVolume(activeChainIds, protocolIds)
-      : activeChainIds
-
-  const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
-    activeInteropChains,
-    defaultFlowChainOrder,
-  )
-
-  // The interop prefetch inputs must match the client queries exactly
-  // (HomeTopInteropProtocolsCard, HomeInteropCard) so hydration avoids a
-  // refetch.
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
   const [
@@ -126,106 +112,114 @@ async function getCachedData(manifest: Manifest) {
     recentProjects,
     projectCounts,
     recentChanges,
-    ongoingAnomalies,
     l2Charts,
     ethereumCharts,
-    ethereumEconomicSecurity,
-    privacyEntries,
-    zkCatalogEntries,
+    interopFlows,
+    privacy,
+    cropsProjects,
   ] = await Promise.all([
     getL2SummaryData(),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
     getRecentChangesOverview(),
-    getOngoingAnomaliesOverview(),
     getHomeL2Charts(chartRange),
     getHomeEthereumCharts(chartRange),
-    getEthereumEconomicSecurity(),
-    getPrivacyEntriesForHome(),
-    getZkCatalogEntries(),
-    defaultSelectedFlowChains.length > 0
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.interop.dashboard.queryOptions({
-            from: defaultSelectedFlowChains,
-            to: defaultSelectedFlowChains,
-            limit: TOP_PROTOCOLS_LIMIT,
-          }),
-        )
-      : undefined,
-    defaultSelectedFlowChains.length >= MIN_SELECTED_CHAINS &&
-    protocolIds.length >= MIN_SELECTED_PROTOCOLS
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.interop.flows.queryOptions({
-            chains: defaultSelectedFlowChains,
-            protocolIds,
-          }),
-        )
-      : undefined,
+    getInteropFlowsForHome(interopChains, flowProtocols, helpers),
+    getHomePrivacyData(chartRange),
+    getHomeCropsProjects(manifest),
   ])
-
-  const summaryTabs = summaryData.tabs
-  const l2CategoryCounts: HomeL2CategoryCounts = {
-    rollups: summaryTabs.rollups.length,
-    validiumsAndOptimiums: summaryTabs.validiumsAndOptimiums.length,
-  }
-
-  const protocols = interopProtocols.map((protocol) => ({
-    id: protocol.id,
-    name: protocol.interopConfig.name ?? protocol.name,
-    slug: protocol.slug,
-    iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
-  }))
-
-  const topChains = summaryTabs.rollups.slice(0, TOP_CHAINS_COUNT)
-  const topChainsTvsData = getHomeTopChainsTvsData(
-    topChains,
-    summaryData.sevenDayTvsBreakdown,
-  )
 
   return {
     queryState: helpers.dehydrate(),
     projectCounts,
-    topChains,
-    topChainsTvsData,
-    topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
-    topZkProvers: zkCatalogEntries
-      .slice(0, TOP_ZK_PROVERS_COUNT)
-      .map(toHomeTopZkProver),
+    cropsProjects,
     l2Charts,
+    topL2Projects: getTopL2Projects(
+      summaryData.tabs.rollups.slice(0, TOP_L2_PROJECTS_COUNT),
+      summaryData.sevenDayTvsBreakdown,
+    ),
+    privacy,
     ethereumCharts,
-    ethereumEconomicSecurity,
+    interopFlowChains: interopFlows.chains,
+    interopDefaultFlowChains: interopFlows.defaultSelectedChains,
+    flowProtocols,
     recentProjects,
-    interopChains: sortedChains,
-    interopProtocols: protocols,
-    defaultSelectedFlowChains,
-    l2CategoryCounts,
     recentChangesCount: recentChanges.count,
     recentChangesProjects: recentChanges.groups.map((group) => ({
       name: group.name,
       iconUrl: group.iconUrl,
     })),
-    ongoingAnomalies,
     whatsNewItem: getHomeWhatsNewItem(),
+    research: getHomeResearch(),
   }
 }
 
-async function getPrivacyEntriesForHome() {
-  const projects = await getPrivacyProjects()
-  return getPrivacySummaryEntries(projects)
-}
-
-async function getEthereumEconomicSecurity(): Promise<number | undefined> {
-  const ethereum = await ps.getProject({
-    id: ProjectId.ETHEREUM,
-    select: ['daLayer'],
-  })
-  if (!ethereum) {
-    return undefined
-  }
-  return getDaProjectEconomicSecurity(
-    ethereum.id,
-    ethereum.daLayer.economicSecurity,
+/**
+ * The interop page's own default selection: chains ordered by 24h volume, the
+ * top ones selected, every protocol. The flows query is prefetched with exactly
+ * what `HomeInteropSection` asks for on the client, so the graph and its
+ * stats hydrate instead of refetching.
+ */
+async function getInteropFlowsForHome(
+  interopChains: InteropChainWithIcon[],
+  protocols: InteropFlowsProtocol[],
+  helpers: ReturnType<typeof getSsrHelpers>,
+) {
+  const chainIds = interopChains.map((chain) => chain.id)
+  const protocolIds = protocols.map((protocol) => protocol.id)
+  const order =
+    chainIds.length > 0 && protocolIds.length > 0
+      ? await getFlowChainOrderByVolume(chainIds, protocolIds)
+      : chainIds
+  const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
+    interopChains,
+    order,
   )
+  if (
+    defaultSelectedFlowChains.length >= MIN_SELECTED_CHAINS &&
+    protocolIds.length >= MIN_SELECTED_PROTOCOLS
+  ) {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultSelectedFlowChains,
+        protocolIds,
+      }),
+    )
+  }
+  return {
+    chains: sortedChains,
+    defaultSelectedChains: defaultSelectedFlowChains,
+  }
+}
+
+export interface HomeTopL2Project {
+  id: string
+  name: string
+  href: string
+  iconUrl: string
+  stage: Stage | 'UnderReview' | 'NotApplicable'
+  isAppchain: boolean
+  tvs: number | undefined
+  tvsChange: number | undefined
+}
+
+function getTopL2Projects(
+  entries: L2SummaryEntry[],
+  breakdown: SevenDayTvsBreakdown,
+): HomeTopL2Project[] {
+  return entries.map((entry) => {
+    const tvs = breakdown.projects[entry.id.toString()]
+    return {
+      id: entry.id.toString(),
+      name: entry.name,
+      href: `/layer2s/projects/${entry.slug}`,
+      iconUrl: entry.icon,
+      stage: entry.stage.stage,
+      isAppchain: entry.capability === 'appchain',
+      tvs: tvs?.breakdown.total,
+      tvsChange: tvs?.change.total,
+    }
+  })
 }
 
 function getHomeWhatsNewItem(): HomeWhatsNewItem | undefined {

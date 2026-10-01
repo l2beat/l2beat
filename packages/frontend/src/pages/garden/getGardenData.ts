@@ -107,7 +107,7 @@ export async function getGardenData(
   }
 }
 
-function compareByCuratedOrder(
+export function compareByCuratedOrder(
   a: { id: ProjectId; name: string },
   b: { id: ProjectId; name: string },
 ): number {

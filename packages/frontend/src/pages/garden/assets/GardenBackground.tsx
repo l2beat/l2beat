@@ -1,5 +1,5 @@
+import { GARDEN_HILLS, Moon, Sun } from '~/components/garden/GardenSky'
 import { PageBackdrop } from '~/layouts/PageBackdrop'
-import { cn } from '~/utils/cn'
 
 /** A sky wash, a sun and two hills. In dark mode the day turns into night. */
 export function GardenBackground() {
@@ -14,70 +14,10 @@ export function GardenBackground() {
         viewBox="0 0 1200 160"
         preserveAspectRatio="none"
       >
-        <path
-          d="M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z"
-          className="fill-[#dcead3]/70 dark:fill-[#1b2415]/70"
-        />
-        <path
-          d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
-          className="fill-garden-border/70"
-        />
+        <path d={GARDEN_HILLS.back} className={GARDEN_HILLS.backClassName} />
+        <path d={GARDEN_HILLS.front} className={GARDEN_HILLS.frontClassName} />
       </svg>
     </PageBackdrop>
-  )
-}
-
-function Sun({ className }: { className?: string }) {
-  const rays = Array.from({ length: 8 }, (_, i) => i * 45)
-  return (
-    <svg
-      width={112}
-      height={112}
-      viewBox="0 0 112 112"
-      className={cn('overflow-visible text-garden-sun', className)}
-    >
-      <circle cx="56" cy="56" r="52" className="fill-garden-sun/25" />
-      <g
-        style={{
-          transformBox: 'fill-box',
-          transformOrigin: '50% 50%',
-          animation: 'garden-spin 90s linear infinite',
-        }}
-      >
-        {rays.map((angle) => (
-          <line
-            key={angle}
-            x1="56"
-            y1="14"
-            x2="56"
-            y2="24"
-            stroke="currentColor"
-            strokeWidth="5"
-            strokeLinecap="round"
-            transform={`rotate(${angle} 56 56)`}
-          />
-        ))}
-      </g>
-      <circle cx="56" cy="56" r="22" fill="currentColor" />
-      <circle cx="56" cy="56" r="22" className="fill-white/25" />
-    </svg>
-  )
-}
-
-function Moon({ className }: { className?: string }) {
-  return (
-    <svg
-      width={112}
-      height={112}
-      viewBox="0 0 112 112"
-      className={cn('overflow-visible text-garden-moon', className)}
-    >
-      <circle cx="56" cy="56" r="52" className="fill-garden-moon/10" />
-      <path
-        d="M52.93 34.22 A22 22 0 1 0 76.58 63.78 A19 19 0 1 1 52.93 34.22 Z"
-        fill="currentColor"
-      />
-    </svg>
   )
 }
 

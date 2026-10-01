@@ -1,6 +1,8 @@
 import { Fragment, useMemo, useState } from 'react'
+import { env } from '~/env'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
 import {
@@ -15,7 +17,6 @@ import {
   SidebarGroup,
   SidebarGroupItem,
   SidebarGroupLink,
-  SidebarGroupSmallLink,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,
@@ -24,23 +25,25 @@ import {
   useSidebar,
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
+import { CropPlant } from '../../garden/CropPlant'
+import { GardenScenery } from '../../garden/GardenSky'
 import { Logo } from '../../Logo'
 import { SocialLinks } from '../../SocialLinks'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
-import type { NavGroup, NavLink } from '../types'
+import type { NavGroup } from '../types'
 
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  sideLinks: NavLink[]
+  className?: string
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+export function NavSidebar({ groups, logoLink, className }: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
-    <Sidebar>
+    <Sidebar className={className}>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
           <a href={logoLink} onClick={closeMobileSidebar}>
@@ -55,49 +58,44 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {groups.map((group) => {
-          return (
-            <SidebarGroup key={group.title}>
-              {group.type === 'multiple' && (
-                <SidebarGroupItem>
-                  <NavCollapsibleItem
-                    group={group}
-                    closeMobileSidebar={closeMobileSidebar}
-                  />
-                </SidebarGroupItem>
-              )}
-              {group.type === 'single' && (
-                <SidebarGroupItem key={group.title}>
-                  <SidebarGroupLink
-                    href={group.href}
-                    isActive={isLinkActive({ href: group.href, pathname })}
-                    onClick={closeMobileSidebar}
-                  >
-                    {group.icon}
-                    <span>{group.title}</span>
-                  </SidebarGroupLink>
-                </SidebarGroupItem>
-              )}
-            </SidebarGroup>
-          )
-        })}
-        <SidebarGroup className="mt-8 gap-1.5">
-          {sideLinks.map((link) => (
-            <SidebarGroupItem key={link.title}>
-              <SidebarGroupSmallLink
-                href={link.href}
-                isActive={isLinkActive({ href: link.href, pathname })}
-                onClick={closeMobileSidebar}
-              >
-                {link.title}
-                {link.accessory}
-              </SidebarGroupSmallLink>
-            </SidebarGroupItem>
+        {env.CLIENT_SIDE_GARDEN_ENABLED && (
+          <SidebarGroup className="mb-2">
+            <CropsLink
+              isActive={pathname.startsWith(GARDEN_PATH)}
+              onClick={closeMobileSidebar}
+            />
+          </SidebarGroup>
+        )}
+        {groups
+          .filter((group) => group.section !== 'more')
+          .map((group) => (
+            <NavGroupItem
+              key={group.title}
+              group={group}
+              closeMobileSidebar={closeMobileSidebar}
+            />
           ))}
+        <SidebarGroup className="mt-5 mb-1">
+          <span className="pl-1.5 font-medium text-2xs text-secondary uppercase tracking-wider">
+            And more
+          </span>
         </SidebarGroup>
+        {/* One block, so the content's gap between groups does not apply. */}
+        <div className="flex flex-col">
+          {groups
+            .filter((group) => group.section === 'more')
+            .map((group) => (
+              <NavGroupItem
+                key={group.title}
+                group={group}
+                closeMobileSidebar={closeMobileSidebar}
+                small
+              />
+            ))}
+        </div>
       </SidebarContent>
       <SidebarFooter>
-        <div className="flex gap-2 lg:justify-between">
+        <div className="flex items-center gap-3.5 pl-1.5">
           <SocialLinks variant="gray" />
         </div>
       </SidebarFooter>
@@ -105,12 +103,106 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   )
 }
 
+/**
+ * `small` draws the secondary sections, under "And more", a size down: no
+ * icon, smaller text and tighter rows.
+ */
+function NavGroupItem({
+  group,
+  closeMobileSidebar,
+  small,
+}: {
+  group: NavGroup
+  closeMobileSidebar: () => void
+  small?: boolean
+}) {
+  const pathname = usePathname()
+  return (
+    <SidebarGroup>
+      {group.type === 'multiple' && (
+        <SidebarGroupItem>
+          <NavCollapsibleItem
+            group={group}
+            closeMobileSidebar={closeMobileSidebar}
+            small={small}
+          />
+        </SidebarGroupItem>
+      )}
+      {group.type === 'single' && group.disabled && (
+        <SidebarGroupItem>
+          <div
+            aria-disabled
+            className={cn(
+              'flex h-8 items-center gap-2 p-1.5 text-base text-secondary [&>svg]:shrink-0 [&>svg]:stroke-secondary',
+              small && 'h-6 py-1 text-sm',
+            )}
+          >
+            {!small && group.icon}
+            <span className="whitespace-nowrap">{group.title}</span>
+            <span className="shrink-0 rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] uppercase leading-none tracking-wider">
+              Soon
+            </span>
+          </div>
+        </SidebarGroupItem>
+      )}
+      {group.type === 'single' && !group.disabled && (
+        <SidebarGroupItem>
+          <SidebarGroupLink
+            href={group.href}
+            isActive={isLinkActive({ href: group.href, pathname })}
+            onClick={closeMobileSidebar}
+            className={cn(small && 'h-6 py-1 text-sm')}
+          >
+            {!small && group.icon}
+            <span>{group.title}</span>
+          </SidebarGroupLink>
+        </SidebarGroupItem>
+      )}
+    </SidebarGroup>
+  )
+}
+
+/** The garden, set apart above the sections as a small highlighted banner. */
+function CropsLink({
+  isActive,
+  onClick,
+}: {
+  isActive: boolean
+  onClick: () => void
+}) {
+  return (
+    <a
+      href={GARDEN_PATH}
+      onClick={onClick}
+      data-active={isActive}
+      className="group relative flex items-center overflow-hidden rounded-md border border-garden-border px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60"
+    >
+      <GardenScenery compact />
+      <CropPlant
+        status="reviewed"
+        sentiment="good"
+        delay={0.3}
+        width={16}
+        className="absolute right-11 bottom-0.5"
+      />
+      <span className="relative flex min-w-0 flex-col gap-1">
+        <span className="font-bold text-sm leading-none">CROPS</span>
+        <span className="truncate font-medium text-2xs text-secondary leading-none">
+          The Infinite Garden
+        </span>
+      </span>
+    </a>
+  )
+}
+
 function NavCollapsibleItem({
   group,
   closeMobileSidebar,
+  small,
 }: {
   group: Extract<NavGroup, { type: 'multiple' }>
   closeMobileSidebar: () => void
+  small?: boolean
 }) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(() => group.links.flat(), [group.links])
@@ -126,18 +218,27 @@ function NavCollapsibleItem({
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger
-        className="group flex items-center gap-1.5 p-1.5"
+        className={cn(
+          'group flex items-center gap-1.5 p-1.5',
+          small && 'h-6 py-1',
+        )}
         data-active={isGroupActive}
       >
         <div className="flex items-center gap-2">
-          <div>{group.icon}</div>
-          <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
+          {!small && <div>{group.icon}</div>}
+          <span
+            className={cn(
+              'font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand',
+              small && 'text-sm',
+            )}
+          >
             {group.title}
           </span>
         </div>
         <ChevronIcon
           className={cn(
             '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
+            small && 'size-2.5',
           )}
         />
       </CollapsibleTrigger>

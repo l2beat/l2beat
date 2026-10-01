@@ -6,141 +6,151 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
-import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
-import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
-import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
-import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
+import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
-import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
+import { HomeCropsBanner } from './components/HomeCropsBanner'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
-import { HomeInteropCard } from './components/HomeInteropCard'
-import type { HomeL2CategoryCounts } from './components/HomeL2Card'
+import { HomeInteropSection } from './components/HomeInteropSection'
 import { HomeL2Card } from './components/HomeL2Card'
-import type { HomeRecentChangesProject } from './components/HomeRecentChangesTile'
-import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
-import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
+import { HomeMandateBanner } from './components/HomeMandateBanner'
+import { HomePrivacyCard } from './components/HomePrivacyCard'
+import { HomeQuestionCard } from './components/HomeQuestionCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
-import { HomeTopChainsCard } from './components/HomeTopChainsCard'
-import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
-import { HomeTopPrivacyProtocolsCard } from './components/HomeTopPrivacyProtocolsCard'
-import { HomeTopZkProversCard } from './components/HomeTopZkProversCard'
-import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
-import { HomeWhatsNewCard } from './components/HomeWhatsNewCard'
-import type { HomeRecentProject } from './getHomeData'
+import {
+  HomeLatestArticlesSection,
+  HomeProjectChangesSection,
+  type HomeRecentChangesProject,
+  HomeWhatsNewHeadline,
+  type HomeWhatsNewItem,
+  HomeWhatsNewProjects,
+} from './components/HomeWhatsNewSection'
+import type { HomeCropsProject } from './getHomeCropsProjects'
+import type { HomeRecentProject, HomeTopL2Project } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
-import type { HomeTopZkProver } from './toHomeTopZkProver'
+import type { HomeResearchItem } from './getHomeResearch'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   projectCounts: HomeProjectCounts
-  topChains: L2SummaryEntry[]
-  topChainsTvsData: TvsTableData
-  topPrivacyProtocols: PrivacySummaryEntry[]
-  topZkProvers: HomeTopZkProver[]
+  cropsProjects: HomeCropsProject[]
   l2Charts: HomeL2Charts
+  topL2Projects: HomeTopL2Project[]
+  privacy: HomePrivacyData
   ethereumCharts: HomeEthereumCharts
-  ethereumEconomicSecurity: number | undefined
+  interopFlowChains: InteropChainWithIcon[]
+  interopDefaultFlowChains: string[]
+  flowProtocols: InteropFlowsProtocol[]
   recentProjects: HomeRecentProject[]
-  interopChains: InteropChainWithIcon[]
-  interopProtocols: InteropFlowsProtocol[]
-  defaultSelectedFlowChains: string[]
-  l2CategoryCounts: HomeL2CategoryCounts
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
-  ongoingAnomalies: OngoingAnomaliesOverview
   whatsNewItem: HomeWhatsNewItem | undefined
+  research: HomeResearchItem[]
 }
 
 export function HomePage({
   queryState,
   projectCounts,
-  topChains,
-  topChainsTvsData,
-  topPrivacyProtocols,
-  topZkProvers,
+  cropsProjects,
   l2Charts,
+  topL2Projects,
+  privacy,
   ethereumCharts,
-  ethereumEconomicSecurity,
+  interopFlowChains,
+  interopDefaultFlowChains,
+  flowProtocols,
   recentProjects,
-  interopChains,
-  interopProtocols,
-  defaultSelectedFlowChains,
-  l2CategoryCounts,
   recentChangesCount,
   recentChangesProjects,
-  ongoingAnomalies,
   whatsNewItem,
+  research,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout
-          variant="home"
-          childrenWrapperClassName="max-md:bg-surface-primary"
-        >
-          <MainPageHeader>Home</MainPageHeader>
-          <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(260px,280px)_minmax(280px,1fr)] 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
-              <div className="flex min-w-0 flex-col gap-4 max-lg:hidden">
-                <HomeRecentProjectsCard
-                  className="h-auto"
+        <SideNavLayout variant="home">
+          {/* The page runs edge to edge so section hairlines reach from the
+              nav to the screen's edge; content keeps one gutter from both. */}
+          <div className="[--home-gutter:--spacing(4)] md:[--home-gutter:--spacing(6)] xl:[--home-gutter:--spacing(8)] 2xl:[--home-gutter:--spacing(10)]">
+            <div className="px-(--home-gutter)">
+              <MainPageHeader>Home</MainPageHeader>
+            </div>
+            {/* No boxes: sections sit on the page background, a hairline
+                above each. From lg the page is one three-column grid, Layer
+                2s | Privacy | what's new, with a line between columns and 24px
+                either side of it, the gutter at the outer edges, so every
+                column's content lines up down the page. A last hairline
+                closes it above the footer, where the column line ends. */}
+            <div className="@container/home grid grid-cols-1 border-divider border-b lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,280px)] lg:grid-rows-[auto_auto_auto_1fr_auto_auto] xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(340px,400px)]">
+              {/* CROPS and the mandate. From lg they split at the column
+                  line, 8px either side of it, the outer edges level with the
+                  content below. */}
+              <div className="flex flex-col md:mx-(--home-gutter) md:mb-6 md:flex-row md:gap-4 lg:col-span-full lg:mx-0 lg:grid lg:grid-cols-subgrid lg:gap-0">
+                <HomeCropsBanner
+                  projects={cropsProjects}
+                  className="md:flex-1 lg:col-span-2 lg:mr-2 lg:ml-(--home-gutter)"
+                />
+                <HomeMandateBanner className="max-md:border-t-0 md:w-80 md:shrink-0 lg:mr-(--home-gutter) lg:ml-2 lg:w-auto" />
+              </div>
+              {/* On phones the CROPS band's own border is the line above. */}
+              <HomeStatsStrip
+                counts={projectCounts}
+                className="max-md:border-t-0 lg:hidden"
+              />
+              {/* From lg the page has six rows: CROPS; the domain cards'
+                  title, charts and rankings; Ethereum; what follows it. */}
+              {/* The right column: what's new. From lg it shares the domain
+                  cards' rows: the announcement sits on the chart row and new
+                  projects on the ranking row, so both end on the same lines
+                  as the cards beside them. Below lg it dissolves and comes
+                  first. Its sections pad themselves, so their hairlines reach
+                  both ends. */}
+              <div className="max-lg:contents lg:col-start-3 lg:row-span-3 lg:row-start-2 lg:grid lg:min-w-0 lg:grid-rows-subgrid lg:border-divider lg:border-l">
+                <HomeWhatsNewHeadline item={whatsNewItem} className="lg:pl-6" />
+                <HomeWhatsNewProjects
                   projects={recentProjects}
-                />
-                <HomeWhatsNewCard
-                  item={whatsNewItem}
-                  className="min-h-0 flex-1"
-                />
-                <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
-                <HomeRecentChangesTile
-                  recentChangesCount={recentChangesCount}
-                  recentChangesProjects={recentChangesProjects}
+                  className="lg:row-start-3 lg:pl-6"
                 />
               </div>
-              <div className="flex min-h-0 min-w-0 flex-col 2xl:order-last">
-                <HomeInteropCard
-                  interopChains={interopChains}
-                  interopProtocols={interopProtocols}
-                  defaultSelectedFlowChains={defaultSelectedFlowChains}
+              {/* The twin cards subgrid the title, chart and ranking rows. The
+                  ranking row is the flexible one, so any height the right
+                  column adds lands there. */}
+              <div className="grid @min-[880px]/home:grid-cols-2 grid-cols-1 lg:col-span-2 lg:col-start-1 lg:row-span-3 lg:row-start-2 lg:grid-cols-subgrid lg:grid-rows-subgrid">
+                <HomeL2Card
+                  charts={l2Charts}
+                  topProjects={topL2Projects}
+                  className="@min-[880px]/home:pr-6"
+                />
+                <HomePrivacyCard
+                  data={privacy}
+                  className="@min-[880px]/home:border-l @min-[880px]/home:pl-6 lg:pr-6"
                 />
               </div>
-              <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:max-2xl:col-span-full 2xl:flex">
-                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
-                  <HomeL2Card
-                    charts={l2Charts}
-                    l2CategoryCounts={l2CategoryCounts}
-                  />
-                </div>
-                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
-                  <HomeEthereumCard
-                    charts={ethereumCharts}
-                    economicSecurity={ethereumEconomicSecurity}
-                  />
-                </div>
+              {/* From lg, Ethereum and the sections under it take the
+                  Layer 2s column; interop takes the other two, beside them. */}
+              <HomeEthereumCard
+                charts={ethereumCharts}
+                className="lg:col-start-1 lg:row-start-5 lg:pr-6"
+              />
+              <HomeInteropSection
+                chains={interopFlowChains}
+                defaultSelectedChains={interopDefaultFlowChains}
+                protocols={flowProtocols}
+                className="lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-5 lg:border-l"
+              />
+              <div className="flex min-w-0 flex-col lg:col-start-1 lg:row-start-6">
+                <HomeLatestArticlesSection
+                  research={research}
+                  className="lg:pr-6"
+                />
+                <HomeProjectChangesSection
+                  count={recentChangesCount}
+                  projects={recentChangesProjects}
+                  className="lg:pr-6"
+                />
+                <HomeQuestionCard className="lg:pr-6" />
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents lg:hidden">
-              <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
-              <HomeRecentChangesTile
-                recentChangesCount={recentChangesCount}
-                recentChangesProjects={recentChangesProjects}
-              />
-              <HomeWhatsNewCard item={whatsNewItem} />
-              <HomeRecentProjectsCard projects={recentProjects} />
-            </div>
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
-              <HomeTopInteropProtocolsCard
-                interopChains={interopChains}
-                defaultSelectedFlowChains={defaultSelectedFlowChains}
-              />
-              <HomeTopPrivacyProtocolsCard entries={topPrivacyProtocols} />
-              <HomeTopChainsCard
-                entries={topChains}
-                tvsData={topChainsTvsData}
-              />
-              <HomeTopZkProversCard entries={topZkProvers} />
             </div>
           </div>
         </SideNavLayout>

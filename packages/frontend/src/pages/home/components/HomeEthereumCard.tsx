@@ -1,29 +1,27 @@
-import {
-  formatActivityCount,
-  formatBytes,
-  formatCurrency,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { formatActivityCount, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { HomeChart } from './charts/HomeChart'
+import { cn } from '~/utils/cn'
+import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
+import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
+import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
-import {
-  HOME_CHART_SECTION_GRID_CLASS,
-  HomeChartSection,
-} from './HomeChartSection'
-import { HomeStatValue } from './HomeStatValue'
+import { HomeKpiRow } from './HomeDomainCard'
+import { HomeKpiTile } from './HomeKpiTile'
 
-interface Props {
+const ETHEREUM_HREF = '/data-availability/projects/ethereum/ethereum'
+
+/** Ethereum's blob data and activity, a chart pair like every other card's. */
+export function HomeEthereumCard({
+  charts,
+  className,
+}: {
   charts: HomeEthereumCharts
-  economicSecurity: number | undefined
-}
-
-export function HomeEthereumCard({ charts, economicSecurity }: Props) {
-  const activityChartData = useMemo(
+  className?: string
+}) {
+  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
     () =>
       charts.activity.chart.map(([timestamp, uopsCount]) => ({
         timestamp,
@@ -32,12 +30,8 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
     [charts.activity.chart],
   )
 
-  const dataPostedChartData = useMemo(
-    () =>
-      charts.da.chart.map(([timestamp, value]) => ({
-        timestamp,
-        value,
-      })),
+  const dataPostedChartData = useMemo<HomeSparklineDataPoint[]>(
+    () => charts.da.chart.map(([timestamp, value]) => ({ timestamp, value })),
     [charts.da.chart],
   )
 
@@ -50,90 +44,66 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
     [charts.da.chart],
   )
 
-  const pastDayUops = charts.activity.pastDayUops
-  const trackedShare = charts.da.trackedShare
-  const uopsChange = charts.activity.change
-  const dataPostedChange = charts.da.change
+  const { pastDayUops } = charts.activity
+  const { trackedShare } = charts.da
 
   return (
-    <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
-      <div className="flex flex-col gap-2.5">
-        <HomeCardHeader
-          title="Ethereum"
-          href="/data-availability/projects/ethereum/ethereum"
+    <HomeCard className={cn('flex min-w-0 flex-col gap-5', className)}>
+      <HomeCardHeader title="Ethereum" href={ETHEREUM_HREF} />
+      <HomeKpiRow>
+        <HomeKpiTile
+          label="Blob data"
+          labelAccessory={
+            trackedShare !== undefined &&
+            `${formatPercent(trackedShare)} by L2s`
+          }
+          {...splitUnit(
+            totalPosted !== undefined ? formatBytes(totalPosted) : undefined,
+          )}
+          change={charts.da.change}
+          chart={
+            <HomeSparkline
+              data={dataPostedChartData}
+              tooltipLabel="Data posted"
+              formatValue={(value) => formatBytes(value)}
+              tooltipDayRange
+              className={HOME_CHART_HEIGHT_CLASS}
+            />
+          }
         />
-        <EconomicSecurityLine value={economicSecurity} />
-      </div>
-      <HorizontalSeparator className="my-3" />
-      <div className={HOME_CHART_SECTION_GRID_CLASS}>
-        <HomeChartSection
-          label="Data posted to blobs"
-          stat={
-            <HomeStatValue
-              isLoading={false}
-              value={
-                totalPosted !== undefined ? formatBytes(totalPosted) : undefined
-              }
-              change={dataPostedChange}
+        <HomeKpiTile
+          label="Activity/UOPS"
+          value={
+            pastDayUops !== undefined
+              ? formatActivityCount(pastDayUops)
+              : undefined
+          }
+          change={charts.activity.change}
+          chart={
+            <HomeSparkline
+              data={activityChartData}
+              tooltipLabel="UOPS"
+              formatValue={(value) => `${formatActivityCount(value)} UOPS`}
+              tooltipDayRange
+              className={HOME_CHART_HEIGHT_CLASS}
             />
           }
-          statFooter={
-            trackedShare !== undefined ? (
-              <span className="font-medium text-label-value-12 text-secondary tabular-nums">
-                {formatPercent(trackedShare)} by layer 2s
-              </span>
-            ) : null
-          }
-        >
-          <HomeChart
-            data={dataPostedChartData}
-            isLoading={false}
-            color="ethereum"
-            tooltipLabel="Data posted"
-            formatValue={(value) => formatBytes(value)}
-            syncedUntil={charts.da.syncedUntil}
-            tooltipDayRange
-          />
-        </HomeChartSection>
-        <HomeChartSection
-          label="Activity"
-          stat={
-            <HomeStatValue
-              isLoading={false}
-              value={
-                pastDayUops !== undefined
-                  ? `${formatActivityCount(pastDayUops)} UOPS`
-                  : undefined
-              }
-              change={uopsChange}
-            />
-          }
-        >
-          <HomeChart
-            data={activityChartData}
-            isLoading={false}
-            color="ethereum"
-            tooltipLabel="UOPS"
-            formatValue={(value) => formatActivityCount(value)}
-            yAxisUnit=" UOPS"
-            syncedUntil={charts.activity.syncedUntil}
-            tooltipDayRange
-          />
-        </HomeChartSection>
-      </div>
+        />
+      </HomeKpiRow>
     </HomeCard>
   )
 }
 
-function EconomicSecurityLine({ value }: { value: number | undefined }) {
-  if (value === undefined) {
-    return null
+/** "1.39 TiB" → number and unit, so the tile can draw the unit smaller. */
+function splitUnit(formatted: string | undefined): {
+  value: string | undefined
+  unit?: string
+} {
+  if (formatted === undefined) {
+    return { value: undefined }
   }
-  return (
-    <div className="flex items-center gap-1.5 font-medium text-label-value-12">
-      <span className="size-2 rounded-full bg-chart-ethereum" />
-      <span className="tabular-nums">{formatCurrency(value, 'usd')}</span>
-      <span className="text-secondary">Economic security</span>
-    </div>
-  )
+  const at = formatted.lastIndexOf(' ')
+  return at === -1
+    ? { value: formatted }
+    : { value: formatted.slice(0, at), unit: formatted.slice(at + 1) }
 }
