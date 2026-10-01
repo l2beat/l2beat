@@ -24,12 +24,17 @@ export const LIST_PAGES_WITH_MARKDOWN = [
   '/privacy/summary',
 ] as const satisfies StaticPagePath[]
 
-/** Express route patterns, where `:name` stands for one path segment. */
+/**
+ * Express route patterns, where `:name` stands for one path segment and
+ * `{...}` for a part the URL may leave out.
+ */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
   '/data-availability/projects/:layer/:bridge',
   '/privacy/projects/:slug',
   '/interop/protocols/:slug',
+  '/zk-catalog/:slug',
+  '/interop/tokens/:slug{/:issuer}{/:symbol}',
   ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/projects/:slug'] as const) : []),
 ] as const
 
@@ -57,6 +62,9 @@ function trimTrailingSlashes(path: string) {
 }
 
 function matchesPage(page: string, routedPath: string) {
-  const segments = page.replaceAll(/:\w+/g, '[^/]+')
-  return new RegExp(`^${segments}$`).test(routedPath)
+  const pattern = page
+    .replaceAll('{', '(?:')
+    .replaceAll('}', ')?')
+    .replaceAll(/:\w+/g, '[^/]+')
+  return new RegExp(`^${pattern}$`).test(routedPath)
 }

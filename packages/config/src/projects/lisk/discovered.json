@@ -2648,7 +2648,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 26019573 },
-  "permissionsConfigHash": "0x6e17832b988d5e6841437bbada4c295a672de2ce123db2561f273bfe6ed77751",
+  "permissionsConfigHash": "0x8758e785931d12e2d04bff0acbf81932f9fc7193f2bd49be7949e43df5c5cf49",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -2835,6 +2835,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
           "description": "set and change address mappings.",
           "role": ".owner",
@@ -2940,6 +2949,12 @@
         {
           "permission": "act",
           "from": "eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {

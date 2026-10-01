@@ -30,6 +30,15 @@ export function hasTokenRelations(graph: InteropTokenRelationsGraph): boolean {
   return graph.edges.length > 0 || graph.nodes.some(isCluster)
 }
 
+/** Unmeasured deployments (null volume) come last, after the zero-volume ones. */
+export function getDeploymentsByVolume(
+  graph: InteropTokenRelationsGraph,
+): InteropTokenDeploymentView[] {
+  return graph.nodes
+    .flatMap((node) => node.deployments)
+    .toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1))
+}
+
 export function describeNode(node: InteropTokenRelationsNode): string {
   const first = node.deployments[0]
   if (!first) return node.id

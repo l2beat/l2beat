@@ -4576,7 +4576,7 @@
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
   "usedBlockNumbers": { "ethereum": 25472135, "unichain": 52576205 },
-  "permissionsConfigHash": "0x802f091f3eebd395208757f2c0fb35797d8b50c0d08dafbbc14ae0d2d8a1fabf",
+  "permissionsConfigHash": "0x5d2f9c2d420254c741090da2588a6f781694aba5d2b12ca032c1afc117577e7e",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -4761,6 +4761,12 @@
     },
     "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x8098F676033A377b9Defe302e9fE6877cD63D575",

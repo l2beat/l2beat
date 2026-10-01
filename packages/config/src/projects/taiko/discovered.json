@@ -111,7 +111,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -5017,7 +5020,7 @@
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
   "usedBlockNumbers": { "ethereum": 26032880, "taiko": 11724281 },
-  "permissionsConfigHash": "0xb4c7602951638b798d05979585dff9869a9454f1d148d59feb025e3b65346d83",
+  "permissionsConfigHash": "0xe4e962c7975da68d7f9d87679ad8801f0236c59aa499e44ac7db3db9ae21d38a",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
