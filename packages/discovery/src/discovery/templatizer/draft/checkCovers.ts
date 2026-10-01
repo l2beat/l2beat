@@ -6,9 +6,9 @@
  * set (`accessControl`) the claim can be checked exactly. An `event` field
  * may claim any getter (it enumerates what `isSequencer(address)` holds,
  * which no ABI fact can confirm) but only the events it actually reads,
- * and the other handlers read no events at all. The dry run then checks
- * the claims that cannot be checked here (an event field that covers a
- * getter but finds no logs).
+ * and the other handlers read no events at all. A claimed getter stays
+ * unconfirmed: when the fold comes back empty, the dry run notes it for
+ * the reviewer rather than rejecting it.
  */
 
 import type { AbiIndex } from '../abi/AbiIndex'

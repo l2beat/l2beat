@@ -28,7 +28,7 @@ describe(checkPrivilegedSkips.name, () => {
     ).toEqual([])
   })
 
-  it('rejects an activity skip of an event only the owner emits, the benchmark misses', () => {
+  it('advises against an activity skip of an event only the owner emits, the benchmark misses', () => {
     expect(
       skipped(
         [
@@ -39,17 +39,17 @@ describe(checkPrivilegedSkips.name, () => {
       ),
     ).toEqual([
       {
-        severity: 'error',
+        severity: 'advisory',
         path: 'skips[1].reason',
         message:
-          'RevertBatch is emitted only by privileged code (revertBatch (onlyOwner), commitAndFinalizeBatch (OnlyTopLevelCall)), so it records configuration, not user activity; fold it into an event field, or skip it as `covered` if a baseline getter or another field already exposes this state',
+          'RevertBatch is emitted only by privileged code (revertBatch (onlyOwner), commitAndFinalizeBatch (OnlyTopLevelCall)), so it most likely records configuration, not user activity; if so, fold it into an event field, or skip it as `covered` if a baseline getter or another field already exposes this state',
       },
     ])
     expect(
       skipped([{ item: 'ZkRouteWasFrozen', reason: 'not-state' }], nitro)[0]
         ?.message,
     ).toEqual(
-      'ZkRouteWasFrozen is emitted only by privileged code (freezeVerifyRoute (onlyOwner)), so it records configuration, not something without state; fold it into an event field, or skip it as `covered` if a baseline getter or another field already exposes this state',
+      'ZkRouteWasFrozen is emitted only by privileged code (freezeVerifyRoute (onlyOwner)), so it most likely records configuration, not something without state; if so, fold it into an event field, or skip it as `covered` if a baseline getter or another field already exposes this state',
     )
   })
 

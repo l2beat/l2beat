@@ -40,12 +40,17 @@ import type {
 } from './ModelClient'
 import { type ProcessRun, runProcess } from './process'
 
-export type ReasoningEffort = 'low' | 'medium' | 'high'
-export const REASONING_EFFORTS: readonly ReasoningEffort[] = [
+/** What the OpenAI API accepts as `reasoning.effort` (its own error lists them); a model may take fewer. */
+export const REASONING_EFFORTS = [
+  'none',
+  'minimal',
   'low',
   'medium',
   'high',
-]
+  'xhigh',
+  'max',
+] as const
+export type ReasoningEffort = (typeof REASONING_EFFORTS)[number]
 
 export interface CodexClientOptions {
   /** Executable name or path; default `codex` on PATH. */

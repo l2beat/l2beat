@@ -19,7 +19,7 @@ import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import type { Templatizer } from '../templatizer/Templatizer'
+import type { TemplatizeRequest, Templatizer } from '../templatizer/Templatizer'
 import {
   get$Beacons,
   get$Implementations,
@@ -153,6 +153,15 @@ export class AddressAnalyzer {
         if (authored !== undefined) {
           matchingTemplates.push(authored)
         }
+      } else if (matchingTemplates.length === 1 && !isEOA) {
+        await this.revisitTemplate(
+          provider,
+          address,
+          config,
+          sources,
+          proxy,
+          matchingTemplates[0] as string,
+        )
       }
       const template = matchingTemplates[0]
       if (template !== undefined) {
@@ -252,13 +261,47 @@ export class AddressAnalyzer {
     ) {
       return undefined
     }
+    return await this.templatizer.templateFor(
+      await this.templatizeRequest(provider, address, config, sources, proxy),
+    )
+  }
+
+  /** `--ai-revisit`: the model may extend the matched template before it is applied. */
+  private async revisitTemplate(
+    provider: IProvider,
+    address: ChainSpecificAddress,
+    config: StructureContractConfig,
+    sources: ContractSources,
+    proxy: ProxyResult,
+    templateId: string,
+  ): Promise<void> {
+    if (
+      this.templatizer?.revisitsMatchedTemplates !== true ||
+      !this.templatizer.canTemplatize(sources, proxy.type)
+    ) {
+      return
+    }
+    await this.templatizer.revisit(
+      await this.templatizeRequest(provider, address, config, sources, proxy),
+      templateId,
+    )
+  }
+
+  /** Runs before the template is pushed, so the values are the untemplatized baseline. */
+  private async templatizeRequest(
+    provider: IProvider,
+    address: ChainSpecificAddress,
+    config: StructureContractConfig,
+    sources: ContractSources,
+    proxy: ProxyResult,
+  ): Promise<TemplatizeRequest> {
     const { values, errors } = await this.handlerExecutor.execute(
       provider,
       address,
       sources.abi,
       config,
     )
-    return await this.templatizer.templateFor({
+    return {
       provider,
       address,
       sources,
@@ -268,6 +311,6 @@ export class AddressAnalyzer {
       values: values ?? {},
       errors,
       ignoreMethods: config.ignoreMethods,
-    })
+    }
   }
 }

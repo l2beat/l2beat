@@ -11,9 +11,6 @@ import { validateDraft, validateDraftText } from './validateDraft'
  * passing with zero errors shows the rules accept what researchers write.
  */
 describe(validateDraft.name, () => {
-  const errorsOf = (findings: Finding[]) =>
-    findings.filter((finding) => finding.severity === 'error')
-
   it('accepts the ScrollChain template as a draft, with only the RevertBatch overload warning', () => {
     const draft = scrollChainDraft()
     const result = validateDraft(draft, contextFor('ScrollChain'))
@@ -65,16 +62,16 @@ describe(validateDraft.name, () => {
     draft.skips = draft.skips.filter((skip) => skip.item !== 'CommitBatch')
     draft.skips.push({ item: 'RevertBatch', reason: 'user-activity' })
     expect(
-      errorsOf(validateDraft(draft, contextFor('ScrollChain')).findings).map(
-        (finding) => finding.path,
-      ),
+      validateDraft(draft, contextFor('ScrollChain'))
+        .findings.filter((finding) => finding.severity !== 'warning')
+        .map((finding) => `${finding.severity} ${finding.path}`),
     ).toEqual([
-      'fields.owner.covers[0]', // R3: UpdateProver twice
-      'skips[13].item', // R3: RevertBatch twice
-      'draft', // R3: CommitBatch has no verdict
-      'fields.owner', // R4: baseline getter
-      'fields.owner.covers[0]', // R8: hardcoded reads no events
-      'skips[13].reason', // R9: only privileged code emits RevertBatch
+      'error fields.owner.covers[0]', // R3: UpdateProver twice
+      'error skips[13].item', // R3: RevertBatch twice
+      'error draft', // R3: CommitBatch has no verdict
+      'error fields.owner', // R4: baseline getter
+      'error fields.owner.covers[0]', // R8: hardcoded reads no events
+      'advisory skips[13].reason', // R9: only privileged code emits RevertBatch
     ])
   })
 })

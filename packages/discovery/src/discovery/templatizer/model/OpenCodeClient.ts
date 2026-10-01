@@ -40,8 +40,12 @@ export interface OpenCodeClientOptions {
   timeoutMs?: number
 }
 
-/** Shorter than Codex's: a turn that runs this long has hung on a tool prompt, not on thinking. */
-export const DEFAULT_OPENCODE_TIMEOUT_MS = 8 * 60 * 1_000
+/**
+ * The same as Codex's. At the default effort a DeepSeek turn has thought
+ * for six minutes before answering, so eight cut real answers off; a turn
+ * past fifteen has hung rather than thought.
+ */
+export const DEFAULT_OPENCODE_TIMEOUT_MS = 15 * 60 * 1_000
 
 /** Written into the scratch working directory before every turn. */
 export const OPENCODE_ISOLATION_CONFIG = {

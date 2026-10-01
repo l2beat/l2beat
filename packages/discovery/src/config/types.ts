@@ -17,10 +17,14 @@ export interface DiscoveryModuleConfig {
   readonly templateSimilarityCutoff?: number
   /** Author a template with a model for every contract no template matches. Local runs only. */
   readonly ai?: boolean
-  /** `opencode/<model>` for opencode, anything else is a Codex model; Codex's default when unset. */
+  /** `opencode/<model>` (Zen) or `opencode-go/<model>` (Go) for opencode, anything else is a Codex model; Codex's default when unset. */
   readonly aiModel?: string
   /** Model turns per contract, the first included. */
   readonly aiRounds?: number
+  /** Reasoning effort: opencode's variant or Codex's `model_reasoning_effort`; `high` when unset. */
+  readonly aiEffort?: string
+  /** Implies `ai`: also let the model extend every template that already matches. */
+  readonly aiRevisit?: boolean
 }
 
 export interface DiscoveryChainConfig {

@@ -61,6 +61,16 @@ export function rewriteTemplate(
   addShape(templateService, templateId, target)
 }
 
+/** A template whose shapes stay as they are; the reload drops the parsed copy V1 caches. */
+export function replaceTemplateText(
+  templateService: TemplateService,
+  templateId: string,
+  text: string,
+): void {
+  templateService.writeTemplateFile(templateId, text)
+  templateService.reload()
+}
+
 export function addShape(
   templateService: TemplateService,
   templateId: string,

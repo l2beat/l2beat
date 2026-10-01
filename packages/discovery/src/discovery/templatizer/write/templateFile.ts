@@ -26,6 +26,8 @@ export interface TemplateFileInput {
   schema: string
   /** The provenance line, without `//`. */
   header: string
+  /** Lines for the reviewer under the header, without `//`, e.g. advisories about skips. */
+  notes?: string[]
   /** Freeze path: top-level entries of the old file, verbatim, in its order. */
   preserved?: { key: string; text: string }[]
   displayName?: string
@@ -40,6 +42,8 @@ export interface TemplateFileField {
   name: string
   reason: string
   covers: string[]
+  /** What the reviewer should check, one comment line each: an empty fold, a kept advisory. */
+  notes?: string[]
   handler: unknown
   edit?: unknown
 }
@@ -68,13 +72,17 @@ const INDENT = '  '
 const FIELD_INDENT = INDENT.repeat(2)
 
 /**
- * The header stands apart from the next key by a blank line, so that
- * reading the file back (`readTopLevelEntries`) does not attach it to that
- * key and a later freeze does not copy an old header along.
+ * The header and its notes stand apart from the next key by a blank line,
+ * so that reading the file back (`readTopLevelEntries`) does not attach
+ * them to that key and a later freeze does not copy old notes along.
  */
 function renderDocument(input: TemplateFileInput): string {
   const [schema, ...rest] = joinMembers(topLevelMembers(input), INDENT)
-  const lines = [schema, `${INDENT}${lineComment(input.header)}`]
+  const comments = [input.header, ...(input.notes ?? [])]
+  const lines = [
+    schema,
+    ...comments.map((comment) => `${INDENT}${lineComment(comment)}`),
+  ]
   if (rest.length > 0) {
     lines.push('', ...rest)
   }
@@ -136,6 +144,9 @@ function fieldComments(field: TemplateFileField): string[] {
   }
   if (field.covers.length > 0) {
     comments.push(lineComment(`covers: ${field.covers.join(', ')}`))
+  }
+  for (const note of field.notes ?? []) {
+    comments.push(lineComment(note))
   }
   return comments
 }

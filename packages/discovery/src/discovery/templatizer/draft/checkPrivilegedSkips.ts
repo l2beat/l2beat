@@ -6,9 +6,10 @@
  * event as `user-activity` or `not-state` although only the owner could
  * emit it, so it was configuration with no getter. When every emitter is
  * the constructor or guarded by an owner/role-style modifier this is an
- * error; when the guards name something else (a messenger counterpart, an
- * allow-list) it is only a warning, because on the suite those guard user
- * withdrawals and deposits. The source analysis is in `privilegedEvents`.
+ * advisory; when the guards name something else (a messenger counterpart,
+ * an allow-list) it is only a warning, because on the suite those guard
+ * user withdrawals and deposits. Neither blocks: the source analysis in
+ * `privilegedEvents` reads modifier names, which is a judgment, not proof.
  */
 import { privilegedEmitters } from './privilegedEvents'
 import type { RuleContext } from './ruleContext'
@@ -32,9 +33,9 @@ export function checkPrivilegedSkips(ctx: RuleContext): void {
     const path = `skips[${i}].reason`
     const emitters = found.emitters.join(', ')
     if (found.privilege === 'authority') {
-      ctx.findings.error(
+      ctx.findings.advisory(
         path,
-        `${skip.item} is emitted only by privileged code (${emitters}), so it records configuration, not ${ACTIVITY_WORDS[skip.reason]}; fold it into an event field, or skip it as \`covered\` if a baseline getter or another field already exposes this state`,
+        `${skip.item} is emitted only by privileged code (${emitters}), so it most likely records configuration, not ${ACTIVITY_WORDS[skip.reason]}; if so, fold it into an event field, or skip it as \`covered\` if a baseline getter or another field already exposes this state`,
       )
       return
     }

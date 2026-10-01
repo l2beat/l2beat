@@ -59,6 +59,7 @@ export interface HiddenTemplateEnv {
   artifactsRoot: string
   model: ModelClient
   modelLabel: string
+  effort?: string
   maxRounds?: number
   logger: Logger
   now?: () => Date
@@ -118,6 +119,7 @@ function buildAnalyzer(
       project: project.name,
       model: env.model,
       modelLabel: env.modelLabel,
+      effort: env.effort,
       maxRounds: env.maxRounds,
       artifactsRoot: env.artifactsRoot,
       previousTemplates: {},

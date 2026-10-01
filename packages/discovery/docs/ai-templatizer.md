@@ -254,7 +254,7 @@ templatizer/
   draft/
     Draft.ts            the model's reply type + schema (section 5)
     validateDraft.ts    rules R1–R9 (section 6), Findings with paths
-    dryRun.ts           R10: HandlerExecutor on the draft, zero-logs rule
+    dryRun.ts           R10: HandlerExecutor on the draft; empty folds are noted, not rejected
   model/
     ModelClient.ts      start/resume interface (port as is)
     CodexClient.ts, codexEvents.ts, OpenCodeClient.ts, opencodeEvents.ts, process.ts, FakeModelClient.ts (port as is)
@@ -425,16 +425,19 @@ Same ideas, V1 spelling.
   "emitted only by privileged functions; fold it into a field or skip it as
   `covered` naming the getter". Keep the heuristic in one small function
   with tests on real flattened sources from the suite. If it misfires on a
-  contract, downgrade to warning and note it here.
+  contract, downgrade to warning and note it here. (Since 2026-10-01 an
+  advisory, not an error; see 12.2, "Advisories".)
 - R10 Dry run (only when R1–R9 have no errors): build a `StructureContract`
   from the draft (`fields` with handler+edit, `ignoreMethods` derived per
   section 8), run `HandlerExecutor.execute` at the analyzer's provider and
   block. Every field with `error` → error finding with the message and
-  "fix the handler or skip the item". An `event` field with non-empty
+  "fix the handler or skip the item". ~~An `event` field with non-empty
   `covers` whose value is an empty array → error "no logs for events … up to
   block …, yet the field covers …; find the events the setters actually
   emit, enumerate another way, or skip". Empty and covering nothing →
-  warning. Record per-field result sizes in the trail.
+  warning.~~ Superseded (12.2, "R10 empty folds"): an empty event field is
+  accepted and its template carries a note for the reviewer. Record
+  per-field result sizes in the trail.
 
 ## 7. The loop
 
@@ -587,14 +590,20 @@ All under `packages/discovery/src/discovery/templatizer/`:
 | `test/` | Four real suite contracts as fixtures (ABI, baseline, full flattened implementation sources) |
 
 Outside that directory: `AddressAnalyzer` (optional 5th constructor
-argument, `authorTemplate`), `getDiscoveryEngine` (optional 7th argument,
-settings; the backend passes six), `runDiscovery`, `discoverCommand`
-(`--ai`, `--ai-model`, `--ai-rounds`), `config/types.ts`,
+argument, `authorTemplate`, `revisitTemplate`), `getDiscoveryEngine`
+(optional 7th argument, settings; the backend passes six), `runDiscovery`,
+`discoverCommand` (`--ai`, `--ai-model`, `--ai-rounds`, `--ai-revisit`),
+`config/types.ts`,
 `flattenDiscoveredSource.ts` (exports `addSolidityVersionComment`),
 `cli.ts` (benchmark command). `Templatizer` is not exported from the
 package index, so nothing outside `packages/discovery` can build one.
 
-Run it: `l2b discover <project> --ai [--ai-model opencode/deepseek-v4.1-flash] [--ai-rounds 3]`.
+Run it: `l2b discover <project> --ai [--ai-model opencode-go/deepseek-v4.1-flash] [--ai-effort high] [--ai-rounds 3]`.
+A model goes to opencode when it names one of opencode's gateways,
+`opencode/…` (Zen account) or `opencode-go/…` (Go subscription); any other
+name goes to Codex. The runs recorded below used `opencode/` (Zen).
+Add `--ai-revisit` (implies `--ai`) to also let the model extend every
+template that already matches (12.2).
 Trail per contract: `packages/config/cache/templatizer/<project>/<address>/`
 (`round-N.{prompt.md,response.txt,findings.json,dryrun.json}`,
 `events.jsonl`, `summary.json`, `draft.json`), gitignored with the cache.
@@ -641,11 +650,77 @@ Benchmark: from `packages/discovery`,
   RollupProxy's `RollupChallengeStarted` has no emit site in any bundle, so
   R9 cannot flip `challenges`; at most two of the three event-only misses
   are reachable through R9.
-- **R10 zero-logs rule.** Every event field covers the events it reads, so
-  "non-empty covers → error" would always fire. An empty event field is an
-  error when it covers a *function*, a warning when it covers only events.
+- **R10 empty folds (revised 2026-10-01).** First implemented as specified:
+  an empty event field was an error when it covered a *function*, a warning
+  when it covered only events. Reviewing the AnchorStateRegistry trail
+  showed the rule backfiring. Base has blacklisted no game, so the model's
+  correct `DisputeGameBlacklisted` fold (identical to the committed
+  `blacklistedGames`) came back empty and was rejected. The model then
+  dropped it and called the items `unbounded`. Across every trail the rule
+  fired 27 times and the field was dropped 17 times: Safe `modules`, gateway
+  `tokenMapping` (committed as `{}`), Plume `sequencers`/`allowList`, Scroll
+  `droppedMessages`, Scroll USDC `blacklisted`. Two benchmark "misses"
+  (`blacklistedGames`, L1CustomERC20Gateway `tokenMapping`) were this rule.
+  Logs cannot tell "nothing happened yet" from "written without these
+  events", and a dropped field is invisible while an empty one is reviewed,
+  so emptiness is now never a finding. The dry run records a note
+  (`empty at block N: no logs yet for E`, or `the K logs for E fold to
+  nothing`) and the writer puts it under the field's `covers` comment.
+  Replaying the 26 rejected drafts verbatim at their blocks (scripted
+  model, sqlite cache) accepted all 26. The known cost: Plume's
+  `batchPosters` fold over `BatchPosterSet` is now accepted as `[]` although
+  9 posters exist, because an older implementation set them without that
+  event (V1 reads them with the custom `arbitrumActors` handler). The note
+  is what flags it. A getter probe that would catch it (call
+  `isBatchPoster` for the senders of recent transactions) was considered
+  and left out to keep the validator to rules that are certain.
+- **Advisories (2026-10-01).** An error now means certain: V1 would fail
+  or silently do something else, or the draft breaks the protocol (an item
+  without a verdict). The three rules that were judgments, R9's authority
+  tier, R10's unread declaration and R10's relatives cap, raise an
+  `advisory` instead. They are kept, because each fixed an observed
+  failure, but none blocks. A draft with no error and with advisories is
+  shown them once ("judgments, not errors; change the draft where one
+  applies"), and the reply is accepted unless it has errors. If the reply
+  cannot be repaired in the rounds left, the draft that was asked about is
+  accepted, so the extra turn can only help. No turn is spent on
+  advisories in the last round. Advisories that still apply are written
+  into the template as `// review: …` lines: under the field for field
+  paths, under the header for skips. Rule for later rules: an error only
+  when certain, otherwise an advisory with a test named after its case.
+- **`--ai-revisit` (2026-10-01).** Implies `--ai`. A contract that exactly
+  one template matches takes the changed-code path as if its code were
+  new: fields that execute are locked verbatim, broken ones are removed,
+  and the model rules on what the template leaves undecided. Two
+  differences from changed code. The model is asked even when nothing
+  broke, because finding what the template misses is the point. The shape
+  is not added, because it is already there. Nothing is written when
+  nothing broke and the draft adds no field and no `ignoreMethods`. A
+  template is revisited once per run, on the first contract that matches
+  it; contracts sharing it wait and then use the result. Templates
+  authored or extended in the same run are not revisited. Shared
+  templates (`opstack/*`, `GnosisSafe`, `global/*`) are rewritten from one
+  contract's code, so other shapes of the same template may break; the
+  git diff shows it.
+- **`--ai-effort` (2026-10-01), default `high`.** Before it, neither
+  backend got an effort: opencode ran the model's default, and Codex its
+  built-in one (`--ignore-user-config` hides `config.toml`). The level
+  goes to opencode as `--variant` and to Codex as `model_reasoning_effort`.
+  It is checked once at startup because neither backend complains early:
+  `opencode run --variant` silently ignores a level the model lacks (a
+  typo would run at the default), and Codex forwards any value to the API,
+  which rejects it on every turn. For opencode the levels come from
+  `opencode models <provider> --verbose`, and they differ per model
+  (DeepSeek v4.1 flash: low, high, max; some models have none, and then the
+  default `high` is dropped with no variant passed). For Codex the API's
+  own list is used: none, minimal, low, medium, high, xhigh, max. The level
+  is in the provenance header (`…, high effort`) and in `summary.json`.
+  opencode turns are now killed after 15 minutes, as Codex's are (was 8):
+  at the default effort a DeepSeek turn has already thought for six.
+  The 12.4 runs used no effort setting.
 - **R10 unread declaration (new).** An empty event field whose event name
-  has another declaration in the ABI that *does* have logs is an error. Found
+  has another declaration in the ABI that *does* have logs is an error
+  (an advisory since 2026-10-01). Found
   on the first real run: ScrollChain declares `RevertBatch` twice; the
   current code emits `(startBatchIndex, finishBatchIndex)`, which has no
   logs, while the 59 reverted batches sit under the legacy
@@ -656,8 +731,8 @@ Benchmark: from `packages/discovery`,
   `ScrollStandardERC20Factory` field folding `DeployToken` into every bridged
   token; scroll grew from 96 to 163 contracts and hit `maxAddresses`,
   dropping 41 addresses. A field whose value holds more than 20 distinct
-  addresses without `ignoreRelative: true` is now an error; the prompt and
-  the handler docs say so. The benchmark numbers in 12.4 predate the rule,
+  addresses without `ignoreRelative: true` is now an error (an advisory
+  since 2026-10-01); the prompt and the handler docs say so. The benchmark numbers in 12.4 predate the rule,
   which cannot change values (`ignoreRelative` only stops following).
 - **Worked example** is an abbreviated Morph Rollup draft, not ScrollChain
   (benchmark contamination). The rules still mention `RevertBatch` as an
@@ -772,6 +847,18 @@ contracts plus ScrollChain.
   Rerun with a faster `SCROLL_EVENT_RPC_URL_FOR_DISCOVERY`.
 
 ### 12.5 Open issues for the reviewer
+
+- **Empty folds are accepted; check every `// empty at block …` note.** A
+  fold over the wrong events looks exactly like a quiet one (Plume
+  `batchPosters`, 12.2). The numbers in 12.4 predate this revision. Rerun
+  the benchmark before comparing them with later runs.
+- **Advisories can let real mistakes through.** R9, the unread
+  declaration and the relatives cap no longer block (12.2). A model that
+  keeps a relatives advisory can make discovery follow every token a
+  factory deployed again; check every `// review:` line, and expect a
+  `maxAddresses` warning if one was kept.
+- **`--ai-revisit` rewrites shared templates from one contract's code.**
+  Run it on one project at a time and review the template diffs.
 
 - **The freeze path edits a shared template.** A template serves every shape
   in its `shapes.json`; removing a broken field or adding one changes the

@@ -18,7 +18,11 @@ import type { IProvider } from '../provider/IProvider'
 import type { PerContractSource } from '../source/SourceCodeService'
 import type { Draft } from './draft/Draft'
 import { FakeModelClient } from './model/FakeModelClient'
-import { type TemplatizeRequest, Templatizer } from './Templatizer'
+import {
+  type TemplatizeRequest,
+  Templatizer,
+  type TemplatizerSettings,
+} from './Templatizer'
 import { bundle, contractSources } from './test/sources'
 import { addShape } from './write/writeTemplate'
 
@@ -71,6 +75,7 @@ describe(Templatizer.name, () => {
   function templatizer(
     model: FakeModelClient,
     previousTemplates: Record<string, string> = {},
+    settings: Partial<TemplatizerSettings> = {},
   ) {
     return new Templatizer(
       templateService,
@@ -82,6 +87,7 @@ describe(Templatizer.name, () => {
         artifactsRoot: join(root, 'trail'),
         previousTemplates,
         now: () => new Date('2026-09-29T12:00:00Z'),
+        ...settings,
       },
       Logger.SILENT,
     )
@@ -148,6 +154,48 @@ describe(Templatizer.name, () => {
 
     expect(ids).toEqual(['proj/Registry', 'proj/Registry'])
     expect(model.calls.length).toEqual(1)
+  })
+
+  it('keeps a field whose events were never emitted and notes it for the reviewer', async () => {
+    const model = new FakeModelClient([JSON.stringify(DRAFT)])
+    const req = {
+      ...request([bundle('Registry', ADDRESS, BODY)]),
+      provider: provider([]),
+    }
+
+    const templateId = await templatizer(model).templateFor(req)
+
+    expect(templateId).toEqual('proj/Registry')
+    expect(model.calls.length).toEqual(1)
+    expect(templateText('proj/Registry')).toInclude(
+      '    // empty at block 100: no logs yet for ValidatorUpdated\n    "validators": {',
+    )
+  })
+
+  it('writes the advisories the model kept into the template for the reviewer', async () => {
+    const activitySkip: Draft = {
+      fields: {},
+      skips: [
+        { item: 'isValidator(address)', reason: 'unbounded' },
+        { item: 'ValidatorUpdated', reason: 'user-activity' },
+        { item: 'OwnershipTransferred', reason: 'covered' },
+      ],
+    }
+    const model = new FakeModelClient([
+      JSON.stringify(activitySkip),
+      JSON.stringify(activitySkip),
+    ])
+
+    const templateId = await templatizer(model).templateFor(
+      request([bundle('Registry', ADDRESS, BODY)]),
+    )
+
+    expect(templateId).toEqual('proj/Registry')
+    expect(model.calls.length).toEqual(2)
+    expect(model.prompts[1] ?? '').toInclude('judgments, not errors')
+    expect(templateText('proj/Registry')).toInclude(
+      '  // review: ValidatorUpdated is emitted only by privileged code (setValidator (onlyOwner))',
+    )
   })
 
   it('writes a template without asking the model when there is nothing to rule on', async () => {
@@ -318,9 +366,149 @@ describe(Templatizer.name, () => {
     })
   })
 
-  function provider(): IProvider {
+  describe('with --ai-revisit, for a template that still matches', () => {
+    const MATCHING_TEMPLATE = `{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Keeps the validator set.",
+  "fields": {
+    // written by a researcher
+    "validators": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "validator",
+        "add": { "event": "ValidatorUpdated", "where": ["=", "#active", true] },
+        "remove": { "event": "ValidatorUpdated", "where": ["!=", "#active", true] }
+      }
+    }
+  }
+}
+`
+    const OWNER_HISTORY: Draft = {
+      fields: {
+        ownershipHistory: {
+          handler: {
+            type: 'event',
+            select: 'newOwner',
+            add: { event: 'OwnershipTransferred' },
+          },
+          covers: ['OwnershipTransferred'],
+          reason: 'transferOwnership (onlyOwner) emits OwnershipTransferred',
+        },
+      },
+      skips: [{ item: 'isValidator(address)', reason: 'covered' }],
+    }
+
+    function writeMatchingTemplate(): TemplatizeRequest {
+      const directory = join(root, '_templates', 'proj', 'Registry')
+      mkdirSync(directory, { recursive: true })
+      writeFileSync(join(directory, 'template.jsonc'), MATCHING_TEMPLATE)
+      const req = request([bundle('Registry', ADDRESS, BODY)])
+      const [current] = req.sources.sources
+      if (current === undefined) throw new Error('no bundle')
+      addShape(templateService, 'proj/Registry', {
+        facts: {
+          chain: 'ethereum',
+          blockNumber: 50,
+          name: 'Registry',
+          shapeHash: getHash(current),
+          address: current.address,
+        } as never,
+        sources: req.sources,
+      })
+      return req
+    }
+
+    function revisiting(model: FakeModelClient) {
+      return templatizer(model, {}, { revisit: true })
+    }
+
+    it('asks the model although every field executes, keeps them verbatim and adds no shape', async () => {
+      const req = writeMatchingTemplate()
+      const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
+
+      await revisiting(model).revisit(req, 'proj/Registry')
+
+      const text = templateText('proj/Registry')
+      expect(model.calls.length).toEqual(1)
+      expect(model.prompts[0] ?? '').toInclude('Locked fields')
+      expect(text).toInclude(
+        '// Revisited by fake-model via l2b discover --ai-revisit on 2026-09-29, 1 round(s). Review before committing. Kept 1 field(s) that still execute.',
+      )
+      expect(text).toInclude(
+        MATCHING_TEMPLATE.slice(
+          MATCHING_TEMPLATE.indexOf('    // written by a researcher'),
+          MATCHING_TEMPLATE.indexOf('\n  }\n}'),
+        ),
+      )
+      expect(text).toInclude('"ownershipHistory": {')
+      expect(Object.keys(shapes()).length).toEqual(1)
+      expect(
+        Object.keys(
+          templateService.loadContractTemplate('proj/Registry').fields,
+        ),
+      ).toEqual(['validators', 'ownershipHistory'])
+    })
+
+    it('leaves the template untouched when the model finds nothing to add', async () => {
+      const req = writeMatchingTemplate()
+      const nothing: Draft = {
+        fields: {},
+        skips: [
+          { item: 'isValidator(address)', reason: 'covered' },
+          { item: 'OwnershipTransferred', reason: 'covered' },
+        ],
+      }
+      const model = new FakeModelClient([JSON.stringify(nothing)])
+
+      await revisiting(model).revisit(req, 'proj/Registry')
+
+      expect(model.calls.length).toEqual(1)
+      expect(templateText('proj/Registry')).toEqual(MATCHING_TEMPLATE)
+    })
+
+    it('revisits a template once however many contracts share it', async () => {
+      const req = writeMatchingTemplate()
+      const twin = request([bundle('Registry', TWIN, BODY)])
+      const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
+      const instance = revisiting(model)
+
+      await Promise.all([
+        instance.revisit(req, 'proj/Registry'),
+        instance.revisit(twin, 'proj/Registry'),
+      ])
+
+      expect(model.calls.length).toEqual(1)
+    })
+
+    it('does not revisit a template this run authored', async () => {
+      const model = new FakeModelClient([JSON.stringify(DRAFT)])
+      const instance = revisiting(model)
+      const req = request([bundle('Registry', ADDRESS, BODY)])
+
+      const templateId = await instance.templateFor(req)
+      await instance.revisit(req, templateId ?? '')
+
+      expect(model.calls.length).toEqual(1)
+    })
+
+    function shapes(): Record<string, unknown> {
+      return JSON.parse(
+        readFileSync(
+          join(root, '_templates', 'proj', 'Registry', 'shapes.json'),
+          'utf8',
+        ),
+      )
+    }
+  })
+
+  function provider(
+    emitted: [event: string, args: unknown[]][] = [
+      ['ValidatorUpdated', [VALIDATOR, true]],
+    ],
+  ): IProvider {
     const coder = new utils.Interface(ABI)
-    const logs = [log(coder, 'ValidatorUpdated', [VALIDATOR, true])]
+    const logs = emitted.map(([event, args]) => log(coder, event, args))
     return mockObject<IProvider>({
       chain: 'ethereum',
       blockNumber: 100,

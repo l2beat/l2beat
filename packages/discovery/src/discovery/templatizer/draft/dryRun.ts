@@ -34,6 +34,8 @@ export interface FieldRun {
   /** Items of an array, keys of an object, `empty` when there is no value. */
   size: number | 'scalar' | 'empty' | 'error'
   error?: string
+  /** For the reviewer, written next to the field in the template; never a finding. */
+  note?: string
 }
 
 export interface DryRunRecord {
@@ -97,11 +99,15 @@ export async function dryRunDraft(
     return failedDryRun(blockNumber, draft, run.failure)
   }
   const findings = new Findings()
+  const notes: Record<string, string> = {}
   for (const [name, field] of Object.entries(draft.fields)) {
-    await checkField(provider, facts, name, field, run, findings)
+    const note = await checkField(provider, facts, name, field, run, findings)
+    if (note !== undefined) {
+      notes[name] = note
+    }
   }
   return {
-    record: { blockNumber, fields: fieldRuns(draft, run) },
+    record: { blockNumber, fields: fieldRuns(draft, run, notes) },
     findings: findings.list,
   }
 }
@@ -150,6 +156,7 @@ function failedDryRun(
   return { record: { blockNumber, fields }, findings: findings.list }
 }
 
+/** Adds the field's findings; returns its note for the reviewer, if any. */
 async function checkField(
   provider: IProvider,
   facts: Facts,
@@ -157,7 +164,7 @@ async function checkField(
   field: DraftField,
   run: FieldValues,
   findings: Findings,
-): Promise<void> {
+): Promise<string | undefined> {
   const path = fieldPath(name)
   const error = run.errors[name]
   if (error !== undefined) {
@@ -165,26 +172,25 @@ async function checkField(
       path,
       `dry run at block ${provider.blockNumber} failed: ${error}; fix the handler or skip the item`,
     )
-    return
+    return undefined
   }
   const followed = followedAddressCount(field, run.values[name])
   if (followed > MAX_FOLLOWED_ADDRESSES) {
     findings.list.push(tooManyRelativesFinding(path, followed))
   }
-  if (field.handler.type === 'event' && isEmpty(run.values[name])) {
-    const events = eventsOf(field)
-    const unread = await unreadDeclarationsWithLogs(provider, facts, events)
-    if (unread.length > 0) {
-      findings.list.push(
-        unreadDeclarationFinding(path, provider.blockNumber, events, unread),
-      )
-      return
-    }
-    const logCount = await countLogs(provider, facts, events)
-    findings.list.push(
-      emptyEventFinding(path, provider.blockNumber, events, field, logCount),
-    )
+  if (field.handler.type !== 'event' || !isEmpty(run.values[name])) {
+    return undefined
   }
+  const events = eventsOf(field)
+  const unread = await unreadDeclarationsWithLogs(provider, facts, events)
+  if (unread.length > 0) {
+    findings.list.push(
+      unreadDeclarationFinding(path, provider.blockNumber, events, unread),
+    )
+    return undefined
+  }
+  const logCount = await countLogs(provider, facts, events)
+  return emptyFoldNote(provider.blockNumber, events, logCount)
 }
 
 /**
@@ -193,7 +199,8 @@ async function checkField(
  * instances rather than parts of the system (every token a factory
  * deployed) turned a 96-contract scroll run into one that hit
  * `maxAddresses` and dropped 41 addresses. Twenty is above any committee
- * or verifier set the suite has.
+ * or verifier set the suite has, but a count says nothing certain about
+ * what the addresses are, so going over it is an advisory.
  */
 export const MAX_FOLLOWED_ADDRESSES = 20
 
@@ -227,9 +234,9 @@ function addressesIn(value: ContractValue): string[] {
 
 function tooManyRelativesFinding(path: string, count: number): Finding {
   return {
-    severity: 'error',
+    severity: 'advisory',
     path,
-    message: `the value holds ${count} addresses and discovery would analyse every one of them as part of this system (more than ${MAX_FOLLOWED_ADDRESSES} is not allowed); when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add \`"ignoreRelative": true\` to the handler; otherwise skip the item`,
+    message: `the value holds ${count} addresses and discovery would analyse every one of them as part of this system, more than the ${MAX_FOLLOWED_ADDRESSES} that any one system usually has; when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add \`"ignoreRelative": true\` to the handler`,
   }
 }
 
@@ -244,8 +251,9 @@ interface UnreadDeclaration {
  * comes back empty while the other has logs has read the wrong half of the
  * history: ScrollChain's reverted batches sit under the legacy
  * `RevertBatch(batchIndex, batchHash)` although the current code emits
- * `RevertBatch(startBatchIndex, finishBatchIndex)`. That is an error
- * whatever the field covers, because the state demonstrably exists.
+ * `RevertBatch(startBatchIndex, finishBatchIndex)`. It is an advisory
+ * rather than an error: the other declaration's logs are strong evidence
+ * that this state exists, but not proof that they belong to this field.
  */
 async function unreadDeclarationsWithLogs(
   provider: IProvider,
@@ -296,9 +304,9 @@ function unreadDeclarationFinding(
     .map((d) => `\`${d.fragment}\` (${d.logCount} log(s))`)
     .join(', ')
   return {
-    severity: 'error',
+    severity: 'advisory',
     path,
-    message: `no logs for ${events.join(', ')} up to block ${blockNumber}, but another declaration of the same event has logs: ${others}; the contract recorded this state under that declaration, so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
+    message: `no logs for ${events.join(', ')} up to block ${blockNumber}, but another declaration of the same event has logs: ${others}; the contract most likely recorded this state under that declaration (older code), so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
   }
 }
 
@@ -331,54 +339,27 @@ async function countTopicLogs(
 }
 
 /**
- * A fold over events nobody emitted is the truth for event-only state, but
- * for a field that claims to answer a getter it is more likely the wrong
- * event: the research benchmark accepted `isBatchPoster = []` that way
- * while the getter returned true for five addresses. So an empty event
- * field is an error when it covers a function and a warning when it covers
- * only events (which every event field does, to rule on what it reads).
- * The log count tells "the contract never emitted these" apart from "the
- * `where` or `remove` actions dropped every log", which need different
- * fixes.
+ * An empty fold is a note for the reviewer, never a finding, because logs
+ * cannot tell "nothing happened yet" from "this state was written without
+ * these events". It used to be an error whenever the field also claimed a
+ * getter, and the model answered by dropping the field: 17 of 27 times in
+ * the first benchmark, `blacklistedGames` and `tokenMapping` among them,
+ * which the committed templates keep although they are empty. A dropped
+ * field is invisible, and it is the one that would have announced the
+ * first blacklisted game. The price is that a fold over the wrong events is
+ * accepted as empty too (Plume's batch posters were set by an older
+ * implementation that did not emit `BatchPosterSet`); the note is what
+ * makes the reviewer check it.
  */
-function emptyEventFinding(
-  path: string,
+function emptyFoldNote(
   blockNumber: number,
   events: string[],
-  field: DraftField,
   logCount: number,
-): Finding {
+): string {
   const names = events.join(', ')
-  const observed =
-    logCount === 0
-      ? `no logs for events ${names} up to block ${blockNumber}`
-      : `the ${logCount} logs for events ${names} up to block ${blockNumber} fold to nothing`
-  const getters = field.covers.filter(isFunctionSignature)
-  if (getters.length === 0) {
-    const check =
-      logCount === 0
-        ? 'the event names'
-        : 'the `where` conditions and the add/remove pairing'
-    return {
-      severity: 'warning',
-      path,
-      message: `${observed}; event-only state can truly be empty, but confirm ${check}`,
-    }
-  }
-  const fix =
-    logCount === 0
-      ? 'find the events the setters actually emit (check the flattened source, including inherited contracts), enumerate another way, or skip the item'
-      : 'check the `where` conditions (log addresses are chain-prefixed, so address literals must be too) and the add/remove pairing, enumerate another way, or skip the item'
-  return {
-    severity: 'error',
-    path,
-    message: `${observed}, yet the field covers ${field.covers.join(', ')}; ${fix}`,
-  }
-}
-
-/** Worklist tokens: functions are `name(types)`, events are bare names. */
-function isFunctionSignature(token: string): boolean {
-  return token.includes('(')
+  return logCount === 0
+    ? `empty at block ${blockNumber}: no logs yet for ${names}`
+    : `empty at block ${blockNumber}: the ${logCount} logs for ${names} fold to nothing`
 }
 
 function eventsOf(field: DraftField): string[] {
@@ -413,12 +394,19 @@ async function countLogs(
   }
 }
 
-function fieldRuns(draft: Draft, run: FieldValues): FieldRun[] {
-  return Object.keys(draft.fields).map((name) => {
+function fieldRuns(
+  draft: Draft,
+  run: FieldValues,
+  notes: Record<string, string>,
+): FieldRun[] {
+  return Object.keys(draft.fields).map((name): FieldRun => {
     const error = run.errors[name]
-    return error === undefined
-      ? { name, size: sizeOf(run.values[name]) }
-      : { name, size: 'error', error }
+    if (error !== undefined) {
+      return { name, size: 'error', error }
+    }
+    const note = notes[name]
+    const size = sizeOf(run.values[name])
+    return note === undefined ? { name, size } : { name, size, note }
   })
 }
 

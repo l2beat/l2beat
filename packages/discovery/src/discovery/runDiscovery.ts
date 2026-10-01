@@ -74,7 +74,7 @@ export async function runDiscovery(
       timestampDate,
       http,
       config.overwriteCache,
-      getTemplatizerSettings(config, paths, configReader),
+      await getTemplatizerSettings(config, paths, configReader),
     )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)

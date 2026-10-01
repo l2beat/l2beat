@@ -200,25 +200,38 @@ describe(dryRunDraft.name, () => {
     ])
   })
 
-  it('errors when an event field that covers a getter finds no logs', async () => {
+  it('accepts an event field that finds no logs, even one covering a getter, and notes it for the reviewer', async () => {
     const result = await dryRunDraft(
       provider([]),
       executor,
       facts,
-      draftOf({ sequencers: SEQUENCERS }),
+      draftOf({
+        sequencers: SEQUENCERS,
+        revertedBatches: REVERTED_BATCHES,
+      }),
     )
 
-    expect(result.findings).toEqual([
-      {
-        severity: 'error',
-        path: 'fields.sequencers',
-        message: `no logs for events UpdateSequencer up to block ${BLOCK}, yet the field covers isSequencer(address), UpdateSequencer; find the events the setters actually emit (check the flattened source, including inherited contracts), enumerate another way, or skip the item`,
+    expect(result).toEqual({
+      record: {
+        blockNumber: BLOCK,
+        fields: [
+          {
+            name: 'sequencers',
+            size: 0,
+            note: `empty at block ${BLOCK}: no logs yet for UpdateSequencer`,
+          },
+          {
+            name: 'revertedBatches',
+            size: 0,
+            note: `empty at block ${BLOCK}: no logs yet for RevertBatch`,
+          },
+        ],
       },
-    ])
-    expect(result.record.fields).toEqual([{ name: 'sequencers', size: 0 }])
+      findings: [],
+    })
   })
 
-  it('errors with the log count when logs exist but the fold keeps none', async () => {
+  it('notes the log count when logs exist but the fold keeps none', async () => {
     const result = await dryRunDraft(
       provider(SEQUENCER_LOGS),
       executor,
@@ -239,33 +252,17 @@ describe(dryRunDraft.name, () => {
       }),
     )
 
-    expect(result.findings).toEqual([
+    expect(result.findings).toEqual([])
+    expect(result.record.fields).toEqual([
       {
-        severity: 'error',
-        path: 'fields.sequencerA',
-        message: `the 3 logs for events UpdateSequencer up to block ${BLOCK} fold to nothing, yet the field covers isSequencer(address); check the \`where\` conditions (log addresses are chain-prefixed, so address literals must be too) and the add/remove pairing, enumerate another way, or skip the item`,
+        name: 'sequencerA',
+        size: 0,
+        note: `empty at block ${BLOCK}: the 3 logs for UpdateSequencer fold to nothing`,
       },
     ])
   })
 
-  it('only warns when an event-only field finds no logs', async () => {
-    const result = await dryRunDraft(
-      provider([]),
-      executor,
-      facts,
-      draftOf({ revertedBatches: REVERTED_BATCHES }),
-    )
-
-    expect(result.findings).toEqual([
-      {
-        severity: 'warning',
-        path: 'fields.revertedBatches',
-        message: `no logs for events RevertBatch up to block ${BLOCK}; event-only state can truly be empty, but confirm the event names`,
-      },
-    ])
-  })
-
-  it('errors when a fold reads an empty declaration while another declaration of the event has logs', async () => {
+  it('advises reading another declaration of the event when it has the logs this fold lacks', async () => {
     const legacy = log(
       'RevertBatch(uint256,bytes32)',
       [7, `0x${'ab'.repeat(32)}`],
@@ -291,14 +288,14 @@ describe(dryRunDraft.name, () => {
 
     expect(result.findings).toEqual([
       {
-        severity: 'error',
+        severity: 'advisory',
         path: 'fields.revertedBatches',
-        message: `no logs for ${current} up to block ${BLOCK}, but another declaration of the same event has logs: \`event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)\` (1 log(s)); the contract recorded this state under that declaration, so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
+        message: `no logs for ${current} up to block ${BLOCK}, but another declaration of the same event has logs: \`event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)\` (1 log(s)); the contract most likely recorded this state under that declaration (older code), so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
       },
     ])
   })
 
-  it('errors when a field would make discovery follow more addresses than a system has parts', async () => {
+  it('advises ignoreRelative when a field would make discovery follow more addresses than a system has parts', async () => {
     const tokens = Array.from(
       { length: 21 },
       (_, i) => `0x${(i + 1).toString(16).padStart(40, '0')}`,
@@ -326,8 +323,13 @@ describe(dryRunDraft.name, () => {
       }),
     )
 
-    expect(unbounded.findings.map((finding) => finding.message)).toEqual([
-      'the value holds 21 addresses and discovery would analyse every one of them as part of this system (more than 20 is not allowed); when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add `"ignoreRelative": true` to the handler; otherwise skip the item',
+    expect(unbounded.findings).toEqual([
+      {
+        severity: 'advisory',
+        path: 'fields.sequencers',
+        message:
+          'the value holds 21 addresses and discovery would analyse every one of them as part of this system, more than the 20 that any one system usually has; when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add `"ignoreRelative": true` to the handler',
+      },
     ])
     expect(ignored.findings).toEqual([])
   })

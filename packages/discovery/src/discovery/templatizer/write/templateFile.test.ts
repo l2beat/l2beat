@@ -177,6 +177,22 @@ describe(renderTemplateFile.name, () => {
     )
   })
 
+  it('writes the dry run note under the covers', () => {
+    const text = renderTemplateFile(
+      minimal([
+        {
+          ...SEQUENCERS,
+          name: 'sequencers',
+          notes: ['empty at block 100: no logs yet for UpdateSequencer'],
+        },
+      ]),
+    )
+
+    expect(text).toInclude(
+      '    // covers: isSequencer(address), UpdateSequencer\n    // empty at block 100: no logs yet for UpdateSequencer\n    "sequencers": {',
+    )
+  })
+
   it('round-trips the handlers and edits of a draft through the template parser', () => {
     const draft: Draft = {
       fields: {

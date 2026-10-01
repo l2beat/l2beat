@@ -5,8 +5,12 @@
  * is mechanical: the prompt is a pure function of the contract, the repair
  * message is the findings verbatim, and a draft is accepted only when the
  * validator reports no error and the dry run on the real provider produces
- * no field error. There is no review turn after acceptance: in the research
- * benchmark it found nothing the mechanical checks had not.
+ * no field error. There is no general review turn after acceptance: in the
+ * research benchmark it found nothing the mechanical checks had not. The
+ * one extra turn is for advisories (see `Finding`): a draft with no error
+ * but with advisories is shown them once, and whatever comes back without
+ * an error is accepted. That turn can only help: if its reply cannot be
+ * repaired, the draft it was asked about is accepted instead.
  *
  * Every round leaves its prompt, response, findings and dry run in the
  * artifact trail as it happens, so a killed run still shows what the model
@@ -17,7 +21,12 @@ import { getErrorMessage } from '../../utils/getErrorMessage'
 import type { ArtifactSink } from './artifacts'
 import type { Draft } from './draft/Draft'
 import type { DryRunRecord } from './draft/dryRun'
-import { countErrors, type Finding, hasErrors } from './draft/Finding'
+import {
+  advisoriesOf,
+  countErrors,
+  type Finding,
+  hasErrors,
+} from './draft/Finding'
 import {
   type ValidationContext,
   validateDraftText,
@@ -60,8 +69,20 @@ export interface RoundRecord {
 }
 
 export type LoopResult =
-  | { status: 'accepted'; draft: Draft; rounds: RoundRecord[]; model?: string }
+  | {
+      status: 'accepted'
+      draft: Draft
+      /** The round whose draft this is: its dry run and advisories go into the template. */
+      acceptedRound: RoundRecord
+      rounds: RoundRecord[]
+      model?: string
+    }
   | { status: 'failed'; failure: string; rounds: RoundRecord[]; model?: string }
+
+interface Candidate {
+  draft: Draft
+  round: RoundRecord
+}
 
 export async function authorDraft(
   deps: LoopDeps,
@@ -88,13 +109,20 @@ class AuthoringLoop {
 
   async run(): Promise<LoopResult> {
     let message = this.input.prompt
+    let askedAbout: Candidate | undefined
     while (this.rounds.length < this.maxRounds) {
       const index = this.rounds.length + 1
       const outcome = await this.round(index, message)
       this.rounds.push(outcome.record)
       this.writeSummary('running')
       if (outcome.draft !== undefined) {
-        return this.accepted(outcome.draft)
+        const candidate = { draft: outcome.draft, round: outcome.record }
+        if (askedAbout !== undefined || !this.worthAsking(candidate)) {
+          return this.accepted(candidate)
+        }
+        askedAbout = candidate
+        message = advisoryMessage(advisoriesOf(outcome.record.findings))
+        continue
       }
       // A refused turn is asked again as it was: the refusal says nothing
       // about the draft, so there is nothing to repair.
@@ -102,7 +130,15 @@ class AuthoringLoop {
         message = repairMessage(outcome.record.findings)
       }
     }
-    return this.failed()
+    return askedAbout !== undefined ? this.accepted(askedAbout) : this.failed()
+  }
+
+  /** Advisories are asked about only while a round is left to answer them. */
+  private worthAsking(candidate: Candidate): boolean {
+    return (
+      advisoriesOf(candidate.round.findings).length > 0 &&
+      this.rounds.length < this.maxRounds
+    )
   }
 
   private async round(
@@ -198,22 +234,25 @@ class AuthoringLoop {
 
   private logRound(record: RoundRecord): void {
     const errors = countErrors(record.findings)
+    const advisories = advisoriesOf(record.findings).length
     this.deps.logger.info('Templatizer round', {
       round: record.index,
       errors,
-      warnings: record.findings.length - errors,
+      advisories,
+      warnings: record.findings.length - errors - advisories,
       durationMs: record.durationMs,
       inputTokens: record.usage?.inputTokens ?? 0,
       outputTokens: record.usage?.outputTokens ?? 0,
     })
   }
 
-  private accepted(draft: Draft): LoopResult {
+  private accepted({ draft, round }: Candidate): LoopResult {
     this.deps.artifacts.write('draft.json', JSON.stringify(draft, null, 2))
-    this.writeSummary('accepted')
+    this.writeSummary('accepted', undefined, round.index)
     return {
       status: 'accepted',
       draft,
+      acceptedRound: round,
       rounds: this.rounds,
       model: this.model,
     }
@@ -228,6 +267,7 @@ class AuthoringLoop {
   private writeSummary(
     status: 'running' | 'accepted' | 'failed',
     failure?: string,
+    acceptedRound?: number,
   ): void {
     this.deps.artifacts.write(
       'summary.json',
@@ -236,6 +276,7 @@ class AuthoringLoop {
           ...this.input.trail,
           status,
           failure,
+          acceptedRound,
           threadId: this.threadId,
           model: this.model,
           rounds: this.rounds,
@@ -247,23 +288,47 @@ class AuthoringLoop {
   }
 }
 
-/** Errors first, then warnings, numbered, so the model can answer point by point. */
+/** Errors first, then advisories, then warnings, numbered, so the model can answer point by point. */
 export function repairMessage(findings: readonly Finding[]): string {
-  const ordered = [
-    ...findings.filter((finding) => finding.severity === 'error'),
-    ...findings.filter((finding) => finding.severity === 'warning'),
-  ]
   const errors = countErrors(findings)
+  const advisories = advisoriesOf(findings).length
+  const intro =
+    advisories === 0
+      ? `The draft has ${errors} error(s) and ${findings.length - errors} warning(s). Fix every error; treat warnings as hints to check.`
+      : `The draft has ${errors} error(s), ${advisories} advisory point(s) and ${findings.length - errors - advisories} warning(s). Fix every error; reconsider each advisory point, which may be right as it is; treat warnings as hints to check.`
   return [
-    `The draft has ${errors} error(s) and ${findings.length - errors} warning(s). Fix every error; treat warnings as hints to check.`,
+    intro,
     '',
-    ...ordered.map(
-      (finding, i) =>
-        `${i + 1}. ${finding.severity} at ${finding.path}: ${finding.message}`,
-    ),
+    ...numbered(bySeverity(findings)),
     '',
     'Return the whole corrected draft as one JSON object and nothing else.',
   ].join('\n')
+}
+
+/** The one turn a draft without errors gets for its advisories. */
+export function advisoryMessage(advisories: readonly Finding[]): string {
+  return [
+    `The draft passes every check. The ${advisories.length} point(s) below are judgments, not errors: each names something that is usually a mistake. Change the draft where one applies; where the draft is right as it is, leave that part unchanged. Your reply is accepted unless it has errors, and the points that still apply are written into the template for the reviewer.`,
+    '',
+    ...numbered(advisories),
+    '',
+    'Return the whole draft as one JSON object and nothing else, changed or not.',
+  ].join('\n')
+}
+
+const SEVERITY_ORDER: Finding['severity'][] = ['error', 'advisory', 'warning']
+
+function bySeverity(findings: readonly Finding[]): Finding[] {
+  return SEVERITY_ORDER.flatMap((severity) =>
+    findings.filter((finding) => finding.severity === severity),
+  )
+}
+
+function numbered(findings: readonly Finding[]): string[] {
+  return findings.map(
+    (finding, i) =>
+      `${i + 1}. ${finding.severity} at ${finding.path}: ${finding.message}`,
+  )
 }
 
 function describeFailure(rounds: readonly RoundRecord[]): string {

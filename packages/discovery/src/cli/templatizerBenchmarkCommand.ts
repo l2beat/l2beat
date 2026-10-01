@@ -25,10 +25,7 @@ import {
   runBenchmark,
 } from '../discovery/templatizer/benchmark/runBenchmark'
 import { DEFAULT_MAX_ROUNDS } from '../discovery/templatizer/loop'
-import {
-  createModelClient,
-  describeModel,
-} from '../discovery/templatizer/model/createModelClient'
+import { chooseModel } from '../discovery/templatizer/model/createModelClient'
 import { configureLogger } from './logger'
 
 export const TemplatizerBenchmarkCommand = command({
@@ -46,7 +43,13 @@ export const TemplatizerBenchmarkCommand = command({
       type: optional(string),
       long: 'ai-model',
       description:
-        'a Codex model name (default: Codex default), or opencode/<model>, e.g. opencode/deepseek-v4.1-flash for the cheap option',
+        'a Codex model name (default: Codex default), or an opencode gateway model, opencode/<model> (Zen) or opencode-go/<model> (Go), e.g. opencode-go/deepseek-v4.1-flash for the cheap option',
+    }),
+    aiEffort: option({
+      type: optional(string),
+      long: 'ai-effort',
+      description:
+        'reasoning effort (default high): for opencode one of the levels of the model, which `opencode models <provider> --verbose` lists under variants (DeepSeek: low, high, max); for Codex none, minimal, low, medium, high, xhigh or max',
     }),
     aiRounds: option({
       type: optional(number),
@@ -80,6 +83,7 @@ export const TemplatizerBenchmarkCommand = command({
 interface TemplatizerBenchmarkArgs {
   out: string
   aiModel?: string
+  aiEffort?: string
   aiRounds?: number
   projects: string[]
   addresses?: string
@@ -100,8 +104,12 @@ export async function templatizerBenchmark(
     logger,
   )
   const outDir = path.resolve(args.out)
-  const model = createModelClient(args.aiModel)
-  const modelLabel = describeModel(args.aiModel)
+  const chosen = await chooseModel({
+    model: args.aiModel,
+    effort: args.aiEffort,
+  })
+  const model = chosen.client
+  const modelLabel = chosen.label
   const maxRounds = args.aiRounds ?? DEFAULT_MAX_ROUNDS
   const report = await runBenchmark(
     {
@@ -116,6 +124,7 @@ export async function templatizerBenchmark(
             artifactsRoot: path.join(outDir, 'trails'),
             model,
             modelLabel,
+            effort: chosen.effort,
             maxRounds,
             logger: logger.for('Templatizer'),
           },

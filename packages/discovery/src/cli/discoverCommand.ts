@@ -96,13 +96,25 @@ export const DiscoverCommandArgs = {
     type: optional(string),
     long: 'ai-model',
     description:
-      'model for --ai: a Codex model name (default: Codex default), or opencode/<model>, e.g. opencode/deepseek-v4.1-flash for the cheap option',
+      'model for --ai: a Codex model name (default: Codex default), or an opencode gateway model, opencode/<model> (Zen) or opencode-go/<model> (Go), e.g. opencode-go/deepseek-v4.1-flash for the cheap option',
   }),
   aiRounds: option({
     type: optional(number),
     long: 'ai-rounds',
     description:
       'model turns per contract for --ai, the first included (default 3)',
+  }),
+  aiEffort: option({
+    type: optional(string),
+    long: 'ai-effort',
+    description:
+      'reasoning effort for --ai (default high): for opencode one of the levels of the model, which `opencode models <provider> --verbose` lists under variants (DeepSeek: low, high, max); for Codex none, minimal, low, medium, high, xhigh or max',
+  }),
+  aiRevisit: flag({
+    type: boolean,
+    long: 'ai-revisit',
+    description:
+      '--ai, and also revisit every template that already matches, as if the code had changed: keep the fields that execute and ask the model about everything the template leaves undecided (rewrites shared templates; review before committing)',
   }),
 }
 

@@ -186,7 +186,7 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   {
     title: 'User activity is never fetched.',
     lines: [
-      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; the dry run rejects a field that would make discovery follow more than 20 addresses without it.',
+      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; the dry run questions a field that would make discovery follow more than 20 addresses without it.',
     ],
   },
   {
