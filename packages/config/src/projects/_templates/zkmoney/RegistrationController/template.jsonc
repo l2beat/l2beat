@@ -4,13 +4,12 @@
   "category": "core",
   "description": "Completes paid name registrations: deploys the user's L1 account, claims the name and writes the user record. Fees above the relayer fee go to an allowlisted beneficiary.",
   "ignoreMethods": ["usedTermsNonces"],
-  "ignoreRelatives": [
-    "ACCOUNT_FACTORY",
-    "ENTRY_POINT",
-    "FEE_TOKEN",
-    "NAME_PORTAL"
-  ],
+  "ignoreRelatives": ["ENTRY_POINT", "FEE_TOKEN", "NAME_PORTAL"],
   "fields": {
+    "ACCOUNT_FACTORY": {
+      "description": "Immutable factory and account implementation used to deploy users’ L1 passkey accounts.",
+      "template": "zkmoney/OxideAccountFactory"
+    },
     "beneficiaries": {
       "description": "Allowlisted fee recipients. The domainOwner can append entries, none can be removed.",
       "handler": {

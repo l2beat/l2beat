@@ -150,12 +150,37 @@
         "SIPA_FACTORY": "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc"
       },
       "fieldMeta": {
+        "ACCOUNT_FACTORY": {
+          "description": "Immutable factory and account implementation used to deploy users’ L1 passkey accounts."
+        },
         "beneficiaries": {
           "description": "Allowlisted fee recipients. The domainOwner can append entries, none can be removed."
         }
       },
       "implementationNames": {
         "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23": "RegistrationController"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OxideAccountFactory",
+      "address": "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee",
+      "type": "Contract",
+      "template": "zkmoney/OxideAccountFactory",
+      "sourceHashes": [
+        "0x5ec639f072b78a7591569d234f52e9de7904d629ba10a3d8b9e2dcddcd4c745d"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless factory for deterministic L1 accounts. The implementation is immutable and there is no administrator.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298455,
+      "sinceBlock": 26051082,
+      "values": {
+        "$immutable": true,
+        "implementation": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844"
+      },
+      "implementationNames": {
+        "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee": "OxideAccountFactory"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -400,6 +425,40 @@
       },
       "implementationNames": {
         "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc": "SIPAFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OxideAccount",
+      "address": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844",
+      "type": "Contract",
+      "template": "zkmoney/OxideAccount",
+      "sourceHashes": [
+        "0x3eeaf7f45896a2760f4482031e22ddd0ef25a16f54ebd6d292b0144dd414313f"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable implementation of users' L1 accounts. The bootstrap key authorizes the first passkey. Once a passkey is installed, only the user's passkeys can authorize operations and manage keys. The last passkey cannot be removed. Deposit recovery checks signatures against this account.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298455,
+      "sinceBlock": 26051082,
+      "values": {
+        "$immutable": true,
+        "authKeyCount": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "OxideAccount",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "getAuthKeys": [],
+        "getNonce": 0
+      },
+      "implementationNames": {
+        "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844": "OxideAccount"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -785,6 +844,18 @@
       "function updateUser(bytes intentData, bytes signature)",
       "function usedTermsNonces(uint256) view returns (bool)"
     ],
+    "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee": [
+      "constructor()",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OxideAccountFactory__InvalidBootstrapOwner()",
+      "event AccountDeployed(address indexed bootstrap, address account)",
+      "function deploy(address bootstrap) returns (address account)",
+      "function implementation() view returns (address)",
+      "function predictAccountAddress(address bootstrap) view returns (address)"
+    ],
     "eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb": [
       "constructor(address _registry, uint256 _rollupVersion, bytes32 _l2Beneficiary, address _ethUsdFeed)",
       "error EthUsdMinOut__InvalidPrice(int256 answer)",
@@ -948,6 +1019,43 @@
       "function renounceOwnership()",
       "function sipaIntentOf(address caller) view returns (uint8)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844": [
+      "constructor()",
+      "error AccountUnauthorized(address sender)",
+      "error ERC7579DecodingError()",
+      "error ERC7579UnsupportedExecType(bytes1 execType)",
+      "error FailedCall()",
+      "error InvalidShortString()",
+      "error OutOfRangeAccess()",
+      "error OxideAccount__AuthKeyIndexOutOfBounds()",
+      "error OxideAccount__AuthKeyMismatch()",
+      "error OxideAccount__CannotRemoveLastKey()",
+      "error OxideAccount__InvalidR1Key()",
+      "error OxideAccount__NotClone()",
+      "error StringTooLong(string str)",
+      "error UnsupportedExecutionMode()",
+      "event AuthKeyAdded(uint256 indexed index, tuple(bytes32 qx, bytes32 qy) key, bytes metadata)",
+      "event AuthKeyRemoved(uint256 indexed index, tuple(bytes32 qx, bytes32 qy) key)",
+      "event DataChanged(bytes32 indexed key, bytes value)",
+      "event EIP712DomainChanged()",
+      "event ERC7579TryExecuteFail(uint256 batchExecutionIndex, bytes returndata)",
+      "function addAuthKey(tuple(bytes32 qx, bytes32 qy) key, bytes metadata)",
+      "function authKeyCount() view returns (uint256)",
+      "function bootstrapOwner() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function entryPoint() pure returns (address)",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function getAuthKey(uint256 index) view returns (tuple(tuple(bytes32 qx, bytes32 qy) key, bytes metadata))",
+      "function getAuthKeys() view returns (tuple(tuple(bytes32 qx, bytes32 qy) key, bytes metadata)[])",
+      "function getData(bytes32 key) view returns (bytes)",
+      "function getNonce(uint192 key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function removeAuthKey(uint256 index, tuple(bytes32 qx, bytes32 qy) expectedKey)",
+      "function setData(bytes32 key, bytes value)",
+      "function supportsExecutionMode(bytes32 mode) view returns (bool result)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256)"
     ],
     "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9": [
       "constructor(address nameRegistry)",
@@ -1213,8 +1321,10 @@
     "zkmoney/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/NameRegistry": "0xcc308907a5c5ed94f6121c00402d22a02660efdff665990c0e58c85ab97d4444",
     "zkmoney/NitroValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkmoney/OxideAccount": "0x1f1e8032b3c9ffe720d9da775c6550d9b715e7f93127cf74763edc1844e5d46c",
+    "zkmoney/OxideAccountFactory": "0x60424d9a287a8f7dd55505a3b0153a40208f7163a3214b14e6eb598888af3738",
     "zkmoney/PlainWithdrawalExecutor": "0x911e8e59c1909f8c418151892ea82bad4130d80f7209e9b398bb0585c2089357",
-    "zkmoney/RegistrationController": "0x9720f8f732ffe4b5a88bfec4d8873e6dd994829e8c6b2da7005996d3670f9b80",
+    "zkmoney/RegistrationController": "0x7d40edff658ec51a29ba6a99b69f3a9ddc052d87d4f05e01e82ca620d0a9fd3a",
     "zkmoney/RegistrationSIPA": "0xb76ce03ef8d6ad2a449e7b71857fb89c06417c1a0ffea67b8bdb89a9019f0dca",
     "zkmoney/Resolver": "0x580a1dfd9c9b4be7e25f9fa12914d7761d488728f109b7eb136e3913c5e62b2b",
     "zkmoney/SIPAFactory": "0x6015b0def645b353825fa1a4fe67b72d8b62ab9ffd99ace348dae0075d2dfd60",
@@ -1223,7 +1333,7 @@
     "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
   "usedBlockNumbers": { "ethereum": 26089322 },
-  "permissionsConfigHash": "0xc7b0274d8c1ace1e3f3a3a0aadf54cb5bd3652aae73d9b3b51bfb47d5652b5d8",
+  "permissionsConfigHash": "0xf1681b610715b3e08a32ba554eea277baa97a5dcacf212a8c23a95699c1ce16d",
   "permissions": {
     "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {
       "receivedPermissions": [

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x53246bf589d4c4b6910e157a95cb97fc9b15e7cf
+Generated with discovered.json: 0x0a04d6b9b42853bebd2f73fc1afbe0be244103be
 
-# Diff at Wed, 30 Sep 2026 09:14:13 GMT:
+# Diff at Wed, 30 Sep 2026 19:15:24 GMT:
 
 - id: 1225e8f9
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x53246bf589d4c4b6910e157a95cb97fc9b15e7cf
 
 ## Description
 
-Initial discovery of zk.money on the Aztec Network.
+Initial full discovery of zk.money.
 
 ## Initial discovery
 
@@ -40,6 +40,12 @@ Initial discovery of zk.money on the Aztec Network.
 +   Status: CREATED
     contract RegistrationController (eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23) [zkmoney/RegistrationController]
     +++ description: Completes paid name registrations: deploys the user's L1 account, claims the name and writes the user record. Fees above the relayer fee go to an allowlisted beneficiary.
+```
+
+```diff
++   Status: CREATED
+    contract OxideAccountFactory (eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee) [zkmoney/OxideAccountFactory]
+    +++ description: Permissionless factory for deterministic L1 accounts. The implementation is immutable and there is no administrator.
 ```
 
 ```diff
@@ -88,6 +94,12 @@ Initial discovery of zk.money on the Aztec Network.
 +   Status: CREATED
     contract SIPAFactory (eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc) [zkmoney/SIPAFactory]
     +++ description: Deploys zk.money deposit addresses (SIPAs) as deterministic clones. The implementation per portal and intent is blessed once by the owner and cannot be changed afterwards.
+```
+
+```diff
++   Status: CREATED
+    contract OxideAccount (eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844) [zkmoney/OxideAccount]
+    +++ description: Immutable implementation of users' L1 accounts. The bootstrap key authorizes the first passkey. Once a passkey is installed, only the user's passkeys can authorize operations and manage keys. The last passkey cannot be removed. Deposit recovery checks signatures against this account.
 ```
 
 ```diff

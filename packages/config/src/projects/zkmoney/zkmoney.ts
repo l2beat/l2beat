@@ -1,12 +1,11 @@
+import type { ContractValue } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -19,12 +18,14 @@ import { zkMoneyAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('zkmoney')
 
-// topic0 of the standard ERC-20 Transfer(address,address,uint256)
-const ERC20_TRANSFER_EVENT =
-  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+// Portal events measure credited deposits and payouts, excluding sponsorship
+// cuts and prover tips. ERC-20 transfers would also count direct donations.
+const DEPOSIT_EVENT =
+  '0x8154af7b1b360f500640de68c82af19c52c4ad4189d7a7c7a41506e19a1fdd6c'
+const WITHDRAWAL_EVENT =
+  '0x0ef2e2e9f18042ca214d1bee833209f28326ffa8f4a6b0dc92172caf71bc5433'
 
 const portal = discovery.getContract('ZkMoneyPortal')
-const executor = discovery.getContract('PlainWithdrawalExecutor')
 assert(
   portal.sinceTimestamp !== undefined,
   'ZkMoneyPortal needs sinceTimestamp',
@@ -60,6 +61,18 @@ assert(
 assert(
   approvedPcr0Hashes.length === 1,
   'ZkMoneyPortal approves more than one enclave image, review the project texts',
+)
+assert(
+  !discovery.getContractValue<boolean>('ZkMoneyPortal', '_$frozen'),
+  'ZkMoneyPortal is frozen, review the exit and recovery descriptions',
+)
+const resolverOperators = discovery.getContractValue<
+  Record<string, ContractValue>
+>('AccountMetadataRegistry', 'resolverOperators')
+assert(
+  Object.keys(resolverOperators).length === 1 &&
+    'eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664' in resolverOperators,
+  'Resolver operators changed, review the operator trust assumptions',
 )
 
 function formatDai(wei: bigint): string {
@@ -103,7 +116,18 @@ const attestationMaxAge = formatSeconds(
   { fullUnit: true },
 )
 
+// TX_AMOUNT_CAP is an internal constant with no getter. Guard its value
+// against the verified portal source, which includes OxideConstants.
+assert(
+  portal.sourceHashes?.includes(
+    '0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e',
+  ),
+  'ZkMoneyPortal source changed, recheck TX_AMOUNT_CAP',
+)
+const transactionAmountCap = 2_583n * 10n ** BigInt(underlying.decimals)
+
 const descriptionValues = {
+  transactionAmountCap: formatDai(transactionAmountCap),
   fpcFundingCut: formatDai(fpcFundingCut),
   depositLimit: formatDai(depositLimit),
   depositRefillTime,
@@ -116,21 +140,6 @@ const governanceValues = {
   attestationMaxAge,
   teeSignerCount: String(teeSigners.length),
 }
-
-const anonymitySetMinimumAmounts =
-  PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[underlying.symbol]
-assert(
-  anonymitySetMinimumAmounts,
-  `No anonymity set thresholds for ${underlying.symbol}`,
-)
-
-// Deposit addresses accept the underlying and, through the Curve 3pool, the
-// USDC and USDT constants of the immutable DepositSIPA code.
-const DEPOSIT_FUNDING_TOKENS = [
-  underlyingAddress,
-  EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
-  EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
-]
 
 const privacyTokens: ProjectPrivacyToken[] = [
   {
@@ -149,28 +158,17 @@ const privacyTokens: ProjectPrivacyToken[] = [
         label: underlying.symbol,
         address: portal.address,
         sinceTimestamp: PORTAL_SINCE,
-        // Deposits arrive from one-time deposit addresses, so the depositor
-        // is whoever funded the address.
-        anonymitySet: {
-          minimumAmounts: anonymitySetMinimumAmounts,
-          fundingTokens: DEPOSIT_FUNDING_TOKENS,
-        },
-        // Deposits are gross transfers into the portal, including the
-        // funding cut that is forwarded to the FPC funder.
+        // Depositor and relayer counts remain untracked: SIPAs can be reused
+        // or have multiple funders, and finalization callers need not be relayers.
         deposit: {
-          event: ERC20_TRANSFER_EVENT,
-          extractor: 'erc20Transfer',
-          params: { to: portalAddress },
+          event: DEPOSIT_EVENT,
+          extractor: 'zkMoneyDeposit',
+          params: {},
         },
-        // Withdrawals pay out through the default executor. Filtering on it
-        // leaves out the funding cuts that also leave the portal.
         withdrawal: {
-          event: ERC20_TRANSFER_EVENT,
-          extractor: 'erc20Transfer',
-          params: {
-            from: portalAddress,
-            to: ChainSpecificAddress.address(executor.address),
-          },
+          event: WITHDRAWAL_EVENT,
+          extractor: 'zkMoneyWithdrawal',
+          params: {},
         },
       },
     ],
@@ -194,7 +192,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A private DAI wallet on Aztec by Aztec Labs, with funds escrowed on Ethereum. Transfers and withdrawals require both an Aztec validity proof and an AWS Nitro enclave signature.',
+      'A private DAI wallet on Aztec Network, with funds escrowed on Ethereum.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
@@ -226,45 +224,27 @@ export const zkmoney: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
-    relayerTracking: {
-      type: 'onchainEvents',
-      sources: [
-        {
-          address: portal.address,
-          sinceTimestamp: PORTAL_SINCE,
-          extractor: 'zkMoneyWithdrawal',
-        },
-      ],
-    },
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The core contracts and approved enclave image are fixed. If Aztec moves to a new rollup, anyone can freeze the portal to stop deposits and fix the refund snapshot at the last proven checkpoint. Withdrawals within the frozen bounds remain available. Later L2 transfers do not change refundable ownership.',
+        'The escrow and approved enclave image cannot be upgraded. Every withdrawal and refund still needs a proof and a live approved enclave. If Aztec changes its canonical rollup, anyone can freeze deposits and fix refundable ownership at the last proven checkpoint. Later L2 transfers do not change it.',
       walkawayTest: {
         passed: false,
         reason:
           'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build.',
       },
     },
-    // TODO: needs a published, reproducible build of the TEE image that matches
-    // the approved PCR0, the Noir source of the resolver circuit,
-    // the frozen chain snapshot service, the source of the hosted web wallet
-    // release, and public source
-    // verification of the zk.money contracts on Aztec (token, fee-paying
-    // contract, broadcaster) on aztecscan.xyz.
-    // TODO: recheck before publishing that the hosted web wallet still runs a
-    // release newer than the published source. The live commit is the
-    // `[boot] commit` line in https://wallet.zk.money/assets/index-*.js (it was
-    // 9f2ef22, obsidion-wallet v0.0.18, while zkmoney-public holds v0.0.13 at
-    // fc37a3e). If zkmoney-public contains the live commit, drop that sentence.
+    // Recheck the hosted wallet's [boot] commit before publication. On
+    // 2026-09-30 it was 2236b3fd7350c09fcb938f8a1aa6895ab26ef42e,
+    // which is absent from the public source at 1ac7d607.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contracts, enclave code and desktop app are open source. The deployed zk.money token on Aztec matches its source, and the refund verifiers are reproducible from the published Noir source. The resolver circuit is published only as its onchain verifier. The approved enclave binary has no published build to check against the source. The hosted wallet runs a newer release than the public source, and the resolver service is closed source.',
+        'The contract, desktop wallet and enclave sources are public. The deployed refund verifiers match the published Solidity. The approved enclave binary has not been reproduced. The resolver circuit and service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund circuits and the Aztec token pinned by the Ethereum portal.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

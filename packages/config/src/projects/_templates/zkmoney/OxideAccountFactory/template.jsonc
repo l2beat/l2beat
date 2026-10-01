@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OxideAccountFactory",
+  "category": "core",
+  "description": "Permissionless factory for deterministic L1 accounts. The implementation is immutable and there is no administrator.",
+  "fields": {
+    "implementation": { "template": "zkmoney/OxideAccount" }
+  }
+}

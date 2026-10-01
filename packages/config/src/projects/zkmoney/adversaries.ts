@@ -13,12 +13,12 @@ const OX = `${ZM}vendor/oxide/`
 export const zkMoneyAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides senders, amounts and links between deposits and withdrawals within the ledger. Tags, deposits and withdrawals are public. The first payment to a new contact reveals the recipient.',
+    text: 'Hides senders, amounts and links between deposits and withdrawals within the ledger. Tags, deposits and withdrawals are public. The first payment to a new contact reveals the recipient, and the first sponsored transaction after registration reveals the sender’s account.',
   },
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Private payments publish encrypted notes. Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
+      exposure: `Private payments publish encrypted notes. Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. The first sponsored transaction after registration also identifies the sender's account. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
       advice:
         'Claim your tag from a wallet with no public link to you and fund each deposit address once. Wait for deposits to be swept. Recovering them reveals the link to your account.',
       interior: {
@@ -77,7 +77,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Most deposits are tag registrations, publicly tied to their tag.',
+          note: 'Registration deposits are publicly tied to their tag.',
         },
       },
       sources: [

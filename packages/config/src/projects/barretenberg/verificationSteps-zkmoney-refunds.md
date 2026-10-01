@@ -36,4 +36,34 @@ Verify:
    done
    ```
    Each circuit should print `matches`.
-4. Open the verified source of each deployed verifier on Etherscan. Its `VK_HASH` constant should equal the hash printed for that circuit in step 2.
+4. Compare the regenerated verifier's **full executable source** with the deployed, verified source, including `loadVerificationKey`, the proof decoder, transcript, relations and pairing checks. A matching `VK_HASH` constant alone does not establish that the contract uses that key or verifies proofs correctly.
+
+   | Circuit | Ethereum verifier |
+   | --- | --- |
+   | Frozen notes | [0x0694…B877](https://etherscan.io/address/0x0694fF404DDA586C73EfCe21f34fe084541BB877#code) |
+   | Frozen deposit | [0xa2fd…3cCe](https://etherscan.io/address/0xa2fd594dCA2d598aF231d615E5D34903154C3cCe#code) |
+   | Unprocessed deposit | [0x5C48…0FA5](https://etherscan.io/address/0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5#code) |
+
+   The same check can use L2BEAT's verified-source discovery output. Run `l2b discover zkmoney --dev` from `packages/config` in an L2BEAT checkout. Then run the following from `packages/discovery`, setting `ZKMONEY_PUBLIC_DIR` to the public checkout used above:
+
+   ```bash
+   node --import tsx <<'JS'
+   const { readFileSync } = require('node:fs')
+   const { strict: assert } = require('node:assert')
+   const { parse } = require('@mradomski/fast-solidity-parser')
+   const { flattenStartingFrom } = require('./src/flatten/flatten.ts')
+   const normalize = (source) => parse(source).children
+     .filter((node) => node.type !== 'PragmaDirective')
+     .map((node) => JSON.stringify(node)).sort()
+   for (const name of ['FrozenNotesRefundVerifier', 'FrozenDepositRefundVerifier', 'UnprocessedDepositRefundVerifier']) {
+     const circuit = { FrozenNotesRefundVerifier: 'frozen_notes_refund', FrozenDepositRefundVerifier: 'frozen_deposit_refund', UnprocessedDepositRefundVerifier: 'unprocessed_deposit_refund' }[name]
+     const content = readFileSync(`${process.env.ZKMONEY_PUBLIC_DIR}/vendor/oxide/noir-projects/${circuit}/target/${name}.sol`, 'utf8')
+     const flat = flattenStartingFrom('HonkVerifier', 'verifier.sol', [{ path: 'verifier.sol', content }], [], { includeAll: true })
+     const deployed = readFileSync(`../config/src/projects/zkmoney/.flat/${name}.sol`, 'utf8')
+     assert.deepEqual(normalize(flat), normalize(deployed))
+     console.log(`${name}: full verifier matches deployed verified source`)
+   }
+   JS
+   ```
+
+   Flattening removes unreachable declarations. The comparison ignores comments, formatting, the pragma and the ordering of top-level declarations. It compares all remaining Solidity syntax, including the complete verification key and verifier logic. L2BEAT checked the committed public verifiers against discovery's deployed verified source on 2026-09-30.

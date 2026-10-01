@@ -1,19 +1,26 @@
 ## Funds can be stolen if
-1. private execution on Aztec or the zk.money token contract is unsound and the TEE layer also fails through an enclave flaw or compromised AWS Nitro attestation.
-2. after a freeze, a refund circuit is unsound and the TEE layer fails at the same time.
-3. a malicious web wallet or desktop release makes users sign a harmful operation.
-4. the NameRegistry owner or owner of zk.money in ENS redirects future payments to zk.money names.
+
+1. Aztec's private execution or refund proof is unsound and the enclave layer also fails.
+2. malicious wallet code obtains a harmful signature, or substituted unsigned contract lists redirect future deposits and payments.
+3. the NameRegistry owner or owner of zk.money in ENS redirects future payments to names.
+
 <br>
+
 ## Funds can be lost if
-1. no registered enclave is running and nobody starts the approved image on AWS.
-2. a user loses their passkey, required for spending and recovering stuck deposits.
-3. resolver screening blocks an external payment to a zk.money name. The wallet never learns the deposit address, so recovery needs the recipient's own tooling.
+
+1. a user loses their passkey.
+2. no AWS-attested enclave is running.
+3. resolver screening blocks an external payment. Funds remain recoverable, but the recipient needs their own tooling to re-derive the unannounced deposit address.
+
 <br>
+
 ## Privacy can be lost if
-1. an enclave or AWS Nitro attestation is compromised, exposing operations received in plaintext.
-2. the resolver operator re-derives deposit addresses and links deposits to recipients.
-3. the first external payment to a tag publicly links the payment to that tag.
-4. an external Aztec RPC learns the account from note requests, or zk.money and Predicate correlate screened deposit and withdrawal addresses by IP.
-5. someone reads keys and decrypted notes stored unencrypted on the user's device.
-6. a freeze forces users to exit through refunds, which pay out fixed note and deposit amounts on Ethereum and use proofs without zero-knowledge.
-7. a quantum computer breaks the elliptic-curve encryption of the notes published to Ethereum.
+
+1. a user pays a new contact. The handshake reveals the recipient's Aztec address, publicly linked to their name. The first sponsored transaction after registration also reveals the sender's account.
+2. an enclave or AWS Nitro attestation is compromised.
+3. the resolver operator re-derives deposit addresses and links deposits to recipients.
+4. public deposits, withdrawals, registration and deposit-address reuse allow amount or timing correlation.
+5. an external Aztec RPC learns the account from note requests, or zk.money and Predicate correlate screened addresses by IP.
+6. someone reads keys and decrypted notes stored unencrypted on the device.
+7. a freeze forces refunds, which expose note and deposit amounts on Ethereum and use proofs without zero knowledge.
+8. a quantum computer breaks the elliptic-curve encryption of notes published to Ethereum.
