@@ -9,6 +9,9 @@ const DOCS = 'https://docs.zk.money/docs/'
 const ZM =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/fc37a3e25440bc4bd7a9de81a7f4830ec753a4d4/'
 const OX = `${ZM}vendor/oxide/`
+// The resolver circuit was vendored after the pinned desktop release.
+const RESOLVER_CIRCUIT =
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/resolver_circuit/'
 
 export const zkMoneyAdversaries = definePrivacyAdversaries({
   promise: {
@@ -168,6 +171,11 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         {
           title: 'Deposit address secrets derive from the resolver key',
           url: `${ZM}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+        },
+        {
+          title:
+            'The resolver circuit derives each secret from the operator key',
+          url: `${RESOLVER_CIRCUIT}src/main.nr#L23-L79`,
         },
         {
           title: 'Self-made deposit addresses use predictable nonces',

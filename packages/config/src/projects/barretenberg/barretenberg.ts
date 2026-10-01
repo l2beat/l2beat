@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const ZK_MONEY_CIRCUITS =
-  'https://github.com/aztec-labs-eng/zkmoney-public/tree/1ac7d607e2a524aa7e6ab881a7f14c0a7a02d585/vendor/oxide/noir-projects/'
+  'https://github.com/aztec-labs-eng/zkmoney-public/tree/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/'
 
 export const barretenberg: BaseProject = {
   id: ProjectId('barretenberg'),
@@ -155,7 +155,7 @@ export const barretenberg: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: readProjectMarkdown(
           'barretenberg',
-          'verificationSteps-zkmoney-refunds',
+          'verificationSteps-zkmoney',
         ),
       },
       {
@@ -177,7 +177,7 @@ export const barretenberg: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: readProjectMarkdown(
           'barretenberg',
-          'verificationSteps-zkmoney-refunds',
+          'verificationSteps-zkmoney',
         ),
       },
       {
@@ -199,14 +199,15 @@ export const barretenberg: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: readProjectMarkdown(
           'barretenberg',
-          'verificationSteps-zkmoney-refunds',
+          'verificationSteps-zkmoney',
         ),
       },
       {
         hash: '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
         name: 'zk.money resolver verifier',
         description:
-          'Verifies that a deposit address returned for a payment to a zk.money name was derived from the registered user and resolver operator keys. The Noir circuit is not published.',
+          'Verifies that the secret behind a deposit address returned for a zk.money name was derived from the registered user and resolver operator keys, and binds the address to the registered Aztec address. Generated with the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_CIRCUITS}resolver_circuit`,
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {
@@ -216,7 +217,12 @@ export const barretenberg: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoney',
+        ),
       },
     ],
   },

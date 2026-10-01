@@ -329,7 +329,7 @@ export const zkmoney: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contract, desktop wallet and enclave sources are public. The deployed refund verifiers match the published Solidity. The approved enclave binary has not been reproduced. The resolver circuit and service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund circuits and the Aztec token pinned by the Ethereum portal.',
+        'The contract, desktop wallet, enclave and circuit sources are public. The deployed refund and resolver verifiers match the published circuits. The approved enclave binary has not been reproduced. The resolver service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund and resolver circuits and the Aztec token pinned by the Ethereum portal.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
