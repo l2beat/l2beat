@@ -91,8 +91,10 @@ function Sidebar({
           // iOS Safari tints its toolbars from the overlay's color and swaps that
           // tint in a single frame, so a dark or animated sheet looks cut off
           // by the address bar. Matching color + no animation keeps them in sync.
-          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background p-0 text-primary [&>button]:hidden"
-          overlayClassName="animate-none! bg-background"
+          // The 1% translucency stops Chrome from skipping raster of the fully
+          // covered page, which otherwise delays closing on Android.
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary [&>button]:hidden"
+          overlayClassName="animate-none! bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
