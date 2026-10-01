@@ -124,6 +124,24 @@ describe(buildDaFlowsGraph.name, () => {
     expect(graph.posters[0]?.batch).toEqual({ interval: 4000, size: 5000 })
   })
 
+  it('never makes a batch smaller than the least the DA layer takes', () => {
+    const graph = buildDaFlowsGraph(
+      daLayer,
+      [project('a'), project('b')],
+      // a sends a batch every 10 s but posted only 3 blobs of 100 over the
+      // 1000 s, so most of its batches carried none
+      flows({ a: 300, b: 3000 }, { a: 10, b: 100 }),
+      15,
+      100,
+    )
+
+    expect(graph.posters.map((p) => p.batch)).toEqual([
+      { interval: 100, size: 300 },
+      // one blob at a time, three of them over the 1000 s
+      { interval: 1000 / 3, size: 100 },
+    ])
+  })
+
   it('sends Others as a steady stream', () => {
     const graph = buildDaFlowsGraph(
       daLayer,

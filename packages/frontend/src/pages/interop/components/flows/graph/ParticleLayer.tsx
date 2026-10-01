@@ -90,12 +90,7 @@ export function ParticleLayer({
 
   return (
     <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
-      <BubbleHolesClip
-        id={clipId}
-        chainIds={visibleChainIds}
-        layout={layout}
-        centerChainId={centerChainId}
-      />
+      <BubbleHolesClip id={clipId} chainIds={visibleChainIds} layout={layout} />
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)

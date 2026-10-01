@@ -15,6 +15,8 @@ export interface DaFlowsUnit {
   scale: ParticleScale
   /** Names an amount of data the way the DA layer counts it */
   format: (bytes: number) => string
+  /** The least the DA layer takes in one batch */
+  minBatchSize?: number
 }
 
 // One particle starts at 256 B of data and doubles up the usual byte steps
@@ -45,6 +47,8 @@ const BLOBS: DaFlowsUnit = {
     extensionStep: 100 * BLOB,
   },
   format: (bytes) => formatBlobs(bytes / BLOB),
+  // a transaction carries whole blobs, at least one
+  minBatchSize: BLOB,
 }
 
 export function getDaFlowsUnit(daLayerId: string): DaFlowsUnit {

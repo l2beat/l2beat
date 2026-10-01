@@ -48,12 +48,16 @@ export interface DaFlowsGraph {
  *
  * A poster whose batches are timed sends its bytes a batch at a time. The
  * others, "Others" among them, send theirs as a steady stream.
+ *
+ * `minBatchSize` is the least the DA layer takes at once, like a whole blob
+ * on Ethereum.
  */
 export function buildDaFlowsGraph(
   daLayer: DaFlowsProject,
   projects: DaFlowsProject[],
   { posted, batchIntervals, range }: DaFlowsInput,
   maxNodes: number,
+  minBatchSize = 0,
 ): DaFlowsGraph {
   const known = new Map(projects.map((p) => [p.id, p]))
   const period = range[1] - range[0]
@@ -72,11 +76,7 @@ export function buildDaFlowsGraph(
         posted: value,
         share: totalPosted > 0 ? value / totalPosted : 0,
         batch: interval
-          ? {
-              interval,
-              // a batch cannot hold more than was posted in all
-              size: Math.min(value, (value * interval) / period),
-            }
+          ? getBatch(value, interval, period, minBatchSize)
           : undefined,
       }
     })
@@ -159,4 +159,27 @@ function getCountIcon(count: number): string {
     `<text x="16" y="17" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="${OTHERS_COLOR}">+${count}</text>` +
     '</svg>'
   return `data:image/svg+xml,${encodeURIComponent(svg)}`
+}
+
+/**
+ * How much a poster sends at once, if its batches come `interval` apart.
+ *
+ * The interval comes from the transactions the poster sends, not from what
+ * it posted, so the two can disagree: a poster may send a batch every few
+ * minutes and still post only a handful of blobs in a day, when most of its
+ * batches carry no data for the DA layer. The batch would then come out
+ * smaller than the least the layer takes, a fraction of a blob. Each one is
+ * counted as that least instead, and spaced out to add up to what was posted.
+ */
+function getBatch(
+  posted: number,
+  interval: number,
+  period: number,
+  minSize: number,
+): DaFlowsBatch {
+  // a batch cannot hold more than was posted in all
+  const size = Math.min(posted, (posted * interval) / period)
+  const least = Math.min(minSize, posted)
+  if (size >= least) return { interval, size }
+  return { interval: (period * least) / posted, size: least }
 }

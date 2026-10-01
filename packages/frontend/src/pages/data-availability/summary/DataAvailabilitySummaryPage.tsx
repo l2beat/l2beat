@@ -11,35 +11,35 @@ import {
   type DaSummaryThroughputChartProps,
 } from './components/charts/DaSummaryThroughputChart'
 import { DaSummaryTvsChart } from './components/charts/DaSummaryTvsChart'
+import {
+  type EthereumSummary,
+  EthereumSummaryCard,
+} from './components/EthereumSummaryCard'
 import { DaFlowsCard } from './components/flows/DaFlowsCard'
 
 interface Props extends AppLayoutProps {
-  /** Ethereum's slashable stake */
-  slashable: number | undefined
+  ethereumSummary: EthereumSummary
   tvsProjectIds: DaTvsProjectIds
-  throughput: DaSummaryThroughputChartProps | undefined
+  throughput: DaSummaryThroughputChartProps
   daFlows: DaFlowsProjects
 }
 
 export function DataAvailabilitySummaryPage({
-  slashable,
+  ethereumSummary,
   tvsProjectIds,
   throughput,
   daFlows,
   ...props
 }: Props) {
-  const tvsChart = (
-    <DaSummaryTvsChart projectIds={tvsProjectIds} slashable={slashable} />
-  )
-  const throughputChart = throughput && (
-    <DaSummaryThroughputChart {...throughput} />
-  )
+  const tvsChart = <DaSummaryTvsChart projectIds={tvsProjectIds} />
+  const throughputChart = <DaSummaryThroughputChart {...throughput} />
 
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <div>
           <MainPageHeader>Blobs</MainPageHeader>
+          <EthereumSummaryCard summary={ethereumSummary} />
           {/* The cards share their rows, so both charts start level however
               tall either header is */}
           <div className="grid grid-cols-2 gap-4 max-lg:hidden">
@@ -54,7 +54,11 @@ export function DataAvailabilitySummaryPage({
             className="lg:hidden"
             charts={[tvsChart, throughputChart]}
           />
-          <DaFlowsCard daLayer={daFlows.daLayer} projects={daFlows.projects} />
+          <DaFlowsCard
+            daLayer={daFlows.daLayer}
+            projects={daFlows.projects}
+            detailsHref={throughput.detailsHref}
+          />
         </div>
       </SideNavLayout>
     </AppLayout>

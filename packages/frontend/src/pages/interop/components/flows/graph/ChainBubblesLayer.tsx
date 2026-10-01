@@ -1,4 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
+import { useId, useLayoutEffect, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 import type {
   FlowsGraphCaption,
@@ -11,7 +12,6 @@ import type {
   FlowsGraphLayout,
 } from './utils/computeGraphLayout'
 import { useFlowsGraph } from './utils/FlowsGraphContext'
-import { getCenterSquare } from './utils/getCenterSquare'
 import { getChainColor } from './utils/getChainColor'
 
 interface ChainBubblesLayerProps {
@@ -186,9 +186,18 @@ interface CenterBubbleProps {
   isSmallScreen: boolean
 }
 
+// Everything flows into the hub, so what reaches it is hidden under its
+// logo and value. They are filled with the color of the card the graph sits
+// on, which reads as no background at all
+const HUB_FILL = 'var(--surface-primary)'
+const HUB_STROKE_OPACITY = 0.6
+const HUB_STROKE_WIDTH = 1.5
+// Room between the logo and the outline that follows its shape
+const LOGO_OUTLINE_GAP = 2.5
+
 /**
  * The hub of the graph. Every spoke meets it, so there is no free space
- * around it for a label: the icon and the value sit inside its square.
+ * around it for a label: the value sits right under the icon.
  */
 function CenterBubble({
   chain,
@@ -198,45 +207,150 @@ function CenterBubble({
   isSmallScreen,
 }: CenterBubbleProps) {
   const { x, y, radius } = layout
-  const square = getCenterSquare(layout)
+  const outlineId = `hub-outline-${useId().replace(/\W/g, '')}`
   const iconSize = radius * (caption ? 0.8 : 1.1)
   const iconY = caption ? y - radius * 0.62 : y - iconSize / 2
 
   return (
     <g>
       <title>{chain.name}</title>
-      <rect
-        x={square.x}
-        y={square.y}
-        width={square.size}
-        height={square.size}
-        rx={square.cornerRadius}
-        fill={color}
-        stroke={color}
-        fillOpacity={0.15}
-        strokeWidth={1.5}
-        strokeOpacity={0.5}
-      />
+      <defs>
+        <LogoOutlineFilter id={outlineId} color={color} />
+      </defs>
       <image
         href={chain.iconUrl}
         x={x - iconSize / 2}
         y={iconY}
         width={iconSize}
         height={iconSize}
+        filter={`url(#${outlineId})`}
       />
       {caption && (
-        <text
+        <HubValue
+          text={caption.text}
           x={x}
-          y={y + radius * 0.52}
-          textAnchor="middle"
-          className={cn(
-            'fill-primary font-bold',
-            isSmallScreen ? 'text-label-value-12' : 'text-label-value-14',
-          )}
-        >
-          {caption.text}
-        </text>
+          y={y + radius * 0.45}
+          color={color}
+          isSmallScreen={isSmallScreen}
+        />
       )}
+    </g>
+  )
+}
+
+/**
+ * Draws a line around an image in the image's own shape, taken from its
+ * transparency, and fills the gap between the two so nothing shows through
+ * the transparent parts of the image.
+ */
+function LogoOutlineFilter({ id, color }: { id: string; color: string }) {
+  return (
+    <filter id={id} x="-25%" y="-25%" width="150%" height="150%">
+      <GrowAlpha by={LOGO_OUTLINE_GAP} result="inner" />
+      <GrowAlpha by={LOGO_OUTLINE_GAP + HUB_STROKE_WIDTH} result="outer" />
+      <feFlood style={{ floodColor: HUB_FILL }} result="fillColor" />
+      <feComposite in="fillColor" in2="outer" operator="in" result="fill" />
+      <feFlood
+        floodColor={color}
+        floodOpacity={HUB_STROKE_OPACITY}
+        result="strokeColor"
+      />
+      <feComposite in="strokeColor" in2="outer" operator="in" result="shape" />
+      <feComposite in="shape" in2="inner" operator="out" result="stroke" />
+      <feMerge>
+        <feMergeNode in="fill" />
+        <feMergeNode in="stroke" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  )
+}
+
+// Past a straight edge, blurred alpha falls to a tenth 1.28 deviations out
+const EDGE_THRESHOLD = 0.1
+const DEVIATIONS_AT_THRESHOLD = 1.28
+
+/**
+ * The image's silhouette grown outwards by `by` pixels. A blur cut at a
+ * threshold grows it the same amount in every direction, so its points stay
+ * points, where dilating would square them off.
+ */
+function GrowAlpha({ by, result }: { by: number; result: string }) {
+  // a steep ramp around the threshold, so the edge stays smooth
+  const slope = 40
+  return (
+    <>
+      <feGaussianBlur
+        in="SourceAlpha"
+        stdDeviation={by / DEVIATIONS_AT_THRESHOLD}
+      />
+      <feComponentTransfer result={result}>
+        <feFuncA
+          type="linear"
+          slope={slope}
+          intercept={0.5 - EDGE_THRESHOLD * slope}
+        />
+      </feComponentTransfer>
+    </>
+  )
+}
+
+const HUB_VALUE_PADDING_X = 8
+
+function HubValue({
+  text,
+  x,
+  y,
+  color,
+  isSmallScreen,
+}: {
+  text: string
+  x: number
+  y: number
+  color: string
+  isSmallScreen: boolean
+}) {
+  const textRef = useRef<SVGTextElement>(null)
+  const [textWidth, setTextWidth] = useState<number>()
+  const height = isSmallScreen ? 18 : 22
+
+  // The pill fits the text, whose width is only known once it is drawn
+  // biome-ignore lint/correctness/useExhaustiveDependencies: remeasured when the text or its size changes
+  useLayoutEffect(() => {
+    setTextWidth(textRef.current?.getComputedTextLength())
+  }, [text, isSmallScreen])
+
+  const width =
+    textWidth === undefined ? undefined : textWidth + 2 * HUB_VALUE_PADDING_X
+
+  return (
+    <g>
+      {width !== undefined && (
+        <rect
+          x={x - width / 2}
+          y={y - height / 2}
+          width={width}
+          height={height}
+          rx={height / 2}
+          style={{ fill: HUB_FILL }}
+          stroke={color}
+          strokeOpacity={HUB_STROKE_OPACITY}
+          strokeWidth={HUB_STROKE_WIDTH}
+        />
+      )}
+      <text
+        ref={textRef}
+        x={x}
+        y={y}
+        textAnchor="middle"
+        dominantBaseline="central"
+        className={cn(
+          'fill-primary font-bold',
+          isSmallScreen ? 'text-label-value-12' : 'text-label-value-14',
+        )}
+      >
+        {text}
+      </text>
     </g>
   )
 }

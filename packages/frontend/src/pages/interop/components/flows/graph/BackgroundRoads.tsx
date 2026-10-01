@@ -76,12 +76,7 @@ export function BackgroundRoads({
 
   return (
     <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
-      <BubbleHolesClip
-        id={clipId}
-        chainIds={chainIds}
-        layout={layout}
-        centerChainId={centerChainId}
-      />
+      <BubbleHolesClip id={clipId} chainIds={chainIds} layout={layout} />
       {inactivePaths && (
         <path
           d={inactivePaths}

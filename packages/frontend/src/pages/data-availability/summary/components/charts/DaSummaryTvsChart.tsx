@@ -28,13 +28,8 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
-import { InfoIcon } from '~/icons/Info'
+import { ViewDetailsLink } from '~/components/ViewDetailsLink'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
@@ -61,11 +56,8 @@ const chartMeta = {
 
 export function DaSummaryTvsChart({
   projectIds,
-  slashable,
 }: {
   projectIds: DaTvsProjectIds
-  /** Ethereum's slashable stake, shown next to the total for scale */
-  slashable: number | undefined
 }) {
   const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
@@ -102,12 +94,7 @@ export function DaSummaryTvsChart({
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
-      <Header
-        total={stats?.total}
-        change={stats?.change}
-        range={range}
-        slashable={slashable}
-      />
+      <Header total={stats?.total} change={stats?.change} range={range} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -233,25 +220,29 @@ function Header({
   total,
   change,
   range,
-  slashable,
 }: {
   total: number | undefined
   change: number | undefined
   range: ChartRange
-  slashable: number | undefined
 }) {
   return (
-    <div className="flex items-start justify-between">
-      <span className="font-bold text-xl">L2s Value Secured</span>
+    <div className="flex items-start justify-between gap-2">
+      <div className="flex flex-col gap-1">
+        <span className="whitespace-nowrap font-bold text-xl">
+          L2s Value Secured
+        </span>
+        <ViewDetailsLink href="/layer2s/tvs" />
+      </div>
       <div className="flex flex-col items-end">
         {total === undefined || change === undefined ? (
           <Skeleton className="my-[5px] h-5 w-40" />
         ) : (
-          <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-            <span className="font-bold text-xl">
+          // the change drops under the total where there is no room beside it
+          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
+            <span className="whitespace-nowrap font-bold text-xl">
               {formatCurrency(total, 'usd')}
             </span>
-            <span className="text-xs">
+            <span className="whitespace-nowrap text-xs">
               <PercentChange value={change} />
               <span className="text-secondary">
                 {' '}
@@ -259,26 +250,6 @@ function Header({
               </span>
             </span>
           </div>
-        )}
-        {/* The second line, level with the one under the data posted next
-            to it */}
-        {slashable !== undefined && (
-          <Tooltip>
-            <TooltipTrigger className="flex items-center gap-1 whitespace-nowrap text-secondary text-xs">
-              <span>
-                <span className="font-medium text-primary">
-                  {formatCurrency(slashable, 'usd')}
-                </span>{' '}
-                slashable
-              </span>
-              <InfoIcon className="size-3 fill-current" />
-            </TooltipTrigger>
-            <TooltipContent>
-              The assets that are slashable in case of a data withholding
-              attack. For public blockchains, it is equal to 2/3 of the total
-              validating stake.
-            </TooltipContent>
-          </Tooltip>
         )}
       </div>
     </div>

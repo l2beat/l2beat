@@ -8,6 +8,7 @@ import { getDataWithConfiguredThroughputs } from '~/components/chart/data-availa
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ViewDetailsLink } from '~/components/ViewDetailsLink'
 import { useTRPC } from '~/trpc/React'
 import { optionToRange, rangeToResolution } from '~/utils/range/range'
 
@@ -17,6 +18,8 @@ export interface DaSummaryThroughputChartProps {
   milestones: Milestone[]
   /** Project colors by name, for the per-project breakdown */
   customColors: Record<string, string>
+  /** The throughput section of the DA layer's own page */
+  detailsHref: string
 }
 
 type View = 'total' | 'per-project'
@@ -30,6 +33,7 @@ export function DaSummaryThroughputChart({
   configuredThroughputs,
   milestones,
   customColors,
+  detailsHref,
 }: DaSummaryThroughputChartProps) {
   const trpc = useTRPC()
   const [view, setView] = useState<View>('total')
@@ -64,6 +68,7 @@ export function DaSummaryThroughputChart({
         isLoading={pastDay === undefined}
         view={view}
         setView={setView}
+        detailsHref={detailsHref}
       />
       {view === 'total' ? (
         <ProjectDaAbsoluteThroughputChart
@@ -96,25 +101,33 @@ function Header({
   isLoading,
   view,
   setView,
+  detailsHref,
 }: {
   used: number | undefined
   capacity: number | undefined
   isLoading: boolean
   view: View
   setView: (view: View) => void
+  detailsHref: string
 }) {
   return (
     <div className="flex items-start justify-between gap-2">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className="font-bold text-xl">Data Posted</span>
-        <RadioGroup
-          name="daSummaryThroughputView"
-          value={view}
-          onValueChange={(value) => setView(value as View)}
-        >
-          <RadioGroupItem value="total">Total</RadioGroupItem>
-          <RadioGroupItem value="per-project">Per project</RadioGroupItem>
-        </RadioGroup>
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="font-bold text-xl">Data Posted</span>
+          {/* as tall as the title, so the link under it stays level with
+              the line under the value */}
+          <RadioGroup
+            name="daSummaryThroughputView"
+            value={view}
+            onValueChange={(value) => setView(value as View)}
+            className="h-7"
+          >
+            <RadioGroupItem value="total">Total</RadioGroupItem>
+            <RadioGroupItem value="per-project">Per project</RadioGroupItem>
+          </RadioGroup>
+        </div>
+        <ViewDetailsLink href={detailsHref} />
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl">

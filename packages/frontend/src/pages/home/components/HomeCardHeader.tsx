@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ChevronIcon } from '~/icons/Chevron'
+import { ViewDetailsLink } from '~/components/ViewDetailsLink'
 import { cn } from '~/utils/cn'
 
 export function HomeCardHeader({
@@ -30,17 +30,7 @@ export function HomeCardHeader({
               {timeframe}
             </span>
           )}
-          {href && (
-            <a
-              className="group flex items-center gap-1 font-medium text-[13px] text-link leading-none"
-              href={href}
-            >
-              <span className="underline-offset-2 group-hover:underline">
-                {linkLabel}
-              </span>
-              <ChevronIcon className="-rotate-90 size-2.5 fill-current transition-transform group-hover:translate-x-0.5" />
-            </a>
-          )}
+          {href && <ViewDetailsLink href={href} label={linkLabel} />}
         </div>
       )}
     </div>

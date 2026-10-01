@@ -1,6 +1,7 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDaFlowsProjects } from '~/server/features/data-availability/flows/getDaFlowsProjects'
+import { getDaProjectValidators } from '~/server/features/data-availability/project/utils/getDaProjectValidators'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { ps } from '~/server/projects'
@@ -8,6 +9,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { toChartProject } from '~/utils/project/toChartProject'
+import type { EthereumSummary } from './components/EthereumSummaryCard'
 
 export async function getDataAvailabilitySummaryData(
   manifest: Manifest,
@@ -30,6 +32,26 @@ export async function getDataAvailabilitySummaryData(
     }),
     ps.getProjects({ select: ['colors'] }),
   ])
+  const ethereumEntry = publicSystems.find((s) => s.id === ProjectId.ETHEREUM)
+  assert(ethereum && ethereumEntry, 'Ethereum DA layer not found')
+
+  const latestThroughput = ethereum.daLayer.throughput
+    ?.toSorted((a, b) => a.sinceTimestamp - b.sinceTimestamp)
+    .at(-1)
+  const ethereumSummary: EthereumSummary = {
+    name: ethereum.name,
+    iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
+    href: ethereumEntry.href,
+    validators: await getDaProjectValidators(
+      ethereum.id,
+      ethereum.daLayer.validators,
+    ),
+    durationStorage: ethereum.daLayer.pruningWindow,
+    maxThroughputPerSecond:
+      latestThroughput && latestThroughput.size !== 'NO_CAP'
+        ? latestThroughput.size / latestThroughput.frequency
+        : undefined,
+  }
 
   return {
     head: {
@@ -48,10 +70,9 @@ export async function getDataAvailabilitySummaryData(
       page: 'DataAvailabilitySummaryPage',
       props: {
         ...appLayoutProps,
-        slashable: publicSystems.find((s) => s.id === ProjectId.ETHEREUM)
-          ?.economicSecurity,
+        ethereumSummary,
         tvsProjectIds: getDaTvsProjectIds(publicSystems),
-        throughput: ethereum && {
+        throughput: {
           project: toChartProject(ethereum),
           configuredThroughputs: ethereum.daLayer.throughput ?? [],
           milestones: ethereum.milestones ?? [],
@@ -59,6 +80,7 @@ export async function getDataAvailabilitySummaryData(
           customColors: Object.fromEntries(
             projectsWithColors.map((p) => [p.name, p.colors.primary.light]),
           ),
+          detailsHref: `${ethereumEntry.href}#throughput`,
         },
         daFlows,
       },

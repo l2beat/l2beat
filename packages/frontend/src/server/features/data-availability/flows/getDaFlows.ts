@@ -177,6 +177,8 @@ function isInRange(record: PostedRecord, [from, to]: [number, number]) {
   return record.timestamp >= from && record.timestamp < to
 }
 
+const MOCK_BLOB_SIZE = 128 * 1024
+
 async function getMockDaFlows(
   daLayerId: string,
   capacity: number | undefined,
@@ -189,16 +191,28 @@ async function getMockDaFlows(
   const posting = projects.filter((p) =>
     p.daTrackingConfig.some((c) => c.daLayer === daLayerId),
   )
+  // Ethereum counts every blob whole, so there a poster posts whole blobs
+  const toPosted =
+    daLayerId === ProjectId.ETHEREUM
+      ? (bytes: number) =>
+          Math.max(1, Math.round(bytes / MOCK_BLOB_SIZE)) * MOCK_BLOB_SIZE
+      : Math.round
   const posted = Object.fromEntries(
-    posting.map((p, i) => [p.id, Math.round(1_500_000_000 * 0.7 ** i)]),
+    posting.map((p, i) => [p.id, toPosted(1_500_000_000 * 0.7 ** i)]),
   )
   const used = Object.values(posted).reduce((sum, value) => sum + value, 0)
   return {
     posted,
-    // the larger the poster, the more often it posts. The last one is left
-    // without, as projects that liveness does not follow are
+    // the larger the poster, the more often it posts, and everyone who
+    // posted did so within the day. The last one is left without, as
+    // projects that liveness does not follow are
     batchIntervals: Object.fromEntries(
-      posting.slice(0, -1).map((p, i) => [p.id, Math.round(45 * 1.6 ** i)]),
+      posting
+        .slice(0, -1)
+        .map((p, i) => [
+          p.id,
+          Math.min(Math.round(45 * 1.6 ** i), UnixTime.DAY),
+        ]),
     ),
     used,
     usedSevenDaysAgo: Math.round(used * 0.9),
