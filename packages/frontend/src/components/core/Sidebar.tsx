@@ -89,6 +89,9 @@ function Sidebar({
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
           className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
+          // iOS Safari tints its floating toolbars with the overlay color, so a
+          // dark overlay makes the full-width sidebar look cut off at both ends.
+          overlayClassName="bg-background"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
