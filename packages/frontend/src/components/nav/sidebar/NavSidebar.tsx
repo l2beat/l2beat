@@ -42,8 +42,10 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   return (
     <Sidebar>
       {/* On mobile the header mirrors MobileTopNavbar's geometry, so the logo
-          and icons stay put when the sidebar covers the navbar. */}
-      <SidebarHeader className="max-lg:h-16 max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
+          and icons stay put when the sidebar covers the navbar. It is sticky
+          because iOS Safari only re-tints its status bar from a sticky or
+          fixed bar at the top; the full-screen sheet alone keeps the navbar's. */}
+      <SidebarHeader className="max-lg:sticky max-lg:top-0 max-lg:h-16 max-lg:bg-background max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
         <div className="flex h-[38px] flex-row items-center justify-between max-lg:h-full">
           <a href={logoLink} onClick={closeMobileSidebar}>
             <Logo className="block h-8 w-auto" />
