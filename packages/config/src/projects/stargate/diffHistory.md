@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x6f909c4bb428a1d39ace77cf9fab688ceb192d40
+
+# Diff at Thu, 01 Oct 2026 11:11:01 GMT:
+
+- id: 64622989
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1786352916
+- current timestamp: 1790851350
+
+## Description
+
+The owner of CreditMessagingMintableBurnable manually minted credits without crosschain messages for the USDC pool (gnosis, aurora) and the ETH pool (gnosis, lightlink), stated reason: consolidating balance and credit as part of the deprecation of these remote pools on 2026-09-24.
+
+## Watched changes
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
++++ description: Credits minted manually by the owner without crosschain messages.
+      values.creditsMinted.2:
++        {"batches":[[1,[[30145,5585911234],[30211,12487351781]]],[13,[[30145,46611],[30309,32980]]]],"reason":"Minting 5585.911234 USDC for gnosis (eid 30145), 12487.351781 USDC for aurora (eid 30211), 0.046611 ETH for gnosis (eid 30145), 0.032980 ETH for lightlink (eid 30309), to consolidate balance and credit as part of pool deprecation 2026-09-24"}
+    }
+```
+
 Generated with discovered.json: 0xaaa3cbddd06a44b302605d56fbabd892cf9cb292
 
 # Diff at Wed, 23 Sep 2026 05:49:52 GMT:

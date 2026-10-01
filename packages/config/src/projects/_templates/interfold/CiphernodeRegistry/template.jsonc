@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CiphernodeRegistry",
   "category": "core",
-  "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.",
+  "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.",
   "ignoreMethods": [
     "committeePublicKey",
     "committeeThresholdMet",
@@ -35,7 +35,7 @@
       ]
     },
     "$members": {
-      "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition.",
+      "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.",
       "type": "PERMISSION",
       "handler": {
         "type": "event",

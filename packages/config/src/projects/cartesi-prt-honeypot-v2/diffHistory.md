@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x4df78961eac52e7c710649994cfcbc2de6b890e3
+
+# Diff at Thu, 01 Oct 2026 11:10:28 GMT:
+
+- id: 25bf6fe1
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592527
+- current timestamp: 1790850950
+
+## Description
+
+Cartesi Multisig removed one signer (eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325): threshold 3/6 -> 3/5.
+
+## Watched changes
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [N/A] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.getOwners.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+      values.nonce:
+-        335
++        339
+    }
+```
+
 Generated with discovered.json: 0xff8a9c8d640049921e7348f9808c39c0158a290d
 
 # Diff at Mon, 28 Sep 2026 13:34:22 GMT:
