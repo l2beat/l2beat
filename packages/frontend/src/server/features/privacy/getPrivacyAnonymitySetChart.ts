@@ -1,16 +1,19 @@
-import { ProjectId, UnixTime, unique } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import type { PrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
 import { ChartRange } from '~/utils/range/range'
 import type {
   PrivacyAnonymitySetHistoryPoint,
   PrivacyAnonymitySetHoldingDurationPoint,
 } from './anonymity-set/calculateAnonymitySets'
+import {
+  getPrivacyAnonymitySetCoverage,
+  type PrivacyAnonymitySetCoverage,
+} from './anonymity-set/getPrivacyAnonymitySetCoverage'
 import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
@@ -24,7 +27,6 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
-import { getPrivacyMetricCoverage } from './getPrivacyMetricCoverage'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
@@ -44,8 +46,7 @@ export interface PrivacyAnonymitySetChartResponse {
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
   /** Labels of configured series excluded from the charts while their history is indexed. */
   syncingLabels: string[]
-  fundingAddresses?: boolean
-  coverage?: PrivacyMetricCoverage
+  coverage?: PrivacyAnonymitySetCoverage
   syncedUntil: number | undefined
 }
 
@@ -65,7 +66,7 @@ export async function getPrivacyAnonymitySetChart(
 
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const snapshot = env.MOCK
-    ? getMockResponse(series, currentDay)
+    ? getMockResponse(project, series, currentDay)
     : await cache.get(
         {
           key: [
@@ -80,12 +81,7 @@ export async function getPrivacyAnonymitySetChart(
       )
 
   return selectPrivacyAnonymitySetChartRange(
-    orderAnonymitySetSeriesByCurrentSize({
-      ...snapshot,
-      ...(project.privacyInfo.anonymitySet?.type === 'fundingAddresses' && {
-        fundingAddresses: true,
-      }),
-    }),
+    orderAnonymitySetSeriesByCurrentSize(snapshot),
     params.range,
   )
 }
@@ -101,7 +97,6 @@ async function getPrivacyAnonymitySetSnapshot(
     series,
     configurations,
     currentDay,
-    project.privacyInfo.anonymitySet?.type === 'fundingAddresses',
   )
   if (syncedSeries.length === 0) {
     return {
@@ -109,23 +104,6 @@ async function getPrivacyAnonymitySetSnapshot(
       syncingLabels,
     }
   }
-
-  const fundingAddresses =
-    project.privacyInfo.anonymitySet?.type === 'fundingAddresses'
-  const coverage = fundingAddresses
-    ? await getPrivacyMetricCoverage(
-        db,
-        project,
-        'fundingAddresses',
-        currentDay - 30 * UnixTime.DAY,
-        currentDay,
-      )
-    : undefined
-  if (fundingAddresses && !coverage)
-    return {
-      ...emptyResponse(),
-      syncingLabels: syncedSeries.map((series) => series.label),
-    }
 
   const firstSeriesDay = UnixTime.toStartOf(
     Math.min(...syncedSeries.map((item) => item.sinceTimestamp)),
@@ -145,26 +123,23 @@ async function getPrivacyAnonymitySetSnapshot(
     [UnixTime(firstSeriesDay), UnixTime(holdingEndpoint)],
     'day',
   )
-  const { history, holdingDuration } = await loadAnonymitySetCharts(
-    syncedSeries,
-    historyEndpoints,
-    (from, to) =>
+  const [{ history, holdingDuration }, coverage] = await Promise.all([
+    loadAnonymitySetCharts(syncedSeries, historyEndpoints, (from, to) =>
       db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
         [project.id],
         from,
         to,
-        unique(syncedSeries.map((series) => series.configurationId)),
       ),
-  )
+    ),
+    getPrivacyAnonymitySetCoverage(db, project, currentDay),
+  ])
 
   return {
     series: toResponseSeries(syncedSeries),
-    history: fundingAddresses
-      ? history
-      : trimLeadingEmptyAnonymitySetHistory(history),
-    ...(coverage && { coverage: coverage.coverage }),
+    history: trimLeadingEmptyAnonymitySetHistory(history),
     holdingDuration,
     syncingLabels,
+    ...(coverage && { coverage }),
     syncedUntil: holdingEndpoint,
   }
 }
@@ -241,6 +216,7 @@ function emptyResponse(): PrivacyAnonymitySetChartResponse {
 }
 
 function getMockResponse(
+  project: PrivacyAnonymitySetProject,
   series: PrivacyAnonymitySetSeries[],
   endpoint: UnixTime,
 ): PrivacyAnonymitySetChartResponse {
@@ -264,6 +240,9 @@ function getMockResponse(
       ]
     }),
     syncingLabels: [],
+    ...(project.privacyInfo.anonymitySet?.type === 'partially-attributed' && {
+      coverage: { attributed: 90, total: 100 },
+    }),
     syncedUntil: endpoint,
   }
 }

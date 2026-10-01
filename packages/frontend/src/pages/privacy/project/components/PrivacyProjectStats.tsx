@@ -1,12 +1,10 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-import { describePrivacyMetricCoverage } from '~/utils/privacyMetricCoverage'
 import {
   PRIVACY_PROJECT_STATS_COPY as COPY,
   RELAYER_STAT_COPY,
@@ -41,22 +39,8 @@ export function PrivacyProjectStats({
   const relayerStatElement = hasRelayerTracking ? (
     <ProjectSummaryStat
       title={RELAYER_STAT_COPY[relayerStat.kind].title}
-      value={
-        relayerStat.syncing ? (
-          <Badge type="gray" size="small">
-            Syncing
-          </Badge>
-        ) : (
-          formatInteger(relayerStat.value)
-        )
-      }
-      tooltip={
-        RELAYER_STAT_COPY[relayerStat.kind].tooltip +
-        (relayerStat.coverage
-          ? ' ' +
-            describePrivacyMetricCoverage(relayerStat.coverage, 'operations')
-          : '')
-      }
+      value={formatInteger(relayerStat.value)}
+      tooltip={RELAYER_STAT_COPY[relayerStat.kind].tooltip}
     />
   ) : undefined
 

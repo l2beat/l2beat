@@ -41,7 +41,6 @@ type ChartPoint = { timestamp: number } & Record<string, number>
 interface Props {
   data: Point[] | undefined
   series: Series[] | undefined
-  fundingAddresses?: boolean
   syncedUntil?: number
   isLoading: boolean
   project: ChartProject
@@ -51,7 +50,6 @@ interface Props {
 export function PrivacyAnonymitySetChart({
   data,
   series = [],
-  fundingAddresses,
   syncedUntil,
   isLoading,
   project,
@@ -96,12 +94,7 @@ export function PrivacyAnonymitySetChart({
         ))}
         <ChartTooltip
           filterNull={false}
-          content={
-            <AnonymitySetTooltip
-              type={type}
-              fundingAddresses={fundingAddresses}
-            />
-          }
+          content={<AnonymitySetTooltip type={type} />}
         />
         <ChartCommonComponents
           data={chartData}
@@ -145,10 +138,8 @@ function AnonymitySetTooltip({
   payload,
   label,
   type,
-  fundingAddresses,
 }: CustomChartTooltipProps & {
   type: Props['type']
-  fundingAddresses?: boolean
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -158,7 +149,7 @@ function AnonymitySetTooltip({
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {type === 'history'
           ? formatTimestamp(label, { longMonthName: true })
-          : `${label}-day ${fundingAddresses ? 'lookback period' : 'holding duration'}`}
+          : `${label}-day holding duration`}
       </div>
       <div className="flex flex-col gap-2">
         {sortAnonymitySetTooltipEntries(payload).map((entry) => {

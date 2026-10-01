@@ -27,7 +27,6 @@ import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
-import { getPrivacyMetricCoverage } from './getPrivacyMetricCoverage'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
   PrivacyAsset,
@@ -351,13 +350,7 @@ async function getRelayerStat(
     switch (tracking.type) {
       case 'onchainEvents':
         return {
-          kind:
-            tracking.metric === 'paidFinalizers'
-              ? 'paidFinalizers'
-              : 'activeRelayers',
-          ...(tracking.metric === 'paidFinalizers' && {
-            coverage: { attributed: 90, total: 100 },
-          }),
+          kind: tracking.metric ?? 'activeRelayers',
           value: Math.round(Math.random() * 20),
         }
       case 'railgunWaku':
@@ -372,29 +365,12 @@ async function getRelayerStat(
 
   switch (tracking.type) {
     case 'onchainEvents': {
-      if (tracking.metric === 'paidFinalizers') {
-        const endpoint = UnixTime.toStartOf(to, 'day')
-        const result = await getPrivacyMetricCoverage(
-          getDb(),
-          project,
-          'paidFinalizers',
-          endpoint - 30 * UnixTime.DAY,
-          endpoint,
-        )
-        return result
-          ? {
-              kind: 'paidFinalizers',
-              value: result.addresses ?? 0,
-              coverage: result.coverage,
-            }
-          : { kind: 'paidFinalizers', value: 0, syncing: true }
-      }
       const count = await getDb().privacyRelayerActivity.getActiveRelayerCount(
         project.id,
         from,
         to,
       )
-      return { kind: 'activeRelayers', value: count }
+      return { kind: tracking.metric ?? 'activeRelayers', value: count }
     }
     case 'railgunWaku': {
       const result = await getDb().privacyRelayerSample.getAverageRelayerCount(

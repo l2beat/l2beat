@@ -1109,7 +1109,11 @@ export interface ProjectPrivacyInfo {
         type: 'not-applicable'
         description: string
       }
-    | { type: 'fundingAddresses' }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
