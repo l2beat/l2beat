@@ -13,7 +13,6 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getTotalValueLockedByProject } from '../getDefiSummaryEntries'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
@@ -27,8 +26,6 @@ export interface ProjectDefiEntry {
   icon: string
   description: string
   category?: ProjectDefiCategory
-  /** Latest value, as the DeFi summary table shows it. */
-  totalValueLockedUsd?: number
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref?: string
@@ -63,17 +60,12 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [
-    contractUtils,
-    projectsChangeReport,
-    dependencyProjectsById,
-    tvlByProject,
-  ] = await Promise.all([
-    getContractUtils(),
-    getProjectsChangeReport(),
-    getDefiDependencyProjectsById(project.externalDependencies),
-    getTotalValueLockedByProject([project]),
-  ])
+  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
+    await Promise.all([
+      getContractUtils(),
+      getProjectsChangeReport(),
+      getDefiDependencyProjectsById(project.externalDependencies),
+    ])
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
@@ -192,7 +184,6 @@ export async function getDefiProjectEntry(
     icon,
     description: project.display.description,
     category: project.defiInfo.category,
-    totalValueLockedUsd: tvlByProject.get(project.id),
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []

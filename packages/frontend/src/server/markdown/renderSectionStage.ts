@@ -6,8 +6,16 @@ import {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { StageSectionProps } from '~/components/projects/sections/StageSection'
+import { STAGES_DISCLAIMER } from '~/components/projects/sections/stagesDisclaimer'
 import { externalLinks } from '~/consts/externalLinks'
-import { bulletList, joinBlocks, link, subsection } from './markdown'
+import {
+  bulletList,
+  joinBlocks,
+  link,
+  resolveSiteUrl,
+  subsection,
+} from './markdown'
+import type { SectionContext } from './renderProjectSection'
 import { formatUtcDateTime, renderWarnings } from './renderSectionParts'
 
 type StageProps = Omit<StageSectionProps, 'id' | 'title' | 'sectionOrder'>
@@ -20,7 +28,7 @@ type Requirement = StageSummary['requirements'][number]
 export function renderStageSection(
   props: StageProps,
   level: number,
-  pageUrl: string,
+  context: SectionContext,
   showUpcomingGuidelines = PROJECT_COUNTDOWNS.stageChanges >= UnixTime.now(),
 ) {
   const { stageConfig, name } = props
@@ -46,7 +54,7 @@ export function renderStageSection(
         ),
       ),
     ),
-    `${link('Learn more about Stages', new URL('/stages', pageUrl).href)}.`,
+    `${link('Learn more about Stages', resolveSiteUrl('/stages', context.pageUrl))}.`,
     STAGES_DISCLAIMER,
   ])
 }
@@ -195,6 +203,3 @@ function formatRequirement(requirement: {
   const upcoming = requirement.upcoming ? ' (upcoming)' : ''
   return `${status}${upcoming}: ${requirement.description}`
 }
-
-const STAGES_DISCLAIMER =
-  'Please keep in mind that these stages do not reflect project security, this is an opinionated assessment of project maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal.'

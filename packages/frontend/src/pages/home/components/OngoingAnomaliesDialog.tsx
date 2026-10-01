@@ -20,7 +20,7 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
-import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
+import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/anomalySubtypeToLabel'
 import type {
   OngoingAnomaliesOverview,
   OngoingAnomalyCategory,

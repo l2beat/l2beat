@@ -8,6 +8,7 @@ import { externalLinks } from '~/consts/externalLinks'
 import {
   PROGRAM_HASHES_SECTION_INTRO,
   VERIFIER_ID_DEFAULT_DESCRIPTION,
+  VERIFIER_STATUS_ORDER,
   VERIFIERS_SECTION_INTRO,
   type VerifierStatus,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
@@ -17,6 +18,7 @@ import {
   joinBlocks,
   link,
   nestHeadings,
+  resolveSiteUrl,
   subsection,
 } from './markdown'
 import type { SectionContext } from './renderProjectSection'
@@ -168,7 +170,7 @@ export function renderUsedIn(
 ) {
   if (projects.length === 0) return 'none'
   return projects
-    .map((project) => link(project.name, new URL(project.url, pageUrl).href))
+    .map((project) => link(project.name, resolveSiteUrl(project.url, pageUrl)))
     .join(', ')
 }
 
@@ -181,6 +183,22 @@ export function renderVerificationStatus(
       ? ` (${ATTESTER_ROLES[status]} ${attesters.map((a) => link(a.name, a.link)).join(', ')})`
       : ''
   return `${VERIFICATION_STATUS_LABELS[status]}${by}`
+}
+
+/** How many verifiers ended in each status, e.g. "2 successful, 1 not verified"; the HTML shows counted status icons. */
+export function formatVerifierCounts(
+  verifiers: Partial<
+    Record<VerifierStatus, { count: number; attesters?: ZkCatalogAttester[] }>
+  >,
+  separator = ', ',
+) {
+  const counts = VERIFIER_STATUS_ORDER.flatMap((status) => {
+    const group = verifiers[status]
+    return group && group.count > 0
+      ? [`${group.count} ${renderVerificationStatus(status, group.attesters)}`]
+      : []
+  })
+  return counts.length > 0 ? counts.join(separator) : 'none'
 }
 
 /** Worded to follow "Verification:" or a count, unlike the tooltips of the HTML icons. */

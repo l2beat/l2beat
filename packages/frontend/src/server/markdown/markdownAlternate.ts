@@ -24,9 +24,9 @@ export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
       return
     }
     const markdown = await getMarkdown(req)
-    if (markdown === undefined) dropMarkdownAlternateLink(res)
     // The page cache is keyed by URL alone (Cloudflare ignores Vary), so a
-    // cached markdown response would be served to browsers.
+    // cached markdown response would be served to browsers. The Link header
+    // is left to LlmsLinkHeaderMiddleware, which set it for the page URL.
     res
       .status(markdown === undefined ? 404 : 200)
       .header('Cache-Control', 'private, no-store')
@@ -55,15 +55,6 @@ export function sendMarkdownDocument(
     .header('Content-Type', MARKDOWN_CONTENT_TYPE)
     .header('Link', LLMS_TXT_LINK)
     .send(markdown ?? NOT_FOUND_MARKDOWN)
-}
-
-/**
- * For responses that turn out not to be the page, e.g. a 404 for a slug that
- * does not exist: LlmsLinkHeaderMiddleware advertised a markdown alternate
- * from the URL alone, which would point agents at another 404.
- */
-export function dropMarkdownAlternateLink(res: Response) {
-  res.header('Link', LLMS_TXT_LINK)
 }
 
 // Not text/markdown: ChatGPT's fetcher answers 400 Unsupported content-type to ours.

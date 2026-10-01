@@ -5,7 +5,14 @@ import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/Proje
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
-import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
+import {
+  bulletList,
+  joinBlocks,
+  link,
+  markCritical,
+  resolveSiteUrl,
+  warning,
+} from './markdown'
 
 /*
  * Pieces shared by several section bodies. They live apart from
@@ -26,7 +33,7 @@ export function renderDiagram(
   pageUrl: string,
 ) {
   if (!diagram) return ''
-  return `![${diagram.caption}](${new URL(diagram.src.light.src, pageUrl).href})`
+  return `![${diagram.caption}](${resolveSiteUrl(diagram.src.light.src, pageUrl)})`
 }
 
 /** The HTML banner under a section linking the project it depends on. */
@@ -36,7 +43,7 @@ export function renderRelatedProjectBanner(
   },
   pageUrl: string,
 ) {
-  return `${banner.text} ${link(banner.project.name, new URL(banner.href, pageUrl).href)}`
+  return `${banner.text} ${link(banner.project.name, resolveSiteUrl(banner.href, pageUrl))}`
 }
 
 /** Same wording as the HTML banner, which reads as one sentence with the host chain link. */

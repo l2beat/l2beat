@@ -1,14 +1,14 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
-import { env } from '~/env'
-import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
-import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import {
-  type MarkdownAlternatePath,
   type MarkdownLink,
   type MarkdownSection,
   renderMarkdown,
-} from './MarkdownAlternatesRouter'
+} from '~/server/markdown/listPageMarkdown'
+import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
+import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
+import { isServedAsMarkdown } from '~/utils/getMarkdownAlternatePath'
+import type { MarkdownAlternatePath } from './MarkdownAlternatesRouter'
 
 /**
  * Entry point for AI agents, following the llms.txt spec (https://llmstxt.org):
@@ -17,12 +17,15 @@ import {
  */
 export function createLlmsTxtRouter() {
   const router = express.Router()
-  const body = renderMarkdown(LLMS_TXT, [
-    ...PAGE_SECTIONS,
-    MARKDOWN_PAGES_SECTION,
-    API_SECTION,
-    OPTIONAL_SECTION,
-  ])
+  const body = renderMarkdown(
+    LLMS_TXT,
+    [
+      ...PAGE_SECTIONS,
+      MARKDOWN_PAGES_SECTION,
+      API_SECTION,
+      OPTIONAL_SECTION,
+    ].map(withoutUnservedMarkdown),
+  )
 
   router.get('/llms.txt', (_req, res) => {
     res.header('Content-Type', MARKDOWN_CONTENT_TYPE).send(body)
@@ -55,12 +58,14 @@ const LLMS_TXT = {
   ].join('\n'),
 }
 
-/** Declared before PAGE_SECTIONS, which reads it while the module loads. */
-const DEFI_LIST_PAGE: MarkdownLink = {
-  name: 'All DeFi protocols',
-  path: markdownAlternate('/defi/summary.md'),
-  description:
-    'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
+/** Markdown of a page that is switched off (e.g. behind a feature flag) would be a 404. */
+function withoutUnservedMarkdown(section: MarkdownSection): MarkdownSection {
+  return { ...section, links: section.links.filter(isServed) }
+}
+
+function isServed(link: MarkdownLink) {
+  const isMarkdownPage = 'path' in link && link.path.endsWith('.md')
+  return !isMarkdownPage || isServedAsMarkdown(link.path)
 }
 
 /** To list a new page, add one entry to the matching section. */
@@ -274,8 +279,12 @@ const PAGE_SECTIONS: MarkdownSection[] = [
         description:
           'Markdown list of every active proving system in the ZK catalog with creator, trusted setups, verifier counts and page URL.',
       },
-      // Behind the same flag as the page: listed while off, this would be a 404.
-      ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_LIST_PAGE] : []),
+      {
+        name: 'All DeFi protocols',
+        path: markdownAlternate('/defi/summary.md'),
+        description:
+          'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
+      },
       {
         name: 'Governance',
         path: staticPagePath('/governance'),
@@ -325,13 +334,6 @@ const PAGE_SECTIONS: MarkdownSection[] = [
   },
 ]
 
-const DEFI_PROJECT_MARKDOWN_PAGE: MarkdownLink = {
-  name: 'DeFi project',
-  path: '/defi/projects/{slug}.md',
-  description:
-    'One DeFi protocol as markdown: TVL, category, warnings, description, external dependencies, permissions and contracts.',
-}
-
 const MARKDOWN_PAGES_SECTION: MarkdownSection = {
   heading: 'Markdown pages',
   links: [
@@ -371,8 +373,12 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
       description:
         'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /interop/tokens/ in a token page URL; interop protocol pages link their top token.',
     },
-    // Behind the same flag as the pages: listed while off, this would be a 404.
-    ...(env.CLIENT_SIDE_DEFI_ENABLED ? [DEFI_PROJECT_MARKDOWN_PAGE] : []),
+    {
+      name: 'DeFi project',
+      path: '/defi/projects/{slug}.md',
+      description:
+        'One DeFi protocol as markdown: TVL, category, warnings, description, external dependencies, permissions and contracts.',
+    },
   ],
 }
 

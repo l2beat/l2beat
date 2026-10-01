@@ -5,8 +5,14 @@ import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
-/** The markdown alternate of the DeFi project page, from the entry the HTML page renders. */
-export function renderDefiProjectMarkdown(entry: ProjectDefiEntry): string {
+/**
+ * The markdown alternate of the DeFi project page, from the entry the HTML
+ * page renders plus the TVL, which that page only charts in the browser.
+ */
+export function renderDefiProjectMarkdown(
+  entry: ProjectDefiEntry,
+  totalValueLockedUsd?: number,
+): string {
   return renderProjectMarkdown({
     name: entry.name,
     // Production URLs, like the canonical link: the document is meant to be
@@ -19,7 +25,7 @@ export function renderDefiProjectMarkdown(entry: ProjectDefiEntry): string {
         entry.warnings.red?.text,
         entry.warnings.yellow,
       ]),
-      facts: getFacts(entry),
+      facts: getFacts(entry.category, totalValueLockedUsd),
       // DeFi pages have no risk rosette.
       risks: [],
       description: entry.description,
@@ -38,7 +44,10 @@ export function renderDefiProjectMarkdown(entry: ProjectDefiEntry): string {
  * The project page has no stats block and its Value Locked chart is
  * interactive, so the headline numbers come from the DeFi summary table.
  */
-function getFacts({ category, totalValueLockedUsd }: ProjectDefiEntry) {
+function getFacts(
+  category: ProjectDefiEntry['category'],
+  totalValueLockedUsd: number | undefined,
+) {
   return compact([
     totalValueLockedUsd !== undefined && {
       label: 'TVL',

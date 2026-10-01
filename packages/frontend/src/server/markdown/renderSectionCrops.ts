@@ -5,7 +5,13 @@ import {
 } from '~/components/garden/crops'
 import type { GardenCropsSectionProps } from '~/components/projects/sections/GardenCropsSection'
 import { GARDEN_PATH } from '~/pages/garden/paths'
-import { bulletList, joinBlocks, link, subsection } from './markdown'
+import {
+  bulletList,
+  joinBlocks,
+  link,
+  resolveSiteUrl,
+  subsection,
+} from './markdown'
 import type { SectionContext } from './renderProjectSection'
 
 /** The garden verdict and each crop's findings; the plants themselves are only a picture of the same. */
@@ -21,7 +27,7 @@ export function renderGardenCropsSection(
   return joinBlocks([
     `${inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'} ${inBloom} of ${entries.length} in bloom.`,
     ...entries.map((entry) => renderCrop(entry, level)),
-    `${link('See the whole garden', new URL(GARDEN_PATH, context.pageUrl).href)}.`,
+    `${link('See the whole garden', resolveSiteUrl(GARDEN_PATH, context.pageUrl))}.`,
   ])
 }
 
@@ -34,18 +40,18 @@ function renderCrop({ definition, evaluation }: CropEntry, level: number) {
     definition.label,
     joinBlocks([
       getCropStatusText(evaluation.status, evaluation.sentiment),
-      findings("What's good", [...license, ...evaluation.points]),
-      findings('What is missing', evaluation.missing),
-      findings(
+      renderFindings("What's good", [...license, ...evaluation.points]),
+      renderFindings('What is missing', evaluation.missing),
+      renderFindings(
         'Additional considerations',
         evaluation.additionalConsiderations,
       ),
-      findings('Not reviewed yet', evaluation.notReviewed),
+      renderFindings('Not reviewed yet', evaluation.notReviewed),
       definition.note ?? '',
     ]),
   )
 }
 
-function findings(title: string, items: string[]) {
+function renderFindings(title: string, items: string[]) {
   return items.length > 0 ? joinBlocks([`**${title}**`, bulletList(items)]) : ''
 }

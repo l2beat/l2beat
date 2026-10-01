@@ -1,7 +1,7 @@
 import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
-import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
+import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/anomalySubtypeToLabel'
 import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'

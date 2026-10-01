@@ -3,7 +3,6 @@ import type {
   ProverInfoData,
   StateValidationSectionProps,
 } from '~/components/projects/sections/state-validation/StateValidationSection'
-import { VERIFIER_STATUS_ORDER } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import {
   bulletList,
@@ -11,6 +10,7 @@ import {
   joinBlocks,
   link,
   nestHeadings,
+  resolveSiteUrl,
   subsection,
 } from './markdown'
 import type { SectionContext } from './renderProjectSection'
@@ -22,9 +22,9 @@ import {
 } from './renderSectionParts'
 import {
   formatTag,
+  formatVerifierCounts,
   renderProgramHashesSubsection,
   renderUsedIn,
-  renderVerificationStatus,
 } from './zkSectionBodies'
 
 export function renderStateValidation(
@@ -81,7 +81,7 @@ function renderProverInfo(
   return joinBlocks([
     heading(
       level,
-      `Prover: ${link(prover.name, new URL(prover.href, pageUrl).href)}`,
+      `Prover: ${link(prover.name, resolveSiteUrl(prover.href, pageUrl))}`,
     ),
     prover.quantumResistant ? QUANTUM_RESISTANT_PROVER : '',
     subsection(
@@ -118,23 +118,11 @@ function formatProofSystemTrustedSetups(
       ? `onchain verifiers: ${onchainVerifiers
           .map(
             (verifier) =>
-              `${link(verifier.name, verifier.href)} (${countVerifiers(verifier.verifiers)})`,
+              `${link(verifier.name, verifier.href)} (${formatVerifierCounts(verifier.verifiers)})`,
           )
           .join(', ')}`
-      : `verifiers: ${countVerifiers(verifiers)}`
+      : `verifiers: ${formatVerifierCounts(verifiers)}`
   return [
     `${formatTag(proofSystem)}: ${setups}; ${verifierList}; used in: ${renderUsedIn(projectsUsedIn, pageUrl)}`,
   ]
-}
-
-function countVerifiers(
-  verifiers: TrustedSetupsByProofSystem[string]['verifiers'],
-) {
-  const counts = VERIFIER_STATUS_ORDER.flatMap((status) => {
-    const group = verifiers[status]
-    return group && group.count > 0
-      ? [`${group.count} ${renderVerificationStatus(status, group.attesters)}`]
-      : []
-  })
-  return counts.length > 0 ? counts.join(', ') : 'none'
 }

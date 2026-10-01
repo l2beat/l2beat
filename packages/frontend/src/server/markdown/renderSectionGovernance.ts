@@ -8,6 +8,7 @@ import {
   subsection,
   table,
 } from './markdown'
+import type { SectionContext } from './renderProjectSection'
 import {
   formatPastUpgrade,
   formatPastUpgradeStats,
@@ -20,13 +21,13 @@ export function renderUpgradesAndGovernance(
     'diagram' | 'content' | 'governanceInfo' | 'pastUpgrades'
   >,
   level: number,
-  pageUrl: string,
+  context: SectionContext,
 ) {
   return joinBlocks([
-    renderDiagram(props.diagram, pageUrl),
+    renderDiagram(props.diagram, context.pageUrl),
     nestHeadings(props.content, level),
     renderGovernanceProfile(props.governanceInfo, level),
-    renderPastUpgrades(props.pastUpgrades, level),
+    renderPastUpgradesSubsection(props.pastUpgrades, level),
   ])
 }
 
@@ -62,7 +63,7 @@ function renderGovernanceProfile(
 }
 
 /** The HTML shows the stats and hides the upgrade list behind a "View past upgrades" dialog; here both are spelled out, newest first as in the dialog. */
-function renderPastUpgrades(
+function renderPastUpgradesSubsection(
   pastUpgrades: PastUpgradesData | undefined,
   level: number,
 ) {

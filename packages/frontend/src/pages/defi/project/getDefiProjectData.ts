@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
+import { getDefiProjectTotalValueLocked } from '~/server/features/defi/project/getDefiProjectTotalValueLocked'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
@@ -16,14 +17,23 @@ export function getDefiProjectData(
   return getCachedDefiProjectPage(slug, manifest, cache)
 }
 
-/** The markdown alternate of the page, built from the same cached entry as the HTML. */
+/**
+ * The markdown alternate of the page, built from the same cached entry as the
+ * HTML. The TVL is queried apart: the HTML page only charts it in the
+ * browser, so its render should not pay for the query.
+ */
 export async function getDefiProjectMarkdown(
   slug: string,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const data = await getCachedDefiProjectPage(slug, manifest, cache)
-  return data && renderDefiProjectMarkdown(data.ssr.props.entry)
+  const [data, totalValueLockedUsd] = await Promise.all([
+    getCachedDefiProjectPage(slug, manifest, cache),
+    getCachedTotalValueLocked(slug, cache),
+  ])
+  return (
+    data && renderDefiProjectMarkdown(data.ssr.props.entry, totalValueLockedUsd)
+  )
 }
 
 function getCachedDefiProjectPage(
@@ -38,6 +48,17 @@ function getCachedDefiProjectPage(
       staleWhileRevalidate: 25 * 60,
     },
     () => loadDefiProjectPage(manifest, slug),
+  )
+}
+
+function getCachedTotalValueLocked(slug: string, cache: InMemoryCache) {
+  return cache.get(
+    {
+      key: ['defi', 'projects', slug, 'tvl'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getDefiProjectTotalValueLocked(slug),
   )
 }
 

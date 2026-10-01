@@ -10,11 +10,10 @@ import {
 import {
   formatTag,
   formatTrustedSetupRisk,
+  formatVerifierCounts,
   renderUsedIn,
-  renderVerificationStatus,
   TRUSTED_SETUP_FRAMEWORK_LINK,
 } from '~/server/markdown/zkSectionBodies'
-import { VERIFIER_STATUS_ORDER } from '../components/zkCatalogUi'
 
 /** The markdown alternate of the ZK catalog project page, from the entry the HTML page renders. */
 export function renderZkCatalogProjectMarkdown(
@@ -90,22 +89,10 @@ function getTrustedSetupsFact(
         `${setup.name}, risk ${formatTrustedSetupRisk(setup.risk)} per the ${TRUSTED_SETUP_FRAMEWORK_LINK}: ${setup.shortDescription}`,
     ),
     `Used in: ${renderUsedIn(projectsUsedIn, pageUrl)}`,
-    `Verifiers: ${countVerifiers(verifiers)}`,
+    `Verifiers: ${formatVerifierCounts(verifiers)}`,
   ])
   return {
     label: `Trusted setups for ${formatTag(proofSystem)}`,
     value: `\n${details}`,
   }
-}
-
-function countVerifiers(
-  verifiers: TrustedSetupsByProofSystem[string]['verifiers'],
-) {
-  const counts = VERIFIER_STATUS_ORDER.flatMap((status) => {
-    const group = verifiers[status]
-    return group && group.count > 0
-      ? [`${group.count} ${renderVerificationStatus(status, group.attesters)}`]
-      : []
-  })
-  return counts.length > 0 ? counts.join(', ') : 'none'
 }

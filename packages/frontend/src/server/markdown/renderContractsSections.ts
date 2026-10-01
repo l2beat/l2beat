@@ -15,6 +15,7 @@ import {
   joinBlocks,
   link,
   nestHeadings,
+  resolveSiteUrl,
   subsection,
   warning,
 } from './markdown'
@@ -173,7 +174,7 @@ function renderContract(
   return joinBlocks([
     heading(level, contractTitle(entry, isNameShared)),
     `Addresses: ${[...entry.addresses, ...entry.admins].map(renderContractAddress).join(', ')}`,
-    renderPastUpgrades(entry.pastUpgrades),
+    renderContractPastUpgrades(entry.pastUpgrades),
     nestHeadings(entry.description, level + 1),
     entry.escrow ? renderEscrowTokens(entry.escrow) : '',
     upgradeableBy.length > 0
@@ -264,12 +265,14 @@ function renderUsedInProjects(projects: UsedInProject[], pageUrl: string) {
 
 /** Project URLs are site paths; the fragment points at the entry on that page, as on the HTML page. */
 function renderUsedInProject(project: UsedInProject, pageUrl: string) {
-  const url = new URL(`${project.url}#${project.targetName}`, pageUrl).href
+  const url = resolveSiteUrl(`${project.url}#${project.targetName}`, pageUrl)
   return link(project.name, url)
 }
 
 /** Behind a "View past upgrades" dialog on the HTML page, newest first. */
-function renderPastUpgrades(pastUpgrades: PastUpgradesData | undefined) {
+function renderContractPastUpgrades(
+  pastUpgrades: PastUpgradesData | undefined,
+) {
   if (!pastUpgrades || pastUpgrades.upgrades.length === 0) return ''
   return joinBlocks([
     `**Past upgrades** (${formatPastUpgradeStats(pastUpgrades.stats).join(', ')})`,

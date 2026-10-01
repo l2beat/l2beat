@@ -17,13 +17,22 @@ export function getMarkdownAlternatePath(pagePath: string): string | undefined {
     : undefined
 }
 
+/** Takes a `.md` path or a template of one (e.g. `/defi/projects/{slug}.md`): false while its page is switched off. */
+export function isServedAsMarkdown(markdownPath: string) {
+  return (
+    getMarkdownAlternatePath(markdownPath.replace(/\.md$/, '')) === markdownPath
+  )
+}
+
 export const LIST_PAGES_WITH_MARKDOWN = [
   '/layer2s/summary',
   '/data-availability/summary',
   '/zk-catalog',
   '/privacy/summary',
   '/interop/summary',
-  // Behind the same flag as the page: advertised while off, this would be a 404.
+  // Behind the same flag as the pages: advertised while off, these would be
+  // 404s. Everything that lists markdown pages filters by this registry, so
+  // the flag is read here only.
   ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/summary'] as const) : []),
 ] as const satisfies ListPagePath[]
 

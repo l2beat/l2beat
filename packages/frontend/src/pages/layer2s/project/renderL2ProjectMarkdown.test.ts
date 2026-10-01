@@ -168,6 +168,34 @@ describe(renderL2ProjectMarkdown.name, () => {
     expect(summary).not.toInclude('- Exit window: 7d')
   })
 
+  it('lists the individual risks of an L3 under review and says so, as the HTML rosette does', () => {
+    const [sequencer, stateValidation, dataAvailability, , proposer] = ROSETTE
+    const combined: ProjectL2Entry['rosette']['self'] = [
+      sequencer,
+      stateValidation,
+      dataAvailability,
+      rosetteValue('Exit window', '2d', 'bad'),
+      proposer,
+    ]
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        type: 'layer3',
+        name: 'Xai',
+        hostChainName: 'Arbitrum One',
+        underReviewStatus: 'config',
+        rosette: { self: ROSETTE, host: ROSETTE, stacked: combined },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Risks shown: individual risks of Xai alone, as the HTML rosette shows them while the project is under review',
+      '- Exit window: 7d',
+    )
+    expect(summary).not.toInclude('- Exit window: 2d')
+  })
+
   it('gives the last 24h cross-chain activity, linking protocols and tokens', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({

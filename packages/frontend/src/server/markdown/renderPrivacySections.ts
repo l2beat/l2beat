@@ -29,6 +29,7 @@ import {
   heading,
   joinBlocks,
   link,
+  resolveSiteUrl,
   table,
   withSentiment,
 } from './markdown'
@@ -126,7 +127,7 @@ function renderInterior(
 function renderSources(sources: PrivacySource[], pageUrl: string) {
   const links = sources.flatMap((source) =>
     'url' in source
-      ? [link(source.title, new URL(source.url, pageUrl).href)]
+      ? [link(source.title, resolveSiteUrl(source.url, pageUrl))]
       : [],
   )
   if (links.length === 0) return ''

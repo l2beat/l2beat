@@ -560,7 +560,12 @@ function renderStage(
   props: Parameters<typeof renderStageSection>[0],
   showUpcomingGuidelines: boolean,
 ) {
-  return renderStageSection(props, 3, PAGE_URL, showUpcomingGuidelines)
+  return renderStageSection(
+    props,
+    3,
+    { pageUrl: PAGE_URL, apiLinks: {} },
+    showUpcomingGuidelines,
+  )
 }
 
 function riskAnalysis(rosetteValues: RosetteValue[]): ProjectDetailsSection {

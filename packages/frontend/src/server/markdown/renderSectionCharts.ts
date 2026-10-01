@@ -1,23 +1,29 @@
-import {
-  formatSeconds,
-  type TrackedTxsConfigSubtype,
-} from '@l2beat/shared-pure'
+import { formatSeconds } from '@l2beat/shared-pure'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
+import { TRACKED_TXS_SUBTYPE_TITLES } from '~/components/projects/sections/costs/trackedTxsSubtypeTitles'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import type { ThroughputSectionProps } from '~/components/projects/sections/throughput/ThroughputSection'
 import type { L2TvsSectionProps } from '~/components/projects/sections/tvs/L2TvsSection'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
+import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/anomalySubtypeToLabel'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import { bulletList, joinBlocks, link, subsection, warning } from './markdown'
-import type { SectionContext } from './renderProjectSection'
+import {
+  bulletList,
+  joinBlocks,
+  link,
+  resolveSiteUrl,
+  subsection,
+  warning,
+} from './markdown'
+import type { SectionBody, SectionContext } from './renderProjectSection'
 import { formatUtcDateTime } from './renderSectionParts'
 
 /*
@@ -26,27 +32,12 @@ import { formatUtcDateTime } from './renderSectionParts'
  * it, but carries the text and facts the server renders around it.
  */
 
-type SectionBody<P> = (
-  props: P,
-  level: number,
-  context: SectionContext,
-) => string
-
 /** For sections whose whole content is loaded by the browser. */
 export function pointToHtmlPage(
   whatIsShown: string,
 ): SectionBody<{ id: ProjectSectionId }> {
   return (props, _level, context) =>
     htmlPagePointer(whatIsShown, props.id, context)
-}
-
-/** `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
-function htmlPagePointer(
-  whatIsShown: string,
-  id: ProjectSectionId,
-  context: SectionContext,
-) {
-  return `${whatIsShown} on ${link('the HTML page', `${context.pageUrl}#${id}`)}.`
 }
 
 export function renderActivitySection(
@@ -72,7 +63,7 @@ export function renderL2TvsSection(
   return joinBlocks([
     htmlPagePointer('The interactive TVS charts are shown', props.id, context),
     props.tvsBreakdownUrl
-      ? `Token by token: ${link('TVS breakdown', new URL(props.tvsBreakdownUrl, context.pageUrl).href)}.`
+      ? `Token by token: ${link('TVS breakdown', resolveSiteUrl(props.tvsBreakdownUrl, context.pageUrl))}.`
       : '',
   ])
 }
@@ -101,7 +92,7 @@ export function renderDataPostedSection(
   const daLayerLinks = (layers: DataPostedSectionProps['currentDaLayers']) =>
     layers
       .map((layer) =>
-        link(layer.name, new URL(layer.href, context.pageUrl).href),
+        link(layer.name, resolveSiteUrl(layer.href, context.pageUrl)),
       )
       .join(', ')
   const previously =
@@ -216,6 +207,15 @@ export function renderPrivacyAnonymitySetSection(
   ])
 }
 
+/** `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
+function htmlPagePointer(
+  whatIsShown: string,
+  id: ProjectSectionId,
+  context: SectionContext,
+) {
+  return `${whatIsShown} on ${link('the HTML page', `${context.pageUrl}#${id}`)}.`
+}
+
 function renderDataSource(dataSource: string | undefined) {
   return dataSource ? `Data source: ${dataSource}` : ''
 }
@@ -277,7 +277,7 @@ function renderLast30DayAnomalies(
 
 /** Same sentence as the HTML anomaly text. */
 function formatAnomaly(anomaly: LivenessAnomaly) {
-  const what = ANOMALY_SUBTYPE_LABELS[anomaly.subtype].toLowerCase()
+  const what = anomalySubtypeToLabel(anomaly.subtype).toLowerCase()
   const duration = formatSeconds(anomaly.durationInSeconds)
   const usually = `These typically occur every ${formatSeconds(anomaly.avgInterval)} on average.`
   if (isOngoing(anomaly)) {
@@ -289,19 +289,6 @@ function formatAnomaly(anomaly: LivenessAnomaly) {
 
 function isOngoing(anomaly: LivenessAnomaly) {
   return anomaly.status === 'ongoing'
-}
-
-/** The labels of the HTML anomaly indicator. */
-const ANOMALY_SUBTYPE_LABELS: Record<TrackedTxsConfigSubtype, string> = {
-  batchSubmissions: 'Tx data submissions',
-  proofSubmissions: 'Proof submissions',
-  stateUpdates: 'State updates',
-}
-
-const TRACKED_TX_GROUP_TITLES: Record<TrackedTxsConfigSubtype, string> = {
-  batchSubmissions: 'Batch submissions',
-  proofSubmissions: 'Proof submissions',
-  stateUpdates: 'State updates',
 }
 
 /** Collapsed on the HTML page, with historical ones behind a checkbox; here all are listed and marked. */
@@ -317,7 +304,7 @@ function renderTrackedTransactions(
         (subtype) =>
           subsection(
             level + 1,
-            TRACKED_TX_GROUP_TITLES[subtype],
+            TRACKED_TXS_SUBTYPE_TITLES[subtype],
             bulletList(
               (transactions[subtype] ?? []).map(formatTrackedTransaction),
             ),

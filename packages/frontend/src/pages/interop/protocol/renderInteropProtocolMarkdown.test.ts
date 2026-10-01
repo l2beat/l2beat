@@ -92,9 +92,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
       },
     })
 
-    expect(markdown).toInclude(
-      '### Links\n\n- Website: https://across.to',
-    )
+    expect(markdown).toInclude('### Links\n\n- Website: https://across.to')
   })
 
   it('reports the average transfer time the way the HTML cell does', () => {

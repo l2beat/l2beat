@@ -3,7 +3,7 @@ import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
-import { anomalySubtypeToLabel } from './AnomalyIndicator'
+import { anomalySubtypeToLabel } from './anomalySubtypeToLabel'
 import { getDurationColorClassName } from './LivenessDurationCell'
 
 export function AnomalyText({

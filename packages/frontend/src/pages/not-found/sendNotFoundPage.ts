@@ -1,5 +1,4 @@
 import type { Response } from 'express'
-import { dropMarkdownAlternateLink } from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getNotFoundData } from './getNotFoundData'
@@ -13,6 +12,5 @@ export async function sendNotFoundPage(
 ) {
   const data = await getNotFoundData(manifest, url)
   const html = await render(data, url)
-  dropMarkdownAlternateLink(res)
   res.status(404).send(html)
 }

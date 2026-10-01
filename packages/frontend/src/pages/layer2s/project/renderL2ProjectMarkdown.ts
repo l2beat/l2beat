@@ -1,6 +1,7 @@
 import type { ReasonForBeingInOther } from '@l2beat/config'
 import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { getInteropTokenPagePath } from '~/pages/interop/utils/getInteropTokenUrl'
@@ -23,7 +24,7 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
   const api = `${PRODUCTION_ORIGIN}/api/scaling`
-  const combinedRisks = getCombinedRisks(entry)
+  const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
     // Production URLs, like the canonical link: the document is meant to be
@@ -41,9 +42,9 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
       facts: [
         ...getFacts(entry),
         ...getInteropFacts(entry),
-        ...(combinedRisks ? [combinedRisks.fact] : []),
+        ...(summaryRisks.fact ? [summaryRisks.fact] : []),
       ],
-      risks: combinedRisks?.risks ?? entry.rosette.self,
+      risks: summaryRisks.risks,
       description: entry.header.description,
     },
     header: {
@@ -243,23 +244,33 @@ function lowercaseFirstLetter(text: string) {
 
 /**
  * The HTML rosette of an L3 opens on the risks stacked with its host chain,
- * so the summary lists those and says so.
+ * or on the L3's own while the project is under review. The summary lists
+ * the same ones and says which, as the Risk analysis section shows both.
  */
-function getCombinedRisks({
+function getSummaryRisks({
   rosette,
   underReviewStatus,
   name,
   hostChainName,
-}: ProjectL2Entry) {
-  if (!rosette.stacked || !rosette.host || underReviewStatus === 'config') {
-    return undefined
+}: ProjectL2Entry): { risks: RosetteValue[]; fact?: ProjectFact } {
+  if (!rosette.stacked || !rosette.host) {
+    return { risks: rosette.self }
+  }
+  if (underReviewStatus === 'config') {
+    return {
+      risks: rosette.self,
+      fact: {
+        label: 'Risks shown',
+        value: `individual risks of ${name} alone, as the HTML rosette shows them while the project is under review; the Risk analysis section also lists them combined with its host chain ${hostChainName}`,
+      },
+    }
   }
   return {
     risks: rosette.stacked,
     fact: {
       label: 'Risks shown',
       value: `combined risks of ${name} and its host chain ${hostChainName}, as the HTML rosette shows them by default; the Risk analysis section lists both separately`,
-    } satisfies ProjectFact,
+    },
   }
 }
 

@@ -19,7 +19,10 @@ describe(renderDefiProjectMarkdown.name, () => {
   })
 
   it('gives the TVL and category of the DeFi summary table, without a risk rosette', () => {
-    const summary = getSection(renderDefiProjectMarkdown(ENTRY), 'Summary')
+    const summary = getSection(
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+      'Summary',
+    )
 
     expect(summary).toInclude(
       '- TVL: $26.53 B (total USD value of assets locked in the protocol)\n- Category: Liquid Staking',
@@ -30,7 +33,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('leaves out the TVL of a project whose value is not tracked', () => {
     const summary = getSection(
-      renderDefiProjectMarkdown({ ...ENTRY, totalValueLockedUsd: undefined }),
+      renderDefiProjectMarkdown(ENTRY, undefined),
       'Summary',
     )
 
@@ -67,7 +70,7 @@ describe(renderDefiProjectMarkdown.name, () => {
       '**Warning:** Withdrawals are paused.',
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
-      summary.indexOf('- TVL:'),
+      summary.indexOf('- Category:'),
     )
   })
 
@@ -281,6 +284,8 @@ const SECTIONS: ProjectDetailsSection[] = [
   },
 ]
 
+const TOTAL_VALUE_LOCKED_USD = 26_530_000_000
+
 const ENTRY: ProjectDefiEntry = {
   id: ProjectId('lido'),
   slug: 'lido',
@@ -288,7 +293,6 @@ const ENTRY: ProjectDefiEntry = {
   icon: '/icons/lido.png',
   description: 'Lido is a liquid staking protocol.',
   category: 'Liquid Staking',
-  totalValueLockedUsd: 26_530_000_000,
   badges: [badge('ethereum', 'Ethereum'), badge('chainlink', 'Chainlink')],
   projectLinks: [{ name: 'Website', links: ['https://lido.fi'] }],
   discoveryHref: DISCO_UI.href,

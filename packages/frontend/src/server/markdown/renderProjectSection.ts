@@ -18,6 +18,7 @@ import {
   markCritical,
   nestHeadings,
   numberedList,
+  resolveSiteUrl,
   subsection,
   textSubsection,
   warning,
@@ -82,7 +83,7 @@ export function renderProjectSection(
 ): string {
   const { id, title } = section.props
   const renderBody = SECTION_BODIES[section.type] as SectionBody<
-    typeof section.type
+    typeof section.props
   >
   const isUnderReview = isSectionUnderReview(section)
   const hidesBody =
@@ -130,9 +131,10 @@ type SectionProps<T extends SectionType> = Extract<
   ProjectDetailsSection,
   { type: T }
 >['props']
-type SectionBody<T extends SectionType> = (
-  props: SectionProps<T>,
-  subsectionLevel: number,
+/** Renders what goes under a section heading; `level` is the heading level of its subsections. */
+export type SectionBody<Props> = (
+  props: Props,
+  level: number,
   context: SectionContext,
 ) => string
 
@@ -140,7 +142,7 @@ type SectionBody<T extends SectionType> = (
  * Exhaustive, so a new section type fails the build until it gets a markdown
  * body or is explicitly left to the HTML page with `pointToHtmlPage`.
  */
-const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
+const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   RiskSummarySection: (props, level, context) =>
     joinBlocks([
       renderHostChainWarning(props.hostChainWarning, context.pageUrl),
@@ -248,10 +250,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
       ).map(([title, text]) => textSubsection(level, title, text)),
     ),
   SequencingSection: renderSequencing,
-  UpgradesAndGovernanceSection: (props, level, context) =>
-    renderUpgradesAndGovernance(props, level, context.pageUrl),
-  StageSection: (props, level, context) =>
-    renderStageSection(props, level, context.pageUrl),
+  UpgradesAndGovernanceSection: renderUpgradesAndGovernance,
+  StageSection: renderStageSection,
   StateValidationSection: renderStateValidation,
   TechnologyChoicesSection: ({ items, hostChainWarning }, level, context) =>
     joinBlocks([
@@ -355,7 +355,7 @@ function renderRiskGroups(groups: RiskGroup[], level: number) {
 /** Project links on the HTML page are site-relative; the markdown is read off-site. */
 function renderDependency(dependency: DefiDependency, pageUrl: string) {
   const name = dependency.href
-    ? link(dependency.name, new URL(dependency.href, pageUrl).href)
+    ? link(dependency.name, resolveSiteUrl(dependency.href, pageUrl))
     : dependency.name
   const notReviewed = dependency.reviewed ? '' : ' (not reviewed)'
   return `${name}${notReviewed}: ${dependency.description}`

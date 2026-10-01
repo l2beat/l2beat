@@ -67,8 +67,18 @@ export function warning(text: string) {
   return `**Warning:** ${text}`
 }
 
+/** Site paths (e.g. "/stages") only resolve on the site; the markdown is read elsewhere. */
+export function resolveSiteUrl(path: string, pageUrl: string) {
+  return new URL(path, pageUrl).href
+}
+
 export function withSentiment(value: string, sentiment: Sentiment | undefined) {
-  return sentiment ? `${value} (sentiment: ${sentiment})` : value
+  return sentiment ? `${value} (${sentimentNote(sentiment)})` : value
+}
+
+/** The HTML shows the sentiment as a color, which plain text has to name. */
+export function sentimentNote(sentiment: Sentiment) {
+  return `sentiment: ${sentiment}`
 }
 
 /** The percentage change as the HTML shows it, with the tooltip's period spelled out. */

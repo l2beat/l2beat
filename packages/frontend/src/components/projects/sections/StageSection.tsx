@@ -35,6 +35,7 @@ import { Markdown } from '../../markdown/Markdown'
 import { WarningBar } from '../../WarningBar'
 import { ProjectSection } from './ProjectSection'
 import { ScopeOfAssessment } from './ScopeOfAssessment'
+import { STAGES_DISCLAIMER } from './stagesDisclaimer'
 import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
@@ -376,7 +377,7 @@ export function StageSection({
       </CustomLink>
       <Callout
         color="blue"
-        body="Please keep in mind that these stages do not reflect project security, this is an opinionated assessment of project maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
+        body={STAGES_DISCLAIMER}
         icon={
           <InfoIcon className="size-4 max-md:mt-0.5 md:size-5" variant="blue" />
         }
