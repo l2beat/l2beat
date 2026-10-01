@@ -17,6 +17,9 @@ export class ConfigRegistry {
     this.structure = resolveStructureConfig(layer)
     this.color = resolveColorConfig(layer)
     this.permission = resolvePermissionsConfig(layer)
+    deepFreeze(this.structure)
+    deepFreeze(this.color)
+    deepFreeze(this.permission)
   }
 
   get name(): string {
@@ -25,5 +28,17 @@ export class ConfigRegistry {
 
   get archived(): boolean {
     return this.color.archived ?? false
+  }
+}
+
+function deepFreeze(value: unknown): void {
+  const pending = [value]
+  while (pending.length > 0) {
+    const item = pending.pop()
+    if (typeof item !== 'object' || item === null || Object.isFrozen(item)) {
+      continue
+    }
+    Object.freeze(item)
+    pending.push(...Object.values(item))
   }
 }

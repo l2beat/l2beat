@@ -100,13 +100,16 @@ describe('readConfig layering', () => {
     expect(config.structure.overrides?.[ADDRESS]?.ignoreDiscovery).toEqual(true)
   })
 
-  it('shares imported layers read-only across projects', () => {
+  it('makes every config value read-only, inherited or not', () => {
     const reader = new ConfigReader('/layered')
-    const names = reader.readConfig('proj').color.names ?? {}
+    const config = reader.readConfig('proj')
+    const names = config.color.names ?? {}
+    const ignoreMethods = config.structure.overrides?.[ADDRESS]?.ignoreMethods
 
     expect(() => {
       names[ADDRESS] = 'Changed'
     }).toThrow(TypeError)
+    expect(() => ignoreMethods?.push('c')).toThrow(TypeError)
     expect(reader.readConfig('proj').color.names?.[ADDRESS]).toEqual('Global')
   })
 })
