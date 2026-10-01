@@ -23,6 +23,7 @@ The Soneium Multisig moved from Safe 1.4.1 to Safe 1.5.0 and its signer set was 
 
 Version changes and implementation diffs:
 
+- PermissionedDisputeGame -> SuperPermissionedDisputeGame (type 1 -> 5): https://disco.l2beat.com/diff/eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e/eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691
 - Soneium Multisig implementation rotated: https://disco.l2beat.com/diff/eth:0x41675C099F32341bf84BFc5382aF534df5C7461a/eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b
 - SystemConfig 3.14.2 -> 4.0.0: https://disco.l2beat.com/diff/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9/eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA
 - OptimismPortal2 5.6.1 -> 5.8.0: https://disco.l2beat.com/diff/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2/eth:0x1005217ad392DC64CEf501FA1777A27D42166748

@@ -25,6 +25,8 @@ The ProxyAdmin owner moved from the UnichainProxyAdminOwner to the SuperchainPro
 
 Version changes and implementation diffs:
 
+- FaultDisputeGame -> SuperFaultDisputeGame (type 0 -> 9): https://disco.l2beat.com/diff/eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499/eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208
+- PermissionedDisputeGame -> SuperPermissionedDisputeGame (type 1 -> 5): https://disco.l2beat.com/diff/eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A/eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691
 - ETHLockbox 1.2.0 -> 1.3.1: https://disco.l2beat.com/diff/eth:0x784d2F03593A42A6E4676A012762F18775ecbBe6/eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad
 - OptimismPortal2 5.2.0 -> 5.8.0: https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0x1005217ad392DC64CEf501FA1777A27D42166748
 - AnchorStateRegistry 3.7.0 -> 3.9.0: https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281
