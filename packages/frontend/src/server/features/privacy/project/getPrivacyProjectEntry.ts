@@ -318,6 +318,7 @@ export async function getPrivacyProjectEntry(
     props: {
       id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
+      isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },
   })

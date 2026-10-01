@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import {
   getExposure,
   getExposureNote,
@@ -21,8 +22,8 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import { cn } from '~/utils/cn'
+import { RiskBanner } from '../../RiskBanner'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -48,7 +49,19 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">at risk</span> stay private only under the
         condition in their note.
       </p>
-      <div className="mt-6 flex flex-col gap-8">
+      <div className="flex justify-center">
+        <BigPizzaRosette
+          values={adversaries.adversaries.map((adversary) => ({
+            name: adversary.label,
+            value: adversaries.cells[adversary.id].value,
+            sentiment: adversaries.cells[adversary.id].sentiment,
+            description: `${adversary.description} Examples: ${adversary.examples}`,
+          }))}
+          isUnderReview={sectionProps.isUnderReview}
+          className="mx-auto my-6"
+        />
+      </div>
+      <div className="flex flex-col gap-8">
         {adversaries.adversaries.map((adversary) => (
           <AdversaryBlock
             key={adversary.id}
@@ -80,24 +93,13 @@ function AdversaryBlock({
       id={getPrivacyAdversaryAnchor(adversary.id)}
       className="flex scroll-mt-24 flex-col gap-3"
     >
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <PrivacySentimentDot sentiment={cell.sentiment} />
-        <Tooltip>
-          <TooltipTrigger className="font-bold text-paragraph-16 md:text-paragraph-18">
-            {adversary.label}
-          </TooltipTrigger>
-          <TooltipContent className="max-w-[320px]">
-            <p>{adversary.description}</p>
-            <p className="mt-1 text-secondary text-xs">
-              Examples: {adversary.examples}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-        <span className="font-medium text-paragraph-15 md:text-paragraph-16">
-          {cell.value}
-        </span>
-      </div>
-      <p className="text-paragraph-15 md:text-paragraph-16">{cell.exposure}</p>
+      <RiskBanner
+        name={adversary.label}
+        value={cell.value}
+        sentiment={cell.sentiment}
+        description={cell.exposure}
+        size="large"
+      />
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">Advice: </span>
