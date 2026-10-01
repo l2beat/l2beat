@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd1a12a27826dce47529a14320ef342778961afd2
+Generated with discovered.json: 0xa58c0b31225ac959737fb15038b308687ff66624
 
-# Diff at Thu, 01 Oct 2026 11:10:26 GMT:
+# Diff at Thu, 01 Oct 2026 14:18:28 GMT:
 
 - id: 85dc61e6
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1784715866
+- comparing to: main@f2656072394a0d215412884ecfaf57f4f0941ea0 block: 1784715866
 - current timestamp: 1790850905
 
 ## Description
@@ -53,8 +53,8 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 
 ```diff
 -   Status: DELETED
-    contract LayerZeroBridge (arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    contract LayerZeroBridge (arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
 ```
 
 ```diff
@@ -67,8 +67,8 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 
 ```diff
 -   Status: DELETED
-    contract LayerZeroBridge (base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    contract LayerZeroBridge (base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
 ```
 
 ```diff
@@ -101,8 +101,8 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 
 ```diff
 -   Status: DELETED
-    contract LayerZeroBridge (bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    contract LayerZeroBridge (bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
 ```
 
 ```diff
@@ -117,8 +117,8 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 
 ```diff
 -   Status: DELETED
-    contract LayerZeroBridge (eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    contract LayerZeroBridge (eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
 ```
 
 ```diff
@@ -131,8 +131,8 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 
 ```diff
 -   Status: DELETED
-    contract LayerZeroBridge (mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    contract LayerZeroBridge (mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
 ```
 
 ```diff
@@ -156,183 +156,42 @@ Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor r
 ```diff
 +   Status: CREATED
     contract LayerZeroBridge (arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract LayerZeroBridge (base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract LayerZeroBridge (bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract LayerZeroBridge (eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract LayerZeroBridge (mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
 ```
 
 ## Source code changes
 
 ```diff
-.../dev/null                                       | 645 ---------------------
- .../dev/null                                       | 645 ---------------------
- .../dev/null                                       | 645 ---------------------
- .../dev/null                                       | 645 ---------------------
- .../dev/null                                       | 645 ---------------------
- 5 files changed, 3225 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1784715866 (main branch discovery), not current.
-
-```diff
-    contract LayerZeroBridge (arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D) [apex-omni/LZSyncHashBridgeV2] {
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
-      template:
--        "apex-omni/LZSyncHashBridge"
-+        "apex-omni/LZSyncHashBridgeV2"
-      description:
--        "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains."
-+        "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain."
-+++ description: Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID.
-      values.minDstGas:
-+        {}
-+++ description: Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).
-+++ severity: HIGH
-      values.trustedRemotes:
-+        {"3":{"lzChainId":102,"destination":"arb1:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"},"4":{"lzChainId":101,"destination":"arb1:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E"},"11":{"lzChainId":184,"destination":"arb1:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3"},"12":{"lzChainId":181,"destination":"arb1:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"}}
-      fieldMeta.governor:
-+        {"severity":"HIGH","description":"Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."}
-      fieldMeta.trustedRemotes:
-+        {"severity":"HIGH","description":"Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."}
-      fieldMeta.minDstGas:
-+        {"description":"Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."}
-      errors:
-+        {"governor":"Processing error occurred."}
-    }
-```
-
-```diff
-    contract LayerZeroBridge (base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3) [apex-omni/LZSyncHashBridgeV2] {
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
-      template:
--        "apex-omni/LZSyncHashBridge"
-+        "apex-omni/LZSyncHashBridgeV2"
-      description:
--        "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains."
-+        "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain."
-+++ description: Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID.
-      values.minDstGas:
-+        {}
-+++ description: Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).
-+++ severity: HIGH
-      values.trustedRemotes:
-+        {"9":{"lzChainId":110,"destination":"base:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"}}
-      fieldMeta.governor:
-+        {"severity":"HIGH","description":"Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."}
-      fieldMeta.trustedRemotes:
-+        {"severity":"HIGH","description":"Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."}
-      fieldMeta.minDstGas:
-+        {"description":"Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."}
-      errors:
-+        {"governor":"Processing error occurred."}
-    }
-```
-
-```diff
-    contract LayerZeroBridge (bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e) [apex-omni/LZSyncHashBridgeV2] {
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
-      template:
--        "apex-omni/LZSyncHashBridge"
-+        "apex-omni/LZSyncHashBridgeV2"
-      description:
--        "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains."
-+        "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain."
-+++ description: Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID.
-      values.minDstGas:
-+        {}
-+++ description: Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).
-+++ severity: HIGH
-      values.trustedRemotes:
-+        {"9":{"lzChainId":110,"destination":"bnb:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"}}
-      fieldMeta.governor:
-+        {"severity":"HIGH","description":"Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."}
-      fieldMeta.trustedRemotes:
-+        {"severity":"HIGH","description":"Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."}
-      fieldMeta.minDstGas:
-+        {"description":"Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."}
-      errors:
-+        {"governor":"Processing error occurred."}
-    }
-```
-
-```diff
-    contract LayerZeroBridge (eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E) [apex-omni/LZSyncHashBridgeV2] {
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
-      template:
--        "apex-omni/LZSyncHashBridge"
-+        "apex-omni/LZSyncHashBridgeV2"
-      description:
--        "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains."
-+        "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain."
-+++ description: Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID.
-      values.minDstGas:
-+        {}
-+++ description: Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).
-+++ severity: HIGH
-      values.trustedRemotes:
-+        {"9":{"lzChainId":110,"destination":"eth:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"}}
-      fieldMeta.governor:
-+        {"severity":"HIGH","description":"Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."}
-      fieldMeta.trustedRemotes:
-+        {"severity":"HIGH","description":"Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."}
-      fieldMeta.minDstGas:
-+        {"description":"Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."}
-      errors:
-+        {"governor":"Processing error occurred."}
-    }
-```
-
-```diff
-    contract LayerZeroBridge (mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e) [apex-omni/LZSyncHashBridgeV2] {
-    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.
-      template:
--        "apex-omni/LZSyncHashBridge"
-+        "apex-omni/LZSyncHashBridgeV2"
-      description:
--        "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains."
-+        "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain."
-+++ description: Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID.
-      values.minDstGas:
-+        {}
-+++ description: Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).
-+++ severity: HIGH
-      values.trustedRemotes:
-+        {"9":{"lzChainId":110,"destination":"mantle:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"}}
-      fieldMeta.governor:
-+        {"severity":"HIGH","description":"Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself."}
-      fieldMeta.trustedRemotes:
-+        {"severity":"HIGH","description":"Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."}
-      fieldMeta.minDstGas:
-+        {"description":"Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."}
-      errors:
-+        {"governor":"Processing error occurred."}
-    }
+...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 76 ++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 76 ++++++++++++++++++--
+ 5 files changed, 361 insertions(+), 31 deletions(-)
 ```
 
 Generated with discovered.json: 0xc8ee66a8027688e5e07ed63d0eaad2a1d94112a3

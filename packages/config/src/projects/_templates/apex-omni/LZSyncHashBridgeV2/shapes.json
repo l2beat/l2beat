@@ -22,5 +22,11 @@
     "address": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
     "chain": "mantle",
     "blockNumber": 101360296
+  },
+  "LZSyncHashBridgeV2_Arb1": {
+    "hash": "0x3995fc56b0666c2d1c6467fbc2f0b5ed56be8fb0d6068f2db740884828ef9899",
+    "address": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
+    "chain": "arbitrum",
+    "blockNumber": 510633521
   }
 }

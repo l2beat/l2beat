@@ -237,10 +237,12 @@
       "name": "LayerZeroBridge",
       "address": "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "unverified": true,
       "template": "apex-omni/LZSyncHashBridgeV2",
+      "sourceHashes": [
+        "0x3995fc56b0666c2d1c6467fbc2f0b5ed56be8fb0d6068f2db740884828ef9899"
+      ],
       "proxyType": "immutable",
-      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
       "deployerAddress": "arb1:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
       "sinceTimestamp": 1785955854,
       "sinceBlock": 491451298,
@@ -297,7 +299,7 @@
           "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
         },
         "minDstGas": {
-          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts."
         },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -313,7 +315,7 @@
         "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": "LayerZeroBridge"
       }
     },
     {
@@ -545,10 +547,12 @@
       "name": "LayerZeroBridge",
       "address": "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "unverified": true,
       "template": "apex-omni/LZSyncHashBridgeV2",
+      "sourceHashes": [
+        "0xa358bfc5dba0700b695b9c8319ac2c580122ee8483439c67cb27e2654ad131d2"
+      ],
       "proxyType": "immutable",
-      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
       "deployerAddress": "base:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
       "sinceTimestamp": 1785955881,
       "sinceBlock": 49583267,
@@ -588,7 +592,7 @@
           "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
         },
         "minDstGas": {
-          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts."
         },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -604,7 +608,7 @@
         "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+        "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": "LayerZeroBridge"
       }
     },
     {
@@ -841,10 +845,12 @@
       "name": "LayerZeroBridge",
       "address": "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "unverified": true,
       "template": "apex-omni/LZSyncHashBridgeV2",
+      "sourceHashes": [
+        "0xd8652f4e728dad14567a1fd32fbed8e2a46c819e4b534d50de44496480f0a178"
+      ],
       "proxyType": "immutable",
-      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
       "deployerAddress": "bnb:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
       "sinceTimestamp": 1785955792,
       "sinceBlock": 114212168,
@@ -884,7 +890,7 @@
           "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
         },
         "minDstGas": {
-          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts."
         },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -900,7 +906,7 @@
         "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+        "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": "LayerZeroBridge"
       }
     },
     {
@@ -1136,10 +1142,12 @@
       "name": "LayerZeroBridge",
       "address": "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "unverified": true,
       "template": "apex-omni/LZSyncHashBridgeV2",
+      "sourceHashes": [
+        "0x5194491d4f219b6efb155f531da2022e88f1efe276ef3266682f6af9223a4d80"
+      ],
       "proxyType": "immutable",
-      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
       "deployerAddress": "eth:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
       "sinceTimestamp": 1785955823,
       "sinceBlock": 25690628,
@@ -1179,7 +1187,7 @@
           "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
         },
         "minDstGas": {
-          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts."
         },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -1195,7 +1203,7 @@
         "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+        "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": "LayerZeroBridge"
       }
     },
     {
@@ -1499,10 +1507,12 @@
       "name": "LayerZeroBridge",
       "address": "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453",
       "type": "Contract",
-      "unverified": true,
       "template": "apex-omni/LZSyncHashBridgeV2",
+      "sourceHashes": [
+        "0x1e2a237dc673234831467495ffaf75429b34a2341403cf553dd4e3cfef319f39"
+      ],
       "proxyType": "immutable",
-      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and a minimum gas limit is enforced for execution on the destination chain.",
+      "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
       "deployerAddress": "mantle:0xFb7C4481b7776Bf97D859dB2eb198d8D1fF4513A",
       "sinceTimestamp": 1785955966,
       "sinceBlock": 98912827,
@@ -1542,7 +1552,7 @@
           "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one)."
         },
         "minDstGas": {
-          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID."
+          "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts."
         },
         "ALL_CHAINS": {
           "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -1558,7 +1568,7 @@
         "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." }
       },
       "implementationNames": {
-        "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": ""
+        "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": "LayerZeroBridge"
       }
     }
   ],
@@ -1806,6 +1816,41 @@
     "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
       "constructor(address _singleton)"
     ],
+    "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event NewGovernor(address indexed newGovernor)",
+      "event SetMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function governor() view returns (address)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function minDstGasLookup(uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
     "base:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2043,6 +2088,41 @@
       "function initialize(bytes) pure",
       "function transferMastership(address _newMaster)",
       "function upgradeTarget(address newTarget)"
+    ],
+    "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event NewGovernor(address indexed newGovernor)",
+      "event SetMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function governor() view returns (address)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function minDstGasLookup(uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
     ],
     "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716": [
       "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
@@ -2282,6 +2362,41 @@
     "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
       "constructor(address _singleton)"
     ],
+    "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event NewGovernor(address indexed newGovernor)",
+      "event SetMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function governor() view returns (address)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function minDstGasLookup(uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
     "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F": [
       "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
       "event BlockCommit(uint32 indexed blockNumber)",
@@ -2499,6 +2614,41 @@
       "function initialize(bytes) pure",
       "function transferMastership(address _newMaster)",
       "function upgradeTarget(address newTarget)"
+    ],
+    "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event NewGovernor(address indexed newGovernor)",
+      "event SetMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function governor() view returns (address)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function minDstGasLookup(uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
     ],
     "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94": [
       "constructor(address _singleton)"
@@ -2759,12 +2909,47 @@
       "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
       "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
       "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ],
+    "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event NewGovernor(address indexed newGovernor)",
+      "event SetMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function governor() view returns (address)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function minDstGasLookup(uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setMinDstGas(uint16 lzChainId, uint256 minDstGas)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
     ]
   },
   "usedTemplates": {
-    "apex-omni/LZSyncHashBridgeV2": "0x9f46b397ef0511c51d078fe6b5d01c2fbb9ee12837f6ed16126d10c4fffddf5b",
-    "apex-omni/ZkLink_LZEscrow": "0x329ad7a46ec16a130ac208f8c2f97194df30ff99e7790b5e624ab7279f170af8",
-    "apex-omni/ZkLink_main": "0x329ad7a46ec16a130ac208f8c2f97194df30ff99e7790b5e624ab7279f170af8",
+    "apex-omni/LZSyncHashBridgeV2": "0x511be2caa5510cf6a7961c2ec6ee693bd4f56295ac3214d0bbac82f93dd33c92",
+    "apex-omni/ZkLink_LZEscrow": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "apex-omni/ZkLink_main": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
