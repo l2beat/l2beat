@@ -8,12 +8,25 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 
-export function getDefiProjectData(
+export async function getDefiProjectData(
   slug: string,
   manifest: Manifest,
   cache: InMemoryCache,
+  selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
-  return getCachedDefiProjectPage(slug, manifest, cache)
+  const data = await getCachedDefiProjectPage(slug, manifest, cache)
+  if (!data) return undefined
+
+  return {
+    head: data.head,
+    ssr: {
+      page: 'DefiProjectPage',
+      props: {
+        ...data.props,
+        selectedUpdateId,
+      },
+    },
+  }
 }
 
 /** The markdown alternate of the page, built from the same cached entry as the HTML. */
@@ -23,7 +36,7 @@ export async function getDefiProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedDefiProjectPage(slug, manifest, cache)
-  return data && renderDefiProjectMarkdown(data.ssr.props.entry)
+  return data && renderDefiProjectMarkdown(data.props.entry)
 }
 
 function getCachedDefiProjectPage(
@@ -45,7 +58,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
   const [appLayoutProps, entry] = await Promise.all([
     getAppLayoutProps(),
-    getDefiProjectEntry(slug),
+    getDefiProjectEntry(slug, helpers),
   ])
 
   if (!entry) {
@@ -66,13 +79,10 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
         },
       }),
     },
-    ssr: {
-      page: 'DefiProjectPage',
-      props: {
-        ...appLayoutProps,
-        entry,
-        queryState: helpers.dehydrate(),
-      },
+    props: {
+      ...appLayoutProps,
+      entry,
+      queryState: helpers.dehydrate(),
     },
-  } satisfies RenderData
+  }
 }

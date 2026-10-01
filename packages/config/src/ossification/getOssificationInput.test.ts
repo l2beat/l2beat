@@ -134,7 +134,7 @@ describe(getOssificationInput.name, () => {
       expect(input?.contracts).toEqual([
         {
           name: 'A',
-          address: ADDRESS_A,
+          address: ChainSpecificAddress(ADDRESS_A),
           isVerified: false,
           ossifyingSince: T0,
           codeChangeCount: 0,

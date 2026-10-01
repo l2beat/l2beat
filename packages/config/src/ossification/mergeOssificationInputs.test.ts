@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectOssificationContract } from '../types'
 import { mergeOssificationInputs } from './mergeOssificationInputs'
@@ -11,7 +11,7 @@ const ADDRESS_B = 'eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b'
 function contract(address: string): ProjectOssificationContract {
   return {
     name: address,
-    address,
+    address: ChainSpecificAddress(address),
     isVerified: true,
     ossifyingSince: 100,
     codeChangeCount: 0,
