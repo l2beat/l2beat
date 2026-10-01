@@ -29,6 +29,7 @@ import {
   parseOpenCodeEvents,
 } from './opencodeEvents'
 import { type ProcessRun, runProcess } from './process'
+import { notAnswering, type TurnProblem, unusableAnswer } from './turnProblem'
 
 export interface OpenCodeClientOptions {
   /** `provider/model`, as `opencode models` lists them; required. */
@@ -67,6 +68,8 @@ export class OpenCodeTurnError extends Error {
     message: string,
     readonly events: unknown[],
     readonly stderr: string,
+    /** See `isRetryable`: only an unusable answer is worth asking again. */
+    readonly retryable = false,
   ) {
     super(message)
     this.name = 'OpenCodeTurnError'
@@ -147,9 +150,10 @@ export class OpenCodeClient implements ModelClient {
     const problem = describeProblem(run, parsed)
     if (problem !== undefined) {
       throw new OpenCodeTurnError(
-        `${problem}${stderrTail(run.stderr)}`,
+        `${problem.message}${stderrTail(run.stderr)}`,
         parsed.events,
         run.stderr,
+        problem.retryable,
       )
     }
     return {
@@ -167,24 +171,30 @@ export class OpenCodeClient implements ModelClient {
 function describeProblem(
   run: ProcessRun,
   parsed: ParsedOpenCodeEvents,
-): string | undefined {
+): TurnProblem | undefined {
   if (run.timedOut) {
-    return `opencode did not finish within ${run.timeoutMs} ms and was killed`
+    return notAnswering(
+      `opencode did not finish within ${run.timeoutMs} ms and was killed`,
+    )
   }
   if (parsed.toolParts.length > 0) {
-    return `opencode turn used tools despite the isolation config: ${parsed.toolParts.join('; ')}`
+    return unusableAnswer(
+      `opencode turn used tools despite the isolation config: ${parsed.toolParts.join('; ')}`,
+    )
   }
   if (parsed.errors.length > 0) {
-    return `opencode reported an error: ${parsed.errors.join('; ')}`
+    return notAnswering(
+      `opencode reported an error: ${parsed.errors.join('; ')}`,
+    )
   }
   if (run.exitCode !== 0) {
-    return `opencode exited with code ${run.exitCode}`
+    return notAnswering(`opencode exited with code ${run.exitCode}`)
   }
   if (parsed.sessionId === undefined) {
-    return 'opencode emitted no sessionID'
+    return notAnswering('opencode emitted no sessionID')
   }
   if (parsed.text === undefined) {
-    return 'opencode produced no text'
+    return unusableAnswer('opencode produced no text')
   }
   return undefined
 }

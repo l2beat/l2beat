@@ -7,9 +7,10 @@
  * Contracts run one after another and each is isolated: a throw anywhere in
  * its analysis is recorded on that contract and the run continues, because
  * one explorer hiccup must not cost an hour of model calls on the others.
- * Once the model provider refuses for quota, every later contract would
- * author nothing and count as misses, so authoring stops there and the rest
- * is recorded as skipped: the numbers stay honest and the report says why.
+ * Once the model provider refuses for quota, or stops answering at all,
+ * every later contract would author nothing and count as misses, so
+ * authoring stops there and the rest is recorded as skipped: the numbers
+ * stay honest and the report says why.
  *
  * The report is rewritten after every contract, so a killed run still
  * leaves what it measured. Everything that touches RPC, the model or the
@@ -22,6 +23,7 @@ import fs from 'fs'
 import path from 'path'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
+import { TemplatizationFailedError } from '../TemplatizationFailedError'
 import type {
   HiddenTemplateResult,
   HiddenTemplateRun,
@@ -87,7 +89,7 @@ class BenchmarkRun {
   private readonly now: () => Date
   private readonly startedAt: Date
   private readonly projects: ProjectBenchmark[] = []
-  /** The first quota refusal; from then on contracts are skipped, not authored. */
+  /** The first quota refusal or unanswered turn; from then on contracts are skipped, not authored. */
   private quota: string | undefined
 
   constructor(
@@ -182,6 +184,12 @@ class BenchmarkRun {
         address: entry.address,
         error: getErrorMessage(error),
       })
+      if (
+        error instanceof TemplatizationFailedError &&
+        error.failure === 'model-unavailable'
+      ) {
+        this.quota = error.reason.slice(0, QUOTA_MESSAGE_CHARS)
+      }
       return failedContract(entry, getErrorMessage(error), Date.now() - started)
     }
   }

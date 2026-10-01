@@ -577,7 +577,7 @@ All under `packages/discovery/src/discovery/templatizer/`:
 
 | Module | Responsibility |
 | --- | --- |
-| `Templatizer.ts` | Entry point `templateFor(request)`: dedupe by shape hash (`inFlight`), new / empty-worklist / freeze paths, never throws |
+| `Templatizer.ts` | Entry point `templateFor(request)`: dedupe by shape hash (`inFlight`), new / empty-worklist / freeze paths; a failure stops discovery (`TemplatizationFailedError`) |
 | `templatizerSettings.ts` | `--ai` flags → `TemplatizerSettings`; previous templates from the committed discovered.json |
 | `facts.ts`, `baseline.ts`, `worklist.ts`, `flattenSources.ts` | What the model is told: facts from the analyzer's data, baseline from the untemplatized handler run, worklist (functions *and* events), V1-identical flattening |
 | `prompt/` | `buildPrompt`, `handlerDocs.ts` (a TS string: `dist/` ships no .md), `draftJsonSchema.ts` |
@@ -718,6 +718,34 @@ Benchmark: from `packages/discovery`,
   opencode turns are now killed after 15 minutes, as Codex's are (was 8):
   at the default effort a DeepSeek turn has already thought for six.
   The 12.4 runs used no effort setting.
+- **A failed templatization stops discovery (2026-10-01).** Before, every
+  failure was swallowed: the contract stayed untemplatized (or, under
+  `--ai-revisit`, the template stayed as it was), discovery saved
+  discovered.json, and only a WARN line told a failure from a decision. A
+  missing template is missing values until someone notices, so now any
+  contract `--ai` or `--ai-revisit` was asked to do and could not ends the
+  run with a `TemplatizationFailedError` before discovered.json is
+  written. The error names the contract, the reason, what to do and the
+  trail. Templates written earlier in the run stay and match on the next
+  run without a model call, so a rerun only redoes the failed contract.
+  Three kinds of failure, each with its own advice:
+  - the model did not answer (`model-unavailable`): timeout, API error
+    (quota, rate limit, auth), CLI exit code, no session. It is not
+    retried, because every retry would hit the same wall. The queue closes
+    at once, so no other contract's turn starts.
+  - no draft passed in the rounds (`no-acceptable-draft`).
+  - a bug in the templatizer (`internal`).
+
+  Only an unusable answer (a tool call, no text) is still asked again
+  within the rounds; the smoke test's empty first answer was one. Model
+  processes run in their own process group, so `process.ts` kills every
+  running one when discovery exits. The benchmark keeps recording a failed
+  draft as a miss (`onFailure: 'leave-untemplatized'`, since that is what
+  it measures) and stops authoring once the model does not answer. Contracts
+  that cannot be templatized at all (unverified, EIP-2535) are not failures
+  and stay untemplatized as in V1. Verified with a fake `opencode` whose
+  every `run` fails like a rate limit: exit code 1, the message, one model
+  turn, discovered.json unchanged, no process left.
 - **R10 unread declaration (new).** An empty event field whose event name
   has another declaration in the ABI that *does* have logs is an error
   (an advisory since 2026-10-01). Found

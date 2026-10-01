@@ -44,3 +44,28 @@ export interface ModelClient {
   start(input: ModelTurnInput): Promise<ModelTurn>
   resume(input: ModelResumeInput): Promise<ModelTurn>
 }
+
+/**
+ * A turn that ran but whose answer cannot be used: the model called a tool,
+ * or ended without text. A fresh sample usually behaves, so the loop asks
+ * again. Every other failure (a timeout, an API error such as a spent quota
+ * or a rate limit, a CLI that exits with an error or does not start) means
+ * the model is not answering, and asking again would only spend the
+ * remaining rounds of this contract and the next on the same failure.
+ */
+export function isRetryable(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'retryable' in error &&
+    error.retryable === true
+  )
+}
+
+/** The model did not answer a turn; the loop stops at once rather than spend its rounds. */
+export class ModelUnavailableError extends Error {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options)
+    this.name = 'ModelUnavailableError'
+  }
+}

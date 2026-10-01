@@ -18,6 +18,7 @@ import type { IProvider } from '../provider/IProvider'
 import type { PerContractSource } from '../source/SourceCodeService'
 import type { Draft } from './draft/Draft'
 import { FakeModelClient } from './model/FakeModelClient'
+import { TemplatizationFailedError } from './TemplatizationFailedError'
 import {
   type TemplatizeRequest,
   Templatizer,
@@ -211,29 +212,85 @@ describe(Templatizer.name, () => {
     expect(templateText('proj/Plain')).toInclude('without a model call')
   })
 
-  it('writes nothing and returns undefined when no draft passes', async () => {
+  it('stops discovery with a distinct error when no draft passes, and writes nothing', async () => {
     const invalid = JSON.stringify({ ...DRAFT, skips: [] })
     const model = new FakeModelClient([invalid, invalid, invalid])
 
-    const templateId = await templatizer(model).templateFor(
-      request([bundle('Registry', ADDRESS, BODY)]),
+    const failure = await failureOf(
+      templatizer(model).templateFor(
+        request([bundle('Registry', ADDRESS, BODY)]),
+      ),
     )
 
-    expect(templateId).toEqual(undefined)
+    expect(failure.failure).toEqual('no-acceptable-draft')
+    expect(failure.message).toInclude(
+      `--ai could not templatize Registry (${ADDRESS}): no acceptable draft after 3 round(s)`,
+    )
+    expect(failure.message).toInclude(
+      'Discovery stopped without writing discovered.json',
+    )
+    expect(failure.message).toInclude(
+      'Or rerun without --ai to leave this contract untemplatized on purpose.',
+    )
+    expect(failure.message).toInclude(`Trail: ${join(root, 'trail')}`)
     expect(templateService.exists('proj/Registry')).toEqual(false)
     expect(model.calls.length).toEqual(3)
   })
 
-  it('never throws out of templateFor, whatever fails inside', async () => {
-    const model = new FakeModelClient([])
-    const unparsableAbi = ['this is not a fragment']
+  it('stops at the first turn the model does not answer, and starts no other turn', async () => {
+    const model = new FakeModelClient([
+      new Error('opencode reported an error: rate_limit_exceeded'),
+      JSON.stringify(DRAFT),
+    ])
+    const instance = templatizer(model)
 
-    const templateId = templatizer(model).templateFor(
-      request([bundle('Registry', ADDRESS, BODY)], unparsableAbi),
+    const first = await failureOf(
+      instance.templateFor(request([bundle('Registry', ADDRESS, BODY)])),
+    )
+    const next = await failureOf(
+      instance.templateFor(
+        request([bundle('Other', TWIN, `${BODY}\n  uint256 public other;`)]),
+      ),
     )
 
-    await expect(templateId).not.toBeRejected()
-    expect(await templateId).toEqual(undefined)
+    expect(first.failure).toEqual('model-unavailable')
+    expect(first.message).toInclude(
+      'the model did not answer: opencode reported an error: rate_limit_exceeded',
+    )
+    expect(first.message).toInclude('the quota is not spent')
+    expect(next.failure).toEqual('model-unavailable')
+    expect(model.calls.length).toEqual(1)
+  })
+
+  it('turns a failure of its own into the same distinct error', async () => {
+    const unparsableAbi = ['this is not a fragment']
+
+    const failure = await failureOf(
+      templatizer(new FakeModelClient([])).templateFor(
+        request([bundle('Registry', ADDRESS, BODY)], unparsableAbi),
+      ),
+    )
+
+    expect(failure.failure).toEqual('internal')
+    expect(failure.message).toInclude('This is a bug in the templatizer')
+  })
+
+  it('leaves the contract untemplatized for the benchmark, but still stops when the model does not answer', async () => {
+    const invalid = JSON.stringify({ ...DRAFT, skips: [] })
+    const leaving = (model: FakeModelClient) =>
+      templatizer(model, {}, { onFailure: 'leave-untemplatized' })
+
+    const templateId = await leaving(
+      new FakeModelClient([invalid, invalid, invalid]),
+    ).templateFor(request([bundle('Registry', ADDRESS, BODY)]))
+    const unavailable = await failureOf(
+      leaving(new FakeModelClient([new Error('connection reset')])).templateFor(
+        request([bundle('Registry', ADDRESS, BODY)]),
+      ),
+    )
+
+    expect(templateId).toEqual(undefined)
+    expect(unavailable.failure).toEqual('model-unavailable')
   })
 
   it('refuses unverified code and EIP-2535 diamonds', () => {
@@ -492,6 +549,25 @@ describe(Templatizer.name, () => {
       expect(model.calls.length).toEqual(1)
     })
 
+    it('stops discovery when the revisit fails, naming the template it would have changed', async () => {
+      const req = writeMatchingTemplate()
+      const invalid = JSON.stringify({ fields: {}, skips: [] })
+      const model = new FakeModelClient([invalid, invalid, invalid])
+
+      const failure = await failureOf(
+        revisiting(model).revisit(req, 'proj/Registry'),
+      )
+
+      expect(failure.failure).toEqual('no-acceptable-draft')
+      expect(failure.message).toInclude(
+        `--ai-revisit could not revisit proj/Registry on Registry (${ADDRESS})`,
+      )
+      expect(failure.message).toInclude(
+        'Or rerun without --ai-revisit to keep proj/Registry as it is.',
+      )
+      expect(templateText('proj/Registry')).toEqual(MATCHING_TEMPLATE)
+    })
+
     function shapes(): Record<string, unknown> {
       return JSON.parse(
         readFileSync(
@@ -501,6 +577,20 @@ describe(Templatizer.name, () => {
       )
     }
   })
+
+  async function failureOf(
+    pending: Promise<unknown>,
+  ): Promise<TemplatizationFailedError> {
+    try {
+      await pending
+    } catch (error) {
+      if (error instanceof TemplatizationFailedError) {
+        return error
+      }
+      throw error
+    }
+    throw new Error('expected a TemplatizationFailedError')
+  }
 
   function provider(
     emitted: [event: string, args: unknown[]][] = [

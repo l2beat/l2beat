@@ -9,8 +9,9 @@
  * - model turns are serialised process-wide (one at a time), because the
  *   CLIs behind them are rate-limited accounts, not a pool; RPC dry runs
  *   of different contracts may still overlap;
- * - nothing thrown here may reach the analyzer: a failed authoring leaves
- *   the address untemplatized, exactly as a run without `--ai` would.
+ * - a contract it was asked about and could not templatize stops the run
+ *   with a `TemplatizationFailedError`, rather than leaving the contract
+ *   untemplatized where nobody can tell a failure from a decision.
  *
  * The backend never constructs this class; it is built by
  * `getDiscoveryEngine` only when a CLI run passes templatizer settings.
@@ -38,11 +39,15 @@ import {
   nothingBroke,
   remainingWorklist,
 } from './freeze'
-import { authorDraft, type LoopResult } from './loop'
+import { authorDraft, DEFAULT_MAX_ROUNDS, type LoopResult } from './loop'
 import { describeModel } from './model/createModelClient'
-import type { ModelClient } from './model/ModelClient'
+import { type ModelClient, ModelUnavailableError } from './model/ModelClient'
 import { SerialModelClient } from './model/SerialModelClient'
 import { buildPrompt } from './prompt/buildPrompt'
+import {
+  TemplatizationFailedError,
+  type TemplatizationTask,
+} from './TemplatizationFailedError'
 import { buildWorklist, isEmptyWorklist, type Worklist } from './worklist'
 import { deriveIgnoreMethods } from './write/ignoreMethods'
 import { readFieldEntries, readTopLevelEntries } from './write/jsoncEntries'
@@ -70,6 +75,12 @@ export interface TemplatizerSettings {
   previousTemplates: Record<string, string>
   /** `--ai-revisit`: also extend templates that already match, see `revisit`. */
   revisit?: boolean
+  /**
+   * `stop` (the default) ends discovery on any failure; the benchmark sets
+   * `leave-untemplatized`, because a contract the model cannot author is a
+   * measurement there. A model that does not answer stops both.
+   */
+  onFailure?: 'stop' | 'leave-untemplatized'
   now?: () => Date
 }
 
@@ -91,7 +102,7 @@ export class Templatizer {
   private readonly revisits = new Map<string, Promise<void>>()
   /** Templates this run wrote, which a revisit must not ask about again. */
   private readonly touched = new Set<string>()
-  private readonly model: ModelClient
+  private readonly model: SerialModelClient
 
   constructor(
     private readonly templateService: TemplateService,
@@ -126,44 +137,67 @@ export class Templatizer {
     if (pending !== undefined) {
       return pending
     }
-    const authored = this.templatizeSafely(request, hash)
+    const authored = this.templatizeOrStop(request, hash)
     this.inFlight.set(key, authored)
     return authored
   }
 
-  private async templatizeSafely(
+  private async templatizeOrStop(
     request: TemplatizeRequest,
     hash: Hash256,
   ): Promise<string | undefined> {
+    const task = authoringTask(request)
     try {
-      return await this.templatize(request, hash)
+      return await this.templatize(request, hash, task)
     } catch (error) {
-      this.logger.error(
-        'Templatizer failed; the contract stays untemplatized',
-        {
-          address: request.address,
-          name: request.sources.name,
-          error: getErrorMessage(error),
-        },
-      )
+      return this.stopOrLeave(error, task)
+    }
+  }
+
+  /**
+   * Discovery stops on any failure (see `TemplatizationFailedError`), and
+   * the queue is closed so no other contract's turn starts meanwhile. The
+   * benchmark instead records a contract the model could not author as a
+   * miss, which is what it measures; a model that does not answer stops it
+   * too.
+   */
+  private stopOrLeave(error: unknown, task: TemplatizationTask): undefined {
+    const failed =
+      error instanceof TemplatizationFailedError
+        ? error
+        : new TemplatizationFailedError(
+            'internal',
+            task,
+            getErrorMessage(error),
+            undefined,
+            { cause: error },
+          )
+    if (
+      this.settings.onFailure === 'leave-untemplatized' &&
+      failed.failure !== 'model-unavailable'
+    ) {
+      this.logger.warn(failed.message)
       return undefined
     }
+    this.model.close(failed)
+    throw failed
   }
 
   private async templatize(
     request: TemplatizeRequest,
     hash: Hash256,
-  ): Promise<string | undefined> {
+    task: TemplatizationTask,
+  ): Promise<string> {
     const facts = this.buildFacts(request, hash)
     const worklist = buildWorklist(facts.abi)
     const previous = this.previousTemplateOf(request.address)
     if (previous !== undefined) {
-      return await this.extendPrevious(request, facts, worklist, previous)
+      return await this.extendPrevious(request, facts, worklist, previous, task)
     }
     if (isEmptyWorklist(worklist)) {
       return this.writeWithoutModel(request, facts)
     }
-    return await this.authorNew(request, facts, worklist)
+    return await this.authorNew(request, facts, worklist, task)
   }
 
   private buildFacts(request: TemplatizeRequest, hash: Hash256): ContractFacts {
@@ -214,9 +248,9 @@ export class Templatizer {
       facts,
       sources: request.sources,
     })
-    this.logger.info('Templatizer wrote a template without a model call', {
-      template: templateId,
-    })
+    this.logger.info(
+      `Templatizer wrote ${templateId} for ${subjectOf(facts)} without a model call`,
+    )
     return templateId
   }
 
@@ -224,11 +258,9 @@ export class Templatizer {
     request: TemplatizeRequest,
     facts: ContractFacts,
     worklist: Worklist,
-  ): Promise<string | undefined> {
-    const result = await this.runLoop(request, facts, worklist)
-    if (result.status === 'failed') {
-      return undefined
-    }
+    task: TemplatizationTask,
+  ): Promise<string> {
+    const result = await this.runLoop(request, facts, worklist, task)
     const templateId = chooseTemplateId(this.templateService, facts)
     const text = renderTemplateFile({
       schema: schemaPathFor(templateId),
@@ -242,11 +274,13 @@ export class Templatizer {
       facts,
       sources: request.sources,
     })
-    this.logger.info('Templatizer wrote a template', {
-      template: templateId,
-      fields: Object.keys(result.draft.fields).length,
-      rounds: result.rounds.length,
-    })
+    this.logger.info(
+      `Templatizer wrote ${templateId} for ${subjectOf(facts)}`,
+      {
+        fields: Object.keys(result.draft.fields).length,
+        rounds: result.rounds.length,
+      },
+    )
     return templateId
   }
 
@@ -261,27 +295,25 @@ export class Templatizer {
     facts: ContractFacts,
     worklist: Worklist,
     templateId: string,
-  ): Promise<string | undefined> {
+    task: TemplatizationTask,
+  ): Promise<string> {
     const freeze = await this.freeze(request, facts, templateId)
     const target = { facts, sources: request.sources }
     if (nothingBroke(freeze)) {
       addShape(this.templateService, templateId, target)
-      this.logger.info('Templatizer added the new shape to the old template', {
-        template: templateId,
-      })
+      this.logger.info(
+        `Templatizer added the shape of ${subjectOf(facts)} to ${templateId}, whose fields all still execute`,
+      )
       return templateId
     }
     const remaining = remainingWorklist(worklist, freeze, facts)
-    const result = await this.runLoop(request, facts, remaining, freeze)
-    if (result.status === 'failed') {
-      return undefined
-    }
+    const result = await this.runLoop(request, facts, remaining, task, freeze)
     const text = this.extendedTemplateText(freeze, remaining, result, facts, {
       header: `${this.header(result)} ${keptAndRemoved(freeze, 'broke on the new shape')}`,
     })
     this.touched.add(templateId)
     rewriteTemplate(this.templateService, templateId, text, target)
-    this.logExtended('Templatizer extended the old template', freeze, result)
+    this.logExtended('extended', facts, freeze, result)
     return templateId
   }
 
@@ -293,7 +325,7 @@ export class Templatizer {
    * A template is revisited once per run, on the first contract that
    * matches it; contracts that share it wait for that and then use the
    * result. A template this run authored or extended is not revisited.
-   * Never throws: a failed revisit leaves the template as it was.
+   * A failed revisit stops the run, as a failed authoring does.
    */
   revisit(request: TemplatizeRequest, templateId: string): Promise<void> {
     if (this.touched.has(templateId)) {
@@ -303,7 +335,7 @@ export class Templatizer {
     if (pending !== undefined) {
       return pending
     }
-    const revisited = this.revisitSafely(request, templateId)
+    const revisited = this.revisitOrStop(request, templateId)
     this.revisits.set(templateId, revisited)
     return revisited
   }
@@ -312,23 +344,20 @@ export class Templatizer {
     return this.settings.revisit === true
   }
 
-  private async revisitSafely(
+  private async revisitOrStop(
     request: TemplatizeRequest,
     templateId: string,
   ): Promise<void> {
+    const task = revisitTask(request, templateId)
     try {
       const hash = getHashForMatchingFromSources(request.sources.sources)
       if (hash !== undefined) {
         const facts = this.buildFacts(request, hash)
         const worklist = buildWorklist(facts.abi)
-        await this.revisitTemplate(request, facts, worklist, templateId)
+        await this.revisitTemplate(request, facts, worklist, templateId, task)
       }
     } catch (error) {
-      this.logger.error('Templatizer revisit failed; the template is kept', {
-        address: request.address,
-        template: templateId,
-        error: getErrorMessage(error),
-      })
+      this.stopOrLeave(error, task)
     }
   }
 
@@ -337,29 +366,21 @@ export class Templatizer {
     facts: ContractFacts,
     worklist: Worklist,
     templateId: string,
+    task: TemplatizationTask,
   ): Promise<void> {
     const freeze = await this.freeze(request, facts, templateId)
     const remaining = remainingWorklist(worklist, freeze, facts)
     if (nothingBroke(freeze) && isEmptyWorklist(remaining)) {
-      this.logger.info('Templatizer revisit: the template decides every item', {
-        template: templateId,
-      })
+      this.logger.info(
+        `Templatizer revisit: ${templateId} already decides every item of ${subjectOf(facts)}`,
+      )
       return
     }
-    const result = await this.runLoop(
-      request,
-      facts,
-      remaining,
-      freeze,
-      'the template is kept as it was',
-    )
-    if (result.status === 'failed') {
-      return
-    }
+    const result = await this.runLoop(request, facts, remaining, task, freeze)
     if (nothingBroke(freeze) && addsNothing(freeze, remaining, result, facts)) {
-      this.logger.info('Templatizer revisit found nothing to add', {
-        template: templateId,
-      })
+      this.logger.info(
+        `Templatizer revisit found nothing to add to ${templateId} from ${subjectOf(facts)}`,
+      )
       return
     }
     const text = this.extendedTemplateText(freeze, remaining, result, facts, {
@@ -367,7 +388,7 @@ export class Templatizer {
     })
     this.touched.add(templateId)
     replaceTemplateText(this.templateService, templateId, text)
-    this.logExtended('Templatizer revisited the template', freeze, result)
+    this.logExtended('revisited', facts, freeze, result)
   }
 
   private freeze(
@@ -385,16 +406,19 @@ export class Templatizer {
   }
 
   private logExtended(
-    message: string,
+    verb: 'extended' | 'revisited',
+    facts: ContractFacts,
     freeze: FreezeAnalysis,
     result: Accepted,
   ): void {
-    this.logger.info(message, {
-      template: freeze.templateId,
-      kept: freeze.locked.length,
-      removed: freeze.broken.map((field) => field.name).join(', '),
-      added: Object.keys(result.draft.fields).length,
-    })
+    this.logger.info(
+      `Templatizer ${verb} ${freeze.templateId} for ${subjectOf(facts)}`,
+      {
+        kept: freeze.locked.length,
+        removed: freeze.broken.map((field) => field.name).join(', '),
+        added: Object.keys(result.draft.fields).length,
+      },
+    )
   }
 
   /**
@@ -436,33 +460,40 @@ export class Templatizer {
     })
   }
 
+  /** Throws `TemplatizationFailedError` unless a draft is accepted. */
   private async runLoop(
     request: TemplatizeRequest,
     facts: ContractFacts,
     worklist: Worklist,
+    task: TemplatizationTask,
     freeze?: FreezeAnalysis,
-    ifFailed = 'the contract stays untemplatized',
-  ): Promise<LoopResult> {
+  ): Promise<Accepted> {
     const artifacts = new FileArtifactSink(
       trailDirectory(this.settings.artifactsRoot, facts.project, facts.address),
     )
     const locked = freeze === undefined ? undefined : this.lockedTexts(freeze)
     const { prompt, truncated } = buildPrompt({ facts, worklist, locked })
+    const subject = subjectOf(facts)
     if (truncated) {
-      this.logger.warn('Templatizer cut the source to fit the prompt', {
-        address: facts.address,
-      })
+      this.logger.warn(`Templatizer cut the source of ${subject} to fit`)
     }
-    this.logger.info('Templatizer authoring', {
-      address: facts.address,
-      name: facts.name,
-      items: worklist.items.length,
+    // Logged when the contract joins the queue; the turn itself may start
+    // much later, which the line below reports.
+    this.logger.info(`Templatizer queued ${subject} for the model`, {
+      functions: worklist.items.length,
       events: worklist.events.length,
-      locked: freeze?.locked.length ?? 0,
+      lockedFields: freeze?.locked.length ?? 0,
     })
+    const maxRounds = Math.max(1, this.settings.maxRounds ?? DEFAULT_MAX_ROUNDS)
+    const model = this.model.reporting(({ turn, waiting }) =>
+      this.logger.info(
+        `Templatizer asking the model about ${subject}, round ${turn} of ${maxRounds}`,
+        { waiting },
+      ),
+    )
     const result = await authorDraft(
       {
-        model: this.model,
+        model,
         artifacts,
         logger: this.logger,
         dryRun: (draft) =>
@@ -473,6 +504,7 @@ export class Templatizer {
       },
       {
         prompt,
+        subject,
         validation: { facts, worklist, lockedFieldNames: freeze?.locked },
         trail: {
           address: facts.address,
@@ -487,13 +519,24 @@ export class Templatizer {
         },
       },
       { maxRounds: this.settings.maxRounds },
-    )
+    ).catch((error: unknown) => {
+      throw error instanceof ModelUnavailableError
+        ? new TemplatizationFailedError(
+            'model-unavailable',
+            task,
+            error.message,
+            artifacts.directory,
+            { cause: error },
+          )
+        : error
+    })
     if (result.status === 'failed') {
-      this.logger.warn(`Templatizer gave up; ${ifFailed}`, {
-        address: facts.address,
-        trail: artifacts.directory,
-        failure: result.failure.slice(0, 500),
-      })
+      throw new TemplatizationFailedError(
+        'no-acceptable-draft',
+        task,
+        result.failure,
+        artifacts.directory,
+      )
     }
     return result
   }
@@ -549,6 +592,33 @@ function templateNotes(result: Accepted): string[] {
   return advisoriesOf(result.acceptedRound.findings)
     .filter((advisory) => !advisory.path.startsWith('fields'))
     .map((advisory) => reviewNote(advisory.message))
+}
+
+/** How every log line names the contract: the logs of contracts in one depth interleave. */
+function subjectOf(facts: ContractFacts): string {
+  return `${facts.name} (${facts.address})`
+}
+
+function requestSubject(request: TemplatizeRequest): string {
+  return `${request.sources.name} (${request.address})`
+}
+
+function authoringTask(request: TemplatizeRequest): TemplatizationTask {
+  return {
+    failedTo: `--ai could not templatize ${requestSubject(request)}`,
+    bypass:
+      'rerun without --ai to leave this contract untemplatized on purpose',
+  }
+}
+
+function revisitTask(
+  request: TemplatizeRequest,
+  templateId: string,
+): TemplatizationTask {
+  return {
+    failedTo: `--ai-revisit could not revisit ${templateId} on ${requestSubject(request)}`,
+    bypass: `rerun without --ai-revisit to keep ${templateId} as it is`,
+  }
 }
 
 function reviewNote(message: string): string {

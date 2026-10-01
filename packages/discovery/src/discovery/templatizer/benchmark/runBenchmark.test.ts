@@ -6,6 +6,7 @@ import { tmpdir } from 'os'
 import { join } from 'path'
 import type { EntryParameters } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
+import { TemplatizationFailedError } from '../TemplatizationFailedError'
 import type {
   HiddenTemplateResult,
   HiddenTemplateRun,
@@ -365,6 +366,36 @@ describe(runBenchmark.name, () => {
       'skipped: You have hit your usage limit. Try again later.',
     )
     expect(report.totals.skipped).toEqual(2)
+  })
+
+  it('stops authoring once the model does not answer, and records the rest as skipped', async () => {
+    const fakes = deps(
+      [project('first', [entry(AUTHORED), entry(THROWS), entry(MATCHED)])],
+      async ({ entry }) => {
+        if (entry.address === AUTHORED) {
+          throw new TemplatizationFailedError(
+            'model-unavailable',
+            { failedTo: '--ai could not templatize X', bypass: 'rerun' },
+            'the model did not answer: connection reset',
+          )
+        }
+        return { values: {}, proxyValueNames: [] }
+      },
+    )
+    const report = await runBenchmark(fakes, suite('first'), {
+      ...options,
+      outDir,
+    })
+
+    expect(fakes.analyzed).toEqual([AUTHORED])
+    expect(report.projects[0]?.contracts.map((c) => c.status)).toEqual([
+      'failed',
+      'skipped',
+      'skipped',
+    ])
+    expect(report.projects[0]?.contracts[1]?.error).toEqual(
+      'skipped: the model did not answer: connection reset',
+    )
   })
 
   function verdicts(fields: { name: string; verdict: string }[] | undefined) {

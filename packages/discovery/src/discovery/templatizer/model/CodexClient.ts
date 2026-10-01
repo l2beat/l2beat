@@ -39,6 +39,7 @@ import type {
   ModelTurnInput,
 } from './ModelClient'
 import { type ProcessRun, runProcess } from './process'
+import { notAnswering, type TurnProblem, unusableAnswer } from './turnProblem'
 
 /** What the OpenAI API accepts as `reasoning.effort` (its own error lists them); a model may take fewer. */
 export const REASONING_EFFORTS = [
@@ -84,6 +85,8 @@ export class CodexTurnError extends Error {
     message: string,
     readonly events: unknown[],
     readonly stderr: string,
+    /** See `isRetryable`: only an unusable answer is worth asking again. */
+    readonly retryable = false,
   ) {
     super(message)
     this.name = 'CodexTurnError'
@@ -175,9 +178,10 @@ export class CodexClient implements ModelClient {
     const problem = describeProblem(run, parsed, text)
     if (problem !== undefined) {
       throw new CodexTurnError(
-        `${problem}${stderrTail(run.stderr)}`,
+        `${problem.message}${stderrTail(run.stderr)}`,
         parsed.events,
         run.stderr,
+        problem.retryable,
       )
     }
     const threadId = parsed.threadId as string
@@ -211,24 +215,28 @@ function describeProblem(
   run: ProcessRun,
   parsed: ParsedCodexEvents,
   text: string | undefined,
-): string | undefined {
+): TurnProblem | undefined {
   if (run.timedOut) {
-    return `codex did not finish within ${run.timeoutMs} ms and was killed`
+    return notAnswering(
+      `codex did not finish within ${run.timeoutMs} ms and was killed`,
+    )
   }
   if (parsed.toolItems.length > 0) {
-    return `codex turn used tools despite isolation flags: ${parsed.toolItems.join('; ')}`
+    return unusableAnswer(
+      `codex turn used tools despite isolation flags: ${parsed.toolItems.join('; ')}`,
+    )
   }
   if (parsed.errors.length > 0) {
-    return `codex reported an error: ${parsed.errors.join('; ')}`
+    return notAnswering(`codex reported an error: ${parsed.errors.join('; ')}`)
   }
   if (run.exitCode !== 0) {
-    return `codex exited with code ${run.exitCode}`
+    return notAnswering(`codex exited with code ${run.exitCode}`)
   }
   if (parsed.threadId === undefined) {
-    return 'codex emitted no thread.started'
+    return notAnswering('codex emitted no thread.started')
   }
   if (text === undefined) {
-    return 'codex produced no final message'
+    return unusableAnswer('codex produced no final message')
   }
   return undefined
 }

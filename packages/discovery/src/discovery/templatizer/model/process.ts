@@ -2,6 +2,11 @@
  * One model turn is one child process: prompt in on stdin, JSONL out on
  * stdout, killed as a group on timeout so a CLI that spawned helpers does
  * not outlive the turn. Shared by every CLI-backed `ModelClient`.
+ *
+ * The group of its own is also why a turn would outlive discovery: a run
+ * stopped by a failed templatization exits while another contract's turn
+ * may still be thinking, on the user's quota. So every running child is
+ * killed when the process exits, however it exits.
  */
 import { type ChildProcess, spawn } from 'child_process'
 
@@ -38,6 +43,7 @@ export function runProcess(
       reject(error)
       return
     }
+    killOnExit(child)
     const stdout: Buffer[] = []
     const stderr: Buffer[] = []
     let timedOut = false
@@ -50,6 +56,7 @@ export function runProcess(
     child.stderr?.on('data', (chunk: Buffer) => stderr.push(chunk))
     child.on('error', (error) => {
       clearTimeout(timer)
+      running.delete(child)
       reject(
         new Error(`could not run ${binary}: ${error.message}`, {
           cause: error,
@@ -58,6 +65,7 @@ export function runProcess(
     })
     child.on('close', (exitCode) => {
       clearTimeout(timer)
+      running.delete(child)
       resolve({
         stdout: Buffer.concat(stdout).toString('utf8'),
         stderr: Buffer.concat(stderr).toString('utf8'),
@@ -71,6 +79,21 @@ export function runProcess(
     child.stdin?.on('error', () => undefined)
     child.stdin?.end(stdin)
   })
+}
+
+const running = new Set<ChildProcess>()
+let exitHookInstalled = false
+
+function killOnExit(child: ChildProcess): void {
+  running.add(child)
+  if (!exitHookInstalled) {
+    exitHookInstalled = true
+    process.once('exit', () => {
+      for (const child of running) {
+        killGroup(child)
+      }
+    })
+  }
 }
 
 function killGroup(child: ChildProcess): void {

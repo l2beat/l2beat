@@ -31,7 +31,13 @@ import {
   type ValidationContext,
   validateDraftText,
 } from './draft/validateDraft'
-import type { ModelClient, ModelTurn, ModelUsage } from './model/ModelClient'
+import {
+  isRetryable,
+  type ModelClient,
+  type ModelTurn,
+  ModelUnavailableError,
+  type ModelUsage,
+} from './model/ModelClient'
 import { draftJsonSchema } from './prompt/draftJsonSchema'
 
 export const DEFAULT_MAX_ROUNDS = 3
@@ -47,6 +53,8 @@ export interface LoopDeps {
 
 export interface LoopInput {
   prompt: string
+  /** How log lines name the contract, e.g. `ScrollChain (eth:0xa13B…)`. */
+  subject?: string
   validation: ValidationContext
   /** Facts about the run that belong in `summary.json`, e.g. whether the source was cut. */
   trail?: Record<string, unknown>
@@ -115,6 +123,9 @@ class AuthoringLoop {
       const outcome = await this.round(index, message)
       this.rounds.push(outcome.record)
       this.writeSummary('running')
+      if (outcome.notAnswering !== undefined) {
+        throw this.unavailable(outcome.notAnswering)
+      }
       if (outcome.draft !== undefined) {
         const candidate = { draft: outcome.draft, round: outcome.record }
         if (askedAbout !== undefined || !this.worthAsking(candidate)) {
@@ -124,8 +135,8 @@ class AuthoringLoop {
         message = advisoryMessage(advisoriesOf(outcome.record.findings))
         continue
       }
-      // A refused turn is asked again as it was: the refusal says nothing
-      // about the draft, so there is nothing to repair.
+      // An unusable answer is asked again as it was: it says nothing about
+      // the draft, so there is nothing to repair.
       if (outcome.record.refused === undefined) {
         message = repairMessage(outcome.record.findings)
       }
@@ -144,14 +155,15 @@ class AuthoringLoop {
   private async round(
     index: number,
     message: string,
-  ): Promise<{ record: RoundRecord; draft?: Draft }> {
+  ): Promise<{ record: RoundRecord; draft?: Draft; notAnswering?: unknown }> {
     this.deps.artifacts.write(`round-${index}.prompt.md`, message)
     const started = Date.now()
     let turn: ModelTurn
     try {
       turn = await this.turn(message)
     } catch (error) {
-      return { record: this.refusedRound(index, error, Date.now() - started) }
+      const record = this.refusedRound(index, error, Date.now() - started)
+      return isRetryable(error) ? { record } : { record, notAnswering: error }
     }
     this.remember(turn)
     this.deps.artifacts.write(`round-${index}.response.txt`, turn.text)
@@ -225,25 +237,41 @@ class AuthoringLoop {
       )
     }
     const refused = getErrorMessage(error)
-    this.deps.logger.warn('Templatizer model turn refused', {
-      round: index,
-      reason: refused.slice(0, 300),
-    })
+    const what = isRetryable(error)
+      ? 'gave an unusable answer, asking again'
+      : 'did not answer'
+    this.deps.logger.warn(
+      `Templatizer model ${what}${this.forSubject()}, round ${index}`,
+      { reason: refused.slice(0, 300) },
+    )
     return { index, durationMs, refused, findings: [] }
+  }
+
+  /** The trail says why the loop ended before the error leaves it. */
+  private unavailable(error: unknown): ModelUnavailableError {
+    const failure = `the model did not answer: ${getErrorMessage(error)}`
+    this.writeSummary('failed', failure)
+    return new ModelUnavailableError(failure, { cause: error })
   }
 
   private logRound(record: RoundRecord): void {
     const errors = countErrors(record.findings)
     const advisories = advisoriesOf(record.findings).length
-    this.deps.logger.info('Templatizer round', {
-      round: record.index,
-      errors,
-      advisories,
-      warnings: record.findings.length - errors - advisories,
-      durationMs: record.durationMs,
-      inputTokens: record.usage?.inputTokens ?? 0,
-      outputTokens: record.usage?.outputTokens ?? 0,
-    })
+    this.deps.logger.info(
+      `Templatizer round ${record.index} done${this.forSubject()}`,
+      {
+        errors,
+        advisories,
+        warnings: record.findings.length - errors - advisories,
+        durationMs: record.durationMs,
+        inputTokens: record.usage?.inputTokens ?? 0,
+        outputTokens: record.usage?.outputTokens ?? 0,
+      },
+    )
+  }
+
+  private forSubject(): string {
+    return this.input.subject === undefined ? '' : ` for ${this.input.subject}`
   }
 
   private accepted({ draft, round }: Candidate): LoopResult {

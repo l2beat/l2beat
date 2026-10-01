@@ -8,6 +8,7 @@ import type { Finding } from './draft/Finding'
 import type { ContractFacts } from './facts'
 import { authorDraft, repairMessage } from './loop'
 import { FakeModelClient } from './model/FakeModelClient'
+import { ModelUnavailableError } from './model/ModelClient'
 import { buildWorklist } from './worklist'
 
 describe(authorDraft.name, () => {
@@ -199,10 +200,11 @@ describe(authorDraft.name, () => {
     )
   })
 
-  it('counts a refused turn as a round and asks the same message again', async () => {
+  it('counts an unusable answer as a round and asks the same message again', async () => {
     const { model, artifacts, result } = run([
       Object.assign(new Error('codex turn used tools'), {
         events: [{ type: 'item.completed' }],
+        retryable: true,
       }),
       JSON.stringify(VALID),
     ])
@@ -271,6 +273,24 @@ describe(authorDraft.name, () => {
       expect((await result).status).toEqual('accepted')
       expect(model.calls.length).toEqual(1)
     })
+  })
+
+  it('stops at once when the model does not answer, and says so in the trail', async () => {
+    const { model, artifacts, result } = run([
+      new Error('opencode reported an error: insufficient quota'),
+      JSON.stringify(VALID),
+    ])
+
+    await expect(result).toBeRejectedWith(
+      ModelUnavailableError,
+      'the model did not answer: opencode reported an error: insufficient quota',
+    )
+    expect(model.calls.length).toEqual(1)
+    const summary = JSON.parse(artifacts.files.get('summary.json') ?? '')
+    expect(summary.status).toEqual('failed')
+    expect(summary.failure).toEqual(
+      'the model did not answer: opencode reported an error: insufficient quota',
+    )
   })
 
   it('turns an unparsable reply into a finding for the next round', async () => {

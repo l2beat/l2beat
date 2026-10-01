@@ -123,6 +123,8 @@ function buildAnalyzer(
       maxRounds: env.maxRounds,
       artifactsRoot: env.artifactsRoot,
       previousTemplates: {},
+      // A contract the model cannot author is what the benchmark measures.
+      onFailure: 'leave-untemplatized',
       now: env.now,
     },
     env.logger,
