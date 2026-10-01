@@ -39,5 +39,8 @@ describe(splitChainPrefix.name, () => {
     expect(
       splitChainPrefix(`https://etherscan.io/address/${ADDRESS}/code?a=1`),
     ).toEqual({ chain: 'eth', address: ADDRESS })
+    expect(
+      splitChainPrefix(`https://katanascan.com/address/${ADDRESS}`),
+    ).toEqual({ chain: 'katana', address: ADDRESS })
   })
 })

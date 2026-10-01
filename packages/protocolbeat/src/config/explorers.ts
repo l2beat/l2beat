@@ -31,7 +31,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   zama: 'https://explorer.mainnet.zama.org/address',
   ethereal: 'https://explorer.ethereal.trade/address',
   jovay: 'https://explorer.jovay.io/l2/address',
-  katana: 'https://katanascan.com',
+  katana: 'https://katanascan.com/address',
   robinhood: 'https://robinhoodchain.blockscout.com/address',
 }
 
