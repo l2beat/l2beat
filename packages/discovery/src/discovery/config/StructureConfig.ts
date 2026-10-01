@@ -5,7 +5,7 @@ import type { BlipSexp } from '../../blip/type'
 import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 import { AddressKey } from './AddressKey'
-import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
+import { resolveConfig, resolveContract } from './resolveUtils'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
@@ -89,7 +89,7 @@ export const StructureContract = StructureContractLayer.transform(
 )
 
 export function resolveStructureContract(layer: StructureContractLayer) {
-  const contract = resolveByShape(_StructureContract, layer, {
+  return resolveContract(_StructureContract, _StructureContractField, layer, {
     ignoreDiscovery: false,
     ignoreMethods: [],
     ignoreRelatives: [],
@@ -98,12 +98,6 @@ export function resolveStructureContract(layer: StructureContractLayer) {
     manualSourcePaths: {},
     types: {},
   })
-  return {
-    ...contract,
-    fields: mapRecord(contract.fields, (field) =>
-      pickByShape(_StructureContractField, field),
-    ),
-  }
 }
 
 export type EntryType = v.infer<typeof EntryType>
@@ -155,19 +149,14 @@ export const StructureConfig = StructureConfigLayer.transform(
 )
 
 export function resolveStructureConfig(layer: StructureConfigLayer) {
-  const { overrides, ...config } = resolveByShape(_StructureConfig, layer, {
-    maxAddresses: 100,
-    maxDepth: Number.POSITIVE_INFINITY,
-  })
+  const config = resolveConfig(
+    _StructureConfig,
+    layer,
+    { maxAddresses: 100, maxDepth: Number.POSITIVE_INFINITY },
+    resolveStructureContract,
+  )
   const { name, initialAddresses } = config
   assert(name !== undefined, 'Discovery config has no name')
   assert(initialAddresses !== undefined, `${name} has no initialAddresses`)
-  return {
-    ...config,
-    name,
-    initialAddresses,
-    ...(overrides && {
-      overrides: mapRecord(overrides, resolveStructureContract),
-    }),
-  }
+  return { ...config, name, initialAddresses }
 }

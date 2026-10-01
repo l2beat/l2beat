@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 import { AddressKey } from './AddressKey'
-import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
+import { resolveConfig, resolveContract } from './resolveUtils'
 
 export const BasePermissionEntries = [
   'member',
@@ -42,13 +42,9 @@ export const ContractPermission = ContractPermissionLayer.transform(
 )
 
 export function resolveContractPermission(layer: ContractPermissionLayer) {
-  const contract = resolveByShape(_ContractPermission, layer, { fields: {} })
-  return {
-    ...contract,
-    fields: mapRecord(contract.fields, (field) =>
-      pickByShape(_ContractPermissionField, field),
-    ),
-  }
+  return resolveContract(_ContractPermission, _ContractPermissionField, layer, {
+    fields: {},
+  })
 }
 
 export const _PermissionsConfig = {
@@ -63,10 +59,5 @@ export const PermissionsConfig = PermissionsConfigLayer.transform(
 )
 
 export function resolvePermissionsConfig(layer: PermissionsConfigLayer) {
-  const { overrides } = pickByShape(_PermissionsConfig, layer)
-  return {
-    ...(overrides && {
-      overrides: mapRecord(overrides, resolveContractPermission),
-    }),
-  }
+  return resolveConfig(_PermissionsConfig, layer, {}, resolveContractPermission)
 }

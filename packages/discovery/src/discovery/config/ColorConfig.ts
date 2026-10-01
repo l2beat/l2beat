@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 import { AddressKey } from './AddressKey'
-import { mapRecord, pickByShape, resolveByShape } from './resolveUtils'
+import { resolveConfig, resolveContract } from './resolveUtils'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
@@ -66,16 +66,10 @@ export type ColorContract = ReturnType<typeof resolveColorContract>
 export const ColorContract = ColorContractLayer.transform(resolveColorContract)
 
 export function resolveColorContract(layer: ColorContractLayer) {
-  const contract = resolveByShape(_ColorContract, layer, {
+  return resolveContract(_ColorContract, _ColorContractField, layer, {
     fields: {},
     manualSourcePaths: {},
   })
-  return {
-    ...contract,
-    fields: mapRecord(contract.fields, (field) =>
-      pickByShape(_ColorContractField, field),
-    ),
-  }
 }
 
 export const _ColorConfig = {
@@ -91,9 +85,5 @@ export type ColorConfig = ReturnType<typeof resolveColorConfig>
 export const ColorConfig = ColorConfigLayer.transform(resolveColorConfig)
 
 export function resolveColorConfig(layer: ColorConfigLayer) {
-  const { overrides, ...config } = pickByShape(_ColorConfig, layer)
-  return {
-    ...config,
-    ...(overrides && { overrides: mapRecord(overrides, resolveColorContract) }),
-  }
+  return resolveConfig(_ColorConfig, layer, {}, resolveColorContract)
 }
