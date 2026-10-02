@@ -1,6 +1,6 @@
 {
   "name": "cartesi-prt-honeypot-v2",
-  "timestamp": 1790875197,
+  "timestamp": 1790850950,
   "configHash": "0xa3ae62a88751f3b190a18934950a9e6f0d202e2b6217ad823ba98a8c629b1115",
   "entries": [
     {
@@ -831,7 +831,7 @@
     "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
   },
-  "usedBlockNumbers": { "ethereum": 26098917 },
+  "usedBlockNumbers": { "ethereum": 26096908 },
   "permissionsConfigHash": "0x686dac2af5d0b2418c3ce4e4a37df248b914ce18deefdad3b840f97c91b37666",
   "permissions": {
     "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {

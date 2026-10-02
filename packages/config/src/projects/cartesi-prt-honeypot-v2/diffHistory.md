@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x65cdd285505e7537980b70b57d48310261cff958
+Generated with discovered.json: 0x4df78961eac52e7c710649994cfcbc2de6b890e3
 
-# Diff at Thu, 01 Oct 2026 17:21:17 GMT:
+# Diff at Thu, 01 Oct 2026 11:10:28 GMT:
 
-- id: aede9633
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@f2656072394a0d215412884ecfaf57f4f0941ea0 block: 1790592527
-- current timestamp: 1790875197
+- id: 25bf6fe1
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592527
+- current timestamp: 1790850950
 
 ## Description
 
-One signer (0xccD5) was removed from the Cartesi Multisig, which is now 3 of 5 (was 3 of 6).
+Cartesi Multisig removed one signer (eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325): threshold 3/6 -> 3/5.
 
 ## Watched changes
 
