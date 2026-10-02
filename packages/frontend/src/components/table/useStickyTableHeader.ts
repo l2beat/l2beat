@@ -181,7 +181,7 @@ function publishLayout(
 ) {
   const lastRow = getLastRow(table)
   const stop = lastRow
-    ? lastRow.getBoundingClientRect().top
+    ? lastRow.getBoundingClientRect().top + getBorderWidthAbove(lastRow)
     : table.getBoundingClientRect().bottom
   setVariable(root, HEIGHT_VARIABLE, thead.getBoundingClientRect().height)
   setVariable(
@@ -220,6 +220,18 @@ function getPinnedLeftVariables({ pinnedCount }: Columns) {
 function getLastRow(table: HTMLTableElement) {
   const rows = Array.from(table.tBodies[0]?.rows ?? [])
   return rows.findLast((row) => !row.hasAttribute('aria-hidden'))
+}
+
+/**
+ * A collapsed border straddles the line between two rows, so half of the one
+ * above the last row lies inside that row. Left showing under the header's
+ * divider, the two read as one thick line. Stopping past the whole border
+ * covers it however the browser snaps its halves to device pixels.
+ */
+function getBorderWidthAbove(row: HTMLTableRowElement) {
+  const previousRow = row.previousElementSibling
+  if (!previousRow) return 0
+  return Number.parseFloat(getComputedStyle(previousRow).borderBottomWidth)
 }
 
 function getColumnCells(thead: HTMLTableSectionElement) {

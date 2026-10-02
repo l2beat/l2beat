@@ -49,7 +49,7 @@
 
 /*
   The bottom margin stops the header where the table's last row starts, so it
-  never covers that row; the scroller's negative top margin gives that space
+  never covers that row, only the border above it; the scroller's negative top margin gives that space
   back, along with the header's own height.
 */
 @utility sticky-table-header {
