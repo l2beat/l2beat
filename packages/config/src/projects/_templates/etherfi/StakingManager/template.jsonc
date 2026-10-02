@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "StakingManager",
   "category": "core",
-  "description": "Registers validators and creates EtherFiNode instances (behind a beacon). Batches beacon-chain deposits from LiquidityPool ETH.",
+  "description": "Registers validators and creates EtherFiNode instances (behind a beacon), with or without an EigenLayer EigenPod. Batches beacon-chain deposits from LiquidityPool ETH, binding withdrawal credentials to the node's EigenPod or, for a node without a pod, to the node itself.",
   "ignoreMethods": ["proxiableUUID"],
   "canActIndependently": false
 }

@@ -1,24 +1,26 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
-import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type {
-  AverageDuration,
   ByBridgeTypeData,
+  TokenData,
 } from '~/server/features/layer2s/interop/types'
-import type { InteropTopTokenData } from '~/server/features/layer2s/interop/utils/getTopToken'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
-import { listTopItems } from '~/server/markdown/interopMarkdown'
-import { formatCount, formatUsd, link } from '~/server/markdown/markdown'
+import {
+  formatAverageDuration,
+  formatTopPath,
+  formatTransferCount,
+  interopProtocolUrl,
+  linkInteropToken,
+  listTopItems,
+} from '~/server/markdown/interopMarkdown'
+import { formatCount, formatUsd } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
-import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
 
 /** The page props the markdown needs: the headline numbers live next to the entry, not in it. */
@@ -34,9 +36,7 @@ export function renderInteropProtocolMarkdown({
 }: InteropProtocolPageContent): string {
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/interop/protocols/${entry.slug}`,
+    pagePath: interopProtocolUrl(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings(entry),
@@ -50,6 +50,7 @@ export function renderInteropProtocolMarkdown({
       risks: [],
       description: entry.header.description,
     },
+    header: { links: entry.header.links, badges: entry.header.badges },
     sections: entry.sections,
     apiLinks: {},
   })
@@ -73,7 +74,7 @@ function getFacts({
     },
     topPath && {
       label: 'Last 24h top path',
-      value: `${chainName(topPath.chainA)} ↔ ${chainName(topPath.chainB)} (${formatUsd(topPath.volume)})`,
+      value: formatTopPath(topPath),
     },
     entry?.averageDuration && {
       label: 'Last 24h avg. transfer time',
@@ -85,69 +86,48 @@ function getFacts({
     },
     entry &&
       entry.tokens.items.length > 0 && {
-        label: 'Tokens by volume',
-        value: listTopItems(entry.tokens, (token) =>
-          token.volume !== null
-            ? `${token.symbol} (${formatUsd(token.volume)})`
-            : token.symbol,
-        ).join(', '),
+        label: 'Last 24h tokens by volume',
+        value: listTopItems(entry.tokens, formatTokenVolume).join(', '),
       },
     topToken && {
-      label: 'Top token',
-      value: `${linkToken(topToken)} (${formatUsd(topToken.volume)} volume, ${formatCount(topToken.transferCount)} transfers)`,
+      label: 'Last 24h top token',
+      value: `${linkInteropToken(topToken)} (${formatUsd(topToken.volume)} volume, ${formatTransferCount(topToken.transferCount)})`,
     },
     transferSize && {
-      label: 'Transfer size',
+      label: 'Last 24h transfer size',
       value: formatTransferSize(transferSize),
     },
     entry?.byBridgeType && {
-      label: 'Transfer type distribution',
+      label: 'Last 24h transfer type distribution',
       value: formatTransferTypes(entry.byBridgeType),
     },
   ])
 }
 
-/** The HTML page shows chain ids capitalized; the configured name reads better. */
-function chainName(id: string) {
-  return INTEROP_CHAINS.find((chain) => chain.id === id)?.name ?? id
-}
-
-function formatAverageDuration(duration: AverageDuration) {
-  switch (duration.type) {
-    case 'unknown':
-      return 'Unknown (the transfer times for this protocol could not be derived based on onchain data only)'
-    case 'single':
-      return formatSeconds(duration.duration)
-    case 'split':
-      return duration.splits
-        .map(
-          (split) =>
-            `${split.label}: ${split.duration !== null ? formatSeconds(split.duration) : 'N/A'}`,
-        )
-        .join(', ')
-    default:
-      assertUnreachable(duration)
-  }
-}
-
-function linkToken(token: InteropTopTokenData) {
-  const path = getInteropTokenUrl(token)
-  return path ? link(token.symbol, `${PRODUCTION_ORIGIN}${path}`) : token.symbol
+function formatTokenVolume(token: TokenData) {
+  return token.volume !== null
+    ? `${linkInteropToken(token)} (${formatUsd(token.volume)})`
+    : linkInteropToken(token)
 }
 
 function formatTransferSize(size: TransferSizeDataPoint) {
   const range = compact([
     size.minTransferValueUsd !== undefined &&
-      `min ${formatUsd(size.minTransferValueUsd)}`,
+      `min ${formatMinTransferSize(size.minTransferValueUsd)}`,
     size.averageTransferSizeUsd !== undefined &&
       `average ${formatUsd(size.averageTransferSizeUsd)}`,
     size.maxTransferValueUsd !== undefined &&
       `max ${formatUsd(size.maxTransferValueUsd)}`,
   ])
   const counts = getTransferSizeBreakdown(size)
-    .map(({ label, count }) => `${label}: ${formatCount(count)} transfers`)
+    .map(({ label, count }) => `${label}: ${formatTransferCount(count)}`)
     .join(', ')
   return range.length > 0 ? `${counts} (${range.join(', ')})` : counts
+}
+
+/** Dust transfers round to "$0.00", which reads as free transfers. */
+function formatMinTransferSize(value: number) {
+  return value < 0.005 ? 'under $0.01' : formatUsd(value)
 }
 
 /** Volume per bridge type, in the order and with the labels of the HTML breakdown. */

@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -52,7 +53,6 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectLivenessInfo,
-  ProjectOssification,
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
@@ -86,8 +86,10 @@ import {
   getOpStackMaxCumulativeClockExtension,
   getOptimismPortal,
   getOracleChallengePeriod,
+  getPermissionedDisputeGameName,
   getPermissionedGameBond,
   getPermissionlessGameBond,
+  isSuperPermissionedOnly,
 } from './opStack/faultDisputeGame'
 import {
   getOpStackCentralizedSequencing,
@@ -249,7 +251,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossificationHistory?: OssificationHistory
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
@@ -432,7 +434,7 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationHistory: templateVars.ossificationHistory,
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
@@ -683,14 +685,18 @@ function getProgramHashes(
           portal.name ?? portal.address,
           'respectedGameType',
         )
-      if (respectedGameType === 8) {
+      // Type 5 runs no VM, so there is no prestate.
+      if (respectedGameType === 5) return []
+      if (respectedGameType === 8 || respectedGameType === 9) {
+        // gameArgs[9] holds the prestate at the same offset as type 8.
+        const argsField = respectedGameType === 9 ? 'game9Args' : 'game8Args'
         const konaPrestate = templateVars.discovery.hasContract(
           'DisputeGameFactory',
         )
           ? prestateFromGameArgs(
               templateVars.discovery.getContractValueOrUndefined<string>(
                 'DisputeGameFactory',
-                'game8Args',
+                argsField,
               ),
             )
           : undefined
@@ -866,8 +872,27 @@ function getStateValidation(
       }
     }
     case 'Permissioned': {
+      const permissionedGame = getPermissionedDisputeGameName(templateVars)
+
+      // No bonds, clocks or depths exist to describe for type 5.
+      if (isSuperPermissionedOnly(templateVars)) {
+        return {
+          description:
+            'State roots are proposed as super roots by a permissioned proposer. The respected game type is the super permissioned game, which carries no bond and exposes no challenge mechanics: validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.',
+          categories: [
+            {
+              title: 'State root proposals',
+              description:
+                'Only the permissioned proposer configured in the dispute game factory can create games of the respected type. Each proposal commits to a super root anchored to an L2 timestamp rather than an L2 block number.',
+              references: [],
+              risks: [],
+            },
+          ],
+        }
+      }
+
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        'PermissionedDisputeGame',
+        permissionedGame,
         'maxClockDuration',
       )
 
@@ -875,19 +900,19 @@ function getStateValidation(
 
       const permissionedGameClockExtension =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'clockExtension',
         )
 
       const permissionedGameMaxDepth =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'maxGameDepth',
         )
 
       const permissionedGameSplitDepth =
         templateVars.discovery.getContractValue<number>(
-          'PermissionedDisputeGame',
+          permissionedGame,
           'splitDepth',
         )
 
@@ -1478,6 +1503,17 @@ function getRiskViewStateValidation(
       }
     }
     case 'Permissioned': {
+      // Type 5 has no interactive dispute process, so it must not render as a
+      // fault proof with a challenge window.
+      if (isSuperPermissionedOnly(templateVars)) {
+        return {
+          ...RISK_VIEW.STATE_NONE,
+          description:
+            'State roots are proposed as super roots by a permissioned proposer. The respected game type exposes no challenger, VM or challenge clock, so proposals cannot be disputed by execution. Validity is governed by the AnchorStateRegistry, and the Guardian can blacklist games and change the respected game type.',
+          permissioned: true,
+          defenderAdvantage: 'not-applicable',
+        }
+      }
       return {
         ...RISK_VIEW.STATE_FP_INT(
           getChallengePeriod(templateVars),
@@ -1964,25 +2000,37 @@ function getTechnologyExitMechanism(
           'proofMaturityDelaySeconds',
         )
 
-      const disputeGameName =
-        fraudProofType === 'Permissionless'
-          ? getFaultDisputeGameName(templateVars)
-          : 'PermissionedDisputeGame'
-
-      const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        disputeGameName,
-        'maxClockDuration',
-      )
+      const noChallengeProcess = isSuperPermissionedOnly(templateVars)
+      const maxClockDuration = noChallengeProcess
+        ? undefined
+        : templateVars.discovery.getContractValue<number>(
+            fraudProofType === 'Permissionless'
+              ? getFaultDisputeGameName(templateVars)
+              : getPermissionedDisputeGameName(templateVars),
+            'maxClockDuration',
+          )
 
       result.push({
         name: 'Regular exits',
-        description: readMarkdown('templates/opStack/regularExits.md', {
-          disputeGameFinalityDelaySeconds: formatSeconds(
-            disputeGameFinalityDelaySeconds,
-          ),
-          proofMaturityDelaySeconds: formatSeconds(proofMaturityDelaySeconds),
-          challengePeriod: formatSeconds(maxClockDuration),
-        }),
+        description:
+          maxClockDuration === undefined
+            ? readMarkdown('templates/opStack/regularExitsNoChallenge.md', {
+                disputeGameFinalityDelaySeconds: formatSeconds(
+                  disputeGameFinalityDelaySeconds,
+                ),
+                proofMaturityDelaySeconds: formatSeconds(
+                  proofMaturityDelaySeconds,
+                ),
+              })
+            : readMarkdown('templates/opStack/regularExits.md', {
+                disputeGameFinalityDelaySeconds: formatSeconds(
+                  disputeGameFinalityDelaySeconds,
+                ),
+                proofMaturityDelaySeconds: formatSeconds(
+                  proofMaturityDelaySeconds,
+                ),
+                challengePeriod: formatSeconds(maxClockDuration),
+              }),
         risks: [],
         references: [
           {
@@ -2580,8 +2628,9 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'Permissioned': {
+      // Type 5 has no challenge period; its risk view branches before here.
       return templateVars.discovery.getContractValue<number>(
-        'PermissionedDisputeGame',
+        getPermissionedDisputeGameName(templateVars),
         'maxClockDuration',
       )
     }

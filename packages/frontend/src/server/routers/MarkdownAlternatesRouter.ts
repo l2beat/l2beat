@@ -1,15 +1,37 @@
 import express from 'express'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
-import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
-import { ps } from '~/server/projects'
-import type { ListPageWithMarkdown } from '~/utils/getMarkdownAlternatePath'
+import {
+  DEFI_SUMMARY_DESCRIPTION,
+  PRIVACY_SUMMARY_DESCRIPTION,
+  ZK_CATALOG_DESCRIPTION,
+} from '~/consts/summaryPageDescriptions'
+import { getDaListSections } from '~/server/markdown/list-pages/getDaListSections'
+import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
+import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
+import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyListSections'
+import { getScalingListSections } from '~/server/markdown/list-pages/getScalingListSections'
+import { getZkListSections } from '~/server/markdown/list-pages/getZkListSections'
+import {
+  type LinkListSection,
+  renderLinkListMarkdown,
+} from '~/server/markdown/listPageMarkdown'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
+import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
+import {
+  LIST_PAGES_WITH_MARKDOWN,
+  type ListPageWithMarkdown,
+} from '~/utils/getMarkdownAlternatePath'
 
 /**
  * Markdown versions of the pages that list what L2BEAT tracks, at the page
  * URL plus `.md` as the llms.txt spec recommends. llms.txt links here instead
  * of listing every project itself, so it stays small enough to fit in context
  * while an agent can still map a project name to its page and API slug.
+ *
+ * The page URL itself answers with the same markdown when Accept prefers it,
+ * and falls through to the HTML page otherwise.
  */
 export function createMarkdownAlternatesRouter(
   alternates: MarkdownAlternate[] = MARKDOWN_ALTERNATES,
@@ -17,15 +39,21 @@ export function createMarkdownAlternatesRouter(
   const router = express.Router()
 
   for (const alternate of alternates) {
-    router.get(alternate.path, async (_req, res) => {
-      sendMarkdownDocument(
-        res,
-        renderMarkdown(alternate, await alternate.getSections()),
-      )
-    })
+    const getMarkdown = async () =>
+      renderLinkListMarkdown(alternate, await alternate.getSections())
+
+    router.get(alternate.path, serveMarkdown(getMarkdown))
+    router.get(
+      toPagePath(alternate.path),
+      serveMarkdownIfPreferred(getMarkdown),
+    )
   }
 
   return router
+}
+
+function toPagePath(alternatePath: MarkdownAlternatePath) {
+  return alternatePath.slice(0, -'.md'.length)
 }
 
 export type MarkdownAlternatePath = `${ListPageWithMarkdown}.md`
@@ -34,222 +62,65 @@ export interface MarkdownAlternate {
   path: MarkdownAlternatePath
   title: string
   summary: string
-  getSections: () => Promise<MarkdownSection[]>
+  /** The intro the HTML page shows above its table. */
+  notes?: string
+  getSections: () => Promise<LinkListSection[]>
 }
 
-export interface MarkdownSection {
-  heading: string
-  links: MarkdownLink[]
-}
-
-export type MarkdownLink = { name: string; description: string } & (
-  | { path: `/${string}` }
-  | { url: string }
-)
-
-export const MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
-  {
-    path: '/layer2s/summary.md',
+/** Keyed by the registry, so every list page registered as having markdown gets its document. */
+const LIST_PAGE_DOCUMENTS: Record<
+  ListPageWithMarkdown,
+  Omit<MarkdownAlternate, 'path'>
+> = {
+  '/layer2s/summary': {
     title: 'L2BEAT scaling projects',
     summary:
       'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
-    getSections: getScalingSections,
+    getSections: getScalingListSections,
   },
-  {
-    path: '/data-availability/summary.md',
+  '/data-availability/summary': {
     title: 'L2BEAT data availability layers',
     summary:
-      'Every data availability layer tracked by L2BEAT, one entry per bridge to Ethereum plus one for use without a bridge.',
-    getSections: getDaSections,
+      'Every data availability layer tracked by L2BEAT with its type and risks: public layers one entry per bridge to Ethereum plus one for use without a bridge, and custom solutions built for a single project.',
+    getSections: getDaListSections,
   },
-  {
-    path: '/zk-catalog.md',
+  '/zk-catalog': {
     title: 'L2BEAT ZK catalog',
     summary:
-      'Zero-knowledge proving systems used by tracked projects, with their creators.',
-    getSections: getZkSections,
+      'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
+    notes: [
+      ZK_CATALOG_DESCRIPTION,
+      '',
+      `Trusted setup risks (green, yellow, red) follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}.`,
+    ].join('\n'),
+    getSections: getZkListSections,
   },
-  {
-    path: '/privacy/summary.md',
+  '/privacy/summary': {
     title: 'L2BEAT privacy protocols',
     summary:
-      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT.',
-    getSections: getPrivacySections,
+      'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
+    notes: PRIVACY_SUMMARY_DESCRIPTION,
+    getSections: getPrivacyListSections,
   },
-]
-
-async function getScalingSections(): Promise<MarkdownSection[]> {
-  const [scaling, ecosystems] = await Promise.all([
-    ps.getProjects({
-      select: ['scalingInfo'],
-      whereNot: ['archivedAt'],
-      optional: ['display'],
-    }),
-    ps.getProjects({ where: ['ecosystemConfig'], optional: ['display'] }),
-  ])
-  return [
-    {
-      heading: 'Layer 2s (/layer2s/projects/{slug})',
-      links: scaling
-        .filter((p) => p.scalingInfo.layer === 'layer2')
-        .map(scalingLink),
-    },
-    {
-      heading: 'Layer 3s (/layer2s/projects/{slug})',
-      links: scaling
-        .filter((p) => p.scalingInfo.layer === 'layer3')
-        .map(scalingLink),
-    },
-    {
-      heading: 'Ecosystems (/ecosystems/{slug})',
-      links: ecosystems.map((p) => ({
-        name: p.name,
-        path: `/ecosystems/${p.slug}`,
-        description: firstSentence(p.display?.description ?? ''),
-      })),
-    },
-  ]
+  '/interop/summary': {
+    title: 'L2BEAT interoperability protocols',
+    summary:
+      'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
+    notes:
+      'Token pages live at /interop/tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
+    getSections: getInteropListSections,
+  },
+  '/defi/summary': {
+    title: 'L2BEAT DeFi protocols',
+    summary: 'DeFi protocols tracked by L2BEAT, with their category.',
+    notes: DEFI_SUMMARY_DESCRIPTION,
+    getSections: getDefiListSections,
+  },
 }
 
-async function getDaSections(): Promise<MarkdownSection[]> {
-  const [layers, bridges] = await Promise.all([
-    ps.getProjects({
-      select: ['daLayer'],
-      whereNot: ['archivedAt'],
-      optional: ['display'],
-    }),
-    ps.getProjects({ select: ['daBridge'] }),
-  ])
-  return [
-    {
-      heading: 'Layers (/data-availability/projects/{layer}/{bridge})',
-      links: layers.flatMap((layer) => {
-        const layerBridges = bridges.filter(
-          (b) => b.daBridge.daLayer === layer.id,
-        )
-        const description = withFacts(
-          firstSentence(
-            layer.display?.description ?? layer.daLayer.description ?? '',
-          ),
-          [layer.daLayer.type],
-        )
-        const links: MarkdownLink[] = layerBridges.map((bridge) => ({
-          name: `${layer.name} via ${bridge.daBridge.name}`,
-          path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
-          description,
-        }))
-        if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
-          links.push({
-            name: `${layer.name} without a bridge`,
-            path: `/data-availability/projects/${layer.slug}/no-bridge`,
-            description,
-          })
-        }
-        return links
-      }),
-    },
-  ]
-}
-
-async function getZkSections(): Promise<MarkdownSection[]> {
-  const projects = await ps.getProjects({
-    select: ['zkCatalogInfo'],
-    optional: ['display'],
-  })
-  return [
-    {
-      heading: 'Proving systems (/zk-catalog/{slug})',
-      links: projects.map((p) => ({
-        name: p.name,
-        path: `/zk-catalog/${p.slug}`,
-        description: withFacts(firstSentence(p.display?.description ?? ''), [
-          p.zkCatalogInfo.creator && `by ${p.zkCatalogInfo.creator}`,
-        ]),
-      })),
-    },
-  ]
-}
-
-async function getPrivacySections(): Promise<MarkdownSection[]> {
-  const projects = await ps.getProjects({
-    where: ['privacyInfo'],
-    optional: ['display'],
-  })
-  return [
-    {
-      heading: 'Privacy protocols (/privacy/projects/{slug})',
-      links: projects.map((p) => ({
-        name: p.name,
-        path: `/privacy/projects/${p.slug}`,
-        description: firstSentence(p.display?.description ?? ''),
-      })),
-    },
-  ]
-}
-
-function scalingLink(project: {
-  name: string
-  slug: string
-  scalingInfo: {
-    type: string | undefined
-    stage: string
-    hostChain: { name: string }
-    stacks: string[] | undefined
-  }
-  display?: { description: string }
-}): MarkdownLink {
-  const info = project.scalingInfo
-  return {
-    name: project.name,
-    path: `/layer2s/projects/${project.slug}`,
-    description: withFacts(firstSentence(project.display?.description ?? ''), [
-      info.type ?? 'Other',
-      info.stage !== 'Not applicable' && info.stage,
-      info.stacks?.join(', '),
-      `on ${info.hostChain.name}`,
-    ]),
-  }
-}
-
-/** "Fact, fact, fact. Description." keeps each line scannable and one line long. */
-function withFacts(description: string, facts: unknown[]): string {
-  const known = facts.filter(
-    (fact): fact is string => typeof fact === 'string' && fact !== '',
-  )
-  return [known.join(', '), description].filter(Boolean).join('. ')
-}
-
-function firstSentence(text: string): string {
-  const oneLine = text.replaceAll(/\s+/g, ' ').trim()
-  const match = oneLine.match(/^.+?[.!?](?=\s|$)/)
-  return match?.[0] ?? oneLine
-}
-
-/** Same shape as llms.txt (H1, blockquote, H2 link lists) so one parser reads both. */
-export function renderMarkdown(
-  document: { title: string; summary: string; notes?: string },
-  sections: MarkdownSection[],
-): string {
-  const rendered = sections.map((section) =>
-    [
-      `## ${section.heading}`,
-      '',
-      ...section.links.map(
-        (link) => `- [${link.name}](${linkUrl(link)}): ${link.description}`,
-      ),
-    ].join('\n'),
-  )
-
-  return `${[
-    `# ${document.title}`,
-    `> ${document.summary}`,
-    document.notes,
-    ...rendered,
-  ]
-    .filter((part) => part !== undefined)
-    .join('\n\n')}\n`
-}
-
-function linkUrl(link: MarkdownLink) {
-  return 'url' in link ? link.url : PRODUCTION_ORIGIN + link.path
-}
+/** The registry already leaves out pages that are switched off, which would be 404s. */
+export const MARKDOWN_ALTERNATES: MarkdownAlternate[] =
+  LIST_PAGES_WITH_MARKDOWN.map((page) => ({
+    path: `${page}.md`,
+    ...LIST_PAGE_DOCUMENTS[page],
+  }))

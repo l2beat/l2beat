@@ -1,3 +1,4 @@
+import { TVS_ASSET_CATEGORY_LABELS } from '~/components/breakdown/tvsAssetCategories'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   Select,
@@ -15,7 +16,6 @@ import { useIsClient } from '~/hooks/useIsClient'
 import {
   COMPARE_TVS_ASSET_CATEGORIES,
   COMPARE_TVS_BRIDGE_TYPES,
-  type CompareTvsAssetCategory,
   type CompareTvsBridgeType,
   type CompareTvsFilter,
   type CompareTvsUnit,
@@ -27,16 +27,6 @@ const TVS_BRIDGE_TYPE_LABELS: Record<CompareTvsBridgeType, string> = {
   canonical: 'Canonical',
   native: 'Native',
   external: 'External',
-}
-
-// Same labels as the TVS page's "By asset category" chart.
-const TVS_ASSET_CATEGORY_LABELS: Record<CompareTvsAssetCategory, string> = {
-  ether: 'ETH & derivatives',
-  stablecoin: 'Stablecoins',
-  btc: 'BTC & derivatives',
-  rwaPublic: 'Public RWAs',
-  rwaRestricted: 'Restricted RWAs',
-  other: 'Other',
 }
 
 export function TvsCompareControls({

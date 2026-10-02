@@ -1,4 +1,4 @@
-Privacy Boost is a shielded pool for registered ERC-20 tokens on OP Mainnet, aimed at institutional users. The operator's TEE setup has to be trusted for privacy and liveness, while ZKPs ensure validity and an exit path against a malicious or faulty operator.
+Privacy Boost is a shielded pool for registered ERC-20 tokens on Base, aimed at institutional users. The operator's TEE setup has to be trusted for privacy and liveness, while ZKPs ensure validity and an exit path against a malicious or faulty operator.
 
 ### Architecture
 

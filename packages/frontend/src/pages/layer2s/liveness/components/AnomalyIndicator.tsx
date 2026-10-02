@@ -1,4 +1,4 @@
-import { assertUnreachable, pluralize, UnixTime } from '@l2beat/shared-pure'
+import { pluralize, UnixTime } from '@l2beat/shared-pure'
 
 import {
   Tooltip,
@@ -69,19 +69,6 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
       </TooltipContent>
     </Tooltip>
   )
-}
-
-export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
-  switch (type) {
-    case 'batchSubmissions':
-      return 'Tx data submissions'
-    case 'proofSubmissions':
-      return 'Proof submissions'
-    case 'stateUpdates':
-      return 'State updates'
-    default:
-      assertUnreachable(type)
-  }
 }
 
 function calculateUptimePercentage(anomalies: LivenessAnomaly[], days: number) {

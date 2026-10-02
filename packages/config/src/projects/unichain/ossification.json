@@ -108,6 +108,63 @@
       "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
       "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
       "reason": "The July 2026 upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 slot changed in this block without a past-upgrades entry."
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x08bA0023eD60C7Bd040716dD13C45fA0062df5C5",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the ETHLockbox implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the OptimismPortal2 implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the AnchorStateRegistry implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the DisputeGameFactory implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the SuperchainConfig implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the L1CrossDomainMessenger implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
+    },
+    {
+      "timestamp": 1790268683,
+      "type": "code",
+      "contract": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+      "transaction": "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",
+      "reason": "Replaced the SystemConfig implementation as part of OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3), executed by the SuperchainProxyAdminOwner in one transaction: SystemConfig v4.0.0, OptimismPortal2 v5.8.0, SuperchainConfig v2.4.3; the dispute game factory also cleared game types 0, 1 and 8 and registered the super games (type 9 and type 5), and the respected game type moved to 9.",
+      "updateId": "cd925ce0"
     }
-  ]
+  ],
+  "acceptedIntervals": ["cd925ce0"]
 }

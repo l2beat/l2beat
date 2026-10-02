@@ -108,7 +108,7 @@ export const tornadoCash: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-04-15')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

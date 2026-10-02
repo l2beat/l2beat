@@ -1,10 +1,11 @@
 export interface FaqItem {
   question: string
-  answer: string | string[]
+  /** Markdown, with paragraphs separated by a blank line. */
+  answer: string
 }
 
 // TODO: move this to collections
-export const faqItems: FaqItem[] = [
+const items: { question: string; answer: string | string[] }[] = [
   {
     question: 'What is the overall purpose of this site?',
     answer:
@@ -154,3 +155,8 @@ export const faqItems: FaqItem[] = [
     ],
   },
 ]
+
+export const faqItems: FaqItem[] = items.map((item) => ({
+  question: item.question,
+  answer: Array.isArray(item.answer) ? item.answer.join('\n\n') : item.answer,
+}))

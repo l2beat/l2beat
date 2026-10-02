@@ -5,18 +5,15 @@ import {
   parsePastUpgrades,
   type Upgrade,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  notUndefined,
-  type UnixTime,
-} from '@l2beat/shared-pure'
-import type { ProjectOssificationContract } from '../types'
-import type { OssificationChange, OssificationInput } from './OssificationInput'
+import type {
+  OssificationChange,
+  OssificationContract,
+  OssificationHistory,
+} from '@l2beat/shared'
+import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import type { OssificationPatch } from './OssificationPatch'
 
 export interface OssificationSources {
-  now: UnixTime
   projectStart?: number
   entries: EntryParameters[]
   overrides: CriticalOverride[]
@@ -69,9 +66,9 @@ const upgradeKey = (contract: string, transaction: string | undefined) =>
     ? undefined
     : `${key(contract)} ${transaction.toLowerCase()}`
 
-export function getOssificationInput(
+export function getOssificationHistory(
   sources: OssificationSources,
-): OssificationInput | undefined {
+): OssificationHistory | undefined {
   const members = getPerimeter(sources)
   if (members.size === 0) return undefined
 
@@ -84,7 +81,6 @@ export function getOssificationInput(
     .map((member) => toRow(member, events, perimeteredChanges))
 
   return {
-    now: sources.now,
     contracts,
     changes: perimeteredChanges.map(toChange),
     resets: [...members.values()]
@@ -110,7 +106,7 @@ function toRow(
   member: Member,
   events: MemberEvent[],
   perimetered: MemberEvent[],
-): ProjectOssificationContract {
+): OssificationContract {
   const own = (event: MemberEvent) => event.contract === key(member.address)
   const ossifyingSince = latest(
     member.deployedAt,

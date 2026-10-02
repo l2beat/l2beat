@@ -21,12 +21,7 @@ import type {
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import { SubsectionHeading } from '../Subsection'
-
-const subtypeToTitle: Record<TrackedTxsConfigSubtype, string> = {
-  batchSubmissions: 'Batch submissions',
-  proofSubmissions: 'Proof submissions',
-  stateUpdates: 'State updates',
-}
+import { TRACKED_TXS_SUBTYPE_TITLES } from './trackedTxsSubtypeTitles'
 
 interface TrackedTransactionsProps extends TrackedTransactionsByType {
   duplicateData?: {
@@ -44,8 +39,8 @@ export function TrackedTransactions({
 
   const getTitle = (subtype: TrackedTxsConfigSubtype) =>
     duplicateData?.from === subtype
-      ? `${subtypeToTitle[subtype]}, ${subtypeToTitle[duplicateData.to]}`
-      : subtypeToTitle[subtype]
+      ? `${TRACKED_TXS_SUBTYPE_TITLES[subtype]}, ${TRACKED_TXS_SUBTYPE_TITLES[duplicateData.to]}`
+      : TRACKED_TXS_SUBTYPE_TITLES[subtype]
 
   const transactions = {
     batchSubmissions: showHistoricalTransactions
