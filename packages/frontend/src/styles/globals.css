@@ -26,6 +26,20 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* The home interop section's body, a size container from lg (see
+   HomeInteropSection): stacked like on phones when it is clearly taller than
+   wide or too narrow for the corners, otherwise the figures in the corners. */
+@custom-variant interop-stacked {
+  @container interop-body (max-aspect-ratio: 4 / 5) or (max-width: 640px) {
+    @slot;
+  }
+}
+@custom-variant interop-corners {
+  @container interop-body (min-aspect-ratio: 4 / 5) and (min-width: 641px) {
+    @slot;
+  }
+}
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */

@@ -124,6 +124,7 @@ export function HomeSparkline({
               <ReferenceLine
                 y={first.value}
                 stroke="var(--divider)"
+                strokeOpacity={0.7}
                 strokeDasharray="2 3"
                 ifOverflow="extendDomain"
                 zIndex={BEHIND_SERIES}
@@ -135,6 +136,8 @@ export function HomeSparkline({
                   key={key}
                   y={range[key].value}
                   stroke="var(--divider)"
+                  // Softer than the page's hairlines: a reference, not a frame.
+                  strokeOpacity={0.5}
                   zIndex={BEHIND_SERIES}
                   // On the side away from the extreme itself, clear of the line.
                   label={{

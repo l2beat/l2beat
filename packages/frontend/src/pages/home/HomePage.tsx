@@ -128,27 +128,30 @@ export function HomePage({
                 protocols={flowProtocols}
                 className="lg:col-start-2 lg:row-span-2 lg:row-start-5 lg:border-l"
               />
-              {/* Under Ethereum: articles and the question, with new research
-                  and project changes beside them once the column is wide
-                  enough. */}
+              {/* Under Ethereum: articles, new research, project changes and,
+                  always last in its column, the question. */}
               <div className="@container/recent flex min-w-0 flex-col lg:col-start-1 lg:row-start-6">
+                {/* Two columns once wide enough: articles and the question,
+                    then new research (its rows fill the height the left
+                    column sets) and project changes. Stacked, the columns
+                    dissolve so the question can come last. */}
                 <div className="flex @min-[560px]/recent:grid min-w-0 @min-[560px]/recent:grid-cols-2 flex-col">
-                  <div className="flex min-w-0 flex-col">
+                  <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col">
                     <HomeLatestArticlesSection
                       research={research}
                       className="lg:pr-6"
                     />
-                    <HomeQuestionCard className="lg:pr-6" />
+                    <HomeQuestionCard className="@min-[560px]/recent:order-none order-last lg:pr-6" />
                   </div>
-                  <div className="flex min-w-0 flex-col @min-[560px]/recent:border-divider @min-[560px]/recent:border-l">
+                  <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:border-divider @min-[560px]/recent:border-l">
                     <HomeWhatsNewProjects
                       projects={recentProjects}
-                      className="@min-[560px]/recent:pl-6 lg:pr-6"
+                      className="@min-[560px]/recent:flex-1 @min-[560px]/recent:pl-6 lg:pr-6"
                     />
                     <HomeProjectChangesSection
                       count={recentChangesCount}
                       projects={recentChangesProjects}
-                      className="@min-[560px]/recent:flex-1 @min-[560px]/recent:pl-6 lg:pr-6"
+                      className="@min-[560px]/recent:pl-6 lg:pr-6"
                     />
                   </div>
                 </div>

@@ -36,7 +36,12 @@ export function HomeWhatsNewProjects({
     return null
   }
   return (
-    <HomeCard className={cn('flex flex-col gap-2', className)}>
+    <HomeCard
+      className={cn(
+        'flex @min-[560px]/recent:min-h-0 flex-col gap-2',
+        className,
+      )}
+    >
       <HomeCardHeader title="New research" />
       <NewProjects projects={projects} />
     </HomeCard>
@@ -77,12 +82,24 @@ export function HomeLatestArticlesSection({
   )
 }
 
+const STACKED_PROJECTS_COUNT = 5
+
 function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
   return (
-    // Row height and lines as in the rankings.
-    <ul className="flex flex-col divide-y divide-divider">
-      {projects.map((project) => (
-        <li key={project.id} className="flex min-h-10">
+    // Row height and lines as in the rankings. Beside the articles the list
+    // takes the height they leave (a 0px height, so it never sets it, but
+    // room for five), wrapping the rows that do not fit into a second column,
+    // out of view: whole rows only. Stacked it shows five.
+    <ul className="flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:flex-wrap divide-y divide-divider @min-[560px]/recent:overflow-hidden">
+      {projects.map((project, index) => (
+        <li
+          key={project.id}
+          className={cn(
+            'flex @min-[560px]/recent:h-10 min-h-10 w-full shrink-0',
+            index >= STACKED_PROJECTS_COUNT &&
+              '@min-[560px]/recent:flex hidden',
+          )}
+        >
           <a
             href={project.href}
             className="group flex min-w-0 flex-1 items-center gap-2 py-2"

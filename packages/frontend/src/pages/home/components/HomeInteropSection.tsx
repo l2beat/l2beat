@@ -90,14 +90,23 @@ function Content({
         subtitle="Last 24h"
         href="/interop/summary"
       />
-      {/* From lg the section is as tall as the column beside it and the graph
-          fills its body: the largest square it fits (a 0px basis, so it never
-          sets the height itself). The chains sit on a ring, so the corners of
-          that square are free, and the figures go there. Below lg it all
-          stacks, the graph a fixed-size square. */}
-      <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0">
-        {data && <Stats data={data} chains={chains} className="lg:hidden" />}
-        <div className="pointer-events-none flex min-h-[360px] min-w-0 flex-col items-center lg:absolute lg:inset-0 lg:min-h-0">
+      {/* From lg the section is as tall as the column beside it, so its body
+          is a size container (it never sets the height itself). Roughly
+          square, the graph fills it, the largest square it fits, and the
+          figures go in the corners its ring leaves free. Clearly taller than
+          wide, or too narrow for the corners, it stacks as on phones: the
+          figures, the graph as a square, then as many top routes as the
+          height left holds. Below lg it stacks too, the graph a fixed-size
+          square. */}
+      <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
+        {data && (
+          <Stats
+            data={data}
+            chains={chains}
+            className="interop-corners:hidden"
+          />
+        )}
+        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink-0 flex-col items-center">
           <FlowsGraphPanel
             activeChains={activeChains}
             data={data}
@@ -114,7 +123,7 @@ function Content({
             <TopRoutes
               flows={data.flows}
               chains={chains}
-              className="lg:hidden"
+              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1"
             />
             <CornerStats data={data} chains={chains} />
           </>
@@ -125,6 +134,8 @@ function Content({
 }
 
 const TOP_ROUTES_COUNT = 5
+/** Stacked from lg the routes fill the height left; whole rows only. */
+const FILL_ROUTES_COUNT = 15
 /** A corner fits fewer rows than the list under the graph. */
 const CORNER_ROUTES_COUNT = 3
 
@@ -330,18 +341,24 @@ function TopRoutes({
   chains: InteropChainWithIcon[]
   className?: string
 }) {
-  const routes = useTopRoutes(flows, chains, TOP_ROUTES_COUNT)
+  const routes = useTopRoutes(flows, chains, FILL_ROUTES_COUNT)
   if (routes.length === 0) {
     return null
   }
   return (
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
       <h3 className={HOME_TEXT.sectionTitle}>Top routes</h3>
-      <ol className="divide-y divide-divider">
+      {/* Stacked from lg, the list takes the height left and wraps the rows
+          that do not fit into a second column, out of view: whole rows only,
+          as many as fit. */}
+      <ol className="interop-stacked:flex interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:flex-col interop-stacked:flex-wrap divide-y divide-divider interop-stacked:overflow-hidden">
         {routes.map(({ src, dst, volume, href }, index) => (
           <li
             key={`${src.id}-${dst.id}`}
-            className="flex min-h-10 items-center gap-2 py-2"
+            className={cn(
+              'flex interop-stacked:h-10 min-h-10 w-full interop-stacked:shrink-0 items-center gap-2 py-2',
+              index >= TOP_ROUTES_COUNT && 'interop-stacked:flex hidden',
+            )}
           >
             <span
               className={cn(
@@ -394,7 +411,7 @@ function CornerStats({
   const routes = useTopRoutes(data.flows, chains, CORNER_ROUTES_COUNT)
 
   return (
-    <div className="pointer-events-none absolute inset-0 max-lg:hidden">
+    <div className="pointer-events-none absolute inset-0 interop-corners:block hidden">
       <div className={cn(CORNER_CLASS, 'top-0 left-0')}>
         <Figure
           label="Volume"
