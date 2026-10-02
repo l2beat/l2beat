@@ -10,13 +10,11 @@ const TOP_VARIABLE = '--sticky-table-header-top'
 const HEIGHT_VARIABLE = '--sticky-table-header-height'
 const BOTTOM_GAP_VARIABLE = '--sticky-table-header-bottom-gap'
 const MAX_SCROLL_VARIABLE = '--sticky-table-max-scroll'
-const SCROLL_VARIABLE = '--sticky-table-scroll'
 const PINNED_WIDTH_VARIABLE = '--sticky-table-pinned-width'
 const VARIABLES = [
   HEIGHT_VARIABLE,
   BOTTOM_GAP_VARIABLE,
   MAX_SCROLL_VARIABLE,
-  SCROLL_VARIABLE,
   PINNED_WIDTH_VARIABLE,
 ]
 
@@ -62,7 +60,8 @@ export interface StickyTableRefs {
  * This hook copies the real column widths onto the copy and feeds
  * `sticky-table.css` the lengths it cannot know. Until it has, the copy stays
  * hidden and the real header shows, so the server-rendered HTML looks
- * unchanged.
+ * unchanged. Browsers without scroll-driven animations keep the real header
+ * for good, see `canSlideWithScroller`.
  *
  * Call it in the component that renders all the elements: a parent's layout
  * effect runs once every child's ref is attached.
@@ -88,6 +87,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     if (!root || !scroller || !table || !thead || !tbody || !header) return
     if (!track || !pinned) return
     const getViewHeight = getStickingViewHeight(root)
+    const canStick = canSlideWithScroller()
 
     let pinnedVariables: string[] = []
     const update = () => {
@@ -105,8 +105,9 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
       const isAligned = [track, pinned].every((copy) =>
         alignColumns(table, copy, widths),
       )
-      root.toggleAttribute(READY_ATTRIBUTE, isTallerThanView && isAligned)
-      if (isTallerThanView && isAligned) {
+      const isReady = canStick && isTallerThanView && isAligned
+      root.toggleAttribute(READY_ATTRIBUTE, isReady)
+      if (isReady) {
         publishLayout(root, scroller, table, thead)
       }
     }
@@ -133,20 +134,10 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     update()
     window.addEventListener('resize', update)
 
-    const followScroll = () => {
-      setVariable(root, SCROLL_VARIABLE, scroller.scrollLeft)
-    }
-    const needsScrollFallback = !CSS.supports('animation-timeline', 'scroll()')
-    if (needsScrollFallback) {
-      followScroll()
-      scroller.addEventListener('scroll', followScroll, { passive: true })
-    }
-
     return () => {
       resizeObserver.disconnect()
       mutationObserver.disconnect()
       window.removeEventListener('resize', update)
-      scroller.removeEventListener('scroll', followScroll)
       root.removeAttribute(READY_ATTRIBUTE)
       for (const variable of [...VARIABLES, ...pinnedVariables]) {
         root.style.removeProperty(variable)
@@ -185,6 +176,15 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
     resizeObserver.disconnect()
     parent.style.removeProperty(TOP_VARIABLE)
   }
+}
+
+/**
+ * Without a scroll-driven animation the copy could only follow the scroller
+ * from a scroll listener, which visibly trails sideways scrolling. A header
+ * that does not stick reads better than one that lags.
+ */
+function canSlideWithScroller() {
+  return CSS.supports('animation-timeline', 'scroll()')
 }
 
 /**

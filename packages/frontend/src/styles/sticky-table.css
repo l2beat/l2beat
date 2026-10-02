@@ -57,11 +57,6 @@
   & th[data-pinned] {
     visibility: hidden;
   }
-
-  @supports not (animation-timeline: scroll()) {
-    animation: none;
-    transform: translateX(calc(-1 * var(--sticky-table-scroll, 0px)));
-  }
 }
 
 /*
@@ -80,19 +75,6 @@
 
   & th:not([data-pinned]) {
     visibility: hidden;
-  }
-
-  @supports not (animation-timeline: scroll()) {
-    animation: none;
-    transform: translateX(
-      calc(
-        -1 *
-        min(
-          var(--sticky-table-scroll, 0px),
-          var(--sticky-table-pinned-overlap, 0px)
-        )
-      )
-    );
   }
 }
 
