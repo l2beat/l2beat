@@ -26,7 +26,9 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getRowId: (row) => row.hash,
+    // Verifiers that are not deployed yet share the zero hash, and rows with
+    // the same id get duplicated when sorting reorders them.
+    getRowId: (row, index) => `${row.hash}-${index}`,
     getRowCanExpand: () => true,
     initialState: collapsible ? undefined : { expanded: true },
   })
