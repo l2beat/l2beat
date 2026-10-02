@@ -17,6 +17,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
@@ -140,20 +141,20 @@ export async function getDefiProjectEntry(
     })
   }
 
-  if (project.tvsConfig !== undefined) {
+  if (project.defiInfo.tvl !== undefined) {
     sections.push({
-      type: 'TvsValueSection',
+      type: 'DefiTvlSection',
       props: {
         id: 'tvs',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
-        rangeControls: 'tvs',
         project: {
           id: project.id,
           name: project.name,
           shortName: project.shortName,
           iconUrl: icon,
         },
+        dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
       },
     })
   }

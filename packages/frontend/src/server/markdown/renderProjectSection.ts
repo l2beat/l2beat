@@ -290,6 +290,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<T> } = {
   ActivitySection: linkToHtmlPage,
   CostsSection: linkToHtmlPage,
   DataPostedSection: linkToHtmlPage,
+  DefiTvlSection: linkToHtmlPage,
   GardenCropsSection: linkToHtmlPage,
   InteropFlowsSection: linkToHtmlPage,
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
