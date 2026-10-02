@@ -27,6 +27,7 @@ export interface DefiSummaryEntry {
   description: string
   category: ProjectDefiCategory
   totalValueLockedUsd?: number
+  /** External provider name, undefined when the TVL comes from L2BEAT. */
   tvlDataSource?: string
   dependencies?: DefiDependency[]
   isUnderReview: boolean
@@ -62,7 +63,7 @@ export function buildDefiSummaryEntries(
         category: project.defiInfo.category,
         totalValueLockedUsd: tvlByProject.get(project.id),
         tvlDataSource: project.defiInfo.tvl
-          ? getDefiTvlDataSource(project.defiInfo.tvl).name
+          ? getDefiTvlDataSource(project.defiInfo.tvl)?.name
           : undefined,
         dependencies:
           project.externalDependencies !== undefined

@@ -16,7 +16,8 @@ import type { ProjectSectionProps } from '../types'
 export interface DefiTvlSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
-  dataSource: {
+  /** External provider attribution, absent when the data is L2BEAT's own. */
+  dataSource?: {
     name: string
     url?: string
     scope?: string
@@ -44,7 +45,7 @@ export function DefiTvlSection({
     [chartData],
   )
   const sourceDetails = [
-    dataSource.scope,
+    dataSource?.scope,
     data?.sourceTimestamp
       ? `Latest source update: ${formatTimestamp(data.sourceTimestamp, {
           mode: 'datetime',
@@ -56,13 +57,15 @@ export function DefiTvlSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
-      <div className="mb-3">
-        <ChartDataSourceInfo
-          dataSource={dataSource.name}
-          href={dataSource.url}
-          scope={sourceDetails || undefined}
-        />
-      </div>
+      {dataSource && (
+        <div className="mb-3">
+          <ChartDataSourceInfo
+            dataSource={dataSource.name}
+            href={dataSource.url}
+            scope={sourceDetails || undefined}
+          />
+        </div>
+      )}
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
         <TvsChartRangeControls range={range} setRange={setRange} />

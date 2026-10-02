@@ -7,12 +7,13 @@ export interface DefiTvlDataSource {
   scope?: string
 }
 
+/** Returns undefined for L2BEAT's own data, which needs no attribution. */
 export function getDefiTvlDataSource(
   tvl: ProjectDefiTvlConfig,
-): DefiTvlDataSource {
+): DefiTvlDataSource | undefined {
   switch (tvl.source) {
     case 'l2beat':
-      return { name: 'L2BEAT' }
+      return undefined
     case 'defillama':
       return {
         name: 'DeFiLlama',

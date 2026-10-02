@@ -224,7 +224,7 @@ describe(getDefiSummaryEntries.name, () => {
     expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toEqual(undefined)
     expect(byId.get('chainlink')?.totalValueLockedUsd).toEqual(undefined)
     expect(byId.get('uniswapv3')?.totalValueLockedUsd).not.toEqual(undefined)
-    expect(byId.get('liquityv2')?.tvlDataSource).toEqual('L2BEAT')
+    expect(byId.get('liquityv2')?.tvlDataSource).toEqual(undefined)
     expect(byId.get('uniswapv3')?.tvlDataSource).toEqual('DeFiLlama')
   })
 })
