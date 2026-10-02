@@ -1,7 +1,10 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
-import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
+import {
+  MARKDOWN_CONTENT_TYPE,
+  NEGOTIATED_MARKDOWN_CONTENT_TYPE,
+} from '~/server/markdown/markdownAlternate'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
 import { createZkCatalogRouter } from './ZkCatalogRouter'
@@ -30,7 +33,9 @@ describe(createZkCatalogRouter.name, () => {
       { headers: { Accept: 'text/markdown' } },
     )
 
-    expect(response.headers.get('content-type')).toEqual(MARKDOWN_CONTENT_TYPE)
+    expect(response.headers.get('content-type')).toEqual(
+      NEGOTIATED_MARKDOWN_CONTENT_TYPE,
+    )
     expect(await response.text()).toMatchRegex(/^# SP1 Turbo\n/)
   })
 

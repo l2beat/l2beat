@@ -63,11 +63,12 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   }
 
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
+  // First, so the pages those routers answer in markdown carry the Link header too.
+  app.use(LlmsLinkHeaderMiddleware())
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
   app.use('/', createLlmsTxtRouter())
   app.use('/', createMarkdownAlternatesRouter())
-  app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
     app.use('/', express.static('./static'))

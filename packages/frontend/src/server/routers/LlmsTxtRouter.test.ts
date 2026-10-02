@@ -24,6 +24,29 @@ describe(createLlmsTxtRouter.name, () => {
     )
   })
 
+  it('serves the same map as the homepage when Accept prefers markdown', async () => {
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/markdown' },
+    })
+
+    expect(response.status).toEqual(200)
+    expect(response.headers.get('content-type')).toEqual(
+      'text/markdown; charset=utf-8',
+    )
+    expect(response.headers.get('vary')).toEqual('Accept')
+    expect(await response.text()).toEqual(await getLlmsTxt())
+  })
+
+  it('leaves the homepage to the HTML page for browsers', async () => {
+    // Nothing else is mounted here, so falling through shows up as a 404.
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/html' },
+    })
+
+    expect(response.status).toEqual(404)
+    expect(response.headers.get('vary')).toEqual('Accept')
+  })
+
   it('opens with the L2BEAT title and a one-paragraph summary', async () => {
     const body = await getLlmsTxt()
 
