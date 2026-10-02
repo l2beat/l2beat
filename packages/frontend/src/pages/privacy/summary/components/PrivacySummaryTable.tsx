@@ -25,7 +25,10 @@ import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdvers
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
 import { toPrivacyProjectCellProject } from '../../toPrivacyProjectCellProject'
-import type { PrivacySummaryOptionalColumn } from '../privacySummaryGroups'
+import {
+  PRIVACY_SUMMARY_OPTIONAL_COLUMNS as OPTIONAL_COLUMNS,
+  type PrivacySummaryOptionalColumn,
+} from '../privacySummaryGroups'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -94,7 +97,7 @@ const columns = [
     },
   ),
   columnHelper.accessor('totalValueLockedUsd', {
-    id: 'totalValueLockedUsd',
+    id: OPTIONAL_COLUMNS.tvl,
     header: 'TVL',
     cell: (ctx) => {
       if (!ctx.row.original.hasTvl) {
@@ -116,7 +119,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
-    id: 'totalValueDeposited30dUsd',
+    id: OPTIONAL_COLUMNS.volume30d,
     header: '30D vol.',
     cell: (ctx) => {
       const value = ctx.getValue()
@@ -139,7 +142,7 @@ const columns = [
         ? entry.anonymitySet.value
         : undefined,
     {
-      id: 'anonymitySet',
+      id: OPTIONAL_COLUMNS.anonymitySet,
       header: 'Anon. set',
       cell: (ctx) => (
         <AnonymitySetCell
@@ -158,7 +161,7 @@ const columns = [
     id: 'protocolRisks',
     columns: [
       columnHelper.display({
-        id: 'trustedSetup',
+        id: OPTIONAL_COLUMNS.trustedSetup,
         header: 'Setup',
         cell: (ctx) => (
           <PrivacyTrustedSetupCell

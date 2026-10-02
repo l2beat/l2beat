@@ -1,21 +1,17 @@
 import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { cn } from '~/utils/cn'
 import { PrivacyRosetteLegend } from '../../rosette/PrivacyRosetteLegend'
-import {
-  getPrivacySummaryGroups,
-  type PrivacySummaryGroup,
-} from '../privacySummaryGroups'
+import type { PrivacySummaryGroup } from '../privacySummaryGroups'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
 
 /** The first group spans the page, the others sit side by side below it. */
 export function PrivacySummaryTables({
-  entries,
+  groups,
 }: {
-  entries: PrivacySummaryEntry[]
+  groups: PrivacySummaryGroup[]
 }) {
-  const [first, ...rest] = getPrivacySummaryGroups(entries)
+  const [first, ...rest] = groups
 
   return (
     <div className="mt-4 flex flex-col gap-4">
