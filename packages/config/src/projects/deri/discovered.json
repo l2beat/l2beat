@@ -1,7 +1,7 @@
 {
   "name": "deri",
-  "timestamp": 1790891953,
-  "configHash": "0x74af3da869f8014324f67415c4810e92a4da93e6507c6fd4a8a7ef4f94d450cd",
+  "timestamp": 1790940361,
+  "configHash": "0x2f350421c9fc9d91e52c510fc497bd3610167df1ea5abf3af4791735390b1230",
   "entries": [
     {
       "address": "arb1:0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE",
@@ -323,13 +323,13 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6222,
+        "firstUnresolvedNode": 6224,
         "inbox": "arb1:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18603821,
-        "latestConfirmed": 6221,
-        "latestNodeCreated": 6225,
+        "latestConfirmed": 6223,
+        "latestNodeCreated": 6229,
         "loserStakeEscrow": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -426,8 +426,13 @@
       "name": "Outbox",
       "address": "arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xc0f0150134d542551ab981033f0dd34e7462d1fd27028a5a3bf9ea7db360d2c7"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
@@ -446,12 +451,26 @@
             ["arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "bridge": "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+        "l2ToL1BatchNum": 0,
+        "l2ToL1Block": 0,
+        "l2ToL1EthBlock": 0,
+        "l2ToL1OutputId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2ToL1Sender": "arb1:0x0000000000000000000000000000000000000000",
+        "l2ToL1Timestamp": 0,
+        "OUTBOX_VERSION": 2,
+        "rollup": "arb1:0x846387C3D6001F74170455B1074D01f05eB3067a"
+      },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "TransparentUpgradeableProxy",
-        "arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381": ""
-      }
+        "arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381": "Outbox"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "arb1:0xa634397c4E5F12C5312c535a1DaBBaae34Ee166e",
@@ -597,7 +616,7 @@
         "allowedOutboxList": [
           "arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
         ],
-        "delayedMessageCount": 5846,
+        "delayedMessageCount": 5850,
         "inboxHistory": [
           "arb1:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
           "arb1:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
@@ -605,8 +624,8 @@
         "outboxHistory": ["arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"],
         "rollup": "arb1:0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerInbox": "arb1:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 5769,
-        "sequencerReportedSubMessageCount": 241073
+        "sequencerMessageCount": 5773,
+        "sequencerReportedSubMessageCount": 241147
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -695,7 +714,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 5769,
+        "batchCount": 5773,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"],
         "bridge": "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
@@ -723,7 +742,7 @@
         "rollup": "arb1:0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5845,
+        "totalDelayedMessagesRead": 5849,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1257,6 +1276,43 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
+    "arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381": [
+      "error AlreadyInit()",
+      "error AlreadySpent(uint256 index)",
+      "error BadPostUpgradeInit()",
+      "error BridgeCallFailed()",
+      "error HadZeroInit()",
+      "error MerkleProofTooLong(uint256 actualLength, uint256 maxProofLength)",
+      "error NotOwner(address sender, address owner)",
+      "error NotRollup(address sender, address rollup)",
+      "error PathNotMinimal(uint256 index, uint256 maxIndex)",
+      "error ProofTooLong(uint256 proofLength)",
+      "error RollupNotChanged()",
+      "error SimulationOnlyEntrypoint()",
+      "error UnknownRoot(bytes32 root)",
+      "event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)",
+      "event SendRootUpdated(bytes32 indexed outputRoot, bytes32 indexed l2BlockHash)",
+      "function OUTBOX_VERSION() view returns (uint128)",
+      "function bridge() view returns (address)",
+      "function calculateItemHash(address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data) pure returns (bytes32)",
+      "function calculateMerkleRoot(bytes32[] proof, uint256 path, bytes32 item) pure returns (bytes32)",
+      "function executeTransaction(bytes32[] proof, uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
+      "function executeTransactionSimulation(uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
+      "function initialize(address _bridge)",
+      "function isSpent(uint256 index) view returns (bool)",
+      "function l2ToL1BatchNum() pure returns (uint256)",
+      "function l2ToL1Block() view returns (uint256)",
+      "function l2ToL1EthBlock() view returns (uint256)",
+      "function l2ToL1OutputId() view returns (bytes32)",
+      "function l2ToL1Sender() view returns (address)",
+      "function l2ToL1Timestamp() view returns (uint256)",
+      "function postUpgradeInit()",
+      "function rollup() view returns (address)",
+      "function roots(bytes32) view returns (bytes32)",
+      "function spent(uint256) view returns (bytes32)",
+      "function updateRollupAddress()",
+      "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
+    ],
     "arb1:0xce4b9839C83cB0650B34659B8Fa44609A45b1010": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
@@ -1497,7 +1553,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 510791249 },
+  "usedBlockNumbers": { "arbitrum": 510969352 },
   "permissionsConfigHash": "0x03ac46e27fe64664d31a6c4fda6aebd098329539ae3af34ed4184978bde494b5",
   "permissions": {
     "arb1:0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE": {
