@@ -68,6 +68,33 @@ describe(createMarkdownAlternatesRouter.name, () => {
     )
   })
 
+  it('serves the alternate on the page URL when Accept prefers markdown', async () => {
+    const response = await fetchFromRouter(
+      createMarkdownAlternatesRouter([ALTERNATE]),
+      '/layer2s/summary',
+      { headers: { Accept: 'text/markdown' } },
+    )
+
+    expect(response.status).toEqual(200)
+    expect(response.headers.get('content-type')).toEqual(
+      'text/markdown; charset=utf-8',
+    )
+    expect(response.headers.get('vary')).toEqual('Accept')
+    expect(await response.text()).toMatchRegex(/^# L2BEAT scaling projects\n/)
+  })
+
+  it('leaves the page URL to the HTML page for browsers', async () => {
+    // Nothing else is mounted here, so falling through shows up as a 404.
+    const response = await fetchFromRouter(
+      createMarkdownAlternatesRouter([ALTERNATE]),
+      '/layer2s/summary',
+      { headers: { Accept: 'text/html' } },
+    )
+
+    expect(response.status).toEqual(404)
+    expect(response.headers.get('vary')).toEqual('Accept')
+  })
+
   it('serves exactly the list pages registered as having markdown', () => {
     const served: string[] = MARKDOWN_ALTERNATES.map((a) => a.path)
     const registered = LIST_PAGES_WITH_MARKDOWN.map((page) => `${page}.md`)

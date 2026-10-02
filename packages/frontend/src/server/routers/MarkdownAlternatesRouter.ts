@@ -14,7 +14,10 @@ import {
   type LinkListSection,
   renderLinkListMarkdown,
 } from '~/server/markdown/listPageMarkdown'
-import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
+import {
+  serveMarkdown,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import {
   LIST_PAGES_WITH_MARKDOWN,
@@ -26,6 +29,9 @@ import {
  * URL plus `.md` as the llms.txt spec recommends. llms.txt links here instead
  * of listing every project itself, so it stays small enough to fit in context
  * while an agent can still map a project name to its page and API slug.
+ *
+ * The page URL itself answers with the same markdown when Accept prefers it,
+ * and falls through to the HTML page otherwise.
  */
 export function createMarkdownAlternatesRouter(
   alternates: MarkdownAlternate[] = MARKDOWN_ALTERNATES,
@@ -33,15 +39,21 @@ export function createMarkdownAlternatesRouter(
   const router = express.Router()
 
   for (const alternate of alternates) {
-    router.get(alternate.path, async (_req, res) => {
-      sendMarkdownDocument(
-        res,
-        renderLinkListMarkdown(alternate, await alternate.getSections()),
-      )
-    })
+    const getMarkdown = async () =>
+      renderLinkListMarkdown(alternate, await alternate.getSections())
+
+    router.get(alternate.path, serveMarkdown(getMarkdown))
+    router.get(
+      toPagePath(alternate.path),
+      serveMarkdownIfPreferred(getMarkdown),
+    )
   }
 
   return router
+}
+
+function toPagePath(alternatePath: MarkdownAlternatePath) {
+  return alternatePath.slice(0, -'.md'.length)
 }
 
 export type MarkdownAlternatePath = `${ListPageWithMarkdown}.md`

@@ -5,7 +5,10 @@ import {
   type MarkdownLink,
   renderLinkListMarkdown,
 } from '~/server/markdown/listPageMarkdown'
-import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
+import {
+  MARKDOWN_CONTENT_TYPE,
+  serveMarkdownIfPreferred,
+} from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 import { isServedAsMarkdown } from '~/utils/getMarkdownAlternatePath'
 import type { MarkdownAlternatePath } from './MarkdownAlternatesRouter'
@@ -14,6 +17,9 @@ import type { MarkdownAlternatePath } from './MarkdownAlternatesRouter'
  * Entry point for AI agents, following the llms.txt spec (https://llmstxt.org):
  * a short curated map of the site that fits in context, with detail behind
  * the links. Project lists live in the markdown alternates, not here.
+ *
+ * The same map is the markdown version of the homepage, which agents ask for
+ * with Accept: text/markdown to find their way around the site.
  */
 export function createLlmsTxtRouter() {
   const router = express.Router()
@@ -30,6 +36,11 @@ export function createLlmsTxtRouter() {
   router.get('/llms.txt', (_req, res) => {
     res.header('Content-Type', MARKDOWN_CONTENT_TYPE).send(body)
   })
+
+  router.get(
+    '/',
+    serveMarkdownIfPreferred(() => Promise.resolve(body)),
+  )
 
   return router
 }

@@ -58,8 +58,9 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
       )
 
       expect(response.status).toEqual(200)
+      // Agents check for the type they asked for; the .md URL stays text/plain.
       expect(response.headers.get('content-type')).toEqual(
-        'text/plain; charset=utf-8',
+        'text/markdown; charset=utf-8',
       )
       expect(await response.text()).toEqual('# arbitrum\n')
     }
