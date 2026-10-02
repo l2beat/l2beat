@@ -17,11 +17,11 @@ export function ChainAddressField(props: {
   autoFocus?: boolean
   onChange: (value: ChainAddress) => void
 }) {
-  const [blurred, setBlurred] = useState(false)
+  const [focused, setFocused] = useState(props.autoFocus ?? false)
   const address = props.value.address.trim()
   const invalid = !isValidEthereumAddress(address)
   const errorVisible =
-    invalid && (props.submitted || (blurred && address !== ''))
+    invalid && (props.submitted || (!focused && address !== ''))
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -54,11 +54,11 @@ export function ChainAddressField(props: {
           placeholder="0x… or eth:0x…"
           className="min-w-0 flex-1 bg-transparent px-3 py-2 font-mono text-sm placeholder:font-sans placeholder:text-coffee-400/60 focus:outline-none"
           value={props.value.address}
-          onBlur={() => setBlurred(true)}
-          onChange={(e) => {
-            setBlurred(false)
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          onChange={(e) =>
             props.onChange(withChainFromInput(props.value, e.target.value))
-          }}
+          }
         />
       </div>
       {errorVisible && (
