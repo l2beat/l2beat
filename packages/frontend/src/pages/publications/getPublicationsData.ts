@@ -33,7 +33,7 @@ export async function getPublicationsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Publications - L2BEAT',
+        name: 'Publications',
         description:
           'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
         url,

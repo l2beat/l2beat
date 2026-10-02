@@ -31,10 +31,11 @@ import {
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
-  const api = '/api/scaling'
+  const api = getL2ProjectApiUrls(entry)
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
@@ -64,16 +65,16 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
     sections: entry.sections,
     apiLinks: {
       tvs: [
-        { title: 'TVS chart (JSON)', url: `${api}/tvs/${entry.slug}` },
+        { title: 'TVS chart (JSON)', url: api.tvs },
         {
           title: 'TVS breakdown by token (JSON)',
-          url: `${api}/tvs/${entry.slug}/breakdown`,
+          url: api.tvsBreakdown,
         },
       ],
       activity: [
         {
           title: 'Activity chart (JSON)',
-          url: `${api}/activity/${entry.slug}`,
+          url: api.activity,
         },
       ],
     },

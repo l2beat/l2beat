@@ -5,11 +5,7 @@ import { getTotalValueLockedByProject } from '../getDefiSummaryEntries'
 export async function getDefiProjectTotalValueLocked(
   slug: string,
 ): Promise<number | undefined> {
-  const project = await ps.getProject({
-    slug,
-    where: ['defiInfo'],
-    optional: ['tvsConfig'],
-  })
+  const project = await ps.getProject({ slug, select: ['defiInfo'] })
   if (!project) return undefined
   const tvlByProject = await getTotalValueLockedByProject([project])
   return tvlByProject.get(project.id)

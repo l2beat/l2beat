@@ -114,14 +114,14 @@ hash and requires rediscovery of dependent projects.
 
 ```
 discovered.json ─┐
-diffHistory.md  ─┼─ getOssificationInput ─► OssificationInput ─► measureOssification ─► ProjectOssification
-config.jsonc    ─┤        (judgement)          four tables            (arithmetic)
+diffHistory.md  ─┼─ getOssificationHistory ─► OssificationHistory ─► measureOssification ─► OssificationResult
+config.jsonc    ─┤        (judgement)          four tables                (arithmetic)
 templates       ─┤
 ossification.json┘         (patch)
 ```
 
 The derivation answers every per-contract question. The measure only
-aggregates. The input is four tables:
+aggregates. The history is four tables:
 
 - `contracts`: one row per contract that is critical today, with its name,
   address, verification status, `ossifyingSince` (the last reset of its
@@ -207,16 +207,17 @@ diffHistory entry, and re-check that link after rediscovery.
   `$pastUpgrades` tuples. A round-trip test, a seeded fuzz test and corpus
   tests over every project's diffHistory.md pin them. `CriticalFlag` in
   `ColorConfig.ts` is the shape of `critical`.
-- `packages/config/src/ossification/`: `getOssificationInput`
-  calculates the input. `measureOssification` calculates the result.
-  `loadOssificationInput` reads the files. `ProjectDiscovery` exposes both
-  steps as `getOssificationInput` and `getOssification`. A project opts in by
-  setting `ossification: discovery.getOssification(chainStart)` in its config,
-  so
-  ossification can be switched off per project without touching the discovery
-  data. All calls share one `now` value. The build stores the result in the
-  `ossification` column of the SQLite database. The clocks are timestamps. The
-  frontend calculates the ages at request time.
-- `l2b ossification <project> [--input]`: Shows the result for a project. With
-  `--input`, it shows the perimeter and the events. Build `packages/config`
+- `packages/config/src/ossification/`: `getOssificationHistory`
+  calculates the history. `loadOssificationHistory` reads the files.
+  `ProjectDiscovery` exposes it as `getOssificationHistory`. A project opts in
+  by setting `ossificationHistory: discovery.getOssificationHistory(chainStart)`
+  in its config, so ossification can be switched off per project without
+  touching the discovery data. The build stores the history in the
+  `ossificationHistory` column of the SQLite database. The history has no
+  `now`, so it only changes when the files it is read from change.
+- `packages/shared/src/tools/ossification/`: `measureOssification(history, now)`
+  calculates the result, together with the history and result types. The
+  frontend calls it with the request time.
+- `l2b ossification <project> [--history]`: Shows the result for a project.
+  With `--history`, it shows the perimeter and the events. Build `packages/config`
   first.

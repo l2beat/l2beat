@@ -9,11 +9,6 @@ import type { FlattenOptions } from './types'
 
 type ParseResult = ReturnType<typeof parse>
 
-export interface ByteRange {
-  start: number
-  end: number
-}
-
 export type DeclarationType =
   | 'contract'
   | 'interface'

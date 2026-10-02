@@ -8,6 +8,7 @@ import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
 export async function getL2ProjectData(
@@ -88,6 +89,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'costsInfo',
       'activityConfig',
       'crops',
+      'ossificationHistory',
     ],
   })
   if (!project) return undefined
@@ -100,7 +102,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
+        name: project.name,
         description: getScalingMetadataDescription({
           name: project.name,
           category: project.scalingInfo.type,
@@ -115,6 +117,15 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/layer2s/projects/${project.slug}/opengraph-image.png`,
         },
+        structuredData: (page) => [
+          getL2ProjectStructuredData(page, {
+            name: project.name,
+            slug: project.slug,
+            archivedAt: project.archivedAt,
+            hasTvsApi: project.tvsConfig !== undefined,
+            hasActivityApi: project.activityConfig !== undefined,
+          }),
+        ],
       }),
     },
     props: {

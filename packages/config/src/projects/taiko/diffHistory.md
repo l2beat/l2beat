@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x4bb43a3e4f908b7a7f26772432ec7858abebc5db
+
+# Diff at Thu, 01 Oct 2026 11:11:03 GMT:
+
+- id: 8abd4ccf
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790078329
+- current timestamp: 1790850875
+
+## Description
+
+- Two new standard DAO proposals (25 and 26), both still open in their veto period:
+  - veto ends 2026-10-04: upgrades MainnetBridge, MainnetERC20Vault, MainnetERC721Vault, MainnetERC1155Vault, registers addresses in DefaultResolver and sends an L1->L2 message.
+  - veto ends 2026-10-10: upgrades MainnetInbox, changes trusted RISC Zero image IDs and SP1 programs, changes MrEnclave values in both AutomataDcapV3Attestation contracts and deletes SGX instances in both SecureSgxVerifiers. Reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8c49f2c8bbf29.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        40
++        42
+      values.proposalIds.40:
++        "609192021977025249345447570106396801273767657512"
+      values.proposalIds.41:
++        "609381197194961808191081799941267350559458852905"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
+      values.proposalCount:
+-        25
++        27
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
++        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
 Generated with discovered.json: 0xfc11d74360ada478a3dbe79ae86e4e2667feca2a
 
 # Diff at Wed, 30 Sep 2026 07:45:37 GMT:

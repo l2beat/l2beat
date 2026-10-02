@@ -67,7 +67,7 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
-  ossification: discovery.getOssification(genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],

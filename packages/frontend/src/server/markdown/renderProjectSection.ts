@@ -287,6 +287,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   ActivitySection: renderActivitySection,
   CostsSection: renderCostsSection,
   DataPostedSection: renderDataPostedSection,
+  DefiTvlSection: pointToHtmlPage('The interactive TVL chart is shown'),
   GardenCropsSection: renderGardenCropsSection,
   InteropFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,

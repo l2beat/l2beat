@@ -1,3 +1,588 @@
+Generated with discovered.json: 0x56160c326fe673bf98b2a55da427abcfdc301948
+
+# Diff at Thu, 01 Oct 2026 12:52:03 GMT:
+
+- id: 14e50736
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789656139
+- current timestamp: 1790851094
+
+## Description
+
+Aragon vote 205 / Dual Governance proposal 14 (LIP-37 Execution Delegation Framework), executed 2026-09-25:
+- All four HashConsensus committees and the DSM guardian set now consist of per-entity DelegationContracts: a hot-key delegate acts through the contract, its owner Safe can revoke it instantly or install a new one after a 2-day cooldown.
+- New DepositSecurityModule v5 that only accepts ERC-1271 guardians and binds signatures to the guardian. It replaces the old DSM as StakingRouter unvetter. LidoLocator impl redeployed only to point to it: https://disco.l2beat.com/diff/eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be/eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0, https://disco.l2beat.com/diff/eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313/eth:0x60E09F1791F1168d0450E4F100616B4a3F95119C
+- TopUpGateway TOP_UP_ROLE moved to a DelegationContract (depositor bot). EasyTrack EVMScriptExecutor gets stETH BUFFER_RESERVE_MANAGER_ROLE.
+
+Other: P2P Safe signer rotated, VettedGate tree updated, 15 ConsolidationMigrator pairs added, MEV relay list v26 drops bloXroute Max-Profit, stETH fee split shifts with stake migrating from Curated Module v1 to v2 (module fees unchanged).
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0x2e59A20f205bB85a89C53f1936454680651E618e) [lido/Voting] {
+    +++ description: Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.
+      receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.143:
+-        {"permission":"interact","from":"eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [lido/LidoDaoAgent] {
+    +++ description: The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner"}
+      directlyReceivedPermissions.73:
+-        {"permission":"interact","from":"eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner"}
+    }
+```
+
+```diff
+    contract TopUpGateway (eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374) [lido/TopUpGateway] {
+    +++ description: Validates consensus-layer proofs and submits EIP-7251 validator top-ups for staking modules. It limits top-up batch size, proof age, and call frequency.
+      values.accessControl.TOP_UP_ROLE.members.0:
+-        "eth:0xF82aC5937A20dC862F9bc0668779031E06000f17"
++        "eth:0x6Aa249bA53A3abcaC52F91146583B3eE2Ee4C7F5"
+      values.topUpSubmitters.0:
+-        "eth:0xF82aC5937A20dC862F9bc0668779031E06000f17"
++        "eth:0x6Aa249bA53A3abcaC52F91146583B3eE2Ee4C7F5"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.0:
+-        "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
++        "eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.1:
+-        "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
++        "eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.2:
+-        "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2"
++        "eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.3:
+-        "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78"
++        "eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.4:
+-        "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
++        "eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.5:
+-        "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
++        "eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.6:
+-        "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
++        "eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.7:
+-        "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
++        "eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.8:
+-        "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
++        "eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.0:
+-        "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
++        "eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.1:
+-        "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
++        "eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.2:
+-        "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2"
++        "eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.3:
+-        "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78"
++        "eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.4:
+-        "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
++        "eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.5:
+-        "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
++        "eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.6:
+-        "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
++        "eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.7:
+-        "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
++        "eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.8:
+-        "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
++        "eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f"
+    }
+```
+
+```diff
+    contract P2P (eth:0x8ed4dfd3A610CCF1FB45e797bf5D8e0f93084F22) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xE21a08C60b065cE42FD5b0BD99a98A0FAe6ddA23"
++        "eth:0x8a955ed24FcB3cF71d8A5BC828B7DcFdB2C17101"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x902D64c93F6595339aA46105627a085591051aFb) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.0:
+-        "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
++        "eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.1:
+-        "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
++        "eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.2:
+-        "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2"
++        "eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.3:
+-        "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78"
++        "eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.4:
+-        "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
++        "eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.5:
+-        "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
++        "eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.6:
+-        "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
++        "eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.7:
+-        "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
++        "eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.8:
+-        "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
++        "eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f"
+    }
+```
+
+```diff
+    contract ConsolidationMigrator (eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7) [lido/ConsolidationMigrator] {
+    +++ description: Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.24:
++        {"sourceOperatorId":37,"targetOperatorId":25,"submitter":"eth:0xF5Cba67d34c18bD77Ecd705341bD1b00d8A6bDB9"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.25:
++        {"sourceOperatorId":19,"targetOperatorId":40,"submitter":"eth:0x60bC65e1ccA448F98578F8d9f9AB64c3BA70a4c3"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.26:
++        {"sourceOperatorId":19,"targetOperatorId":41,"submitter":"eth:0x60bC65e1ccA448F98578F8d9f9AB64c3BA70a4c3"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.27:
++        {"sourceOperatorId":31,"targetOperatorId":14,"submitter":"eth:0xE556Da28015c04F35A52B3111B9F4120E908056e"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.28:
++        {"sourceOperatorId":17,"targetOperatorId":35,"submitter":"eth:0xb79C6146b0165eB25Fa33A796FB3bF3916254c67"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.29:
++        {"sourceOperatorId":28,"targetOperatorId":24,"submitter":"eth:0x209a649DAF35f390285c28F8FE3907804535C247"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.30:
++        {"sourceOperatorId":36,"targetOperatorId":26,"submitter":"eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.31:
++        {"sourceOperatorId":0,"targetOperatorId":38,"submitter":"eth:0x6fA0f36A24Cdb9cE4aeCc74DC86084c0c5dad8c6"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.32:
++        {"sourceOperatorId":5,"targetOperatorId":5,"submitter":"eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.33:
++        {"sourceOperatorId":5,"targetOperatorId":7,"submitter":"eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.34:
++        {"sourceOperatorId":2,"targetOperatorId":23,"submitter":"eth:0x1126EBBDd9f2A9B3a1F1D48A74cDF4e67B80C262"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.35:
++        {"sourceOperatorId":35,"targetOperatorId":13,"submitter":"eth:0x78CEE97C23560279909c0215e084dB293F036774"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.36:
++        {"sourceOperatorId":27,"targetOperatorId":45,"submitter":"eth:0x58b620C74fB5D370e960C81B9f319653f6176945"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.37:
++        {"sourceOperatorId":33,"targetOperatorId":4,"submitter":"eth:0x208e16012C0D774703cAA93f00F59A2d4a31689a"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.38:
++        {"sourceOperatorId":11,"targetOperatorId":39,"submitter":"eth:0xd8d93E91EA5F24D0E2a328BC242055D40f00bE1A"}
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      values.aragonPermissions.BUFFER_RESERVE_MANAGER_ROLE.members.1:
++        "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"
+      values.bufferReserveManagers.1:
++        "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xB314D4A76C457c93150d308787939063F4Cc67E0) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      values.treeCid:
+-        "bafkreihg2mqulwsmhiho6bcd4mf4ao2kigzaq3uh5dlna34cjiyllawvja"
++        "bafkreibtrmelqmb22jhbc5bnexwmfuoz3sgntv7b5ip5bvsbmftt4jevru"
+      values.treeRoot:
+-        "0x8c92643a5320749acb56f82705e45e3cd680e1760c172e28a4945118f3769b69"
++        "0x233e33a3d3a195e614c5dc13886e1804cd9c0b88dac909fb67e0badef44a8f38"
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) [lido/LidoLocator] {
+    +++ description: Canonical registry of the active Lido core, oracle, staking, withdrawal, top-up, consolidation, and StakingVault subsystem contract addresses.
+      values.$implementation:
+-        "eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313"
++        "eth:0x60E09F1791F1168d0450E4F100616B4a3F95119C"
+      values.$pastUpgrades.12:
++        ["2026-09-25T12:27:47.000Z","0x2aac8dd013e5284a39a08c3ca463862aa22b06b3c1253390a4fc806d0bca6a9e",["eth:0x60E09F1791F1168d0450E4F100616B4a3F95119C"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.depositSecurityModule:
+-        "eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be"
++        "eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0"
+      values.proxy__getImplementation:
+-        "eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313"
++        "eth:0x60E09F1791F1168d0450E4F100616B4a3F95119C"
+      implementationNames.eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313:
+-        "LidoLocator"
+      implementationNames.eth:0x60E09F1791F1168d0450E4F100616B4a3F95119C:
++        "LidoLocator"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.0:
+-        "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
++        "eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.1:
+-        "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
++        "eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.2:
+-        "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2"
++        "eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.3:
+-        "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78"
++        "eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.4:
+-        "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
++        "eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.5:
+-        "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
++        "eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.6:
+-        "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
++        "eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.7:
+-        "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
++        "eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d"
++++ description: Oracle committee members, excluding their changing last-reported reference slots.
+      values.members.8:
+-        "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
++        "eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f"
+    }
+```
+
+```diff
+    contract EasyTrack (eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea) [lido/EasyTrack] {
+    +++ description: Optimistic Lido DAO motion system. Approved factories restrict the target and selector of each motion; LDO holders can object, and an unobstructed motion is executed through the EVMScriptExecutor after its delay.
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"change the ETH deposit-reserve target retained in the stETH buffer.","role":".bufferReserveManagers","via":[{"address":"eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DepositSecurityModule (eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be) [lido/DepositSecurityModule]
+    +++ description: Guardian-based circuit breaker for staking-module deposits. Buffered ETH can only be deposited into a module with attestations of the current deposit root and module nonce from a quorum of guardians, while any single guardian can pause all deposits or unvet node-operator signing keys. The owner configures guardians, quorum and pause parameters and resumes deposits. Version 5 only accepts ERC-1271 guardian contracts and binds every signed message to the signing guardian.
+```
+
+```diff
+    contract MEV Boost Relay Allowed List (eth:0xF95f069F9AD107938F6ba802a3da87892298610E) [lido/MEVBoostRelayAllowedList] {
+    +++ description: Registry of MEV-Boost relay endpoints supported by Lido node operators. The list distinguishes mandatory relays from optional relays and is consumed offchain.
+      values.get_allowed_list_version:
+-        25
++        26
+      values.get_relays.3.description:
+-        "bloXroute Max-Profit Relay"
++        "Ultra Sound Relay - filtering"
+      values.get_relays.3.operator:
+-        "bloXroute"
++        "Ultra Sound"
+      values.get_relays.3.uri:
+-        "https://0x8b5d2e73e2a3a55c6c87b8b6eb92e0149a125c852751db1422fa951e42a09b82c142c3ea98d0d9930b056a3bc9896b8f@bloxroute.max-profit.blxrbdn.com"
++        "https://0xa1559ace749633b997cb3fdacffb890aeebdb0f5a3b6aaa7eeeaf1a38af0a8fe88b9e4b1f61f236d2e64d95733327a62@relay-filtered.ultrasound.money"
+      values.get_relays.8:
+-        {"uri":"https://0xa1559ace749633b997cb3fdacffb890aeebdb0f5a3b6aaa7eeeaf1a38af0a8fe88b9e4b1f61f236d2e64d95733327a62@relay-filtered.ultrasound.money","operator":"Ultra Sound","is_mandatory":true,"description":"Ultra Sound Relay - filtering"}
+      values.get_relays_amount:
+-        9
++        8
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.accessControl.STAKING_MODULE_UNVETTING_ROLE.members.0:
+-        "eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be"
++        "eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0"
+      values.stakingModuleUnvetters.0:
+-        "eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be"
++        "eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0"
+    }
+```
+
+```diff
+    contract EVMScriptExecutor (eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977) [lido/EVMScriptExecutor] {
+    +++ description: EasyTrack execution adapter. It executes the Aragon CallsScript produced by an approved EasyTrack motion, making downstream calls from this contract's address.
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"change the ETH deposit-reserve target retained in the stETH buffer.","role":".bufferReserveManagers"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x031E597BcF680f1f2293b119b4b2B14096B15497) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x35506190Ca6df385aA6Bc4a970646dd4f49426c1) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DepositSecurityModule (eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0) [lido/DepositSecurityModule]
+    +++ description: Guardian-based circuit breaker for staking-module deposits. Buffered ETH can only be deposited into a module with attestations of the current deposit root and module nonce from a quorum of guardians, while any single guardian can pause all deposits or unvet node-operator signing keys. The owner configures guardians, quorum and pause parameters and resumes deposits. Version 5 only accepts ERC-1271 guardian contracts and binds every signed message to the signing guardian.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x6A22d74a816662078f2371A7138E7614874cd61d) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x6Aa249bA53A3abcaC52F91146583B3eE2Ee4C7F5) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x915F0Fa50E1af761B113b41c79ab33Bf4734C36E) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xDc1579636686C082fc3b00B9EB25259A110D0C44) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xe387Ba1d5C9f6306eCe9ac949C7fB6233dD5411E) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+```diff
++   Status: CREATED
+    contract DelegationContract (eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3) [lido/DelegationContract]
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+```
+
+## Source code changes
+
+```diff
+...:0x031E597BcF680f1f2293b119b4b2B14096B15497.sol | 2750 ++++++++++++++++++++
+ ...:0x35506190Ca6df385aA6Bc4a970646dd4f49426c1.sol | 2750 ++++++++++++++++++++
+ ...:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe.sol | 2750 ++++++++++++++++++++
+ ...:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC.sol | 2750 ++++++++++++++++++++
+ ...:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f.sol | 2750 ++++++++++++++++++++
+ ...:0x6A22d74a816662078f2371A7138E7614874cd61d.sol | 2750 ++++++++++++++++++++
+ ...:0x6Aa249bA53A3abcaC52F91146583B3eE2Ee4C7F5.sol | 2750 ++++++++++++++++++++
+ ...:0x915F0Fa50E1af761B113b41c79ab33Bf4734C36E.sol | 2750 ++++++++++++++++++++
+ ...:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d.sol | 2750 ++++++++++++++++++++
+ ...:0xC4f2704273598d51A0ec76A31C12553ec8f5A891.sol | 2750 ++++++++++++++++++++
+ ...:0xDc1579636686C082fc3b00B9EB25259A110D0C44.sol | 2750 ++++++++++++++++++++
+ ...:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3.sol | 2750 ++++++++++++++++++++
+ ...:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749.sol | 2750 ++++++++++++++++++++
+ ...:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d.sol | 2750 ++++++++++++++++++++
+ ...:0xd524101C3c40f71Fce7B9312D299603880a06Bdb.sol | 2750 ++++++++++++++++++++
+ ...:0xe387Ba1d5C9f6306eCe9ac949C7fB6233dD5411E.sol | 2750 ++++++++++++++++++++
+ .../DepositSecurityModule.sol                      |  546 +++-
+ 17 files changed, 44482 insertions(+), 64 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789656139 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
+```diff
+    EOA (eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
+```diff
+    EOA (eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
+```diff
+    EOA (eth:0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
+```diff
+    EOA (eth:0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      fieldMeta.getFeeDistribution:
++        {"description":"Deprecated split of getFee, derived from current staking-module stake weights. Its output labels are swapped relative to StakingRouter.getStakingFeeAggregateDistribution: treasuryFeeBasisPoints holds the staking modules' share and operatorsFeeBasisPoints the treasury's share."}
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be) [lido/DepositSecurityModule] {
+    +++ description: Guardian-based circuit breaker for staking-module deposits. Buffered ETH can only be deposited into a module with attestations of the current deposit root and module nonce from a quorum of guardians, while any single guardian can pause all deposits or unvet node-operator signing keys. The owner configures guardians, quorum and pause parameters and resumes deposits. Version 5 only accepts ERC-1271 guardian contracts and binds every signed message to the signing guardian.
+      description:
+-        "Guardian-based circuit breaker for legacy staking-module deposits. Guardians can collectively pause deposits if a malicious or stale deposit is observed, while the owner configures guardians and resumes deposits."
++        "Guardian-based circuit breaker for staking-module deposits. Buffered ETH can only be deposited into a module with attestations of the current deposit root and module nonce from a quorum of guardians, while any single guardian can pause all deposits or unvet node-operator signing keys. The owner configures guardians, quorum and pause parameters and resumes deposits. Version 5 only accepts ERC-1271 guardian contracts and binds every signed message to the signing guardian."
+    }
+```
+
+```diff
+    EOA (eth:0xf82D88217C249297C6037BA77CE34b3d8a90ab43) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
++        "attest staking-module deposits (deposits need 4 guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
+    }
+```
+
 Generated with discovered.json: 0x56727b6c8a6b47a049c7289647f244b679289ac8
 
 # Diff at Fri, 25 Sep 2026 12:12:34 GMT:

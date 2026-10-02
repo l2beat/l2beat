@@ -10,6 +10,7 @@ export function getEthereumConnectData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: 'Ethereum Connect Survey',
         title: 'Ethereum Connect Survey',
         description:
           'Help us understand the needs of professionals in LATAM who want to learn more about crypto and Ethereum by filling this quick survey',

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.",
+  // owners are per-entity Safes whose signers are not relevant for the role they hold
+  "ignoreRelatives": ["owner"],
+  "fields": {
+    "getDelegate": {
+      "permissions": [{ "type": "act" }]
+    },
+    "owner": {
+      "permissions": [
+        { "type": "act", "delay": "{{getCooldown}}" },
+        {
+          "type": "interact",
+          "description": "revoke the current delegate immediately or permanently terminate this contract."
+        }
+      ]
+    }
+  }
+}

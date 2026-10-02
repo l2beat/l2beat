@@ -56,7 +56,7 @@ export function ProjectIconList({
     <div
       className={cn('grid grid-cols-2', className)}
       style={{
-        gridTemplateColumns: `${visibleProjects.length === 1 ? 20 : visibleProjects.length * 15}px 30px`,
+        gridTemplateColumns: `${visibleProjects.length === 1 ? 20 : visibleProjects.length * 15}px${overflowProjects.length > 0 ? ' 30px' : ''}`,
       }}
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
