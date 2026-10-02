@@ -1,4 +1,5 @@
 import { type RefObject, useLayoutEffect, useRef } from 'react'
+import { forwardStickyHeaderInput } from './forwardStickyHeaderInput'
 import {
   getPinnedLeftVariable,
   PINNED_CELL_ATTRIBUTE,
@@ -91,9 +92,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
 
     let pinnedVariables: string[] = []
     const update = () => {
-      const widths = getColumnCells(table).map(
-        (cell) => cell.getBoundingClientRect().width,
-      )
+      const widths = measureColumnWidths(table)
       // The table's own pinned cells use these whether the header sticks or
       // not, so they do not shift when a resize switches it.
       pinnedVariables = publishPinnedColumns(root, table, widths)
@@ -132,6 +131,11 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     observeLayout()
     update()
     window.addEventListener('resize', update)
+    const stopForwarding = forwardStickyHeaderInput(
+      header,
+      scroller,
+      () => pinned.parentElement?.clientWidth ?? 0,
+    )
 
     const followScroll = () => {
       setVariable(root, SCROLL_VARIABLE, scroller.scrollLeft)
@@ -146,6 +150,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
       resizeObserver.disconnect()
       mutationObserver.disconnect()
       window.removeEventListener('resize', update)
+      stopForwarding()
       scroller.removeEventListener('scroll', followScroll)
       root.removeAttribute(READY_ATTRIBUTE)
       for (const variable of [...VARIABLES, ...pinnedVariables]) {
@@ -302,9 +307,27 @@ function alignColumns(
   return true
 }
 
+/**
+ * Width of each column, in column order. A cell hidden with `display: none`
+ * (columns some tables drop on small screens) takes no column, so the cells
+ * after it move into the first free columns and the last ones stay empty.
+ */
+function measureColumnWidths(table: HTMLTableElement) {
+  const cells = getShownColumnCells(table)
+  const widths = cells.map((cell) => cell.getBoundingClientRect().width)
+  const columnCount = getColumnCells(table).length
+  return [...widths, ...Array<number>(columnCount - widths.length).fill(0)]
+}
+
+function getShownColumnCells(table: HTMLTableElement) {
+  return getColumnCells(table).filter(
+    (cell) => getComputedStyle(cell).display !== 'none',
+  )
+}
+
 /** Pinned columns lead the table. */
 function countPinnedColumns(table: HTMLTableElement) {
-  const cells = getColumnCells(table)
+  const cells = getShownColumnCells(table)
   const count = cells.findIndex(
     (cell) => !cell.hasAttribute(PINNED_CELL_ATTRIBUTE),
   )

@@ -6,6 +6,12 @@
 */
 @utility sticky-table {
   timeline-scope: --sticky-table-timeline;
+  /*
+    Sorting from the stuck header reorders the rows on screen, and scroll
+    anchoring (iOS Safari) would then scroll the page after whichever row it
+    anchored to. Readers expect the page to stay where they are.
+  */
+  overflow-anchor: none;
 }
 
 @utility sticky-table-scroller {
@@ -38,6 +44,8 @@
   /* Pinned cells are held by the pinned layer, see `getCommonPinningStyles`. */
   --sticky-table-pinned-position: static;
   top: var(--sticky-table-header-top, 0px);
+  /* Sideways drags are passed to the table, see `forwardStickyHeaderInput`. */
+  touch-action: pan-y;
 
   [data-sticky-table-ready] > & {
     display: block;
