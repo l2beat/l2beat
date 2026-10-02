@@ -179,8 +179,8 @@ const columns = [
       if (entry.anonymitySet.status === 'available') {
         return entry.anonymitySet.value
       }
-      // Sorts below every measured set, but above projects without one
-      return entry.anonymitySet.status === 'too-small' ? 0 : undefined
+      // Sorts below every measured set, including 0, but above projects without one
+      return entry.anonymitySet.status === 'too-small' ? -1 : undefined
     },
     {
       id: 'anonymitySet',
