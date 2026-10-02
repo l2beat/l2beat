@@ -12913,6 +12913,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Apple Inc.",
+      "coingeckoId": "apple-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+      "symbol": "AAPLc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079839,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175597/large/aapl_200x200.png?1787068801",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Auki Token",
       "coingeckoId": "auki-labs",
       "address": "0xF9569cFb8FD265e91aa478d86ae8c78b8AF55Df4",
@@ -13079,6 +13093,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Clearstar USDC Reactor",
+      "coingeckoId": "usd-coin",
+      "address": "0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+      "symbol": "CSUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1741348301,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "Coinbase Wrapped BTC",
@@ -13389,6 +13417,34 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Gauntlet USDC Frontier",
+      "coingeckoId": "usd-coin",
+      "address": "0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+      "symbol": "gtusdcf",
+      "decimals": 18,
+      "deploymentTimestamp": 1761148283,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      "name": "Gauntlet WETH Balanced",
+      "coingeckoId": "weth",
+      "address": "0xFeFeC33668E22677c4762d0853d56245a800ff08",
+      "symbol": "gtwethb",
+      "decimals": 18,
+      "deploymentTimestamp": 1761148427,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "GoPlus Security",
@@ -14124,6 +14180,20 @@
       }
     },
     {
+      "name": "Steakhouse High Yield USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+      "symbol": "bbqUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1761597645,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
       "name": "Syrup USDC",
       "coingeckoId": "syrupusdc",
       "address": "0x660975730059246A68521a3e2FBD4740173100f5",
@@ -14144,6 +14214,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "l2-standard-bridged-usdt-base",
+      "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1710879181,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39963/large/usdt.png?1724952731",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "The Innovation Game",
@@ -14200,6 +14284,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "UltraYield USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+      "symbol": "edgeUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1762351795,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "uniBTC",
