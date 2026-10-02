@@ -1,17 +1,18 @@
 import { Env } from '@l2beat/backend-tools'
 import { expect } from 'earl'
-import { getDiscoveryCoingeckoApiUrl } from './config.discovery'
+import { getDiscoveryCoingeckoConfig } from './config.discovery'
 
-describe(getDiscoveryCoingeckoApiUrl.name, () => {
-  it('uses the shared url with the shared key', () => {
+describe(getDiscoveryCoingeckoConfig.name, () => {
+  it('falls back to the shared key and its url', () => {
     const env = new Env({
       COINGECKO_API_KEY: 'proxy-key',
       COINGECKO_API_URL: 'https://prices.example.com/api/v3',
     })
 
-    expect(getDiscoveryCoingeckoApiUrl(env)).toEqual(
-      'https://prices.example.com/api/v3',
-    )
+    expect(getDiscoveryCoingeckoConfig(env)).toEqual({
+      coingeckoApiKey: 'proxy-key',
+      coingeckoApiUrl: 'https://prices.example.com/api/v3',
+    })
   })
 
   it('never sends a discovery key to the shared url', () => {
@@ -21,7 +22,10 @@ describe(getDiscoveryCoingeckoApiUrl.name, () => {
       COINGECKO_API_KEY_FOR_DISCOVERY: 'coingecko-key',
     })
 
-    expect(getDiscoveryCoingeckoApiUrl(env)).toEqual(undefined)
+    expect(getDiscoveryCoingeckoConfig(env)).toEqual({
+      coingeckoApiKey: 'coingecko-key',
+      coingeckoApiUrl: undefined,
+    })
   })
 
   it('pairs a discovery key with the discovery url', () => {
@@ -30,8 +34,9 @@ describe(getDiscoveryCoingeckoApiUrl.name, () => {
       COINGECKO_API_URL_FOR_DISCOVERY: 'https://prices.example.com/api/v3',
     })
 
-    expect(getDiscoveryCoingeckoApiUrl(env)).toEqual(
-      'https://prices.example.com/api/v3',
-    )
+    expect(getDiscoveryCoingeckoConfig(env)).toEqual({
+      coingeckoApiKey: 'discovery-proxy-key',
+      coingeckoApiUrl: 'https://prices.example.com/api/v3',
+    })
   })
 })
