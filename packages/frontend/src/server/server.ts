@@ -65,8 +65,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
-  app.use('/', createLlmsTxtRouter())
-  app.use('/', createMarkdownAlternatesRouter())
   app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
@@ -105,6 +103,9 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
+  // After the metrics middleware, so requests for markdown are logged like page requests.
+  app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
