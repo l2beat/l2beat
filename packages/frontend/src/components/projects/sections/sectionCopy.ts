@@ -1,3 +1,6 @@
+import { formatNumberWithCommas } from '@l2beat/shared-pure'
+import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
+
 /*
  * Text the project page sections show and their markdown versions repeat,
  * kept in one place so the two cannot drift apart.
@@ -125,6 +128,16 @@ export function anonymitySetHistoricDescription(windowDays: number) {
 
 export const ANONYMITY_SET_LOOKS_BACKWARDS_NOTE =
   'The metric looks backwards: it counts deposits that already happened, including from addresses that have since withdrawn. Your real anonymity also depends on deposits made after yours, which cannot be known in advance.'
+
+export function anonymitySetCoverageNote(
+  coverage: PrivacyAnonymitySetCoverage | undefined,
+  windowDays: number,
+) {
+  if (coverage === undefined || coverage.total === 0) return undefined
+
+  const percentage = Math.round((100 * coverage.attributed) / coverage.total)
+  return `Depositors were identified for ${formatNumberWithCommas(coverage.attributed)} of ${formatNumberWithCommas(coverage.total)} deposits (${percentage}%) during the last ${windowDays} complete UTC days. The remaining deposits are not counted.`
+}
 
 export function anonymitySetByHoldingDurationDescription(windowDays: number) {
   return `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${windowDays} days effectively means blending in with everyone who deposited during the last ${windowDays} days.`

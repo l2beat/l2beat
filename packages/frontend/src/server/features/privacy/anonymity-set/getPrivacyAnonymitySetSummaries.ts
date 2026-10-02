@@ -1,4 +1,5 @@
 import type {
+  Database,
   IndexerConfigurationRecord,
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
@@ -60,22 +61,18 @@ export async function getPrivacyAnonymitySetSummaries(
   const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const [configurations, rows, coverages] = await Promise.all([
+  const [configurations, rows, coverageByProject] = await Promise.all([
     getPrivacyAnonymitySetConfigurations(db, allSeries),
     db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
       trackedProjectIds,
       cutoff,
       currentDay,
     ),
-    Promise.all(
-      projects.map((project) =>
-        getPrivacyAnonymitySetCoverage(db, project, currentDay),
-      ),
-    ),
+    getCoverageByProject(db, projects, currentDay),
   ])
 
   return new Map(
-    projects.map((project, index) => [
+    projects.map((project) => [
       project.id,
       getPrivacyAnonymitySetSummary(
         project,
@@ -83,7 +80,7 @@ export async function getPrivacyAnonymitySetSummaries(
         configurations,
         rows,
         currentDay,
-        coverages[index],
+        coverageByProject.get(project.id),
       ),
     ]),
   )
@@ -127,6 +124,23 @@ export function getPrivacyAnonymitySetSummary(
     formattedAmount: largest.series.formattedAmount,
     token: largest.series.token,
   }
+}
+
+async function getCoverageByProject(
+  db: Database,
+  projects: PrivacyProject[],
+  currentDay: UnixTime,
+): Promise<Map<string, PrivacyAnonymitySetCoverage | undefined>> {
+  const entries = await Promise.all(
+    projects.map(
+      async (project) =>
+        [
+          project.id,
+          await getPrivacyAnonymitySetCoverage(db, project, currentDay),
+        ] as const,
+    ),
+  )
+  return new Map(entries)
 }
 
 /**
