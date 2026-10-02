@@ -12913,6 +12913,34 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Alphabet Inc.",
+      "coingeckoId": "alphabet-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000002D0BA3164cc74f58B7",
+      "symbol": "GOOGLc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079783,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175598/large/goog_200x200.png?1787068802",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Amazon.com Inc.",
+      "coingeckoId": "amazon-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000d9192b6B456483C2E8",
+      "symbol": "AMZNc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785080019,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178280/large/amzn-200.png?1789233782",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Apple Inc.",
       "coingeckoId": "apple-coinbase-tokenized-stock",
       "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
@@ -13641,6 +13669,34 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Meta Platforms Inc.",
+      "coingeckoId": "meta-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000008bC8786B856E61707C",
+      "symbol": "METAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079709,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175599/large/meta_200x200.png?1787068803",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Microsoft Corporation",
+      "coingeckoId": "microsoft-coinbase-tokenized-stock",
+      "address": "0xB200000000000000000000Ab99cFa739E253872B",
+      "symbol": "MSFTc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079943,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178281/large/msft-200.png?1789233933",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Midas Fasanara Global Open",
       "coingeckoId": "midas-fasanara-global-open",
       "address": "0xFCc9Cc1209651Ed8867332d6F664CF82743A2584",
@@ -13731,6 +13787,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "NVIDIA Corporation",
+      "coingeckoId": "nvidia-coinbase-tokenized-stock",
+      "address": "0xb20000000000000000000078ee7ce2fE4908108C",
+      "symbol": "NVDAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079969,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175596/large/nvda_200x200.png?1787068801",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "o1.exchange",
@@ -13978,6 +14048,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Sandisk Corporation",
+      "coingeckoId": "sandisk-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000397293Cb8cda9a10c5",
+      "symbol": "SNDKc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079731,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178283/large/sndk-200.png?1789234014",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Sapien",
       "coingeckoId": "sapien-2",
       "address": "0xC729777d0470F30612B1564Fd96E8Dd26f5814E3",
@@ -14114,6 +14198,20 @@
       }
     },
     {
+      "name": "Space Exploration Technologies Corp.",
+      "coingeckoId": "spacex-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000007b9fcbd005511aCBd5",
+      "symbol": "SPCXc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079901,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178284/large/spcx-200.png?1789234077",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "SPX6900",
       "coingeckoId": "spx6900",
       "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
@@ -14194,6 +14292,20 @@
       "supply": "zero"
     },
     {
+      "name": "Strategy Inc.",
+      "coingeckoId": "microstrategy-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000004884b426556b92883d",
+      "symbol": "MSTRc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079757,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178282/large/mstr-200.png?1789233935",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Syrup USDC",
       "coingeckoId": "syrupusdc",
       "address": "0x660975730059246A68521a3e2FBD4740173100f5",
@@ -14228,6 +14340,20 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Tesla Inc.",
+      "coingeckoId": "tesla-coinbase-tokenized-stocks",
+      "address": "0xb2000000000000000000001e800a7f5189430cD0",
+      "symbol": "TSLAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079921,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178285/large/tsla-200.png?1789234081",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "The Innovation Game",
