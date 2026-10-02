@@ -35,7 +35,14 @@ export function StickyTableHeader({
   children: React.ReactNode
 }) {
   const renderCopy = (ref: RefObject<HTMLTableElement | null>) => (
-    <table ref={ref} cellSpacing={0} cellPadding={0} {...tableProps}>
+    // The table's own header, kept invisible, is the one screen readers read.
+    <table
+      ref={ref}
+      role="presentation"
+      cellSpacing={0}
+      cellPadding={0}
+      {...tableProps}
+    >
       {children}
     </table>
   )

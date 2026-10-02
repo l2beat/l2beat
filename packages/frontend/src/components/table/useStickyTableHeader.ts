@@ -7,6 +7,9 @@ import {
 } from './utils/commonPinningStyles'
 
 const READY_ATTRIBUTE = 'data-sticky-table-ready'
+const UNTABBED_ATTRIBUTE = 'data-sticky-table-untabbed'
+const FOCUSABLE_SELECTOR =
+  'a[href], button, input, select, textarea, [tabindex]'
 const TOP_VARIABLE = '--sticky-table-header-top'
 const HEIGHT_VARIABLE = '--sticky-table-header-height'
 const BOTTOM_GAP_VARIABLE = '--sticky-table-header-bottom-gap'
@@ -100,6 +103,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
       )
       const isReady = canStick && isAligned
       root.toggleAttribute(READY_ATTRIBUTE, isReady)
+      setTabbable(thead, !isReady)
       if (isReady) {
         publishLayout(root, scroller, table, thead)
       }
@@ -138,6 +142,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
       window.removeEventListener('resize', update)
       stopForwarding()
       root.removeAttribute(READY_ATTRIBUTE)
+      setTabbable(thead, true)
       for (const variable of [...VARIABLES, ...pinnedVariables]) {
         root.style.removeProperty(variable)
       }
@@ -184,6 +189,31 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
  */
 function canSlideWithScroller() {
   return CSS.supports('animation-timeline', 'scroll()')
+}
+
+/**
+ * While the copy shows, the real header is invisible but stays the table's
+ * header for screen readers (see `sticky-table.css`). Its controls leave the
+ * tab order, so keyboard focus goes through the visible copy only.
+ */
+function setTabbable(thead: HTMLTableSectionElement, isTabbable: boolean) {
+  if (isTabbable) {
+    for (const element of thead.querySelectorAll(`[${UNTABBED_ATTRIBUTE}]`)) {
+      const tabIndex = element.getAttribute(UNTABBED_ATTRIBUTE)
+      if (tabIndex) element.setAttribute('tabindex', tabIndex)
+      else element.removeAttribute('tabindex')
+      element.removeAttribute(UNTABBED_ATTRIBUTE)
+    }
+    return
+  }
+  for (const element of thead.querySelectorAll(FOCUSABLE_SELECTOR)) {
+    if (element.hasAttribute(UNTABBED_ATTRIBUTE)) continue
+    element.setAttribute(
+      UNTABBED_ATTRIBUTE,
+      element.getAttribute('tabindex') ?? '',
+    )
+    element.setAttribute('tabindex', '-1')
+  }
 }
 
 /**

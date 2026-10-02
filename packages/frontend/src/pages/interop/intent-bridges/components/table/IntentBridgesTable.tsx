@@ -50,7 +50,9 @@ export function IntentBridgesTable({
   })
 
   return (
-    <PrimaryCard className="overflow-hidden p-0 md:px-0 md:py-0">
+    // `clip`, not `hidden`: a hidden overflow is a scroll container, which
+    // would hold the table's sticky header instead of the page.
+    <PrimaryCard className="overflow-clip p-0 md:px-0 md:py-0">
       <div className="flex items-center gap-2 px-4 pt-4 md:px-5 md:pt-5">
         <h2 className="font-bold text-heading-20">Intent Bridge Comparison</h2>
         <Last24HoursBadge />

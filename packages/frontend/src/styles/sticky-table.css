@@ -28,8 +28,13 @@
     );
   }
 
+  /*
+    Invisible, but still the table's header for screen readers, which the
+    copy cannot be: it is a separate table, so its cells head no data.
+  */
   [data-sticky-table-ready] > & > table > thead {
-    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
