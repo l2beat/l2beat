@@ -1,12 +1,18 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { isValidEthereumAddress } from '../utils/isValidEthereumAddress'
 import { splitChainPrefix } from '../utils/splitChainPrefix'
 import { ChainPicker } from './ChainPicker'
 
 export interface ChainAddress {
   chain: string
   address: string
+}
+
+export function parseChainAddress(
+  value: ChainAddress,
+): ChainSpecificAddress | undefined {
+  return ChainSpecificAddress.tryParse(`${value.chain}:${value.address.trim()}`)
 }
 
 export function ChainAddressField(props: {
@@ -19,7 +25,7 @@ export function ChainAddressField(props: {
 }) {
   const [focused, setFocused] = useState(props.autoFocus ?? false)
   const address = props.value.address.trim()
-  const invalid = !isValidEthereumAddress(address)
+  const invalid = parseChainAddress(props.value) === undefined
   const errorVisible =
     invalid && (props.submitted || (!focused && address !== ''))
 
@@ -65,7 +71,7 @@ export function ChainAddressField(props: {
         <p className="text-aux-red text-xs">
           {address === ''
             ? 'Enter an address'
-            : 'Not a valid address, expected 0x followed by 40 hex characters'}
+            : 'Not a valid address, check for typos'}
         </p>
       )}
     </div>

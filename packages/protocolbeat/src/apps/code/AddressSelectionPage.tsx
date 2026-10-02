@@ -4,9 +4,9 @@ import { AddressLandingPage } from '../../components/AddressLandingPage'
 import {
   type ChainAddress,
   ChainAddressField,
+  parseChainAddress,
 } from '../../components/ChainAddressField'
 import { AVAILABLE_CHAINS } from '../../config/chains'
-import { isValidEthereumAddress } from '../../utils/isValidEthereumAddress'
 
 // biome-ignore lint/style/noNonNullAssertion: We know it's there
 const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
@@ -21,12 +21,12 @@ export function AddressSelectionPage() {
 
   function show() {
     setSubmitted(true)
-    const address = target.address.trim()
-    if (!isValidEthereumAddress(address)) {
+    const address = parseChainAddress(target)
+    if (address === undefined) {
       document.getElementById('address')?.focus()
       return
     }
-    navigate(`/address/${target.chain}:${address}`)
+    navigate(`/address/${address}`)
   }
 
   return (

@@ -4,10 +4,10 @@ import { AddressLandingPage } from '../../components/AddressLandingPage'
 import {
   type ChainAddress,
   ChainAddressField,
+  parseChainAddress,
 } from '../../components/ChainAddressField'
 import { AVAILABLE_CHAINS } from '../../config/chains'
 import { IconSwap } from '../../icons/IconSwap'
-import { isValidEthereumAddress } from '../../utils/isValidEthereumAddress'
 
 // biome-ignore lint/style/noNonNullAssertion: We know it's there
 const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
@@ -38,19 +38,17 @@ export function AddressSelectionPage() {
 
   function diff() {
     setSubmitted(true)
-    const beforeAddress = before.address.trim()
-    const afterAddress = after.address.trim()
-    if (!isValidEthereumAddress(beforeAddress)) {
+    const beforeAddress = parseChainAddress(before)
+    const afterAddress = parseChainAddress(after)
+    if (beforeAddress === undefined) {
       document.getElementById('before')?.focus()
       return
     }
-    if (!isValidEthereumAddress(afterAddress)) {
+    if (afterAddress === undefined) {
       document.getElementById('after')?.focus()
       return
     }
-    navigate(
-      `/diff/${before.chain}:${beforeAddress}/${after.chain}:${afterAddress}`,
-    )
+    navigate(`/diff/${beforeAddress}/${afterAddress}`)
   }
 
   return (
