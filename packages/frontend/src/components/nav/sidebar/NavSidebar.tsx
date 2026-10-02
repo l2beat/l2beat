@@ -193,7 +193,7 @@ function NavCollapsibleItem({
           {!small && <div>{group.icon}</div>}
           <span
             className={cn(
-              'font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand',
+              'font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-chart-pink',
               small && 'text-sm',
             )}
           >
@@ -202,7 +202,7 @@ function NavCollapsibleItem({
         </div>
         <ChevronIcon
           className={cn(
-            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
+            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-chart-pink',
             small && 'size-2.5',
           )}
         />

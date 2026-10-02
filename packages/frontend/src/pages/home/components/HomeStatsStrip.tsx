@@ -26,8 +26,8 @@ interface MoreItem {
   href: string
 }
 
-/** The icons take the charts' pink, so the menu reads with the cards. */
-const ICON_CLASS = 'size-5 stroke-(--chart-pink)'
+/** The charts' pink, as the nav's selected items use. */
+const ICON_CLASS = 'size-5 stroke-chart-pink'
 
 /**
  * The desktop sidebar's menu, for the screens where it hides behind the menu

@@ -201,7 +201,7 @@ function SidebarGroupLink({
       data-active={isActive}
       className={cn(
         'group flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
-        'data-[active=true]:text-brand',
+        'data-[active=true]:text-chart-pink',
         className,
       )}
       {...props}
@@ -224,7 +224,7 @@ function SidebarGroupSmallLink({
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
         'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
-        isActive && 'text-brand hover:text-brand',
+        isActive && 'text-chart-pink hover:text-chart-pink',
         className,
       )}
       {...props}
@@ -260,7 +260,7 @@ function SidebarGroupSubButton({
       data-active={isActive}
       className={cn(
         '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
-        'data-[active=true]:bg-brand data-[active=true]:text-primary-invert',
+        'data-[active=true]:bg-chart-pink data-[active=true]:text-primary-invert',
         className,
       )}
       {...props}
@@ -280,7 +280,7 @@ function SidebarGroupSubLink({
       data-active={isActive}
       className={cn(
         'font-medium text-label-value-14',
-        'data-[active=true]:text-brand',
+        'data-[active=true]:text-chart-pink',
         className,
       )}
       {...props}

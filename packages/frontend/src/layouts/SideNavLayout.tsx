@@ -41,8 +41,9 @@ const contentWrapperVariants = cva(
         wide: 'lg:ml-3',
         // Home sets its content apart from the nav and the page background.
         // Past 1920px the content stops growing (see contentAreaVariants)
-        // and the page's grey shows either side of it.
-        home: 'bg-pure-white lg:ml-0 min-[1920px]:bg-transparent dark:bg-pure-black dark:min-[1920px]:bg-transparent',
+        // and the page's grey shows either side of it. Its hairlines are
+        // softer than the rest of the site's.
+        home: 'bg-pure-white [--divider:var(--home-divider)] lg:ml-0 min-[1920px]:bg-transparent dark:bg-pure-black dark:min-[1920px]:bg-transparent',
       },
     },
   },
