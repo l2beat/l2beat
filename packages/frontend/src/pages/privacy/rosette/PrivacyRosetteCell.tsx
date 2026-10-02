@@ -42,7 +42,11 @@ export function PrivacyRosetteCell({
       {/* The reasons appear nowhere else on the summary page. */}
       <Tooltip contentInHtml>
         <TooltipTrigger asChild disabledOnMobile>
-          <TableLink href={sectionHref} className="max-md:hidden">
+          <TableLink
+            href={sectionHref}
+            aria-label="Privacy risk analysis"
+            className="max-md:hidden"
+          >
             {icon}
           </TableLink>
         </TooltipTrigger>

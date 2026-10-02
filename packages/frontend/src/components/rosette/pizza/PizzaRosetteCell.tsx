@@ -22,7 +22,7 @@ export function PizzaRosetteCell(props: Props) {
   return (
     <Tooltip contentInHtml>
       <TooltipTrigger asChild disabledOnMobile>
-        <TableLink href={props.href}>
+        <TableLink href={props.href} aria-label="Risk analysis">
           <PizzaRosetteIcon
             values={props.values}
             className="size-6 md:size-8"
