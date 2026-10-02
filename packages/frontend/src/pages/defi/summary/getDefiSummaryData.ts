@@ -24,7 +24,7 @@ export async function getDefiSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'DeFi - L2BEAT',
+        name: 'DeFi',
         description: 'Overview of DeFi protocols tracked by L2BEAT.',
         url,
         openGraph: {

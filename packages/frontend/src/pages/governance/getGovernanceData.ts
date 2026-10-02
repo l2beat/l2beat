@@ -36,7 +36,7 @@ export async function getGovernanceData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Governance - L2BEAT',
+        name: 'Governance',
         description:
           'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
         url,

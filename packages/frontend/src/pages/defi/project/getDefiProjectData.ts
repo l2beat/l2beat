@@ -69,6 +69,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: entry.name,
         title: `${entry.name} - DeFi - L2BEAT`,
         description: getProjectMetadataDescription(entry),
         // Derived from the slug, not the request URL: the cache entry is

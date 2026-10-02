@@ -13,7 +13,7 @@ export async function getNotFoundData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Page not found - L2BEAT',
+        name: 'Page not found',
         description: 'The page you are looking for does not exist.',
         url,
         openGraph: {
