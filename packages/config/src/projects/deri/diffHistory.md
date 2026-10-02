@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x0bfa58c8caf78b9758e0c8cc8fc277fd0d855b98
+
+# Diff at Thu, 01 Oct 2026 22:00:23 GMT:
+
+- id: 1f492e32
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1787668943
+- current timestamp: 1790891953
+
+## Description
+
+Outbox upgraded to an unverified implementation by the EOA holding the UpgradeExecutor executor role (2026-09-18). The new bytecode is the previous Outbox with one change: the recipient of one specific withdrawal is replaced with that EOA. The withdrawal (`0.687 ETH`) was executed on 2026-09-19 and paid to the EOA.
+
+## Watched changes
+
+```diff
+    contract Outbox (arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) [N/A] {
+    +++ description: None
+      template:
+-        "orbitstack/Outbox"
+      sourceHashes:
+-        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"]
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+      critical:
+-        true
+      values.$implementation:
+-        "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381"
+      values.$pastUpgrades.1:
++        ["2026-09-18T13:25:39.000Z","0x8e12a2fc08a80c84d16a9b9890623a1face19a6db4790d5a1f4b6168c3353fca",["arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.bridge:
+-        "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+      values.l2ToL1BatchNum:
+-        0
+      values.l2ToL1Block:
+-        0
+      values.l2ToL1EthBlock:
+-        0
+      values.l2ToL1OutputId:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.l2ToL1Sender:
+-        "arb1:0x0000000000000000000000000000000000000000"
+      values.l2ToL1Timestamp:
+-        0
+      values.OUTBOX_VERSION:
+-        2
+      values.rollup:
+-        "arb1:0x846387C3D6001F74170455B1074D01f05eB3067a"
+      fieldMeta:
+-        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+      implementationNames.arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
+-        "Outbox"
+      implementationNames.arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381:
++        ""
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../Outbox/Outbox.sol => /dev/null                 | 680 ---------------------
+ 1 file changed, 680 deletions(-)
+```
+
 Generated with discovered.json: 0xe890faffdff53157388a909405f62d0a05a9104a
 
 # Diff at Wed, 23 Sep 2026 05:45:48 GMT:
