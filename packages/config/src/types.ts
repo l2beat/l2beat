@@ -1105,10 +1105,13 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
