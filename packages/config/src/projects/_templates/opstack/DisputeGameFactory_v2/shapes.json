@@ -9,5 +9,11 @@
     "address": "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "DisputeGameFactory_v1_5_0_base": {
+    "hash": "0x580049b41f9d831de51dfb5920cb1d45c4c229d3eb702b5422231a00759af5a1",
+    "address": "eth:0x94eab8f73fd83407D26C006D159923760D483029",
+    "chain": "ethereum",
+    "blockNumber": 26078391
   }
 }

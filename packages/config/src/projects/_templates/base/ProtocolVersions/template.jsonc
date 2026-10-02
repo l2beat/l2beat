@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProtocolVersions",
+  "critical": true,
+  "description": "Registry of L2 upgrade activation timestamps. Each AggregateVerifier game commits to the upgrades active at its ending L2 block and proofs must match that commitment. The ProxyAdmin owner can register and reschedule upgrades with at least {{minNoticeFmt}} notice. The incident responder can only delay a scheduled activation.",
+  "fields": {
+    "getSchedule": {
+      "severity": "HIGH"
+    },
+    "incidentResponder": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "delay the activation of a scheduled upgrade."
+        }
+      ]
+    },
+    "proxyAdminOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register upgrades, set their activation timestamps and the minimum protocol version, and appoint the incident responder."
+        }
+      ]
+    },
+    "minNoticeFmt": {
+      "handler": {
+        "type": "call",
+        "method": "MIN_NOTICE",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}
