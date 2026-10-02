@@ -2,6 +2,7 @@
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
+@import "./sticky-table.css";
 
 @plugin "tailwindcss-animate";
 
