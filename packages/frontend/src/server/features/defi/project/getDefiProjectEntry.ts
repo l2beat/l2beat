@@ -1,4 +1,4 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -30,6 +30,7 @@ export interface ProjectDefiEntry {
   shortName?: string
   icon: string
   description: string
+  category?: ProjectDefiCategory
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref?: string
@@ -214,6 +215,7 @@ export async function getDefiProjectEntry(
     shortName: project.shortName,
     icon,
     description: project.display.description,
+    category: project.defiInfo.category,
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []

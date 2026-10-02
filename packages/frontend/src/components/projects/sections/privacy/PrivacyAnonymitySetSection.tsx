@@ -11,6 +11,11 @@ import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import {
+  ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
+  anonymitySetByHoldingDurationDescription,
+  anonymitySetHistoricDescription,
+} from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 
 export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
@@ -54,10 +59,7 @@ export function PrivacyAnonymitySetSection({
             {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            How many unique addresses you could have blended in with if you
-            withdrew on a particular day after depositing during the previous{' '}
-            {ANONYMITY_SET_WINDOW_DAYS} days. This metric is a proxy for the
-            historic anonymity set and shows how it developed over time.
+            {anonymitySetHistoricDescription(ANONYMITY_SET_WINDOW_DAYS)}
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
             <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
@@ -85,23 +87,16 @@ export function PrivacyAnonymitySetSection({
             type="history"
           />
           <p className="mt-4 text-paragraph-14 text-secondary">
-            The metric looks backwards: it counts deposits that already
-            happened, including from addresses that have since withdrawn. Your
-            real anonymity also depends on deposits made after yours, which
-            cannot be known in advance.
+            {ANONYMITY_SET_LOOKS_BACKWARDS_NOTE}
           </p>
 
           <h3 className="mt-4 mb-2 font-bold text-heading-20">
             Estimated anonymity set by holding duration
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            An estimate of how many unique addresses you blend in with,
-            depending on how long you leave your deposit in the pool. It is
-            based on historic data of past deposits: each point counts
-            depositors from the preceding period, so holding for up to{' '}
-            {ANONYMITY_SET_WINDOW_DAYS} days effectively means blending in with
-            everyone who deposited during the last {ANONYMITY_SET_WINDOW_DAYS}{' '}
-            days.
+            {anonymitySetByHoldingDurationDescription(
+              ANONYMITY_SET_WINDOW_DAYS,
+            )}
             {data?.syncedUntil !== undefined && (
               <>
                 {' '}

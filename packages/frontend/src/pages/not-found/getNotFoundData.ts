@@ -12,15 +12,19 @@ export async function getNotFoundData(
   return {
     head: {
       manifest,
-      metadata: getMetadata(manifest, {
-        name: 'Page not found',
-        description: 'The page you are looking for does not exist.',
-        url,
-        openGraph: {
-          image: '/meta-images/home/opengraph-image.png',
-        },
-        excludeFromSearchEngines: true,
-      }),
+      metadata: {
+        ...getMetadata(manifest, {
+          name: 'Page not found',
+          description: 'The page you are looking for does not exist.',
+          url,
+          openGraph: {
+            image: '/meta-images/home/opengraph-image.png',
+          },
+          excludeFromSearchEngines: true,
+        }),
+        // The URL may look like a page with a markdown version, but it is not one.
+        markdownAlternateUrl: undefined,
+      },
     },
     ssr: {
       page: 'NotFoundPage',

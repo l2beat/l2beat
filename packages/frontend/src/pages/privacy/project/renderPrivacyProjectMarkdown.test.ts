@@ -99,6 +99,24 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('keeps a multi-paragraph risk explanation inside its list item', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        reproducibility: {
+          ...ENTRY.reproducibility,
+          description:
+            'The client can be built locally.\n\nThe prover keys are not published.',
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.\n\n  The prover keys are not published.',
+    )
+  })
+
   it('gives the reason a protocol fails the walkaway test', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown({

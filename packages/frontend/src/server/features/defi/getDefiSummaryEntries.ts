@@ -78,8 +78,8 @@ export function buildDefiSummaryEntries(
     .sort(compareDefiSummaryEntries)
 }
 
-async function getTotalValueLockedByProject(
-  projects: DefiProject[],
+export async function getTotalValueLockedByProject(
+  projects: Pick<DefiProject, 'id' | 'defiInfo'>[],
 ): Promise<Map<string, number>> {
   const l2beatIds = projects
     .filter((project) => project.defiInfo.tvl?.source === 'l2beat')

@@ -26,7 +26,7 @@ export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
     const markdown = await getMarkdown(req)
     // The page cache is keyed by URL alone (Cloudflare ignores Vary), so a
     // cached markdown response would be served to browsers. The Link header
-    // is left as LlmsLinkHeaderMiddleware set it for the page URL.
+    // is left to LlmsLinkHeaderMiddleware, which set it for the page URL.
     res
       .status(markdown === undefined ? 404 : 200)
       .header('Cache-Control', 'private, no-store')

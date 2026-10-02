@@ -29,6 +29,7 @@ import {
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
@@ -328,13 +329,7 @@ async function getTrackedOn(
   const [chainProjects, daLayers] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
-      optional: [
-        'scalingInfo',
-        'daBridge',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
     ps.getProjects({ where: ['daLayer'] }),
   ])

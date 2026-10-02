@@ -10,6 +10,7 @@ import { HorizontalSeparator } from '../core/HorizontalSeparator'
 import { Square } from '../Square'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
+import { TVS_ASSET_CATEGORY_LABELS } from './tvsAssetCategories'
 
 interface TokenBreakdownProps {
   total: number
@@ -59,24 +60,32 @@ export function TokenBreakdownTooltipContent({
 }: TokenBreakdownTooltipContentProps & { associated: number }) {
   const values = [
     {
-      title: 'ETH & derivatives',
+      title: TVS_ASSET_CATEGORY_LABELS.ether,
       value: ether,
       variant: 'ether' as const,
     },
     {
-      title: 'Stablecoins',
+      title: TVS_ASSET_CATEGORY_LABELS.stablecoin,
       value: stablecoin,
       variant: 'stable' as const,
     },
     {
-      title: 'BTC & derivatives',
+      title: TVS_ASSET_CATEGORY_LABELS.btc,
       value: btc,
       variant: 'btc' as const,
     },
-    { title: 'Other', value: other, variant: 'other' as const },
-    { title: 'Public RWAs', value: rwaPublic, variant: 'rwaPublic' as const },
     {
-      title: 'Restricted RWAs',
+      title: TVS_ASSET_CATEGORY_LABELS.other,
+      value: other,
+      variant: 'other' as const,
+    },
+    {
+      title: TVS_ASSET_CATEGORY_LABELS.rwaPublic,
+      value: rwaPublic,
+      variant: 'rwaPublic' as const,
+    },
+    {
+      title: TVS_ASSET_CATEGORY_LABELS.rwaRestricted,
       value: rwaRestricted,
       variant: 'rwaRestricted' as const,
     },
