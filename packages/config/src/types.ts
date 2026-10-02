@@ -1115,6 +1115,8 @@ export interface ProjectPrivacyInfo {
      * that cannot be traced are left out, so the frontend reports coverage.
      */
     | { type: 'partially-attributed' }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
