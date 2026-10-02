@@ -95,8 +95,8 @@ function Content({
           square, the graph fills it, the largest square it fits, and the
           figures go in the corners its ring leaves free. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
-          figures, the graph as a square, then as many top routes as the
-          height left holds. Below lg it stacks too, the graph a fixed-size
+          figures, the graph as a square (smaller when the height runs out, so
+          nothing spills), then as many top routes as the height left holds. Below lg it stacks too, the graph a fixed-size
           square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
@@ -106,7 +106,7 @@ function Content({
             className="interop-corners:hidden"
           />
         )}
-        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink-0 flex-col items-center">
+        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center">
           <FlowsGraphPanel
             activeChains={activeChains}
             data={data}
@@ -123,7 +123,7 @@ function Content({
             <TopRoutes
               flows={data.flows}
               chains={chains}
-              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1"
+              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
             />
             <CornerStats data={data} chains={chains} />
           </>
