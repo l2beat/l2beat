@@ -2,5 +2,5 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "P384Verifier",
   "critical": true,
-  "description": "Stateless verifier of P-384 ECDSA signatures. Used by the NitroValidator and the CertManager to check AWS Nitro attestation and certificate signatures."
+  "description": "Stateless verifier of P-384 ECDSA signatures."
 }

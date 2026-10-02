@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CertManager",
   "critical": true,
-  "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate. The owner can revoke the root certificate, unrevoke certificates and set the revoker. The revoker can revoke non-root certificates.",
+  "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate.",
   "fields": {
     "owner": {
       "severity": "HIGH",

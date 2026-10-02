@@ -9,7 +9,7 @@ Generated with discovered.json: 0xf400f76087443384b2848ce55eace65fc9b0d767
 
 ## Description
 
-SystemConfig `gasLimit` raised from `1500000000` to `2250000000`.
+SystemConfig `gasLimit` raised from `1500000000` to `2250000000` (+50%).
 
 ## Watched changes
 

@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xc4cd44e76fb38f83e5e0d632c009ee5bf0a430c9
+Generated with discovered.json: 0x1e09b844ed1be225089a7086b54f678f87db6cf9
 
-# Diff at Fri, 02 Oct 2026 13:30:04 GMT:
+# Diff at Fri, 02 Oct 2026 14:25:16 GMT:
 
 - id: 8d1a9dc9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@89cb82bb76bcee4c1e82bb3c348ae193f0df6fc8 block: 1785226129
-- current timestamp: 1790947737
+- current timestamp: 1790951049
 
 ## Description
 
-Base Cobalt upgrade.
+Base [Cobalt upgrade](https://github.com/base/contract-deployments/tree/main/archive/evm/2026-09-14-cobalt-upgrade).
 
 Version changes and implementation diffs:
 
@@ -51,7 +51,7 @@ TEEProverRegistry: signer attestations are validated by the new NitroValidator, 
 
 ```diff
     contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
-    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a valid AWS Nitro attestation document.
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
       sourceHashes.1:
 -        "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2"
 +        "0xede8082a5b614fbd752ea8f214321a92d5c97db36aac1070675b57e45a775d5d"
@@ -285,25 +285,25 @@ TEEProverRegistry: signer attestations are validated by the new NitroValidator, 
 ```diff
 +   Status: CREATED
     contract NitroValidator (eth:0x47C1ab20fac92c789d9e5708D06641c79b03C460) [base/NitroValidator]
-    +++ description: Onchain validator of AWS Nitro Enclave attestation documents. Checks the document signature with the P384Verifier and its certificate chain with the CertManager. Used by TEEProverRegistry to validate new enclave signer registrations.
+    +++ description: Onchain validator of AWS Nitro Enclave attestation documents.
 ```
 
 ```diff
 +   Status: CREATED
     contract CertManager (eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17) [base/CertManager]
-    +++ description: Verifies and caches AWS Nitro certificate chains against a pinned root certificate. The owner can revoke the root certificate, unrevoke certificates and set the revoker. The revoker can revoke non-root certificates.
+    +++ description: Verifies and caches AWS Nitro certificate chains against a pinned root certificate.
 ```
 
 ```diff
 +   Status: CREATED
     contract ProtocolVersions (eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095) [base/ProtocolVersions]
-    +++ description: Registry of L2 upgrade activation timestamps. Each AggregateVerifier game commits to the upgrades active at its ending L2 block and proofs must match that commitment. The ProxyAdmin owner can register and reschedule upgrades with at least 1h notice. The incident responder can only delay a scheduled activation.
+    +++ description: Registry of L2 upgrade activation timestamps. Dispute games commit to the upgrades active at their ending L2 block and proofs must match that commitment.
 ```
 
 ```diff
 +   Status: CREATED
     contract P384Verifier (eth:0xe0aa6868e14300355001130C6DC29f2f4467D86c) [base/P384Verifier]
-    +++ description: Stateless verifier of P-384 ECDSA signatures. Used by the NitroValidator and the CertManager to check AWS Nitro attestation and certificate signatures.
+    +++ description: Stateless verifier of P-384 ECDSA signatures.
 ```
 
 ```diff
@@ -362,10 +362,10 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 
 ```diff
     contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
-    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a valid AWS Nitro attestation document.
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
       description:
 -        "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER."
-+        "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a valid AWS Nitro attestation document."
++        "Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document."
     }
 ```
 
@@ -375,6 +375,15 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
       critical:
 -        true
 +        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
+    +++ description: Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified.
+      description:
+-        "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call."
++        "Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified."
     }
 ```
 
@@ -437,6 +446,24 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
       critical:
 -        true
 +        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d.
+      description:
+-        "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months."
++        "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d."
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
+    +++ description: Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified.
+      description:
+-        "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call."
++        "Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified."
     }
 ```
 

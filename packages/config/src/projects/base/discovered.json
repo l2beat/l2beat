@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1790947737,
+  "timestamp": 1790951049,
   "configHash": "0x5de69439fc2e9bcf611160242480015e4f96637785a6fb8e49d36463a0a5cd95",
   "entries": [
     {
@@ -80,7 +80,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292680354",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292680358",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -306,10 +306,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 339736532,
+        "basefee": 784393999,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 20139504,
+        "blobBaseFee": 49037922,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -319,15 +319,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x4857f3657a3b201bb514916b45c9d622b49ba1e01f8232c9faaad532ed9a6a2d",
+        "hash": "0x65d8de9a8ca4db9dbfcf60d7ff75039bac706b4cea748015f5ef7dacb9e074bb",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 26104925,
+        "number": 26105201,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 0,
-        "timestamp": 1790947547,
+        "timestamp": 1790950871,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -786,7 +786,7 @@
         "0xede8082a5b614fbd752ea8f214321a92d5c97db36aac1070675b57e45a775d5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a valid AWS Nitro attestation document.",
+      "description": "Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.",
       "critical": true,
       "ignoreInWatchMode": ["getRegisteredSigners"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
@@ -883,7 +883,7 @@
         "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7"
       ],
       "proxyType": "immutable",
-      "description": "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+      "description": "Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified.",
       "critical": true,
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394835,
@@ -1136,7 +1136,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 23334,
+        "gameCount": 23337,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1213,7 +1213,7 @@
         "0x3c35c49f7f4940b02545bf5a9524c281059c1b30055aa3ba3165f8d30a0b9b8f"
       ],
       "proxyType": "immutable",
-      "description": "Onchain validator of AWS Nitro Enclave attestation documents. Checks the document signature with the P384Verifier and its certificate chain with the CertManager. Used by TEEProverRegistry to validate new enclave signer registrations.",
+      "description": "Onchain validator of AWS Nitro Enclave attestation documents.",
       "critical": true,
       "deployerAddress": "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
       "sinceTimestamp": 1790264627,
@@ -1332,8 +1332,8 @@
         "minimumGasLimitZeroBytes": 21000,
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 60000,
-          "prevBlockNum": 26104927
+          "prevBoughtGas": 516982,
+          "prevBlockNum": 26105178
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1771,7 +1771,7 @@
         "0x9115a0d93f5b5ad6fbef41ffb1420d92c2e4731acee544538088fc20caee9ce2"
       ],
       "proxyType": "immutable",
-      "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate. The owner can revoke the root certificate, unrevoke certificates and set the revoker. The revoker can revoke non-root certificates.",
+      "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate.",
       "critical": true,
       "deployerAddress": "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
       "sinceTimestamp": 1790264603,
@@ -1996,7 +1996,7 @@
         "0xd4e69718bf2a0125105d7af4b9707cde9a3ceb5f8dd1ca5a713ef807fee1756a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Registry of L2 upgrade activation timestamps. Each AggregateVerifier game commits to the upgrades active at its ending L2 block and proofs must match that commitment. The ProxyAdmin owner can register and reschedule upgrades with at least 1h notice. The incident responder can only delay a scheduled activation.",
+      "description": "Registry of L2 upgrade activation timestamps. Dispute games commit to the upgrades active at their ending L2 block and proofs must match that commitment.",
       "critical": true,
       "deployerAddress": "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
       "sinceTimestamp": 1790011595,
@@ -2022,7 +2022,6 @@
         "initVersion": 1,
         "MIN_NOTICE": 3600,
         "minimumProtocolVersion": "79228162588051313896972091392",
-        "minNoticeFmt": "1h",
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "scheduleId": "0x3d6185fc0e020da273b0abec02bd96263cd2f079f9f88db097fa683fb74ac896",
@@ -2179,7 +2178,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293239749",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293239764",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2278,13 +2277,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x21B49881400F2C4aca0CF245EFCbEC813e7d5A5e",
+        "anchorGame": "eth:0xA2fA97FB89eABC565E38cb858353D45E7679A55B",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 0,
         "getAnchorRoot": [
-          "0x87ecafa5b60424ae521f7825ece6816c8e560d349c18c503ad7de418d2dce843",
-          51861960
+          "0xa1b23816a0c62450864cf97876b719aaa41968dedc02a3c42dce62f3b2464904",
+          51863160
         ],
         "getStartingAnchorRoot": {
           "root": "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329",
@@ -2530,7 +2529,7 @@
         "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",
+      "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d.",
       "critical": true,
       "deployerAddress": "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc",
       "sinceTimestamp": 1771973279,
@@ -2580,7 +2579,7 @@
         "0x68474d87d0ac0a78246d07f7a3ff8d5b74d28b181ad81f1192415e6f6f9e8c81"
       ],
       "proxyType": "immutable",
-      "description": "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+      "description": "Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified.",
       "critical": true,
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1780357679,
@@ -2737,7 +2736,7 @@
         "0xb4dd9dac0cc5a46ce5430c0679778179942b4c9fc7dffa49daf66b0374d73929"
       ],
       "proxyType": "immutable",
-      "description": "Stateless verifier of P-384 ECDSA signatures. Used by the NitroValidator and the CertManager to check AWS Nitro attestation and certificate signatures.",
+      "description": "Stateless verifier of P-384 ECDSA signatures.",
       "critical": true,
       "deployerAddress": "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
       "sinceTimestamp": 1790264579,
@@ -4735,7 +4734,7 @@
     "base/CertManager": "0xb150ca4c49fc6a9050255569a1e1e40a08588fe21d75d55e73778800a57d4021",
     "base/NitroValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "base/P384Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "base/ProtocolVersions": "0xe8053825b4ba88f4a2ffaaf85319cc2f9b9cd8ffab3fa5cdc40072dfb286be43",
+    "base/ProtocolVersions": "0x1c99851b9bf8f56b6c16eac685b29b98c1d12e2f73c13c986e74936824a524d9",
     "base/TEEProverRegistry": "0x03018509a0a5b55055c18232c6d57e8d638ddc7202216686a7648201248fca07",
     "base/TEEVerifier": "0xd293d3f86a73e3a192c6d4f590e1d3a2739dbc02709188aeab774547579c3076",
     "base/ZkVerifier": "0xd293d3f86a73e3a192c6d4f590e1d3a2739dbc02709188aeab774547579c3076",
@@ -4777,7 +4776,7 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "base": 52079195, "ethereum": 26104939 },
+  "usedBlockNumbers": { "base": 52080851, "ethereum": 26105215 },
   "permissionsConfigHash": "0xb19a51d80e4b73a73af09105ab77256e1643b204f7890f8c6530ed91ed4620df",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
