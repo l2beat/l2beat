@@ -1,0 +1,238 @@
+{
+  "name": "zkapi",
+  "timestamp": 1790944823,
+  "configHash": "0xe2b85351410fade62831257bdf31f4063b99380a9ad92de8cc0cb94fba8cbe17",
+  "entries": [
+    {
+      "name": "ZkApiVault",
+      "address": "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe",
+      "type": "Contract",
+      "template": "zkapi/ZkApiVault",
+      "sourceHashes": [
+        "0x72d737baab9b8413b0fce1575c05db16b36d72e1b15637e9490b0525432f051b"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrows native ETH for anonymous API authorizations. Each deposit creates a publicly identified note. A Groth16 proof closes it with operator clearance or starts a delayed escape withdrawal that can be challenged with a valid request proof sharing its nullifier. The challenge does not prove service acceptance or delivery. Closures reveal the original note id, payout address and remaining balance, and send the consumed balance to the treasury. Anyone can sweep an expired active note entirely to the treasury. Pausing blocks deposits, cooperative closes and new escapes, while challenges, escape finalization and expiry sweeps remain available.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRoot", "nextNoteId"],
+      "deployerAddress": "eth:0x83f7eA47811A288f2052Bc31aaAE0803c761D156",
+      "sinceTimestamp": 1790783879,
+      "sinceBlock": 26091339,
+      "values": {
+        "$immutable": true,
+        "billingToken": "eth:0x0000000000000000000000000000000000000000",
+        "challengePeriod": 86400,
+        "clearanceSigningKeyX": "8513913750309181534008235846459118226424698599790706716052128440749190831340",
+        "clearanceSigningKeyY": "8050192682323929383212454306316051320934799180645974083504169946352558452098",
+        "currentRoot": "12754617183972507588446104231825103619507852152796131018330408679940542623202",
+        "DEFAULT_CHALLENGE_PERIOD": 86400,
+        "EXPIRY_BUCKET": 86400,
+        "MAX_NATIVE_UNITS": 9007199254740991,
+        "MERKLE_DEPTH": 32,
+        "nativeAssetWeiPerUnit": 1000000000,
+        "nextNoteId": 31,
+        "noteTtl": 2592000,
+        "owner": "eth:0x83f7eA47811A288f2052Bc31aaAE0803c761D156",
+        "paused": false,
+        "proofAdapter": "eth:0x8e92013Dd7cc86f75b539DBD3814B2e603e0F9C1",
+        "PROTOCOL_VERSION": 2,
+        "requestChargeCap": 50000,
+        "stateSigningKeyX": "14736870901058190133810528518080235034742307208502646627484501334292400432548",
+        "stateSigningKeyY": "8042216759564936785720998744885695000945209346712716628356441486619284013271",
+        "treasury": "eth:0x7665Af7d8C08733A22d0ac370EE8c5e2E21379BB"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "Receives the difference between deposit and final balance on closure, and the full deposit when an active expired note is swept. It has no special call authority."
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Blocks deposit, mutualClose and initiateEscapeWithdrawal. Challenge, finalizeEscapeWithdrawal and claimExpired are unaffected."
+        },
+        "proofAdapter": { "severity": "HIGH" },
+        "stateSigningKeyX": {
+          "severity": "HIGH",
+          "description": "X coordinate of the Baby-JubJub public key whose signatures authorize non-genesis offchain balance states. The signing key holder controls settlement availability."
+        },
+        "stateSigningKeyY": { "severity": "HIGH" },
+        "clearanceSigningKeyX": {
+          "severity": "HIGH",
+          "description": "X coordinate of the Baby-JubJub public key whose signature permits immediate cooperative closure. A delayed escape does not require clearance."
+        },
+        "clearanceSigningKeyY": { "severity": "HIGH" },
+        "noteTtl": {
+          "severity": "HIGH",
+          "description": "Seconds added to deposit time before rounding expiry up to an EXPIRY_BUCKET boundary. After expiry anyone can sweep an active note to the treasury."
+        },
+        "challengePeriod": {
+          "severity": "HIGH",
+          "description": "Seconds during which an escape can be challenged with a valid request proof sharing its nullifier. The contract does not check whether the operator accepted or serviced that request."
+        },
+        "requestChargeCap": {
+          "severity": "HIGH",
+          "description": "Deployment-pinned request cap in gwei, checked by the client and authorization service. The vault does not compare request proof solvencyBound against this cap."
+        },
+        "nativeAssetWeiPerUnit": {
+          "description": "Wei per balance unit. Vault balances and event amounts are denominated in whole gwei."
+        },
+        "currentRoot": {
+          "description": "Current root of the active-note Merkle tree."
+        },
+        "nextNoteId": {
+          "description": "Next deposit's sequential note identifier."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe": "ZkApiVault"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x7665Af7d8C08733A22d0ac370EE8c5e2E21379BB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x83f7eA47811A288f2052Bc31aaAE0803c761D156",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Groth16ProofAdapter",
+      "address": "eth:0x8e92013Dd7cc86f75b539DBD3814B2e603e0F9C1",
+      "type": "Contract",
+      "template": "zkapi/Groth16ProofAdapter",
+      "sourceHashes": [
+        "0xd31acf861825869e6a84b6b0025cb6940077f5981a10e73d2e4e8e5d7417c853"
+      ],
+      "proxyType": "immutable",
+      "description": "BN254 Groth16 verifier containing the request and withdrawal verification keys for zkapi-v2-note-bound-v1. Request proofs hide the note identity, exact balance and state signature. Withdrawal proofs expose the note id, destination, final balance and nullifier. The published circuit-specific keys were generated in a single-party setup. Retained setup secrets can allow forged proofs.",
+      "critical": true,
+      "deployerAddress": "eth:0x83f7eA47811A288f2052Bc31aaAE0803c761D156",
+      "sinceTimestamp": 1790782859,
+      "sinceBlock": 26091254,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x8e92013Dd7cc86f75b539DBD3814B2e603e0F9C1": "Groth16ProofAdapter"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Bn254Poseidon",
+      "address": "eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f",
+      "type": "Contract",
+      "template": "zkapi/Bn254Poseidon",
+      "sourceHashes": [
+        "0xcc6ce4b93fa5762203bd23bc698617f85f28ae603c8d3c8e43159432900256c5"
+      ],
+      "proxyType": "immutable",
+      "description": "Linked Poseidon hash library used by the vault for active-note leaves and Merkle updates. Its BN254 parameters must agree with the request and withdrawal circuits.",
+      "deployerAddress": "eth:0xc2768Bf1d837f38E99150D3892648AE1e9e280Cf",
+      "sinceTimestamp": 1786505999,
+      "sinceBlock": 25736293,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f": "Bn254Poseidon"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    }
+  ],
+  "abis": {
+    "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe": [
+      "constructor(address treasury_, uint64 noteTtl_, uint64 challengePeriod_, uint128 requestChargeCap_, address proofAdapter_, uint256 stateSigningKeyX_, uint256 stateSigningKeyY_, uint256 clearanceSigningKeyX_, uint256 clearanceSigningKeyY_, address owner_)",
+      "error ChallengeExpired()",
+      "error ChallengeNotExpired()",
+      "error InvalidBalance()",
+      "error InvalidCommitment()",
+      "error InvalidDeploymentBinding()",
+      "error InvalidFelt()",
+      "error InvalidNativeValue()",
+      "error NativeTransferFailed()",
+      "error NotPendingWithdrawal()",
+      "error NoteNotActive()",
+      "error NoteNotExpired()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error Paused()",
+      "error ReentrancyGuardReentrantCall()",
+      "error ReplayedNullifier()",
+      "error StaleRoot()",
+      "error Unauthorized()",
+      "error ZeroAmount()",
+      "event EscapeWithdrawalChallenged(uint32 indexed noteId, uint256 nullifier, uint256 restoredRoot)",
+      "event EscapeWithdrawalFinalized(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)",
+      "event EscapeWithdrawalInitiated(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination, uint64 challengeDeadline, uint256 newRoot)",
+      "event ExpiredClaimed(uint32 indexed noteId, uint128 depositAmount, uint256 newRoot)",
+      "event MutualClose(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)",
+      "event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProofAdapterSet(address indexed newAdapter)",
+      "event TreasurySet(address indexed newTreasury)",
+      "function DEFAULT_CHALLENGE_PERIOD() view returns (uint64)",
+      "function EXPIRY_BUCKET() view returns (uint64)",
+      "function MAX_NATIVE_UNITS() view returns (uint128)",
+      "function MERKLE_DEPTH() view returns (uint256)",
+      "function PROTOCOL_VERSION() view returns (uint16)",
+      "function billingToken() view returns (address)",
+      "function challengeEscapeWithdrawal(uint32 noteId, tuple(uint16 protocolVersion, uint64 chainId, address contractAddress, uint256 activeRoot, uint256 stateSigningKeyX, uint256 stateSigningKeyY, uint64 requestTime, uint128 solvencyBound, uint256 requestNullifier, uint256 authorizationTag, uint256 anonymousCommitmentX, uint256 anonymousCommitmentY) inputs, bytes proof, uint256[32] siblings)",
+      "function challengePeriod() view returns (uint64)",
+      "function claimExpired(uint32 noteId, uint256[32] siblings)",
+      "function clearanceSigningKeyX() view returns (uint256)",
+      "function clearanceSigningKeyY() view returns (uint256)",
+      "function currentRoot() view returns (uint256)",
+      "function deposit(bytes32 commitment, uint128 amount, uint256[32] siblings) payable",
+      "function finalizeEscapeWithdrawal(uint32 noteId)",
+      "function initiateEscapeWithdrawal(tuple(uint16 protocolVersion, uint64 chainId, address contractAddress, uint256 activeRoot, uint256 stateSigningKeyX, uint256 stateSigningKeyY, uint256 clearanceSigningKeyX, uint256 clearanceSigningKeyY, uint32 noteId, uint128 finalBalance, address destination, uint256 withdrawalNullifier, bool hasClearance, uint256 withdrawalTag) inputs, bytes proof, uint256[32] siblings)",
+      "function mutualClose(tuple(uint16 protocolVersion, uint64 chainId, address contractAddress, uint256 activeRoot, uint256 stateSigningKeyX, uint256 stateSigningKeyY, uint256 clearanceSigningKeyX, uint256 clearanceSigningKeyY, uint32 noteId, uint128 finalBalance, address destination, uint256 withdrawalNullifier, bool hasClearance, uint256 withdrawalTag) inputs, bytes proof, uint256[32] siblings)",
+      "function nativeAssetWeiPerUnit() view returns (uint256)",
+      "function nextNoteId() view returns (uint32)",
+      "function noteTtl() view returns (uint64)",
+      "function notes(uint32) view returns (bytes32 commitment, uint128 depositAmount, uint64 expiryTs, uint8 status)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingWithdrawals(uint32) view returns (bool exists, uint256 activeRoot, uint256 withdrawalNullifier, uint128 finalBalance, address destination, uint64 challengeDeadline)",
+      "function proofAdapter() view returns (address)",
+      "function renounceOwnership()",
+      "function requestChargeCap() view returns (uint128)",
+      "function setTreasury(address newTreasury)",
+      "function stateSigningKeyX() view returns (uint256)",
+      "function stateSigningKeyY() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function unpause()",
+      "function usedNullifiers(uint256) view returns (bool)"
+    ],
+    "eth:0x8e92013Dd7cc86f75b539DBD3814B2e603e0F9C1": [
+      "error InvalidProof()",
+      "function assertValidRequest(tuple(uint16 protocolVersion, uint64 chainId, address contractAddress, uint256 activeRoot, uint256 stateSigningKeyX, uint256 stateSigningKeyY, uint64 requestTime, uint128 solvencyBound, uint256 requestNullifier, uint256 authorizationTag, uint256 anonymousCommitmentX, uint256 anonymousCommitmentY) inputs, bytes proof) view",
+      "function assertValidWithdrawal(tuple(uint16 protocolVersion, uint64 chainId, address contractAddress, uint256 activeRoot, uint256 stateSigningKeyX, uint256 stateSigningKeyY, uint256 clearanceSigningKeyX, uint256 clearanceSigningKeyY, uint32 noteId, uint128 finalBalance, address destination, uint256 withdrawalNullifier, bool hasClearance, uint256 withdrawalTag) inputs, bytes proof) view"
+    ],
+    "eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f": [
+      "function hash3(uint256 a, uint256 b, uint256 c) pure returns (uint256 result)",
+      "function hash3PairPath32(uint256 domain, uint32 index, uint256 oldLeaf, uint256 newLeaf, uint256[32] siblings) pure returns (uint256 oldRoot, uint256 newRoot)",
+      "function hash5(uint256 a, uint256 b, uint256 c, uint256 d, uint256 e) pure returns (uint256 result)"
+    ]
+  },
+  "usedTemplates": {
+    "zkapi/Bn254Poseidon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkapi/Groth16ProofAdapter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkapi/ZkApiVault": "0xa362880fd60313173bd112d78b2c4fd73176ba90f2aed5829d71a27929ad60e8"
+  },
+  "usedBlockNumbers": { "ethereum": 26104701 },
+  "permissionsConfigHash": "0x12a82f707c0127556e68ed70f7d6290975d19f7c44229ab18781cfb9eec31357",
+  "permissions": {
+    "eth:0x83f7eA47811A288f2052Bc31aaAE0803c761D156": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe",
+          "description": "pause and unpause deposits, cooperative withdrawals and new escape withdrawals, and change the treasury receiving consumed balances and expired notes. Pausing can prevent users from exiting before their notes become sweepable.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
+}
