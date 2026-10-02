@@ -9,11 +9,11 @@ Generated with discovered.json: 0x1d9f2ae26ae0e436adaff4af8ad1a611bc607dd9
 
 ## Description
 
-Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0), then RollupProxy logic upgraded to nitro-contracts v3.2.0. Both executed by an EOA executor via the UpgradeExecutor.
+Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0), then RollupProxy logic upgraded to nitro-contracts v3.2.0.
 
 RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled. Stake token ETH → WETH. `baseStake` 0.1 ETH → 0. `confirmPeriodBlocks` 45818 → 50400. `validatorAfkBlocks` 45818 → 201600. `challengeGracePeriodBlocks` set to 14400.
 
-ChallengeManager replaced by EdgeChallengeManager: 1 big-step level, no stake on any edge level.
+ChallengeManager replaced by EdgeChallengeManager: 1 big-step level. No stake is required to propose an assertion or open a challenge (`baseStake` 0, all edge stakes 0): if the validator whitelist is dropped, delay and resource exhaustion attacks cost only gas.
 
 Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max.
 

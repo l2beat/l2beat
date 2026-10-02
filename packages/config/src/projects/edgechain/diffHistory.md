@@ -13,7 +13,7 @@ Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0), then RollupProxy 
 
 RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled; validators 3 → 1: two GnosisSafeL2 removed as validators, one of them kept as `anyTrustFastConfirmer`. Stake token ETH → WETH. `minimumAssertionPeriod` 5 → 75. `validatorAfkBlocks` 45818 → 201600. `challengeGracePeriodBlocks` set to 14400.
 
-ChallengeManager replaced by EdgeChallengeManager: 1 big-step level, no stake on any edge level.
+ChallengeManager replaced by EdgeChallengeManager: 1 big-step level. No stake is required to propose an assertion or open a challenge (`baseStake` 0, all edge stakes 0): if the validator whitelist is dropped, delay and resource exhaustion attacks cost only gas.
 
 Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max.
 
