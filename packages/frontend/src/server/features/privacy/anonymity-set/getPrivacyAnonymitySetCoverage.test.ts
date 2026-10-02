@@ -1,5 +1,5 @@
 import type { ProjectPrivacyInfo, ProjectPrivacyToken } from '@l2beat/config'
-import type { Database, PrivacyFlowDailyRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import {
   ChainSpecificAddress,
   EthereumAddress,
@@ -16,14 +16,10 @@ const WINDOW_START = UnixTime(CURRENT_DAY - 30 * UnixTime.DAY)
 // The database is mocked: the function only combines two counts, so the tests
 // pin which rows it asks for and how it relates them.
 describe(getPrivacyAnonymitySetCoverage.name, () => {
-  it('compares attributed deposits with all deposits into tracked buckets', async () => {
-    const { db, getDepositCount, getDailyByProjectIds } = mockDatabase({
+  it('counts attributed and all deposits over the same buckets and window', async () => {
+    const { db, getDepositCount, getNonZeroDepositCount } = mockDatabase({
       attributed: 8,
-      flows: [
-        flowDay('tracked', 6),
-        flowDay('tracked', 4),
-        flowDay('untracked', 100),
-      ],
+      total: 10,
     })
 
     const coverage = await getPrivacyAnonymitySetCoverage(
@@ -35,18 +31,23 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
     expect(coverage).toEqual({ attributed: 8, total: 10 })
     expect(getDepositCount).toHaveBeenOnlyCalledWith(
       'project',
+      ['tracked'],
       WINDOW_START,
       CURRENT_DAY,
     )
-    expect(getDailyByProjectIds).toHaveBeenOnlyCalledWith(
-      ['project'],
+    expect(getNonZeroDepositCount).toHaveBeenOnlyCalledWith(
+      'project',
+      ['tracked'],
       WINDOW_START,
       CURRENT_DAY,
     )
   })
 
   it('skips projects whose depositors are all attributed', async () => {
-    const { db, getDepositCount } = mockDatabase({ attributed: 8, flows: [] })
+    const { db, getDepositCount, getNonZeroDepositCount } = mockDatabase({
+      attributed: 8,
+      total: 10,
+    })
 
     const coverage = await getPrivacyAnonymitySetCoverage(
       db,
@@ -56,13 +57,11 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
 
     expect(coverage).toEqual(undefined)
     expect(getDepositCount).not.toHaveBeenCalled()
+    expect(getNonZeroDepositCount).not.toHaveBeenCalled()
   })
 
   it('withholds coverage while deposit totals lag behind attributed deposits', async () => {
-    const { db } = mockDatabase({
-      attributed: 8,
-      flows: [flowDay('tracked', 5)],
-    })
+    const { db } = mockDatabase({ attributed: 8, total: 5 })
 
     const coverage = await getPrivacyAnonymitySetCoverage(
       db,
@@ -76,32 +75,28 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
 
 function mockDatabase({
   attributed,
-  flows,
+  total,
 }: {
   attributed: number
-  flows: PrivacyFlowDailyRecord[]
+  total: number
 }) {
   const getDepositCount =
     mockFn<
       Database['privacyAnonymitySetEvent']['getDepositCount']
     >().resolvesTo(attributed)
-  const getDailyByProjectIds =
-    mockFn<Database['privacyFlowEvent']['getDailyByProjectIds']>().resolvesTo(
-      flows,
+  const getNonZeroDepositCount =
+    mockFn<Database['privacyFlowEvent']['getNonZeroDepositCount']>().resolvesTo(
+      total,
     )
   const db = mockObject<Database>({
     privacyAnonymitySetEvent: mockObject<Database['privacyAnonymitySetEvent']>({
       getDepositCount,
     }),
     privacyFlowEvent: mockObject<Database['privacyFlowEvent']>({
-      getDailyByProjectIds,
+      getNonZeroDepositCount,
     }),
   })
-  return { db, getDepositCount, getDailyByProjectIds }
-}
-
-function flowDay(bucketId: string, depositCount: number) {
-  return mockObject<PrivacyFlowDailyRecord>({ bucketId, depositCount })
+  return { db, getDepositCount, getNonZeroDepositCount }
 }
 
 function makeProject(
@@ -117,7 +112,10 @@ function makeProject(
       sinceTimestamp: UnixTime(0),
     },
     buckets: [
-      { ...makeBucket('tracked'), anonymitySet: { minimumAmounts: ['200'] } },
+      {
+        ...makeBucket('tracked'),
+        anonymitySet: { minimumAmounts: ['100', '200'] },
+      },
       makeBucket('untracked'),
     ],
   }

@@ -109,6 +109,58 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
   )
 
   describe(
+    PrivacyFlowEventRepository.prototype.getNonZeroDepositCount.name,
+    () => {
+      it('counts deposits into the given project buckets within the half-open window', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', UnixTime(START - 1), 100, 'deposit', 1, 1n),
+          flowEvent('proj-a', START, 101, 'deposit', 1, 1n),
+          flowEvent('proj-a', START, 102, 'deposit', 2, 1n),
+          flowEvent('proj-a', START, 103, 'withdrawal', 1, 1n),
+          flowEvent(
+            'proj-a',
+            UnixTime(START + UnixTime.DAY),
+            104,
+            'deposit',
+            1,
+            1n,
+          ),
+          flowEvent('proj-b', START, 105, 'deposit', 1, 1n),
+          {
+            ...flowEvent('proj-a', START, 106, 'deposit', 1, 1n),
+            bucketId: 'other',
+          },
+        ])
+
+        const result = await repository.getNonZeroDepositCount(
+          'proj-a',
+          ['bucket'],
+          START,
+          UnixTime(START + UnixTime.DAY),
+        )
+
+        expect(result).toEqual(3)
+      })
+
+      it('leaves out zero-amount deposits', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 1n),
+          flowEvent('proj-a', START, 101, 'deposit', 1, 0n),
+        ])
+
+        const result = await repository.getNonZeroDepositCount(
+          'proj-a',
+          ['bucket'],
+          START,
+          UnixTime(START + UnixTime.DAY),
+        )
+
+        expect(result).toEqual(1)
+      })
+    },
+  )
+
+  describe(
     PrivacyFlowEventRepository.prototype.deleteByConfigInBlockRange.name,
     () => {
       it('deletes records in block range', async () => {
