@@ -104,7 +104,7 @@ export const payyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposure:
-        "Proofs are built on your device and the app talks only to the operator's servers. The payment-link website is different: it loads a third-party analytics script that records the page URL, which holds the redeem secret of the link, and reports a device fingerprint to the backend.",
+        "The payment-link website loads a third-party analytics script that records the page URL, which holds the redeem secret of the link, and reports a device fingerprint to the backend. On the other hand, proofs are built on your device and the app talks only to the operator's servers.",
       advice: 'Redeem payment links in the app, not in a browser.',
       interior: {
         sender: 'private',

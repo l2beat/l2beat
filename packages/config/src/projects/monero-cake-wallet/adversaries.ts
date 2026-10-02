@@ -72,7 +72,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposure:
-        "With Tor and own nodes, the two legs stay apart unless they run in the same app/tor session. Cake's Tor has one SOCKS port without isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one circuit.",
+        "Cake's Tor has one SOCKS port without isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one circuit. With Tor and own nodes, the two legs stay apart unless they run in the same app/tor session.",
       advice:
         'Turn on Tor, switch off Blink and Etherscan, set your own Monero node and Ethereum RPC, then restart the app, since the Ethereum client keeps its first connection. Wait and restart it again between the legs.',
       interior: {

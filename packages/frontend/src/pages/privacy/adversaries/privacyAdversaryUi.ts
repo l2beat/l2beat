@@ -1,9 +1,11 @@
 import type {
   PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
   TableReadyValue,
 } from '@l2beat/config'
+import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
@@ -53,9 +55,41 @@ export function getPrivacyAdversaryTitle(label: string): string {
 }
 
 /**
- * All adversaries folded into one value: the homepage dot colour and the
- * summary table sort key. The future adversary is left out: it grades a
- * potential post-quantum world, not today's protocol. Any red cell makes it
+ * First sentence of an adversary's exposure: the gist shown under each verdict
+ * in the rosette tooltip, while the full text stays on the project page. A
+ * sentence only ends where the next one starts with a capital, a digit or a
+ * quote, so abbreviations like "e.g." do not cut it short.
+ */
+export function getPrivacyAdversaryGist(exposure: string): string {
+  const match = exposure.match(/^(.+?[.!?])\s+(?=[A-Z0-9"'(])/s)
+  return (match?.[1] ?? exposure).trim()
+}
+
+/** Points a cell contributes to the score; green is worth the most. */
+const PRIVACY_SENTIMENT_POINTS: Record<PrivacyAdversarySentiment, number> = {
+  good: 2,
+  warning: 1,
+  bad: 0,
+}
+
+/**
+ * Every adversary summed, two points for green and one for yellow, so a higher
+ * score is a better protocol. Unlike the folded value below it counts the
+ * future adversary too.
+ */
+export function getPrivacyAdversariesScore(
+  adversaries: PrivacyAdversariesSummary,
+): number {
+  return adversaries.cells.reduce(
+    (score, cell) => score + PRIVACY_SENTIMENT_POINTS[cell.sentiment],
+    0,
+  )
+}
+
+/**
+ * All adversaries folded into one value: the homepage dot colour. The future
+ * adversary is left out: it grades a potential post-quantum world, not
+ * today's protocol. Any red cell makes it
  * red, otherwise the majority colour wins and a tie is green. Within a colour,
  * fewer red and yellow cells sort first.
  */
@@ -77,7 +111,52 @@ export function getPrivacyAdversariesTableValue(
   }
 }
 
+/** The verdict of one adversary, as the rosette and its tooltip word it. */
+export const PRIVACY_ADVERSARY_VERDICT: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
+  good: 'Private',
+  warning: 'At risk',
+  bad: 'Exposed',
+}
+
+/** What each rosette colour means, as the legend above the tables words it. */
+export const PRIVACY_ADVERSARY_LEGEND: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
+  good: "An average user's privacy can't be compromised by this adversary.",
+  warning:
+    'Privacy can be compromised, but a careful user taking extra steps can avoid it.',
+  bad: 'Privacy can be compromised and there is no way around it.',
+}
+
+/**
+ * The five adversaries as values of the L2 risk rosette, in spine order, which
+ * the rosette lays out clockwise from bottom left. Labels break after their
+ * first word to fit around the rosette like the L2 risk names do.
+ */
+export function getPrivacyAdversaryRosetteValues(
+  adversaries: PrivacyAdversariesSummary,
+): RosetteValue[] {
+  return adversaries.cells.map((cell) => ({
+    name: cell.label.replace(' ', '\n'),
+    value: PRIVACY_ADVERSARY_VERDICT[cell.sentiment],
+    sentiment: cell.sentiment,
+    description: cell.exposure,
+  }))
+}
+
+/** Id of the project page section, as set in getPrivacyProjectEntry. */
+export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
+
+/** Link to the adversaries section of a project page. */
+export function getPrivacyAdversariesSectionHref(projectHref: string): string {
+  return `${projectHref}#${PRIVACY_ADVERSARIES_SECTION_ID}`
+}
+
 /** Anchor of an adversary block inside the project page section. */
 export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
-  return `privacy-adversaries-${id}`
+  return `${PRIVACY_ADVERSARIES_SECTION_ID}-${id}`
 }

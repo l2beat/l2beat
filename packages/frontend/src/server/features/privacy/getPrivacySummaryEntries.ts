@@ -221,7 +221,11 @@ function getPoolsTracked(project: PrivacyProject): number {
   )
 }
 
-/** Sorts by privacy. */
+/**
+ * Privacy first: the page ranks protocols by the adversary assessment, not by
+ * how much money sits in them. Everything below is a tie-break within the
+ * same score, which is why a protocol with no TVL can still outrank one with.
+ */
 function comparePrivacySummaryEntries(
   a: PrivacySummaryEntry,
   b: PrivacySummaryEntry,

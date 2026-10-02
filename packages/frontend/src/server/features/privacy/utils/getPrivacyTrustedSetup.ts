@@ -13,6 +13,8 @@ export type PrivacyTrustedSetup = Omit<TrustedSetup, 'risk'> & {
 
 export type PrivacyTrustedSetupSummary = PrivacySummaryValue & {
   risk: TrustedSetupRisk
+  /** Beside the dot; see getTrustedSetupLabel. */
+  label: string | undefined
 }
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
@@ -48,16 +50,33 @@ export function getPrivacyTrustedSetup(
   return result
 }
 
+/**
+ * What is written beside a trusted setup's dot: its participant count. The
+ * no-setup and transparent-setup icons are labelled with their name, which is
+ * what they mean. A setup whose participants are not yet published gets no
+ * label rather than its name.
+ */
+export function getTrustedSetupLabel(
+  trustedSetup: PrivacyTrustedSetup,
+): string | undefined {
+  if (trustedSetup.participantCount !== undefined) {
+    return `${formatInteger(trustedSetup.participantCount)} participants`
+  }
+  return trustedSetup.risk === 'None' || trustedSetup.risk === 'N/A'
+    ? trustedSetup.name
+    : undefined
+}
+
 export function toTrustedSetupSummaryValue(
   trustedSetup: PrivacyTrustedSetup,
 ): PrivacyTrustedSetupSummary {
+  const label = getTrustedSetupLabel(trustedSetup)
   return {
-    value:
-      trustedSetup.participantCount !== undefined
-        ? `${formatInteger(trustedSetup.participantCount)} participants`
-        : trustedSetup.name,
+    // Also the tooltip heading, so it falls back to the name.
+    value: label ?? trustedSetup.name,
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
     risk: trustedSetup.risk,
+    label,
   }
 }

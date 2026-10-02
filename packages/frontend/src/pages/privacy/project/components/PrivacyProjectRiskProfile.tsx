@@ -17,21 +17,21 @@ import {
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
-import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
 } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PrivacyProjectRosette } from '../../rosette/PrivacyProjectRosette'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
-import { DotWithLabel } from '../../summary/components/DotWithLabel'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
   exitWindow: PrivacyExitWindow
   adversaries: PrivacyAdversariesSummary
-  /** This project's page, which the adversary dots link into. */
+  /** This project's page, which the adversary rosette links into. */
   href: string
+  isUnderReview?: boolean
   reproducibility: PrivacySummaryValue
   className?: string
 }
@@ -41,15 +41,33 @@ export function PrivacyProjectRiskProfile({
   exitWindow,
   adversaries,
   href,
+  isUnderReview,
   reproducibility,
   className,
 }: Props) {
   return (
     <div className={cn('grid gap-4 md:grid-cols-4', className)}>
       <ProjectSummaryStat
+        title={PRIVACY_ASSESSMENT.title}
+        tooltip={PRIVACY_ASSESSMENT.tooltip}
+        value={
+          <PrivacyProjectRosette
+            adversaries={adversaries}
+            href={href}
+            isUnderReview={isUnderReview}
+          />
+        }
+      />
+      <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."
-        value={<RiskValue value={trustedSetup} risk={trustedSetup.risk} />}
+        value={
+          <RiskValue
+            value={trustedSetup}
+            label={trustedSetup.label}
+            risk={trustedSetup.risk}
+          />
+        }
       />
       <ProjectSummaryStat
         title="Exit window"
@@ -57,25 +75,9 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={exitWindow}
+            label={exitWindow.value}
             risk={sentimentToRiskDot(exitWindow.sentiment)}
             walkawayTest={exitWindow.walkawayTest}
-          />
-        }
-      />
-      <ProjectSummaryStat
-        title={PRIVACY_ASSESSMENT.title}
-        tooltip={PRIVACY_ASSESSMENT.tooltip}
-        value={
-          <DotWithLabel
-            dot={
-              <PrivacyAdversaryDots
-                adversaries={adversaries}
-                size="md"
-                href={href}
-              />
-            }
-            label={adversaries.promiseLabel}
-            className="items-end md:items-start"
           />
         }
       />
@@ -85,6 +87,7 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={reproducibility}
+            label={reproducibility.value}
             risk={sentimentToRiskDot(reproducibility.sentiment)}
           />
         }
@@ -95,10 +98,13 @@ export function PrivacyProjectRiskProfile({
 
 function RiskValue({
   value,
+  label,
   risk,
   walkawayTest,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
+  /** Beside the dot, which stands alone without one. */
+  label: string | undefined
   risk: TrustedSetupRisk
   walkawayTest?: PrivacyWalkawayTest
 }) {
@@ -106,10 +112,10 @@ function RiskValue({
     <Tooltip>
       <TooltipTrigger
         className="flex items-center gap-2 text-left"
-        aria-label={value.value}
+        aria-label={label ?? value.value}
       >
         <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
-        <span>{value.value}</span>
+        {label && <span>{label}</span>}
         {walkawayTest && (
           <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
         )}
