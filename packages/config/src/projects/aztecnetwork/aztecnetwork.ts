@@ -178,6 +178,7 @@ const rollup = discovery.getContract('Rollup')
 const escapeHatch = discovery.getContract('EscapeHatch')
 const slasher = discovery.getContract('Slasher')
 const slashingProposer = discovery.getContract('SlashingProposer')
+const zkMoneyPortal = discovery.getContract('ZkMoneyPortal')
 
 const rollupAddress = ChainSpecificAddress.address(rollup.address)
 const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
@@ -368,7 +369,7 @@ export const aztecnetwork: ScalingProject = {
         tokens: ['AZTEC'],
       }),
       discovery.getEscrowDetails({
-        address: discovery.getContract('ZkMoneyPortal').address,
+        address: zkMoneyPortal.address,
         tokens: ['DAI'],
         ...ESCROW.CANONICAL_ADD_TA,
         description:
