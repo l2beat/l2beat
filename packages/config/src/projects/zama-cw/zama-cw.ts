@@ -17,10 +17,15 @@ import { zamaCwAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('zama-cw')
 
-const ZAMA_WRAP_EVENT =
-  '0xcda691c81d2fd787d8c209adb4ae8b138f857d7575adf7669195ed05482e701b'
-const ZAMA_UNWRAP_FINALIZED_EVENT =
-  '0x87061fd1a5b3714805472c94c9eb8a6b8491992ee77791aa2594be67b92fd962'
+// Flows are the underlying token transfers into and out of each wrapper. The
+// wrappers' own events changed when the ones deployed before block 25077611
+// (2026-05-12) were upgraded in it: before, wraps emitted no Wrap event and
+// UnwrapFinalized had a different signature. Underlying transfers cover both
+// implementations and match every nonzero wrap and finalized unwrap. They also
+// include a few hundred dust transfers into cUSDT and cUSDC (address
+// poisoning, under 2 USD in total) that wrapped nothing.
+const ERC20_TRANSFER_EVENT =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
 const WRAPPER_NAMES = [
   'ConfidentialUSDCWrapper',
@@ -69,7 +74,6 @@ const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
       {
         wrapper,
         wrapperSymbol: discovery.getContractValue<string>(name, 'symbol'),
-        wrapperRate: discovery.getContractValue<number>(name, 'rate'),
         wrapperSinceTimestamp: UnixTime(wrapper.sinceTimestamp ?? 0),
         underlyingAddress,
         underlyingToken,
@@ -124,7 +128,6 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
   ({
     wrapper,
     wrapperSymbol,
-    wrapperRate,
     wrapperSinceTimestamp,
     underlyingAddress,
     underlyingToken,
@@ -145,15 +148,19 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
         address: wrapper.address,
         sinceTimestamp: wrapperSinceTimestamp,
         deposit: {
-          event: ZAMA_WRAP_EVENT,
-          extractor: 'zamaWrap',
-          params: {},
+          event: ERC20_TRANSFER_EVENT,
+          extractor: 'erc20Transfer',
+          params: {
+            to: EthereumAddress(ChainSpecificAddress.address(wrapper.address)),
+          },
         },
         withdrawal: {
-          event: ZAMA_UNWRAP_FINALIZED_EVENT,
-          extractor: 'zamaUnwrap',
+          event: ERC20_TRANSFER_EVENT,
+          extractor: 'erc20Transfer',
           params: {
-            rate: wrapperRate.toString(),
+            from: EthereumAddress(
+              ChainSpecificAddress.address(wrapper.address),
+            ),
           },
         },
       },

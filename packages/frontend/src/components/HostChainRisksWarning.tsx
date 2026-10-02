@@ -1,4 +1,5 @@
 import { ProjectDetailsRelatedProjectBanner } from './ProjectDetailsRelatedProjectBanner'
+import { hostChainRisksText } from './projects/sections/sectionCopy'
 
 export type HostChainRisksWarningProps = {
   hostChainName: string
@@ -13,13 +14,9 @@ export function HostChainRisksWarning({
   hostChainIcon,
   riskCount,
 }: HostChainRisksWarningProps) {
-  const text = riskCount
-    ? 'There are ' + riskCount + ' additional risks coming from the host chain '
-    : 'The section considers only the L3 properties. For more details please refer to '
-
   return (
     <ProjectDetailsRelatedProjectBanner
-      text={text}
+      text={hostChainRisksText(riskCount)}
       project={{
         name: hostChainName,
         icon: hostChainIcon,

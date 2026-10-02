@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xf02a290485dbd2251e3010f0b35457ac4966bac3
+Generated with discovered.json: 0x732b069b11d145b99d58b3aa9178ea68b8ed242d
 
-# Diff at Thu, 01 Oct 2026 09:46:07 GMT:
+# Diff at Fri, 02 Oct 2026 12:42:51 GMT:
 
-- id: 9e1121b6
+- id: b817e3a5
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789077777
-- current timestamp: 1790847900
+- comparing to: main@083c8d4892c0f44227f033385b4317b5f0a92b74 block: 1789077777
+- current timestamp: 1790944906
 
 ## Description
 
@@ -172,6 +172,17 @@ Version changes and implementation diffs:
       values.game1:
 +        "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e"
 +++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
       values.game621:
 +        "eth:0x0000000000000000000000000000000000000000"
 +++ severity: HIGH
@@ -194,13 +205,34 @@ Version changes and implementation diffs:
 +++ severity: HIGH
       values.game8Weth:
 +        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
       values.initBondGame0:
 +        0
       values.initBondGame1:
 +        0
+      values.initBondGame5:
++        0
       values.initBondGame621:
 +        0
       values.initBondGame8:
++        0
+      values.initBondGame9:
 +        0
 +++ severity: HIGH
       values.vmFromDGF:
@@ -221,6 +253,10 @@ Version changes and implementation diffs:
 +        {"severity":"HIGH"}
       fieldMeta.game8:
 +        {"severity":"HIGH"}
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
       fieldMeta.absolutePrestateFromDGF:
 +        {"severity":"HIGH"}
       fieldMeta.vmFromDGF:
@@ -234,6 +270,18 @@ Version changes and implementation diffs:
       fieldMeta.game8Weth:
 +        {"severity":"HIGH"}
       fieldMeta.game8ChainId:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
 +        {"severity":"HIGH"}
       fieldMeta.anchorStateRegistryFromDGF:
 +        {"severity":"HIGH"}
@@ -255,6 +303,10 @@ Version changes and implementation diffs:
 +        {"typeCaster":"SliceAddress","arg":{"offset":72}}
       usedTypes.5:
 +        {"typeCaster":"SliceUint256","arg":{"offset":92}}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
       usedTypes.2:
 -        {"typeCaster":"SliceAddress","arg":{"offset":72}}
     }
@@ -516,6 +568,45 @@ Version changes and implementation diffs:
  .../SuperchainConfig/SuperchainConfig.sol          |   34 +-
  .../SystemConfig/SystemConfig.sol                  | 1580 +++++--------------
  13 files changed, 2377 insertions(+), 4911 deletions(-)
+```
+
+Generated with discovered.json: 0x55a999a3c1741ec654c5ff91fcea7ce21b385c8b
+
+# Diff at Wed, 30 Sep 2026 22:47:38 GMT:
+
+- id: 9ffe080d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
 ```
 
 Generated with discovered.json: 0x8155a67ce3d6643faad9dce9171039f456e002c8

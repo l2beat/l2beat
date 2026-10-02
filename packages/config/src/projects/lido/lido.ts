@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -22,14 +22,29 @@ const oracleMembers = discovery.getContractValue<{ addresses: string[] }>(
   ACCOUNTING_HASH_CONSENSUS,
   'getMembers',
 ).addresses.length
-const dsmGuardians = discovery.getContractValue<string[]>(
+const dsmGuardianAddresses = discovery.getContractValue<string[]>(
   'DepositSecurityModule',
   'getGuardians',
-).length
+)
+const dsmGuardians = dsmGuardianAddresses.length
 const dsmQuorum = discovery.getContractValue<number>(
   'DepositSecurityModule',
   'getGuardianQuorum',
 )
+// Oracle seats and DSM guardian seats are held by Execution Delegation
+// Framework DelegationContracts (getCooldown fails for any other holder).
+const delegationSeats = [
+  ...discovery.getContractValue<string[]>(ACCOUNTING_HASH_CONSENSUS, 'members'),
+  ...dsmGuardianAddresses,
+]
+const delegationCooldowns = delegationSeats.map((address) =>
+  discovery.getContractValue<number>(address, 'getCooldown'),
+)
+assert(
+  delegationCooldowns.every((c) => c === delegationCooldowns[0]),
+  'Lido DelegationContract cooldowns differ, update the description',
+)
+const delegationCooldownDays = delegationCooldowns[0] / 86400
 const vaultShareCap =
   discovery.getContractValue<number>(
     'VaultHub',
@@ -91,6 +106,7 @@ export const lido: BaseProject = {
       oracleQuorum,
       dsmGuardians,
       dsmQuorum,
+      delegationCooldownDays,
       vaultShareCap,
       externalRatioCap,
       dgSubmitDays,

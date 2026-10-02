@@ -1,6 +1,6 @@
 {
   "name": "shape",
-  "timestamp": 1790847915,
+  "timestamp": 1790944922,
   "configHash": "0xaeb6ef1a8735b2dd406b261219957c5877b08c775eb8a45eefb1170df91dcc02",
   "entries": [
     {
@@ -342,6 +342,10 @@
         "game1": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
+        "game5": "eth:0x0000000000000000000000000000000000000000",
+        "game5AnchorStateRegistry": "UNRESOLVED",
+        "game5Args": "0x",
+        "game5Proposer": "UNRESOLVED",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8AbsolutePrestate": "UNRESOLVED",
@@ -350,16 +354,24 @@
         "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
         "game8Weth": "UNRESOLVED",
-        "gameCount": 11587,
+        "game9": "eth:0x0000000000000000000000000000000000000000",
+        "game9AbsolutePrestate": "UNRESOLVED",
+        "game9AnchorStateRegistry": "UNRESOLVED",
+        "game9Args": "0x",
+        "game9Vm": "UNRESOLVED",
+        "game9Weth": "UNRESOLVED",
+        "gameCount": 11614,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
+        "initBondGame5": 0,
         "initBondGame621": 0,
         "initBondGame8": 0,
+        "initBondGame9": 0,
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6eacc005dcd857b401e4732e6f7837135a22825cfac55f722cf6e14907b844a8b8d3cfd0c04cf3ed9baedcf9c230c67e0ce4f4e964b5b18805daf2884900000000000000000000000000000000000000000000000000000000000001680d8a607f3d2de86add04df00f06794cb339a40dea4fb12d15eb85dc9284a7df0adbc8b696edbbf1d",
-        "permissionedGamesTotal": 11587,
+        "permissionedGamesTotal": 11614,
         "proposerFromDGF": "eth:0x0D8a607F3d2de86adD04Df00f06794cB339A40de",
         "proxyAdmin": "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -374,6 +386,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "game9": { "severity": "HIGH" },
+        "game5": { "severity": "HIGH" },
         "absolutePrestateFromDGF": { "severity": "HIGH" },
         "vmFromDGF": { "severity": "HIGH" },
         "game8AbsolutePrestate": { "severity": "HIGH" },
@@ -381,6 +395,12 @@
         "game8AnchorStateRegistry": { "severity": "HIGH" },
         "game8Weth": { "severity": "HIGH" },
         "game8ChainId": { "severity": "HIGH" },
+        "game9AbsolutePrestate": { "severity": "HIGH" },
+        "game9Vm": { "severity": "HIGH" },
+        "game9AnchorStateRegistry": { "severity": "HIGH" },
+        "game9Weth": { "severity": "HIGH" },
+        "game5AnchorStateRegistry": { "severity": "HIGH" },
+        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -396,6 +416,8 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
         { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 0 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 20 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
@@ -1054,13 +1076,13 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0xAb4299a131dDA3d125e72B9A233D54344081B6c8",
+        "anchorGame": "eth:0xEb4321E5a3aac57B4427A6652D0Fe82a8CFB37D6",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xe3730da46b5d3faa5050c1d95c7b3dbd4150986ec47e6b9fd8b40e69ba4f793e",
-          34247967
+          "0xc2bd95c158350dcd6d3cc832560753b187c8034f13bb7fdb8764d59b72a0a152",
+          34296673
         ],
         "getStartingAnchorRoot": {
           "root": "0x137f34d380e6aed311aea30584f0b684ca0cdfeaa6c47b9dd0b78802163204a1",
@@ -1093,7 +1115,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -1476,7 +1500,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -2696,22 +2722,22 @@
     "gnosisSafeModules/LivenessModule": "0x8b71e37cf372147df718b6b3f85ee721b20cf6d68c86a79ef273d781b300c97c",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/AnchorStateRegistry_post20": "0x7a20ab279102d43f00d8981d9ba7240b97b1e33531ab7ea639effbf9cb3267d4",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
+    "opstack/DisputeGameFactory_v2": "0xaa57a6d06b584640b5e7df1b1ca0605b79f694c4380d21737d81c645b3d617d1",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
+    "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26096655 },
+  "usedBlockNumbers": { "ethereum": 26104709 },
   "permissionsConfigHash": "0x05a69aa3f4de14da55571cf2862c1735082e7ed779b0ba50aee40505399f6447",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {

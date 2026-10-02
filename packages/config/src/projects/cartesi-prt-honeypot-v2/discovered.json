@@ -1,6 +1,6 @@
 {
   "name": "cartesi-prt-honeypot-v2",
-  "timestamp": 1790592527,
+  "timestamp": 1790850950,
   "configHash": "0xa3ae62a88751f3b190a18934950a9e6f0d202e2b6217ad823ba98a8c629b1115",
   "entries": [
     {
@@ -109,11 +109,13 @@
       "name": "Cartesi Multisig",
       "address": "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
       "type": "Contract",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
         "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x77eBA70fe27aC8BA1f292bDa9108555e9a065e3b",
       "sinceTimestamp": 1634112168,
       "sinceBlock": 13408863,
@@ -125,23 +127,13 @@
           "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
           "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
           "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
-          "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
           "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"
         ],
         "$threshold": 3,
         "domainSeparator": "0x5da08fdea0dbcc8c2e5ff2167841877be4e4105aceec36114c391bed58448056",
-        "getOwners": [
-          "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
-          "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
-          "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
-          "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
-          "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
-          "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 335,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 339,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -318,11 +310,6 @@
       }
     },
     {
-      "address": "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
       "type": "EOA",
       "proxyType": "EOA"
@@ -363,15 +350,15 @@
         "$immutable": true,
         "canSettle": {
           "isFinished": false,
-          "epochNumber": 45,
+          "epochNumber": 46,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getApplicationContract": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
         "getCurrentSealedEpoch": {
-          "epochNumber": 45,
+          "epochNumber": 46,
           "inputIndexLowerBound": 3,
           "inputIndexUpperBound": 3,
-          "tournament": "eth:0x4cAF49588c80c88689A810A94E1C791Db7cbdb07"
+          "tournament": "eth:0xF2bd8FAe53068A219Fe7586173A4fa041d1b8Eb2"
         },
         "getDeploymentBlockNumber": 23751050,
         "getInputBox": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac",
@@ -836,10 +823,11 @@
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/TopTournament": "0xbd083fb1c65455271f875f433e772fdecce43eb614fc3d12775dc903854e6905",
     "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
-    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
+    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26075457 },
-  "permissionsConfigHash": "0x3efca5324131b231b36b4a890bd76784daec3a887b916450264f8bb63544af18",
+  "usedBlockNumbers": { "ethereum": 26096908 },
+  "permissionsConfigHash": "0x07d318e1bcd3ea2d11b7db3c52963bd9f975e9aaca89f78a99fc789e955cb616",
   "permissions": {
     "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
       "receivedPermissions": [

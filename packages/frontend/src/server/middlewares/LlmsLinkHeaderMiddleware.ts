@@ -12,6 +12,7 @@ export function LlmsLinkHeaderMiddleware() {
   return (req: Request, res: Response, next: NextFunction) => {
     if (isPageRequest(req) && !hasExtension(req.path)) {
       res.header('Link', getLinkHeader(req.path))
+      dropAlternateFromErrorResponses(res)
     }
     next()
   }
@@ -26,6 +27,22 @@ export function getLinkHeader(path: string): string {
     )
   }
   return links.join(', ')
+}
+
+/**
+ * The alternate is derived from the URL, before any handler ran. Whether the
+ * page exists is known only once the status is, so an error response loses
+ * the alternate as it is sent: it would point agents at another 404. Done
+ * here rather than by each handler that can answer with an error; like
+ * `SafeSendHandler`, it hooks `send`, which every page and error response
+ * goes through.
+ */
+function dropAlternateFromErrorResponses(res: Response) {
+  const send = res.send.bind(res)
+  res.send = (body) => {
+    if (res.statusCode >= 400) res.setHeader('Link', LLMS_TXT_LINK)
+    return send(body)
+  }
 }
 
 function isPageRequest(req: Request) {

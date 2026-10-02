@@ -5,6 +5,7 @@ import {
   formatPercent,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
+import { configMarkdown } from './configMarkdown'
 
 /** Separates blocks with a blank line and drops empty ones, so an optional part is just '' when absent. */
 export function joinBlocks(blocks: string[]) {
@@ -30,15 +31,21 @@ export function textSubsection(
   title: string,
   text: string | undefined,
 ) {
-  return subsection(level, title, nestHeadings(text, level + 1))
+  return subsection(level, title, configMarkdown(text, level + 1))
 }
 
 export function bulletList(items: string[]) {
-  return items.map((item) => `- ${item}`).join('\n')
+  return items.map((item) => listItem('- ', item)).join('\n')
 }
 
 export function numberedList(items: string[], start = 1) {
-  return items.map((item, i) => `${start + i}. ${item}`).join('\n')
+  return items.map((item, i) => listItem(`${start + i}. `, item)).join('\n')
+}
+
+/** Continuation lines align with the item text; unindented, a second paragraph would end the list. */
+function listItem(marker: string, text: string) {
+  const indent = ' '.repeat(marker.length)
+  return `${marker}${text.replaceAll(/\n(?=[^\n])/g, `\n${indent}`)}`
 }
 
 export function table(header: string[], rows: string[][]) {
@@ -61,14 +68,39 @@ export function warning(text: string) {
   return `**Warning:** ${text}`
 }
 
+export function note(text: string) {
+  return `**Note:** ${text}`
+}
+
+/** What the HTML shows in place of a value it has no data for. */
+export const NO_DATA = 'No data'
+
 export function withSentiment(value: string, sentiment: Sentiment | undefined) {
-  return sentiment ? `${value} (sentiment: ${sentiment})` : value
+  return sentiment ? `${value} (${sentimentNote(sentiment)})` : value
+}
+
+/** The HTML shows the sentiment as a color, which plain text has to name. */
+export function sentimentNote(sentiment: Sentiment) {
+  return `sentiment: ${sentiment}`
 }
 
 /** The percentage change as the HTML shows it, with the tooltip's period spelled out. */
 export function formatChange(change: number, period: PercentageChangePeriod) {
-  const sign = change > 0 ? '+' : change < 0 ? '-' : ''
-  return `${sign}${formatPercent(Math.abs(change))} compared to ${COMPARED_TO_PERIOD[period]}`
+  return `${formatSignedPercent(change)} compared to ${COMPARED_TO_PERIOD[period]}`
+}
+
+/**
+ * The HTML shows the direction as an arrow next to the unsigned percentage.
+ * The sign is picked after rounding, so a change too small to show reads
+ * "0.00%" rather than "-0.00%", and the ">1K%" cap is spelled out.
+ */
+function formatSignedPercent(change: number) {
+  const percent = formatPercent(Math.abs(change))
+  const roundsToZero = Number.parseFloat(percent) === 0
+  const sign = roundsToZero ? '' : change > 0 ? '+' : '-'
+  return percent.startsWith('>')
+    ? `more than ${sign}${percent.slice(1)}`
+    : `${sign}${percent}`
 }
 
 /** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
@@ -84,61 +116,21 @@ export function formatCount(value: number) {
   return withRegularSpaces(formatInteger(value))
 }
 
-/** Same marker placement as the HTML risk lists: before the closing punctuation. */
+/** Same marker placement as the HTML risk lists: before the closing punctuation, commas included. */
 export function markCritical(text: string, isCritical: boolean | undefined) {
   if (!isCritical) return text
-  const [, body, punctuation] = text.match(/^(.*?)([.!?]?)$/s) ?? []
+  const [, body, punctuation] = text.match(/^(.*?)([.,;:!?]?)$/s) ?? []
   return `${body} (CRITICAL)${punctuation}`
 }
 
 /**
- * Config text links site pages and images by path (e.g. "/images/x.png"),
- * which only resolves on the site; the markdown is read elsewhere.
+ * Links written for the HTML page (site paths like "/stages", fragments like
+ * "#permissions", queries like "?update=1") only resolve on the site; the
+ * markdown is read elsewhere, so they are resolved against the HTML page.
  */
-export function absolutizeLinks(markdown: string, origin: string) {
-  return markdown.replaceAll(/\]\(\/(?!\/)/g, `](${origin}/`)
-}
-
-/**
- * Config text can carry its own headings (e.g. "## Architecture"). Shifted so
- * the shallowest one lands at `level`, they nest under the heading the text is
- * rendered below instead of breaking the page outline. Optional config text
- * that is absent renders as no block at all.
- */
-export function nestHeadings(content: string | undefined, level: number) {
-  if (content === undefined) return ''
-  const lines = content.split('\n')
-  const headingDepthByLine = findHeadingDepthByLine(lines)
-  if (headingDepthByLine.size === 0) return content
-
-  const shift = level - Math.min(...headingDepthByLine.values())
-  if (shift <= 0) return content
-
-  return lines
-    .map((line, i) => {
-      const depth = headingDepthByLine.get(i)
-      if (depth === undefined) return line
-      const nestedDepth = Math.min(depth + shift, MAX_HEADING_DEPTH)
-      return `${'#'.repeat(nestedDepth)}${line.slice(depth)}`
-    })
-    .join('\n')
-}
-
-const MAX_HEADING_DEPTH = 6
-
-/** Skips fenced code, where `#` is literal. */
-function findHeadingDepthByLine(lines: string[]) {
-  const depths = new Map<number, number>()
-  let inCodeFence = false
-  for (const [i, line] of lines.entries()) {
-    if (line.trimStart().startsWith('```')) {
-      inCodeFence = !inCodeFence
-      continue
-    }
-    const hashes = line.match(/^(#{1,6}) /)?.[1]
-    if (!inCodeFence && hashes) {
-      depths.set(i, hashes.length)
-    }
-  }
-  return depths
+export function absolutizeLinks(markdown: string, pageUrl: string) {
+  const { origin } = new URL(pageUrl)
+  return markdown
+    .replaceAll(/\]\(\/(?!\/)/g, `](${origin}/`)
+    .replaceAll(/\]\((?=[#?])/g, `](${pageUrl}`)
 }

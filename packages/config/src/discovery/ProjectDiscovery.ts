@@ -13,6 +13,7 @@ import {
   getReachableEntries,
   toAddressArray,
 } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -27,15 +28,12 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { loadOssificationInput } from '../ossification/loadOssificationInput'
-import { measureOssification } from '../ossification/measureOssification'
-import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
-import type { OssificationInput } from '../ossification/OssificationInput'
+import { loadOssificationHistory } from '../ossification/loadOssificationHistory'
+import { mergeOssificationHistories } from '../ossification/mergeOssificationHistories'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
   ProjectEscrow,
-  ProjectOssification,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -54,7 +52,6 @@ import {
 } from './utils'
 
 const paths = getDiscoveryPaths()
-const buildTime = UnixTime.now()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -1095,23 +1092,16 @@ export class ProjectDiscovery {
     return result
   }
 
-  getOssification(projectStart?: UnixTime): ProjectOssification | undefined {
-    const input = this.getOssificationInput(buildTime, projectStart)
-    return input === undefined ? undefined : measureOssification(input)
-  }
-
-  getOssificationInput(
-    now: UnixTime,
+  getOssificationHistory(
     projectStart?: UnixTime,
-  ): OssificationInput | undefined {
-    return mergeOssificationInputs(
+  ): OssificationHistory | undefined {
+    return mergeOssificationHistories(
       this.discoveries
         .map((discovery) =>
-          loadOssificationInput(
+          loadOssificationHistory(
             discovery,
             this.reachableAddresses,
             this.configReader,
-            now,
             projectStart,
           ),
         )

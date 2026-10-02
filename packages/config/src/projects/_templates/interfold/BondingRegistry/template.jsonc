@@ -2,11 +2,13 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "BondingRegistry",
   "category": "core",
-  "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.",
+  "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.",
+  "ignoreMethods": ["admissionPolicyAt"],
   "ignoreInWatchMode": [
     "bondOwners",
     "bondingAssetConfigurationVersion",
     "ciphernodeBonds",
+    "committeeOwnerCapacity",
     "eligibilityConfigurationVersion",
     "numRegisteredOperators",
     "reservedSlashedTicketBalance",
@@ -23,7 +25,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
         }
       ]
     },
@@ -50,7 +52,7 @@
       ]
     },
     "bondOwners": {
-      "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions.",
+      "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions, but only one of them can be selected into any committee requested after the bond-owner cap was introduced.",
       "handler": {
         "type": "event",
         "groupBy": "operator",
@@ -139,6 +141,23 @@
     },
     "numRegisteredOperators": {
       "description": "Number of operator keys with a registered collateral position."
+    },
+    "admissionPolicy": {
+      "description": "Latest admission policy for future committees. With the cooldown enabled, an operator key that registers or changes bond owner is not eligible for sortition until cooldownDuration (unbounded) has passed; keys registered before the upgrade and not re-owned since are exempt. Pausing admissions freezes the eligible pool (and the cooldown settings applied to it) at the pause time. Every change resets the bond-owner capacity count, which blocks new E3 requests until enough operators refresh their status.",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "admissionPolicyAt",
+        "args": [281474976710655]
+      }
+    },
+    "committeeOwnerCapacity": {
+      "description": "Number of distinct bond owners with at least one active, admitted operator key. New E3 requests revert unless it is at least the committee size N. It reads zero until every registered operator has refreshed its status after an eligibility-configuration bump.",
+      "handler": {
+        "type": "call",
+        "method": "committeeOwnerCapacity",
+        "args": [281474976710655]
+      }
     }
   }
 }

@@ -5,7 +5,7 @@
       "type": "code",
       "contract": "eth:0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B",
       "transaction": "0x15dd2c00df3c6367e16358c69b1390d444b22de3b58d6d115b5788a2f30ef205",
-      "updateId": "aacca7b3",
+      "updateId": "c20bd025",
       "reason": "Upgraded the L1StandardBridge implementation as part of the core protocol upgrade."
     }
   ]

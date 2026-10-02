@@ -1,6 +1,6 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1790847900,
+  "timestamp": 1790944906,
   "configHash": "0xfbf90c7086562c72b2da3cb37abbcc907189c932bcfd92e2c03f1493a0c84937",
   "entries": [
     {
@@ -449,13 +449,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x3aC5b73dbDa96a9d3246C872fdc9CEE09dee1202",
+        "anchorGame": "eth:0xe5389be41008c736666484df75e64f3261CC64C2",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x5a834ee635fad6ce1008e0b0f1f4a2f60be2b88ad67c7b790d031516ac2c5d43",
-          61366564
+          "0x252f0462341dfefb2e96ade70677f1c51a341b54838f5e3bf875891323ba0584",
+          61431458
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -488,7 +488,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -1101,6 +1103,10 @@
         "game1": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
         "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
         "game42": "eth:0x0000000000000000000000000000000000000000",
+        "game5": "eth:0x0000000000000000000000000000000000000000",
+        "game5AnchorStateRegistry": "UNRESOLVED",
+        "game5Args": "0x",
+        "game5Proposer": "UNRESOLVED",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8AbsolutePrestate": "UNRESOLVED",
@@ -1109,16 +1115,24 @@
         "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
         "game8Weth": "UNRESOLVED",
-        "gameCount": 284,
+        "game9": "eth:0x0000000000000000000000000000000000000000",
+        "game9AbsolutePrestate": "UNRESOLVED",
+        "game9AnchorStateRegistry": "UNRESOLVED",
+        "game9Args": "0x",
+        "game9Vm": "UNRESOLVED",
+        "game9Weth": "UNRESOLVED",
+        "gameCount": 287,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
+        "initBondGame5": 0,
         "initBondGame621": 0,
         "initBondGame8": 0,
+        "initBondGame9": 0,
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 81,
+        "permissionedGamesTotal": 84,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -1133,6 +1147,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "game9": { "severity": "HIGH" },
+        "game5": { "severity": "HIGH" },
         "absolutePrestateFromDGF": { "severity": "HIGH" },
         "vmFromDGF": { "severity": "HIGH" },
         "game8AbsolutePrestate": { "severity": "HIGH" },
@@ -1140,6 +1156,12 @@
         "game8AnchorStateRegistry": { "severity": "HIGH" },
         "game8Weth": { "severity": "HIGH" },
         "game8ChainId": { "severity": "HIGH" },
+        "game9AbsolutePrestate": { "severity": "HIGH" },
+        "game9Vm": { "severity": "HIGH" },
+        "game9AnchorStateRegistry": { "severity": "HIGH" },
+        "game9Weth": { "severity": "HIGH" },
+        "game5AnchorStateRegistry": { "severity": "HIGH" },
+        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1155,6 +1177,8 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
         { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 0 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 20 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
@@ -1214,7 +1238,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 324,
+        "nonce": 327,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -1601,7 +1625,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -2074,7 +2100,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2051433636732574279380170"
+        "totalSupply": "2029192707584681760568700"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -4430,15 +4456,15 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/AnchorStateRegistry_post20": "0x7a20ab279102d43f00d8981d9ba7240b97b1e33531ab7ea639effbf9cb3267d4",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x9b266f070c18f7ba3523dd529bfc8fd041767d73c96d6ffde884889aff76b154",
+    "opstack/DisputeGameFactory_v2": "0xaa57a6d06b584640b5e7df1b1ca0605b79f694c4380d21737d81c645b3d617d1",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
+    "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
@@ -4451,7 +4477,7 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26096654 },
+  "usedBlockNumbers": { "ethereum": 26104707 },
   "permissionsConfigHash": "0x99c3a163d265dd822d77a7e47e1fa58c2b9cde3082f000bf5285cdf5c3a6ddb7",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {

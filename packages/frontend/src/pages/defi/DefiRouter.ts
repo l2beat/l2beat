@@ -58,10 +58,16 @@ export function createDefiRouter(
     '/defi/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     serveMarkdownIfPreferred(getProjectMarkdown),
     async (req, res) => {
-      const data = await getDefiProjectData(req.params.slug, manifest, cache)
+      const data = await getDefiProjectData(
+        req.params.slug,
+        manifest,
+        cache,
+        req.query.update,
+      )
 
       if (!data) {
         await sendNotFoundPage(manifest, render, req.originalUrl, res)

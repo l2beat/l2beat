@@ -1,6 +1,7 @@
 import { Callout } from '~/components/Callout'
 import { ShieldIcon } from '~/icons/Shield'
 import { cn } from '~/utils/cn'
+import { CONTRACTS_UPDATED_NOTE } from '../sectionCopy'
 
 export function ContractsUpdated() {
   return (
@@ -14,9 +15,7 @@ export function ContractsUpdated() {
       }
       body={
         <div className="text-paragraph-15 md:text-paragraph-16">
-          <strong>Note:</strong> Contracts presented in this section had their
-          implementations updated since the last time our team looked at this
-          project. The information presented may be inaccurate.
+          <strong>Note:</strong> {CONTRACTS_UPDATED_NOTE}
         </div>
       }
     />

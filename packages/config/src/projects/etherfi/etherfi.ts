@@ -31,6 +31,11 @@ const oracleMembers = value('EtherFiOracle', 'numActiveCommitteeMembers')
 const acceptableRebaseApr = bps('EtherFiAdmin', 'acceptableRebaseAprInBps')
 const maxPositiveRebase = bps('LiquidityPool', 'MAX_POSITIVE_REBASE_BPS')
 const maxExitFee = bps('EtherFiRedemptionManager', 'maxExitFeeInBps')
+// Total ETH (1 ETH initial deposit + top-up) each new validator is funded with.
+const validatorSize = `${Number(
+  discovery.getContractValueBigInt('LiquidityPool', 'validatorSizeWei') /
+    10n ** 18n,
+)} ETH`
 // Reports wait postReportWaitTimeInSlots slots (12s each) past consensus before
 // EtherFiAdmin can execute; the operating multisig can unpublish them until then.
 const reportWaitDelay = formatSeconds(
@@ -65,6 +70,7 @@ export const etherfi: BaseProject = {
       maxPositiveRebase,
       acceptableRebaseApr,
       maxExitFee,
+      validatorSize,
       reportWaitDelay,
       upgradeDelay,
       operatingDelay,
@@ -92,7 +98,7 @@ export const etherfi: BaseProject = {
       name: 'EigenLayer',
       icon: 'eigenlayer',
       description:
-        "Holds the native stake. Every validator's withdrawal credentials point at an EigenLayer EigenPod, so ether.fi's own ETH sits inside EigenLayer contracts. Its DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, and since the slashing release an AVS can slash delegated stake. Exits also wait out EigenLayer's roughly 14-day withdrawal delay.",
+        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. Its DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, and since the slashing release an AVS can slash delegated stake. Exits from these pods also wait out EigenLayer's roughly 14-day withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
     },
     {
       type: 'tracked',

@@ -36,7 +36,66 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     const summary = getSection(renderZkCatalogProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Trusted setups for Groth16: SP1 Groth16 setup (risk: red); used in: [Katana](https://l2beat.com/layer2s/projects/katana); verifiers: 2 successful (by [L2BEAT](https://l2beat.com)), 1 not verified',
+      [
+        '- Trusted setups for Gnark (Groth16):',
+        '  - SP1 Groth16 setup, risk red (highest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Run among 7 contributors.',
+        '  - Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
+        '  - Verifiers: 2 successful (verified by [L2BEAT](https://l2beat.com)), 1 not verified',
+      ].join('\n'),
+    )
+  })
+
+  it('tells apart proof systems of the same type by their name', () => {
+    const groth16 = ENTRY.header.trustedSetupsByProofSystem['Groth16-Gnark']!
+    const otherGroth16 = tag('Groth16', 'SP1 v6.1.0')
+    const summary = getSection(
+      renderZkCatalogProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          trustedSetupsByProofSystem: {
+            'Groth16-Gnark': groth16,
+            'Groth16-SP1 v6.1.0': {
+              ...groth16,
+              trustedSetups: groth16.trustedSetups.map((setup) => ({
+                ...setup,
+                proofSystem: otherGroth16,
+              })),
+            },
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Trusted setups for Gnark (Groth16):',
+      '- Trusted setups for SP1 v6.1.0 (Groth16):',
+    )
+  })
+
+  it('does not say an unverified verifier was verified by its attester', () => {
+    const summary = getSection(
+      renderZkCatalogProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          trustedSetupsByProofSystem: {
+            'Groth16-Gnark': {
+              ...ENTRY.header.trustedSetupsByProofSystem['Groth16-Gnark']!,
+              verifiers: {
+                notVerified: { count: 1, attesters: [L2BEAT_ATTESTER] },
+                unsuccessful: { count: 1, attesters: [L2BEAT_ATTESTER] },
+              },
+            },
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '  - Verifiers: 1 not verified (status reported by [L2BEAT](https://l2beat.com)), 1 unsuccessful (checked by [L2BEAT](https://l2beat.com))',
     )
   })
 
@@ -116,7 +175,18 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
 
     expect(trustedSetups).toInclude(
-      '### SP1 Groth16 setup\n\n- Risk: red\n- Proof systems: Gnark (Groth16)\n\nRun among 7 contributors.\n\n#### Artifacts\n\nDownload the transcript.',
+      '### SP1 Groth16 setup\n\n- Risk: red (highest risk)\n- Proof systems: Gnark (Groth16)\n\nRun among 7 contributors.\n\n#### Artifacts\n\nDownload the transcript.',
+    )
+  })
+
+  it('explains the risk levels before the setups, citing the framework', () => {
+    const trustedSetups = getSection(
+      renderZkCatalogProjectMarkdown(ENTRY),
+      'Trusted Setups',
+    )
+
+    expect(trustedSetups).toMatchRegex(
+      /^\nRisk levels follow the \[Trusted Setups Risk Framework\]\(https:\/\/forum\.l2beat\.com\/[^)]+\)\. Yellow \(medium risk\): [^\n]*at least 30 contributions[^\n]*Green \(lowest risk\): [^\n]*150 contributions[^\n]*\n\n### SP1 Groth16 setup/,
     )
   })
 
@@ -128,8 +198,8 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
 
     expect(verifiers).toInclude(
       '### Groth16: Gnark\n\nConsensys implementation of Groth16.',
-      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (by [L2BEAT](https://l2beat.com))\n- Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
-      '**Known deployments**\n\n- [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111#code), used in: [Katana](https://l2beat.com/layer2s/projects/katana)\n- 0x2222222222222222222222222222222222222222, used in: none',
+      '#### SP1 Groth16 v5\n\nWraps the STARK proof.\n\n- Verifier ID: `0xa4594c59`\n- Source: https://github.com/succinctlabs/sp1\n- Verification: successful (verified by [L2BEAT](https://l2beat.com))\n- Used in: [Katana](https://l2beat.com/layer2s/projects/katana)',
+      '**Known deployments**\n\n- [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111#code) on Ethereum, used in: [Katana](https://l2beat.com/layer2s/projects/katana)\n- 0x2222222222222222222222222222222222222222 on Arbitrum One, used in: none',
       '##### Verification steps\n\nRun `make build-circuits`.',
     )
   })
@@ -245,10 +315,12 @@ const SECTIONS: ProjectDetailsSection[] = [
                 {
                   address: '0x1111111111111111111111111111111111111111',
                   url: 'https://etherscan.io/address/0x1111111111111111111111111111111111111111#code',
+                  chain: 'Ethereum',
                   projectsUsedIn: [KATANA],
                 },
                 {
                   address: '0x2222222222222222222222222222222222222222',
+                  chain: 'Arbitrum One',
                   projectsUsedIn: [],
                 },
               ],

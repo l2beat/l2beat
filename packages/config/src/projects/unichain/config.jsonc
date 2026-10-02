@@ -27,6 +27,7 @@
     "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833": "UnichainProxyAdminOwner",
     "unichain:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
     "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias",
+    "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "unichain:0x420000000000000000000000000000000000000F": "GasPriceOracle",
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
@@ -47,6 +48,10 @@
     },
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       // OPContractsManagerV2
+      "ignoreDiscovery": true
+    },
+    "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
+      // OPContractsManager 8.0.1
       "ignoreDiscovery": true
     },
     "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {

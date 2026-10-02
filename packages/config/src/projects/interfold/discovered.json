@@ -1,7 +1,7 @@
 {
   "name": "interfold",
-  "timestamp": 1790089928,
-  "configHash": "0xb3acaa53b8cb794b7aa17466dcfbd115bd148cc405c0d86ef706ce3401ab6a6b",
+  "timestamp": 1790850461,
+  "configHash": "0x38e53f5165d3784d72555b1b37624b02ebce40f6686b1eafa376f7b0461e2c4a",
   "entries": [
     {
       "name": "DkgAggregatorVerifier",
@@ -39,7 +39,7 @@
       "values": {
         "$immutable": true,
         "checkpoints": "eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963",
-        "clock": 1790089919,
+        "clock": 1790850455,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
@@ -108,13 +108,13 @@
         ],
         "$upgradeCount": 1,
         "clock": "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166",
-        "currentEpochStart": 1788998400,
+        "currentEpochStart": 1790208000,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "enableUpdateVotingPowerHook": true,
-        "epochId": 1479,
-        "epochStart": 1790208000,
-        "epochVoteEnd": 1790089919,
-        "epochVoteStart": 1790211600,
+        "epochId": 1480,
+        "epochStart": 1791417600,
+        "epochVoteEnd": 1790850455,
+        "epochVoteStart": 1791421200,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
         "GAUGE_ADMIN_ROLE": "0xfda1ae526c1fb38407f23e8b7712f7cfacc146f3e340a04221488331e0d42014",
         "gaugeList": [],
@@ -232,14 +232,15 @@
       "template": "interfold/BondingRegistry",
       "sourceHashes": [
         "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
-        "0xb97dc60ab9865caddf8025162df9c53ea501692873fbef50c57733bea73c86ab"
+        "0x80851d52a1fd2a24e68aaf0931069f80c737f25dcfb52c3a02aec5a6d6b3f155"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.",
+      "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.",
       "ignoreInWatchMode": [
         "bondOwners",
         "bondingAssetConfigurationVersion",
         "ciphernodeBonds",
+        "committeeOwnerCapacity",
         "eligibilityConfigurationVersion",
         "numRegisteredOperators",
         "reservedSlashedTicketBalance",
@@ -254,7 +255,7 @@
       "sinceBlock": 25473398,
       "values": {
         "$admin": "eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b",
-        "$implementation": "eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2",
+        "$implementation": "eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db",
         "$pastUpgrades": [
           [
             "2026-07-06T12:09:11.000Z",
@@ -275,9 +276,14 @@
             "2026-09-18T13:15:47.000Z",
             "0x975b5104729480bdf914304ce81726041e27450580fab4cd2f2750b7f0848047",
             ["eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2"]
+          ],
+          [
+            "2026-09-24T18:43:35.000Z",
+            "0x8e6d53a9137ad0cb441aef11b4752abfa936258661668d1b2692bf6c2678b4a2",
+            ["eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "activeOperators": [
           "eth:0xA303d8Cb0CE470F772A459b4a87AcB11b2978DB8",
           "eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb",
@@ -336,8 +342,30 @@
           "eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42",
           "eth:0xDa1D20efb36e7F3bb47CEDbF471feB099051e717",
           "eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4",
-          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1"
+          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1",
+          "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45",
+          "eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a",
+          "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
+          "eth:0xAF062fC363c3AE910ec76676346f798792bEB851",
+          "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
+          "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
+          "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554",
+          "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A",
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877"
         ],
+        "admissionPolicy": {
+          "cooldownEnabled": true,
+          "admissionsPaused": false,
+          "cooldownDuration": 259200,
+          "pauseTimepoint": 0,
+          "pauseCooldownEnabled": false,
+          "pauseCooldownDuration": 0
+        },
         "authorizedDistributorCount": 2,
         "authorizedDistributors": [
           "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715",
@@ -425,7 +453,25 @@
           "eth:0x7E94eEd05e81679F69dA44157a45F0528DA9Ce66": "eth:0xeC04f8d2531371eEc429047b50ae113816f3DC5E",
           "eth:0xFF79709339F5dBCA606c8b9D4940390d61cB4B29": "eth:0xeC04f8d2531371eEc429047b50ae113816f3DC5E",
           "eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42": "eth:0xeC04f8d2531371eEc429047b50ae113816f3DC5E",
-          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1": "eth:0xf15AFcDfdCF957daA319712E08A6ea70566c65f6"
+          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1": "eth:0xf15AFcDfdCF957daA319712E08A6ea70566c65f6",
+          "eth:0x4fc21284b55f40549b617A8dC9b61c1951594aa0": "eth:0x4fc21284b55f40549b617A8dC9b61c1951594aa0",
+          "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": "eth:0x8980e4ad57cD1abF560c040F2137FaEEA2B01fe4",
+          "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": "eth:0x762aE5163219c238c1bfC927Be521F4F163666b4",
+          "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": "eth:0x24f93616525818f07440364DF68D499d61056bab",
+          "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": "eth:0x6f9BB7e454f5B3eb2310343f0E99269dC2BB8A1d",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": "eth:0x6f9BB7e454f5B3eb2310343f0E99269dC2BB8A1d",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": "eth:0x6f9BB7e454f5B3eb2310343f0E99269dC2BB8A1d",
+          "eth:0x9b5AE497fd1BF885A40D6f99d0c57245761E053C": "eth:0x9b5AE497fd1BF885A40D6f99d0c57245761E053C",
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "eth:0x6f9BB7e454f5B3eb2310343f0E99269dC2BB8A1d",
+          "eth:0x6612341c6ba068BA0fC259EAd5254f18028B022E": "eth:0x6612341c6ba068BA0fC259EAd5254f18028B022E",
+          "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "eth:0xfc662A94F4d6E7Be443b1b7381BF949865AF2685",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "eth:0xe1679C04371A0341b08347EdE683D0377997c468",
+          "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "eth:0xfe952CB6F4B8F4ACd5337153dA5C7c93Dc3e44e1",
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f",
+          "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f",
+          "eth:0x9d4351A621ef5bE55dC265622Fd5417E6186FFf6": "eth:0x9d4351A621ef5bE55dC265622Fd5417E6186FFf6",
+          "eth:0x6f421Aab7b6337efF7e017ee0A0c2d903E1127A0": "eth:0x6f421Aab7b6337efF7e017ee0A0c2d903E1127A0",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": "eth:0x325409632bccFfAc706d378A2Eca57Cafa21ab11"
         },
         "ciphernodeBondActiveBps": 8000,
         "ciphernodeBonds": {
@@ -490,9 +536,23 @@
           "eth:0xFF79709339F5dBCA606c8b9D4940390d61cB4B29": "32000000000000000000000",
           "eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42": "32000000000000000000000",
           "eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4": "32000000000000000000000",
-          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1": "32000000000000000000000"
+          "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1": "32000000000000000000000",
+          "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": "32000000000000000000000",
+          "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": "32000000000000000000000",
+          "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": "32000000000000000000000",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": "32000000000000000000000",
+          "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": "32000000000000000000000",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": "32000000000000000000000",
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "32000000000000000000000",
+          "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "32000000000000000000000",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "32000000000000000000000",
+          "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": 0,
+          "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "32000000000000000000000",
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "32000000000000000000000",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": "32000000000000000000000"
         },
         "ciphernodeBondToken": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
+        "committeeOwnerCapacity": 24,
         "eligibilityConfigurationVersion": 6,
         "exitDelay": 2592000,
         "getCiphernodeBondToken": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
@@ -502,8 +562,8 @@
         "MAX_EXIT_DELAY": 7776000,
         "MIN_EXIT_DELAY": 86400,
         "minTicketBalance": 1,
-        "numActiveOperators": 56,
-        "numRegisteredOperators": 60,
+        "numActiveOperators": 70,
+        "numRegisteredOperators": 72,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "registry": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
@@ -526,7 +586,7 @@
           "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663": "1000000000000000000000",
           "eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8": "2000000000000000000000",
           "eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C": "1000000000000000000000",
-          "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": "6000000000000000000000",
+          "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": "8000000000000000000000",
           "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190": "2000000000000000000000",
           "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513": "5000000000000000000000",
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": "1000000000000000000000",
@@ -542,7 +602,7 @@
           "eth:0xd2b46ceC7b4d8046eF2D7bCb32aF3220Ef7bc1dd": "5000000000000000000000",
           "eth:0xd3336047DCf4d7C7393b3BF5Fa47A31478C22d47": "1000000000000000000000",
           "eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a": "1000000000000000000000",
-          "eth:0xd698bC33a4A98a019881c6e2664f1dAc62c4B3B5": "1000000000000000000000",
+          "eth:0xd698bC33a4A98a019881c6e2664f1dAc62c4B3B5": "2000000000000000000000",
           "eth:0x76f3491D36138450F957b03F657dDa258Ad4c0E7": "5000000000000000000000",
           "eth:0x2048E0750655298E628155Ca5024F0b30D896e51": "5000000000000000000000",
           "eth:0x69760AF47771F8F763B5E3cb88601C197b0ee235": "5000000000000000000000",
@@ -574,12 +634,25 @@
           "eth:0xDa1D20efb36e7F3bb47CEDbF471feB099051e717": "5000000000000000000000",
           "eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4": "5000000000000000000000",
           "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1": "5000000000000000000000",
-          "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45": "1000000000000000000000"
+          "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45": "1000000000000000000000",
+          "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": "5000000000000000000000",
+          "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": "5000000000000000000000",
+          "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": "5000000000000000000000",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": "1000000000000000000000",
+          "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": "1000000000000000000000",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": "1000000000000000000000",
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "1000000000000000000000",
+          "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "1000000000000000000000",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "1000000000000000000000",
+          "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "1000000000000000000000",
+          "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": 0,
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "1000000000000000000000",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": "2000000000000000000000"
         },
         "ticketPrice": "1000000000000000000000",
         "ticketToken": "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D",
-        "totalCiphernodeBondLiability": "1972184000000000000000000",
-        "unresolvedCommitteeCount": 1
+        "totalCiphernodeBondLiability": "2388184000000000000000000",
+        "unresolvedCommitteeCount": 2
       },
       "fieldMeta": {
         "owner": {
@@ -591,7 +664,7 @@
           "type": "PERMISSION"
         },
         "bondOwners": {
-          "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions."
+          "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions, but only one of them can be selected into any committee requested after the bond-owner cap was introduced."
         },
         "ticketBalances": {
           "description": "Latest ticket-token balance for each operator reconstructed from balance-update events."
@@ -635,16 +708,28 @@
         },
         "numRegisteredOperators": {
           "description": "Number of operator keys with a registered collateral position."
+        },
+        "admissionPolicy": {
+          "description": "Latest admission policy for future committees. With the cooldown enabled, an operator key that registers or changes bond owner is not eligible for sortition until cooldownDuration (unbounded) has passed; keys registered before the upgrade and not re-owned since are exempt. Pausing admissions freezes the eligible pool (and the cooldown settings applied to it) at the pause time. Every change resets the bond-owner capacity count, which blocks new E3 requests until enough operators refresh their status.",
+          "type": "RISK_PARAMETER"
+        },
+        "committeeOwnerCapacity": {
+          "description": "Number of distinct bond owners with at least one active, admitted operator key. New E3 requests revert unless it is at least the committee size N. It reads zero until every registered operator has refreshed its status after an eligibility-configuration bump."
         }
       },
       "implementationNames": {
         "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F": "TransparentUpgradeableProxy",
-        "eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2": "BondingRegistry"
+        "eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db": "BondingRegistry"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -756,7 +841,6 @@
         "CREATE_PROPOSAL_PERMISSION_ID": "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
         "customProposalParamsABI": "(uint256 allowFailureMap)",
         "dao": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-        "earliestVotingStart": 1790115719,
         "getCurrentTargetConfig": {
           "target": "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4",
           "operation": 1
@@ -838,6 +922,11 @@
         "eth:0xb3d51BDe9cB8401cE9C630448Da2619279eF97DA": "CrispVoting"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706",
@@ -958,7 +1047,7 @@
         ],
         "$upgradeCount": 3,
         "activeCryptoConfigId": "0xd9c86e581f8291ffb5b63595600e8d096ed30b16e2e0a6634a76c22b1f58fb4e",
-        "activeE3Count": 0,
+        "activeE3Count": 1,
         "bfvCiphertextVerifier": "eth:0x80D217d3b2e16fF2ecc178cC75655C773895c549",
         "bfvDecryptionVerifier": "eth:0xA66CAb7AE230698b2a9ee1E0E967BaD4651FeEa7",
         "bfvPkVerifier": "eth:0x7CD10057c25674bd5666A9deEE3193f1b29563d1",
@@ -997,7 +1086,7 @@
         "MAX_PROTOCOL_SHARE_BPS": 5000,
         "MAX_TIMEOUT_WINDOW": 2592000,
         "maxDuration": 2592000,
-        "nexte3Id": "18458939420885977824981152629962741023865184457287647280899939019117062782978",
+        "nexte3Id": "18458939420885977824981152629962741023865184457287647280899939019117062782979",
         "nodeReleaseRegistry": "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A",
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -1078,6 +1167,11 @@
     },
     {
       "address": "eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1262,6 +1356,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Risc0BfvCiphertextVerifier",
       "address": "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c",
       "type": "Contract",
@@ -1342,7 +1441,6 @@
         "$immutable": true,
         "availabilityFinalizationWindow": 10800,
         "dataAvailabilityVerifier": "eth:0xC038C7ba5717bDa886115e5d954085bce069069E",
-        "earliestVotingStart": 1790115719,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "CRISP",
@@ -1516,6 +1614,11 @@
     },
     {
       "address": "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2118,14 +2221,14 @@
         ],
         "$upgradeCount": 1,
         "clock": "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166",
-        "currentExitingAmount": "5000000000000000000000",
+        "currentExitingAmount": "113226000000000000000000",
         "curve": "eth:0xf023390C78CF95a77A8910187d5B09BBC05F37e9",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "decimals": 18,
         "ESCROW_ADMIN_ROLE": "0x5153bc4ddea3acc82e49822cf2356cf42e16e0ba80c942840692ca4dd7db5995",
         "implementation": "eth:0x201d4c1cd48F2fC1297eEa56B14A29a039164a91",
         "ivotesAdapter": "eth:0x8f141B4D294d39e7D1530916A3eD65B3970C6FEc",
-        "lastLockId": 33,
+        "lastLockId": 47,
         "lockNFT": "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E",
         "minDeposit": "1000000000000000000",
         "paused": false,
@@ -2134,8 +2237,8 @@
         "SPLIT_WHITELIST_ANY_ADDRESS": "eth:0x89203EDb30c2eCF12612E709afB87C85a170dA0a",
         "SWEEPER_ROLE": "0xfdecf383ad5026ade6d21db07b04781efb7ede2811d8b5fe299044cc4bb91fc9",
         "token": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
-        "totalLocked": "2621208598477253143691443",
-        "totalVotingPower": "2616208598477253143691443",
+        "totalLocked": "3132153526866951895219101",
+        "totalVotingPower": "3018927526866951895219101",
         "voter": "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0"
       },
       "fieldMeta": {
@@ -2177,6 +2280,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SlashingManager",
       "address": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
       "type": "Contract",
@@ -2209,7 +2317,7 @@
         },
         "ACCUSATION_REPORTING_WINDOW": 86400,
         "activeBanCount": 0,
-        "activeE3Assignments": 2,
+        "activeE3Assignments": 3,
         "APPEAL_RESOLUTION_GRACE": 604800,
         "attestationDomainSeparator": "0x3be893a74512f00ecdaa1eb5e6b768b1f181f31134600ac7b7ec1226539b413b",
         "bannedNodes": [],
@@ -2547,6 +2655,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BfvDecryptionVerifier",
       "address": "eth:0x86ba053b37a844FcD2dd52aBC69fc4D69D965Ad8",
       "type": "Contract",
@@ -2637,7 +2750,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 47,
+        "nonce": 52,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2676,7 +2789,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "clock": 1790089919,
+        "clock": 1790850455,
         "CLOCK_MODE": "mode=timestamp",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "DELEGATION_ADMIN_ROLE": "0xc4a19b785a540c2c44664ee81553e51ce4d2ff785f770bea0ef0e33e9fc2e896",
@@ -2890,6 +3003,11 @@
         "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "VotingEscrowDAO",
@@ -3368,6 +3486,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0xAF062fC363c3AE910ec76676346f798792bEB851",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xAF92b142F15eb873f7D1d9F05c8c9b1855698249",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3395,6 +3518,16 @@
     },
     {
       "address": "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3493,7 +3626,7 @@
       "sinceBlock": 25786372,
       "values": {
         "$immutable": true,
-        "clock": 1790089919,
+        "clock": 1790850455,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "eip712Domain": {
@@ -3507,7 +3640,7 @@
         },
         "name": "Interfold Ticket Token",
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-        "payableBalance": "4000000000000000000000",
+        "payableBalance": "5000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "pendingRegistry": "eth:0x0000000000000000000000000000000000000000",
         "pendingRegistryActivationTime": 0,
@@ -3515,7 +3648,7 @@
         "REGISTRY_CHANGE_DELAY": 86400,
         "registryLocked": true,
         "symbol": "tFOLD",
-        "totalSupply": "239000000000000000000000",
+        "totalSupply": "267000000000000000000000",
         "underlying": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
       },
       "fieldMeta": {
@@ -3631,10 +3764,10 @@
       "template": "interfold/CiphernodeRegistry",
       "sourceHashes": [
         "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
-        "0xaaf0cc5a82e6d85f4cb4d4b1cdfe655456ddfd34d6a347cf23f5f5acb505fd7c"
+        "0x15fc7691fe2aef9e081c0a4c84c36701c7f1777903a9cd07d2598b200a683055"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.",
+      "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.",
       "ignoreInWatchMode": [
         "ciphernodes",
         "numCiphernodes",
@@ -3646,7 +3779,7 @@
       "sinceBlock": 25786378,
       "values": {
         "$admin": "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7",
-        "$implementation": "eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2",
+        "$implementation": "eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A",
         "$members": [
           "eth:0xA303d8Cb0CE470F772A459b4a87AcB11b2978DB8",
           "eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb",
@@ -3707,7 +3840,19 @@
           "eth:0xDa1D20efb36e7F3bb47CEDbF471feB099051e717",
           "eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4",
           "eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1",
-          "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45"
+          "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45",
+          "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
+          "eth:0xAF062fC363c3AE910ec76676346f798792bEB851",
+          "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
+          "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
+          "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554",
+          "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A",
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877"
         ],
         "$pastUpgrades": [
           [
@@ -3724,14 +3869,19 @@
             "2026-09-18T13:15:47.000Z",
             "0x975b5104729480bdf914304ce81726041e27450580fab4cd2f2750b7f0848047",
             ["eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2"]
+          ],
+          [
+            "2026-09-24T18:43:35.000Z",
+            "0x8e6d53a9137ad0cb441aef11b4752abfa936258661668d1b2692bf6c2678b4a2",
+            ["eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "ACCUSATION_VOTE_VALIDITY_TIMELOCK": 172800,
         "accusationVoteValidity": 1800,
         "bondingRegistry": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
         "CIPHERNODE_TREE_WARNING_THRESHOLD": 838860,
-        "ciphernodes": { "maxIndex": 1048575, "numberOfLeaves": 60 },
+        "ciphernodes": { "maxIndex": 1048575, "numberOfLeaves": 72 },
         "DEFAULT_ACCUSATION_VOTE_VALIDITY": 1800,
         "DKG_FOLD_VERIFIER_TIMELOCK": 172800,
         "dkgFoldAttestationVerifier": "eth:0xE5657c0756B772B600D6c73eDbF046f32129c770",
@@ -3742,7 +3892,7 @@
         "MAX_COMMITTEE_PUBLIC_KEY_BYTES": 524288,
         "MAX_SORTITION_SUBMISSION_WINDOW": 86400,
         "MIN_SORTITION_SUBMISSION_WINDOW": 60,
-        "numCiphernodes": 60,
+        "numCiphernodes": 72,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingAccusationVoteValidity": 0,
         "pendingAccusationVoteValidityAt": 0,
@@ -3752,12 +3902,12 @@
         "randomnessDegraded": false,
         "randomnessProvider": "eth:0xC60919F8Bd128B76E11F4B071C8c38e1391a3e00",
         "randomnessRequestTimeout": 3600,
-        "root": "3771149299766901843254544719330009372392669976783985392717069550694281973737",
+        "root": "14785925264261887160376418908719347751632147080053399407119066530738044730427",
         "slashingManager": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
         "sortitionSubmissionWindow": 600,
         "TREE_DEPTH": 20,
-        "treeSize": 60,
-        "unreleasedCommitteeCount": 1
+        "treeSize": 72,
+        "unreleasedCommitteeCount": 2
       },
       "fieldMeta": {
         "owner": {
@@ -3765,7 +3915,7 @@
           "type": "PERMISSION"
         },
         "$members": {
-          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition.",
+          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.",
           "type": "PERMISSION"
         },
         "dkgFoldAttestationVerifier": {
@@ -3808,7 +3958,7 @@
       },
       "implementationNames": {
         "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7": "TransparentUpgradeableProxy",
-        "eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2": "CiphernodeRegistryOwnable"
+        "eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A": "CiphernodeRegistryOwnable"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -3854,20 +4004,20 @@
         "$upgradeCount": 1,
         "checkpointInterval": 604800,
         "CLOCK_ADMIN_ROLE": "0x440d025ee487c9fe654894f3750aeb18132e334d52d7a9c0a3f6a5c77450a9b5",
-        "currentEpoch": 1479,
+        "currentEpoch": 1480,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-        "elapsedInEpoch": 1091519,
+        "elapsedInEpoch": 642455,
         "epochDuration": 1209600,
-        "epochNextCheckpointIn": 118081,
-        "epochNextCheckpointTs": 1790208000,
-        "epochPrevCheckpointElapsed": 486719,
-        "epochPrevCheckpointTs": 1789603200,
-        "epochStartsIn": 118081,
-        "epochStartTs": 1790208000,
+        "epochNextCheckpointIn": 567145,
+        "epochNextCheckpointTs": 1791417600,
+        "epochPrevCheckpointElapsed": 37655,
+        "epochPrevCheckpointTs": 1790812800,
+        "epochStartsIn": 567145,
+        "epochStartTs": 1791417600,
         "epochVoteEndsIn": 0,
-        "epochVoteEndTs": 1790089919,
-        "epochVoteStartsIn": 121681,
-        "epochVoteStartTs": 1790211600,
+        "epochVoteEndTs": 1790850455,
+        "epochVoteStartsIn": 570745,
+        "epochVoteStartTs": 1791421200,
         "implementation": "eth:0xEC0162045B44C5506954E3A04dbbcdfe39f64f21",
         "voteDuration": 604800,
         "voteWindowBuffer": 3600,
@@ -4005,6 +4155,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xd3336047DCf4d7C7393b3BF5Fa47A31478C22d47",
       "type": "EOA",
       "proxyType": "EOA"
@@ -4069,7 +4224,7 @@
       "sinceBlock": 25786391,
       "values": {
         "$immutable": true,
-        "clock": 1790089919,
+        "clock": 1790850455,
         "CLOCK_MODE": "mode=timestamp",
         "registry": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F"
       },
@@ -4216,7 +4371,7 @@
         "CCA_END": 1783692000,
         "CCA_START": 1783346400,
         "CLAIM_SOURCE": "eth:0x687Cc38d8279dF3352b64cF3EC1fe8e033933595",
-        "clock": 1790089919,
+        "clock": 1790850455,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -4357,7 +4512,7 @@
         "CURVE_ADMIN_ROLE": "0x065385aea91ea94bccc193b44dcdc1da3bcab7e7328692e0b12cda00df64eac4",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
-        "globalPointLatestIndex": 38,
+        "globalPointLatestIndex": 60,
         "implementation": "eth:0x59417A78C133a6Fddf8a3b5e751378aF8d42e249",
         "maxTime": 62899200,
         "warmupPeriod": 0
@@ -4484,7 +4639,7 @@
         "LOCK_ADMIN_ROLE": "0x54e26bc44f032b9c63f050973076cd279ea75ee2dceeaee6367075804fd03838",
         "name": "Vote Escrow FOLD",
         "symbol": "veFOLD",
-        "totalSupply": 33,
+        "totalSupply": 47,
         "WHITELIST_ANY_ADDRESS": "eth:0x95A53aa925FDd6f1733830EbB7A586B33CbD4355"
       },
       "fieldMeta": {
@@ -4971,7 +5126,24 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2": [
+    "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db": [
       "constructor()",
       "error AlreadyRegistered()",
       "error ArrayLengthMismatch()",
@@ -5026,6 +5198,8 @@
       "error Unauthorized()",
       "error ZeroAddress()",
       "error ZeroAmount()",
+      "event AdmissionPolicyUpdated(uint48 timepoint, tuple(bool cooldownEnabled, bool admissionsPaused, uint48 cooldownDuration, uint48 pauseTimepoint, bool pauseCooldownEnabled, uint48 pauseCooldownDuration) policy)",
+      "event AdmissionStarted(address indexed operator, uint48 timepoint)",
       "event AssetsClaimed(address indexed operator, uint256 ticketAmount, uint256 ciphernodeBondAmount)",
       "event AssetsQueuedForExit(address indexed operator, uint256 ticketAmount, uint256 ciphernodeBondAmount, uint64 unlockTimestamp)",
       "event BondOwnerSet(address indexed operator, address indexed bondOwner)",
@@ -5064,12 +5238,14 @@
       "function acceptBondOwner(address operator)",
       "function acceptOwnership()",
       "function addTicketBalanceFor(address operator, uint256 amount)",
+      "function admissionPolicyAt(uint256 timepoint) view returns (tuple(bool cooldownEnabled, bool admissionsPaused, uint48 cooldownDuration, uint48 pauseTimepoint, bool pauseCooldownEnabled, uint48 pauseCooldownDuration))",
       "function authorizedDistributorCount() view returns (uint256)",
       "function authorizedDistributors(address distributor) view returns (bool authorized)",
       "function authorizedSlashingManagerAt(uint256 index) view returns (address)",
       "function authorizedSlashingManagerCount() view returns (uint256)",
       "function availableTickets(address operator) view returns (uint256)",
       "function bondCiphernodeFor(address operator, uint256 amount)",
+      "function bondOwnerAt(address operator, uint256 timepoint) view returns (address)",
       "function bondOwnerOf(address operator) view returns (address)",
       "function bondedCheckpoints() view returns (address)",
       "function bondingAssetConfigurationVersion() view returns (uint64)",
@@ -5078,6 +5254,7 @@
       "function claimExitsFor(address operator, uint256 maxTicketAmount, uint256 maxCiphernodeBondAmount)",
       "function clearSlashingManagerBan(address manager, address operator)",
       "function closeSlashLock(uint256 proposalId, address operator)",
+      "function committeeOwnerCapacity(uint256 timepoint) view returns (uint256)",
       "function deregisterOperatorFor(address operator)",
       "function distributeRewards(address rewardToken, address[] recipients, uint256[] amounts)",
       "function eligibilityAt(address operator, uint256 timepoint) view returns (bool active, uint256 activeOperatorCount)",
@@ -5120,6 +5297,7 @@
       "function resyncBondedCheckpoint(address bondOwner)",
       "function revokeRewardDistributor(address distributor)",
       "function revokeSlashingManager(address oldSlashingManager)",
+      "function setAdmissionPolicy(bool cooldownEnabled, uint48 cooldownDuration, bool admissionsPaused)",
       "function setBondOwner(address bondOwner)",
       "function setBondedCheckpoints(address newCheckpoints)",
       "function setBondingAssetConfig(tuple(address ticketToken, address ciphernodeBondToken, uint256 ticketPrice, uint256 requiredCiphernodeBond, uint8 expectedTicketDecimals, uint8 expectedCiphernodeBondDecimals) config)",
@@ -5149,23 +5327,6 @@
       "function unbondCiphernodeFor(address operator, uint256 amount)",
       "function unresolvedCommitteeCount() view returns (uint256)",
       "function withdrawSlashedFunds(uint256 ticketAmount, uint256 ciphernodeBondAmount)"
-    ],
-    "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x3C1C772B1D800ff4E6F8d0c02E1e6D07293c0059": [
       "constructor(address _circuitVerifier, bytes32 _expectedNodesFoldKeyHash, bytes32 _expectedC5KeyHash, uint256 _h)",
@@ -6119,6 +6280,193 @@
       "function risc0Verifier() view returns (address)",
       "function verify(uint256 e3Id, bytes32 encryptionSchemeId, bytes32 paramsHash, bytes32 committeePublicKey, bytes32 ciphertextOutputHash, bytes32 ciphertextCommitment, bytes encodedProof) view returns (bool)"
     ],
+    "eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A": [
+      "constructor()",
+      "error AccusationVoteValidityDecreaseRequiresTimelock()",
+      "error AccusationVoteValidityMismatch(uint256 pending, uint256 provided)",
+      "error AccusationVoteValidityProposalExpired(uint256 expiredAt, uint256 nowAt)",
+      "error AccusationVoteValidityTimelockActive(uint256 readyAt, uint256 nowAt)",
+      "error AttestationBindingCountMismatch()",
+      "error BondingRegistryNotSet()",
+      "error CiphernodeNotEnabled(address node)",
+      "error CiphernodeTreeExhausted()",
+      "error CommitteeAccusationWindowOpen(uint256 e3Id, uint64 submissionDeadline)",
+      "error CommitteeAlreadyFinalized()",
+      "error CommitteeAlreadyPublished()",
+      "error CommitteeAlreadyRequested()",
+      "error CommitteeDeadlineReached()",
+      "error CommitteeNotFinalized()",
+      "error CommitteeNotInitializedOrFinalized()",
+      "error CommitteeNotPublished()",
+      "error CommitteeNotRequested()",
+      "error CommitteeObligationsAlreadyReleased(uint256 e3Id)",
+      "error DkgProofRequired()",
+      "error E3NotTerminal(uint256 e3Id)",
+      "error ExitDelayMustExceedSortitionWindow(uint256 exitDelay, uint256 requiredDelay)",
+      "error FoldAttestationVerifierAlreadySet()",
+      "error FoldAttestationVerifierNotSet()",
+      "error FoldAttestationsRequired()",
+      "error IncompatibleSlashingManager(address candidate)",
+      "error InsufficientBondOwners(uint256 required, uint256 available)",
+      "error InsufficientCiphernodes(uint256 requested, uint256 available)",
+      "error InvalidDkgProof()",
+      "error InvalidFoldAttestation()",
+      "error InvalidInitialization()",
+      "error InvalidProof()",
+      "error InvalidPublicKeyChunk()",
+      "error InvalidPublicKeyLength(uint256 supplied, uint256 maximum)",
+      "error InvalidRandomnessProvider(address provider)",
+      "error InvalidRandomnessRequestId()",
+      "error InvalidTicketNumber()",
+      "error NoPendingAccusationVoteValidityUpdate()",
+      "error NoPendingVerifierUpdate()",
+      "error NodeAlreadySubmitted()",
+      "error NodeNotBonded(address node)",
+      "error NodeNotEligible()",
+      "error NodeNotSubmitted()",
+      "error NotInitializing()",
+      "error NotOwnerOrBondingRegistry()",
+      "error NotSlashingManager()",
+      "error OnlyInterfold()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PartyIdNotInProof()",
+      "error PartyIdOutOfBounds(uint256 partyId, uint256 committeeSize)",
+      "error PkCommitmentRequired()",
+      "error PublicKeyPublisherNotCommitteeMember()",
+      "error RandomnessConfigurationInUse(uint256 unreleasedCommittees)",
+      "error RandomnessConfigurationRequiresPause()",
+      "error RandomnessProviderRequesterMismatch(address provider, address expected, address actual)",
+      "error RandomnessRequestTimeoutOutOfBounds(uint256 timeout)",
+      "error RegistryGenerationNotDrained()",
+      "error RenounceOwnershipDisabled()",
+      "error ServiceDependencyMigrationNotDrained()",
+      "error ServiceDependencyMigrationRequiresPause()",
+      "error SortitionSeedUnavailable(uint256 e3Id, uint256 requestId)",
+      "error SortitionSubmissionWindowOutOfBounds(uint256 window)",
+      "error SubmissionWindowClosed()",
+      "error SubmissionWindowNotClosed()",
+      "error ThresholdNotMet()",
+      "error Unauthorized()",
+      "error VerifierMismatch(address pending, address provided)",
+      "error VerifierUpdateTimelockActive(uint256 readyAt, uint256 nowAt)",
+      "error ZeroAddress()",
+      "event AccusationVoteValidityProposalCancelled(uint256 accusationVoteValidity)",
+      "event AccusationVoteValidityProposed(uint256 accusationVoteValidity, uint256 readyAt)",
+      "event AccusationVoteValiditySet(uint256 accusationVoteValidity)",
+      "event BondingRegistrySet(address indexed bondingRegistry)",
+      "event CiphernodeAdded(address indexed node, uint256 index, uint256 numNodes, uint256 size)",
+      "event CiphernodeRemoved(address indexed node, uint256 index, uint256 numNodes, uint256 size)",
+      "event CiphernodeTreeCapacityWarning(uint256 size, uint256 capacity)",
+      "event CommitteeActivationChanged(uint256 indexed e3Id, bool active)",
+      "event CommitteeBondOwnerCapEnabled(uint256 indexed e3Id)",
+      "event CommitteeFormationFailed(uint256 indexed e3Id, uint256 nodesSubmitted, uint256 thresholdRequired)",
+      "event CommitteeMemberExpelled(uint256 indexed e3Id, address indexed node, bytes32 reason, uint256 activeCountAfter)",
+      "event CommitteeProofPublished(uint256 indexed e3Id, address[] nodes, bytes32 pkCommitment, bytes proof)",
+      "event CommitteePublicKeyChunkPublished(uint256 indexed e3Id, address indexed publisher, bytes32 indexed candidateHash, address[] nodes, bytes32 pkCommitment, uint16 chunkIndex, uint16 chunkCount, uint32 totalLength, bytes chunk)",
+      "event CommitteePublished(uint256 indexed e3Id, address[] nodes, bytes publicKey, bytes32 pkCommitment, bytes proof)",
+      "event CommitteeRandomnessRequested(uint256 indexed e3Id, uint256 indexed requestId, address indexed provider, uint256 randomnessDeadline)",
+      "event CommitteeRequested(uint256 indexed e3Id, uint256 entropyBlock, uint32[2] threshold, uint256 requestBlock, uint256 committeeDeadline, uint256 ticketPrice)",
+      "event CommitteeViabilityUpdated(uint256 indexed e3Id, uint256 activeCount, uint256 thresholdM, bool viable)",
+      "event DkgFoldAttestationContextEstablished(uint256 indexed e3Id, address indexed registry, address indexed dkgFoldAttestationVerifier)",
+      "event DkgFoldAttestationVerifierProposalCancelled(address indexed verifier)",
+      "event DkgFoldAttestationVerifierProposed(address indexed verifier, uint256 readyAt)",
+      "event DkgFoldAttestationVerifierUpdated(address indexed verifier)",
+      "event Initialized(uint64 version)",
+      "event InterfoldSet(address indexed interfold)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RandomnessCircuitBreakerTripped(uint256 indexed e3Id, uint256 indexed requestId, address indexed randomnessProvider)",
+      "event RandomnessProviderSet(address indexed randomnessProvider)",
+      "event RandomnessRequestTimeoutSet(uint256 randomnessRequestTimeout)",
+      "event RegistrySlashingManagerSet(address indexed slashingManager)",
+      "event SlashingManagerSet(address indexed slashingManager)",
+      "event SortitionCommitteeFinalized(uint256 indexed e3Id, address[] committee, uint256[] scores)",
+      "event SortitionSubmissionWindowSet(uint256 sortitionSubmissionWindow)",
+      "event TicketSubmitted(uint256 indexed e3Id, address indexed node, uint256 ticketId, uint256 score)",
+      "function ACCUSATION_VOTE_VALIDITY_TIMELOCK() view returns (uint256)",
+      "function CIPHERNODE_TREE_WARNING_THRESHOLD() view returns (uint256)",
+      "function DEFAULT_ACCUSATION_VOTE_VALIDITY() view returns (uint256)",
+      "function DKG_FOLD_VERIFIER_TIMELOCK() view returns (uint256)",
+      "function MAX_CIPHERNODE_LEAVES() view returns (uint256)",
+      "function MAX_COMMITTEE_PUBLIC_KEY_BYTES() view returns (uint256)",
+      "function MAX_SORTITION_SUBMISSION_WINDOW() view returns (uint256)",
+      "function MIN_SORTITION_SUBMISSION_WINDOW() view returns (uint256)",
+      "function TREE_DEPTH() view returns (uint8)",
+      "function acceptOwnership()",
+      "function accusationVoteValidity() view returns (uint256)",
+      "function addCiphernode(address node)",
+      "function bondingRegistry() view returns (address)",
+      "function cancelAccusationVoteValidityProposal()",
+      "function cancelDkgFoldAttestationVerifierProposal()",
+      "function canonicalCommitteeNodeAt(uint256 e3Id, uint256 partyId) view returns (address)",
+      "function ciphernodeEnabled(address node) view returns (bool enabled)",
+      "function ciphernodeTreeIndex(address node) view returns (uint40 index)",
+      "function ciphernodes() view returns (uint40 maxIndex, uint40 numberOfLeaves)",
+      "function commitAccusationVoteValidity(uint256 _accusationVoteValidity)",
+      "function commitDkgFoldAttestationVerifier(address verifier)",
+      "function committeePublicKey(uint256 e3Id) view returns (bytes32 publicKeyHash)",
+      "function committeeThresholdMet(uint256 e3Id) view returns (bool)",
+      "function dkgFoldAttestationVerifier() view returns (address)",
+      "function dkgFoldAttestationVerifierFor(uint256 e3Id) view returns (address)",
+      "function exitDelayFloor() view returns (uint256 floor)",
+      "function expelCommitteeMember(uint256 e3Id, address node, bytes32 reason) returns (uint256 activeCount, uint32 thresholdM)",
+      "function finalizeCommittee(uint256 e3Id) returns (bool success)",
+      "function getActiveCommitteeNodes(uint256 e3Id) view returns (address[] nodes, uint256[] scores)",
+      "function getBondingRegistry() view returns (address)",
+      "function getCommitteeDeadline(uint256 e3Id) view returns (uint256)",
+      "function getCommitteeHash(uint256 e3Id) view returns (bytes32 committeeHash)",
+      "function getCommitteeNodes(uint256 e3Id) view returns (address[] nodes)",
+      "function getCommitteeViability(uint256 e3Id) view returns (uint256 activeCount, uint32 thresholdM, uint32 thresholdN, bool viable)",
+      "function getDkgAnchors(uint256 e3Id) view returns (uint256[] partyIds, bytes32[] skAggCommits, bytes32[] esmAggCommits)",
+      "function getSortitionRequest(uint256 e3Id) view returns (uint32[2] threshold, uint256 requestBlock, uint256 committeeDeadline, uint256 ticketPrice)",
+      "function initialize(address _owner, uint256 _submissionWindow)",
+      "function interfold() view returns (address)",
+      "function isCiphernodeEligible(address node) view returns (bool)",
+      "function isCommitteeMember(uint256 e3Id, address node) view returns (bool)",
+      "function isCommitteeMemberActive(uint256 e3Id, address node) view returns (bool)",
+      "function isEnabled(address node) view returns (bool)",
+      "function isOpen(uint256 e3Id) view returns (bool)",
+      "function numCiphernodes() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingAccusationVoteValidity() view returns (uint256)",
+      "function pendingAccusationVoteValidityAt() view returns (uint256)",
+      "function pendingDkgFoldAttestationVerifier() view returns (address)",
+      "function pendingDkgFoldAttestationVerifierAt() view returns (uint256)",
+      "function pendingOwner() view returns (address)",
+      "function proposeAccusationVoteValidity(uint256 _accusationVoteValidity)",
+      "function proposeDkgFoldAttestationVerifier(address verifier)",
+      "function publicKeyHashes(uint256 e3Id) view returns (bytes32 publicKeyHash)",
+      "function publishCommittee(uint256 e3Id, bytes32 pkCommitment, bytes proof, bytes dkgAttestationBundle)",
+      "function publishCommitteePublicKey(uint256 e3Id, bytes32 candidateHash, uint16 chunkIndex, uint16 chunkCount, uint32 totalLength, bytes chunk)",
+      "function randomnessDegraded() view returns (bool)",
+      "function randomnessProvider() view returns (address)",
+      "function randomnessRequestTimeout() view returns (uint256)",
+      "function releaseCommittee(uint256 e3Id)",
+      "function removeCiphernode(address node)",
+      "function renounceOwnership() pure",
+      "function requestCommittee(uint256 e3Id, uint256, uint32[2] threshold) returns (bool success)",
+      "function root() view returns (uint256)",
+      "function rootAt(uint256 e3Id) view returns (uint256)",
+      "function roots(uint256 e3Id) view returns (uint256 root)",
+      "function setAccusationVoteValidity(uint256 _accusationVoteValidity)",
+      "function setBondingRegistry(address _bondingRegistry)",
+      "function setInitialDkgFoldAttestationVerifier(address verifier)",
+      "function setInterfold(address _interfold)",
+      "function setRandomnessProvider(address provider)",
+      "function setRandomnessRequestTimeout(uint256 timeout)",
+      "function setSlashingManager(address _slashingManager)",
+      "function setSortitionSubmissionWindow(uint256 _sortitionSubmissionWindow)",
+      "function slashingManager() view returns (address)",
+      "function sortitionSeed(uint256 e3Id) view returns (bool ready, uint256 seed)",
+      "function sortitionSubmissionWindow() view returns (uint256)",
+      "function sortitionTicketPrices(uint256 e3Id) view returns (uint256 ticketPrice)",
+      "function submitTicket(uint256 e3Id, uint256 ticketNumber)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treeSize() view returns (uint256)",
+      "function unreleasedCommitteeCount() view returns (uint256)"
+    ],
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": [
       "constructor(address _initialOwner, address _risc0Verifier, address _honkVerifier, address _onchainHonkVerifier, bytes32 _imageId)",
       "error CallerNotAuthorized()",
@@ -7055,191 +7403,6 @@
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
       "function updateRules(tuple(uint8 id, uint8 op, uint240 value, bytes32 permissionId)[] _rules)"
     ],
-    "eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2": [
-      "constructor()",
-      "error AccusationVoteValidityDecreaseRequiresTimelock()",
-      "error AccusationVoteValidityMismatch(uint256 pending, uint256 provided)",
-      "error AccusationVoteValidityProposalExpired(uint256 expiredAt, uint256 nowAt)",
-      "error AccusationVoteValidityTimelockActive(uint256 readyAt, uint256 nowAt)",
-      "error AttestationBindingCountMismatch()",
-      "error BondingRegistryNotSet()",
-      "error CiphernodeNotEnabled(address node)",
-      "error CiphernodeTreeExhausted()",
-      "error CommitteeAccusationWindowOpen(uint256 e3Id, uint64 submissionDeadline)",
-      "error CommitteeAlreadyFinalized()",
-      "error CommitteeAlreadyPublished()",
-      "error CommitteeAlreadyRequested()",
-      "error CommitteeDeadlineReached()",
-      "error CommitteeNotFinalized()",
-      "error CommitteeNotInitializedOrFinalized()",
-      "error CommitteeNotPublished()",
-      "error CommitteeNotRequested()",
-      "error CommitteeObligationsAlreadyReleased(uint256 e3Id)",
-      "error DkgProofRequired()",
-      "error E3NotTerminal(uint256 e3Id)",
-      "error ExitDelayMustExceedSortitionWindow(uint256 exitDelay, uint256 requiredDelay)",
-      "error FoldAttestationVerifierAlreadySet()",
-      "error FoldAttestationVerifierNotSet()",
-      "error FoldAttestationsRequired()",
-      "error IncompatibleSlashingManager(address candidate)",
-      "error InsufficientCiphernodes(uint256 requested, uint256 available)",
-      "error InvalidDkgProof()",
-      "error InvalidFoldAttestation()",
-      "error InvalidInitialization()",
-      "error InvalidProof()",
-      "error InvalidPublicKeyChunk()",
-      "error InvalidPublicKeyLength(uint256 supplied, uint256 maximum)",
-      "error InvalidRandomnessProvider(address provider)",
-      "error InvalidRandomnessRequestId()",
-      "error InvalidTicketNumber()",
-      "error NoPendingAccusationVoteValidityUpdate()",
-      "error NoPendingVerifierUpdate()",
-      "error NodeAlreadySubmitted()",
-      "error NodeNotBonded(address node)",
-      "error NodeNotEligible()",
-      "error NodeNotSubmitted()",
-      "error NotInitializing()",
-      "error NotOwnerOrBondingRegistry()",
-      "error NotSlashingManager()",
-      "error OnlyInterfold()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PartyIdNotInProof()",
-      "error PartyIdOutOfBounds(uint256 partyId, uint256 committeeSize)",
-      "error PkCommitmentRequired()",
-      "error PublicKeyPublisherNotCommitteeMember()",
-      "error RandomnessConfigurationInUse(uint256 unreleasedCommittees)",
-      "error RandomnessConfigurationRequiresPause()",
-      "error RandomnessProviderRequesterMismatch(address provider, address expected, address actual)",
-      "error RandomnessRequestTimeoutOutOfBounds(uint256 timeout)",
-      "error RegistryGenerationNotDrained()",
-      "error RenounceOwnershipDisabled()",
-      "error ServiceDependencyMigrationNotDrained()",
-      "error ServiceDependencyMigrationRequiresPause()",
-      "error SortitionSeedUnavailable(uint256 e3Id, uint256 requestId)",
-      "error SortitionSubmissionWindowOutOfBounds(uint256 window)",
-      "error SubmissionWindowClosed()",
-      "error SubmissionWindowNotClosed()",
-      "error ThresholdNotMet()",
-      "error Unauthorized()",
-      "error VerifierMismatch(address pending, address provided)",
-      "error VerifierUpdateTimelockActive(uint256 readyAt, uint256 nowAt)",
-      "error ZeroAddress()",
-      "event AccusationVoteValidityProposalCancelled(uint256 accusationVoteValidity)",
-      "event AccusationVoteValidityProposed(uint256 accusationVoteValidity, uint256 readyAt)",
-      "event AccusationVoteValiditySet(uint256 accusationVoteValidity)",
-      "event BondingRegistrySet(address indexed bondingRegistry)",
-      "event CiphernodeAdded(address indexed node, uint256 index, uint256 numNodes, uint256 size)",
-      "event CiphernodeRemoved(address indexed node, uint256 index, uint256 numNodes, uint256 size)",
-      "event CiphernodeTreeCapacityWarning(uint256 size, uint256 capacity)",
-      "event CommitteeActivationChanged(uint256 indexed e3Id, bool active)",
-      "event CommitteeFormationFailed(uint256 indexed e3Id, uint256 nodesSubmitted, uint256 thresholdRequired)",
-      "event CommitteeMemberExpelled(uint256 indexed e3Id, address indexed node, bytes32 reason, uint256 activeCountAfter)",
-      "event CommitteeProofPublished(uint256 indexed e3Id, address[] nodes, bytes32 pkCommitment, bytes proof)",
-      "event CommitteePublicKeyChunkPublished(uint256 indexed e3Id, address indexed publisher, bytes32 indexed candidateHash, address[] nodes, bytes32 pkCommitment, uint16 chunkIndex, uint16 chunkCount, uint32 totalLength, bytes chunk)",
-      "event CommitteePublished(uint256 indexed e3Id, address[] nodes, bytes publicKey, bytes32 pkCommitment, bytes proof)",
-      "event CommitteeRandomnessRequested(uint256 indexed e3Id, uint256 indexed requestId, address indexed provider, uint256 randomnessDeadline)",
-      "event CommitteeRequested(uint256 indexed e3Id, uint256 entropyBlock, uint32[2] threshold, uint256 requestBlock, uint256 committeeDeadline, uint256 ticketPrice)",
-      "event CommitteeViabilityUpdated(uint256 indexed e3Id, uint256 activeCount, uint256 thresholdM, bool viable)",
-      "event DkgFoldAttestationContextEstablished(uint256 indexed e3Id, address indexed registry, address indexed dkgFoldAttestationVerifier)",
-      "event DkgFoldAttestationVerifierProposalCancelled(address indexed verifier)",
-      "event DkgFoldAttestationVerifierProposed(address indexed verifier, uint256 readyAt)",
-      "event DkgFoldAttestationVerifierUpdated(address indexed verifier)",
-      "event Initialized(uint64 version)",
-      "event InterfoldSet(address indexed interfold)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RandomnessCircuitBreakerTripped(uint256 indexed e3Id, uint256 indexed requestId, address indexed randomnessProvider)",
-      "event RandomnessProviderSet(address indexed randomnessProvider)",
-      "event RandomnessRequestTimeoutSet(uint256 randomnessRequestTimeout)",
-      "event RegistrySlashingManagerSet(address indexed slashingManager)",
-      "event SlashingManagerSet(address indexed slashingManager)",
-      "event SortitionCommitteeFinalized(uint256 indexed e3Id, address[] committee, uint256[] scores)",
-      "event SortitionSubmissionWindowSet(uint256 sortitionSubmissionWindow)",
-      "event TicketSubmitted(uint256 indexed e3Id, address indexed node, uint256 ticketId, uint256 score)",
-      "function ACCUSATION_VOTE_VALIDITY_TIMELOCK() view returns (uint256)",
-      "function CIPHERNODE_TREE_WARNING_THRESHOLD() view returns (uint256)",
-      "function DEFAULT_ACCUSATION_VOTE_VALIDITY() view returns (uint256)",
-      "function DKG_FOLD_VERIFIER_TIMELOCK() view returns (uint256)",
-      "function MAX_CIPHERNODE_LEAVES() view returns (uint256)",
-      "function MAX_COMMITTEE_PUBLIC_KEY_BYTES() view returns (uint256)",
-      "function MAX_SORTITION_SUBMISSION_WINDOW() view returns (uint256)",
-      "function MIN_SORTITION_SUBMISSION_WINDOW() view returns (uint256)",
-      "function TREE_DEPTH() view returns (uint8)",
-      "function acceptOwnership()",
-      "function accusationVoteValidity() view returns (uint256)",
-      "function addCiphernode(address node)",
-      "function bondingRegistry() view returns (address)",
-      "function cancelAccusationVoteValidityProposal()",
-      "function cancelDkgFoldAttestationVerifierProposal()",
-      "function canonicalCommitteeNodeAt(uint256 e3Id, uint256 partyId) view returns (address)",
-      "function ciphernodeEnabled(address node) view returns (bool enabled)",
-      "function ciphernodeTreeIndex(address node) view returns (uint40 index)",
-      "function ciphernodes() view returns (uint40 maxIndex, uint40 numberOfLeaves)",
-      "function commitAccusationVoteValidity(uint256 _accusationVoteValidity)",
-      "function commitDkgFoldAttestationVerifier(address verifier)",
-      "function committeePublicKey(uint256 e3Id) view returns (bytes32 publicKeyHash)",
-      "function committeeThresholdMet(uint256 e3Id) view returns (bool)",
-      "function dkgFoldAttestationVerifier() view returns (address)",
-      "function dkgFoldAttestationVerifierFor(uint256 e3Id) view returns (address)",
-      "function exitDelayFloor() view returns (uint256 floor)",
-      "function expelCommitteeMember(uint256 e3Id, address node, bytes32 reason) returns (uint256 activeCount, uint32 thresholdM)",
-      "function finalizeCommittee(uint256 e3Id) returns (bool success)",
-      "function getActiveCommitteeNodes(uint256 e3Id) view returns (address[] nodes, uint256[] scores)",
-      "function getBondingRegistry() view returns (address)",
-      "function getCommitteeDeadline(uint256 e3Id) view returns (uint256)",
-      "function getCommitteeHash(uint256 e3Id) view returns (bytes32 committeeHash)",
-      "function getCommitteeNodes(uint256 e3Id) view returns (address[] nodes)",
-      "function getCommitteeViability(uint256 e3Id) view returns (uint256 activeCount, uint32 thresholdM, uint32 thresholdN, bool viable)",
-      "function getDkgAnchors(uint256 e3Id) view returns (uint256[] partyIds, bytes32[] skAggCommits, bytes32[] esmAggCommits)",
-      "function getSortitionRequest(uint256 e3Id) view returns (uint32[2] threshold, uint256 requestBlock, uint256 committeeDeadline, uint256 ticketPrice)",
-      "function initialize(address _owner, uint256 _submissionWindow)",
-      "function interfold() view returns (address)",
-      "function isCiphernodeEligible(address node) view returns (bool)",
-      "function isCommitteeMember(uint256 e3Id, address node) view returns (bool)",
-      "function isCommitteeMemberActive(uint256 e3Id, address node) view returns (bool)",
-      "function isEnabled(address node) view returns (bool)",
-      "function isOpen(uint256 e3Id) view returns (bool)",
-      "function numCiphernodes() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingAccusationVoteValidity() view returns (uint256)",
-      "function pendingAccusationVoteValidityAt() view returns (uint256)",
-      "function pendingDkgFoldAttestationVerifier() view returns (address)",
-      "function pendingDkgFoldAttestationVerifierAt() view returns (uint256)",
-      "function pendingOwner() view returns (address)",
-      "function proposeAccusationVoteValidity(uint256 _accusationVoteValidity)",
-      "function proposeDkgFoldAttestationVerifier(address verifier)",
-      "function publicKeyHashes(uint256 e3Id) view returns (bytes32 publicKeyHash)",
-      "function publishCommittee(uint256 e3Id, bytes32 pkCommitment, bytes proof, bytes dkgAttestationBundle)",
-      "function publishCommitteePublicKey(uint256 e3Id, bytes32 candidateHash, uint16 chunkIndex, uint16 chunkCount, uint32 totalLength, bytes chunk)",
-      "function randomnessDegraded() view returns (bool)",
-      "function randomnessProvider() view returns (address)",
-      "function randomnessRequestTimeout() view returns (uint256)",
-      "function releaseCommittee(uint256 e3Id)",
-      "function removeCiphernode(address node)",
-      "function renounceOwnership() pure",
-      "function requestCommittee(uint256 e3Id, uint256, uint32[2] threshold) returns (bool success)",
-      "function root() view returns (uint256)",
-      "function rootAt(uint256 e3Id) view returns (uint256)",
-      "function roots(uint256 e3Id) view returns (uint256 root)",
-      "function setAccusationVoteValidity(uint256 _accusationVoteValidity)",
-      "function setBondingRegistry(address _bondingRegistry)",
-      "function setInitialDkgFoldAttestationVerifier(address verifier)",
-      "function setInterfold(address _interfold)",
-      "function setRandomnessProvider(address provider)",
-      "function setRandomnessRequestTimeout(uint256 timeout)",
-      "function setSlashingManager(address _slashingManager)",
-      "function setSortitionSubmissionWindow(uint256 _sortitionSubmissionWindow)",
-      "function slashingManager() view returns (address)",
-      "function sortitionSeed(uint256 e3Id) view returns (bool ready, uint256 seed)",
-      "function sortitionSubmissionWindow() view returns (uint256)",
-      "function sortitionTicketPrices(uint256 e3Id) view returns (uint256 ticketPrice)",
-      "function submitTicket(uint256 e3Id, uint256 ticketNumber)",
-      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function treeSize() view returns (uint256)",
-      "function unreleasedCommitteeCount() view returns (uint256)"
-    ],
     "eth:0xdB3c40bb17e9AD1f51178AF5A66eF32d19176A1c": [
       "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
       "error DelegateCallFailed()",
@@ -7622,11 +7785,11 @@
     "interfold/BfvPkVerifierRouter": "0xd85325e07e90b23e21f61d4660a7620687d9dfcd3a436749d8d0e8825388448d",
     "interfold/BondedCheckpoints": "0xe6c229b46bf9c90035a806064d3363aa3d3d2f6da263ba7c7e536368afba4d98",
     "interfold/BondedVotes": "0xfac0485d490c70596b698b188666552d13f860f15af50deec8c76e68bfa161bd",
-    "interfold/BondingRegistry": "0x1e64d27c24ed5d686991f0247f5287422405f2dc26c3e1f985765d2d64d98e4c",
+    "interfold/BondingRegistry": "0xc8af9ede5b45db93d1658b2e6ac628403bc7fd915622cab6c5ae240a51ad80d6",
     "interfold/ChainlinkVrfRandomnessProvider": "0x288e9d662bd6ec1b644494a31643f7d25d2a5a73db51bb110028ecde018d07ce",
     "interfold/CiphernodeRegistry": "0xe82e5fd8320fac4ec750e28b2215ca7f9009eb261b3b7ff0b866036cecdca3ca",
-    "interfold/CRISPProgram": "0x4cb23d143566034e5637718e0cceeee74348e2c49e4856dc891959b572c41a1a",
-    "interfold/CrispVoting": "0x08c9a7a558a659ddc0d2a5906d11a18dff18a6cc16a8de208e10b0e902dd5cb1",
+    "interfold/CRISPProgram": "0xbc5cf16d0e1b7b897793a7fc0df0c2e1fa3e390b75f50f20baf9f134b9fd520b",
+    "interfold/CrispVoting": "0x2e77bd08460dd06f751df79cf12ac20500e91ca3ce0bbebd774cee6eed0e7bbd",
     "interfold/DecryptionAggregatorVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "interfold/DkgAggregatorVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "interfold/DkgFoldAttestationVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -7652,8 +7815,8 @@
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8"
   },
-  "usedBlockNumbers": { "ethereum": 26033842 },
-  "permissionsConfigHash": "0x1d29c04accb51b7c62504bf4b7dbb9cc684525e98c45f3d1a4a1bdc6ae615b6f",
+  "usedBlockNumbers": { "ethereum": 26096867 },
+  "permissionsConfigHash": "0xb32de157f29988b97bc31f42fb993ff5d4a5a8e101ca87759fe609615793d4da",
   "permissions": {
     "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": {
       "receivedPermissions": [
@@ -7710,6 +7873,22 @@
       ]
     },
     "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": {
       "receivedPermissions": [
         {
           "permission": "member",
@@ -7790,6 +7969,22 @@
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
           "description": "change multisig plugin target execution configuration.",
           "role": ".multisigTargetConfigAdmins"
+        }
+      ]
+    },
+    "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
         }
       ]
     },
@@ -7931,6 +8126,22 @@
         }
       ]
     },
+    "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42": {
       "receivedPermissions": [
         {
@@ -7987,7 +8198,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -8496,6 +8707,22 @@
         }
       ]
     },
+    "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3": {
       "receivedPermissions": [
         {
@@ -8533,7 +8760,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -9122,6 +9349,22 @@
         }
       ]
     },
+    "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x62b2dF039198096259F8dc619cE5E79507806A00": {
       "receivedPermissions": [
         {
@@ -9185,7 +9428,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner"
         },
         {
@@ -9377,6 +9620,22 @@
         }
       ]
     },
+    "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4": {
       "receivedPermissions": [
         {
@@ -9441,6 +9700,22 @@
         }
       ]
     },
+    "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x86FBE1027577A343c1C9DcCAEc470d2B613cB347": {
       "receivedPermissions": [
         {
@@ -9461,6 +9736,12 @@
       "receivedPermissions": [
         {
           "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
           "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
           "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
           "role": ".$members"
@@ -9472,7 +9753,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -10026,6 +10307,22 @@
         }
       ]
     },
+    "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0x9EC16384b956D7B2A71284711FD32d156e6b33c6": {
       "receivedPermissions": [
         {
@@ -10063,7 +10360,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -10704,6 +11001,12 @@
       "receivedPermissions": [
         {
           "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
           "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
           "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
           "role": ".$members"
@@ -10711,6 +11014,22 @@
       ]
     },
     "eth:0xA303d8Cb0CE470F772A459b4a87AcB11b2978DB8": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": {
       "receivedPermissions": [
         {
           "permission": "member",
@@ -11076,7 +11395,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
-          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -11627,6 +11946,38 @@
         }
       ]
     },
+    "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
     "eth:0xc6E48712E56F6E9548c54a0A983eBe992eFA26Bd": {
       "receivedPermissions": [
         {
@@ -11692,6 +12043,22 @@
       ]
     },
     "eth:0xd2b46ceC7b4d8046eF2D7bCb32aF3220Ef7bc1dd": {
+      "receivedPermissions": [
+        {
+          "permission": "member",
+          "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.",
+          "role": ".activeOperators"
+        },
+        {
+          "permission": "member",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": {
       "receivedPermissions": [
         {
           "permission": "member",

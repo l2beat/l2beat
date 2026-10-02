@@ -26,7 +26,7 @@ export async function getZkCatalogData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'ZK Catalog - L2BEAT',
+        name: 'ZK Catalog',
         description:
           "Browse L2BEAT's comprehensive catalog of zero-knowledge projects with in-depth research.",
         url,

@@ -165,18 +165,24 @@ const RAIKO2_GUEST_DIGEST_STEPS = (
   options: {
     enableDigestsFeature?: boolean
     forceRebuild?: boolean
+    buildGuestCargoCommand?: string
+    guestDigestsCommand?: string
     reference?: string
   } = {},
 ) => {
-  const guestDigestsCommand = options.enableDigestsFeature
-    ? 'cargo run -r -p xtask-build-guest --bin guest-digests --features digests --'
-    : 'cargo run -p xtask-build-guest --bin guest-digests --'
+  const guestDigestsCommand =
+    options.guestDigestsCommand ??
+    (options.enableDigestsFeature
+      ? 'cargo run -r -p xtask-build-guest --bin guest-digests --features digests --'
+      : 'cargo run -p xtask-build-guest --bin guest-digests --')
   const buildGuestCommand = options.forceRebuild
     ? 'just build-guest all --force'
     : 'just build-guest all'
-  const buildGuestCargoCommand = options.forceRebuild
-    ? 'cargo run -r -p xtask -- build-guest all --force'
-    : 'cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all'
+  const buildGuestCargoCommand =
+    options.buildGuestCargoCommand ??
+    (options.forceRebuild
+      ? 'cargo run -r -p xtask -- build-guest all --force'
+      : 'cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all')
   const reference = options.reference ? `\n\n${options.reference}` : ''
 
   return `
@@ -231,6 +237,18 @@ const RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS = {
   forceRebuild: true,
   reference:
     'Reference: [Raiko2 v0.8.0-rc1 release](https://github.com/taikoxyz/raiko2/releases/tag/v0.8.0-rc1), rolled out by Taiko multisig proposal `0xa3cd408eabf658ce08f25450f837679f09269742eabc672fbbf4479db59ec2cf`.',
+}
+
+const RAIKO2_V090_COMMIT_HASH = 'dcbfdec7396c7e25a53ee26b43c55d58f63e0b81'
+
+const RAIKO2_V090_GUEST_DIGEST_OPTIONS = {
+  forceRebuild: true,
+  buildGuestCargoCommand:
+    'CARGO_PROFILE_RELEASE_OPT_LEVEL=1 cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all --force',
+  guestDigestsCommand:
+    'CARGO_PROFILE_RELEASE_OPT_LEVEL=1 cargo run -r -p xtask-build-guest --bin guest-digests --features digests --',
+  reference:
+    'Reference: [Taiko council proposal 26 creation transaction](https://etherscan.io/tx/0x5b3db8656ea83df099bb246711a43e4a0bee5340c9bc7802f06aa1b2c6354f71). All six proposed zk program hashes reproduced from source on 2026-09-30.',
 }
 
 const KAILUA_FP = (version: string, descAppendix = '') => ({
@@ -1218,6 +1236,62 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
     ),
   },
+  '0x0017912dfd72308e2e2cd4211b05ed73a97eb7f576816adec2606a37507de51e': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0bc896fe5c8c238b459a8423305ed73a4bf5bfab5a05ab7b04c0d46e507de51e': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0012b97234e59f2319d44202c7b093fed9c9a51b2068e38d26625c139d668c97': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x095cb91a3967c8c63a8840587b093fed4e4d28d901a38e344cc4b8271d668c97': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1650,6 +1724,34 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'v0.8.0-rc1',
       RAIKO2_V080RC1_COMMIT_HASH,
       RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x04480b22e244d60165f3d0898bc61ea084d9c76221464a8a3c3343c74889040a': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/risc0/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x88712dad7dc78126ee7bb592282d3102569c706f1b9db80580a582e5ffd1dfb0': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/risc0/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
     ),
   },
   '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {
@@ -2435,6 +2537,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   // Active CANNON_KONA prestate (Karst). Reproduced via kona Docker build,
   // tag kona-client/v1.6.0-rc.2 (commit d7cea91b).
+  '0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df': {
+    title:
+      'OP Kona interop absolute prestate v1.7.0-rc.2 (cannon64-kona-interop)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client, in the interop variant run by the super fault dispute game (respected game type 9).',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/kona-client/v1.7.0-rc.2/rust/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df.md',
+    ),
+  },
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
     title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
     description:

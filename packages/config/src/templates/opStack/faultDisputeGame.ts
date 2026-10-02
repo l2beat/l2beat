@@ -53,6 +53,24 @@ export type FraudProofType =
   | 'OpSuccinctFDP'
   | 'AggregateProof'
 
+export function getRespectedGameType(
+  templateVars: OpStackGameContext,
+): number | undefined {
+  const portal = getOptimismPortal(templateVars)
+  return templateVars.discovery.getContractValueOrUndefined<number>(
+    portal.name ?? portal.address,
+    'respectedGameType',
+  )
+}
+
+// Type 5 exposes only a proposer and an anchor state registry: no challenger,
+// VM, bond or clock, so nothing can be disputed by execution.
+export function isSuperPermissionedOnly(
+  templateVars: OpStackGameContext,
+): boolean {
+  return getRespectedGameType(templateVars) === 5
+}
+
 export function getFraudProofType(
   templateVars: OpStackGameContext,
 ): FraudProofType {
@@ -80,7 +98,14 @@ export function getFraudProofType(
   if (respectedGameType === 8) {
     return 'Permissionless'
   }
+  // 9 = SUPER_CANNON_KONA: same trust model as type 8.
+  if (respectedGameType === 9) {
+    return 'Permissionless'
+  }
   if (respectedGameType === 1) {
+    return 'Permissioned'
+  }
+  if (respectedGameType === 5) {
     return 'Permissioned'
   }
   if (respectedGameType === 6) {
@@ -119,6 +144,12 @@ export function getPermissionlessGameBond(
       'initBondGame8',
     )
   }
+  if (respectedGameType === 9) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame9',
+    )
+  }
   return templateVars.discovery.getContractValue<number[]>(
     'DisputeGameFactory',
     'initBonds',
@@ -130,6 +161,13 @@ export function getPermissionlessGameBond(
 export function getPermissionedGameBond(
   templateVars: OpStackGameContext,
 ): number {
+  // initBondGame1 is zeroed for type 5; the bond lives in initBondGame5.
+  if (isSuperPermissionedOnly(templateVars)) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame5',
+    )
+  }
   const perType = templateVars.discovery.getContractValueOrUndefined<number>(
     'DisputeGameFactory',
     'initBondGame1',
@@ -155,14 +193,28 @@ export function getOptimismPortal(
   }
 }
 
-// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2
+// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2.
 export function getFaultDisputeGameName(
   templateVars: OpStackGameContext,
 ): string {
+  if (getRespectedGameType(templateVars) === 9) {
+    return 'SuperFaultDisputeGame'
+  }
   if (templateVars.discovery.hasContract('FaultDisputeGame')) {
     return 'FaultDisputeGame'
   }
   return 'FaultDisputeGameV2'
+}
+
+export function getPermissionedDisputeGameName(
+  templateVars: OpStackGameContext,
+): string {
+  // Every other type keeps the legacy lookup, which throws when the game is
+  // missing rather than silently falling through to different wording.
+  if (getRespectedGameType(templateVars) === 5) {
+    return 'SuperPermissionedDisputeGame'
+  }
+  return 'PermissionedDisputeGame'
 }
 
 // V2 dispute games don't discover PreimageOracle (VM address is zero
