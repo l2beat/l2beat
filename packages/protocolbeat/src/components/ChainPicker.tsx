@@ -79,7 +79,7 @@ function ChainList(props: {
   function onKeyDown(e: KeyboardEvent) {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setHighlighted(Math.min(highlighted + 1, chains.length - 1))
+      setHighlighted(Math.max(0, Math.min(highlighted + 1, chains.length - 1)))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setHighlighted(Math.max(highlighted - 1, 0))
