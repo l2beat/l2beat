@@ -1,4 +1,4 @@
-import type { PrivacyField, PrivacyFieldInfo } from '@l2beat/config'
+import type { PrivacyField } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
@@ -16,12 +16,12 @@ export type PrivacySummaryOptionalColumn =
 
 interface PrivacySummaryGroupConfig {
   field: PrivacyField
+  label: string
   description: string
   hiddenColumns: PrivacySummaryOptionalColumn[]
 }
 
 export interface PrivacySummaryGroup extends PrivacySummaryGroupConfig {
-  label: string
   entries: PrivacySummaryEntry[]
 }
 
@@ -36,12 +36,14 @@ const COLUMNS = PRIVACY_SUMMARY_OPTIONAL_COLUMNS
 const GROUPS: PrivacySummaryGroupConfig[] = [
   {
     field: 'linkage',
+    label: 'Link privacy',
     description:
       'Breaks the link between deposits and withdrawals; both stay public.',
     hiddenColumns: [COLUMNS.volume30d],
   },
   {
     field: 'recipient',
+    label: 'Recipient privacy',
     description:
       'Hides who is paid: each transfer lands at a fresh one-time address.',
     // Stealth payments lock nothing in a contract and need no ZK proofs.
@@ -49,6 +51,7 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
   },
   {
     field: 'amount',
+    label: 'Amount privacy',
     description: 'Hides how much moves: balances and transfers are encrypted.',
     // No ZK proofs, and the crowd a deposit hides in says nothing about how
     // well its amount is hidden.
@@ -63,7 +66,6 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
 /** Keeps the entries' order, so each group stays ranked by privacy. */
 export function getPrivacySummaryGroups(
   entries: PrivacySummaryEntry[],
-  fields: PrivacyFieldInfo[],
 ): PrivacySummaryGroup[] {
   const byField = groupBy(
     entries,
@@ -82,8 +84,6 @@ export function getPrivacySummaryGroups(
     if (!groupEntries) {
       return []
     }
-    const field = fields.find((field) => field.id === group.field)
-    assert(field, `Unknown privacy field ${group.field}`)
-    return { ...group, label: field.promiseLabel, entries: groupEntries }
+    return { ...group, entries: groupEntries }
   })
 }

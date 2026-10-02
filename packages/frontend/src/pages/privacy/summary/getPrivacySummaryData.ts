@@ -96,11 +96,7 @@ async function getCachedData() {
   ])
   return {
     appLayoutProps,
-    // Every project carries the same field registry.
-    groups: getPrivacySummaryGroups(
-      entries,
-      projects[0]?.privacyInfo.adversaries.fields ?? [],
-    ),
+    groups: getPrivacySummaryGroups(entries),
     chartProjects: entries
       .filter((e) => e.isTracked || e.hasTvl)
       .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl })),
