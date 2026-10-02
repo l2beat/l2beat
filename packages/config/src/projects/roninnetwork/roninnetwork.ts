@@ -143,7 +143,7 @@ const roninTemplate = opStackL2({
       },
       {
         type: 'blockscout',
-        url: 'https://explorer.roninchain.com/api',
+        url: 'https://ronin.blockscout.com/api',
       },
     ],
   },

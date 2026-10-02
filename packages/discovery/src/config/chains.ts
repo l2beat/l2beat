@@ -385,7 +385,7 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(1),
     explorer: {
       type: 'blockscout',
-      url: 'https://explorer.roninchain.com/api',
+      url: 'https://ronin.blockscout.com/api',
     },
     coingeckoPlatform: 'ronin',
   },
