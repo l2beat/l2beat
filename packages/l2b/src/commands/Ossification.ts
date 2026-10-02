@@ -9,12 +9,12 @@ import { join } from 'path'
 export const Ossification = command({
   name: 'ossification',
   description:
-    'Prints the ossification input derived from discovery for a project, and the measurement made from it. Rebuild packages/config first.',
+    'Prints the ossification history derived from discovery for a project, and the measurement made from it. Rebuild packages/config first.',
   args: {
     project: positional({ type: string, displayName: 'project' }),
-    input: flag({
+    history: flag({
       type: boolean,
-      long: 'input',
+      long: 'history',
       description: 'print the derived perimeter and events instead',
     }),
   },
@@ -24,16 +24,16 @@ export const Ossification = command({
       args.project,
       'discovered.json',
     )
-    const input = existsSync(discovered)
-      ? new ProjectDiscovery(args.project).getOssificationInput()
+    const history = existsSync(discovered)
+      ? new ProjectDiscovery(args.project).getOssificationHistory()
       : undefined
-    if (input === undefined) {
+    if (history === undefined) {
       console.log(`${args.project} has no critical perimeter`)
       return
     }
-    const output = args.input
-      ? input
-      : measureOssification(input, UnixTime.now())
+    const output = args.history
+      ? history
+      : measureOssification(history, UnixTime.now())
     console.log(formatJson(output))
   },
 })

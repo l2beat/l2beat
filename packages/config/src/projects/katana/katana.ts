@@ -173,7 +173,7 @@ export const katana: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossificationInput: discovery.getOssificationInput(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

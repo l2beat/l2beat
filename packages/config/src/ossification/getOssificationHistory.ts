@@ -8,7 +8,7 @@ import {
 import type {
   OssificationChange,
   OssificationContract,
-  OssificationInput,
+  OssificationHistory,
 } from '@l2beat/shared'
 import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import type { OssificationPatch } from './OssificationPatch'
@@ -66,9 +66,9 @@ const upgradeKey = (contract: string, transaction: string | undefined) =>
     ? undefined
     : `${key(contract)} ${transaction.toLowerCase()}`
 
-export function getOssificationInput(
+export function getOssificationHistory(
   sources: OssificationSources,
-): OssificationInput | undefined {
+): OssificationHistory | undefined {
   const members = getPerimeter(sources)
   if (members.size === 0) return undefined
 

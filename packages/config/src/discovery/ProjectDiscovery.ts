@@ -13,7 +13,7 @@ import {
   getReachableEntries,
   toAddressArray,
 } from '@l2beat/discovery'
-import type { OssificationInput } from '@l2beat/shared'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -28,8 +28,8 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { loadOssificationInput } from '../ossification/loadOssificationInput'
-import { mergeOssificationInputs } from '../ossification/mergeOssificationInputs'
+import { loadOssificationHistory } from '../ossification/loadOssificationHistory'
+import { mergeOssificationHistories } from '../ossification/mergeOssificationHistories'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
@@ -1092,11 +1092,13 @@ export class ProjectDiscovery {
     return result
   }
 
-  getOssificationInput(projectStart?: UnixTime): OssificationInput | undefined {
-    return mergeOssificationInputs(
+  getOssificationHistory(
+    projectStart?: UnixTime,
+  ): OssificationHistory | undefined {
+    return mergeOssificationHistories(
       this.discoveries
         .map((discovery) =>
-          loadOssificationInput(
+          loadOssificationHistory(
             discovery,
             this.reachableAddresses,
             this.configReader,

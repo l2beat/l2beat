@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import type { OssificationInput } from '@l2beat/shared'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -249,7 +249,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossificationInput?: OssificationInput
+  ossificationHistory?: OssificationHistory
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
@@ -432,7 +432,7 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossificationInput: templateVars.ossificationInput,
+    ossificationHistory: templateVars.ossificationHistory,
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs

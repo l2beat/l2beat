@@ -277,7 +277,7 @@ export const base: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },
-  ossificationInput: discovery.getOssificationInput(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   centralizedSequencing: {
     hardcoded: HARDCODED.BASE,

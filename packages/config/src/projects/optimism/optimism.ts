@@ -351,7 +351,7 @@ export const optimism: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
-  ossificationInput: discovery.getOssificationInput(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,

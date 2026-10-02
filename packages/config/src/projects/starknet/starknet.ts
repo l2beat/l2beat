@@ -365,7 +365,7 @@ export const starknet: ScalingProject = {
       },
     ],
   },
-  ossificationInput: discovery.getOssificationInput(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

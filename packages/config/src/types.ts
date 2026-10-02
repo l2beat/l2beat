@@ -1,5 +1,5 @@
 import type {
-  OssificationInput,
+  OssificationHistory,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -283,7 +283,7 @@ export interface BaseProject {
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   /** Ossification perimeter and history, for projects with a critical
    *  contract in their discovery config. */
-  ossificationInput?: OssificationInput
+  ossificationHistory?: OssificationHistory
 
   // tags
   archivedAt?: UnixTime

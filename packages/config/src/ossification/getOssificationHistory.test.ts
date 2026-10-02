@@ -6,10 +6,10 @@ import type {
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  getOssificationInput,
+  getOssificationHistory,
   type OssificationJudgement,
   type OssificationSources,
-} from './getOssificationInput'
+} from './getOssificationHistory'
 import {
   EMPTY_OSSIFICATION_PATCH,
   type OssificationPatch,
@@ -96,7 +96,7 @@ const patch = (overrides: Partial<OssificationPatch>): OssificationPatch => ({
 })
 
 function derive(overrides: Partial<OssificationSources>) {
-  return getOssificationInput({
+  return getOssificationHistory({
     entries: [entry()],
     overrides: [],
     changes: [],
@@ -106,22 +106,22 @@ function derive(overrides: Partial<OssificationSources>) {
   })
 }
 
-const rows = (input: ReturnType<typeof derive>) =>
-  input?.contracts.map((c) => [
+const rows = (history: ReturnType<typeof derive>) =>
+  history?.contracts.map((c) => [
     c.name,
     c.ossifyingSince,
     c.codeChangeCount,
     c.stateChangeCount,
   ])
-const changes = (input: ReturnType<typeof derive>) =>
-  input?.changes
+const changes = (history: ReturnType<typeof derive>) =>
+  history?.changes
     .map((c) => [c.type, c.timestamp, c.earliest, c.updateId] as const)
     .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]))
 
-describe(getOssificationInput.name, () => {
+describe(getOssificationHistory.name, () => {
   describe('rows', () => {
     it('are the contracts critical today, with the deployment as their clock', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry({ unverified: true }),
           entry({
@@ -130,7 +130,7 @@ describe(getOssificationInput.name, () => {
           }),
         ],
       })
-      expect(input?.contracts).toEqual([
+      expect(history?.contracts).toEqual([
         {
           name: 'A',
           address: ChainSpecificAddress(ADDRESS_A),
@@ -140,12 +140,12 @@ describe(getOssificationInput.name, () => {
           stateChangeCount: 0,
         },
       ])
-      expect(input?.resets).toEqual([T0])
-      expect(input?.observedSince).toEqual(T0)
+      expect(history?.resets).toEqual([T0])
+      expect(history?.observedSince).toEqual(T0)
     })
 
     it('are absent for a contract whose critical window has closed', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry(),
           entry({
@@ -154,11 +154,11 @@ describe(getOssificationInput.name, () => {
           }),
         ],
       })
-      expect(rows(input)).toEqual([['A', T0, 0, 0]])
+      expect(rows(history)).toEqual([['A', T0, 0, 0]])
     })
 
     it('are empty when every contract has retired, and the history stays', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry({
             critical: { untilTimestamp: RUN_1 },
@@ -166,8 +166,8 @@ describe(getOssificationInput.name, () => {
           }),
         ],
       })
-      expect(rows(input)).toEqual([])
-      expect(changes(input)).toEqual([
+      expect(rows(history)).toEqual([])
+      expect(changes(history)).toEqual([
         ['code', T0 + 10 * DAY, T0 + 10 * DAY, undefined],
       ])
     })
@@ -185,7 +185,7 @@ describe(getOssificationInput.name, () => {
     })
 
     it('let a config override win over the discovered flag', () => {
-      const input = derive({
+      const history = derive({
         overrides: [
           {
             address: ADDRESS_A.toLowerCase(),
@@ -193,7 +193,7 @@ describe(getOssificationInput.name, () => {
           },
         ],
       })
-      expect(rows(input)).toEqual([])
+      expect(rows(history)).toEqual([])
     })
 
     it('refuse a critical flag on something that is not a contract', () => {
@@ -206,18 +206,18 @@ describe(getOssificationInput.name, () => {
       expect(() =>
         derive({ overrides: [{ address: ADDRESS_B, critical: true }] }),
       ).toThrow('untilTimestamp')
-      const input = derive({
+      const history = derive({
         overrides: [
           { address: ADDRESS_B, critical: { untilTimestamp: RUN_1 } },
         ],
       })
-      expect(rows(input)).toEqual([['A', T0, 0, 0]])
+      expect(rows(history)).toEqual([['A', T0, 0, 0]])
     })
   })
 
   describe('$pastUpgrades', () => {
     it('resets the clock on the initialization and counts later upgrades', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry({
             values: pastUpgrades(
@@ -228,15 +228,15 @@ describe(getOssificationInput.name, () => {
           }),
         ],
       })
-      expect(rows(input)).toEqual([['A', T0 + 30 * DAY, 1, 0]])
-      expect(changes(input)).toEqual([
+      expect(rows(history)).toEqual([['A', T0 + 30 * DAY, 1, 0]])
+      expect(changes(history)).toEqual([
         ['code', T0 + 30 * DAY, T0 + 30 * DAY, undefined],
       ])
-      expect(input?.resets).toEqual([T0 + DAY])
+      expect(history?.resets).toEqual([T0 + DAY])
     })
 
     it('drops ignored transactions and upgrades after the contract left', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry(),
           entry({
@@ -251,11 +251,11 @@ describe(getOssificationInput.name, () => {
         ],
         patch: patch({ ignoredTransactions: [TX_2.toUpperCase()] }),
       })
-      expect(changes(input)).toEqual([])
+      expect(changes(history)).toEqual([])
     })
 
     it('lets a reviewed change with the same transaction replace the initialization', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry({ values: pastUpgrades([T0, TX_1], [T0 + 30 * DAY, TX_2]) }),
         ],
@@ -272,7 +272,7 @@ describe(getOssificationInput.name, () => {
         }),
       })
       expect(
-        changes(input)?.map(([type, timestamp]) => [type, timestamp]),
+        changes(history)?.map(([type, timestamp]) => [type, timestamp]),
       ).toEqual([
         ['code', T0],
         ['code', T0 + 30 * DAY],
@@ -280,7 +280,7 @@ describe(getOssificationInput.name, () => {
     })
 
     it('replaces only the reviewed contract when one transaction upgraded two', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry({ values: pastUpgrades([T0, TX_1], [RUN_1, TX_2]) }),
           entry({
@@ -301,7 +301,7 @@ describe(getOssificationInput.name, () => {
           ],
         }),
       })
-      expect(rows(input)).toEqual([
+      expect(rows(history)).toEqual([
         ['A', RUN_1, 0, 1],
         ['B', RUN_1, 1, 0],
       ])
@@ -310,7 +310,7 @@ describe(getOssificationInput.name, () => {
 
   describe('diff history', () => {
     it('dates appended upgrades onchain and skips ones discovery already has', () => {
-      const input = derive({
+      const history = derive({
         entries: [entry({ values: pastUpgrades([T0, TX_1]) })],
         changes: update('u1', RUN_1, T0, ADDRESS_A, [
           appended(T0, TX_1),
@@ -318,11 +318,13 @@ describe(getOssificationInput.name, () => {
           { kind: 'upgradeRecord', field: '$upgradeCount' },
         ]),
       })
-      expect(changes(input)).toEqual([['code', RUN_1 - DAY, RUN_1 - DAY, 'u1']])
+      expect(changes(history)).toEqual([
+        ['code', RUN_1 - DAY, RUN_1 - DAY, 'u1'],
+      ])
     })
 
     it('keeps an appended upgrade a live sibling already recorded', () => {
-      const input = derive({
+      const history = derive({
         entries: [entry({ values: pastUpgrades([T0, TX_1], [RUN_1, TX_2]) })],
         changes: [
           ...update('u1', RUN_1 + DAY, T0, ADDRESS_B, [appended(RUN_1, TX_2)]),
@@ -332,7 +334,7 @@ describe(getOssificationInput.name, () => {
         ],
         judgement: judgement({ 'x/B': true }),
       })
-      expect(changes(input)).toEqual([
+      expect(changes(history)).toEqual([
         ['code', RUN_1, RUN_1, undefined],
         ['code', RUN_1, RUN_1, 'u1'],
       ])
@@ -351,7 +353,7 @@ describe(getOssificationInput.name, () => {
     })
 
     it('counts a state change on a field that is HIGH today, and nothing else', () => {
-      const input = derive({
+      const history = derive({
         changes: [
           ...update('u1', RUN_1, T0, ADDRESS_A, [owner]),
           ...update('u2', RUN_2, RUN_1, ADDRESS_A, [
@@ -363,12 +365,12 @@ describe(getOssificationInput.name, () => {
         ],
         judgement: judgement({}, ['owner']),
       })
-      expect(changes(input)).toEqual([['state', RUN_1, T0, 'u1']])
-      expect(rows(input)).toEqual([['A', RUN_1, 0, 1]])
+      expect(changes(history)).toEqual([['state', RUN_1, T0, 'u1']])
+      expect(rows(history)).toEqual([['A', RUN_1, 0, 1]])
     })
 
     it('dates a state change at the upgrade bundled in the same diff', () => {
-      const input = derive({
+      const history = derive({
         entries: [entry({ values: pastUpgrades([T0, TX_1]) })],
         changes: update('u1', RUN_1, RUN_1 - 10 * DAY, ADDRESS_A, [
           appended(RUN_1 - 5 * DAY, TX_2),
@@ -376,14 +378,14 @@ describe(getOssificationInput.name, () => {
         ]),
         judgement: judgement({}, ['owner']),
       })
-      expect(changes(input)).toEqual([
+      expect(changes(history)).toEqual([
         ['code', RUN_1 - 5 * DAY, RUN_1 - 5 * DAY, 'u1'],
         ['state', RUN_1 - 5 * DAY, RUN_1 - 5 * DAY, 'u1'],
       ])
     })
 
     it('keeps the history of a retired contract without giving it a row', () => {
-      const input = derive({
+      const history = derive({
         changes: [
           ...update('u1', RUN_1, T0, ADDRESS_B, [implementation]),
           ...update('u2', RUN_2, RUN_1, ADDRESS_B, [
@@ -392,12 +394,12 @@ describe(getOssificationInput.name, () => {
         ],
         judgement: judgement({ 'x/B': true }),
       })
-      expect(rows(input)).toEqual([['A', T0, 0, 0]])
-      expect(changes(input)).toEqual([['code', RUN_1, T0, 'u1']])
+      expect(rows(history)).toEqual([['A', T0, 0, 0]])
+      expect(changes(history)).toEqual([['code', RUN_1, T0, 'u1']])
     })
 
     it('keeps the creation of a retired contract as a reset', () => {
-      const input = derive({
+      const history = derive({
         changes: [
           ...update('u1', RUN_1, T0, ADDRESS_B, [
             { status: 'created', template: 'x/B' },
@@ -408,12 +410,12 @@ describe(getOssificationInput.name, () => {
         ],
         judgement: judgement({ 'x/B': true }),
       })
-      expect(input?.resets).toEqual([T0, RUN_1])
-      expect(input?.observedSince).toEqual(T0)
+      expect(history?.resets).toEqual([T0, RUN_1])
+      expect(history?.observedSince).toEqual(T0)
     })
 
     it('takes the latest deletion time and any template a deletion carried', () => {
-      const input = derive({
+      const history = derive({
         changes: [
           ...update('u1', RUN_1, T0, ADDRESS_B, [
             { status: 'deleted', template: 'x/B' },
@@ -423,12 +425,12 @@ describe(getOssificationInput.name, () => {
         ],
         judgement: judgement({ 'x/B': true }),
       })
-      expect(rows(input)).toEqual([['A', T0, 0, 0]])
-      expect(changes(input)).toEqual([])
+      expect(rows(history)).toEqual([['A', T0, 0, 0]])
+      expect(changes(history)).toEqual([])
     })
 
     it('ignores changes recorded after the contract left', () => {
-      const input = derive({
+      const history = derive({
         entries: [
           entry(),
           entry({
@@ -438,21 +440,21 @@ describe(getOssificationInput.name, () => {
         ],
         changes: update('u1', RUN_2, RUN_1, ADDRESS_B, [implementation]),
       })
-      expect(changes(input)).toEqual([])
+      expect(changes(history)).toEqual([])
     })
 
     it('skips updates the review marked as discovery bugs', () => {
-      const input = derive({
+      const history = derive({
         changes: update('u1', RUN_1, T0, ADDRESS_A, [implementation]),
         patch: patch({ ignoredUpdates: ['u1'] }),
       })
-      expect(changes(input)).toEqual([])
+      expect(changes(history)).toEqual([])
     })
   })
 
   describe('whose change it is', () => {
     it('moves the clock but does not count a change made before the project or the adoption', () => {
-      const input = derive({
+      const history = derive({
         projectStart: RUN_1,
         entries: [
           entry(),
@@ -467,17 +469,17 @@ describe(getOssificationInput.name, () => {
           ...update('u2', RUN_2 - DAY, RUN_1, ADDRESS_B, [implementation]),
         ],
       })
-      expect(rows(input)).toEqual([
+      expect(rows(history)).toEqual([
         ['A', RUN_1 - DAY, 0, 0],
         ['B', RUN_2 - DAY, 0, 0],
       ])
-      expect(changes(input)).toEqual([])
-      expect(input?.resets).toEqual([T0, T0, RUN_2])
-      expect(input?.observedSince).toEqual(RUN_1)
+      expect(changes(history)).toEqual([])
+      expect(history?.resets).toEqual([T0, T0, RUN_2])
+      expect(history?.observedSince).toEqual(RUN_1)
     })
 
     it('always counts a reviewed change and lets it supersede its update for its contract', () => {
-      const input = derive({
+      const history = derive({
         projectStart: RUN_2,
         entries: [
           entry(),
@@ -501,10 +503,10 @@ describe(getOssificationInput.name, () => {
           ],
         }),
       })
-      expect(changes(input)).toEqual([
+      expect(changes(history)).toEqual([
         ['state', RUN_1 - 3 * DAY, RUN_1 - 3 * DAY, 'u1'],
       ])
-      expect(rows(input)).toEqual([
+      expect(rows(history)).toEqual([
         ['A', RUN_1 - 3 * DAY, 0, 1],
         ['B', RUN_1, 0, 0],
       ])

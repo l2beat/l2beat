@@ -3,7 +3,7 @@ export {
   measureOssification,
   type OssificationChangeType,
   type OssificationCriticalUpdate,
-  type OssificationInput,
+  type OssificationHistory,
   type OssificationResult,
 } from './tools/ossification'
 export type {

@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import type { OssificationInput } from '@l2beat/shared'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -97,7 +97,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossificationInput?: OssificationInput
+  ossificationHistory?: OssificationHistory
   chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
@@ -366,7 +366,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossificationInput: templateVars.ossificationInput,
+    ossificationHistory: templateVars.ossificationHistory,
     ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

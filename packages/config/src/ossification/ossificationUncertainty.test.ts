@@ -4,7 +4,7 @@ import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { readPatch } from './loadOssificationInput'
+import { readPatch } from './loadOssificationHistory'
 
 /** The newest change sets the project clock and with it the whole score. A
  *  change we only know to have happened between two discovery runs must not
@@ -19,9 +19,9 @@ describe('ossification newest change', () => {
       const projectPath = join(root, project)
       if (!existsSync(join(projectPath, 'discovered.json'))) continue
       const discovery = new ProjectDiscovery(project)
-      const input = discovery.getOssificationInput()
-      if (input === undefined) continue
-      const uncertain = getUncertainNewestChange(input)
+      const history = discovery.getOssificationHistory()
+      if (history === undefined) continue
+      const uncertain = getUncertainNewestChange(history)
       if (uncertain === undefined) continue
       const acceptedIntervals = discovery.configReader
         .readDiscoveryWithReferences(project)

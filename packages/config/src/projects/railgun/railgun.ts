@@ -162,7 +162,7 @@ export const railgun: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationInput: discovery.getOssificationInput(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

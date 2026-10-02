@@ -97,5 +97,5 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  ossificationInput: discovery.getOssificationInput(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
 })

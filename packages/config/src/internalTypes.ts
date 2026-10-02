@@ -1,5 +1,5 @@
 import type {
-  OssificationInput,
+  OssificationHistory,
   TrackedTxFunctionCallGrouping,
 } from '@l2beat/shared'
 import type {
@@ -76,7 +76,7 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
-  ossificationInput?: OssificationInput
+  ossificationHistory?: OssificationHistory
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */

@@ -1,6 +1,6 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-export interface OssificationInput {
+export interface OssificationHistory {
   contracts: OssificationContract[]
   changes: OssificationChange[]
   resets: number[]
