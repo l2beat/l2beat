@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x5f0ca51b25c1ac9ec4679e67ee54cbbb13e3595f
+Generated with discovered.json: 0xc4cd44e76fb38f83e5e0d632c009ee5bf0a430c9
 
-# Diff at Fri, 02 Oct 2026 13:18:34 GMT:
+# Diff at Fri, 02 Oct 2026 13:30:04 GMT:
 
 - id: 8d1a9dc9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@a42dc3443a716e1d14547c3c9dc18bcc823ae3bc block: 1785226129
-- current timestamp: 1790947046
+- comparing to: main@89cb82bb76bcee4c1e82bb3c348ae193f0df6fc8 block: 1785226129
+- current timestamp: 1790947737
 
 ## Description
 
@@ -23,7 +23,7 @@ OptimismPortal2 and SystemConfig drop ETHLockbox support. DisputeGameFactory dep
 
 AggregateVerifier: new TEE image hash, ZK range hash and ZK aggregation hash. Games commit to the upgrade schedule in the new ProtocolVersions contract (admin ProxyAdmin, incident responder Base Multisig 1).
 
-TEEProverRegistry: signer attestations are validated by the new NitroValidator, CertManager (owner Base Coordinator Multisig) and P384Verifier. NitroEnclaveVerifier and the RISC Zero verifier contracts with their TimelockController and Safe are removed.
+TEEProverRegistry: signer attestations are validated by the new NitroValidator, CertManager (owner Base Coordinator Multisig, revoker the TEEProverRegistry manager) and P384Verifier. NitroEnclaveVerifier and the RISC Zero verifier contracts with their TimelockController and Safe are removed.
 
 ## Watched changes
 
@@ -356,6 +356,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A timelock with access control. The current minimum delay is 3d.
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -373,6 +374,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -381,6 +383,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -389,6 +392,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -397,6 +401,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -405,6 +410,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -421,6 +427,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 
@@ -429,6 +436,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
       critical:
 -        true
++        {"untilTimestamp":1790627891}
     }
 ```
 

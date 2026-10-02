@@ -3,7 +3,6 @@ Prepare:
 1. Install `just`: <https://just.systems/man/en/pre-built-binaries.html>
 2. Install sp1 toolchain: `curl -L https://sp1up.succinct.xyz/ | bash`, then `sp1up`.
 3. Install docker <https://docs.docker.com/get-started/get-docker/>
-4. Install `lld` (required by the repo's `.cargo/config.toml`)
 
 Verify:
 
