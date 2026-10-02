@@ -35,6 +35,7 @@ export type PrivacyAnonymitySetSummary =
       status: 'not-applicable'
       description: string
     }
+  | { status: 'too-small' }
   | { status: 'syncing' }
   | { status: 'unavailable' }
 
@@ -88,6 +89,9 @@ export function getPrivacyAnonymitySetSummary(
   const state = project.privacyInfo.anonymitySet
   if (state?.type === 'not-applicable') {
     return { status: 'not-applicable', description: state.description }
+  }
+  if (state?.type === 'too-small') {
+    return { status: 'too-small' }
   }
   if (series.length === 0) {
     return { status: 'unavailable' }
@@ -146,6 +150,9 @@ function getMockSummaries(
           project.id,
           { status: 'not-applicable', description: state.description },
         ]
+      }
+      if (state?.type === 'too-small') {
+        return [project.id, { status: 'too-small' }]
       }
       const series = seriesByProject.get(project.id)?.[0]
       if (series) {
