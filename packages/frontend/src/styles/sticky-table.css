@@ -28,20 +28,20 @@
 }
 
 /*
-  The bottom margin stops the header at the table's last row rather than the
-  scroller's padding below it; the scroller's negative top margin gives that
-  space back, along with the header's own height.
+  The bottom margin stops the header where the table's last row starts, so it
+  never covers that row; the scroller's negative top margin gives that space
+  back, along with the header's own height.
 */
 @utility sticky-table-header {
   display: none;
 
   /* Pinned cells are held by the pinned layer, see `getCommonPinningStyles`. */
   --sticky-table-pinned-position: static;
+  top: var(--sticky-table-header-top, 0px);
 
   [data-sticky-table-ready] > & {
     display: block;
     position: sticky;
-    top: var(--sticky-table-header-top, 0px);
     z-index: 20;
     overflow: clip;
     height: var(--sticky-table-header-height);

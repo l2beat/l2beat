@@ -32,7 +32,7 @@ export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

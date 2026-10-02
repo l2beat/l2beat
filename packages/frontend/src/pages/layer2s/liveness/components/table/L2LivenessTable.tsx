@@ -45,7 +45,7 @@ export function L2LivenessTable({ entries, hideType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

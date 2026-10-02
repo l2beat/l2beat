@@ -27,7 +27,7 @@ export function DaArchivedTable({
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

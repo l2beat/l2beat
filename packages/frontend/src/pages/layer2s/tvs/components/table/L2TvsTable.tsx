@@ -69,7 +69,7 @@ export function L2TvsTable({ tab, entries, breakdownType }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

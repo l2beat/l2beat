@@ -21,7 +21,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

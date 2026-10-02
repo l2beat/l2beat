@@ -6,6 +6,7 @@ import {
 } from './utils/commonPinningStyles'
 
 const READY_ATTRIBUTE = 'data-sticky-table-ready'
+const TOP_VARIABLE = '--sticky-table-header-top'
 const HEIGHT_VARIABLE = '--sticky-table-header-height'
 const BOTTOM_GAP_VARIABLE = '--sticky-table-header-bottom-gap'
 const MAX_SCROLL_VARIABLE = '--sticky-table-max-scroll'
@@ -33,6 +34,8 @@ export interface StickyTableRefs {
   root: RefObject<HTMLDivElement | null>
   scroller: RefObject<HTMLDivElement | null>
   table: RefObject<HTMLTableElement | null>
+  /** The visible copy: the sticky box holding the track and pinned layer. */
+  header: RefObject<HTMLDivElement | null>
   /** The copy in the sliding track and in the pinned layer. */
   track: RefObject<HTMLTableElement | null>
   pinned: RefObject<HTMLTableElement | null>
@@ -68,6 +71,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
   const rootRef = useRef<HTMLDivElement>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const tableRef = useRef<HTMLTableElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLTableElement>(null)
   const pinnedRef = useRef<HTMLTableElement>(null)
 
@@ -77,22 +81,34 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     const scroller = scrollerRef.current
     const table = tableRef.current
     const thead = table?.tHead
+    const tbody = table?.tBodies[0]
+    const header = headerRef.current
     const track = trackRef.current
     const pinned = pinnedRef.current
-    if (!root || !scroller || !table || !thead || !track || !pinned) return
+    if (!root || !scroller || !table || !thead || !tbody || !header) return
+    if (!track || !pinned) return
+    const getViewHeight = getStickingViewHeight(root)
 
     let pinnedVariables: string[] = []
     const update = () => {
       const widths = getColumnCells(table).map(
         (cell) => cell.getBoundingClientRect().width,
       )
+      // The table's own pinned cells use these whether the header sticks or
+      // not, so they do not shift when a resize switches it.
+      pinnedVariables = publishPinnedColumns(root, table, widths)
+      const isTallerThanView = isTableTallerThanView(
+        table,
+        header,
+        getViewHeight(),
+      )
       const isAligned = [track, pinned].every((copy) =>
         alignColumns(table, copy, widths),
       )
-      root.toggleAttribute(READY_ATTRIBUTE, isAligned)
-      if (!isAligned) return
-      publishLayout(root, scroller, table, thead)
-      pinnedVariables = publishPinnedColumns(root, table, widths)
+      root.toggleAttribute(READY_ATTRIBUTE, isTallerThanView && isAligned)
+      if (isTallerThanView && isAligned) {
+        publishLayout(root, scroller, table, thead)
+      }
     }
 
     const resizeObserver = new ResizeObserver(update)
@@ -105,14 +121,17 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
         resizeObserver.observe(cell)
       }
     }
-    // Hiding or reordering columns swaps the header cells being observed.
+    // Hiding or reordering columns swaps the header cells being observed, and
+    // sorting or loading rows changes which row is last.
     const mutationObserver = new MutationObserver(() => {
       observeLayout()
       update()
     })
     mutationObserver.observe(thead, { childList: true, subtree: true })
+    mutationObserver.observe(tbody, { childList: true })
     observeLayout()
     update()
+    window.addEventListener('resize', update)
 
     const followScroll = () => {
       setVariable(root, SCROLL_VARIABLE, scroller.scrollLeft)
@@ -126,6 +145,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     return () => {
       resizeObserver.disconnect()
       mutationObserver.disconnect()
+      window.removeEventListener('resize', update)
       scroller.removeEventListener('scroll', followScroll)
       root.removeAttribute(READY_ATTRIBUTE)
       for (const variable of [...VARIABLES, ...pinnedVariables]) {
@@ -138,23 +158,82 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     root: rootRef,
     scroller: scrollerRef,
     table: tableRef,
+    header: headerRef,
     track: trackRef,
     pinned: pinnedRef,
   }
 }
 
-/** Lengths the CSS needs to place the copy and stop it at the table's end. */
+/**
+ * Ref for a bar that sticks to the top of the page, like the directory tabs or
+ * a project page's section nav. Sticky table headers after it, within the same
+ * parent, stick right below it. Measured rather than declared, because bars
+ * change height with the viewport and some hide on wide screens.
+ */
+export function stickyTopBarRef(bar: HTMLElement | null) {
+  const parent = bar?.parentElement
+  if (!bar || !parent) return
+
+  const publish = () => {
+    const top = Number.parseFloat(getComputedStyle(bar).top) || 0
+    setVariable(parent, TOP_VARIABLE, top + bar.getBoundingClientRect().height)
+  }
+  const resizeObserver = new ResizeObserver(publish)
+  resizeObserver.observe(bar)
+  publish()
+  return () => {
+    resizeObserver.disconnect()
+    parent.style.removeProperty(TOP_VARIABLE)
+  }
+}
+
+/**
+ * A table that fits below the header's stuck position can always be seen
+ * whole, header included, so its header only needs to stick when it does not.
+ */
+function isTableTallerThanView(
+  table: HTMLTableElement,
+  header: HTMLElement,
+  viewHeight: number,
+) {
+  const top = Number.parseFloat(getComputedStyle(header).top) || 0
+  return table.getBoundingClientRect().height > viewHeight - top
+}
+
+/**
+ * The height of the area the header sticks in: the nearest scroll container,
+ * like a dialog's body, or the page. For the page it is the smallest viewport,
+ * so mobile toolbars sliding in and out do not switch the header on and off.
+ */
+function getStickingViewHeight(root: HTMLElement) {
+  for (let box = root.parentElement; box; box = box.parentElement) {
+    const { overflowY } = getComputedStyle(box)
+    if (box !== document.body && /auto|scroll|hidden/.test(overflowY)) {
+      return () => box.clientHeight
+    }
+  }
+  return () => document.documentElement.clientHeight
+}
+
+/**
+ * Lengths the CSS needs to place the copy and to stop it when the table's
+ * last row reaches it, so it never covers that row.
+ */
 function publishLayout(
   root: HTMLElement,
   scroller: HTMLElement,
   table: HTMLTableElement,
   thead: HTMLTableSectionElement,
 ) {
+  const lastRow = getLastRow(table)
+  const stop = lastRow
+    ? lastRow.getBoundingClientRect().top
+    : table.getBoundingClientRect().bottom
   setVariable(root, HEIGHT_VARIABLE, thead.getBoundingClientRect().height)
   setVariable(
     root,
     BOTTOM_GAP_VARIABLE,
-    root.getBoundingClientRect().bottom - table.getBoundingClientRect().bottom,
+    root.getBoundingClientRect().bottom - stop,
   )
   setVariable(
     root,
@@ -182,6 +261,12 @@ function publishPinnedColumns(
       setVariable(root, variable, left - STICKY_OVERLAP_PX)
       return variable
     })
+}
+
+/** The last body row a reader would see; decorative rows are `aria-hidden`. */
+function getLastRow(table: HTMLTableElement) {
+  const rows = Array.from(table.tBodies[0]?.rows ?? [])
+  return rows.findLast((row) => !row.hasAttribute('aria-hidden'))
 }
 
 /**

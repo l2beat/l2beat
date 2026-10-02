@@ -3,6 +3,7 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/Deskt
 import type { ProjectNavigationSection } from '~/components/projects/navigation/types'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { stickyTopBarRef } from '~/components/table/useStickyTableHeader'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 
 interface InteropEntityPageLayoutProps {
@@ -28,7 +29,10 @@ export function InteropEntityPageLayout({
   return (
     <SideNavLayout childrenWrapperClassName="md:pt-0">
       {!isNavigationEmpty && (
-        <div className="md:-mx-5 sticky top-0 z-40 lg:hidden">
+        <div
+          ref={stickyTopBarRef}
+          className="md:-mx-5 sticky top-0 z-40 lg:hidden"
+        >
           <MobileSectionNavigation sections={navigationSections} />
         </div>
       )}

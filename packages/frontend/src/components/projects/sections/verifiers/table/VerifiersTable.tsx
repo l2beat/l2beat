@@ -18,8 +18,13 @@ export type VerifierRow =
 interface Props {
   entries: VerifierRow[]
   collapsible?: boolean
+  stickyHeader?: boolean
 }
-export function VerifiersTable({ entries, collapsible = true }: Props) {
+export function VerifiersTable({
+  entries,
+  collapsible = true,
+  stickyHeader,
+}: Props) {
   const table = useTable('VerifiersTable', {
     data: entries,
     columns: collapsible ? verifiersColumns : verifiersColumnsWithoutActions,
@@ -35,6 +40,7 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
   return (
     <BasicTable
       table={table}
+      stickyHeader={stickyHeader}
       renderSubComponent={({ row }) => (
         <VerifierRowDetails verifierHash={row.original} />
       )}

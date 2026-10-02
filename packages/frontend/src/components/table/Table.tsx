@@ -44,6 +44,7 @@ const Table = ({
     >
       {isSticky && (
         <StickyTableHeader
+          header={sticky.header}
           track={sticky.track}
           pinned={sticky.pinned}
           tableProps={{

@@ -1,3 +1,4 @@
+import { stickyTopBarRef } from '~/components/table/useStickyTableHeader'
 import { SwapIcon } from '~/icons/Swap'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
@@ -14,7 +15,7 @@ export function MultiChainSelector({ chains, protocols }: Props) {
   const { swapPaths } = useInteropSelectedChains()
 
   return (
-    <div className="sticky top-0 z-30 md:pt-4">
+    <div ref={stickyTopBarRef} className="sticky top-0 z-30 md:pt-4">
       <div className="-z-10 absolute top-0 h-22 w-full bg-gradient-to-b from-surface-secondary via-60% via-surface-secondary to-transparent max-md:hidden dark:from-background dark:via-background" />
       <div className="flex items-start justify-between bg-[#ECB2FF] px-4 py-3 max-md:flex-col max-md:gap-3 max-md:border-brand max-md:border-b md:items-center md:rounded-lg md:py-2 min-[1024px]:px-6 dark:bg-pink-900">
         <div className="flex items-center gap-[17px] max-md:w-full">

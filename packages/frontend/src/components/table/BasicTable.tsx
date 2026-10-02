@@ -76,9 +76,9 @@ export interface BasicTableProps<T extends BasicTableRow> {
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
   /**
-   * Keeps the header in view while the table scrolls under the top of the
-   * viewport. For long, page-level tables; a clipping or scrolling ancestor
-   * would hold the header instead of the page.
+   * Keeps the header in view while the table scrolls under the top of its
+   * scroll area. On by default; turn it off for small tables shown as part of
+   * a card or list, where a moving header adds nothing.
    */
   stickyHeader?: boolean
   /**
@@ -145,7 +145,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
       )}
       <Table
         tableWrapperClassName={props.tableWrapperClassName}
-        stickyHeader={props.stickyHeader ? header : undefined}
+        stickyHeader={props.stickyHeader === false ? undefined : header}
         {...getPersistedTableAttributes(props.table)}
       >
         {header}
@@ -504,7 +504,7 @@ function ColGroup<T>({
 
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
-    <tr>
+    <tr aria-hidden>
       {getRenderedHeaders(props.headers).map((header, index, headers) => {
         const isLast = index === headers.length - 1
         return (

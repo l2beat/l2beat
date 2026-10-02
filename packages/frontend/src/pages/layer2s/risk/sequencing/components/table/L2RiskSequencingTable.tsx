@@ -36,7 +36,7 @@ export function L2RiskSequencingTable({ entries }: Props) {
         </h2>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
-      <BasicTable table={table} stickyHeader />
+      <BasicTable table={table} />
     </>
   )
 }

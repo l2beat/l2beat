@@ -25,11 +25,12 @@ const PINNED_LAYER_STYLE = {
  * `div`s are animated; animated table cells run on the main thread in WebKit.
  */
 export function StickyTableHeader({
+  header,
   track,
   pinned,
   tableProps,
   children,
-}: Pick<StickyTableRefs, 'track' | 'pinned'> & {
+}: Pick<StickyTableRefs, 'header' | 'track' | 'pinned'> & {
   tableProps: React.TableHTMLAttributes<HTMLTableElement>
   children: React.ReactNode
 }) {
@@ -41,6 +42,7 @@ export function StickyTableHeader({
 
   return (
     <div
+      ref={header}
       className={cn(stickyTableHeaderClassNames.header, 'bg-surface-primary')}
     >
       <div className={stickyTableHeaderClassNames.track}>

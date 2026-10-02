@@ -11,6 +11,7 @@ import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { stickyTopBarRef } from '~/components/table/useStickyTableHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -40,7 +41,10 @@ export function ZkCatalogProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <div className="md:-mx-5 sticky top-0 z-100 lg:hidden">
+              <div
+                ref={stickyTopBarRef}
+                className="md:-mx-5 sticky top-0 z-100 lg:hidden"
+              >
                 <MobileSectionNavigation sections={navigationSections} />
               </div>
             )}

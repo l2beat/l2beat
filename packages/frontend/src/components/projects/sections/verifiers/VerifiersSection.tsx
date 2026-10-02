@@ -77,6 +77,7 @@ export function VerifiersSection({
           )}
           <VerifiersTable
             collapsible={isZkCatalog}
+            stickyHeader={isZkCatalog}
             entries={verifierHashes.map((verifierHash) => ({
               ...verifierHash,
               proofSystem,
