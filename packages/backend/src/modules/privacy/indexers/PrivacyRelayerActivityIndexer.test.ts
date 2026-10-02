@@ -6,9 +6,23 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyRelayerActivityIndexerConfig } from '../types'
+import type {
+  PrivacyRelayerActivityIndexerConfig,
+  PrivacyRelayerActivityIndexerConfigProperties,
+} from '../types'
 import { getPrivacyRelayerExtractor } from '../utils/extractPrivacyRelayerActivity'
+import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
+import {
+  ALICE,
+  mockZkMoneyRpc,
+  PORTAL,
+  transfer,
+  WITHDRAWAL_EXECUTOR,
+  WITHDRAWAL_PAYOUT_PARAMS,
+  withdrawal,
+} from '../zkmoney/test/fixtures'
 import { PrivacyRelayerActivityIndexer } from './PrivacyRelayerActivityIndexer'
 
 const CONTRACT = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -23,6 +37,10 @@ const privacyPoolsInterface = new utils.Interface([
 ])
 
 describe(PrivacyRelayerActivityIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
   it('fetches, extracts, and saves relayer activity', async () => {
     const from = UnixTime.toStartOf(UnixTime(0), 'day')
     const to = from + 5 * UnixTime.HOUR
@@ -108,7 +126,92 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     expect(safeHeight).toEqual(to)
   })
 
+  // The portal event alone does not name the finalizer: the indexer must pass
+  // the receipt (served by the RPC mock) to the zk.money extractor.
+  it('resolves a zk.money paid finalizer from the transaction receipt', async () => {
+    const from = UnixTime.toStartOf(UnixTime(0), 'day')
+    const to = from + 5 * UnixTime.HOUR
+    const blockTimestamp = from + UnixTime.HOUR
+    const portalEvent = {
+      ...withdrawal(1, { logIndex: 3, blockNumber: 100 }),
+      blockTimestamp,
+    }
+    const properties: PrivacyRelayerActivityIndexerConfig = {
+      id: 'config-zk',
+      projectId: 'zkmoney',
+      chain: 'ethereum',
+      address: PORTAL,
+      sinceTimestamp: UnixTime(0),
+      event: WITHDRAWAL_TOPIC,
+      extractor: 'zkMoneyWithdrawalPayout',
+      params: WITHDRAWAL_PAYOUT_PARAMS,
+    }
+    const configurations = [
+      { id: properties.id, minHeight: 0, maxHeight: null, properties },
+    ]
+    const rpcClient = mockZkMoneyRpc({
+      receipt: [
+        transfer(WITHDRAWAL_EXECUTOR, ALICE, 90n, { logIndex: 1 }),
+        transfer(WITHDRAWAL_EXECUTOR, ALICE, 10n, { logIndex: 2 }),
+        portalEvent,
+      ],
+    })
+    const privacyRelayerActivity = mockObject<
+      Database['privacyRelayerActivity']
+    >({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+    const indexer = new PrivacyRelayerActivityIndexer(
+      {
+        chain: 'ethereum',
+        rpcClient,
+        configurations,
+        blockProvider: mockObject<BlockProvider>({}),
+        logsProvider: mockObject<LogsProvider>({
+          getLogs: mockFn().returnsOnce([portalEvent]),
+        }),
+        db: mockDatabase({
+          privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
+            findBlockNumberByChainAndTimestamp: mockFn()
+              .returnsOnce(50)
+              .returnsOnce(150),
+          }),
+          privacyRelayerActivity,
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(from, to, configurations)
+    await save()
+
+    expect(rpcClient.getTransactionReceipt).toHaveBeenOnlyCalledWith(
+      portalEvent.transactionHash,
+    )
+    expect(privacyRelayerActivity.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-zk',
+        projectId: 'zkmoney',
+        chain: 'ethereum',
+        timestamp: blockTimestamp,
+        blockNumber: 100,
+        txHash: portalEvent.transactionHash,
+        logIndex: 3,
+        relayerAddress: ALICE,
+      },
+    ])
+  })
+
   describe(PrivacyRelayerActivityIndexer.idToConfigurationId.name, () => {
+    // A changed id wipes and re-syncs the configuration's data.
+    it('keeps the existing id for extractors without params', () => {
+      expect(
+        PrivacyRelayerActivityIndexer.idToConfigurationId(relayerProperties()),
+      ).toEqual('0a13c1d85c91')
+    })
+
     it('is deterministic for the same input', () => {
       const properties = relayerProperties()
 
@@ -125,7 +228,9 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       ).not.toEqual(
         PrivacyRelayerActivityIndexer.idToConfigurationId({
           ...properties,
-          event: getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,
+          event: getPrivacyRelayerExtractor({
+            extractor: 'tornadoCashWithdrawal',
+          }).event,
           extractor: 'tornadoCashWithdrawal',
         }),
       )
@@ -133,7 +238,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
   })
 })
 
-function relayerProperties(): Omit<PrivacyRelayerActivityIndexerConfig, 'id'> {
+function relayerProperties(): PrivacyRelayerActivityIndexerConfigProperties {
   return {
     projectId: 'privacy-pools',
     chain: 'ethereum',

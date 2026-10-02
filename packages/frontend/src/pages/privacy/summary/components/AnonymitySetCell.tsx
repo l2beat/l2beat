@@ -8,10 +8,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { anonymitySetCoverageNote } from '~/components/projects/sections/sectionCopy'
 import { UserIcon } from '~/icons/User'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import {
-  getAnonymitySetCoverageNote,
   getAnonymitySetDescription,
   getAnonymitySetSteps,
   getAnonymitySetSyncingNote,
@@ -45,11 +46,32 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
       </Tooltip>
     )
   }
+  if (anonymitySet.status === 'too-small') {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            className="font-medium text-secondary text-xs leading-[15px] md:text-sm md:leading-[1.2]"
+          >
+            Too small
+          </button>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[320px]">
+          The anonymity set is too small and exact data fetching is not enabled
+          yet.
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
 
   const displayValue = formatInteger(anonymitySet.value)
   const steps = getAnonymitySetSteps(anonymitySet, projectName)
   const syncingNote = getAnonymitySetSyncingNote(anonymitySet)
-  const coverageNote = getAnonymitySetCoverageNote(anonymitySet.coverage)
+  const coverageNote = anonymitySetCoverageNote(
+    anonymitySet.coverage,
+    ANONYMITY_SET_WINDOW_DAYS,
+  )
 
   return (
     <Tooltip>

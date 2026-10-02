@@ -175,10 +175,13 @@ const columns = [
     },
   }),
   columnHelper.accessor(
-    (entry) =>
-      entry.anonymitySet.status === 'available'
-        ? entry.anonymitySet.value
-        : undefined,
+    (entry) => {
+      if (entry.anonymitySet.status === 'available') {
+        return entry.anonymitySet.value
+      }
+      // Sorts below every measured set, including 0, but above projects without one
+      return entry.anonymitySet.status === 'too-small' ? -1 : undefined
+    },
     {
       id: 'anonymitySet',
       header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,

@@ -8,10 +8,8 @@ import type { ContractsSectionProps } from '~/components/projects/sections/contr
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import type { Participant } from '~/components/projects/sections/permissions/Participants'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
-import {
-  splitUsedInProjects,
-  type UsedInProject,
-} from '~/components/projects/sections/permissions/UsedInProject'
+import { splitUsedInProjects } from '~/components/projects/sections/permissions/splitUsedInProjects'
+import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import {
   CONTRACTS_UPDATED_NOTE,
   DEPLOYMENT_RISKS_INTRO,
