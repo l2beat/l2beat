@@ -7,6 +7,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -62,8 +63,7 @@ const portalOwner = discovery.getContractValue<ChainSpecificAddress>(
   'owner',
 )
 assert(
-  ChainSpecificAddress.address(portalOwner).toString() ===
-    '0x0000000000000000000000000000000000000000',
+  ChainSpecificAddress.address(portalOwner) === EthereumAddress.ZERO,
   'ZkMoneyPortal ownership is no longer renounced, review the project texts',
 )
 assert(
@@ -82,15 +82,6 @@ assert(
     'eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664' in resolverOperators,
   'Resolver operators changed, review the operator trust assumptions',
 )
-
-function formatDai(wei: bigint): string {
-  const scale = 10n ** BigInt(underlying.decimals)
-  const whole = wei / scale
-  const cents = ((wei % scale) * 100n) / scale
-  const fraction =
-    cents > 0n ? `.${cents.toString().padStart(2, '0').replace(/0$/, '')}` : ''
-  return `${whole.toLocaleString('en-US')}${fraction} ${underlying.symbol}`
-}
 
 const fpcFundingCut = discovery.getContractValueBigInt(
   'ZkMoneyPortal',
@@ -134,6 +125,14 @@ assert(
 )
 const transactionAmountCap = 2_583n * 10n ** BigInt(underlying.decimals)
 
+function formatDai(amount: bigint): string {
+  const value = Number(utils.formatUnits(amount, underlying.decimals))
+  const digits = value.toLocaleString('en-US', {
+    maximumFractionDigits: underlying.decimals,
+  })
+  return `${digits} ${underlying.symbol}`
+}
+
 const descriptionValues = {
   transactionAmountCap: formatDai(transactionAmountCap),
   fpcFundingCut: formatDai(fpcFundingCut),
@@ -146,7 +145,7 @@ const descriptionValues = {
 
 const governanceValues = {
   attestationMaxAge,
-  teeSignerCount: String(teeSigners.length),
+  teeSignerCount: teeSigners.length,
 }
 
 const factory = discovery.getContract('SIPAFactory')
