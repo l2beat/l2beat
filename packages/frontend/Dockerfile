@@ -3,7 +3,7 @@
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
 
-FROM node:22.22.0 AS pruner
+FROM node:24.21.0 AS pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
@@ -14,7 +14,7 @@ COPY . .
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/frontend
 
-FROM node:22.22.0 AS builder
+FROM node:24.21.0 AS builder
 ARG TURBO_TEAM
 ENV TURBO_TEAM=$TURBO_TEAM
 ARG COREPACK_VERSION
@@ -47,7 +47,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
   rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --store-dir /pnpm/store
 
-FROM node:22.22.0-slim AS release
+FROM node:24.21.0-slim AS release
 
 # Install curl for healthcheck and create non-root user
 RUN apt update && \
