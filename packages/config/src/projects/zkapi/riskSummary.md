@@ -24,5 +24,3 @@
 4. identifying prompts, responses or retained service logs expose the user.
 5. a withdrawal challenge publishes a request proof and links its nullifier to the original note.
 6. hosted wallet code or another process obtains locally stored note secrets and recovery data.
-
-Deposits and withdrawals are always publicly linked by note id. Their amounts, payout address and total consumption are public when a note closes.

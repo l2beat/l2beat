@@ -116,7 +116,7 @@ export const zkapi: BaseProject = {
   },
   display: {
     description:
-      'An ETH-funded API payment system that hides the deposit behind an API authorization proof. Deposits and withdrawals remain publicly linked.',
+      'An ETH-funded API payment system that hides the deposit behind an API authorization proof.',
     detailedDescription: readProjectMarkdown(
       'zkapi',
       'detailedDescription',
@@ -178,7 +178,7 @@ export const zkapi: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        'API authorization proofs hide their note among eligible active deposits. Each withdrawal identifies its original deposit by note id, so there is no deposit-to-withdrawal anonymity set. Funding-address counts would misrepresent this protection.',
+        'API authorization proofs hide their note among eligible active deposits. Each withdrawal identifies its original deposit by note id, so there is no deposit-to-withdrawal anonymity set.',
     },
     tokens: [
       {
