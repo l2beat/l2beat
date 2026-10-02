@@ -28,7 +28,10 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
     getExpandedRowModel: getExpandedRowModel(),
     getRowId: (row) => row.hash,
     getRowCanExpand: () => true,
-    initialState: collapsible ? undefined : { expanded: true },
+    // No '#' column, so opt out of useTable's default '#' sort.
+    initialState: collapsible
+      ? { sorting: [] }
+      : { sorting: [], expanded: true },
   })
   return (
     <BasicTable
