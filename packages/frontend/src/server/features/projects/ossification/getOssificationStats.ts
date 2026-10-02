@@ -3,7 +3,7 @@ import type {
   ProjectPrivacyInfo,
   ProjectScalingRisks,
 } from '@l2beat/config'
-import type { ProjectOssification } from '@l2beat/shared/frontend'
+import type { OssificationResult } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { calculateExposure } from './calculateExposure'
 import {
@@ -54,7 +54,7 @@ export interface OssificationStatsProject extends OssificationSeriesProject {
 
 export async function getOssificationStats(
   project: OssificationStatsProject,
-  ossification: ProjectOssification,
+  ossification: OssificationResult,
   now: UnixTime,
 ): Promise<OssificationStats> {
   const clockStart = ossification.projectClockStart

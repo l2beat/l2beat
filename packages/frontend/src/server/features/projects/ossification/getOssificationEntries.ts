@@ -26,13 +26,13 @@ export interface OssificationEntry
 }
 
 type OssificationEntryProject = Project<
-  'ossification' | 'statuses',
+  'ossificationInput' | 'statuses',
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
-    select: ['ossification', 'statuses'],
+    select: ['ossificationInput', 'statuses'],
     optional: [
       'scalingInfo',
       'scalingRisks',
@@ -70,7 +70,7 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         ...placement,
         ...(await getOssificationStats(
           project,
-          measureOssification(project.ossification, now),
+          measureOssification(project.ossificationInput, now),
           now,
         )),
       }

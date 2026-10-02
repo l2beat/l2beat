@@ -1,7 +1,4 @@
-import type {
-  OssificationInput,
-  ProjectOssificationContract,
-} from '@l2beat/shared'
+import type { OssificationContract, OssificationInput } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { mergeOssificationInputs } from './mergeOssificationInputs'
@@ -9,7 +6,7 @@ import { mergeOssificationInputs } from './mergeOssificationInputs'
 const ADDRESS_A = 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f'
 const ADDRESS_B = 'eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b'
 
-function contract(address: string): ProjectOssificationContract {
+function contract(address: string): OssificationContract {
   return {
     name: address,
     address: ChainSpecificAddress(address),
@@ -34,7 +31,8 @@ function input(
 }
 
 describe(mergeOssificationInputs.name, () => {
-  it('joins the tables and observes from the earliest start', () => {
+  it('joins the tables in time order and observes from the earliest start', () => {
+    const younger = { ...contract(ADDRESS_B), ossifyingSince: 200 }
     const merged = mergeOssificationInputs([
       input(ADDRESS_A, {
         changes: [{ timestamp: 300, type: 'code' }],
@@ -42,18 +40,19 @@ describe(mergeOssificationInputs.name, () => {
         observedSince: 200,
       }),
       input(ADDRESS_B, {
+        contracts: [younger],
         changes: [{ timestamp: 250, type: 'state', updateId: 'u1' }],
         resets: [150],
         observedSince: 150,
       }),
     ])
     expect(merged).toEqual({
-      contracts: [contract(ADDRESS_A), contract(ADDRESS_B)],
+      contracts: [younger, contract(ADDRESS_A)],
       changes: [
-        { timestamp: 300, type: 'code' },
         { timestamp: 250, type: 'state', updateId: 'u1' },
+        { timestamp: 300, type: 'code' },
       ],
-      resets: [200, 150],
+      resets: [150, 200],
       observedSince: 150,
     })
   })

@@ -114,7 +114,7 @@ hash and requires rediscovery of dependent projects.
 
 ```
 discovered.json ─┐
-diffHistory.md  ─┼─ getOssificationInput ─► OssificationInput ─► measureOssification ─► ProjectOssification
+diffHistory.md  ─┼─ getOssificationInput ─► OssificationInput ─► measureOssification ─► OssificationResult
 config.jsonc    ─┤        (judgement)          four tables            (arithmetic)
 templates       ─┤
 ossification.json┘         (patch)
@@ -209,12 +209,12 @@ diffHistory entry, and re-check that link after rediscovery.
   `ColorConfig.ts` is the shape of `critical`.
 - `packages/config/src/ossification/`: `getOssificationInput`
   calculates the input. `loadOssificationInput` reads the files.
-  `ProjectDiscovery` exposes it as `getOssification`. A project opts in by
-  setting `ossification: discovery.getOssification(chainStart)` in its config,
-  so ossification can be switched off per project without touching the
-  discovery data. The build stores the input in the `ossification` column of
-  the SQLite database. The input has no `now`, so it only changes when the
-  files it is read from change.
+  `ProjectDiscovery` exposes it as `getOssificationInput`. A project opts in
+  by setting `ossificationInput: discovery.getOssificationInput(chainStart)`
+  in its config, so ossification can be switched off per project without
+  touching the discovery data. The build stores the input in the
+  `ossificationInput` column of the SQLite database. The input has no `now`,
+  so it only changes when the files it is read from change.
 - `packages/shared/src/tools/ossification/`: `measureOssification(input, now)`
   calculates the result, together with the input and output types. The
   frontend calls it with the request time.

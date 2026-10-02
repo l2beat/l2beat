@@ -2,9 +2,9 @@ import { assert, clamp, type UnixTime } from '@l2beat/shared-pure'
 import { knots as EXPLOIT_AGES } from './ossificationCurve.json'
 import type {
   OssificationChange,
+  OssificationCriticalUpdate,
   OssificationInput,
-  ProjectOssification,
-  ProjectOssificationCriticalUpdate,
+  OssificationResult,
 } from './types'
 
 const DAY = 24 * 60 * 60
@@ -16,7 +16,7 @@ const RATE_WINDOW_MIN = 30 * DAY
 export function measureOssification(
   input: OssificationInput,
   now: UnixTime,
-): ProjectOssification {
+): OssificationResult {
   assert(input.contracts.length > 0, 'a measured perimeter has a contract')
   const changes = sortedChanges(input)
   const timestamps = changes.map((change) => change.timestamp)
@@ -71,8 +71,8 @@ function getProjectClockStart(input: OssificationInput): number {
 
 function getCriticalUpdates(
   changes: OssificationChange[],
-): ProjectOssificationCriticalUpdate[] {
-  const updates = new Map<string, ProjectOssificationCriticalUpdate>()
+): OssificationCriticalUpdate[] {
+  const updates = new Map<string, OssificationCriticalUpdate>()
   for (const change of changes) {
     if (change.updateId === undefined) continue
     const update = updates.get(change.updateId) ?? {

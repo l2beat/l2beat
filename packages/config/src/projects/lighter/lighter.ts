@@ -77,7 +77,7 @@ export const lighter: ScalingProject = {
     chainId: undefined,
     apis: [],
   },
-  ossification: discovery.getOssification(),
+  ossificationInput: discovery.getOssificationInput(),
   config: {
     associatedTokens: ['LIT'],
     escrows: [

@@ -19,7 +19,7 @@ describe('ossification newest change', () => {
       const projectPath = join(root, project)
       if (!existsSync(join(projectPath, 'discovered.json'))) continue
       const discovery = new ProjectDiscovery(project)
-      const input = discovery.getOssification()
+      const input = discovery.getOssificationInput()
       if (input === undefined) continue
       const uncertain = getUncertainNewestChange(input)
       if (uncertain === undefined) continue

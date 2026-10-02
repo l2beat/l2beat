@@ -7,8 +7,8 @@ import {
 } from '@l2beat/discovery'
 import type {
   OssificationChange,
+  OssificationContract,
   OssificationInput,
-  ProjectOssificationContract,
 } from '@l2beat/shared'
 import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import type { OssificationPatch } from './OssificationPatch'
@@ -106,7 +106,7 @@ function toRow(
   member: Member,
   events: MemberEvent[],
   perimetered: MemberEvent[],
-): ProjectOssificationContract {
+): OssificationContract {
   const own = (event: MemberEvent) => event.contract === key(member.address)
   const ossifyingSince = latest(
     member.deployedAt,

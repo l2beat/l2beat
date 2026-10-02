@@ -25,7 +25,7 @@ export const Ossification = command({
       'discovered.json',
     )
     const input = existsSync(discovered)
-      ? new ProjectDiscovery(args.project).getOssification()
+      ? new ProjectDiscovery(args.project).getOssificationInput()
       : undefined
     if (input === undefined) {
       console.log(`${args.project} has no critical perimeter`)

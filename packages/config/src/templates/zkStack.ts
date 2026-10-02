@@ -97,7 +97,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: OssificationInput
+  ossificationInput?: OssificationInput
   chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
@@ -366,7 +366,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationInput: templateVars.ossificationInput,
     ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

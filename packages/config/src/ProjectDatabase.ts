@@ -73,7 +73,7 @@ const schema = {
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
   discoveryUpdates: 'TEXT',
-  ossification: 'TEXT',
+  ossificationInput: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

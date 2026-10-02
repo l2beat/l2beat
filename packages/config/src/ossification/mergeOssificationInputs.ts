@@ -1,16 +1,11 @@
-import type {
-  OssificationInput,
-  ProjectOssificationContract,
-} from '@l2beat/shared'
+import type { OssificationContract, OssificationInput } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { isDeepStrictEqual } from 'util'
 
 export function mergeOssificationInputs(
   inputs: OssificationInput[],
 ): OssificationInput | undefined {
-  const first = inputs.at(0)
-  if (first === undefined) return undefined
-  const byAddress = new Map<string, ProjectOssificationContract>()
+  const byAddress = new Map<string, OssificationContract>()
   for (const contract of inputs.flatMap((input) => input.contracts)) {
     const seen = byAddress.get(contract.address)
     assert(
@@ -19,15 +14,19 @@ export function mergeOssificationInputs(
     )
     byAddress.set(contract.address, contract)
   }
-  const contracts = [...byAddress.values()]
+  const contracts = [...byAddress.values()].sort(
+    (a, b) => b.ossifyingSince - a.ossifyingSince,
+  )
   if (contracts.length === 0) return undefined
 
   return {
     contracts,
     // TODO(L2B-15037): update ids of a shared module's changes are not in the
     // project's discoveryUpdates.
-    changes: inputs.flatMap((input) => input.changes),
-    resets: inputs.flatMap((input) => input.resets),
+    changes: inputs
+      .flatMap((input) => input.changes)
+      .sort((a, b) => a.timestamp - b.timestamp),
+    resets: inputs.flatMap((input) => input.resets).sort((a, b) => a - b),
     observedSince: Math.min(...inputs.map((input) => input.observedSince)),
   }
 }

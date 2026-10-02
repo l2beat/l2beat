@@ -128,7 +128,7 @@ export const unichain: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: discovery.getOssification(genesisTimestamp),
+  ossificationInput: discovery.getOssificationInput(genesisTimestamp),
   milestones: [
     {
       title: 'UNIfication proposal executed',

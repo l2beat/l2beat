@@ -448,7 +448,7 @@ export const taiko: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationInput: discovery.getOssificationInput(chainStart),
   type: 'layer2',
   riskView: {
     stateValidation: {

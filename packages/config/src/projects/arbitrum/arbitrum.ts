@@ -378,7 +378,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationInput: discovery.getOssificationInput(chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
       l2CoreQuorumPercent,

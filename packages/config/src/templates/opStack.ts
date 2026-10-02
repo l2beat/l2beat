@@ -249,7 +249,7 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: OssificationInput
+  ossificationInput?: OssificationInput
   hasProperSecurityCouncil?: boolean
   reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
@@ -432,7 +432,7 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationInput: templateVars.ossificationInput,
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs

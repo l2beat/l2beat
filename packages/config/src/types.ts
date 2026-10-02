@@ -282,9 +282,8 @@ export interface BaseProject {
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   /** Ossification perimeter and history, for projects with a critical
-   *  contract in their discovery config. Measured by the frontend at request
-   *  time with measureOssification. */
-  ossification?: OssificationInput
+   *  contract in their discovery config. */
+  ossificationInput?: OssificationInput
 
   // tags
   archivedAt?: UnixTime

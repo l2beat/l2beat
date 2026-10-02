@@ -153,7 +153,7 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
-  ossification?: OssificationInput
+  ossificationInput?: OssificationInput
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
@@ -536,7 +536,7 @@ function orbitStackCommon(
         ? templateVars.chainConfig?.gasTokens
         : ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationInput: templateVars.ossificationInput,
     technology: {
       sequencing:
         templateVars.nonTemplateTechnology?.sequencing ??

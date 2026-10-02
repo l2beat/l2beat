@@ -67,7 +67,7 @@ export const uniswapv3: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(0),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationInput: discovery.getOssificationInput(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

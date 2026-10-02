@@ -181,7 +181,7 @@ export const scroll: ScalingProject = {
       { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationInput: discovery.getOssificationInput(chainStart),
   config: {
     associatedTokens: ['SCR'],
     escrows: [

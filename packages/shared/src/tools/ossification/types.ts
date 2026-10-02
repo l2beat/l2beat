@@ -1,42 +1,16 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export interface OssificationInput {
-  contracts: ProjectOssificationContract[]
+  contracts: OssificationContract[]
   changes: OssificationChange[]
   resets: number[]
   observedSince: number
 }
 
-export interface OssificationChange {
-  timestamp: number
-  type: OssificationChangeType
-  updateId?: string
-  earliest?: number
-}
-
-export type OssificationChangeType = 'code' | 'state'
-
-export interface ProjectOssificationCriticalUpdate {
-  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
-  id: string
-  type: OssificationChangeType
-}
-
-export interface ProjectOssificationContract {
-  name: string
-  address: ChainSpecificAddress
-  isVerified: boolean
-  /** Start of the battle-tested clock: last critical change, or deployment
-   *  if the contract never changed. */
-  ossifyingSince: number
-  codeChangeCount: number
-  stateChangeCount: number
-}
-
 /** Score, change rate and clock timestamps of the critical perimeter,
  *  measured at the time passed to measureOssification. The TVS exposure needs
  *  the database and is added by the frontend. */
-export interface ProjectOssification {
+export interface OssificationResult {
   /** 0-100: the share of recorded code-bug exploits (published, versioned
    *  incident dataset, see ossificationCurve.json) whose exploited code was
    *  younger than this perimeter's age. 0 while any critical contract is
@@ -59,6 +33,32 @@ export interface ProjectOssification {
    *  changes plus deployments of critical contracts. */
   perimeterResets: number[]
   /** Youngest clock first. */
-  contracts: ProjectOssificationContract[]
-  criticalUpdates: ProjectOssificationCriticalUpdate[]
+  contracts: OssificationContract[]
+  criticalUpdates: OssificationCriticalUpdate[]
+}
+
+export interface OssificationContract {
+  name: string
+  address: ChainSpecificAddress
+  isVerified: boolean
+  /** Start of the battle-tested clock: last critical change, or deployment
+   *  if the contract never changed. */
+  ossifyingSince: number
+  codeChangeCount: number
+  stateChangeCount: number
+}
+
+export interface OssificationChange {
+  timestamp: number
+  type: OssificationChangeType
+  updateId?: string
+  earliest?: number
+}
+
+export type OssificationChangeType = 'code' | 'state'
+
+export interface OssificationCriticalUpdate {
+  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
+  id: string
+  type: OssificationChangeType
 }

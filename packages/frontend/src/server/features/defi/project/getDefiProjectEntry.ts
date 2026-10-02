@@ -61,7 +61,7 @@ export async function getDefiProjectEntry(
       'tvsConfig',
       'externalDependencies',
       'discoveryUpdates',
-      'ossification',
+      'ossificationInput',
     ],
   })
 

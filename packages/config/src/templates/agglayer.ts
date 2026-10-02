@@ -95,7 +95,7 @@ interface AgglayerBaseConfig {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
-  ossification?: OssificationInput
+  ossificationInput?: OssificationInput
   stateDerivation?: ProjectScalingStateDerivation
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateRiskView?: Partial<ScalingProject['riskView']>
@@ -289,7 +289,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       ...config.chainConfig,
       gasTokens: config.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: config.ossification,
+    ossificationInput: config.ossificationInput,
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
     stage: config.stage ?? { stage: 'NotApplicable' },

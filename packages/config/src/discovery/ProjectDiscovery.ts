@@ -1092,7 +1092,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  getOssification(projectStart?: UnixTime): OssificationInput | undefined {
+  getOssificationInput(projectStart?: UnixTime): OssificationInput | undefined {
     return mergeOssificationInputs(
       this.discoveries
         .map((discovery) =>

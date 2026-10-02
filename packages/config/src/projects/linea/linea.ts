@@ -397,7 +397,7 @@ export const linea: ScalingProject = {
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationInput: discovery.getOssificationInput(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

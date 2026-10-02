@@ -76,7 +76,7 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
-  ossification?: OssificationInput
+  ossificationInput?: OssificationInput
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */

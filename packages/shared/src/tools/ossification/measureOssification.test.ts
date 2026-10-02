@@ -14,8 +14,8 @@ import {
 import ossificationCurve from './ossificationCurve.json'
 import type {
   OssificationChange,
+  OssificationContract,
   OssificationInput,
-  ProjectOssificationContract,
 } from './types'
 
 const NOW = UnixTime(1_800_000_000)
@@ -27,8 +27,8 @@ const scoreAt = (ageSeconds: number) =>
   Math.round(100 * exploitAgePercentile(ageSeconds))
 
 function row(
-  overrides: Partial<ProjectOssificationContract> = {},
-): ProjectOssificationContract {
+  overrides: Partial<OssificationContract> = {},
+): OssificationContract {
   return {
     name: 'A',
     address: ChainSpecificAddress(

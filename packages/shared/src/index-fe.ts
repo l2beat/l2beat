@@ -2,9 +2,9 @@ export { createTrackedTxId } from './tools/createTrackedTxConfigId'
 export {
   measureOssification,
   type OssificationChangeType,
+  type OssificationCriticalUpdate,
   type OssificationInput,
-  type ProjectOssification,
-  type ProjectOssificationCriticalUpdate,
+  type OssificationResult,
 } from './tools/ossification'
 export type {
   TrackedTxConfigEntry,
