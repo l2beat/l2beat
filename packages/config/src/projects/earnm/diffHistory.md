@@ -15,10 +15,6 @@ RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist 
 
 ChallengeManager replaced by EdgeChallengeManager: 1 big-step level. No stake is required to propose an assertion or open a challenge (`baseStake` 0, all edge stakes 0): if the validator whitelist is dropped, delay and resource exhaustion attacks cost only gas.
 
-Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max.
-
-OneStepProvers and OneStepProofEntry replaced. ValidatorUtils removed.
-
 SafeL2 threshold lowered from 5 of 8 to 3 of 8.
 
 Implementation diffs:
