@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf755477ff1fe7222cad81e3cd93f56dbc2396c2b
+
+# Diff at Thu, 01 Oct 2026 11:11:05 GMT:
+
+- id: 6b9ec1ab
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592851
+- current timestamp: 1790851757
+
+## Description
+
+Proposal 69 (1,000 TORN to Mr Anon) was defeated (~163k for vs ~458k TORN against). The same proposer resubmitted it as proposal 70 (voting active, ends 2026-10-06) with a new verified Proposal contract (eth:0x04C2eb6Df3bF6032b8e07a03Fc9a5Ca424414483): 1,000 TORN split into 500 TORN to abusedotch and 500 TORN to JJ (Mr Anon's share, redirected as repayment). It only transfers TORN from governance, no protocol parameters or contracts are changed.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        69
++        70
+    }
+```
+
 Generated with discovered.json: 0x2e16fadd112013d339429f6094c9434c899a3237
 
 # Diff at Mon, 28 Sep 2026 13:34:46 GMT:

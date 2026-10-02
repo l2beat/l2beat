@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x9d5dfb9f92f91196391a920725ab4afec8da7ebc
+
+# Diff at Thu, 01 Oct 2026 11:11:00 GMT:
+
+- id: bd1b5d97
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1787644553
+- current timestamp: 1790850812
+
+## Description
+
+AgglayerManager: silicon (rollupID 10) migrated from rollupTypeID 7 (Validium, StateTransition) to rollupTypeID 14 (AggchainECDSAMultisig, ALGateway) and now sends pessimistic proofs.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.15:
++        10
+      values.rollupsDataV2.9.rollupVerifierType:
+-        0
++        2
+      values.rollupsDataV2.9.rollupTypeID:
+-        7
++        14
+      values.rollupsDataV2.9.forkID:
+-        12
++        0
+      values.rollupsDataV2.9.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x78fa89195b11945e9d1b086d8bc365d1288f8f32
 
 # Diff at Wed, 23 Sep 2026 05:49:37 GMT:

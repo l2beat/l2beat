@@ -1,4 +1,4 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -17,6 +17,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
@@ -29,6 +30,7 @@ export interface ProjectDefiEntry {
   shortName?: string
   icon: string
   description: string
+  category?: ProjectDefiCategory
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref?: string
@@ -61,7 +63,7 @@ export async function getDefiProjectEntry(
       'tvsConfig',
       'externalDependencies',
       'discoveryUpdates',
-      'ossification',
+      'ossificationHistory',
     ],
   })
 
@@ -140,20 +142,20 @@ export async function getDefiProjectEntry(
     })
   }
 
-  if (project.tvsConfig !== undefined) {
+  if (project.defiInfo.tvl !== undefined) {
     sections.push({
-      type: 'TvsValueSection',
+      type: 'DefiTvlSection',
       props: {
         id: 'tvs',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
-        rangeControls: 'tvs',
         project: {
           id: project.id,
           name: project.name,
           shortName: project.shortName,
           iconUrl: icon,
         },
+        dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
       },
     })
   }
@@ -213,6 +215,7 @@ export async function getDefiProjectEntry(
     shortName: project.shortName,
     icon,
     description: project.display.description,
+    category: project.defiInfo.category,
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []

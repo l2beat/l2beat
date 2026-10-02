@@ -87,7 +87,7 @@ export async function getGardenData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'The Infinite Garden - L2BEAT',
+        name: 'The Infinite Garden',
         description:
           'A garden view of how projects grow across the CROPS framework: censorship resistance, open source, privacy, and security.',
         url,

@@ -1,5 +1,6 @@
 import { cn } from '~/utils/cn'
 import { Banner } from './Banner'
+import { trackedTxsOutageText } from './projects/sections/sectionCopy'
 
 export function TrackedTxsOutageNotice({
   className,
@@ -19,9 +20,7 @@ export function TrackedTxsOutageNotice({
         className,
       )}
     >
-      Data {type === 'page' ? 'on this page' : 'in this section'} may be
-      temporarily out of date due to third-party provider issues. We&apos;re
-      working to resolve this.
+      {trackedTxsOutageText(type)}
     </Banner>
   )
 }

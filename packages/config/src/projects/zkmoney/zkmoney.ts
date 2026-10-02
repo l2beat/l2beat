@@ -242,7 +242,7 @@ export const zkmoney: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

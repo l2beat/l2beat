@@ -44,11 +44,12 @@ export function getCommonDaProjectStats(
   stats.push({
     key: 'economic-security',
     title: 'Economic security',
-    value: project.header.economicSecurity
-      ? formatCurrency(project.header.economicSecurity, 'usd')
-      : EM_DASH,
-    tooltip:
-      'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
+    // Zero is a value (nothing is slashable); only a missing one is unknown.
+    value:
+      project.header.economicSecurity !== undefined
+        ? formatCurrency(project.header.economicSecurity, 'usd')
+        : EM_DASH,
+    tooltip: getEconomicSecurityTooltip(project),
   })
 
   if (project.header.numberOfValidators) {
@@ -79,6 +80,16 @@ export function getCommonDaProjectStats(
   }
 
   return stats
+}
+
+function getEconomicSecurityTooltip({
+  type,
+}: DaProjectPageEntry | EthereumDaProjectPageEntry) {
+  const definition =
+    'The assets that are slashable in case of a data withholding attack.'
+  return type === 'Public Blockchain'
+    ? `${definition} For public blockchains, it is equal to 2/3 of the total validating stake.`
+    : definition
 }
 
 function getDurationOfStorage({

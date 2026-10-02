@@ -8,5 +8,11 @@
     "hash": "0xca0b27e9f594f2c113df96d8a46490f8e50e40bb6eba119a9c067b6152322fcd",
     "address": "eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be",
     "blockNumber": 25624347
+  },
+  "DepositSecurityModuleV5": {
+    "hash": "0x37d022ad43900d2c31f8768964172aa143b26f8077adee17edd355543c1418d5",
+    "address": "eth:0x39BB5d491e98A44D1bfe8047A737a81E296a63E0",
+    "chain": "ethereum",
+    "blockNumber": 26096920
   }
 }

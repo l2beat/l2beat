@@ -1,19 +1,25 @@
 import compact from 'lodash/compact'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import type { InteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import {
   formatAverageDuration,
+  formatTopPath,
+  formatTransferCount,
+  interopChainName,
+  interopProtocolUrl,
+  renderTopRoutes,
+} from '~/server/markdown/interopMarkdown'
+import { renderProtocolsTable } from '~/server/markdown/interopTokenMarkdown'
+import {
   formatCount,
   formatUsd,
-  interopProtocolUrl,
-  renderProtocolsTable,
-} from '~/server/markdown/interopTokenMarkdown'
-import { link } from '~/server/markdown/markdown'
+  joinBlocks,
+  link,
+} from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+import type { SectionBodyOverrides } from '~/server/markdown/renderProjectSection'
+import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 
 export interface InteropTokenPage {
@@ -31,9 +37,7 @@ export function renderInteropTokenMarkdown({
 }: InteropTokenPage): string {
   return renderProjectMarkdown({
     name: token.symbol,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}${getInteropTokenPagePath(token)}`,
+    pagePath: getInteropTokenPagePath(token),
     summary: {
       warnings: tokenData ? [] : [NO_DATA_WARNING],
       facts: getFacts(token, tokenEntry, tokenData),
@@ -41,9 +45,8 @@ export function renderInteropTokenMarkdown({
       description: undefined,
     },
     // Without data the HTML page shows an empty state instead of sections.
-    sections: tokenData
-      ? withProtocolsTable(tokenEntry.sections, tokenData.entries)
-      : [],
+    sections: tokenData ? tokenEntry.sections : [],
+    sectionBodies: tokenData ? getDashboardSectionBodies(tokenData) : {},
     apiLinks: {},
   })
 }
@@ -83,11 +86,11 @@ function getFacts(
     },
     data?.topPath && {
       label: 'Last 24h top path',
-      value: `${capitalizeWords(data.topPath.chainA)} <-> ${capitalizeWords(data.topPath.chainB)} (${formatUsd(data.topPath.volume)})`,
+      value: formatTopPath(data.topPath),
     },
     data?.topProtocol && {
       label: 'Top protocol (based on 24h volume)',
-      value: `${link(data.topProtocol.name, interopProtocolUrl(data.topProtocol.slug))} (volume ${formatUsd(data.topProtocol.volume.value)}, ${formatCount(data.topProtocol.transfers.value)} transactions)`,
+      value: `${link(data.topProtocol.name, interopProtocolUrl(data.topProtocol.slug))} (volume ${formatUsd(data.topProtocol.volume.value)}, ${formatTransferCount(data.topProtocol.transfers.value)})`,
     },
     protocols.length > 0 && {
       label: 'Protocols used',
@@ -101,24 +104,39 @@ function getFacts(
 }
 
 /**
- * The HTML protocols section reads its table from the dashboard data rather
- * than from its props, so the markdown one is built here from the same data.
+ * The HTML volume and protocols sections read the dashboard data rather than
+ * their props, so their markdown is built here from the same data.
  */
-function withProtocolsTable(
-  sections: ProjectDetailsSection[],
-  protocols: ProtocolEntry[],
-): ProjectDetailsSection[] {
-  return sections.map((section) =>
-    section.type === 'InteropTokenProtocolsSection'
-      ? {
-          type: 'MarkdownSection',
-          props: { ...section.props, content: renderProtocolsTable(protocols) },
-        }
-      : section,
-  )
+function getDashboardSectionBodies(
+  data: InteropTokenDashboardData,
+): SectionBodyOverrides {
+  return {
+    InteropTokenProtocolsSection: () => renderProtocolsTable(data.entries),
+    InteropTokenVolumeSection: (props, level) =>
+      renderTopFlows(data, props.id, level),
+  }
 }
 
-/** Issuers and chains are lowercase ids, which the HTML page capitalizes with CSS. */
+/** Only the busiest routes are loaded with the page; the graph queries the rest. */
+function renderTopFlows(
+  { flows }: InteropTokenDashboardData,
+  sectionId: string,
+  level: number,
+) {
+  return joinBlocks([
+    renderTopRoutes(
+      flows.filter((flow) => flow.volume > 0),
+      interopChainName,
+      level,
+    ),
+    htmlPagePointer(
+      'The flows between all chains are an interactive graph',
+      sectionId,
+    ),
+  ])
+}
+
+/** Issuers are lowercase ids, which the HTML page capitalizes with CSS. */
 function capitalizeWords(text: string) {
   return text.replace(/\b[a-z]/g, (letter) => letter.toUpperCase())
 }

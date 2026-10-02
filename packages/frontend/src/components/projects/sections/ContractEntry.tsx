@@ -19,10 +19,16 @@ import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
+import { splitUsedInProjects } from './permissions/splitUsedInProjects'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
+import {
+  ESCROW_ALL_TOKENS_INCLUDED,
+  ESCROW_TOKENS_INCLUDED,
+  impactfulChangesWarning,
+} from './sectionCopy'
 
 export interface TechnologyContract {
   id: string
@@ -74,15 +80,11 @@ export function ContractEntry({
   className,
   expandableAddresses = false,
 }: ContractEntryProps) {
-  const sharedProxies = contract.usedInProjects?.filter(
-    (c) => c.type === 'proxy',
-  )
-  const sharedImplementations = contract.usedInProjects
-    ?.filter((c) => c.type === 'implementation')
-    .filter((c) => !sharedProxies?.map((k) => k.id).includes(c.id))
-  const sharedPermissions = contract.usedInProjects?.filter(
-    (c) => c.type === 'permission',
-  )
+  const {
+    proxies: sharedProxies,
+    implementations: sharedImplementations,
+    permissions: sharedPermissions,
+  } = splitUsedInProjects(contract.usedInProjects ?? [])
 
   const { color, icon } = getCalloutProps(contract)
 
@@ -199,19 +201,19 @@ export function ContractEntry({
           {contract.participants && (
             <ParticipantsEntry participants={contract.participants} />
           )}
-          {sharedProxies && sharedProxies.length !== 0 && (
+          {sharedProxies.length !== 0 && (
             <UsedInProjectEntry
               label="Proxy used in"
               implementations={sharedProxies}
             />
           )}
-          {sharedImplementations && sharedImplementations.length !== 0 && (
+          {sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
               label="Implementation used in"
               implementations={sharedImplementations}
             />
           )}
-          {sharedPermissions && sharedPermissions.length !== 0 && (
+          {sharedPermissions.length !== 0 && (
             <UsedInProjectEntry
               label="Used in"
               implementations={sharedPermissions}
@@ -247,19 +249,14 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
   if (escrow.tokens === '*') {
     return (
       <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
-        <strong className="text-primary">
-          All supported tokens in this escrow are included in the value secured
-          calculation.
-        </strong>
+        <strong className="text-primary">{ESCROW_ALL_TOKENS_INCLUDED}</strong>
       </p>
     )
   }
 
   return (
     <div className="mt-2 flex flex-wrap items-center text-paragraph-15 md:text-paragraph-16">
-      <strong className="text-primary">
-        The following tokens are included in the value secured calculation:
-      </strong>
+      <strong className="text-primary">{ESCROW_TOKENS_INCLUDED}</strong>
       <div className="ml-1.5 flex flex-wrap items-center gap-1.5">
         {escrow.tokenIcons.map((token) => (
           <Tooltip key={token.symbol}>
@@ -333,8 +330,7 @@ export function ContractsWithImpactfulChanges(props: {
   return (
     <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are impactful changes to the following {props.type}, and part of
-        the information might be outdated.
+        {impactfulChangesWarning(props.type)}
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry

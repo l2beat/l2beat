@@ -1,4 +1,4 @@
-import { type Project, ProjectService } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { ConfigReader, ConfigRegistry } from '@l2beat/discovery'
 import {
@@ -13,12 +13,11 @@ import {
   type DashboardDeployment,
   renderDashboardPage,
 } from './view/DashboardPage'
+import type { GroupingProjectConfig } from './view/groupProjects'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
-  private projectConfigs:
-    | Project<never, 'scalingInfo' | 'daLayer'>[]
-    | undefined
+  private projectConfigs: GroupingProjectConfig[] | undefined
 
   constructor(
     private readonly db: Database,
@@ -82,7 +81,7 @@ export class UpdateMonitorController {
 
     const ps = new ProjectService()
     this.projectConfigs = await ps.getProjects({
-      optional: ['scalingInfo', 'daLayer'],
+      optional: ['scalingInfo', 'daLayer', 'privacyInfo', 'defiInfo'],
     })
 
     return this.projectConfigs
@@ -90,7 +89,7 @@ export class UpdateMonitorController {
 
   private async getDiscoveryDashboardData(): Promise<{
     projects: DashboardProject[]
-    projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[]
+    projectConfigs: GroupingProjectConfig[]
     projectsWithHighSeverityChanges: Set<string>
   }> {
     const projects: DashboardProject[] = await getDashboardProjects(

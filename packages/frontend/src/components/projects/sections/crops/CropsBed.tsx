@@ -14,6 +14,7 @@ import {
 } from '~/components/garden/crops'
 import { useEntranceHold } from '~/components/garden/useEntranceHold'
 import { cn } from '~/utils/cn'
+import { gardenVerdictText } from '../sectionCopy'
 
 // Layout follows the section's own width (container queries), because the
 // side nav collapsing under 1200px makes a landscape tablet wider than a 13"
@@ -190,7 +191,7 @@ function Verdict({
           inGarden ? 'text-garden-accent' : 'text-primary',
         )}
       >
-        {inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'}
+        {gardenVerdictText(inGarden)}
       </p>
       <div className="flex items-center gap-2">
         <span className="font-medium text-[12px] text-secondary uppercase tracking-wider">

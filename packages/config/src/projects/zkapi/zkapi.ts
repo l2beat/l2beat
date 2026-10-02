@@ -98,7 +98,7 @@ export const zkapi: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-10-02')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: {

@@ -37,6 +37,15 @@
     "VmFromPermissionedArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 32 }
+    },
+    // Type-5 args, 40 bytes: anchorStateRegistry(20) | proposer(20).
+    "AnchorStateRegistryFromGame5Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 0 }
+    },
+    "ProposerFromGame5Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 20 }
     }
   },
   "fields": {
@@ -96,6 +105,22 @@
         "args": [8]
       }
     },
+    "game9": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [9]
+      }
+    },
+    "game5": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [5]
+      }
+    },
     "initBondGame42": {
       "handler": {
         "type": "call",
@@ -122,6 +147,20 @@
         "type": "call",
         "method": "initBonds",
         "args": [8]
+      }
+    },
+    "initBondGame9": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [9]
+      }
+    },
+    "initBondGame5": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [5]
       }
     },
     "initBondGame621": {
@@ -223,6 +262,85 @@
         "expectRevert": true
       },
       "edit": ["format", "ChainIdFromArgs"]
+    },
+    // Type-9 args, 124 bytes: absolutePrestate(32) | vm(20) |
+    // anchorStateRegistry(20) | weth(20), then 32 bytes that are zero where the
+    // legacy games carry the L2 chain ID. Same offsets as type 8.
+    "game9Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      }
+    },
+    "game9AbsolutePrestate": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
+    },
+    "game9Vm": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromGame8Args"]
+    },
+    "game9AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "game9Weth": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
+    },
+    "game5Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      }
+    },
+    "game5AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromGame5Args"]
+    },
+    "game5Proposer": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      },
+      "edit": ["format", "ProposerFromGame5Args"]
     },
     "proposerFromDGF": {
       "handler": {

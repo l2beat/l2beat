@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { env } from '~/env'
@@ -25,13 +26,13 @@ export interface OssificationEntry
 }
 
 type OssificationEntryProject = Project<
-  'ossification' | 'statuses',
+  'ossificationHistory' | 'statuses',
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
-    select: ['ossification', 'statuses'],
+    select: ['ossificationHistory', 'statuses'],
     optional: [
       'scalingInfo',
       'scalingRisks',
@@ -67,7 +68,11 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         backgroundColor: getRowBackgroundColor(statuses),
         statuses,
         ...placement,
-        ...(await getOssificationStats(project, project.ossification, now)),
+        ...(await getOssificationStats(
+          project,
+          measureOssification(project.ossificationHistory, now),
+          now,
+        )),
       }
     }),
   )

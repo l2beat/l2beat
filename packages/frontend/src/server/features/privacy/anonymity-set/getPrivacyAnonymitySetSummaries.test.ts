@@ -39,6 +39,20 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
     })
   })
 
+  it('reports too-small projects', () => {
+    const project = makeProject({ anonymitySet: { type: 'too-small' } })
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      getPrivacyAnonymitySetSeries(project),
+      [],
+      [],
+      CURRENT_DAY,
+    )
+
+    expect(result).toEqual({ status: 'too-small' })
+  })
+
   it('reports projects without configured series as unavailable', () => {
     const project = makeProject({ tokens: [] })
 

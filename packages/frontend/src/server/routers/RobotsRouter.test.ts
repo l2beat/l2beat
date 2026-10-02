@@ -35,6 +35,14 @@ describe(createRobotsRouter.name, () => {
       ])
     })
 
+    it('declares Content Signals allowing search, AI input and AI training in the `*` group', async () => {
+      const body = await getRobotsTxt('production')
+
+      expect(body).toInclude(
+        'User-agent: *\nContent-Signal: ai-train=yes, search=yes, ai-input=yes\n',
+      )
+    })
+
     it('points to the sitemap', async () => {
       const body = await getRobotsTxt('production')
 

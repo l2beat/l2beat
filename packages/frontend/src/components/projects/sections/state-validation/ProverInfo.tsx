@@ -4,7 +4,7 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/ProjectTooltipContent'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/quantumResistanceTooltips'
 import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { TrustedSetupsByProofSystemSection } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { ProverInfoData } from './StateValidationSection'

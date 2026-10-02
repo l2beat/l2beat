@@ -490,10 +490,13 @@ describe('getProjects', () => {
         }
 
         if (
-          privacyInfo.anonymitySet?.type === 'not-applicable' &&
+          privacyInfo.anonymitySet !== undefined &&
+          privacyInfo.anonymitySet.type !== 'partially-attributed' &&
           configuredBuckets !== 0
         ) {
-          problems.push(`${project.id}: not-applicable with buckets`)
+          problems.push(
+            `${project.id}: ${privacyInfo.anonymitySet.type} with buckets`,
+          )
         }
       }
       expect(problems).toEqual([])

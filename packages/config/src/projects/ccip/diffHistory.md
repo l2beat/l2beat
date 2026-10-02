@@ -1,3 +1,693 @@
+Generated with discovered.json: 0xb72e38702619162aee619a933e50581cfaeed979
+
+# Diff at Thu, 01 Oct 2026 16:21:27 GMT:
+
+- id: 79604d23
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@f2656072394a0d215412884ecfaf57f4f0941ea0 block: 1790609268
+- current timestamp: 1790867273
+
+## Description
+
+- 16 more Ethereum lanes moved to CCIP 2.0 in both directions (zkSync, Sonic, Berachain, Katana, MegaETH, arc, Rootstock, Etherlink and others): the MainRouter now selects EthereumOnRamp_v2_0 for them, and EthereumOffRamp_v2_0 routes their inbound messages through the MainRouter instead of the DeprecatedRouter. The FeeQuoter limits for these destinations were updated accordingly.
+- New TAC lane configured on the v2.0 OnRamp, OffRamp, CommitteeVerifier (9-of-16 signers) and Executor, wired to the DeprecatedRouter like previous lanes before their cutover.
+- USDC to Monad and Pharos now uses the CCTP-through-CCV path (Pharos was lock/release). USDCTokenPoolCCTPV2 ownership moved from the deployer EOA (0x062f) to ARMTimelock.
+- The FeeQuoter flat fee for WETH transfers rose to $45 on the Linea and Optimism lanes (from $0.50) and on the Arbitrum and Base lanes (from $42.50).
+- Circle added a new USDC minter, an unverified upgradeable proxy (0xA669) deployed on Sep 28, and two MasterMinter controllers. It is discovered only because CCIP follows the USDC minter list.
+- No allowed finality config changed: the CommitteeVerifier still accepts only full finality or a block depth, so the safe (FCR) mode remains unavailable on Ethereum.
+
+## Watched changes
+
+```diff
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor] {
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.54:
++        {"destChainSelector":"tac","config":{"usdCentsFee":0,"enabled":true}}
+    }
+```
+
+```diff
+    EOA (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner"}
+    }
+```
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+    }
+```
+
+```diff
+    contract CCTPVerifier_v2_1 (eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af) [ccip/CCTPVerifier] {
+    +++ description: USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.
++++ description: Current verifier configuration for every configured remote chain: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.4:
++        {"remoteChainConfig":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","remoteChainSelector":"monad","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":220000,"payloadSizeBytes":1024},"allowedSendersList":[]}
++++ description: Current verifier configuration for every configured remote chain: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.6:
++        {"remoteChainConfig":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","remoteChainSelector":"pharos","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":220000,"payloadSizeBytes":1024},"allowedSendersList":[]}
++++ description: Remote chain selectors with verifier configuration, reconstructed from configuration events.
+      values.remoteChainSelectors.6:
++        "7801139999541420232"
++++ description: Remote chain selectors with verifier configuration, reconstructed from configuration events.
+      values.remoteChainSelectors.7:
++        "8481857512324358265"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.4:
++        {"remoteChainSelector":"monad","router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.6:
++        {"remoteChainSelector":"pharos","router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"}
+    }
+```
+
+```diff
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.55:
++        {"destChainSelector":"tac","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.getOffRamps.69:
++        {"sourceChainSelector":"5936861837188149645","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.onRamps.tac:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+    }
+```
+
+```diff
+    contract USDCTokenPoolCCTPV2 (eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574) [ccip/USDCTokenPool] {
+    +++ description: USDC pool that burns outgoing USDC through a fixed Circle TokenMessenger and forwards incoming Circle attestations through a fixed message-transmitter proxy. Its caller allowlist lets a routing proxy invoke it, and separate deployments handle Circle CCTP v1 and CCTP v2 messages.
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.0:
++        "monad"
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.1:
++        "pharos"
+      values.owner:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"4426351306075016396":"0g","4829375610284793157":"ab","3577778157919314504":"abstract","4059281736450291836":"adi","14894068710063348487":"apechain","4741433654826277614":"aptos","6433500567565415381":"avalanche","1294465214383781161":"berachain","465944652040885897":"opbnb","7937294810946806131":"bitlayer","3849287863852499584":"bob","4560701533377838164":"botanix","5406759801798337480":"bsquared","241851231317828981":"bitcoin-merlin","2135107236357186872":"bittensor","11344663589394136015":"bsc","2308837218439511688":"canton","1346049177634351622":"celo","1224752112135636129":"core","9043146809313071210":"corn","18240105181246962294":"creditcoin","1456215246176062136":"cronos","8788096068760390840":"cronos-zkevm","6325494908023253251":"edge","8805746078405598895":"andromeda","4949039107694359620":"arbitrum","15971525489660198786":"base","7613811247471741961":"hashkey","3461204551265785888":"ink","4627098889531055414":"linea","1556008542357238666":"mantle","7264351850409363825":"mode","3734403246176062136":"optimism","13204309965629103672":"scroll","16468599424800719238":"taiko","1923510103922296319":"unichain","2049429975587534727":"worldchain","3016212468291539606":"xlayer","17198166215261833993":"zircuit","1562403441176082196":"zksync","13624601974233774587":"etherlink","1462016016387883143":"fraxtal","3229138320728879060":"hedera","1804312132722180201":"hemi","2442541497099098535":"hyperliquid","1523760397290643893":"jovay","9813823125703490621":"kaia","5608378062013572713":"lens","15293031020466096408":"lisk","5009297550715157269":"ethereum","4051577828743386545":"matic","6093540873831549674":"megaeth","13447077090413146373":"metal","11690709103138290329":"mind","17164792800244661392":"mint","8481857512324358265":"monad","18164309074156128038":"morph","4215185756725900654":"mova","12657445206920369324":"henesys","7801139999541420232":"pharos","9335212494177455608":"plasma","17912061998839310979":"plume","6422105447186081193":"astar","2459028469735686113":"katana","6180753054346818345":"robinhood","6370580034781731079":"arc","2988178761202034333":"gravity","6916147374840168594":"ronin","11964252391146578476":"rootstock","9027416829622342829":"sei","3993510008929295315":"shibarium","124615329519749607":"solana","12505351618335765396":"soneium","1673871237479749969":"sonic","16978377838628290997":"stable","470401360549526817":"superseed","5936861837188149645":"tac","7281642695469137430":"tempo","16448340667252469081":"ton","5142893604156789321":"wemix","465200170687744372":"xdai","17673274061779414707":"xdc","3555797439612589184":"zora","17529533435026248318":"sui","9762610643973837292":"sui-testnet","6473245816409426016":"memento","9723842205701363942":"everclear","1546563616611573946":"tron","4348158687435793198":"polygonzkevm","4411394078118774322":"blast","5214452172935136222":"treasure","7222032299962346917":"neox"}}]
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+      values.sourceChainConfigs.arc.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.bsquared.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.morph.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.henesys.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.astar.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.rootstock.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.zksync.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.xdc.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.jovay.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.bitlayer.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.sonic.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.katana.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.etherlink.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.megaeth.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.stable.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.berachain.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.tac:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000172f94f347c6762c9bf21abb90ea6683cb90fc96"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+    }
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Role based timelock used to administer CCIP contracts.
+      directlyReceivedPermissions.30:
++        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner"}
+    }
+```
+
+```diff
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier] {
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
+      values.remoteChainConfigs.50.remoteChainConfig.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.55:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"tac","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.65:
++        "5936861837188149645"
+      values.routeRouters.50.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.55:
++        {"remoteChainSelector":"tac","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
+      values.signatureConfigs.tac:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.onRamps.zksync:
+-        "eth:0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.astar:
+-        "eth:0xD8E8720709a3d9A18a9B281E6148E94149B2E252"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bsquared:
+-        "eth:0xddF4b4aF7A9603869C90189EFa8826683D0D234b"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.bitlayer:
+-        "eth:0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.sonic:
+-        "eth:0x4fdAaDe22bd05537EeaB204cF7319589CE595D6a"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.berachain:
+-        "eth:0xBeFfEF56Cd6FA063d2e04E126cF1b93269886c42"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.rootstock:
+-        "eth:0x34748FbeD8fD8468eD66D53A7D102ce793cB4094"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.katana:
+-        "eth:0xc5Dbe2055Fa233ece44c99432526F3Fc46cA3FC2"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.etherlink:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.morph:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.xdc:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.henesys:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.jovay:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.stable:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.megaeth:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.arc:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+    }
+```
+
+```diff
+    contract CCTPThroughCCVTokenPool (eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2) [ccip/CCTPThroughCCVTokenPool] {
+    +++ description: CCIP 2.0 USDC pool for transfers that use CCTP through a CCV. The CCTP verifier burns and mints the USDC, while this pool validates the configured route, RMN state, finality, rate limits, transfer fees, and authorized caller.
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.4:
++        "monad"
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.6:
++        "pharos"
+    }
+```
+
+```diff
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2] {
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+      values.destChainConfigs.megaeth.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.megaeth.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.megaeth.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.megaeth.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.henesys.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.henesys.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.henesys.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.henesys.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.etherlink.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.etherlink.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.etherlink.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.etherlink.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.morph.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.morph.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.morph.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.morph.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.xdc.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.xdc.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.xdc.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.xdc.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.stable.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.stable.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.stable.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.stable.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.jovay.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.jovay.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.jovay.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.jovay.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.rootstock.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.rootstock.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.rootstock.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.rootstock.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.zksync.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.zksync.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.zksync.destGasOverhead:
+-        300000
++        0
+      values.destChainConfigs.zksync.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.zksync.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.bitlayer.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.bitlayer.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.bitlayer.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.bitlayer.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.berachain.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.berachain.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.berachain.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.berachain.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.bsquared.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.bsquared.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.bsquared.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.bsquared.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.lens.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.lens.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.lens.destGasOverhead:
+-        300000
++        0
+      values.destChainConfigs.lens.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.lens.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.astar.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.astar.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.astar.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.astar.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.sonic.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.sonic.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.sonic.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.sonic.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.katana.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.katana.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.katana.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.katana.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.arc.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.arc.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.arc.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.arc.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.tokenTransferFeeConfig.monad.13:
++        {"token":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","tokenTransferFeeConfig":{"feeUSDCents":0,"destGasOverhead":90000,"destBytesOverhead":32,"isEnabled":true}}
+      values.tokenTransferFeeConfig.linea.1.tokenTransferFeeConfig.feeUSDCents:
+-        50
++        4500
+      values.tokenTransferFeeConfig.optimism.8.tokenTransferFeeConfig.feeUSDCents:
+-        50
++        4500
+      values.tokenTransferFeeConfig.arbitrum.12.tokenTransferFeeConfig.feeUSDCents:
+-        4250
++        4500
+      values.tokenTransferFeeConfig.base.15.tokenTransferFeeConfig.feeUSDCents:
+-        4250
++        4500
+      values.tokenTransferFeeConfig.pharos:
++        [{"token":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","tokenTransferFeeConfig":{"feeUSDCents":0,"destGasOverhead":90000,"destBytesOverhead":32,"isEnabled":true}}]
+    }
+```
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC] {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.31:
++        "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd"
+    }
+```
+
+```diff
+    contract USDCCCTPVerifierResolver (eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.4:
++        {"destChainSelector":"monad","verifier":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.6:
++        {"destChainSelector":"pharos","verifier":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"}
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v2_0 (eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7) [ccip/OnRampV2_0] {
+    +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
+      values.destChainConfigs.arc.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.bsquared.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.lens.baseExecutionGasCost:
+-        200000
++        5000000
+      values.destChainConfigs.morph.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.henesys.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.astar.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.astar.baseExecutionGasCost:
+-        200000
++        1000000
+      values.destChainConfigs.rootstock.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.sei.baseExecutionGasCost:
+-        200000
++        300000
+      values.destChainConfigs.zksync.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.zksync.baseExecutionGasCost:
+-        200000
++        5000000
+      values.destChainConfigs.xdc.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.jovay.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.bitlayer.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.sonic.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.katana.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.etherlink.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.megaeth.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.stable.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.berachain.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.tac:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xDB4E8291304DAc89caec9D0D000d2ddF258C7872"}
+      values.routeRouters.arc:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bsquared:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.morph:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.henesys:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.astar:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.rootstock:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.zksync:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.xdc:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.jovay:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.bitlayer:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.sonic:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.katana:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.etherlink:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.megaeth:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.stable:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.berachain:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.tac:
++        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+    }
+```
+
+```diff
+    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.41:
++        "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.42:
++        "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3"
+    }
+```
+
+```diff
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy] {
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+      values.lockOrBurnMechanisms.pharos:
+-        "LOCK_RELEASE"
++        "CCV"
+      values.lockOrBurnMechanisms.monad:
++        "CCV"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1ChugSplashProxy.p.sol                        |   0
+ .../ERC1967Proxy.p.sol                             | 612 +++++++++++++++++++++
+ 2 files changed, 612 insertions(+)
+```
+
 Generated with discovered.json: 0x7b3c7c151f59ce193afa9dec703513cfd296d155
 
 # Diff at Mon, 28 Sep 2026 17:48:01 GMT:
