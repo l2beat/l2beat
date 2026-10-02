@@ -44,6 +44,7 @@ import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedS
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getL2RiskSummarySection } from '~/utils/project/risk-summary/getL2RiskSummary'
@@ -175,7 +176,7 @@ export async function getL2ProjectEntry(
     | 'discoveryUpdates'
     | 'daTrackingConfig'
     | 'crops'
-    | 'ossification'
+    | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -215,13 +216,7 @@ export async function getL2ProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: [
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
     getL2ProjectInteropData(project.id),
     getProjectOssification(project),

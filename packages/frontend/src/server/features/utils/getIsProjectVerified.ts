@@ -1,10 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { PROJECT_UNVERIFIED_CONTRACTS_WARNING } from '~/components/projects/sections/sectionCopy'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { ProjectVerificationWarnings } from './getCommonProjectEntry'
-
-const UNVERIFIED_CONTRACTS_WARNING =
-  'This project includes unverified contracts.'
 
 const UNSUCCESSFUL_PROGRAM_HASHES_WARNING =
   'The project relies on program hashes that could not be successfully reproduced from their published sources.'
@@ -29,7 +27,7 @@ export function getProjectVerification(
       contracts:
         unverifiedContracts.length === 0
           ? undefined
-          : UNVERIFIED_CONTRACTS_WARNING,
+          : PROJECT_UNVERIFIED_CONTRACTS_WARNING,
       programHashes: hasUnsuccessfulProgramHashes
         ? UNSUCCESSFUL_PROGRAM_HASHES_WARNING
         : undefined,

@@ -49,6 +49,237 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('keeps the TVS and UOPS stats the HTML shows as "No data"', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: { ...ENTRY.header, tvs: undefined, activity: undefined },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Total Value Secured: No data\n',
+      '- Past day UOPS: No data\n',
+    )
+  })
+
+  it('splits TVS by asset class and lists the associated tokens apart, as the tokens breakdown tooltip does', () => {
+    const tvs = ENTRY.header.tvs
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          tvs: tvs && {
+            ...tvs,
+            tokens: {
+              warnings: [],
+              associatedTokens: [{ symbol: 'ARB', icon: undefined }],
+              breakdown: {
+                total: 10_000_000_000,
+                ether: 5_000_000_000,
+                stablecoin: 3_000_000_000,
+                btc: 0,
+                other: 2_000_000_000,
+                associated: 1_000_000_000,
+                rwaPublic: 0,
+                rwaRestricted: 0,
+              },
+            },
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- TVS by asset: ETH & derivatives $5.00 B (50.0%), Stablecoins $3.00 B (30.0%), Other $2.00 B (20.0%)\n- Associated tokens: ARB: $1.00 B (10.0% of TVS)\n',
+    )
+  })
+
+  it('marks the stage of an appchain as the HTML stage badge does', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        isAppchain: true,
+        stageConfig: {
+          ...ENTRY.stageConfig,
+          stage: 'Stage 1',
+          additionalConsiderations: {
+            short: 'The chain only runs one app.',
+            long: 'Longer.',
+          },
+        } as ProjectL2Entry['stageConfig'],
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Stage: Stage 1 (Appchain: The chain only runs one app.)',
+    )
+  })
+
+  it('explains why a project is listed in Others, with each consequence', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: { ...ENTRY.header, category: 'Other' },
+        reasonsForBeingOther: [
+          {
+            label: 'No proofs',
+            shortDescription: "The proof system isn't fully functional",
+            description: 'A malicious proposer can finalize an invalid state.',
+          },
+        ],
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      "**Warning:** Why is the project listed in others? The proof system isn't fully functional. Consequence: a malicious proposer can finalize an invalid state. Learn more about the [recategorisation](https://medium.com/l2beat/",
+    )
+  })
+
+  it('lists the combined risks of an L3 and says so, as the HTML rosette opens on them', () => {
+    const [sequencer, stateValidation, dataAvailability, , proposer] = ROSETTE
+    const combined: ProjectL2Entry['rosette']['self'] = [
+      sequencer,
+      stateValidation,
+      dataAvailability,
+      rosetteValue('Exit window', '2d', 'bad'),
+      proposer,
+    ]
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        type: 'layer3',
+        name: 'Xai',
+        hostChainName: 'Arbitrum One',
+        rosette: { self: ROSETTE, host: ROSETTE, stacked: combined },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Risks shown: combined with host chain Arbitrum One',
+      '- Exit window: 2d (sentiment: bad)',
+    )
+    expect(summary).not.toInclude('- Exit window: 7d')
+  })
+
+  it('lists the individual risks of an L3 under review and says so, as the HTML rosette does', () => {
+    const [sequencer, stateValidation, dataAvailability, , proposer] = ROSETTE
+    const combined: ProjectL2Entry['rosette']['self'] = [
+      sequencer,
+      stateValidation,
+      dataAvailability,
+      rosetteValue('Exit window', '2d', 'bad'),
+      proposer,
+    ]
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        type: 'layer3',
+        name: 'Xai',
+        hostChainName: 'Arbitrum One',
+        underReviewStatus: 'config',
+        rosette: { self: ROSETTE, host: ROSETTE, stacked: combined },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Risks shown: Xai alone, while under review',
+      '- Exit window: 7d',
+    )
+    expect(summary).not.toInclude('- Exit window: 2d')
+  })
+
+  it('gives the last 24h cross-chain activity, linking the protocols and tokens that have a page', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          interop: {
+            volume: 12_000_000,
+            transferCount: 1,
+            protocols: {
+              items: [
+                {
+                  id: 'across',
+                  slug: 'across',
+                  name: 'Across',
+                  iconUrl: '/icons/across.png',
+                  volume: 8_000_000,
+                },
+              ],
+              remainingCount: 4,
+            },
+            tokens: {
+              items: [
+                {
+                  id: 'C0Hmkq',
+                  symbol: 'ETH',
+                  iconUrl: '/icons/eth.png',
+                  volume: 7_000_000,
+                },
+                // Transfers of tokens L2BEAT could not identify; it has no page.
+                {
+                  id: 'unknown',
+                  symbol: 'Unknown',
+                  iconUrl: '/icons/unknown.png',
+                  volume: 1_000_000,
+                },
+              ],
+              remainingCount: 0,
+            },
+          },
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Last 24h cross-chain volume: $12.00 M',
+      '- Last 24h cross-chain transfers: 1\n',
+      '- Interop protocols used (last 24h volume): [Across](https://l2beat.com/interop/protocols/across) ($8.00 M), and 4 more',
+      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/interop/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
+    )
+  })
+
+  it('lists the header links, badges with their descriptions and the contracts explorer', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          links: [{ name: 'Website', links: ['https://arbitrum.io'] }],
+          badges: [
+            {
+              id: 'OPStack',
+              type: 'Stack',
+              name: 'Built on Arbitrum Orbit',
+              description: 'The project is built on Arbitrum Orbit.',
+              action: undefined,
+              src: '/images/badges/orbit.png',
+              width: 100,
+              height: 100,
+            },
+          ],
+        },
+        discoUiHref: 'https://disco.l2beat.com/ui/p/arbitrum',
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '### Links\n\n- Website: https://arbitrum.io\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/arbitrum',
+      '### Badges\n\n- Built on Arbitrum Orbit: The project is built on Arbitrum Orbit.',
+    )
+  })
+
   it('names the proof system of a project without a category', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({
@@ -258,14 +489,15 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
-  it('states the stage and checks off its requirements per stage', () => {
+  it('states the stage and whether each requirement is met or an issue, per stage', () => {
     const stage = getSection(renderL2ProjectMarkdown(ENTRY), 'Stage')
 
     expect(stage).toInclude(
       'Arbitrum One is a Stage 1 Optimistic Rollup.',
-      '### Stage 0\n\n- [x] The project posts all data on L1.',
-      '### Stage 1\n\n- [x] Principle: Compromising the Security Council is needed to steal funds.\n- [x] Fraud proof system is permissionless.',
-      '### Stage 2\n\n- [ ] Upgrades unrelated to onchain provable bugs provide at least 30d to exit.',
+      '### Stage 0\n\n1 requirement met.\n\n- Met: The project posts all data on L1.',
+      '**Principle**\n\n- Met: Compromising the Security Council is needed to steal funds.',
+      '**Guidelines**\n\n- Met: Fraud proof system is permissionless.',
+      '### Stage 2\n\n1 issue needs fixing.\n\n- Issue: Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
     )
   })
 
@@ -419,13 +651,24 @@ const ROSETTE: ProjectL2Entry['rosette']['self'] = [
   rosetteValue('Proposer failure', 'Self propose', 'good'),
 ]
 
-/** Chart sections carry only chart inputs, which the markdown does not read. */
+/** Chart sections with no facts around the chart; the chart data itself loads in the browser. */
 function chartSection(
   type: 'L2TvsSection' | 'ActivitySection' | 'CostsSection',
   id: 'tvs' | 'activity' | 'onchain-costs',
   title: string,
 ) {
-  return { type, props: { id, title } } as ProjectDetailsSection
+  return {
+    type,
+    props: {
+      id,
+      title,
+      trackedTransactions: {
+        batchSubmissions: undefined,
+        proofSubmissions: undefined,
+        stateUpdates: undefined,
+      },
+    },
+  } as ProjectDetailsSection
 }
 
 function contract(
@@ -549,7 +792,7 @@ const SECTIONS: ProjectDetailsSection[] = [
               {
                 satisfied: false,
                 description:
-                  'Upgrades unrelated to onchain provable bugs provide at least 30d to exit.',
+                  'Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
               },
             ],
           },

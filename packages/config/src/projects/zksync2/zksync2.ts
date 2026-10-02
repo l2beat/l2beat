@@ -223,7 +223,7 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

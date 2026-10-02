@@ -58,7 +58,7 @@ export async function getInteropIntentBridgesData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Intent bridges - L2BEAT',
+        name: 'Intent bridges',
         description:
           'Overview of intent-based bridge protocols across the Ethereum ecosystem.',
         url: req.originalUrl,

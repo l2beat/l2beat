@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -53,7 +54,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectOssification,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingContractsProgramHash,
@@ -153,7 +153,7 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossificationHistory?: OssificationHistory
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
@@ -536,7 +536,7 @@ function orbitStackCommon(
         ? templateVars.chainConfig?.gasTokens
         : ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationHistory: templateVars.ossificationHistory,
     technology: {
       sequencing:
         templateVars.nonTemplateTechnology?.sequencing ??

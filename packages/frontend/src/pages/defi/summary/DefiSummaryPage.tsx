@@ -1,4 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { DEFI_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -13,7 +14,7 @@ export function DefiSummaryPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Overview of DeFi protocols tracked by L2BEAT.">
+        <MainPageHeader description={DEFI_SUMMARY_DESCRIPTION}>
           DeFi
         </MainPageHeader>
         <DefiSummaryTable entries={entries} />

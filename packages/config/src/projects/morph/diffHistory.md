@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x78731ad7bc5525b258480e0764c9fde50ecb4852
+
+# Diff at Thu, 01 Oct 2026 11:10:41 GMT:
+
+- id: 3887ddb4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790080873
+- current timestamp: 1790851283
+
+## Description
+
+A Rollup challenger EOA (eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442) set an EIP-7702 delegation (no previous delegation) to MetaMask's `EIP7702StatelessDeleGator` v1.3.0 (eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B).
+
+## Watched changes
+
+```diff
+    EOA (eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x92af0176a7cce342bb4d9b4a5da3322f3bd575abd9be6d24ec51f986b8f734c8","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0x5abeffdd6e87a7301ae01f5d03c6502ad2cfb0cb
 
 # Diff at Wed, 30 Sep 2026 07:45:40 GMT:

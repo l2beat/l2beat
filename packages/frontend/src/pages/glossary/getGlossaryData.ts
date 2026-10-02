@@ -1,5 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
+import { getGlossaryStructuredData } from '~/pages/glossary/getGlossaryStructuredData'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -15,13 +16,16 @@ export async function getGlossaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Glossary - L2BEAT',
+        name: 'Glossary',
         description:
           'Understand key terms in Ethereum’s scaling ecosystem with L2BEAT’s glossary.',
         url,
         openGraph: {
           image: '/meta-images/glossary/opengraph-image.png',
         },
+        structuredData: (page) => [
+          getGlossaryStructuredData(page, glossaryEntries),
+        ],
       }),
     },
     ssr: {

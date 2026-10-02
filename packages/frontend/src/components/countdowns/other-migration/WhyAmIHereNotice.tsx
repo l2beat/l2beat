@@ -1,6 +1,8 @@
 import type { ReasonForBeingInOther } from '@l2beat/config'
+import lowerFirst from 'lodash/lowerFirst'
 import { Callout } from '~/components/Callout'
 import { CustomLink } from '~/components/link/CustomLink'
+import { WHY_LISTED_IN_OTHERS_HEADING } from '~/components/projects/sections/sectionCopy'
 import { externalLinks } from '~/consts/externalLinks'
 import { CloseIcon } from '~/icons/Close'
 import { CountdownSection } from '../CountdownSection'
@@ -13,7 +15,7 @@ export function WhyAmIHereNotice({
   return (
     <CountdownSection>
       <h2 className="mr-auto text-heading-24">
-        Why is the project listed in others?
+        {WHY_LISTED_IN_OTHERS_HEADING}
       </h2>
       <div className="mt-6 space-y-6">
         {reasons.map((reason) => (
@@ -33,7 +35,7 @@ export function WhyAmIHereNotice({
             )}
             <p className="mt-3 gap-1 text-paragraph-15 md:text-paragraph-16">
               <strong>Consequence: </strong>
-              {lowercaseFirstLetter(reason.description)}
+              {lowerFirst(reason.description)}
             </p>
           </div>
         ))}
@@ -47,8 +49,4 @@ export function WhyAmIHereNotice({
       </p>
     </CountdownSection>
   )
-}
-
-function lowercaseFirstLetter(text: string) {
-  return text.charAt(0).toLowerCase() + text.slice(1)
 }

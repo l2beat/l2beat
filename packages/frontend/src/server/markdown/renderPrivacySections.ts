@@ -32,13 +32,11 @@ import {
   table,
   withSentiment,
 } from './markdown'
-import type { SectionContext } from './renderProjectSection'
 
 /** The promise, then one subsection per adversary with what it learns, as the HTML section shows it. */
 export function renderPrivacyAdversaries(
   { adversaries }: Pick<PrivacyAdversariesSectionProps, 'adversaries'>,
   level: number,
-  context: SectionContext,
 ) {
   const baseline = adversaries.cells.publicObserver
   return joinBlocks([
@@ -49,7 +47,6 @@ export function renderPrivacyAdversaries(
       return renderAdversary(adversary, cell, level, {
         baseline: adversary.id === 'publicObserver' ? undefined : baseline,
         fields: adversaries.fields,
-        pageUrl: context.pageUrl,
       })
     }),
   ])
@@ -62,12 +59,10 @@ function renderAdversary(
   {
     baseline,
     fields,
-    pageUrl,
   }: {
     /** The public observer cell; undefined when rendering the baseline itself. */
     baseline: PrivacyAdversaryCell | undefined
     fields: PrivacyFieldInfo[]
-    pageUrl: string
   },
 ) {
   return joinBlocks([
@@ -81,7 +76,7 @@ function renderAdversary(
         ? renderInteriorDiff(cell.interior, baseline.interior, fields)
         : renderInterior(`**${PRIVACY_INTERIOR_LABEL}**`, cell.interior, fields)
       : '',
-    renderSources(cell.sources ?? [], pageUrl),
+    renderSources(cell.sources ?? []),
   ])
 }
 
@@ -122,12 +117,9 @@ function renderInterior(
   ])
 }
 
-/** Contract and section sources point at anchors of the HTML page, so they resolve against it. */
-function renderSources(sources: PrivacySource[], pageUrl: string) {
+function renderSources(sources: PrivacySource[]) {
   const links = sources.flatMap((source) =>
-    'url' in source
-      ? [link(source.title, new URL(source.url, pageUrl).href)]
-      : [],
+    'url' in source ? [link(source.title, source.url)] : [],
   )
   if (links.length === 0) return ''
   return joinBlocks(['**Sources**', bulletList(links)])

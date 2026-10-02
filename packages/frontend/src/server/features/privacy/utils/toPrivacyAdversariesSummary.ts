@@ -1,6 +1,6 @@
 import type { ProjectPrivacyAdversaries } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { firstSentence } from '~/utils/firstSentence'
+import { firstSentence } from '~/server/markdown/listPageMarkdown'
 import type { PrivacyAdversariesSummary } from '../types'
 
 /**

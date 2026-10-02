@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x46218e18424428617ce5cde598a2c9ec3f36973b
+
+# Diff at Thu, 01 Oct 2026 11:10:44 GMT:
+
+- id: 6a2a9ffc
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1788793431
+- current timestamp: 1790852086
+
+## Description
+
+New USDC minter eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd added, with two new MasterMinter controllers (EOAs) managing it. Its minting allowance is currently 0.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC] {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.31:
++        "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd"
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.41:
++        "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.42:
++        "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UnverifiedUSDCMinter (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A]
+    +++ description: Upgradeable contract with an unverified implementation that is registered as a USDC minter in the USDC token contract. Its minting allowance is set by its MasterMinter controllers.
+```
+
+## Source code changes
+
+```diff
+.../.flat/UnverifiedUSDCMinter/ERC1967Proxy.p.sol  | 612 +++++++++++++++++++++
+ 1 file changed, 612 insertions(+)
+```
+
 Generated with discovered.json: 0xe4b0d85c98a40ed022276b4faad8b4b68f0c4cf4
 
 # Diff at Mon, 07 Sep 2026 15:05:06 GMT:

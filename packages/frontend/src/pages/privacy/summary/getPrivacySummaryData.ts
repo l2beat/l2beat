@@ -33,7 +33,7 @@ export async function getPrivacySummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Privacy - L2BEAT',
+        name: 'Privacy',
         description:
           'Track live balances and daily privacy flows across tracked privacy protocols.',
         url,
