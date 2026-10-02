@@ -65,7 +65,11 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
-    ...getDiscoveryCoingeckoConfig(env),
+    coingeckoApiKey: env.optionalString([
+      'COINGECKO_API_KEY_FOR_DISCOVERY',
+      'COINGECKO_API_KEY',
+    ]),
+    coingeckoApiUrl: getDiscoveryCoingeckoApiUrl(env),
     multicall: chainConfig.multicall,
     explorer: ensureArray(chainConfig.explorer).map((e) =>
       e.type === 'blockscout'
@@ -100,22 +104,12 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
   }
 }
 
-// A custom URL belongs to the key it is configured with: a discovery key
-// never goes to the URL meant for COINGECKO_API_KEY, nor the other way round.
-export function getDiscoveryCoingeckoConfig(
-  env: Env,
-): Pick<DiscoveryChainConfig, 'coingeckoApiKey' | 'coingeckoApiUrl'> {
-  const discoveryKey = env.optionalString('COINGECKO_API_KEY_FOR_DISCOVERY')
-  if (discoveryKey !== undefined) {
-    return {
-      coingeckoApiKey: discoveryKey,
-      coingeckoApiUrl: env.optionalString('COINGECKO_API_URL_FOR_DISCOVERY'),
-    }
-  }
-  return {
-    coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-    coingeckoApiUrl: env.optionalString('COINGECKO_API_URL'),
-  }
+// The URL that belongs to the key coingeckoApiKey falls back to, so a
+// discovery key never goes to the URL configured for COINGECKO_API_KEY.
+export function getDiscoveryCoingeckoApiUrl(env: Env): string | undefined {
+  return env.optionalString('COINGECKO_API_KEY_FOR_DISCOVERY') === undefined
+    ? env.optionalString('COINGECKO_API_URL')
+    : env.optionalString('COINGECKO_API_URL_FOR_DISCOVERY')
 }
 
 function ensureArray<T>(v: T | T[]): T[] {

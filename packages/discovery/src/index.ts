@@ -5,7 +5,7 @@ export {
   getChainConfigs,
   getChainFullName,
   getChainShortName,
-  getDiscoveryCoingeckoConfig,
+  getDiscoveryCoingeckoApiUrl,
   isChainShortName,
 } from './config/config.discovery'
 export type {
