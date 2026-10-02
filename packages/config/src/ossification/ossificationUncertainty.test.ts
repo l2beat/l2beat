@@ -1,11 +1,10 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { UnixTime } from '@l2beat/shared-pure'
+import { getUncertainNewestChange } from '@l2beat/shared'
 import { expect } from 'earl'
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { readPatch } from './loadOssificationInput'
-import { getUncertainNewestChange } from './measureOssification'
+import { readPatch } from './loadOssificationHistory'
 
 /** The newest change sets the project clock and with it the whole score. A
  *  change we only know to have happened between two discovery runs must not
@@ -15,15 +14,14 @@ describe('ossification newest change', () => {
   it('is dated onchain, reviewed, or accepted for every project', function () {
     this.timeout(120_000)
     const root = getDiscoveryPaths().discovery
-    const now = UnixTime.now()
     const problems: string[] = []
     for (const project of readdirSync(root)) {
       const projectPath = join(root, project)
       if (!existsSync(join(projectPath, 'discovered.json'))) continue
       const discovery = new ProjectDiscovery(project)
-      const input = discovery.getOssificationInput(now)
-      if (input === undefined) continue
-      const uncertain = getUncertainNewestChange(input)
+      const history = discovery.getOssificationHistory()
+      if (history === undefined) continue
+      const uncertain = getUncertainNewestChange(history)
       if (uncertain === undefined) continue
       const acceptedIntervals = discovery.configReader
         .readDiscoveryWithReferences(project)

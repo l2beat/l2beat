@@ -88,7 +88,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'costsInfo',
       'activityConfig',
       'crops',
-      'ossification',
+      'ossificationHistory',
     ],
   })
   if (!project) return undefined

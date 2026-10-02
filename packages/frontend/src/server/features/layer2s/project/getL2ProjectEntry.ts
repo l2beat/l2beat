@@ -175,7 +175,7 @@ export async function getL2ProjectEntry(
     | 'discoveryUpdates'
     | 'daTrackingConfig'
     | 'crops'
-    | 'ossification'
+    | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
