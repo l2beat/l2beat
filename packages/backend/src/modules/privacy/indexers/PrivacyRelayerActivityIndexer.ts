@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyRelayerActivityRecord } from '@l2beat/database'
 import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
-import { createPrivacyRelayerConfigurationId } from '@l2beat/shared'
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  createPrivacyConfigurationId,
+  stringifyPrivacyConfigurationParams,
+} from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -13,13 +16,12 @@ import type {
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
-import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
-import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
-
 import {
-  extractZkMoneyWithdrawalPayout,
-  ZkMoneyMetrics,
-} from '../utils/zkMoneyMetrics'
+  extractPrivacyRelayerActivity,
+  getPrivacyRelayerExtractor,
+} from '../utils/extractPrivacyRelayerActivity'
+import { fetchPrivacyReceiptLogs } from '../utils/fetchPrivacyReceiptLogs'
+import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyRelayerActivityIndexerDeps
   extends Omit<
@@ -28,8 +30,8 @@ interface PrivacyRelayerActivityIndexerDeps
   > {
   chain: string
   blockProvider: BlockProvider
-  rpcClient: IRpcClient
   logsProvider: LogsProvider
+  rpcClient: IRpcClient
   db: Database
 }
 
@@ -139,22 +141,24 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       logger: this.logger,
     })
 
-    const metrics = new ZkMoneyMetrics(this.$.rpcClient)
+    const receipts = await fetchPrivacyReceiptLogs(
+      this.$.rpcClient,
+      matches
+        .filter(
+          ({ configuration }) =>
+            getPrivacyRelayerExtractor(configuration.properties.extractor)
+              .readsReceipt,
+        )
+        .map(({ log }) => log.transactionHash),
+    )
+
     const records: PrivacyRelayerActivityRecord[] = []
     for (const { log, timestamp, configuration } of matches) {
-      const source = configuration.properties
-      let activity: EthereumAddress | undefined
-      if (source.extractor === 'zkMoneyDepositPayout') {
-        activity = await metrics.depositFinalizer(log, source.params)
-      } else if (source.extractor === 'zkMoneyWithdrawalPayout') {
-        activity = extractZkMoneyWithdrawalPayout(
-          await metrics.receipt(log.transactionHash),
-          log,
-          source.params,
-        )
-      } else {
-        activity = extractPrivacyRelayerActivity(source, log)?.relayerAddress
-      }
+      const activity = extractPrivacyRelayerActivity(
+        configuration.properties,
+        log,
+        receipts.get(log.transactionHash),
+      )
       if (!activity) continue
 
       records.push({
@@ -165,7 +169,7 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
         blockNumber: log.blockNumber,
         txHash: log.transactionHash,
         logIndex: log.logIndex,
-        relayerAddress: activity,
+        relayerAddress: activity.relayerAddress,
       })
     }
 
@@ -175,9 +179,17 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
   static idToConfigurationId(
     config: Omit<PrivacyRelayerActivityIndexerConfig, 'id'>,
   ): string {
-    return createPrivacyRelayerConfigurationId({
-      ...config,
-      address: config.address.toString(),
-    })
+    return createPrivacyConfigurationId([
+      'privacy-relayer-activity',
+      config.projectId,
+      config.chain,
+      config.address.toString(),
+      config.event,
+      config.extractor,
+      // Left out when absent: a changed id would re-index extractors without params.
+      ...(config.params
+        ? [stringifyPrivacyConfigurationParams(config.params)]
+        : []),
+    ])
   }
 }

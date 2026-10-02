@@ -6,9 +6,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
+import { erc20Interface } from '../utils/erc20'
 import { getPrivacyRelayerExtractor } from '../utils/extractPrivacyRelayerActivity'
+import { zkMoneyInterface } from '../utils/zkMoneyEvents'
 import { PrivacyRelayerActivityIndexer } from './PrivacyRelayerActivityIndexer'
 
 const CONTRACT = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -23,6 +26,10 @@ const privacyPoolsInterface = new utils.Interface([
 ])
 
 describe(PrivacyRelayerActivityIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
   it('fetches, extracts, and saves relayer activity', async () => {
     const from = UnixTime.toStartOf(UnixTime(0), 'day')
     const to = from + 5 * UnixTime.HOUR
@@ -108,6 +115,99 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     expect(safeHeight).toEqual(to)
   })
 
+  it('reads the receipt for events that do not name the relayer', async () => {
+    const from = UnixTime.toStartOf(UnixTime(0), 'day')
+    const blockTimestamp = from + UnixTime.HOUR
+    const depositAddress = RECIPIENT
+    const deposit = zkMoneyInterface.encodeEventLog('Deposit', [
+      utils.hexZeroPad('0x01', 32),
+      100,
+      utils.hexZeroPad('0x02', 32),
+      1,
+    ])
+    const properties: PrivacyRelayerActivityIndexerConfig = {
+      ...relayerProperties(),
+      id: 'config-1',
+      event: getPrivacyRelayerExtractor('zkMoneyDepositPayout').event,
+      extractor: 'zkMoneyDepositPayout',
+      params: { tokenAddress: ASSET, operationExecutor: EthereumAddress.ZERO },
+    }
+    const configurations = [
+      { id: 'config-1', minHeight: 0, maxHeight: null, properties },
+    ]
+    const log: Log = {
+      ...deposit,
+      address: CONTRACT.toString(),
+      blockNumber: 100,
+      blockHash: '0xblock',
+      transactionHash: '0xtx',
+      logIndex: 4,
+      blockTimestamp,
+    }
+    // A sweep pays the relayer, funds the portal, and logs Sweep after the Deposit.
+    const receiptLogs = [
+      transfer(depositAddress, RELAYER),
+      transfer(depositAddress, CONTRACT),
+      { ...deposit, address: CONTRACT.toString() },
+      {
+        ...zkMoneyInterface.encodeEventLog('Sweep', [1, 100]),
+        address: depositAddress.toString(),
+      },
+    ]
+    const getTransactionReceipt = mockFn<
+      IRpcClient['getTransactionReceipt']
+    >().resolvesTo({ logs: receiptLogs })
+    const privacyRelayerActivity = mockObject<
+      Database['privacyRelayerActivity']
+    >({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+
+    const indexer = new PrivacyRelayerActivityIndexer(
+      {
+        chain: 'ethereum',
+        rpcClient: mockObject<IRpcClient>({ getTransactionReceipt }),
+        configurations,
+        blockProvider: mockObject<BlockProvider>({}),
+        logsProvider: mockObject<LogsProvider>({
+          getLogs: mockFn().returnsOnce([log]),
+        }),
+        db: mockDatabase({
+          privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
+            findBlockNumberByChainAndTimestamp: mockFn()
+              .returnsOnce(50)
+              .returnsOnce(150),
+          }),
+          privacyRelayerActivity,
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(
+      from,
+      from + 5 * UnixTime.HOUR,
+      configurations,
+    )
+    await save()
+
+    expect(getTransactionReceipt).toHaveBeenOnlyCalledWith('0xtx')
+    expect(privacyRelayerActivity.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        projectId: 'privacy-pools',
+        chain: 'ethereum',
+        timestamp: blockTimestamp,
+        blockNumber: 100,
+        txHash: '0xtx',
+        logIndex: 4,
+        relayerAddress: RELAYER,
+      },
+    ])
+  })
+
   describe(PrivacyRelayerActivityIndexer.idToConfigurationId.name, () => {
     it('is deterministic for the same input', () => {
       const properties = relayerProperties()
@@ -132,6 +232,13 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     })
   })
 })
+
+function transfer(from: EthereumAddress, to: EthereumAddress) {
+  return {
+    ...erc20Interface.encodeEventLog('Transfer', [from, to, 100]),
+    address: ASSET.toString(),
+  }
+}
 
 function relayerProperties(): Omit<PrivacyRelayerActivityIndexerConfig, 'id'> {
   return {

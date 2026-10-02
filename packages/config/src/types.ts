@@ -1154,29 +1154,25 @@ export type PrivacyRelayerExtractorConfig =
       extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
       params?: undefined
     }
-  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyDepositConfig }
+  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyPayoutConfig }
   | {
       extractor: 'zkMoneyWithdrawalPayout'
-      params: {
-        tokenAddress: EthereumAddress
-        executorAddress: EthereumAddress
-        operationExecutor: EthereumAddress
-      }
+      params: ZkMoneyPayoutConfig & { executorAddress: EthereumAddress }
     }
 
-/** Immutable deployments and fee parameters used to attribute portal operations. */
+/** What it takes to trace a zk.money deposit to the address that funded it. */
 export type ZkMoneyDepositConfig = {
   tokenAddress: EthereumAddress
-  factoryAddress: EthereumAddress
-  depositImplementation: EthereumAddress
-  registrationImplementation: EthereumAddress
+  /** Tokens a deposit address accepts. All but the portal token are swapped on sweep. */
   fundingTokens: EthereumAddress[]
+  /** Sender of the swapped tokens, which is not a funder. */
   exchangeAddress: EthereumAddress
-  /** Earlier balances are checked and treated as unattributed until emptied. */
-  historyFromBlock: number
-  fundingCut: string
-  depositFee: string
-  registrationSweepFee: string
+}
+
+/** What it takes to find who was paid for finalizing a zk.money operation. */
+export type ZkMoneyPayoutConfig = {
+  tokenAddress: EthereumAddress
+  /** Helper that forwards payouts to its caller. */
   operationExecutor: EthereumAddress
 }
 

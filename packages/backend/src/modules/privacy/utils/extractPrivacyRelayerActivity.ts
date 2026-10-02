@@ -6,8 +6,11 @@ import type {
   PrivacyRelayerActivityIndexerConfig,
   PrivacyRpcLog,
 } from '../types'
-
 import { zkMoneyInterface } from './zkMoneyEvents'
+import {
+  findZkMoneyDepositFinalizer,
+  findZkMoneyWithdrawalFinalizer,
+} from './zkMoneyOperations'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
@@ -21,45 +24,28 @@ type RelayerExtractor = ProjectPrivacyOnchainRelayerSource['extractor']
 
 interface RelayerExtractorDefinition {
   event: string
-  extract?: (
-    log: PrivacyRpcLog,
-  ) => PrivacyRelayerActivityExtractResult | undefined
-}
-
-const privacyPoolsWithdrawalRelayed: RelayerExtractorDefinition = {
-  event: privacyPoolsInterface.getEventTopic('WithdrawalRelayed'),
-  extract: (log) => {
-    const parsedLog = privacyPoolsInterface.parseLog(log)
-    return toRelayerActivity(
-      String(parsedLog.args._relayer),
-      String(parsedLog.args._recipient),
-    )
-  },
-}
-
-const tornadoCashWithdrawal: RelayerExtractorDefinition = {
-  event: tornadoCashInterface.getEventTopic('Withdrawal'),
-  extract: (log) => {
-    const parsedLog = tornadoCashInterface.parseLog(log)
-    return toRelayerActivity(
-      String(parsedLog.args.relayer),
-      String(parsedLog.args.to),
-    )
-  },
+  /** Set when the event does not name the relayer, so the transaction's other logs are needed. */
+  readsReceipt?: true
 }
 
 export function getPrivacyRelayerExtractor(
   extractor: RelayerExtractor,
 ): RelayerExtractorDefinition {
   switch (extractor) {
-    case 'zkMoneyDepositPayout':
-      return { event: zkMoneyInterface.getEventTopic('Deposit') }
-    case 'zkMoneyWithdrawalPayout':
-      return { event: zkMoneyInterface.getEventTopic('WithdrawalOrRefund') }
     case 'privacyPoolsWithdrawalRelayed':
-      return privacyPoolsWithdrawalRelayed
+      return { event: privacyPoolsInterface.getEventTopic('WithdrawalRelayed') }
     case 'tornadoCashWithdrawal':
-      return tornadoCashWithdrawal
+      return { event: tornadoCashInterface.getEventTopic('Withdrawal') }
+    case 'zkMoneyDepositPayout':
+      return {
+        event: zkMoneyInterface.getEventTopic('Deposit'),
+        readsReceipt: true,
+      }
+    case 'zkMoneyWithdrawalPayout':
+      return {
+        event: zkMoneyInterface.getEventTopic('WithdrawalOrRefund'),
+        readsReceipt: true,
+      }
     default:
       assertUnreachable(extractor)
   }
@@ -68,8 +54,28 @@ export function getPrivacyRelayerExtractor(
 export function extractPrivacyRelayerActivity(
   source: PrivacyRelayerActivityIndexerConfig,
   log: PrivacyRpcLog,
+  receipt: PrivacyRpcLog[] = [],
 ): PrivacyRelayerActivityExtractResult | undefined {
-  return getPrivacyRelayerExtractor(source.extractor).extract?.(log)
+  switch (source.extractor) {
+    case 'privacyPoolsWithdrawalRelayed': {
+      const { args } = privacyPoolsInterface.parseLog(log)
+      return toRelayerActivity(String(args._relayer), String(args._recipient))
+    }
+    case 'tornadoCashWithdrawal': {
+      const { args } = tornadoCashInterface.parseLog(log)
+      return toRelayerActivity(String(args.relayer), String(args.to))
+    }
+    case 'zkMoneyDepositPayout':
+      return toFinalizerActivity(
+        findZkMoneyDepositFinalizer(receipt, log, source.params),
+      )
+    case 'zkMoneyWithdrawalPayout':
+      return toFinalizerActivity(
+        findZkMoneyWithdrawalFinalizer(receipt, log, source.params),
+      )
+    default:
+      assertUnreachable(source)
+  }
 }
 
 function toRelayerActivity(
@@ -87,4 +93,10 @@ function toRelayerActivity(
   }
 
   return { relayerAddress }
+}
+
+function toFinalizerActivity(
+  finalizer: EthereumAddress | undefined,
+): PrivacyRelayerActivityExtractResult | undefined {
+  return finalizer && { relayerAddress: finalizer }
 }

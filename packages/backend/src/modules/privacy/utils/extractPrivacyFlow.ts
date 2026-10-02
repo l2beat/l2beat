@@ -7,6 +7,7 @@ import { utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
+import { zkMoneyInterface } from './zkMoneyEvents'
 
 const ERC20_TOKEN_TYPE = 0
 
@@ -27,11 +28,6 @@ const umbraInterface = new utils.Interface([
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
-])
-
-const zkMoneyInterface = new utils.Interface([
-  'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
-  'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
 ])
 
 export function extractPrivacyFlow<T extends PrivacyFlowSource>(

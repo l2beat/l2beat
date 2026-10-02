@@ -15,6 +15,8 @@ import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import { erc20Interface } from '../utils/erc20'
+import { zkMoneyInterface } from '../utils/zkMoneyEvents'
 import { PrivacyAnonymitySetIndexer } from './PrivacyAnonymitySetIndexer'
 
 const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -234,6 +236,108 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
 
     expect(getTransaction).toHaveBeenCalledTimes(26)
     expect(upsertMany.calls[0]?.args[0]).toHaveLength(26)
+  })
+
+  it('stores a zk.money deposit under the address that funded it and drops untraceable ones', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from + UnixTime.HOUR
+    const token = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const traced = EthereumAddress('0x5555555555555555555555555555555555555555')
+    const untraced = EthereumAddress(
+      '0x6666666666666666666666666666666666666666',
+    )
+    const transfer = (source: EthereumAddress, target: EthereumAddress) => ({
+      ...erc20Interface.encodeEventLog('Transfer', [source, target, 100]),
+      address: token.toString(),
+    })
+    const deposit = (index: number) =>
+      zkMoneyInterface.encodeEventLog('Deposit', [
+        utils.hexZeroPad('0x01', 32),
+        100,
+        utils.hexZeroPad('0x02', 32),
+        index,
+      ])
+    const sweep = (depositAddress: EthereumAddress, index: number) => ({
+      ...zkMoneyInterface.encodeEventLog('Sweep', [index, 100]),
+      address: depositAddress.toString(),
+    })
+    const configuration = baseConfiguration({
+      event: zkMoneyInterface.getEventTopic('Deposit'),
+      extractor: 'zkMoneyDeposit',
+      params: {
+        tokenAddress: token,
+        fundingTokens: [token],
+        exchangeAddress: EthereumAddress.ZERO,
+      },
+    })
+    const logs = [
+      makeLog({ ...deposit(1), timestamp, transactionHash: '0xa' }),
+      makeLog({ ...deposit(2), timestamp, transactionHash: '0xb' }),
+    ]
+    // Each deposit is swept from its own deposit address. Only the first one
+    // was funded, so only it has a sender.
+    const receipts = new Map([
+      ['0xa', [transfer(traced, POOL), logs[0]!, sweep(traced, 1)]],
+      ['0xb', [transfer(untraced, POOL), logs[1]!, sweep(untraced, 2)]],
+    ])
+    const funding: Log = {
+      ...transfer(DEPOSITOR, traced),
+      blockNumber: 90,
+      blockHash: '0xblock',
+      transactionHash: '0xfunding',
+      logIndex: 0,
+    }
+    const getBlockNumberAtOrBefore = mockFn<
+      BlockTimestampProvider['getBlockNumberAtOrBefore']
+    >()
+      .resolvesToOnce(50)
+      .resolvesToOnce(150)
+      .resolvesToOnce(10)
+    const getLogs = mockFn<LogsProvider['getLogs']>()
+      .resolvesToOnce(logs)
+      .resolvesToOnce([funding])
+      .resolvesToOnce([])
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const indexer = new PrivacyAnonymitySetIndexer(
+      {
+        chain: 'ethereum',
+        configurations: [configuration],
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({
+          getBlockNumberAtOrBefore,
+        }),
+        blockProvider: mockObject<BlockProvider>({
+          getBlockTimestamps: mockFn().returnsOnce(new Map([[100, timestamp]])),
+        }),
+        logsProvider: mockObject<LogsProvider>({ getLogs }),
+        rpcClient: mockObject<IRpcClient>({
+          getTransactionReceipt: mockFn().executes(async (hash: string) => ({
+            logs: receipts.get(hash) ?? [],
+          })),
+        }),
+        db: mockDatabase({
+          privacyAnonymitySetEvent: mockObject<
+            Database['privacyAnonymitySetEvent']
+          >({ upsertMany }),
+        }),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(from, to, [configuration])
+    await save()
+
+    expect(getBlockNumberAtOrBefore).toHaveBeenLastCalledWith(
+      from - 30 * UnixTime.DAY,
+      'ethereum',
+    )
+    expect(getLogs.calls[1]?.args.slice(0, 2)).toEqual([10, 100])
+    expect(upsertMany.calls[0]?.args[0].map((record) => record.sender)).toEqual(
+      [DEPOSITOR.toLowerCase()],
+    )
   })
 
   describe(PrivacyAnonymitySetIndexer.prototype.wipeData.name, () => {

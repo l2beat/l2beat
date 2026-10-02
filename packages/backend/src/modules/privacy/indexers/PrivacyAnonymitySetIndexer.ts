@@ -36,11 +36,13 @@ import {
   buildPrivacyLogFilter,
   getPrivacyLogKey,
 } from '../utils/privacyLogIndexerUtils'
-
 import { eventKey } from '../utils/zkMoneyEvents'
-import { ZkMoneyMetrics } from '../utils/zkMoneyMetrics'
+import { findZkMoneyDepositSenders } from '../utils/zkMoneyFunders'
 
 const TRANSACTION_LOOKUP_BATCH_SIZE = 25
+// Deposit addresses are swept soon after they are funded. Older funding is
+// not worth scanning for on every update, and the deposit stays unattributed.
+const ZK_MONEY_FUNDING_LOOKBACK = 30 * UnixTime.DAY
 
 interface PrivacyAnonymitySetIndexerDeps
   extends Omit<
@@ -207,30 +209,21 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       ),
     )
 
-    const funders = new Map<string, string>()
-    const metrics = new ZkMoneyMetrics(this.$.rpcClient)
-    for (const configuration of configurations) {
-      const source = configuration.properties
-      if (source.extractor !== 'zkMoneyDeposit') continue
-      const deposits = recordsInRange
-        .filter((record) => record.configuration.id === configuration.id)
-        .map((record) => record.log)
-      const attributed = await metrics.funders(
-        deposits,
-        source.params,
-        this.$.logsProvider,
-      )
-      for (const [key, funder] of attributed)
-        funders.set(`${configuration.id}:${key}`, funder)
-    }
+    const zkMoneySenders = await this.getZkMoneySenders(
+      configurations,
+      recordsInRange,
+      from,
+    )
 
     return recordsInRange.flatMap((record) => {
       const config = record.configuration.properties
-      const sender =
-        record.origin.type === 'zkMoney'
-          ? funders.get(`${record.configuration.id}:${eventKey(record.log)}`)
-          : this.resolveSender(record, transactionSenders)
+      const sender = this.resolveSender(
+        record,
+        transactionSenders,
+        zkMoneySenders,
+      )
       if (sender === undefined) return []
+
       return [
         {
           configurationId: record.configuration.id,
@@ -251,9 +244,13 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
   private resolveSender(
     record: RawRecord,
     transactionSenders: Map<string, string>,
-  ): string {
+    zkMoneySenders: Map<string, string>,
+  ): string | undefined {
     if (record.origin.type === 'event') {
       return record.origin.sender.toString()
+    }
+    if (record.origin.type === 'zkMoney') {
+      return zkMoneySenders.get(senderKey(record))
     }
 
     const sender = transactionSenders.get(
@@ -264,6 +261,42 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       `Missing transaction sender for ${record.log.transactionHash}`,
     )
     return sender
+  }
+
+  private async getZkMoneySenders(
+    configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
+    records: RawRecord[],
+    from: number,
+  ): Promise<Map<string, string>> {
+    const result = new Map<string, string>()
+
+    for (const configuration of configurations) {
+      const source = configuration.properties
+      if (source.extractor !== 'zkMoneyDeposit') continue
+
+      const deposits = records.filter(
+        (record) => record.configuration.id === configuration.id,
+      )
+      if (deposits.length === 0) continue
+
+      const fundingFromBlock =
+        await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+          UnixTime(from - ZK_MONEY_FUNDING_LOOKBACK),
+          this.$.chain,
+        )
+      const senders = await findZkMoneyDepositSenders(
+        deposits.map((record) => record.log),
+        source.params,
+        this.$,
+        fundingFromBlock,
+      )
+      for (const record of deposits) {
+        const sender = senders.get(eventKey(record.log))
+        if (sender !== undefined) result.set(senderKey(record), sender)
+      }
+    }
+
+    return result
   }
 
   private async getTransactionSenders(
@@ -317,6 +350,10 @@ interface RawRecord {
   log: Log
   amount: bigint
   origin: PrivacyAnonymitySetDeposit['origin']
+}
+
+function senderKey(record: RawRecord): string {
+  return `${record.configuration.id}:${eventKey(record.log)}`
 }
 
 function extractRawRecords(
