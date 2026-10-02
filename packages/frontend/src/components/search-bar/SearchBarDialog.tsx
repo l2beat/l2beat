@@ -23,7 +23,6 @@ import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
-import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
 import { searchBarPages } from './searchBarPages'
 import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
@@ -126,31 +125,6 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           )}
           <CommandEmpty>No results found.</CommandEmpty>
 
-          {value === '' && (
-            <div className="flex flex-col gap-2 px-2 pt-3 pb-1">
-              <span className="font-medium text-secondary text-xs">Try</span>
-              <div className="flex flex-wrap gap-1.5">
-                {SEARCH_BAR_EXAMPLES.flatMap(({ query, kind }) =>
-                  query
-                    ? [
-                        <button
-                          key={query}
-                          type="button"
-                          onClick={() => {
-                            setValue(query)
-                            inputRef.current?.focus()
-                          }}
-                          className="flex items-baseline gap-1.5 rounded-full border border-divider px-2.5 py-1 text-xs transition-colors hover:bg-surface-secondary"
-                        >
-                          <span className="font-medium">{query}</span>
-                          <span className="text-secondary">{kind}</span>
-                        </button>,
-                      ]
-                    : [],
-                )}
-              </div>
-            </div>
-          )}
           {value === '' && (
             <CommandGroup heading="Recently added projects">
               {recentlyAdded.map((project) => {

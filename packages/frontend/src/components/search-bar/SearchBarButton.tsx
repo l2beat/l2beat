@@ -5,7 +5,7 @@ import { cn } from '~/utils/cn'
 import { useSearchBarContext } from './SearchBarContext'
 import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
 
-const EXAMPLE_INTERVAL_MS = 2800
+const EXAMPLE_INTERVAL_MS = 5000
 
 export function SearchBarButton({
   label,
@@ -73,7 +73,7 @@ function ExampleHint() {
       key={index}
       className="fade-in slide-in-from-bottom-1 animate-in truncate font-normal text-secondary/80 duration-300"
     >
-      {SEARCH_BAR_EXAMPLES[index]?.hint}
+      {SEARCH_BAR_EXAMPLES[index]}
     </span>
   )
 }
