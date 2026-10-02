@@ -54,7 +54,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - run: pnpm --filter @l2beat/ai-review^... build
@@ -127,7 +127,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - run: pnpm --filter @l2beat/ai-review^... build
@@ -184,7 +184,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - uses: actions/download-artifact@v7
