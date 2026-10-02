@@ -26,5 +26,11 @@
     "address": "oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
     "chain": "optimism",
     "blockNumber": 154170183
+  },
+  "EAS_v1_4_1_beta3_unichain": {
+    "hash": "0x3f7d9db9a6d3d5d487930fcb808a16592e61fe97c3bbd86b63464273f81a6dd9",
+    "address": "unichain:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
+    "chain": "unichain",
+    "blockNumber": 59972128
   }
 }

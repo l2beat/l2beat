@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x95b5683fb6a110c4f137dc221b7291f57f1b83b7
+
+# Diff at Fri, 02 Oct 2026 08:08:47 GMT:
+
+- id: 741e8e51
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f6e34290bf6b81eca442b61515c2bb91f5fe65e8 block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x879f683cfe4e97b3476385e13066ef9cc8c25b2d
 
 # Diff at Thu, 01 Oct 2026 12:51:55 GMT:

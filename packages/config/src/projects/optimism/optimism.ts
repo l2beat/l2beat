@@ -201,7 +201,7 @@ export const optimism: ScalingProject = opStackL2({
       },
       {
         title: 'OptimismPortal2 - source code',
-        url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        url: 'https://etherscan.io/address/0x1005217ad392DC64CEf501FA1777A27D42166748#code',
       },
       {
         title: 'OP Stack specification - fault dispute game resolution',
