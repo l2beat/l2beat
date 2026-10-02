@@ -81,12 +81,10 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     const table = tableRef.current
     const thead = table?.tHead
     const tbody = table?.tBodies[0]
-    const header = headerRef.current
     const track = trackRef.current
     const pinned = pinnedRef.current
-    if (!root || !scroller || !table || !thead || !tbody || !header) return
+    if (!root || !scroller || !table || !thead || !tbody) return
     if (!track || !pinned) return
-    const getViewHeight = getStickingViewHeight(root)
     const canStick = canSlideWithScroller()
 
     let pinnedVariables: string[] = []
@@ -95,17 +93,12 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
         (cell) => cell.getBoundingClientRect().width,
       )
       // The table's own pinned cells use these whether the header sticks or
-      // not, so they do not shift when a resize switches it.
+      // not.
       pinnedVariables = publishPinnedColumns(root, table, widths)
-      const isTallerThanView = isTableTallerThanView(
-        table,
-        header,
-        getViewHeight(),
-      )
       const isAligned = [track, pinned].every((copy) =>
         alignColumns(table, copy, widths),
       )
-      const isReady = canStick && isTallerThanView && isAligned
+      const isReady = canStick && isAligned
       root.toggleAttribute(READY_ATTRIBUTE, isReady)
       if (isReady) {
         publishLayout(root, scroller, table, thead)
@@ -185,34 +178,6 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
  */
 function canSlideWithScroller() {
   return CSS.supports('animation-timeline', 'scroll()')
-}
-
-/**
- * A table that fits below the header's stuck position can always be seen
- * whole, header included, so its header only needs to stick when it does not.
- */
-function isTableTallerThanView(
-  table: HTMLTableElement,
-  header: HTMLElement,
-  viewHeight: number,
-) {
-  const top = Number.parseFloat(getComputedStyle(header).top) || 0
-  return table.getBoundingClientRect().height > viewHeight - top
-}
-
-/**
- * The height of the area the header sticks in: the nearest scroll container,
- * like a dialog's body, or the page. For the page it is the smallest viewport,
- * so mobile toolbars sliding in and out do not switch the header on and off.
- */
-function getStickingViewHeight(root: HTMLElement) {
-  for (let box = root.parentElement; box; box = box.parentElement) {
-    const { overflowY } = getComputedStyle(box)
-    if (box !== document.body && /auto|scroll|hidden/.test(overflowY)) {
-      return () => box.clientHeight
-    }
-  }
-  return () => document.documentElement.clientHeight
 }
 
 /**
