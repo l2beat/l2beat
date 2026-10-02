@@ -12,6 +12,12 @@ const PRODUCTION_RULES = [
   'Disallow: /dev/',
 ]
 
+/**
+ * Content Signals (contentsignals.org): L2BEAT is a public good, so search,
+ * AI answers and AI training are all welcome to use the content.
+ */
+const CONTENT_SIGNAL = 'Content-Signal: ai-train=yes, search=yes, ai-input=yes'
+
 export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
   const router = express.Router()
   const body = getRobotsTxtBody(deploymentEnv)
@@ -34,7 +40,9 @@ function getRobotsTxtBody(deploymentEnv: DeploymentEnv): string {
     return DISALLOW_EVERYTHING
   }
 
-  const group = ['User-agent: *', ...PRODUCTION_RULES].join('\n')
+  const group = ['User-agent: *', CONTENT_SIGNAL, ...PRODUCTION_RULES].join(
+    '\n',
+  )
   const sitemap = `Sitemap: ${PRODUCTION_ORIGIN}/sitemap.xml`
 
   return `${group}\n\n${sitemap}\n`
