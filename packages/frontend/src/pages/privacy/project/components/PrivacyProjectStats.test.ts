@@ -75,6 +75,19 @@ describe(PrivacyProjectStats.name, () => {
     expect(html).not.toInclude('Active Relayers 30D')
   })
 
+  it('labels fee recipients as paid finalizers instead of relayers', () => {
+    const html = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        relayerStat: { kind: 'paidFinalizers', value: 3 },
+      }),
+    )
+
+    expect(html).toInclude('Paid finalizers 30D')
+    expect(html).toInclude('>3</span>')
+    expect(html).not.toInclude('Active Relayers 30D')
+  })
+
   it('hides the metric when relayer tracking is not configured', () => {
     const html = render(createElement(PrivacyProjectStats, BASE_PROPS))
 

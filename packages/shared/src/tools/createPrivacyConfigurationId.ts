@@ -25,6 +25,45 @@ export function createPrivacyAnonymitySetConfigurationId(
   ])
 }
 
+export function createPrivacyFlowConfigurationId(
+  config: PrivacyAnonymitySetConfigurationIdentity & {
+    direction: 'deposit' | 'withdrawal'
+  },
+): string {
+  return createPrivacyConfigurationId([
+    'privacy-flow',
+    config.projectId,
+    config.bucketId,
+    config.direction,
+    config.chain,
+    config.address,
+    config.event,
+    config.extractor,
+    stringifyPrivacyConfigurationParams(config.params),
+  ])
+}
+
+export function createPrivacyRelayerConfigurationId(config: {
+  projectId: string
+  chain: string
+  address: string
+  event: string
+  extractor: string
+  params?: Record<string, unknown>
+}): string {
+  return createPrivacyConfigurationId([
+    'privacy-relayer-activity',
+    config.projectId,
+    config.chain,
+    config.address,
+    config.event,
+    config.extractor,
+    ...(config.params
+      ? [stringifyPrivacyConfigurationParams(config.params)]
+      : []),
+  ])
+}
+
 export function createPrivacyConfigurationId(input: string[]): string {
   return createHash('sha1').update(input.join('')).digest('hex').slice(0, 12)
 }

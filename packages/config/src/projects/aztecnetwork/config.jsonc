@@ -2,8 +2,26 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aztecnetwork",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"],
+  "initialAddresses": [
+    "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449" // zk.money escrow, fully discovered in zkmoney
+  ],
   "overrides": {
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": {
+      "ignoreRelatives": [
+        "FPC_FUNDER",
+        "FROZEN_DEPOSIT_REFUND_VERIFIER",
+        "FROZEN_NOTES_REFUND_VERIFIER",
+        "INBOX",
+        "OUTBOX",
+        "REGISTRY",
+        "ROLLUP",
+        "TEE_CERT_MANAGER",
+        "TEE_NITRO_VALIDATOR",
+        "UNDERLYING",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER"
+      ]
+    },
     "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": {
       "fields": {
         "owner": {

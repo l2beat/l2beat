@@ -7,6 +7,8 @@ import type {
   PrivacyRpcLog,
 } from '../types'
 
+import { zkMoneyInterface } from './zkMoneyEvents'
+
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
 ])
@@ -19,7 +21,7 @@ type RelayerExtractor = ProjectPrivacyOnchainRelayerSource['extractor']
 
 interface RelayerExtractorDefinition {
   event: string
-  extract: (
+  extract?: (
     log: PrivacyRpcLog,
   ) => PrivacyRelayerActivityExtractResult | undefined
 }
@@ -50,6 +52,10 @@ export function getPrivacyRelayerExtractor(
   extractor: RelayerExtractor,
 ): RelayerExtractorDefinition {
   switch (extractor) {
+    case 'zkMoneyDepositPayout':
+      return { event: zkMoneyInterface.getEventTopic('Deposit') }
+    case 'zkMoneyWithdrawalPayout':
+      return { event: zkMoneyInterface.getEventTopic('WithdrawalOrRefund') }
     case 'privacyPoolsWithdrawalRelayed':
       return privacyPoolsWithdrawalRelayed
     case 'tornadoCashWithdrawal':
@@ -63,7 +69,7 @@ export function extractPrivacyRelayerActivity(
   source: PrivacyRelayerActivityIndexerConfig,
   log: PrivacyRpcLog,
 ): PrivacyRelayerActivityExtractResult | undefined {
-  return getPrivacyRelayerExtractor(source.extractor).extract(log)
+  return getPrivacyRelayerExtractor(source.extractor).extract?.(log)
 }
 
 function toRelayerActivity(

@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ZkMoneyPortal",
+  "critical": true,
+  "category": "core",
+  "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.",
+  "ignoreMethods": ["$firstProver"],
+  "ignoreInWatchMode": [
+    "_$cachedAvailable",
+    "_$lastUpdatedTime",
+    "getCurrentAvailable"
+  ],
+  "ignoreRelatives": ["INBOX", "OUTBOX", "REGISTRY", "ROLLUP", "UNDERLYING"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve additional enclave images for TEE signer registration and freeze the portal at any time."
+        }
+      ]
+    },
+    "approvedPcr0Hashes": {
+      "description": "Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "pcr0Hash",
+        "add": { "event": "TEEPcr0Approved" }
+      }
+    },
+    "teeSigners": {
+      "description": "Registered TEE signers. Registrations are permanent.",
+      "handler": {
+        "type": "event",
+        "select": "tee",
+        "add": { "event": "TEEAdded" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal."
+        }
+      ]
+    },
+    "_$l2Portal": {
+      "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds.",
+      "severity": "HIGH"
+    },
+    "_$frozen": {
+      "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.",
+      "severity": "HIGH"
+    },
+    "REGISTRY": {
+      "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+    },
+    "TEE_CERT_MANAGER": {
+      "template": "zkmoney/CertManager"
+    },
+    "TEE_NITRO_VALIDATOR": {
+      "template": "zkmoney/NitroValidator"
+    },
+    "FROZEN_NOTES_REFUND_VERIFIER": {
+      "template": "zkmoney/HonkVerifier"
+    },
+    "FROZEN_DEPOSIT_REFUND_VERIFIER": {
+      "template": "zkmoney/HonkVerifier"
+    },
+    "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": {
+      "template": "zkmoney/HonkVerifier"
+    },
+    "FPC_FUNDER": {
+      "description": "Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users.",
+      "template": "zkmoney/FPCFunderDAI"
+    },
+    "GLOBAL_LIMIT": {
+      "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals are only limited by a hardcoded per-transaction cap.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

@@ -36,6 +36,7 @@ const BLOCK_TIMESTAMP_BATCH_SIZE = 25
 export interface Receipt {
   blockHash?: string
   logs: {
+    address?: string
     topics: string[]
     data: string
   }[]
@@ -216,6 +217,7 @@ export class RpcClientCompat implements IRpcClient {
     return {
       blockHash: receipt.blockHash,
       logs: receipt.logs.map((log) => ({
+        ...(log.address !== undefined && { address: log.address.toString() }),
         topics: log.topics,
         data: log.data,
       })),

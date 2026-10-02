@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PlainWithdrawalExecutor",
+  "critical": true,
+  "category": "core",
+  "description": "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec.",
+  "ignoreRelatives": ["ASSET"]
+}

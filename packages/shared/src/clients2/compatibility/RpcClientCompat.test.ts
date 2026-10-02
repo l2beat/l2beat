@@ -46,12 +46,19 @@ describe(RpcClientCompat.name, () => {
   })
 
   describe(RpcClientCompat.prototype.getTransactionReceipt.name, () => {
-    it('keeps the block hash', async () => {
+    it('keeps the block hash and event emitter', async () => {
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({
           getTransactionReceipt: mockFn().resolvesTo({
             blockHash: `0x${'ab'.repeat(32)}`,
-            logs: [{ topics: ['0x1'], data: '0x2', logIndex: 0n }],
+            logs: [
+              {
+                address: EthereumAddress.ZERO,
+                topics: ['0x1'],
+                data: '0x2',
+                logIndex: 0n,
+              },
+            ],
           }),
         }),
         'avalanche',
@@ -61,7 +68,13 @@ describe(RpcClientCompat.name, () => {
 
       expect(receipt).toEqual({
         blockHash: `0x${'ab'.repeat(32)}`,
-        logs: [{ topics: ['0x1'], data: '0x2' }],
+        logs: [
+          {
+            address: EthereumAddress.ZERO.toString(),
+            topics: ['0x1'],
+            data: '0x2',
+          },
+        ],
       })
     })
   })
