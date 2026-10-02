@@ -12,7 +12,6 @@ import {
   getDeploymentsByVolume,
   isCluster,
 } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/graphSelectors'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
   InteropTokenDeploymentView,
   InteropTokenRelationsGraph,
@@ -96,7 +95,7 @@ function withPlainSpaces(text: string) {
 }
 
 export function interopProtocolUrl(slug: string) {
-  return `${PRODUCTION_ORIGIN}/interop/protocols/${slug}`
+  return `/interop/protocols/${slug}`
 }
 
 const NO_DATA = 'No data'
@@ -227,11 +226,8 @@ function via(bridges: ProjectIconListItem[]) {
     : ' (bridge not identified)'
 }
 
-/** Icon list items link relatively, which a standalone markdown document cannot resolve. */
 function renderProjectLink(project: ProjectIconListItem) {
-  return project.href
-    ? link(project.name, `${PRODUCTION_ORIGIN}${project.href}`)
-    : project.name
+  return project.href ? link(project.name, project.href) : project.name
 }
 
 function renderProtocolName(entry: ProtocolEntry) {

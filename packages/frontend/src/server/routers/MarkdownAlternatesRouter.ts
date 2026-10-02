@@ -12,7 +12,7 @@ import {
 import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import {
-  isServedAsMarkdown,
+  LIST_PAGES_WITH_MARKDOWN,
   type ListPageWithMarkdown,
 } from '~/utils/getMarkdownAlternatePath'
 
@@ -50,23 +50,24 @@ export interface MarkdownAlternate {
   getSections: () => Promise<MarkdownSection[]>
 }
 
-const ALL_MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
-  {
-    path: '/layer2s/summary.md',
+/** Keyed by the registry, so every list page registered as having markdown gets its document. */
+const LIST_PAGE_DOCUMENTS: Record<
+  ListPageWithMarkdown,
+  Omit<MarkdownAlternate, 'path'>
+> = {
+  '/layer2s/summary': {
     title: 'L2BEAT scaling projects',
     summary:
       'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
   },
-  {
-    path: '/data-availability/summary.md',
+  '/data-availability/summary': {
     title: 'L2BEAT data availability layers',
     summary:
       'Every data availability layer tracked by L2BEAT with its type and risks: public layers one entry per bridge to Ethereum plus one for use without a bridge, and custom solutions built for a single project.',
     getSections: getDaListSections,
   },
-  {
-    path: '/zk-catalog.md',
+  '/zk-catalog': {
     title: 'L2BEAT ZK catalog',
     summary:
       'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
@@ -77,8 +78,7 @@ const ALL_MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
     ].join('\n'),
     getSections: getZkListSections,
   },
-  {
-    path: '/privacy/summary.md',
+  '/privacy/summary': {
     title: 'L2BEAT privacy protocols',
     summary:
       'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
@@ -86,8 +86,7 @@ const ALL_MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
       'Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).',
     getSections: getPrivacyListSections,
   },
-  {
-    path: '/interop/summary.md',
+  '/interop/summary': {
     title: 'L2BEAT interoperability protocols',
     summary:
       'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
@@ -95,16 +94,17 @@ const ALL_MARKDOWN_ALTERNATES: MarkdownAlternate[] = [
       'Token pages live at /interop/tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
     getSections: getInteropListSections,
   },
-  {
-    path: '/defi/summary.md',
+  '/defi/summary': {
     title: 'L2BEAT DeFi protocols',
     summary: 'DeFi protocols tracked by L2BEAT, with their category.',
     notes: 'Overview of DeFi protocols tracked by L2BEAT.',
     getSections: getDefiListSections,
   },
-]
+}
 
-/** Without the alternates of pages that are switched off, which would be 404s. */
-export const MARKDOWN_ALTERNATES = ALL_MARKDOWN_ALTERNATES.filter((alternate) =>
-  isServedAsMarkdown(alternate.path),
-)
+/** The registry already leaves out pages that are switched off, which would be 404s. */
+export const MARKDOWN_ALTERNATES: MarkdownAlternate[] =
+  LIST_PAGES_WITH_MARKDOWN.map((page) => ({
+    path: `${page}.md`,
+    ...LIST_PAGE_DOCUMENTS[page],
+  }))

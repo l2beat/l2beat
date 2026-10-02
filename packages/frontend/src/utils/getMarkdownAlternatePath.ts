@@ -12,16 +12,20 @@ import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 export function getMarkdownAlternatePath(pagePath: string): string | undefined {
   const path = trimTrailingSlashes(pagePath)
   if (path.toLowerCase().endsWith('.md')) return undefined
-  return PAGES_WITH_MARKDOWN.some((page) => matchesPage(page, path))
-    ? `${path}.md`
-    : undefined
+  return hasMarkdownVersion(path) ? `${path}.md` : undefined
 }
 
-/** Takes a `.md` path or a template of one (e.g. `/defi/projects/{slug}.md`): false while its page is switched off. */
-export function isServedAsMarkdown(markdownPath: string) {
-  return (
-    getMarkdownAlternatePath(markdownPath.replace(/\.md$/, '')) === markdownPath
-  )
+/**
+ * For links to markdown documents, e.g. `/defi/projects/{slug}.md`, where a
+ * `{name}` placeholder stands for a path segment: false while the page is
+ * switched off, as the registry then leaves it out.
+ */
+export function isServedAsMarkdown(markdownPath: `${string}.md`) {
+  return hasMarkdownVersion(markdownPath.slice(0, -'.md'.length))
+}
+
+function hasMarkdownVersion(path: string) {
+  return PAGES_WITH_MARKDOWN.some((page) => matchesPage(page, path))
 }
 
 export const LIST_PAGES_WITH_MARKDOWN = [

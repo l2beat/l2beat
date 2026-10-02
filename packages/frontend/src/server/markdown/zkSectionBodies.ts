@@ -12,16 +12,8 @@ import {
   VERIFIERS_SECTION_INTRO,
   type VerifierStatus,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
-import {
-  bulletList,
-  heading,
-  joinBlocks,
-  link,
-  nestHeadings,
-  resolveSiteUrl,
-  subsection,
-} from './markdown'
-import type { SectionContext } from './renderProjectSection'
+import { configMarkdown } from './configMarkdown'
+import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
 
 /*
  * Markdown bodies of the sections describing a proving system (ZK catalog and
@@ -42,7 +34,7 @@ export function renderTrustedSetups(
           `Risk: ${formatTrustedSetupRisk(setup.risk)}`,
           `Proof systems: ${setup.proofSystems.map(formatTag).join(', ')}`,
         ]),
-        nestHeadings(setup.description, level + 1),
+        configMarkdown(setup.description, level + 1),
       ]),
     ),
   ])
@@ -74,15 +66,12 @@ export function renderVerifiers(
     proofSystemVerifiers,
   }: Pick<VerifiersSectionProps, 'variant' | 'proofSystemVerifiers'>,
   level: number,
-  context: SectionContext,
 ) {
   // Privacy pages embed a bare list; only the ZK catalog explains and groups it.
   if (variant !== 'zkCatalog') {
     return joinBlocks(
       proofSystemVerifiers.flatMap(({ verifierHashes }) =>
-        verifierHashes.map((verifier) =>
-          renderVerifier(verifier, level, context),
-        ),
+        verifierHashes.map((verifier) => renderVerifier(verifier, level)),
       ),
     )
   }
@@ -93,7 +82,7 @@ export function renderVerifiers(
         heading(level, `${proofSystem.type}: ${proofSystem.name}`),
         proofSystem.description ?? VERIFIER_ID_DEFAULT_DESCRIPTION,
         ...verifierHashes.map((verifier) =>
-          renderVerifier(verifier, level + 1, context),
+          renderVerifier(verifier, level + 1),
         ),
       ]),
     ),
@@ -103,11 +92,10 @@ export function renderVerifiers(
 export function renderProgramHashes(
   { programHashes }: Pick<ProgramHashesSectionProps, 'programHashes'>,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
     PROGRAM_HASHES_SECTION_INTRO,
-    renderProgramHashList(programHashes, level, context),
+    renderProgramHashList(programHashes, level),
   ])
 }
 
@@ -124,14 +112,13 @@ export function renderProgramHashesSubsection(
     programHashesDescription?: string
   },
   level: number,
-  context: SectionContext,
 ) {
   return subsection(
     level,
     'Program Hashes',
     joinBlocks([
-      renderProgramHashList(programHashes, level + 1, context),
-      nestHeadings(programHashesDescription, level + 1),
+      renderProgramHashList(programHashes, level + 1),
+      configMarkdown(programHashesDescription, level + 1),
     ]),
   )
 }
@@ -139,7 +126,6 @@ export function renderProgramHashesSubsection(
 function renderProgramHashList(
   programHashes: ProgramHashesSectionProps['programHashes'],
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks(
     programHashes.map((program) =>
@@ -150,7 +136,7 @@ function renderProgramHashList(
           `Hash: \`${program.hash}\``,
           `Repository: ${program.programUrl ?? 'code unknown'}`,
           `Verification: ${renderVerificationStatus(program.verificationStatus)}`,
-          `Used in: ${renderUsedIn(program.usedIn, context.pageUrl)}`,
+          `Used in: ${renderUsedIn(program.usedIn)}`,
         ]),
         renderVerificationSteps(program.verificationSteps, level + 1),
       ]),
@@ -163,15 +149,9 @@ export function formatTag(tag: ZkCatalogTag) {
   return `${tag.name} (${tag.type})`
 }
 
-/** Project URLs are paths; resolved against the page they become citable. */
-export function renderUsedIn(
-  projects: UsedInProjectWithIcon[],
-  pageUrl: string,
-) {
+export function renderUsedIn(projects: UsedInProjectWithIcon[]) {
   if (projects.length === 0) return 'none'
-  return projects
-    .map((project) => link(project.name, resolveSiteUrl(project.url, pageUrl)))
-    .join(', ')
+  return projects.map((project) => link(project.name, project.url)).join(', ')
 }
 
 export function renderVerificationStatus(
@@ -221,7 +201,6 @@ const ATTESTER_ROLES: Record<VerifierStatus, string> = {
 function renderVerifier(
   verifier: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number],
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
     heading(level, verifier.name),
@@ -230,16 +209,15 @@ function renderVerifier(
       `Verifier ID: \`${verifier.hash}\``,
       ...(verifier.sourceLink ? [`Source: ${verifier.sourceLink}`] : []),
       `Verification: ${renderVerificationStatus(verifier.verificationStatus, verifier.attesters)}`,
-      `Used in: ${renderUsedIn(verifier.projectsUsedIn, context.pageUrl)}`,
+      `Used in: ${renderUsedIn(verifier.projectsUsedIn)}`,
     ]),
-    renderKnownDeployments(verifier.knownDeployments, context.pageUrl),
+    renderKnownDeployments(verifier.knownDeployments),
     renderVerificationSteps(verifier.verificationSteps, level + 1),
   ])
 }
 
 function renderKnownDeployments(
   deployments: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]['knownDeployments'],
-  pageUrl: string,
 ) {
   if (deployments.length === 0) return ''
   return joinBlocks([
@@ -249,7 +227,7 @@ function renderKnownDeployments(
         const address = deployment.url
           ? link(deployment.address, deployment.url)
           : deployment.address
-        return `${address} on ${deployment.chain}, used in: ${renderUsedIn(deployment.projectsUsedIn, pageUrl)}`
+        return `${address} on ${deployment.chain}, used in: ${renderUsedIn(deployment.projectsUsedIn)}`
       }),
     ),
   ])
@@ -259,6 +237,6 @@ function renderVerificationSteps(steps: string | undefined, level: number) {
   return subsection(
     level,
     'Verification steps',
-    nestHeadings(steps ?? '', level + 1),
+    configMarkdown(steps ?? '', level + 1),
   )
 }

@@ -1,29 +1,33 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
 import { TRACKED_TXS_SUBTYPE_TITLES } from '~/components/projects/sections/costs/trackedTxsSubtypeTitles'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
+import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
+import {
+  COSTS_DESCRIPTION,
+  DA_BRIDGE_LIVENESS_DESCRIPTION,
+  DATA_POSTED_DESCRIPTION,
+  LAST_30_DAY_ANOMALIES_DESCRIPTION,
+  LIVENESS_DESCRIPTION,
+  THROUGHPUT_DESCRIPTION,
+  TRACKED_CONTRACTS_CHANGED_WARNING,
+  trackedTxsOutageText,
+} from '~/components/projects/sections/sectionCopy'
 import type { ThroughputSectionProps } from '~/components/projects/sections/throughput/ThroughputSection'
 import type { L2TvsSectionProps } from '~/components/projects/sections/tvs/L2TvsSection'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
-import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/anomalySubtypeToLabel'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import {
-  bulletList,
-  joinBlocks,
-  link,
-  resolveSiteUrl,
-  subsection,
-  warning,
-} from './markdown'
-import type { SectionBody, SectionContext } from './renderProjectSection'
+import { bulletList, joinBlocks, link, subsection, warning } from './markdown'
+import type { SectionBody } from './renderProjectSection'
 import { formatUtcDateTime } from './renderSectionParts'
 
 /*
@@ -36,21 +40,15 @@ import { formatUtcDateTime } from './renderSectionParts'
 export function pointToHtmlPage(
   whatIsShown: string,
 ): SectionBody<{ id: ProjectSectionId }> {
-  return (props, _level, context) =>
-    htmlPagePointer(whatIsShown, props.id, context)
+  return (props) => htmlPagePointer(whatIsShown, props.id)
 }
 
 export function renderActivitySection(
   props: Pick<ActivitySectionProps, 'id' | 'dataSource'>,
   _level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    htmlPagePointer(
-      'The interactive activity chart is shown',
-      props.id,
-      context,
-    ),
+    htmlPagePointer('The interactive activity chart is shown', props.id),
     renderDataSource(props.dataSource),
   ])
 }
@@ -58,12 +56,11 @@ export function renderActivitySection(
 export function renderL2TvsSection(
   props: Pick<L2TvsSectionProps, 'id' | 'tvsBreakdownUrl'>,
   _level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    htmlPagePointer('The interactive TVS charts are shown', props.id, context),
+    htmlPagePointer('The interactive TVS charts are shown', props.id),
     props.tvsBreakdownUrl
-      ? `Token by token: ${link('TVS breakdown', resolveSiteUrl(props.tvsBreakdownUrl, context.pageUrl))}.`
+      ? `Token by token: ${link('TVS breakdown', props.tvsBreakdownUrl)}.`
       : '',
   ])
 }
@@ -71,12 +68,11 @@ export function renderL2TvsSection(
 export function renderCostsSection(
   props: Pick<CostsSectionProps, 'id' | 'trackedTransactions'>,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    'The section shows the operating costs that L2s pay to Ethereum.',
+    COSTS_DESCRIPTION,
     renderTrackedTxsOutage(),
-    htmlPagePointer('The interactive costs chart is shown', props.id, context),
+    htmlPagePointer('The interactive costs chart is shown', props.id),
     renderTrackedTransactions(props.trackedTransactions, level),
   ])
 }
@@ -87,21 +83,16 @@ export function renderDataPostedSection(
     'id' | 'currentDaLayers' | 'pastDaLayers' | 'daTrackingConfig'
   >,
   level: number,
-  context: SectionContext,
 ) {
   const allLayers = [...props.pastDaLayers, ...props.currentDaLayers]
   return joinBlocks([
-    `This section shows how much data the project publishes to its data-availability (DA) layer over time. ${describeDaLayers(props, context.pageUrl)}`.trimEnd(),
+    `${DATA_POSTED_DESCRIPTION} ${describeDaLayers(props)}`.trimEnd(),
     renderDataSource(
       allLayers.some((layer) => layer.name === 'EigenDA')
         ? 'API provided by EigenLayer'
         : undefined,
     ),
-    htmlPagePointer(
-      'The interactive data posted chart is shown',
-      props.id,
-      context,
-    ),
+    htmlPagePointer('The interactive data posted chart is shown', props.id),
     subsection(
       level,
       'Tracked transactions',
@@ -125,13 +116,10 @@ export function renderLivenessSection(
     | 'isForDaBridge'
   >,
   level: number,
-  context: SectionContext,
 ) {
   const ongoing = props.anomalies.filter(isOngoing)
   return joinBlocks([
-    props.isForDaBridge
-      ? 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'
-      : 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.',
+    props.isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION,
     renderTrackedTxsOutage(),
     props.isArchived
       ? ''
@@ -140,11 +128,7 @@ export function renderLivenessSection(
           props.hasTrackedContractsChanged,
           level,
         ),
-    htmlPagePointer(
-      'The interactive liveness chart is shown',
-      props.id,
-      context,
-    ),
+    htmlPagePointer('The interactive liveness chart is shown', props.id),
     renderTrackedTransactions(props.trackedTransactions, level),
     props.isArchived
       ? ''
@@ -159,15 +143,13 @@ export function renderLivenessSection(
 export function renderThroughputSection(
   props: Pick<ThroughputSectionProps, 'id' | 'syncStatus'>,
   _level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
     props.syncStatus.warning ? warning(props.syncStatus.warning) : '',
-    'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.',
+    THROUGHPUT_DESCRIPTION,
     htmlPagePointer(
       'The interactive throughput chart and its past day stats are shown',
       props.id,
-      context,
     ),
   ])
 }
@@ -176,7 +158,6 @@ export function renderThroughputSection(
 export function renderPrivacyAnonymitySetSection(
   props: { id: ProjectSectionId },
   level: number,
-  context: SectionContext,
 ) {
   const days = ANONYMITY_SET_WINDOW_DAYS
   return joinBlocks([
@@ -193,7 +174,7 @@ export function renderPrivacyAnonymitySetSection(
       'Estimated anonymity set by holding duration',
       `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${days} days effectively means blending in with everyone who deposited during the last ${days} days.`,
     ),
-    htmlPagePointer('The interactive charts are shown', props.id, context),
+    htmlPagePointer('The interactive charts are shown', props.id),
   ])
 }
 
@@ -201,17 +182,12 @@ export function renderPrivacyAnonymitySetSection(
  * A project whose tracking has all ended has no current layer: the HTML
  * sentence then names nothing after "posts data to", so it is reworded.
  */
-function describeDaLayers(
-  {
-    currentDaLayers,
-    pastDaLayers,
-  }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>,
-  pageUrl: string,
-) {
+function describeDaLayers({
+  currentDaLayers,
+  pastDaLayers,
+}: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>) {
   const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers
-      .map((layer) => link(layer.name, resolveSiteUrl(layer.href, pageUrl)))
-      .join(', ')
+    layers.map((layer) => link(layer.name, layer.href)).join(', ')
   if (currentDaLayers.length === 0) {
     return pastDaLayers.length > 0
       ? `The project no longer posts data; previously it posted to ${links(pastDaLayers)}.`
@@ -225,12 +201,8 @@ function describeDaLayers(
 }
 
 /** `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
-function htmlPagePointer(
-  whatIsShown: string,
-  id: ProjectSectionId,
-  context: SectionContext,
-) {
-  return `${whatIsShown} on ${link('the HTML page', `${context.pageUrl}#${id}`)}.`
+function htmlPagePointer(whatIsShown: string, id: ProjectSectionId) {
+  return `${whatIsShown} on ${link('the HTML page', `#${id}`)}.`
 }
 
 function renderDataSource(dataSource: string | undefined) {
@@ -239,15 +211,11 @@ function renderDataSource(dataSource: string | undefined) {
 
 function renderTrackedTxsOutage() {
   return env.CLIENT_SIDE_TRACKED_TXS_OUTAGE
-    ? warning(
-        "Data in this section may be temporarily out of date due to third-party provider issues. We're working to resolve this.",
-      )
+    ? warning(trackedTxsOutageText('section'))
     : ''
 }
 
-const IMPLEMENTATION_CHANGE_WARNING = warning(
-  'There are implementation changes to tracked contracts, anomaly data might be inaccurate.',
-)
+const IMPLEMENTATION_CHANGE_WARNING = warning(TRACKED_CONTRACTS_CHANGED_WARNING)
 
 function renderOngoingAnomalies(
   ongoing: LivenessAnomaly[],
@@ -284,7 +252,7 @@ function renderLast30DayAnomalies(
     'Last 30 day anomalies',
     anomalies.length > 0
       ? joinBlocks([
-          'All liveness anomalies detected for this project in the last 30 days, helping you review recent downtime and availability issues.',
+          LAST_30_DAY_ANOMALIES_DESCRIPTION,
           hasTrackedContractsChanged ? IMPLEMENTATION_CHANGE_WARNING : '',
           bulletList(anomalies.map(formatAnomaly)),
         ])
@@ -336,66 +304,72 @@ function formatTrackedTransaction(transaction: TrackedTransaction) {
   const until = transaction.untilTimestamp
     ? formatUtcDateTime(transaction.untilTimestamp)
     : 'now'
-  const details = [
-    `${formatUtcDateTime(transaction.sinceTimestamp)} - ${until}`,
-    transaction.isHistorical ? 'historical' : 'currently used',
-    ...(params.formula === 'transfer'
+  const target =
+    params.formula === 'transfer'
       ? [
-          ...(params.from ? [`from: ${etherscanLink(params.from)}`] : []),
+          params.from && `from: ${etherscanLink(params.from)}`,
           `to: ${etherscanLink(params.to)}`,
         ]
       : [
           `address: ${etherscanLink(params.address)}`,
           `selector: ${params.selector}`,
-        ]),
-    ...('signature' in params ? [`signature: \`${params.signature}\``] : []),
-    ...(params.formula === 'sharedBridge'
-      ? [`first calldata parameter: ${params.firstParameter}`]
-      : []),
-    ...(params.formula === 'sharpSubmission'
-      ? [
-          `program hashes: ${params.programHashes.map((hash) => `\`${hash}\``).join(', ')}`,
         ]
-      : []),
-    ...(transaction.costMultiplier
-      ? [`cost multiplier: ${transaction.costMultiplier}`]
-      : []),
-  ]
+  const details = compact([
+    `${formatUtcDateTime(transaction.sinceTimestamp)} - ${until}`,
+    transaction.isHistorical ? 'historical' : 'currently used',
+    ...target,
+    'signature' in params && `signature: \`${params.signature}\``,
+    params.formula === 'sharedBridge' &&
+      `first calldata parameter: ${params.firstParameter}`,
+    params.formula === 'sharpSubmission' &&
+      `program hashes: ${params.programHashes.map((hash) => `\`${hash}\``).join(', ')}`,
+    transaction.costMultiplier &&
+      `cost multiplier: ${transaction.costMultiplier}`,
+  ])
   return `${params.formula}: ${details.join('; ')}`
 }
 
-function formatDaTrackingConfig(
-  config: DataPostedSectionProps['daTrackingConfig'][number],
-) {
-  const range =
-    config.type === 'eigen-da'
-      ? `from ${formatUtcDateTime(config.sinceTimestamp)} to ${config.untilTimestamp ? formatUtcDateTime(config.untilTimestamp) : 'now'}`
-      : `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
-  const isHistorical =
-    config.type === 'eigen-da' ? !!config.untilTimestamp : !!config.untilBlock
+type DaTrackingConfig = DataPostedSectionProps['daTrackingConfig'][number]
+
+function formatDaTrackingConfig(config: DaTrackingConfig) {
   const details = [
-    range,
-    isHistorical ? 'historical' : 'currently used',
-    ...(config.type === 'ethereum'
-      ? [
-          `inbox: ${etherscanLink(config.inbox)}`,
-          ...(config.sequencers && config.sequencers.length > 0
-            ? [`sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`]
-            : []),
-          ...(config.topics && config.topics.length > 0
-            ? [`topics: ${config.topics.join(', ')}`]
-            : []),
-        ]
-      : []),
-    ...(config.type === 'celestia' ? [`namespace: ${config.namespace}`] : []),
-    ...(config.type === 'avail'
-      ? [`app IDs: ${config.appIds.join(', ')}`]
-      : []),
-    ...(config.type === 'eigen-da'
-      ? [`customer ID: ${config.customerId}`]
-      : []),
+    describeDaTrackingRange(config),
+    isDaTrackingHistorical(config) ? 'historical' : 'currently used',
+    ...describeDaTrackingTarget(config),
   ]
   return `DA layer ${config.daLayerName}: ${details.join('; ')}`
+}
+
+/** EigenDA tracking is bounded by time, the other layers by Ethereum block. */
+function describeDaTrackingRange(config: DaTrackingConfig) {
+  return config.type === 'eigen-da'
+    ? `from ${formatUtcDateTime(config.sinceTimestamp)} to ${config.untilTimestamp ? formatUtcDateTime(config.untilTimestamp) : 'now'}`
+    : `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
+}
+
+function isDaTrackingHistorical(config: DaTrackingConfig) {
+  return config.type === 'eigen-da'
+    ? !!config.untilTimestamp
+    : !!config.untilBlock
+}
+
+/** What identifies the project's data on each layer. */
+function describeDaTrackingTarget(config: DaTrackingConfig): string[] {
+  switch (config.type) {
+    case 'ethereum':
+      return compact([
+        `inbox: ${etherscanLink(config.inbox)}`,
+        config.sequencers?.length &&
+          `sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`,
+        config.topics?.length && `topics: ${config.topics.join(', ')}`,
+      ])
+    case 'celestia':
+      return [`namespace: ${config.namespace}`]
+    case 'avail':
+      return [`app IDs: ${config.appIds.join(', ')}`]
+    case 'eigen-da':
+      return [`customer ID: ${config.customerId}`]
+  }
 }
 
 /** The HTML links tracked addresses to Etherscan. */

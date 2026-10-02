@@ -1,19 +1,12 @@
 import type { ProjectScalingStateValidation } from '@l2beat/config'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/ProjectTooltipContent'
 import type {
   ProverInfoData,
   StateValidationSectionProps,
 } from '~/components/projects/sections/state-validation/StateValidationSection'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
-import {
-  bulletList,
-  heading,
-  joinBlocks,
-  link,
-  nestHeadings,
-  resolveSiteUrl,
-  subsection,
-} from './markdown'
-import type { SectionContext } from './renderProjectSection'
+import { configMarkdown } from './configMarkdown'
+import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
 import {
   INCOMPLETE_NOTE,
   renderDiagram,
@@ -37,18 +30,17 @@ export function renderStateValidation(
     | 'programHashesDescription'
   >,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    renderDiagram(props.diagram, context.pageUrl),
-    nestHeadings(props.stateValidation.description, level),
+    renderDiagram(props.diagram),
+    configMarkdown(props.stateValidation.description, level),
     ...props.stateValidation.categories.map((category) =>
       renderCategory(category, level),
     ),
     ...(props.proverInfos ?? []).map((prover) =>
-      renderProverInfo(prover, level, context.pageUrl),
+      renderProverInfo(prover, level),
     ),
-    renderProgramHashesSubsection(props, level, context),
+    renderProgramHashesSubsection(props, level),
   ])
 }
 
@@ -58,7 +50,7 @@ function renderCategory(category: Category, level: number) {
   return joinBlocks([
     heading(level, category.title),
     category.isIncomplete ? INCOMPLETE_NOTE : '',
-    nestHeadings(category.description, level + 1),
+    configMarkdown(category.description, level + 1),
     renderRisks(
       (category.risks ?? []).map((risk) => ({
         text: `${risk.category} ${risk.text}`,
@@ -69,42 +61,29 @@ function renderCategory(category: Category, level: number) {
   ])
 }
 
-const QUANTUM_RESISTANT_PROVER =
-  "The prover is plausibly quantum resistant. There is no publicly known quantum algorithm that efficiently breaks prover's cryptography."
-
 /** The prover card: which prover, and per proof system its trusted setups, verifiers and users. */
-function renderProverInfo(
-  prover: ProverInfoData,
-  level: number,
-  pageUrl: string,
-) {
+function renderProverInfo(prover: ProverInfoData, level: number) {
   return joinBlocks([
-    heading(
-      level,
-      `Prover: ${link(prover.name, resolveSiteUrl(prover.href, pageUrl))}`,
-    ),
-    prover.quantumResistant ? QUANTUM_RESISTANT_PROVER : '',
+    heading(level, `Prover: ${link(prover.name, prover.href)}`),
+    prover.quantumResistant ? QUANTUM_RESISTANCE_TOOLTIPS.prover : '',
     subsection(
       level + 1,
       'Trusted setups',
       bulletList(
         Object.values(prover.trustedSetups).flatMap((proofSystem) =>
-          formatProofSystemTrustedSetups(proofSystem, pageUrl),
+          formatProofSystemTrustedSetups(proofSystem),
         ),
       ),
     ),
   ])
 }
 
-function formatProofSystemTrustedSetups(
-  {
-    trustedSetups,
-    onchainVerifiers,
-    verifiers,
-    projectsUsedIn,
-  }: TrustedSetupsByProofSystem[string],
-  pageUrl: string,
-) {
+function formatProofSystemTrustedSetups({
+  trustedSetups,
+  onchainVerifiers,
+  verifiers,
+  projectsUsedIn,
+}: TrustedSetupsByProofSystem[string]) {
   const proofSystem = trustedSetups[0]?.proofSystem
   if (!proofSystem) return []
   const setups = trustedSetups
@@ -123,6 +102,6 @@ function formatProofSystemTrustedSetups(
           .join(', ')}`
       : `verifiers: ${formatVerifierCounts(verifiers)}`
   return [
-    `${formatTag(proofSystem)}: ${setups}; ${verifierList}; used in: ${renderUsedIn(projectsUsedIn, pageUrl)}`,
+    `${formatTag(proofSystem)}: ${setups}; ${verifierList}; used in: ${renderUsedIn(projectsUsedIn)}`,
   ]
 }

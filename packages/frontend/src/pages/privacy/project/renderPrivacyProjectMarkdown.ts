@@ -153,7 +153,9 @@ function explainedRisk(
       `${withSentiment(risk.value, risk.sentiment)}.`,
       risk.description,
       ...explanations,
-    ].join(' '),
+    ]
+      .filter((part) => part !== '')
+      .join(' '),
   }
 }
 

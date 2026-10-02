@@ -1,20 +1,18 @@
-import {
-  PROJECT_COUNTDOWNS,
-  type ProjectScalingScopeOfAssessment,
-  type StageConfigured,
-  type StageSummary,
+import type {
+  ProjectScalingScopeOfAssessment,
+  StageConfigured,
+  StageSummary,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { StageSectionProps } from '~/components/projects/sections/StageSection'
-import { STAGES_DISCLAIMER } from '~/components/projects/sections/stagesDisclaimer'
-import { externalLinks } from '~/consts/externalLinks'
 import {
-  bulletList,
-  joinBlocks,
-  link,
-  resolveSiteUrl,
-  subsection,
-} from './markdown'
+  APPCHAIN_STAGE_RISK,
+  APPCHAIN_STAGES_NOTE,
+  STAGES_DISCLAIMER,
+  WALKAWAY_TEST,
+} from '~/components/projects/sections/sectionCopy'
+import { externalLinks } from '~/consts/externalLinks'
+import { bulletList, joinBlocks, link, subsection } from './markdown'
 import type { SectionContext } from './renderProjectSection'
 import { formatUtcDateTime, renderWarnings } from './renderSectionParts'
 
@@ -28,9 +26,9 @@ type Requirement = StageSummary['requirements'][number]
 export function renderStageSection(
   props: StageProps,
   level: number,
-  context: SectionContext,
-  showUpcomingGuidelines = PROJECT_COUNTDOWNS.stageChanges >= UnixTime.now(),
+  { countdowns }: SectionContext,
 ) {
+  const showUpcomingGuidelines = countdowns.stageChanges >= UnixTime.now()
   const { stageConfig, name } = props
   if (stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return `${name}'s stage is currently under review.`
@@ -54,7 +52,7 @@ export function renderStageSection(
         ),
       ),
     ),
-    `${link('Learn more about Stages', resolveSiteUrl('/stages', context.pageUrl))}.`,
+    `${link('Learn more about Stages', '/stages')}.`,
     STAGES_DISCLAIMER,
   ])
 }
@@ -71,14 +69,9 @@ function describeStage(props: StageProps, stageConfig: StageConfigured) {
 }
 
 function renderWalkAway(walkAway: StageProps['walkAway']) {
-  switch (walkAway) {
-    case 'passed':
-      return '**The project passes the walkaway test**: users can exit in the presence of malicious operators even if the Security Council disappears.'
-    case 'not-passed':
-      return '**The project does not pass the walkaway test**: users are not able to exit in the presence of malicious operators if the Security Council disappears.'
-    case undefined:
-      return ''
-  }
+  if (!walkAway) return ''
+  const { verdict, explanation } = WALKAWAY_TEST[walkAway]
+  return `**${verdict}**: ${explanation}`
 }
 
 /** Without it, the stage would read as covering components L2BEAT did not assess. */
@@ -105,12 +98,10 @@ function renderAdditionalConsiderations(props: StageProps) {
   if (!props.additionalConsiderations) return ''
   return joinBlocks([
     props.isAppchain
-      ? 'Rollup operators cannot compromise the system, but being **application-specific** might bring additional risk.'
+      ? `${APPCHAIN_STAGE_RISK.before} **${APPCHAIN_STAGE_RISK.emphasized}** ${APPCHAIN_STAGE_RISK.after}`
       : '',
     props.additionalConsiderations.long,
-    props.isAppchain
-      ? "**Note:** We're still in the process of formalizing how to properly integrate appchains in the Stages framework."
-      : '',
+    props.isAppchain ? `**Note:** ${APPCHAIN_STAGES_NOTE}` : '',
   ])
 }
 

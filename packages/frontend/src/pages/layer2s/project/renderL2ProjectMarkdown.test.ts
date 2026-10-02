@@ -162,7 +162,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '- Risks shown: combined risks of Xai and its host chain Arbitrum One',
+      '- Risks shown: combined with host chain Arbitrum One',
       '- Exit window: 2d (sentiment: bad)',
     )
     expect(summary).not.toInclude('- Exit window: 7d')
@@ -190,7 +190,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '- Risks shown: individual risks of Xai alone, as the HTML rosette shows them while the project is under review',
+      '- Risks shown: Xai alone, while under review',
       '- Exit window: 7d',
     )
     expect(summary).not.toInclude('- Exit window: 2d')
@@ -209,6 +209,7 @@ describe(renderL2ProjectMarkdown.name, () => {
               items: [
                 {
                   id: 'across',
+                  slug: 'across',
                   name: 'Across',
                   iconUrl: '/icons/across.png',
                   volume: 8_000_000,
@@ -229,23 +230,6 @@ describe(renderL2ProjectMarkdown.name, () => {
             },
           },
         },
-        sections: [
-          {
-            type: 'InteropFlowsSection',
-            props: {
-              id: 'interop-flows',
-              title: 'Volume and flows',
-              protocols: [
-                {
-                  id: 'across',
-                  slug: 'across',
-                  name: 'Across',
-                  iconUrl: '/icons/across.png',
-                },
-              ],
-            },
-          } as ProjectDetailsSection,
-        ],
       }),
       'Summary',
     )

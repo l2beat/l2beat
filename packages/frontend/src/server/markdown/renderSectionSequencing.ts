@@ -2,16 +2,15 @@ import type { ProjectSequencingSpec, TableReadyValue } from '@l2beat/config'
 import type { SequencingSectionProps } from '~/components/projects/sections/SequencingSection'
 import { CENTRALIZED_SEQUENCING_FIELDS } from '~/components/projects/sections/sequencing/centralizedSequencingFields'
 import { getSequencerSetRows } from '~/components/projects/sections/sequencing/sequencerSetFields'
+import { configMarkdown } from './configMarkdown'
 import {
   heading,
   joinBlocks,
   link,
-  nestHeadings,
   table,
   textSubsection,
   withSentiment,
 } from './markdown'
-import type { SectionContext } from './renderProjectSection'
 import {
   renderDiagram,
   renderReferences,
@@ -21,17 +20,16 @@ import {
 export function renderSequencing(
   props: Omit<SequencingSectionProps, 'title' | 'sectionOrder'>,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    renderDiagram(props.diagram, context.pageUrl),
+    renderDiagram(props.diagram),
     heading(level, props.name),
-    nestHeadings(props.content, level + 1),
+    configMarkdown(props.content, level + 1),
     renderSpecSheet(props.sequencingSpec),
     props.inclusionDelay
       ? joinBlocks([
-          `The inclusion delay chart is shown on ${link('the HTML page', `${context.pageUrl}#${props.id}`)}.`,
-          nestHeadings(props.inclusionDelayChartDescription, level + 1),
+          `The inclusion delay chart is shown on ${link('the HTML page', `#${props.id}`)}.`,
+          configMarkdown(props.inclusionDelayChartDescription, level + 1),
         ])
       : '',
     textSubsection(

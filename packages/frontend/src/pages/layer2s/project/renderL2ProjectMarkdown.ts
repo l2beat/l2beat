@@ -1,6 +1,10 @@
 import type { ReasonForBeingInOther } from '@l2beat/config'
 import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import {
+  TVS_ASSET_CATEGORIES,
+  TVS_ASSET_CATEGORY_LABELS,
+} from '~/components/breakdown/tvsAssetCategories'
 import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
@@ -184,20 +188,11 @@ type TokensBreakdown = NonNullable<TvsTokens['breakdown']>
 /** The "Tokens breakdown" tooltip of the HTML page: only the asset classes with value. */
 function formatTokensBreakdown(breakdown: TokensBreakdown) {
   if (breakdown.total === 0) return NO_DATA
-  const assets: [string, number][] = [
-    ['ETH & derivatives', breakdown.ether],
-    ['Stablecoins', breakdown.stablecoin],
-    ['BTC & derivatives', breakdown.btc],
-    ['Other', breakdown.other],
-    ['Public RWAs', breakdown.rwaPublic],
-    ['Restricted RWAs', breakdown.rwaRestricted],
-  ]
-  return assets
-    .filter(([, value]) => value > 0)
-    .map(
-      ([title, value]) =>
-        `${title} ${formatUsd(value)} (${formatPercent(value / breakdown.total)})`,
-    )
+  return TVS_ASSET_CATEGORIES.filter((category) => breakdown[category] > 0)
+    .map((category) => {
+      const value = breakdown[category]
+      return `${TVS_ASSET_CATEGORY_LABELS[category]} ${formatUsd(value)} (${formatPercent(value / breakdown.total)})`
+    })
     .join(', ')
 }
 
@@ -261,7 +256,7 @@ function getSummaryRisks({
       risks: rosette.self,
       fact: {
         label: 'Risks shown',
-        value: `individual risks of ${name} alone, as the HTML rosette shows them while the project is under review; the Risk analysis section also lists them combined with its host chain ${hostChainName}`,
+        value: `${name} alone, while under review; Risk analysis also lists them combined with ${hostChainName}`,
       },
     }
   }
@@ -269,33 +264,24 @@ function getSummaryRisks({
     risks: rosette.stacked,
     fact: {
       label: 'Risks shown',
-      value: `combined risks of ${name} and its host chain ${hostChainName}, as the HTML rosette shows them by default; the Risk analysis section lists both separately`,
+      value: `combined with host chain ${hostChainName}; Risk analysis also lists each separately`,
     },
   }
 }
 
 /** The cross-chain block of the HTML summary; its volume and top lists cover the last 24 hours. */
-function getInteropFacts({ header, sections }: ProjectL2Entry): ProjectFact[] {
+function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
   const interop = header.interop
   if (!interop) return []
-  const protocolSlugs = new Map(
-    sections.flatMap((section) =>
-      section.type === 'InteropFlowsSection'
-        ? section.props.protocols.map((p) => [p.id, p.slug] as const)
-        : [],
-    ),
-  )
-  const linkProtocol = (protocol: { id: string; name: string }) => {
-    const slug = protocolSlugs.get(protocol.id)
-    return slug
-      ? link(protocol.name, `${PRODUCTION_ORIGIN}/interop/protocols/${slug}`)
+  const linkProtocol = (protocol: {
+    slug: string | undefined
+    name: string
+  }) =>
+    protocol.slug
+      ? link(protocol.name, `/interop/protocols/${protocol.slug}`)
       : protocol.name
-  }
   const linkToken = (token: { id: string; symbol: string }) =>
-    link(
-      token.symbol,
-      `${PRODUCTION_ORIGIN}${getInteropTokenPagePath({ ...token, issuer: null })}`,
-    )
+    link(token.symbol, getInteropTokenPagePath({ ...token, issuer: null }))
   return compact([
     {
       label: 'Last 24h cross-chain volume',

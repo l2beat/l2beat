@@ -5,20 +5,12 @@ import {
 } from '~/components/garden/crops'
 import type { GardenCropsSectionProps } from '~/components/projects/sections/GardenCropsSection'
 import { GARDEN_PATH } from '~/pages/garden/paths'
-import {
-  bulletList,
-  joinBlocks,
-  link,
-  resolveSiteUrl,
-  subsection,
-} from './markdown'
-import type { SectionContext } from './renderProjectSection'
+import { bulletList, joinBlocks, link, subsection } from './markdown'
 
 /** The garden verdict and each crop's findings; the plants themselves are only a picture of the same. */
 export function renderGardenCropsSection(
   { crops, inGarden }: Pick<GardenCropsSectionProps, 'crops' | 'inGarden'>,
   level: number,
-  context: SectionContext,
 ) {
   const entries = toCropEntries(crops)
   const inBloom = entries.filter(
@@ -27,7 +19,7 @@ export function renderGardenCropsSection(
   return joinBlocks([
     `${inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'} ${inBloom} of ${entries.length} in bloom.`,
     ...entries.map((entry) => renderCrop(entry, level)),
-    `${link('See the whole garden', resolveSiteUrl(GARDEN_PATH, context.pageUrl))}.`,
+    `${link('See the whole garden', GARDEN_PATH)}.`,
   ])
 }
 

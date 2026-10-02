@@ -9,17 +9,15 @@ import type { PastUpgradesData } from '~/components/projects/sections/PastUpgrad
 import type { Participant } from '~/components/projects/sections/permissions/Participants'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
+import { configMarkdown } from './configMarkdown'
 import {
   bulletList,
   heading,
   joinBlocks,
   link,
-  nestHeadings,
-  resolveSiteUrl,
   subsection,
   warning,
 } from './markdown'
-import type { SectionContext } from './renderProjectSection'
 import {
   formatPastUpgrade,
   formatPastUpgradeStats,
@@ -46,26 +44,25 @@ export function renderContractsSection(
     | 'discoUi'
   >,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
     hasImpactfulChanges(Object.values(props.contracts).flat())
       ? CONTRACTS_UPDATED_NOTE
       : '',
-    renderDiagram(props.diagram, context.pageUrl),
+    renderDiagram(props.diagram),
     renderDiscoUi(props.discoUi),
     ...Object.entries(props.contracts).map(([chain, contracts]) =>
       subsection(
         level,
         chain,
-        renderContractList(contracts, 'contracts', level + 1, context),
+        renderContractList(contracts, 'contracts', level + 1),
       ),
     ),
     renderRisks(
       props.risks,
       'The current deployment carries some associated risks:',
     ),
-    renderProgramHashesSubsection(props, level, context),
+    renderProgramHashesSubsection(props, level),
   ])
 }
 
@@ -79,7 +76,6 @@ export function renderPermissionsSection(
     'permissionsByChain' | 'permissionedEntities' | 'discoUi'
   >,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
     renderDiscoUi(discoUi),
@@ -92,22 +88,12 @@ export function renderPermissionsSection(
           subsection(
             level + 1,
             'Roles',
-            renderContractList(
-              permissions.roles,
-              'permissions',
-              level + 2,
-              context,
-            ),
+            renderContractList(permissions.roles, 'permissions', level + 2),
           ),
           subsection(
             level + 1,
             'Actors',
-            renderContractList(
-              permissions.actors,
-              'permissions',
-              level + 2,
-              context,
-            ),
+            renderContractList(permissions.actors, 'permissions', level + 2),
           ),
         ]),
       ),
@@ -133,11 +119,10 @@ function renderContractList(
   contracts: TechnologyContract[],
   kind: 'contracts' | 'permissions',
   level: number,
-  context: SectionContext,
 ) {
   const sharedNames = findSharedNames(contracts)
   const render = (entry: TechnologyContract) =>
-    renderContract(entry, level, context, sharedNames.has(entry.name))
+    renderContract(entry, level, sharedNames.has(entry.name))
   const [changed, unchanged] = partition(
     contracts,
     (contract) => contract.impactfulChange,
@@ -167,7 +152,6 @@ function findSharedNames(contracts: TechnologyContract[]) {
 function renderContract(
   entry: TechnologyContract,
   level: number,
-  context: SectionContext,
   isNameShared: boolean,
 ) {
   const upgradeableBy = entry.upgradeableBy ?? []
@@ -175,14 +159,14 @@ function renderContract(
     heading(level, contractTitle(entry, isNameShared)),
     `Addresses: ${[...entry.addresses, ...entry.admins].map(renderContractAddress).join(', ')}`,
     renderContractPastUpgrades(entry.pastUpgrades),
-    nestHeadings(entry.description, level + 1),
+    configMarkdown(entry.description, level + 1),
     entry.escrow ? renderEscrowTokens(entry.escrow) : '',
     upgradeableBy.length > 0
       ? `Can be upgraded by: ${upgradeableBy.map((actor) => `${actor.name} with ${actor.delay} delay`).join(', ')}`
       : '',
     entry.upgradeDelay ? `Upgrade delay: ${entry.upgradeDelay}` : '',
     entry.participants ? renderParticipants(entry.participants) : '',
-    renderUsedInProjects(entry.usedInProjects ?? [], context.pageUrl),
+    renderUsedInProjects(entry.usedInProjects ?? []),
     renderUpgradeConsiderations(entry.upgradeConsiderations, level),
     renderReferences(entry.references),
   ])
@@ -241,7 +225,7 @@ function renderEscrowTokens(escrow: TechnologyContractEscrow) {
  * Same split as the HTML entry: an implementation shared by a project that
  * also shares the proxy is listed under the proxy only.
  */
-function renderUsedInProjects(projects: UsedInProject[], pageUrl: string) {
+function renderUsedInProjects(projects: UsedInProject[]) {
   const proxies = projects.filter((p) => p.type === 'proxy')
   const proxyIds = new Set(proxies.map((p) => p.id))
   const implementations = projects.filter(
@@ -257,15 +241,15 @@ function renderUsedInProjects(projects: UsedInProject[], pageUrl: string) {
       ] as const
     ).map(([label, used]) =>
       used.length > 0
-        ? `${label}: ${used.map((project) => renderUsedInProject(project, pageUrl)).join(', ')}`
+        ? `${label}: ${used.map((project) => renderUsedInProject(project)).join(', ')}`
         : '',
     ),
   )
 }
 
 /** Project URLs are site paths; the fragment points at the entry on that page, as on the HTML page. */
-function renderUsedInProject(project: UsedInProject, pageUrl: string) {
-  const url = resolveSiteUrl(`${project.url}#${project.targetName}`, pageUrl)
+function renderUsedInProject(project: UsedInProject) {
+  const url = `${project.url}#${project.targetName}`
   return link(project.name, url)
 }
 
@@ -283,7 +267,7 @@ function renderContractPastUpgrades(
 /** Collapsed behind "Show upgrade details" on the HTML page. */
 function renderUpgradeConsiderations(text: string | undefined, level: number) {
   if (!text) return ''
-  return joinBlocks(['**Upgrade details**', nestHeadings(text, level + 1)])
+  return joinBlocks(['**Upgrade details**', configMarkdown(text, level + 1)])
 }
 
 type PermissionedEntity = NonNullable<

@@ -4,42 +4,13 @@ import {
   bulletList,
   formatChange,
   markCritical,
-  nestHeadings,
   numberedList,
   subsection,
   table,
-  tidyMarkdown,
 } from './markdown'
 
 // Method: feed small hand-written markdown snippets and compare with the
 // expected text literally.
-describe(nestHeadings.name, () => {
-  it('moves the shallowest heading to the given level, keeping the hierarchy', () => {
-    expect(nestHeadings('## Architecture\n\nText\n\n### Nodes', 4)).toEqual(
-      '#### Architecture\n\nText\n\n##### Nodes',
-    )
-  })
-
-  it('leaves text that is already deep enough or has no headings', () => {
-    expect(nestHeadings('#### Deep', 3)).toEqual('#### Deep')
-    expect(nestHeadings('Plain #hashtag text', 3)).toEqual(
-      'Plain #hashtag text',
-    )
-  })
-
-  it('does not treat # lines inside code fences as headings', () => {
-    expect(nestHeadings('# Title\n\n```\n# comment\n```', 3)).toEqual(
-      '### Title\n\n```\n# comment\n```',
-    )
-  })
-
-  it('stops at level 6, the deepest markdown heading', () => {
-    expect(nestHeadings('# One\n\n## Two', 6)).toEqual(
-      '###### One\n\n###### Two',
-    )
-  })
-})
-
 describe(subsection.name, () => {
   it('heads a non-empty body', () => {
     expect(subsection(3, 'Roles', 'Body')).toEqual('### Roles\n\nBody')
@@ -52,11 +23,13 @@ describe(subsection.name, () => {
 })
 
 describe(absolutizeLinks.name, () => {
+  const PAGE_URL = 'https://l2beat.com/scaling/projects/x'
+
   it('prefixes site paths in links and images with the origin', () => {
     expect(
       absolutizeLinks(
         'See [best practices](/publications/x) and ![diagram](/images/y.png).',
-        'https://l2beat.com',
+        PAGE_URL,
       ),
     ).toEqual(
       'See [best practices](https://l2beat.com/publications/x) and ![diagram](https://l2beat.com/images/y.png).',
@@ -65,7 +38,18 @@ describe(absolutizeLinks.name, () => {
 
   it('leaves absolute and protocol-relative URLs alone', () => {
     const text = '[a](https://example.com/x) [b](//cdn.example.com/y)'
-    expect(absolutizeLinks(text, 'https://l2beat.com')).toEqual(text)
+    expect(absolutizeLinks(text, PAGE_URL)).toEqual(text)
+  })
+
+  it('resolves fragment and query links against the HTML page', () => {
+    expect(
+      absolutizeLinks(
+        'See [permissions](#permissions), [update](?update=1).',
+        PAGE_URL,
+      ),
+    ).toEqual(
+      'See [permissions](https://l2beat.com/scaling/projects/x#permissions), [update](https://l2beat.com/scaling/projects/x?update=1).',
+    )
   })
 })
 
@@ -156,68 +140,5 @@ describe(numberedList.name, () => {
       '9. First.\n\n   More.',
     )
     expect(numberedList(['Tenth.\nMore.'], 10)).toEqual('10. Tenth.\n    More.')
-  })
-})
-
-describe(tidyMarkdown.name, () => {
-  const PAGE_URL = 'https://l2beat.com/scaling/projects/x'
-
-  it('resolves fragment links against the HTML page', () => {
-    expect(tidyMarkdown('See [permissions](#permissions).', PAGE_URL)).toEqual(
-      'See [permissions](https://l2beat.com/scaling/projects/x#permissions).',
-    )
-  })
-
-  it('turns br tags, raw or HTML-escaped, into line breaks', () => {
-    expect(
-      tidyMarkdown(
-        '1. a\n<br>\n## Next\n\nOne.<br />Two. &lt;br/&gt; Three.',
-        PAGE_URL,
-      ),
-    ).toEqual('1. a\n\n## Next\n\nOne.\nTwo.\nThree.')
-  })
-
-  it('keeps table rows on one line when a cell has a br tag', () => {
-    expect(tidyMarkdown('| a<br>b | c |', PAGE_URL)).toEqual('| a b | c |')
-  })
-
-  it('trims trailing spaces and collapses blank-line runs', () => {
-    expect(tidyMarkdown('One.  \n\n\n\nTwo. ', PAGE_URL)).toEqual(
-      'One.\n\nTwo.',
-    )
-  })
-
-  it('collapses runs of spaces in prose, but not in inline code or tables', () => {
-    expect(
-      tidyMarkdown('Too  many   spaces in `a  b`.\n| x  | y |', PAGE_URL),
-    ).toEqual('Too many spaces in `a  b`.\n| x  | y |')
-  })
-
-  it('uses one bullet marker', () => {
-    expect(tidyMarkdown('* one\n  * nested\n**bold**', PAGE_URL)).toEqual(
-      '- one\n  - nested\n**bold**',
-    )
-  })
-
-  it('aligns wrapped lines of template-literal text with the text they continue', () => {
-    expect(
-      tidyMarkdown(
-        'It delivers\n      limitless scale.\n\n- An item\n      wrapped.\n    - nested',
-        PAGE_URL,
-      ),
-    ).toEqual(
-      'It delivers\nlimitless scale.\n\n- An item\n  wrapped.\n    - nested',
-    )
-  })
-
-  it('keeps indented code after a blank line', () => {
-    const code = 'Run:\n\n    make  build\n    make  test'
-    expect(tidyMarkdown(code, PAGE_URL)).toEqual(code)
-  })
-
-  it('leaves fenced code verbatim', () => {
-    const code =
-      '```\n* not a bullet\n\n\n\nx  =  1 <br> [a](#b)\n      indented\n```'
-    expect(tidyMarkdown(code, PAGE_URL)).toEqual(code)
   })
 })

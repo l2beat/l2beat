@@ -11,7 +11,7 @@ import { getUnderReviewText } from '~/utils/project/underReview'
  */
 export function renderDefiProjectMarkdown(
   entry: ProjectDefiEntry,
-  totalValueLockedUsd?: number,
+  totalValueLockedUsd: number | undefined,
 ): string {
   return renderProjectMarkdown({
     name: entry.name,

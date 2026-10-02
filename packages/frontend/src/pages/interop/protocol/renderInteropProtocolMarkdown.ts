@@ -134,7 +134,7 @@ function formatTokenVolume(token: TokenData) {
 
 function linkToken(token: InteropTopTokenData | TokenData) {
   const path = getInteropTokenUrl(token)
-  return path ? link(token.symbol, `${PRODUCTION_ORIGIN}${path}`) : token.symbol
+  return path ? link(token.symbol, path) : token.symbol
 }
 
 function formatTransferSize(size: TransferSizeDataPoint) {

@@ -1,7 +1,9 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { absolutizeLinks } from './markdown'
 import { renderProjectMarkdown } from './renderProjectMarkdown'
 import { renderProjectSection } from './renderProjectSection'
 import { renderStageSection } from './renderSectionStage'
@@ -97,7 +99,7 @@ describe(renderProjectSection.name, () => {
 
   describe('stage', () => {
     it('words each requirement as met, under review or an issue instead of a checkbox', () => {
-      const markdown = renderStage(STAGE_PROPS, false)
+      const markdown = renderStage(STAGE_PROPS, 'in effect')
 
       expect(markdown).toInclude(
         '### Stage 1\n\n1 issue needs fixing.\n\n**Principle**\n\n- Met: Only the Security Council can steal funds.\n\nThe principle explained.\n\n**Guidelines**\n\n- Met: Proofs are permissionless.\n- Under review: Exits are fast.\n- Issue: Users cannot exit without operators.',
@@ -123,10 +125,10 @@ describe(renderProjectSection.name, () => {
         },
       }
 
-      expect(renderStage(withUpcoming, true)).toInclude(
+      expect(renderStage(withUpcoming, 'pending')).toInclude(
         '### Stage 2\n\n1 requirement met.\n\n- Met: Now.\n\n**Upcoming guidelines**\n\n- Issue (upcoming): Later.',
       )
-      expect(renderStage(withUpcoming, false)).toInclude(
+      expect(renderStage(withUpcoming, 'in effect')).toInclude(
         '### Stage 2\n\n1 issue needs fixing.\n\n- Met: Now.\n- Issue (upcoming): Later.',
       )
     })
@@ -147,7 +149,7 @@ describe(renderProjectSection.name, () => {
             },
           },
         },
-        false,
+        'in effect',
       )
 
       expect(markdown).toInclude(
@@ -578,19 +580,27 @@ describe(renderProjectSection.name, () => {
 
 const PAGE_URL = 'https://l2beat.com/layer2s/projects/arbitrum'
 
+/** Links resolve against the page once the whole document is assembled, as `renderProjectMarkdown` does. */
 function render(section: ProjectDetailsSection) {
-  return renderProjectSection(section, 2, { pageUrl: PAGE_URL, apiLinks: {} })
+  return absolutizeLinks(
+    renderProjectSection(section, 2, {
+      apiLinks: {},
+      countdowns: PROJECT_COUNTDOWNS,
+    }),
+    PAGE_URL,
+  )
 }
 
+/** The stage changes are pending until their countdown ends, so a day either side of now picks the phase. */
 function renderStage(
   props: Parameters<typeof renderStageSection>[0],
-  showUpcomingGuidelines: boolean,
+  stageChanges: 'pending' | 'in effect',
 ) {
-  return renderStageSection(
-    props,
-    3,
-    { pageUrl: PAGE_URL, apiLinks: {} },
-    showUpcomingGuidelines,
+  const offset = stageChanges === 'pending' ? UnixTime.DAY : -UnixTime.DAY
+  const countdowns = { stageChanges: UnixTime(UnixTime.now() + offset) }
+  return absolutizeLinks(
+    renderStageSection(props, 3, { apiLinks: {}, countdowns }),
+    PAGE_URL,
   )
 }
 

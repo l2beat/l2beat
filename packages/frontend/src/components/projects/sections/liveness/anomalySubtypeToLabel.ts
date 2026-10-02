@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 
-/** Apart from the indicator component, so the markdown of the page words anomalies the same. */
+/** Shared by the liveness components and the markdown, so both word anomalies the same. */
 export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   switch (type) {
     case 'batchSubmissions':

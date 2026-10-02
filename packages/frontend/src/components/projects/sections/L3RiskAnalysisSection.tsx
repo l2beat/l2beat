@@ -13,6 +13,7 @@ import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../WarningBar'
 import { RiskBanner } from '../RiskBanner'
 import { ProjectSection } from './ProjectSection'
+import { L3_RISKS_DESCRIPTION } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
 import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
@@ -49,8 +50,7 @@ export function L3RiskAnalysisSection({
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
       <div className="font-normal text-paragraph-15 md:text-paragraph-16 dark:text-white/80">
-        The L3 risks depend on the individual properties of L3 and those of the
-        host chain combined.
+        {L3_RISKS_DESCRIPTION}
       </div>
       {unverifiedContracts.length > 0 && (
         <UnverifiedContractsWarning

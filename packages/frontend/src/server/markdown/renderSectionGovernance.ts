@@ -1,14 +1,9 @@
 import type { ProjectGovernanceInfo } from '@l2beat/config'
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
+import { PAST_UPGRADES_DESCRIPTION } from '~/components/projects/sections/sectionCopy'
 import type { UpgradesAndGovernanceSectionProps } from '~/components/projects/sections/UpgradesAndGovernanceSection'
-import {
-  bulletList,
-  joinBlocks,
-  nestHeadings,
-  subsection,
-  table,
-} from './markdown'
-import type { SectionContext } from './renderProjectSection'
+import { configMarkdown } from './configMarkdown'
+import { bulletList, joinBlocks, subsection, table } from './markdown'
 import {
   formatPastUpgrade,
   formatPastUpgradeStats,
@@ -21,11 +16,10 @@ export function renderUpgradesAndGovernance(
     'diagram' | 'content' | 'governanceInfo' | 'pastUpgrades'
   >,
   level: number,
-  context: SectionContext,
 ) {
   return joinBlocks([
-    renderDiagram(props.diagram, context.pageUrl),
-    nestHeadings(props.content, level),
+    renderDiagram(props.diagram),
+    configMarkdown(props.content, level),
     renderGovernanceProfile(props.governanceInfo, level),
     renderPastUpgradesSubsection(props.pastUpgrades, level),
   ])
@@ -72,7 +66,7 @@ function renderPastUpgradesSubsection(
     level,
     'Past upgrades',
     joinBlocks([
-      'The metrics include upgrades on the currently used proxy contracts. Historical proxy contracts and changes of such are not included.',
+      PAST_UPGRADES_DESCRIPTION,
       bulletList(formatPastUpgradeStats(pastUpgrades.stats)),
       bulletList(pastUpgrades.upgrades.map(formatPastUpgrade)),
     ]),

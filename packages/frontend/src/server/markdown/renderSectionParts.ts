@@ -5,14 +5,7 @@ import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/Proje
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
-import {
-  bulletList,
-  joinBlocks,
-  link,
-  markCritical,
-  resolveSiteUrl,
-  warning,
-} from './markdown'
+import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
 
 /*
  * Pieces shared by several section bodies. They live apart from
@@ -28,12 +21,9 @@ export const INCOMPLETE_NOTE =
   '**Note:** This section requires more research and might not present accurate information.'
 
 /** Only the light variant: the dark one is the same diagram recoloured. */
-export function renderDiagram(
-  diagram: DiagramParams | undefined,
-  pageUrl: string,
-) {
+export function renderDiagram(diagram: DiagramParams | undefined) {
   if (!diagram) return ''
-  return `![${diagram.caption}](${resolveSiteUrl(diagram.src.light.src, pageUrl)})`
+  return `![${diagram.caption}](${diagram.src.light.src})`
 }
 
 /** The HTML banner under a section linking the project it depends on. */
@@ -41,28 +31,23 @@ export function renderRelatedProjectBanner(
   banner: Pick<ProjectDetailsRelatedProjectBannerProps, 'text' | 'href'> & {
     project: { name: string }
   },
-  pageUrl: string,
 ) {
-  return `${banner.text} ${link(banner.project.name, resolveSiteUrl(banner.href, pageUrl))}`
+  return `${banner.text} ${link(banner.project.name, banner.href)}`
 }
 
 /** Same wording as the HTML banner, which reads as one sentence with the host chain link. */
 export function renderHostChainWarning(
   hostChainWarning: HostChainRisksWarningProps | undefined,
-  pageUrl: string,
 ) {
   if (!hostChainWarning) return ''
   const { hostChainName, hostChainSlug, riskCount } = hostChainWarning
-  return renderRelatedProjectBanner(
-    {
-      text: riskCount
-        ? `There are ${riskCount} additional risks coming from the host chain`
-        : 'The section considers only the L3 properties. For more details please refer to',
-      href: `/layer2s/projects/${hostChainSlug}`,
-      project: { name: hostChainName },
-    },
-    pageUrl,
-  )
+  return renderRelatedProjectBanner({
+    text: riskCount
+      ? `There are ${riskCount} additional risks coming from the host chain`
+      : 'The section considers only the L3 properties. For more details please refer to',
+    href: `/layer2s/projects/${hostChainSlug}`,
+    project: { name: hostChainName },
+  })
 }
 
 /** UTC and ISO-ordered, so dates sort and parse the same for every reader. */

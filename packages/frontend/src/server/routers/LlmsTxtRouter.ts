@@ -64,8 +64,13 @@ function withoutUnservedMarkdown(section: MarkdownSection): MarkdownSection {
 }
 
 function isServed(link: MarkdownLink) {
-  const isMarkdownPage = 'path' in link && link.path.endsWith('.md')
-  return !isMarkdownPage || isServedAsMarkdown(link.path)
+  return !isMarkdownPath(link) || isServedAsMarkdown(link.path)
+}
+
+function isMarkdownPath(
+  link: MarkdownLink,
+): link is MarkdownLink & { path: `/${string}.md` } {
+  return 'path' in link && link.path.endsWith('.md')
 }
 
 /** To list a new page, add one entry to the matching section. */

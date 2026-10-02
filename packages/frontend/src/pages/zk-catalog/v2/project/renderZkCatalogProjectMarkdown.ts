@@ -2,7 +2,7 @@ import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
-import { bulletList, formatChange, formatUsd } from '~/server/markdown/markdown'
+import { formatChange, formatUsd } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
@@ -21,10 +21,9 @@ export function renderZkCatalogProjectMarkdown(
 ): string {
   // Production URL, like the canonical link: the document is meant to be
   // cited, whichever deployment rendered it.
-  const pageUrl = `${PRODUCTION_ORIGIN}/zk-catalog/${entry.slug}`
   return renderProjectMarkdown({
     name: entry.name,
-    pageUrl,
+    pageUrl: `${PRODUCTION_ORIGIN}/zk-catalog/${entry.slug}`,
     summary: {
       warnings: compact([
         ...getProjectStatusWarnings(entry),
@@ -32,7 +31,7 @@ export function renderZkCatalogProjectMarkdown(
         entry.header.redWarning?.text,
         entry.header.warning,
       ]),
-      facts: getFacts(entry, pageUrl),
+      facts: getFacts(entry),
       // The page has no risk rosette: trusted setup risks are facts instead.
       risks: [],
       description: entry.header.description,
@@ -44,7 +43,7 @@ export function renderZkCatalogProjectMarkdown(
 }
 
 /** Labels follow the header and the summary block at the top of the HTML page. */
-function getFacts({ creator, header }: ProjectZkCatalogEntry, pageUrl: string) {
+function getFacts({ creator, header }: ProjectZkCatalogEntry) {
   const { zkVM = [], snark = [], finalWrap = [] } = header.techStack
   const zkVMTags = [...zkVM, ...snark]
   return compact([
@@ -54,7 +53,7 @@ function getFacts({ creator, header }: ProjectZkCatalogEntry, pageUrl: string) {
       value: `${formatUsd(header.tvs.value)} (${formatChange(header.tvs.change, header.tvs.changePeriod)})`,
     },
     ...Object.values(header.trustedSetupsByProofSystem).map((proofSystem) =>
-      getTrustedSetupsFact(proofSystem, pageUrl),
+      getTrustedSetupsFact(proofSystem),
     ),
     zkVMTags.length > 0 && {
       label: 'zkVM',
@@ -73,26 +72,22 @@ function getFacts({ creator, header }: ProjectZkCatalogEntry, pageUrl: string) {
  * out. Named by the proof system tag, as a project can have several of one
  * type (e.g. two Groth16 wraps).
  */
-function getTrustedSetupsFact(
-  {
-    trustedSetups,
-    projectsUsedIn,
-    verifiers,
-  }: TrustedSetupsByProofSystem[string],
-  pageUrl: string,
-) {
+function getTrustedSetupsFact({
+  trustedSetups,
+  projectsUsedIn,
+  verifiers,
+}: TrustedSetupsByProofSystem[string]) {
   const proofSystem = trustedSetups[0]?.proofSystem
   if (!proofSystem) return undefined
-  const details = bulletList([
-    ...trustedSetups.map(
-      (setup) =>
-        `${setup.name}, risk ${formatTrustedSetupRisk(setup.risk)} per the ${TRUSTED_SETUP_FRAMEWORK_LINK}: ${setup.shortDescription}`,
-    ),
-    `Used in: ${renderUsedIn(projectsUsedIn, pageUrl)}`,
-    `Verifiers: ${formatVerifierCounts(verifiers)}`,
-  ])
   return {
     label: `Trusted setups for ${formatTag(proofSystem)}`,
-    value: `\n${details}`,
+    details: [
+      ...trustedSetups.map(
+        (setup) =>
+          `${setup.name}, risk ${formatTrustedSetupRisk(setup.risk)} per the ${TRUSTED_SETUP_FRAMEWORK_LINK}: ${setup.shortDescription}`,
+      ),
+      `Used in: ${renderUsedIn(projectsUsedIn)}`,
+      `Verifiers: ${formatVerifierCounts(verifiers)}`,
+    ],
   }
 }

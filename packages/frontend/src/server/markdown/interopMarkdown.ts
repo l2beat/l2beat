@@ -17,12 +17,15 @@ import {
  */
 export function renderInteropVolumeSection(
   {
+    id,
     entry,
     interopChains,
     topRoutes,
-  }: Pick<InteropVolumeSectionProps, 'entry' | 'interopChains' | 'topRoutes'>,
+  }: Pick<
+    InteropVolumeSectionProps,
+    'id' | 'entry' | 'interopChains' | 'topRoutes'
+  >,
   level: number,
-  flowsGraphUrl: string,
 ) {
   const chainNames = new Map(interopChains.map((c) => [c.id, c.name]))
   const chainName = (id: string) => chainNames.get(id) ?? id
@@ -44,7 +47,7 @@ export function renderInteropVolumeSection(
       ]),
     ),
     renderTopRoutes(topRoutes, chainName, level),
-    `The flows between chains are an interactive graph on ${link('the HTML page', flowsGraphUrl)}.`,
+    `The flows between chains are an interactive graph on ${link('the HTML page', `#${id}`)}.`,
   ])
 }
 

@@ -11,7 +11,7 @@ import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 // values are literals from the fixture, worded as on the HTML page.
 describe(renderDefiProjectMarkdown.name, () => {
   it('opens with the project name and a link to the HTML page', () => {
-    const markdown = renderDefiProjectMarkdown(ENTRY)
+    const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(markdown).toMatchRegex(
       /^# Lido\n\nMarkdown version of https:\/\/l2beat\.com\/defi\/projects\/lido\n\n/,
@@ -41,7 +41,10 @@ describe(renderDefiProjectMarkdown.name, () => {
   })
 
   it('lists the header links, badges with their descriptions and the contracts explorer', () => {
-    const summary = getSection(renderDefiProjectMarkdown(ENTRY), 'Summary')
+    const summary = getSection(
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+      'Summary',
+    )
 
     expect(summary).toInclude(
       '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
@@ -51,15 +54,18 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('surfaces the under review status and warnings before the facts', () => {
     const summary = getSection(
-      renderDefiProjectMarkdown({
-        ...ENTRY,
-        isUnderReview: true,
-        warnings: {
-          emergency: 'Funds are at risk.',
-          red: { text: 'Critical contracts are unverified.' },
-          yellow: 'Withdrawals are paused.',
+      renderDefiProjectMarkdown(
+        {
+          ...ENTRY,
+          isUnderReview: true,
+          warnings: {
+            emergency: 'Funds are at risk.',
+            red: { text: 'Critical contracts are unverified.' },
+            yellow: 'Withdrawals are paused.',
+          },
         },
-      }),
+        TOTAL_VALUE_LOCKED_USD,
+      ),
       'Summary',
     )
 
@@ -75,7 +81,7 @@ describe(renderDefiProjectMarkdown.name, () => {
   })
 
   it('follows the HTML page outline with one H2 per section', () => {
-    const headings = renderDefiProjectMarkdown(ENTRY)
+    const headings = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
       .split('\n')
       .filter((line) => line.startsWith('## '))
 
@@ -91,7 +97,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('carries the protocol description with its references', () => {
     const description = getSection(
-      renderDefiProjectMarkdown(ENTRY),
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
       'Protocol description',
     )
 
@@ -103,13 +109,16 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('points the value locked chart to the HTML page', () => {
     expect(
-      getSection(renderDefiProjectMarkdown(ENTRY), 'Value Locked'),
+      getSection(
+        renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+        'Value Locked',
+      ),
     ).toInclude('https://l2beat.com/defi/projects/lido#tvs')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
     const dependencies = getSection(
-      renderDefiProjectMarkdown(ENTRY),
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
       'External dependencies',
     )
 
@@ -123,10 +132,13 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('says so when there are no external dependencies', () => {
     const dependencies = getSection(
-      renderDefiProjectMarkdown({
-        ...ENTRY,
-        sections: [externalDependencies([])],
-      }),
+      renderDefiProjectMarkdown(
+        {
+          ...ENTRY,
+          sections: [externalDependencies([])],
+        },
+        TOTAL_VALUE_LOCKED_USD,
+      ),
       'External dependencies',
     )
 
@@ -134,7 +146,7 @@ describe(renderDefiProjectMarkdown.name, () => {
   })
 
   it('lists permissions and contracts per chain with addresses', () => {
-    const markdown = renderDefiProjectMarkdown(ENTRY)
+    const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(getSection(markdown, 'Permissions')).toInclude(
       '#### Actors\n\n##### Lido DAO Agent\n\nAddresses: [0x2222222222222222222222222222222222222222](https://etherscan.io/address/0x2222222222222222222222222222222222222222)\n\nCan upgrade every contract.',

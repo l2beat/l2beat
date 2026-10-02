@@ -4,8 +4,10 @@ import type {
   TechnologyContract,
   TechnologyContractAddress,
 } from '~/components/projects/sections/ContractEntry'
+
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { PROGRAM_HASHES_SECTION_INTRO } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
+import { absolutizeLinks } from './markdown'
 import {
   renderContractsSection,
   renderPermissionsSection,
@@ -43,14 +45,15 @@ describe(renderContractsSection.name, () => {
   })
 
   it('links Disco like the banner above the HTML section', () => {
-    const markdown = renderContractsSection(
-      {
-        contracts: {},
-        risks: [],
-        discoUi: { href: 'https://disco.l2beat.com/ui/p/blobstream' },
-      } as unknown as Parameters<typeof renderContractsSection>[0],
-      3,
-      CONTEXT,
+    const markdown = resolveLinks(
+      renderContractsSection(
+        {
+          contracts: {},
+          risks: [],
+          discoUi: { href: 'https://disco.l2beat.com/ui/p/blobstream' },
+        } as unknown as Parameters<typeof renderContractsSection>[0],
+        3,
+      ),
     )
 
     expect(markdown).toInclude(
@@ -142,23 +145,24 @@ describe(renderContractsSection.name, () => {
   })
 
   it('links the architecture diagram by its absolute URL, captioned', () => {
-    const markdown = renderContractsSection(
-      {
-        contracts: {},
-        risks: [],
-        diagram: {
-          caption: 'A diagram of the smart contract architecture',
-          src: {
-            light: {
-              src: '/images/architecture/arbitrum.png',
-              width: 1,
-              height: 1,
+    const markdown = resolveLinks(
+      renderContractsSection(
+        {
+          contracts: {},
+          risks: [],
+          diagram: {
+            caption: 'A diagram of the smart contract architecture',
+            src: {
+              light: {
+                src: '/images/architecture/arbitrum.png',
+                width: 1,
+                height: 1,
+              },
             },
           },
         },
-      },
-      3,
-      CONTEXT,
+        3,
+      ),
     )
 
     expect(markdown).toEqual(
@@ -167,22 +171,23 @@ describe(renderContractsSection.name, () => {
   })
 
   it('lists program hashes and their description without the ZK catalog intro', () => {
-    const markdown = renderContractsSection(
-      {
-        contracts: {},
-        risks: [],
-        programHashes: [
-          {
-            title: 'Aggregation program',
-            hash: '0xabc',
-            verificationStatus: 'successful',
-            usedIn: [],
-          },
-        ],
-        programHashesDescription: 'Hashes are checked by the verifier.',
-      },
-      3,
-      CONTEXT,
+    const markdown = resolveLinks(
+      renderContractsSection(
+        {
+          contracts: {},
+          risks: [],
+          programHashes: [
+            {
+              title: 'Aggregation program',
+              hash: '0xabc',
+              verificationStatus: 'successful',
+              usedIn: [],
+            },
+          ],
+          programHashesDescription: 'Hashes are checked by the verifier.',
+        },
+        3,
+      ),
     )
 
     expect(markdown).toInclude(
@@ -196,26 +201,27 @@ describe(renderContractsSection.name, () => {
 
 describe(renderPermissionsSection.name, () => {
   it('lists multisig participants and the projects sharing a permission', () => {
-    const markdown = renderPermissionsSection(
-      {
-        permissionsByChain: {
-          ethereum: {
-            roles: [],
-            actors: [
-              {
-                ...contract('Security Council', A1),
-                participants: [
-                  { name: 'Alice', address: A2, href: 'https://e/2' },
-                  { name: '0x3333…3333', address: A3, href: 'https://e/3' },
-                ],
-                usedInProjects: [usedIn('Base', 'permission')],
-              },
-            ],
+    const markdown = resolveLinks(
+      renderPermissionsSection(
+        {
+          permissionsByChain: {
+            ethereum: {
+              roles: [],
+              actors: [
+                {
+                  ...contract('Security Council', A1),
+                  participants: [
+                    { name: 'Alice', address: A2, href: 'https://e/2' },
+                    { name: '0x3333…3333', address: A3, href: 'https://e/3' },
+                  ],
+                  usedInProjects: [usedIn('Base', 'permission')],
+                },
+              ],
+            },
           },
         },
-      },
-      3,
-      CONTEXT,
+        3,
+      ),
     )
 
     expect(markdown).toInclude(
@@ -226,17 +232,18 @@ describe(renderPermissionsSection.name, () => {
   })
 
   it('warns about impactful changes to permissions without the contracts note', () => {
-    const markdown = renderPermissionsSection(
-      {
-        permissionsByChain: {
-          ethereum: {
-            roles: [{ ...contract('Proposer', A1), impactfulChange: true }],
-            actors: [],
+    const markdown = resolveLinks(
+      renderPermissionsSection(
+        {
+          permissionsByChain: {
+            ethereum: {
+              roles: [{ ...contract('Proposer', A1), impactfulChange: true }],
+              actors: [],
+            },
           },
         },
-      },
-      3,
-      CONTEXT,
+        3,
+      ),
     )
 
     expect(markdown).toInclude(
@@ -250,16 +257,20 @@ const A1 = '0x1111111111111111111111111111111111111111'
 const A2 = '0x2222222222222222222222222222222222222222'
 const A3 = '0x3333333333333333333333333333333333333333'
 
-const CONTEXT = {
-  pageUrl: 'https://l2beat.com/scaling/projects/arbitrum',
-  apiLinks: {},
+/** Links resolve against the page once the whole document is assembled, as `renderProjectMarkdown` does. */
+function resolveLinks(markdown: string) {
+  return absolutizeLinks(
+    markdown,
+    'https://l2beat.com/scaling/projects/arbitrum',
+  )
 }
 
 function renderContracts(contracts: TechnologyContract[]) {
-  return renderContractsSection(
-    { contracts: { ethereum: contracts }, risks: [] },
-    3,
-    CONTEXT,
+  return resolveLinks(
+    renderContractsSection(
+      { contracts: { ethereum: contracts }, risks: [] },
+      3,
+    ),
   )
 }
 

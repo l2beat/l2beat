@@ -9,6 +9,7 @@ import {
   PastUpgradesStats,
 } from './PastUpgradesDialog'
 import { ProjectSection } from './ProjectSection'
+import { PAST_UPGRADES_DESCRIPTION } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
 
 type GovernanceInfoSectionKey = keyof ProjectGovernanceInfo
@@ -53,8 +54,7 @@ export function UpgradesAndGovernanceSection({
         <div className="mt-8">
           <h3 className="font-bold text-heading-20">Past upgrades</h3>
           <p className="mt-2 text-paragraph-14 md:text-paragraph-15">
-            The metrics include upgrades on the currently used proxy contracts.
-            Historical proxy contracts and changes of such are not included.
+            {PAST_UPGRADES_DESCRIPTION}
           </p>
           <PastUpgradesDialog
             pastUpgrades={pastUpgrades}

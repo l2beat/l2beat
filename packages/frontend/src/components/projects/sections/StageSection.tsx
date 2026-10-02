@@ -35,7 +35,12 @@ import { Markdown } from '../../markdown/Markdown'
 import { WarningBar } from '../../WarningBar'
 import { ProjectSection } from './ProjectSection'
 import { ScopeOfAssessment } from './ScopeOfAssessment'
-import { STAGES_DISCLAIMER } from './stagesDisclaimer'
+import {
+  APPCHAIN_STAGE_RISK,
+  APPCHAIN_STAGES_NOTE,
+  STAGES_DISCLAIMER,
+  WALKAWAY_TEST,
+} from './sectionCopy'
 import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
@@ -129,9 +134,8 @@ export function StageSection({
           color="green"
           body={
             <>
-              <strong>The project passes the walkaway test</strong>: users can
-              exit in the presence of malicious operators even if the Security
-              Council disappears.
+              <strong>{WALKAWAY_TEST.passed.verdict}</strong>:{' '}
+              {WALKAWAY_TEST.passed.explanation}
             </>
           }
           icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
@@ -143,9 +147,8 @@ export function StageSection({
           color="red"
           body={
             <>
-              <strong>The project does not pass the walkaway test</strong>:{' '}
-              users are not able to exit in the presence of malicious operators
-              if the Security Council disappears.
+              <strong>{WALKAWAY_TEST['not-passed'].verdict}</strong>:{' '}
+              {WALKAWAY_TEST['not-passed'].explanation}
             </>
           }
           icon={
@@ -164,8 +167,9 @@ export function StageSection({
         <div className="mb-2 space-y-4 font-normal text-paragraph-14 md:px-6 md:py-2 md:text-paragraph-16">
           {isAppchain && (
             <p>
-              Rollup operators cannot compromise the system, but being{' '}
-              <strong>application-specific</strong> might bring additional risk.
+              {APPCHAIN_STAGE_RISK.before}{' '}
+              <strong>{APPCHAIN_STAGE_RISK.emphasized}</strong>{' '}
+              {APPCHAIN_STAGE_RISK.after}
             </p>
           )}
           <p>{additionalConsiderations.long}</p>
@@ -174,10 +178,7 @@ export function StageSection({
               <div className="font-semibold text-[13px] text-secondary uppercase leading-none">
                 Note:
               </div>
-              <div>
-                We&apos;re still in the process of formalizing how to properly
-                integrate appchains in the Stages framework.
-              </div>
+              <div>{APPCHAIN_STAGES_NOTE}</div>
             </div>
           )}
         </div>

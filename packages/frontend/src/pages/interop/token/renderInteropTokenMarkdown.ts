@@ -35,10 +35,9 @@ export function renderInteropTokenMarkdown({
 }: InteropTokenPage): string {
   // Production URLs, like the canonical link: the document is meant to be
   // cited, whichever deployment rendered it.
-  const pageUrl = `${PRODUCTION_ORIGIN}${getInteropTokenPagePath(token)}`
   return renderProjectMarkdown({
     name: token.symbol,
-    pageUrl,
+    pageUrl: `${PRODUCTION_ORIGIN}${getInteropTokenPagePath(token)}`,
     summary: {
       warnings: tokenData ? [] : [NO_DATA_WARNING],
       facts: getFacts(token, tokenEntry, tokenData),
@@ -47,7 +46,7 @@ export function renderInteropTokenMarkdown({
     },
     // Without data the HTML page shows an empty state instead of sections.
     sections: tokenData
-      ? withDashboardContent(tokenEntry.sections, tokenData, pageUrl)
+      ? withDashboardContent(tokenEntry.sections, tokenData)
       : [],
     apiLinks: {},
   })
@@ -112,7 +111,6 @@ function getFacts(
 function withDashboardContent(
   sections: ProjectDetailsSection[],
   data: InteropTokenDashboardData,
-  pageUrl: string,
 ): ProjectDetailsSection[] {
   return sections.map((section) => {
     switch (section.type) {
@@ -129,7 +127,7 @@ function withDashboardContent(
           type: 'MarkdownSection',
           props: {
             ...section.props,
-            content: renderTopFlows(data, `${pageUrl}#${section.props.id}`),
+            content: renderTopFlows(data, section.props.id),
           },
         }
       default:
@@ -141,7 +139,7 @@ function withDashboardContent(
 /** Only the busiest routes are loaded with the page; the graph queries the rest. */
 function renderTopFlows(
   { flows }: InteropTokenDashboardData,
-  flowsGraphUrl: string,
+  sectionId: string,
 ) {
   return joinBlocks([
     renderTopRoutes(
@@ -149,7 +147,7 @@ function renderTopFlows(
       interopChainName,
       1,
     ),
-    `The flows between all chains are an interactive graph on ${link('the HTML page', flowsGraphUrl)}.`,
+    `The flows between all chains are an interactive graph on ${link('the HTML page', `#${sectionId}`)}.`,
   ])
 }
 

@@ -1,6 +1,14 @@
-import type { Milestone, ReferenceLink } from '@l2beat/config'
+import type {
+  Milestone,
+  PROJECT_COUNTDOWNS,
+  ReferenceLink,
+} from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
+import {
+  L3_RISKS_DESCRIPTION,
+  NO_EXTERNAL_DEPENDENCIES,
+} from '~/components/projects/sections/sectionCopy'
 import type {
   ProjectDetailsSection,
   ProjectSectionId,
@@ -8,6 +16,7 @@ import type {
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
+import { configMarkdown } from './configMarkdown'
 import { renderInteropVolumeSection } from './interopMarkdown'
 import { renderOnchainDeployments } from './interopTokenMarkdown'
 import {
@@ -16,9 +25,7 @@ import {
   joinBlocks,
   link,
   markCritical,
-  nestHeadings,
   numberedList,
-  resolveSiteUrl,
   subsection,
   textSubsection,
   warning,
@@ -70,11 +77,13 @@ import {
 } from './zkSectionBodies'
 
 export interface SectionContext {
-  /** Absolute URL of the HTML page, for sections markdown cannot express. */
-  pageUrl: string
   /** JSON API endpoints serving the data behind a section, keyed by section id. */
-  apiLinks: Partial<Record<ProjectSectionId, ReferenceLink[]>>
+  apiLinks: ApiLinks
+  /** The dates the HTML reads from its countdowns context, which change what some sections show. */
+  countdowns: typeof PROJECT_COUNTDOWNS
 }
+
+export type ApiLinks = Partial<Record<ProjectSectionId, ReferenceLink[]>>
 
 export function renderProjectSection(
   section: ProjectDetailsSection,
@@ -143,9 +152,9 @@ export type SectionBody<Props> = (
  * body or is explicitly left to the HTML page with `pointToHtmlPage`.
  */
 const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
-  RiskSummarySection: (props, level, context) =>
+  RiskSummarySection: (props, level) =>
     joinBlocks([
-      renderHostChainWarning(props.hostChainWarning, context.pageUrl),
+      renderHostChainWarning(props.hostChainWarning),
       renderUnverifiedContracts(props.unverifiedContracts),
       renderWarnings(
         props.verificationWarnings.programHashes &&
@@ -198,43 +207,41 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
     ]),
   L3RiskAnalysisSection: (props, level) =>
     joinBlocks([
-      'The L3 risks depend on the individual properties of L3 and those of the host chain combined.',
+      L3_RISKS_DESCRIPTION,
       renderUnverifiedContracts(props.unverifiedContracts),
       renderWarnings(props.redWarning?.text, props.warning),
       renderL3RiskValues(props, level),
     ]),
   GrissiniRiskAnalysisSection: (props, level) =>
     joinBlocks([
-      nestHeadings(props.description, level),
+      configMarkdown(props.description, level),
       renderRiskValues(props.layerGrissiniValues ?? [], level),
       renderRiskValues(props.bridgeGrissiniValues ?? [], level),
       props.isNoBridge ? renderRiskValues([NO_BRIDGE_RISK], level) : '',
     ]),
   Group: (props, level, context) =>
     joinBlocks([
-      nestHeadings(props.description, level),
+      configMarkdown(props.description, level),
       ...props.items.map((item) => renderProjectSection(item, level, context)),
     ]),
-  MarkdownSection: (props, level, context) =>
+  MarkdownSection: (props, level) =>
     joinBlocks([
-      renderDiagram(props.diagram, context.pageUrl),
-      nestHeadings(props.content, level),
+      renderDiagram(props.diagram),
+      configMarkdown(props.content, level),
       renderRisks(props.risks ?? []),
       renderReferences(props.references ?? []),
     ]),
   DetailedDescriptionSection: (props, level) =>
     joinBlocks([
-      nestHeadings(props.description, level),
-      nestHeadings(props.detailedDescription, level),
+      configMarkdown(props.description, level),
+      configMarkdown(props.detailedDescription, level),
       renderReferences(props.references ?? []),
     ]),
-  ExternalDependenciesSection: ({ dependencies }, _level, context) =>
+  ExternalDependenciesSection: ({ dependencies }) =>
     dependencies.length === 0
-      ? 'This project has no external dependencies: no oracle, bridge, or other third-party contract is required for its contracts to operate.'
+      ? NO_EXTERNAL_DEPENDENCIES
       : bulletList(
-          dependencies.map((dependency) =>
-            renderDependency(dependency, context.pageUrl),
-          ),
+          dependencies.map((dependency) => renderDependency(dependency)),
         ),
   MilestonesAndIncidentsSection: ({ milestones }) =>
     bulletList(milestones.map(renderMilestone)),
@@ -253,9 +260,9 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   UpgradesAndGovernanceSection: renderUpgradesAndGovernance,
   StageSection: renderStageSection,
   StateValidationSection: renderStateValidation,
-  TechnologyChoicesSection: ({ items, hostChainWarning }, level, context) =>
+  TechnologyChoicesSection: ({ items, hostChainWarning }, level) =>
     joinBlocks([
-      renderHostChainWarning(hostChainWarning, context.pageUrl),
+      renderHostChainWarning(hostChainWarning),
       ...items.map((item) =>
         joinBlocks([
           heading(level, item.name),
@@ -263,15 +270,12 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
           ...(item.isUnderReview
             ? [UNDER_REVIEW_NOTE]
             : [
-                nestHeadings(item.description, level + 1),
+                configMarkdown(item.description, level + 1),
                 renderRisks(item.risks),
                 renderReferences(item.references),
               ]),
           item.relatedProjectBanner
-            ? renderRelatedProjectBanner(
-                item.relatedProjectBanner,
-                context.pageUrl,
-              )
+            ? renderRelatedProjectBanner(item.relatedProjectBanner)
             : '',
         ]),
       ),
@@ -299,8 +303,8 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   InteropTransfersSection: pointToHtmlPage(
     'The interactive transfers table is shown',
   ),
-  InteropVolumeSection: (props, level, context) =>
-    renderInteropVolumeSection(props, level, `${context.pageUrl}#${props.id}`),
+  InteropVolumeSection: (props, level) =>
+    renderInteropVolumeSection(props, level),
   L2TvsSection: renderL2TvsSection,
   LivenessSection: renderLivenessSection,
   PrivacyAdversariesSection: renderPrivacyAdversaries,
@@ -352,10 +356,9 @@ function renderRiskGroups(groups: RiskGroup[], level: number) {
   )
 }
 
-/** Project links on the HTML page are site-relative; the markdown is read off-site. */
-function renderDependency(dependency: DefiDependency, pageUrl: string) {
+function renderDependency(dependency: DefiDependency) {
   const name = dependency.href
-    ? link(dependency.name, resolveSiteUrl(dependency.href, pageUrl))
+    ? link(dependency.name, dependency.href)
     : dependency.name
   const notReviewed = dependency.reviewed ? '' : ' (not reviewed)'
   return `${name}${notReviewed}: ${dependency.description}`

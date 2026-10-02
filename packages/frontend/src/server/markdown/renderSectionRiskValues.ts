@@ -1,9 +1,9 @@
 import type { L3RiskAnalysisSectionProps } from '~/components/projects/sections/L3RiskAnalysisSection'
 import type { RosetteValue } from '~/components/rosette/types'
+import { configMarkdown } from './configMarkdown'
 import {
   heading,
   joinBlocks,
-  nestHeadings,
   sentimentNote,
   subsection,
   table,
@@ -18,9 +18,9 @@ export function renderRiskValues(values: RosetteValue[], level: number) {
       joinBlocks([
         heading(level, risk.name),
         formatRiskValue(risk),
-        nestHeadings(risk.regular?.description, level + 1),
+        configMarkdown(risk.regular?.description, level + 1),
         formatRiskWarning(risk),
-        nestHeadings(risk.description, level + 1),
+        configMarkdown(risk.description, level + 1),
       ]),
     ),
   )

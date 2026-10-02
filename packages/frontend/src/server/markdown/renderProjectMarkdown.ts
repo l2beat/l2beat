@@ -1,7 +1,7 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
@@ -13,13 +13,9 @@ import {
   joinBlocks,
   subsection,
   textSubsection,
-  tidyMarkdown,
   warning,
 } from './markdown'
-import {
-  renderProjectSection,
-  type SectionContext,
-} from './renderProjectSection'
+import { type ApiLinks, renderProjectSection } from './renderProjectSection'
 import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
 
 /**
@@ -28,8 +24,11 @@ import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
  * shared page sections live here, so the markdown outline follows the HTML
  * page outline whichever kind renders it.
  */
-export interface ProjectMarkdown extends SectionContext {
+export interface ProjectMarkdown {
   name: string
+  apiLinks: ApiLinks
+  /** Absolute URL of the HTML page, which the document's links resolve against. */
+  pageUrl: string
   summary: {
     warnings: string[]
     facts: ProjectFact[]
@@ -55,7 +54,10 @@ export interface ProjectBadge {
 
 export interface ProjectFact {
   label: string
-  value: string
+  /** Absent when the fact is only its details. */
+  value?: string
+  /** Listed under the fact, for values too long for one line. */
+  details?: string[]
   /** Caveats on how to read the value; the HTML shows them as a warning icon next to it. */
   warnings?: string[]
 }
@@ -66,10 +68,14 @@ export function renderProjectMarkdown(page: ProjectMarkdown): string {
     `Markdown version of ${page.pageUrl}`,
     renderSummary(page.summary),
     renderHeader(page.header),
-    ...page.sections.map((section) => renderProjectSection(section, 2, page)),
+    ...page.sections.map((section) =>
+      renderProjectSection(section, 2, {
+        apiLinks: page.apiLinks,
+        countdowns: PROJECT_COUNTDOWNS,
+      }),
+    ),
   ])
-  const linked = absolutizeLinks(markdown, PRODUCTION_ORIGIN)
-  return `${tidyMarkdown(linked, page.pageUrl)}\n`
+  return `${absolutizeLinks(markdown, page.pageUrl)}\n`
 }
 
 /**
@@ -130,8 +136,12 @@ function renderHeader(header: ProjectHeader | undefined): string {
 
 /** Warnings nest under the fact they qualify, so they cannot be read as applying to the whole project. */
 function renderFact(fact: ProjectFact) {
-  const warnings = (fact.warnings ?? []).map((text) => `\n- ${warning(text)}`)
-  return `${fact.label}: ${fact.value}${warnings.join('')}`
+  const head = fact.value ? `${fact.label}: ${fact.value}` : `${fact.label}:`
+  const nested = [
+    ...(fact.details ?? []),
+    ...(fact.warnings ?? []).map(warning),
+  ]
+  return [head, ...nested.map((item) => `- ${item}`)].join('\n')
 }
 
 /** Nested like a fact warning, for the same reason. */

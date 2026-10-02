@@ -1,0 +1,66 @@
+/*
+ * Text the project page sections show and their markdown versions repeat,
+ * kept in one place so the two cannot drift apart.
+ */
+
+export const STAGES_DISCLAIMER =
+  'Please keep in mind that these stages do not reflect project security, this is an opinionated assessment of project maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal.'
+
+/** The verdict is shown bold, then the explanation after a colon. */
+export const WALKAWAY_TEST = {
+  passed: {
+    verdict: 'The project passes the walkaway test',
+    explanation:
+      'users can exit in the presence of malicious operators even if the Security Council disappears.',
+  },
+  'not-passed': {
+    verdict: 'The project does not pass the walkaway test',
+    explanation:
+      'users are not able to exit in the presence of malicious operators if the Security Council disappears.',
+  },
+} as const
+
+/** Split around the emphasized words, which the page shows bold. */
+export const APPCHAIN_STAGE_RISK = {
+  before: 'Rollup operators cannot compromise the system, but being',
+  emphasized: 'application-specific',
+  after: 'might bring additional risk.',
+} as const
+
+export const APPCHAIN_STAGES_NOTE =
+  "We're still in the process of formalizing how to properly integrate appchains in the Stages framework."
+
+export const LIVENESS_DESCRIPTION =
+  'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
+
+export const DA_BRIDGE_LIVENESS_DESCRIPTION =
+  'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'
+
+export const LAST_30_DAY_ANOMALIES_DESCRIPTION =
+  'All liveness anomalies detected for this project in the last 30 days, helping you review recent downtime and availability issues.'
+
+export const TRACKED_CONTRACTS_CHANGED_WARNING =
+  'There are implementation changes to tracked contracts, anomaly data might be inaccurate.'
+
+export function trackedTxsOutageText(scope: 'page' | 'section') {
+  return `Data ${scope === 'page' ? 'on this page' : 'in this section'} may be temporarily out of date due to third-party provider issues. We're working to resolve this.`
+}
+
+export const COSTS_DESCRIPTION =
+  'The section shows the operating costs that L2s pay to Ethereum.'
+
+/** The page continues the sentence with the DA layers the project posts to. */
+export const DATA_POSTED_DESCRIPTION =
+  'This section shows how much data the project publishes to its data-availability (DA) layer over time.'
+
+export const THROUGHPUT_DESCRIPTION =
+  'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.'
+
+export const L3_RISKS_DESCRIPTION =
+  'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'
+
+export const PAST_UPGRADES_DESCRIPTION =
+  'The metrics include upgrades on the currently used proxy contracts. Historical proxy contracts and changes of such are not included.'
+
+export const NO_EXTERNAL_DEPENDENCIES =
+  'This project has no external dependencies: no oracle, bridge, or other third-party contract is required for its contracts to operate.'

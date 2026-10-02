@@ -18,9 +18,9 @@ import {
   DrawerTrigger,
 } from '~/components/core/Drawer'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
-import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/anomalySubtypeToLabel'
 import type {
   OngoingAnomaliesOverview,
   OngoingAnomalyCategory,
