@@ -6,9 +6,9 @@ import {
 const DOCS = 'https://docs.zk.money/docs/'
 // Public source of the zk.money desktop release. vendor/oxide holds the Oxide
 // sources, which match the deployed Oxide commit a534df2f.
-const ZM =
+const ZKMONEY_REPO =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/fc37a3e25440bc4bd7a9de81a7f4830ec753a4d4/'
-const OX = `${ZM}vendor/oxide/`
+const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
 // The resolver circuit was vendored after the pinned desktop release.
 const RESOLVER_CIRCUIT =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/resolver_circuit/'
@@ -46,19 +46,19 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Fixed log tags on every zk.money transaction',
-          url: `${OX}noir-projects/oxide_lib/src/constants.nr#L77-L81`,
+          url: `${OXIDE}noir-projects/oxide_lib/src/constants.nr#L77-L81`,
         },
         {
           title: 'First delivery to a new contact opens a handshake',
-          url: `${ZM}packages/sdk/src/feePaymentMethod/claimFpcGasModel.ts#L232-L237`,
+          url: `${ZKMONEY_REPO}packages/sdk/src/feePaymentMethod/claimFpcGasModel.ts#L232-L237`,
         },
         {
           title: 'First sponsored transaction nullifies the L1 account',
-          url: `${ZM}packages/contracts/contracts/fee_paying/claim_fpc/src/main.nr#L205-L217`,
+          url: `${ZKMONEY_REPO}packages/contracts/contracts/fee_paying/claim_fpc/src/main.nr#L205-L217`,
         },
         {
           title: 'Withdrawals publish their L1 payload',
-          url: `${OX}noir-projects/oxide_token_contract/src/withdrawal.nr#L32-L42`,
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/withdrawal.nr#L32-L42`,
         },
         { contract: 'RegistrationController' },
         { contract: 'AccountMetadataRegistry' },
@@ -89,16 +89,16 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         { contract: 'PlainWithdrawalExecutor' },
         {
           title: 'Private transfers credit the recipient with new notes',
-          url: `${OX}noir-projects/oxide_token_contract/src/main.nr#L133-L167`,
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L133-L167`,
         },
         {
           title: 'Resolver notifies the recipient of each deposit address',
-          url: `${OX}noir-projects/oxide_token_contract/src/main.nr#L236-L251`,
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L236-L251`,
         },
         {
           title:
             'The notification and the sweep request share one Aztec transaction',
-          url: `${ZM}packages/sdk/src/services/sipaIntents.ts#L171-L186`,
+          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaIntents.ts#L171-L186`,
         },
         {
           title:
@@ -126,7 +126,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Desktop endpoint overrides',
-          url: `${ZM}packages/web-wallet-desktop/src/config.js#L36-L47`,
+          url: `${ZKMONEY_REPO}packages/web-wallet-desktop/src/config.js#L36-L47`,
         },
         {
           title: 'Handshakes are found by a tag derived from your address',
@@ -134,15 +134,15 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'L1 gas estimates over the wallet RPC carry your address',
-          url: `${ZM}packages/web-wallet/src/features/deposit/sipaRecovery.ts#L166-L193`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/deposit/sipaRecovery.ts#L166-L193`,
         },
         {
           title: 'Desktop sends screening to zk.money from its own process',
-          url: `${ZM}packages/web-wallet-desktop/scripts/compose-config.js#L15-L20`,
+          url: `${ZKMONEY_REPO}packages/web-wallet-desktop/scripts/compose-config.js#L15-L20`,
         },
         {
           title: 'XMTP identity is the account bootstrap address',
-          url: `${ZM}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
         },
         {
           title: 'Pointing the wallet at a different service',
@@ -166,15 +166,15 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Enclave requests carry notes and the nullifier hiding key',
-          url: `${OX}yarn-project/oxide-lib/src/types.ts#L336-L392`,
+          url: `${OXIDE}yarn-project/oxide-lib/src/types.ts#L336-L392`,
         },
         {
           title: 'Wallets encrypt to the enclave key registered in the portal',
-          url: `${OX}yarn-project/oxide-client/src/fleet_signer.ts#L172-L202`,
+          url: `${OXIDE}yarn-project/oxide-client/src/fleet_signer.ts#L172-L202`,
         },
         {
           title: 'Deposit address secrets derive from the resolver key',
-          url: `${ZM}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
         },
         {
           title:
@@ -183,11 +183,11 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Self-made deposit addresses use predictable nonces',
-          url: `${ZM}packages/sdk/src/services/sipaSelfResolve.ts#L47-L53`,
+          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaSelfResolve.ts#L47-L53`,
         },
         {
           title: 'Addresses are sent to Predicate for screening',
-          url: `${ZM}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L86-L97`,
+          url: `${ZKMONEY_REPO}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L86-L97`,
         },
         { contract: 'ZkMoneyPortal', title: 'Registered TEE signers' },
         { contract: 'Resolver' },
@@ -214,11 +214,11 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Deposit address secrets use secp256k1 key exchange',
-          url: `${ZM}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
         },
         {
           title: 'Enclave channel uses P-256 HPKE',
-          url: `${OX}yarn-project/oxide-lib/src/encryption.ts#L1-L5`,
+          url: `${OXIDE}yarn-project/oxide-lib/src/encryption.ts#L1-L5`,
         },
       ],
     },
