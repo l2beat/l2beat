@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { ProjectIconList } from '~/components/ProjectIconList'
@@ -14,6 +15,7 @@ import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -21,6 +23,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
+import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -101,60 +104,73 @@ export function PrivacyProjectPage({
                       data-role="nav-section"
                       className="border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                     >
-                      <PrivacyProjectStats
-                        totalValueLockedUsd={entry.summary.totalValueLockedUsd}
-                        totalValueLockedChange7d={
-                          entry.summary.totalValueLockedChange7d
-                        }
-                        hasTvl={entry.hasTvl}
-                        assetsCount={entry.assetsCount}
-                        bucketsCount={entry.bucketCount}
-                        deposits={entry.summary.deposits}
-                        relayerStat={entry.summary.relayerStat}
-                      />
-
-                      <HorizontalSeparator className="mt-4 max-md:hidden" />
-                      <PrivacyProjectRiskProfile
-                        trustedSetup={entry.trustedSetup}
-                        exitWindow={entry.exitWindow}
-                        adversaries={adversaries}
-                        href={entry.href}
-                        isUnderReview={entry.isUnderReview}
-                        reproducibility={entry.reproducibility}
-                        className="mt-4"
-                      />
-
-                      <HorizontalSeparator className="mt-4 max-md:hidden" />
-                      <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
-                        <ProjectSummaryStat
-                          title="Tracked on"
-                          tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
-                          value={
-                            <ProjectIconList
-                              projects={entry.trackedOn}
-                              dialog={{
-                                title: 'Tracked on',
-                                description: 'Search for chains',
-                                searchPlaceholder:
-                                  'Start typing to find chain...',
-                                emptyText: 'No chains found.',
-                              }}
-                            />
-                          }
-                        />
-                        {entry.attributes.length > 0 && (
-                          <ProjectSummaryStat
-                            title="Attributes"
-                            tooltip="Protocol attributes and capabilities."
-                            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
-                            value={entry.attributes.map((attribute) => (
-                              <PrivacyAttributeTag
-                                key={attribute.id}
-                                attribute={attribute}
-                              />
-                            ))}
+                      <div className="flex">
+                        <div className="w-full min-w-0">
+                          <PrivacyProjectStats
+                            totalValueLockedUsd={
+                              entry.summary.totalValueLockedUsd
+                            }
+                            totalValueLockedChange7d={
+                              entry.summary.totalValueLockedChange7d
+                            }
+                            hasTvl={entry.hasTvl}
+                            assetsCount={entry.assetsCount}
+                            bucketsCount={entry.bucketCount}
+                            deposits={entry.summary.deposits}
+                            relayerStat={entry.summary.relayerStat}
                           />
-                        )}
+
+                          <HorizontalSeparator className="mt-4 max-md:hidden" />
+                          <PrivacyProjectRiskProfile
+                            trustedSetup={entry.trustedSetup}
+                            exitWindow={entry.exitWindow}
+                            adversaries={adversaries}
+                            href={entry.href}
+                            isUnderReview={entry.isUnderReview}
+                            reproducibility={entry.reproducibility}
+                            className="mt-4"
+                          />
+
+                          <HorizontalSeparator className="mt-4 max-md:hidden" />
+                          <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
+                            <ProjectSummaryStat
+                              title="Tracked on"
+                              tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                              value={
+                                <ProjectIconList
+                                  projects={entry.trackedOn}
+                                  dialog={{
+                                    title: 'Tracked on',
+                                    description: 'Search for chains',
+                                    searchPlaceholder:
+                                      'Start typing to find chain...',
+                                    emptyText: 'No chains found.',
+                                  }}
+                                />
+                              }
+                            />
+                            {entry.attributes.length > 0 && (
+                              <ProjectSummaryStat
+                                title="Attributes"
+                                tooltip="Protocol attributes and capabilities."
+                                valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                                value={entry.attributes.map((attribute) => (
+                                  <PrivacyAttributeTag
+                                    key={attribute.id}
+                                    attribute={attribute}
+                                  />
+                                ))}
+                              />
+                            )}
+                          </div>
+                        </div>
+                        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-xl:hidden" />
+                        <BigPizzaRosette
+                          values={getPrivacyAdversaryRosetteValues(adversaries)}
+                          isUnderReview={entry.isUnderReview}
+                          size="small"
+                          className="my-auto max-xl:hidden"
+                        />
                       </div>
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
