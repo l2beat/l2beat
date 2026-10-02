@@ -83,7 +83,7 @@ describe(PrivacyProjectStats.name, () => {
       }),
     )
 
-    expect(html).toInclude('Paid finalizers 30D')
+    expect(html).toInclude('Paid Finalizers 30D')
     expect(html).toInclude('>3</span>')
     expect(html).not.toInclude('Active Relayers 30D')
   })
