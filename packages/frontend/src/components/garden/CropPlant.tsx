@@ -31,12 +31,16 @@ const PLANT: Record<PlantKind, ComponentType<{ delay: number }>> = {
   transparent: TransparentFlower,
 }
 
+/** Without the soil the box ends at the foot of the stem (its round cap included). */
+const NO_SOIL_HEIGHT = 35.2
+
 /** The plant at any size; height follows the 34:40 viewBox. */
 export function CropPlant({
   status,
   sentiment,
   delay,
   width = 46,
+  soil = true,
   label,
   className,
 }: {
@@ -44,11 +48,14 @@ export function CropPlant({
   sentiment: CropSentiment
   delay: number
   width?: number
+  /** Off where the plant stands on scenery rather than in a table cell. */
+  soil?: boolean
   /** Read out instead of the art. */
   label?: string
   className?: string
 }) {
   const Plant = PLANT[getPlantKind(status, sentiment)]
+  const viewHeight = soil ? 40 : NO_SOIL_HEIGHT
   return (
     <span
       className={cn('flex items-end', CROP_PLANT_COLOR[sentiment], className)}
@@ -56,12 +63,12 @@ export function CropPlant({
     >
       <svg
         width={width}
-        height={(width * 40) / 34}
-        viewBox="0 0 34 40"
+        height={(width * viewHeight) / 34}
+        viewBox={`0 0 34 ${viewHeight}`}
         className="block overflow-visible"
         aria-hidden
       >
-        <Soil status={status} />
+        {soil && <Soil status={status} />}
         <Plant delay={delay} />
       </svg>
     </span>

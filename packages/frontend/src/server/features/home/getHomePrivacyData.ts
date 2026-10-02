@@ -21,6 +21,8 @@ export interface HomePrivacyTopProtocol
   /** Undefined when the protocol has no value locked to track. */
   tvl: number | undefined
   tvlChange: number | undefined
+  /** Value deposited over the last 30 days. */
+  deposited30d: number | undefined
 }
 
 export interface HomePrivacyData {
@@ -125,6 +127,7 @@ export async function getHomePrivacyData(
       iconUrl: entry.icon,
       tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
       tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
+      deposited30d: entry.totalValueDeposited30dUsd,
       adversaries: entry.adversaries,
     })),
   }

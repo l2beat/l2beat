@@ -1,5 +1,4 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
@@ -10,16 +9,6 @@ import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import { HomeStackedIcons } from './HomeStackedIcons'
 import { RecentChangesDialog } from './RecentChangesDialog'
-
-export interface HomeWhatsNewItem {
-  id: string
-  title: string
-  description: string | undefined
-  href: string
-  imageSrc: string
-  verticalImageSrc: string | undefined
-  imageAlt: string
-}
 
 export interface HomeRecentChangesProject {
   name: string
@@ -35,41 +24,7 @@ const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   privacy: 'Privacy',
 }
 
-/**
- * The top of What's new: its title and the latest announcement. From lg it
- * takes the same two page rows as the domain cards' title and charts, so the
- * announcement starts with the chart labels and the line under it lands where
- * the line between the charts ends. The domain cards space those rows with a
- * 20px gap, half of which sits under their charts: the 10px bottom margin
- * here matches it.
- */
-export function HomeWhatsNewHeadline({
-  item,
-  className,
-}: {
-  item: HomeWhatsNewItem | undefined
-  className?: string
-}) {
-  return (
-    <HomeCard
-      className={cn(
-        'flex flex-col gap-4',
-        'lg:row-span-2 lg:mb-2.5 lg:grid lg:grid-rows-subgrid lg:gap-5 lg:border-b lg:pb-0',
-        className,
-      )}
-    >
-      <HomeCardHeader title="What's new" />
-      {item && <Announcement item={item} />}
-    </HomeCard>
-  )
-}
-
-/**
- * New projects. From lg it takes the page row of the rankings beside it, so
- * the section after it starts on the same line that ends them. Its title
- * starts 10px down, level with theirs (the domain cards keep half their 20px
- * row gap above the rankings), and the headline above draws its top line.
- */
+/** New projects, under Ethereum beside the articles. */
 export function HomeWhatsNewProjects({
   projects,
   className,
@@ -81,10 +36,8 @@ export function HomeWhatsNewProjects({
     return null
   }
   return (
-    <HomeCard
-      className={cn('flex flex-col gap-2 lg:border-t-0 lg:pt-2.5', className)}
-    >
-      <HomeCardHeader title="New research" level={3} />
+    <HomeCard className={cn('flex flex-col gap-2', className)}>
+      <HomeCardHeader title="New research" />
       <NewProjects projects={projects} />
     </HomeCard>
   )
@@ -124,47 +77,9 @@ export function HomeLatestArticlesSection({
   )
 }
 
-function Announcement({ item }: { item: HomeWhatsNewItem }) {
-  // Opening the item counts as seeing it, which also retires the floating
-  // what's new widget for it.
-  const [, setSeen] = useLocalStorage(`whats-new-${item.id}`, false)
-  return (
-    <a
-      href={item.href}
-      onClick={() => setSeen(true)}
-      // From lg it fills its row: the image takes whatever the text leaves.
-      className="group flex flex-col gap-4 md:max-lg:flex-row md:max-lg:items-center md:max-lg:gap-5 lg:min-h-0 lg:pb-4"
-    >
-      <img
-        src={item.imageSrc}
-        alt={item.imageAlt}
-        loading="lazy"
-        className="aspect-video w-full rounded-md object-cover object-top-left md:max-lg:w-40 md:max-lg:shrink-0 lg:aspect-auto lg:h-0 lg:min-h-0 lg:flex-1 lg:basis-0"
-      />
-      <span className="flex min-w-0 flex-col gap-1">
-        <span
-          className={cn(
-            'underline-offset-2 group-hover:underline',
-            HOME_TEXT.row,
-          )}
-        >
-          {item.title}
-        </span>
-        {item.description && (
-          // The line height goes after the text size, which sets its own.
-          <span className={cn(HOME_TEXT.meta, 'line-clamp-3 leading-normal')}>
-            {item.description}
-          </span>
-        )}
-      </span>
-    </a>
-  )
-}
-
 function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
   return (
-    // Row height and lines as in the rankings beside it, line included in
-    // the 40px, so their rows and lines run level.
+    // Row height and lines as in the rankings.
     <ul className="flex flex-col divide-y divide-divider">
       {projects.map((project) => (
         <li key={project.id} className="flex min-h-10">

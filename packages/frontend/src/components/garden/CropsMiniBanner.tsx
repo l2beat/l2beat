@@ -1,7 +1,11 @@
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
-import { CropPlant } from './CropPlant'
-import { GardenScenery } from './GardenSky'
+import { type GardenFlower, GardenFlowers, GardenLandscape } from './GardenSky'
+
+const FLOWERS: GardenFlower[] = [
+  { left: '78%', bottom: '4%', width: 13 },
+  { left: '90%', bottom: '8%', width: 15 },
+]
 
 /**
  * The garden as a small highlighted banner: the sidebar sets it above the
@@ -12,13 +16,10 @@ export function CropsMiniBanner({
   isActive = false,
   onClick,
   className,
-  plantClassName = 'right-11',
 }: {
   isActive?: boolean
   onClick?: () => void
   className?: string
-  /** Where the plant stands; a narrow banner moves it clear of the text. */
-  plantClassName?: string
 }) {
   return (
     <a
@@ -30,17 +31,12 @@ export function CropsMiniBanner({
         className,
       )}
     >
-      <GardenScenery compact />
-      <CropPlant
-        status="reviewed"
-        sentiment="good"
-        delay={0.3}
-        width={16}
-        className={cn('absolute bottom-0.5', plantClassName)}
-      />
+      <GardenLandscape lightClassName="top-[38%] left-[84%] size-14">
+        <GardenFlowers flowers={FLOWERS} />
+      </GardenLandscape>
       <span className="relative flex min-w-0 flex-col gap-1">
         <span className="font-semibold text-sm leading-none">CROPS</span>
-        <span className="truncate font-medium text-2xs text-secondary leading-none">
+        <span className="truncate font-roboto-serif text-2xs text-secondary leading-none">
           The Infinite Garden
         </span>
       </span>

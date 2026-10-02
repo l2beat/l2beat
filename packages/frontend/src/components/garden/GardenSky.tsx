@@ -1,124 +1,104 @@
+import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
+import { CropPlant } from './CropPlant'
 
-// The garden's sky and land, shared by its page backdrop and the CROPS
-// banners elsewhere, so the garden looks the same wherever it shows.
+// The garden's landscape, shared by its page backdrop and the CROPS banners
+// elsewhere, so the garden looks the same wherever it shows: four ridges that
+// fade with distance and a low sun behind the farthest one, a moon at night.
+// The hills sit low on the left, where a banner puts its text.
 
-/** Two rolling hills, drawn in a 1200x160 box. */
-export const GARDEN_HILLS = {
-  back: 'M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z',
-  backClassName: 'fill-[#dcead3]/70 dark:fill-[#1b2415]/70',
-  front:
-    'M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z',
-  frontClassName: 'fill-garden-border/70',
-}
+const SKY =
+  'bg-[linear-gradient(180deg,#e2eee1_0%,#edf2de_55%,#f8f0cf_100%)] dark:bg-[linear-gradient(180deg,#060b16_0%,#0c1527_60%,#1a2336_100%)]'
 
-export function Sun({ className }: { className?: string }) {
-  const rays = Array.from({ length: 8 }, (_, i) => i * 45)
-  return (
-    <svg
-      width={112}
-      height={112}
-      viewBox="0 0 112 112"
-      className={cn('overflow-visible text-garden-sun', className)}
-    >
-      <circle cx="56" cy="56" r="52" className="fill-garden-sun/25" />
-      <g
-        style={{
-          transformBox: 'fill-box',
-          transformOrigin: '50% 50%',
-          animation: 'garden-spin 90s linear infinite',
-        }}
-      >
-        {rays.map((angle) => (
-          <line
-            key={angle}
-            x1="56"
-            y1="14"
-            x2="56"
-            y2="24"
-            stroke="currentColor"
-            strokeWidth="5"
-            strokeLinecap="round"
-            transform={`rotate(${angle} 56 56)`}
-          />
-        ))}
-      </g>
-      <circle cx="56" cy="56" r="22" fill="currentColor" />
-      <circle cx="56" cy="56" r="22" className="fill-white/25" />
-    </svg>
-  )
-}
-
-export function Moon({ className }: { className?: string }) {
-  return (
-    <svg
-      width={112}
-      height={112}
-      viewBox="0 0 112 112"
-      className={cn('overflow-visible text-garden-moon', className)}
-    >
-      <circle cx="56" cy="56" r="52" className="fill-garden-moon/10" />
-      <path
-        d="M52.93 34.22 A22 22 0 1 0 76.58 63.78 A19 19 0 1 1 52.93 34.22 Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
-
-const BANNER_STARS = [
-  { left: '8%', top: 10 },
-  { left: '23%', top: 26 },
-  { left: '41%', top: 8 },
-  { left: '58%', top: 22 },
-  { left: '74%', top: 12 },
+/** Far to near, drawn in a 1200x200 box. */
+const RIDGES = [
+  {
+    d: 'M0 170 C200 162 380 140 560 114 C720 94 820 70 940 72 C1060 74 1130 90 1200 84 L1200 200 L0 200 Z',
+    className: 'fill-[#d5e4cb] dark:fill-[#172131]',
+  },
+  {
+    d: 'M0 182 C220 178 420 166 600 142 C760 124 880 106 1000 110 C1100 113 1160 122 1200 120 L1200 200 L0 200 Z',
+    className: 'fill-[#bdd6ac] dark:fill-[#152620]',
+  },
+  {
+    d: 'M0 190 C260 188 480 180 700 166 C860 154 1000 142 1200 150 L1200 200 L0 200 Z',
+    className: 'fill-[#9fc48a] dark:fill-[#132b1b]',
+  },
+  {
+    d: 'M0 196 C300 195 560 192 800 182 C960 176 1100 172 1200 176 L1200 200 L0 200 Z',
+    className: 'fill-[#7eab68] dark:fill-[#0f2314]',
+  },
 ]
 
 /**
- * The garden in miniature, laid behind a banner's content: its canvas, the
- * sun (the moon and a few stars in the dark theme) and the hills. `compact`
- * draws it small enough for the side nav.
+ * The sky, the sun and the ridges, filling the nearest positioned parent.
+ * `lightClassName` places and sizes the sun; `ridgesClassName` sets how tall
+ * the hills are (the full height by default).
  */
-export function GardenScenery({
-  compact,
+export function GardenLandscape({
+  lightClassName,
+  ridgesClassName = 'h-full',
   className,
+  children,
 }: {
-  compact?: boolean
+  lightClassName: string
+  ridgesClassName?: string
   className?: string
+  children?: ReactNode
 }) {
-  const skyClassName = compact
-    ? '-top-2.5 right-1 size-9'
-    : '-top-4 right-5 size-[72px]'
   return (
-    <div
+    <span
       aria-hidden
       className={cn(
-        'pointer-events-none absolute inset-0 overflow-hidden bg-garden-canvas',
+        'pointer-events-none absolute inset-0 overflow-hidden',
+        SKY,
         className,
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-garden-sky to-transparent" />
-      {!compact &&
-        BANNER_STARS.map((star) => (
-          <span
-            key={star.left}
-            className="absolute hidden size-[1.5px] rounded-full bg-garden-moon/70 dark:block"
-            style={{ left: star.left, top: star.top }}
-          />
-        ))}
-      <Sun className={cn('absolute dark:hidden', skyClassName)} />
-      <Moon className={cn('absolute hidden dark:block', skyClassName)} />
-      <svg
+      <span
         className={cn(
-          'absolute inset-x-0 bottom-0 w-full',
-          compact ? 'h-1/2' : 'h-3/5',
+          '-translate-x-1/2 -translate-y-1/2 absolute',
+          lightClassName,
         )}
-        viewBox="0 0 1200 160"
-        preserveAspectRatio="none"
       >
-        <path d={GARDEN_HILLS.back} className={GARDEN_HILLS.backClassName} />
-        <path d={GARDEN_HILLS.front} className={GARDEN_HILLS.frontClassName} />
+        <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,206,84,.55)_0%,rgba(255,206,84,.16)_38%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(233,228,200,.22)_0%,rgba(233,228,200,.06)_40%,transparent_70%)]" />
+        <span className="absolute inset-[38%] rounded-full bg-[#ffd76a] dark:bg-garden-moon" />
+      </span>
+      <svg
+        viewBox="0 0 1200 200"
+        preserveAspectRatio="none"
+        className={cn('absolute inset-x-0 bottom-0 w-full', ridgesClassName)}
+      >
+        {RIDGES.map((ridge) => (
+          <path key={ridge.d} d={ridge.d} className={ridge.className} />
+        ))}
       </svg>
-    </div>
+      {children}
+    </span>
   )
+}
+
+export interface GardenFlower {
+  left: string
+  bottom: string
+  width: number
+}
+
+/** Flowers standing on the nearest ridge, growing in one after another. */
+export function GardenFlowers({ flowers }: { flowers: GardenFlower[] }) {
+  return flowers.map((flower, index) => (
+    <span
+      key={flower.left}
+      className="-translate-x-1/2 absolute"
+      style={{ left: flower.left, bottom: flower.bottom }}
+    >
+      <CropPlant
+        status="reviewed"
+        sentiment="good"
+        delay={0.25 + index * 0.18}
+        width={flower.width}
+        soil={false}
+      />
+    </span>
+  ))
 }

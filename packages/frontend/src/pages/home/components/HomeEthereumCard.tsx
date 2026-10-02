@@ -66,7 +66,7 @@ export function HomeEthereumCard({
               data={dataPostedChartData}
               tooltipLabel="Data posted"
               formatValue={(value) => formatBytes(value)}
-              tooltipDayRange
+              weeklyAverage
               className={HOME_CHART_HEIGHT_CLASS}
             />
           }
@@ -84,7 +84,7 @@ export function HomeEthereumCard({
               data={activityChartData}
               tooltipLabel="UOPS"
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
-              tooltipDayRange
+              weeklyAverage
               className={HOME_CHART_HEIGHT_CLASS}
             />
           }

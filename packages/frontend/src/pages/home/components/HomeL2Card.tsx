@@ -9,22 +9,31 @@ import type { HomeTopL2Project } from '../getHomeData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
 import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
-import { HomeDomainCard, HomeDomainSection, HomeKpiRow } from './HomeDomainCard'
+import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import {
-  HomeRankedChange,
   HomeRankedTable,
   HomeRankedValue,
+  HomeRankedValueWithChange,
+  VALUE_WITH_CHANGE_HEADER_CLASS,
 } from './HomeRankedTable'
+import { HomeRiskRosette } from './HomeRiskRosette'
 import { HomeStageBadge } from './HomeStageBadge'
 
 interface Props {
   charts: HomeL2Charts
   topProjects: HomeTopL2Project[]
+  /** Every Layer 2 we track, for the link under the ranking. */
+  projectCount: number
   className?: string
 }
 
-export function HomeL2Card({ charts, topProjects, className }: Props) {
+export function HomeL2Card({
+  charts,
+  topProjects,
+  projectCount,
+  className,
+}: Props) {
   const tvsChartData = useMemo<HomeSparklineDataPoint[]>(
     () =>
       charts.tvs.chart.map(([timestamp, rollups, validiumsAndOptimiums]) => {
@@ -59,6 +68,10 @@ export function HomeL2Card({ charts, topProjects, className }: Props) {
     <HomeDomainCard
       title="Layer 2s"
       href="/layer2s/summary"
+      viewAll={{
+        href: '/layer2s/summary',
+        label: `View all ${projectCount} Layer 2s`,
+      }}
       className={className}
     >
       <HomeKpiRow>
@@ -89,42 +102,61 @@ export function HomeL2Card({ charts, topProjects, className }: Props) {
               data={activityChartData}
               tooltipLabel="UOPS"
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
-              tooltipDayRange
+              weeklyAverage
             />
           }
         />
       </HomeKpiRow>
-      <HomeDomainSection title="Top rollups">
-        <HomeRankedTable
-          rows={topProjects}
-          columns={[
-            {
-              id: 'stage',
-              middle: true,
-              cell: (project) => (
-                <HomeStageBadge
-                  stage={project.stage}
-                  isAppchain={project.isAppchain}
-                />
-              ),
-            },
-            {
-              id: 'tvs',
-              align: 'right',
-              cell: (project) => (
-                <HomeRankedValue label="TVS" value={project.tvs} />
-              ),
-            },
-            {
-              id: 'change',
-              align: 'right',
-              cell: (project) => (
-                <HomeRankedChange change={project.tvsChange} />
-              ),
-            },
-          ]}
-        />
-      </HomeDomainSection>
+      <HomeRankedTable
+        title="Top rollups"
+        rows={topProjects}
+        columns={[
+          {
+            id: 'risks',
+            header: 'Risks',
+            align: 'center',
+            middle: true,
+            minTableWidth: 640,
+            cell: (project) => (
+              <HomeRiskRosette
+                values={project.risks}
+                href={project.risksHref}
+                isUnderReview={project.risksUnderReview}
+              />
+            ),
+          },
+          {
+            id: 'stage',
+            header: 'Stage',
+            middle: true,
+            cell: (project) => <HomeStageBadge stage={project.stage} />,
+          },
+          {
+            id: 'tvs',
+            header: 'TVS',
+            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
+            align: 'right',
+            cell: (project) => (
+              <HomeRankedValueWithChange
+                value={project.tvs}
+                change={project.tvsChange}
+              />
+            ),
+          },
+          {
+            id: 'uops',
+            header: 'UOPS',
+            align: 'right',
+            minTableWidth: 480,
+            cell: (project) => (
+              <HomeRankedValue
+                value={project.uops}
+                format={formatActivityCount}
+              />
+            ),
+          },
+        ]}
+      />
     </HomeDomainCard>
   )
 }

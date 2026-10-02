@@ -2,10 +2,7 @@ import type { Stage } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import {
-  getChangelogEntries,
-  selectActiveWhatsNewEntry,
-} from '~/server/features/changelog/getChangelogEntries'
+import type { RosetteValue } from '~/components/rosette/types'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import { getHomePrivacyData } from '~/server/features/home/getHomePrivacyData'
@@ -31,7 +28,6 @@ import type { InteropFlowsProtocol } from '../interop/components/flows/utils/Int
 import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
-import type { HomeWhatsNewItem } from './components/HomeWhatsNewSection'
 import { getHomeCropsProjects } from './getHomeCropsProjects'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { getHomeResearch } from './getHomeResearch'
@@ -149,7 +145,6 @@ async function getCachedData(manifest: Manifest) {
       name: group.name,
       iconUrl: group.iconUrl,
     })),
-    whatsNewItem: getHomeWhatsNewItem(),
     research: getHomeResearch(),
   }
 }
@@ -198,9 +193,14 @@ export interface HomeTopL2Project {
   href: string
   iconUrl: string
   stage: Stage | 'UnderReview' | 'NotApplicable'
-  isAppchain: boolean
   tvs: number | undefined
   tvsChange: number | undefined
+  /** User operations per second over the past day. */
+  uops: number | undefined
+  risks: RosetteValue[]
+  /** The risk page, this project highlighted. */
+  risksHref: string
+  risksUnderReview: boolean
 }
 
 function getTopL2Projects(
@@ -215,33 +215,14 @@ function getTopL2Projects(
       href: `/layer2s/projects/${entry.slug}`,
       iconUrl: entry.icon,
       stage: entry.stage.stage,
-      isAppchain: entry.capability === 'appchain',
       tvs: tvs?.breakdown.total,
       tvsChange: tvs?.change.total,
+      uops: entry.activity?.pastDayUops,
+      risks: entry.risks,
+      risksHref: `/layer2s/risk?tab=${entry.tab}&highlight=${entry.slug}`,
+      risksUnderReview: entry.statuses?.underReview === 'config',
     }
   })
-}
-
-function getHomeWhatsNewItem(): HomeWhatsNewItem | undefined {
-  // The card is a permanent part of the desktop layout, so unlike the
-  // floating widget it falls back to the most recent entry when no
-  // campaign is currently active.
-  const entries = getChangelogEntries()
-  const entry =
-    selectActiveWhatsNewEntry(entries, new Date()) ??
-    entries.find((entry) => entry.whatsNew)
-  if (!entry?.whatsNew) {
-    return undefined
-  }
-  return {
-    id: `changelog-${entry.id}`,
-    title: entry.title,
-    description: entry.summary,
-    href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
-    imageSrc: entry.whatsNew.image,
-    verticalImageSrc: entry.whatsNew.verticalImage,
-    imageAlt: entry.whatsNew.alt,
-  }
 }
 
 export interface HomeRecentProject {

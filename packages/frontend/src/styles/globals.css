@@ -1000,15 +1000,6 @@ html:has([data-backdrop="plot"]) {
   }
 }
 
-@keyframes garden-spin {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes garden-drift {
   0%,
   100% {

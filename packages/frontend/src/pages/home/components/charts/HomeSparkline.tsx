@@ -1,6 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
-import { Area, AreaChart, ReferenceDot, XAxis, YAxis } from 'recharts'
+import {
+  Area,
+  AreaChart,
+  ReferenceDot,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -29,8 +36,11 @@ interface Props {
   data: HomeSparklineDataPoint[]
   tooltipLabel: string
   formatValue: (value: number) => string
-  /** Each point covers a whole day, so the tooltip names the day's range. */
-  tooltipDayRange?: boolean
+  /**
+   * Daily figures that swing day to day (activity, deposits): drawn as weekly
+   * averages, so the line shows the trend the yearly change describes.
+   */
+  weeklyAverage?: boolean
   className?: string
 }
 
@@ -51,17 +61,27 @@ const FILL_HEIGHT_CLASS = cn(
   '[&_.recharts-area-curve]:stroke-[1.5px]!',
 )
 
-/** A chart reduced to its line: no axes, no grid, a dot on the latest value. */
+/**
+ * A chart reduced to its line and a soft fill: no axes, a hairline at the
+ * period's high and low with their values, a dashed line where it started
+ * and a dot on the latest value.
+ */
 export function HomeSparkline({
-  data,
+  data: dailyData,
   tooltipLabel,
   formatValue,
-  tooltipDayRange,
+  weeklyAverage,
   className,
 }: Props) {
   const fillId = useId()
+  const data = useMemo(
+    () => (weeklyAverage ? toWeeklyAverages(dailyData) : dailyData),
+    [dailyData, weeklyAverage],
+  )
   const domain = useMemo(() => getDomain(data), [data])
+  const first = useMemo(() => data.find((d) => d.value !== null), [data])
   const last = useMemo(() => data.findLast((d) => d.value !== null), [data])
+  const range = useMemo(() => getRange(data), [data])
   const meta = useMemo<ChartMeta>(
     () => ({
       value: {
@@ -86,8 +106,9 @@ export function HomeSparkline({
           <AreaChart
             responsive
             data={data}
-            // Room for the end dot, which sits on the last point at the edge.
-            margin={{ top: 6, right: 6, bottom: 0, left: 0 }}
+            // Room for the end dot, which sits on the last point at the edge,
+            // and under the plot for the low label.
+            margin={{ top: 6, right: 6, bottom: LOW_LABEL_HEIGHT, left: 0 }}
           >
             <defs>
               <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
@@ -97,8 +118,39 @@ export function HomeSparkline({
             </defs>
             <XAxis dataKey="timestamp" hide />
             <YAxis hide domain={domain} />
+            {/* Where the period started, so the change beside the number
+                shows in the line's shape. */}
+            {first && first.value !== null && (
+              <ReferenceLine
+                y={first.value}
+                stroke="var(--divider)"
+                strokeDasharray="2 3"
+                ifOverflow="extendDomain"
+                zIndex={BEHIND_SERIES}
+              />
+            )}
+            {range &&
+              (['max', 'min'] as const).map((key) => (
+                <ReferenceLine
+                  key={key}
+                  y={range[key].value}
+                  stroke="var(--divider)"
+                  zIndex={BEHIND_SERIES}
+                  // On the side away from the extreme itself, clear of the line.
+                  label={{
+                    value: formatValue(range[key].value),
+                    position: range[key].early
+                      ? 'insideTopRight'
+                      : 'insideTopLeft',
+                    fontSize: 10,
+                    fill: 'var(--secondary)',
+                  }}
+                />
+              ))}
             <Area
               dataKey="value"
+              // A weekly series has few enough points to show its corners.
+              type={weeklyAverage ? 'monotone' : 'linear'}
               stroke={STROKE}
               fill={`url(#${fillId})`}
               fillOpacity={1}
@@ -121,7 +173,7 @@ export function HomeSparkline({
               content={
                 <SparklineTooltip
                   formatValue={formatValue}
-                  dayRange={tooltipDayRange}
+                  weeklyAverage={weeklyAverage}
                 />
               }
               filterNull={false}
@@ -133,10 +185,54 @@ export function HomeSparkline({
   )
 }
 
+/** Recharts' grid layer: guide lines go under the series, not across it. */
+const BEHIND_SERIES = -100
+
+/** The low label hangs under the plot, in a margin this tall. */
+const LOW_LABEL_HEIGHT = 16
+
 /**
- * The series' own range: a sparkline shows the shape, not the size. Room is
- * left under the lowest point so the fade always shows; a flat series draws
- * near the top, where a real series would peak.
+ * Seven-day buckets counted back from the latest day, so the last point is
+ * the latest full week. Each is stamped with its first day and holds the mean
+ * of the days that have data.
+ */
+function toWeeklyAverages(
+  data: HomeSparklineDataPoint[],
+): HomeSparklineDataPoint[] {
+  const weeks: HomeSparklineDataPoint[] = []
+  for (let end = data.length; end > 0; end -= 7) {
+    const days = data.slice(Math.max(0, end - 7), end)
+    const [firstDay] = days
+    if (!firstDay) continue
+    const values = days.flatMap((d) => (d.value === null ? [] : [d.value]))
+    weeks.push({
+      timestamp: firstDay.timestamp,
+      value:
+        values.length > 0
+          ? values.reduce((sum, v) => sum + v, 0) / values.length
+          : null,
+    })
+  }
+  return weeks.reverse()
+}
+
+/** The extremes, and whether each falls in the first half of the period. */
+function getRange(data: HomeSparklineDataPoint[]) {
+  let min: { value: number; early: boolean } | undefined
+  let max: { value: number; early: boolean } | undefined
+  data.forEach((d, index) => {
+    if (d.value === null) return
+    const early = index < data.length / 2
+    if (!min || d.value < min.value) min = { value: d.value, early }
+    if (!max || d.value > max.value) max = { value: d.value, early }
+  })
+  return min && max && min.value !== max.value ? { min, max } : undefined
+}
+
+/**
+ * The series' own range: a sparkline shows the shape, not the size. The low
+ * line sits at the bottom of the plot (its label hangs below it); a flat
+ * series draws near the top, where a real series would peak.
  */
 function getDomain(data: HomeSparklineDataPoint[]): [number, number] {
   let min = Number.POSITIVE_INFINITY
@@ -154,17 +250,17 @@ function getDomain(data: HomeSparklineDataPoint[]): [number, number] {
     return [min - padding, max + padding * 0.1]
   }
   const range = max - min
-  return [min - range * 0.35, max + range * 0.05]
+  return [min, max + range * 0.05]
 }
 
 function SparklineTooltip({
   payload,
   label,
   formatValue,
-  dayRange,
+  weeklyAverage,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
-  dayRange?: boolean
+  weeklyAverage?: boolean
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -174,7 +270,12 @@ function SparklineTooltip({
   const breakdown = (entry.payload as HomeSparklineDataPoint | undefined)
     ?.tvsBreakdown
   const rows = [
-    { id: 'value', label: config.label, value: entry.value, indicator: true },
+    {
+      id: 'value',
+      label: weeklyAverage ? `${config.label}, daily average` : config.label,
+      value: entry.value,
+      indicator: true,
+    },
     ...(breakdown
       ? [
           {
@@ -196,8 +297,8 @@ function SparklineTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-50 flex-col gap-2 sm:w-60">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {dayRange
-            ? formatRange(label, label + UnixTime.DAY)
+          {weeklyAverage
+            ? formatRange(label, label + 7 * UnixTime.DAY)
             : formatTimestamp(label, { longMonthName: true })}
         </div>
         {rows.map((row, index) => (

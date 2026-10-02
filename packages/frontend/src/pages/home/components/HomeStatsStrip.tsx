@@ -71,10 +71,7 @@ export function HomeStatsStrip({
     <HomeCard className={cn('flex flex-col gap-2', className)}>
       <ul className="grid grid-cols-2 gap-2 md:grid-cols-4">
         <li>
-          <CropsMiniBanner
-            className="h-full rounded-lg"
-            plantClassName="right-6"
-          />
+          <CropsMiniBanner className="h-full rounded-lg" />
         </li>
         {domains.map((tile) => (
           <li key={tile.label}>

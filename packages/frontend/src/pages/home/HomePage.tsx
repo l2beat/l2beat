@@ -21,8 +21,6 @@ import {
   HomeLatestArticlesSection,
   HomeProjectChangesSection,
   type HomeRecentChangesProject,
-  HomeWhatsNewHeadline,
-  type HomeWhatsNewItem,
   HomeWhatsNewProjects,
 } from './components/HomeWhatsNewSection'
 import type { HomeCropsProject } from './getHomeCropsProjects'
@@ -44,7 +42,6 @@ interface Props extends AppLayoutProps {
   recentProjects: HomeRecentProject[]
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
-  whatsNewItem: HomeWhatsNewItem | undefined
   research: HomeResearchItem[]
 }
 
@@ -62,7 +59,6 @@ export function HomePage({
   recentProjects,
   recentChangesCount,
   recentChangesProjects,
-  whatsNewItem,
   research,
   ...props
 }: Props) {
@@ -77,12 +73,13 @@ export function HomePage({
               <MainPageHeader>Home</MainPageHeader>
             </div>
             {/* No boxes: sections sit on the page background, a hairline
-                above each. From lg the page is one three-column grid, Layer
-                2s | Privacy | what's new, with a line between columns and 24px
-                either side of it, the gutter at the outer edges, so every
-                column's content lines up down the page. A last hairline
-                closes it above the footer, where the column line ends. */}
-            <div className="@container/home grid grid-cols-1 border-divider border-b lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,280px)] lg:grid-rows-[auto_auto_auto_1fr_auto_auto] xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(340px,400px)]">
+                above each. From lg the page is one two-column grid, Privacy |
+                Layer 2s, with a line between the columns and 24px either side
+                of it, the gutter at the outer edges, so every column's
+                content lines up down the page. What's new lives in the nav
+                there. A last hairline closes it above the footer, where the
+                column line ends. */}
+            <div className="@container/home grid grid-cols-1 border-divider border-b lg:grid-cols-2 lg:grid-rows-[auto_auto_auto_1fr_auto_auto]">
               {/* Below lg, where the sidebar hides behind the menu button,
                   its menu opens the page, CROPS first; the big CROPS banner
                   stays a desktop thing. It comes right under the top bar, so
@@ -91,48 +88,36 @@ export function HomePage({
                 counts={projectCounts}
                 className="border-t-0 pt-4 md:pt-0 lg:hidden"
               />
-              {/* CROPS and the mandate. From lg they split at the column
-                  line, 8px either side of it, the outer edges level with the
-                  content below; below lg only the mandate shows, under the
-                  menu. */}
-              <div className="flex flex-col lg:col-span-full lg:mb-6 lg:grid lg:grid-cols-subgrid">
+              {/* CROPS and the mandate. From lg they share a row, the mandate
+                  at the width the old right column had, 16px between them and
+                  the outer edges level with the content below; below lg only
+                  the mandate shows, under the menu. */}
+              <div className="flex flex-col lg:col-span-full lg:mx-(--home-gutter) lg:mb-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,280px)] lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
                 <HomeCropsBanner
                   projects={cropsProjects}
-                  className="max-lg:hidden lg:col-span-2 lg:mr-2 lg:ml-(--home-gutter)"
+                  className="max-lg:hidden"
                 />
-                <HomeMandateBanner className="lg:mr-(--home-gutter) lg:ml-2" />
+                <HomeMandateBanner />
               </div>
               {/* From lg the page has six rows: CROPS; the domain cards'
                   title, charts and rankings; Ethereum; what follows it. */}
-              {/* The right column: what's new. From lg it shares the domain
-                  cards' rows: the announcement sits on the chart row and new
-                  projects on the ranking row, so both end on the same lines
-                  as the cards beside them. Below lg it dissolves and comes
-                  first. Its sections pad themselves, so their hairlines reach
-                  both ends. */}
-              <div className="max-lg:contents lg:col-start-3 lg:row-span-3 lg:row-start-2 lg:grid lg:min-w-0 lg:grid-rows-subgrid lg:border-divider lg:border-l">
-                <HomeWhatsNewHeadline item={whatsNewItem} className="lg:pl-6" />
-                <HomeWhatsNewProjects
-                  projects={recentProjects}
-                  className="lg:row-start-3 lg:pl-6"
-                />
-              </div>
-              {/* The twin cards subgrid the title, chart and ranking rows. The
-                  ranking row is the flexible one, so any height the right
-                  column adds lands there. */}
+              {/* The twin cards subgrid the title, chart and ranking rows, so
+                  their parts stay level. */}
               <div className="grid @min-[880px]/home:grid-cols-2 grid-cols-1 lg:col-span-2 lg:col-start-1 lg:row-span-3 lg:row-start-2 lg:grid-cols-subgrid lg:grid-rows-subgrid">
+                <HomePrivacyCard
+                  data={privacy}
+                  projectCount={projectCounts.privacy}
+                  className="@min-[880px]/home:pr-6"
+                />
                 <HomeL2Card
                   charts={l2Charts}
                   topProjects={topL2Projects}
-                  className="@min-[880px]/home:pr-6"
-                />
-                <HomePrivacyCard
-                  data={privacy}
-                  className="@min-[880px]/home:border-l @min-[880px]/home:pl-6 lg:pr-6"
+                  projectCount={projectCounts.l2}
+                  className="@min-[880px]/home:border-l @min-[880px]/home:pl-6"
                 />
               </div>
               {/* From lg, Ethereum and the sections under it take the
-                  Layer 2s column; interop takes the other two, beside them. */}
+                  Privacy column; interop takes the other, beside them. */}
               <HomeEthereumCard
                 charts={ethereumCharts}
                 className="lg:col-start-1 lg:row-start-5 lg:pr-6"
@@ -141,19 +126,32 @@ export function HomePage({
                 chains={interopFlowChains}
                 defaultSelectedChains={interopDefaultFlowChains}
                 protocols={flowProtocols}
-                className="lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-5 lg:border-l"
+                className="lg:col-start-2 lg:row-span-2 lg:row-start-5 lg:border-l"
               />
-              <div className="flex min-w-0 flex-col lg:col-start-1 lg:row-start-6">
-                <HomeLatestArticlesSection
-                  research={research}
-                  className="lg:pr-6"
-                />
-                <HomeProjectChangesSection
-                  count={recentChangesCount}
-                  projects={recentChangesProjects}
-                  className="lg:pr-6"
-                />
-                <HomeQuestionCard className="lg:pr-6" />
+              {/* Under Ethereum: articles and the question, with new research
+                  and project changes beside them once the column is wide
+                  enough. */}
+              <div className="@container/recent flex min-w-0 flex-col lg:col-start-1 lg:row-start-6">
+                <div className="flex @min-[560px]/recent:grid min-w-0 @min-[560px]/recent:grid-cols-2 flex-col">
+                  <div className="flex min-w-0 flex-col">
+                    <HomeLatestArticlesSection
+                      research={research}
+                      className="lg:pr-6"
+                    />
+                    <HomeQuestionCard className="lg:pr-6" />
+                  </div>
+                  <div className="flex min-w-0 flex-col @min-[560px]/recent:border-divider @min-[560px]/recent:border-l">
+                    <HomeWhatsNewProjects
+                      projects={recentProjects}
+                      className="@min-[560px]/recent:pl-6 lg:pr-6"
+                    />
+                    <HomeProjectChangesSection
+                      count={recentChangesCount}
+                      projects={recentChangesProjects}
+                      className="@min-[560px]/recent:flex-1 @min-[560px]/recent:pl-6 lg:pr-6"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

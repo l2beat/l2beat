@@ -123,7 +123,12 @@ export function SideNavLayout({
           </div>
           <div className={contentAreaVariants({ variant })}>
             {children}
-            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
+            {/* From lg the nav shows the announcement itself. */}
+            {whatsNew && (
+              <div className="lg:hidden">
+                <WhatsNewWidgetCloseable whatsNew={whatsNew} />
+              </div>
+            )}
           </div>
           <Footer
             className={footerVariants({ variant })}

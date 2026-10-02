@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import { HOME_TEXT } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -11,11 +13,17 @@ import { HomeCardHeader } from './HomeCardHeader'
 export function HomeDomainCard({
   title,
   href,
+  viewAll,
   className,
   children,
 }: {
   title: string
   href: string
+  /**
+   * Opposite the title, so the short ranking never reads as everything we
+   * track, at no cost in height.
+   */
+  viewAll: { href: string; label: string }
   className?: string
   children: ReactNode
 }) {
@@ -26,7 +34,21 @@ export function HomeDomainCard({
         className,
       )}
     >
-      <HomeCardHeader title={title} href={href} />
+      <div className="flex min-w-0 items-baseline justify-between gap-3">
+        <HomeCardHeader title={title} href={href} />
+        <a
+          href={viewAll.href}
+          className={cn(
+            'group flex min-w-0 items-center gap-1 hover:text-primary',
+            HOME_TEXT.meta,
+          )}
+        >
+          <span className="truncate underline-offset-2 group-hover:underline">
+            {viewAll.label}
+          </span>
+          <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-current transition-transform group-hover:translate-x-0.5" />
+        </a>
+      </div>
       {children}
     </HomeCard>
   )
@@ -48,24 +70,6 @@ export function HomeKpiRow({
         className,
       )}
     >
-      {children}
-    </div>
-  )
-}
-
-/** A titled block inside a domain card, e.g. its ranking. */
-export function HomeDomainSection({
-  title,
-  className,
-  children,
-}: {
-  title: string
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <div className={cn('flex min-w-0 flex-col gap-2', className)}>
-      <HomeCardHeader title={title} level={3} />
       {children}
     </div>
   )

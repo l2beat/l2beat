@@ -3,6 +3,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
+import { PinProjectButton } from '../your-projects/PinProjectButton'
 
 interface Project {
   name: string
@@ -16,6 +17,8 @@ interface Props {
   recentUpdatesCount?: number
   secondLine?: ReactNode
   livenessSectionHref?: string
+  /** Off for pages that are not projects (e.g. a token), so they never land in the nav's "Your projects". */
+  pinnable?: boolean
   className?: string
 }
 
@@ -25,6 +28,7 @@ export function ProjectHeader({
   recentUpdatesCount,
   secondLine,
   livenessSectionHref = '#liveness',
+  pinnable = true,
   className,
 }: Props) {
   return (
@@ -58,6 +62,9 @@ export function ProjectHeader({
           </div>
         </h1>
         <div className="flex flex-col gap-2 max-md:w-full md:flex-row md:items-center">
+          {pinnable && (
+            <PinProjectButton name={project.name} iconUrl={project.icon} />
+          )}
           {!!ongoingAnomaly && (
             <a
               href={livenessSectionHref}

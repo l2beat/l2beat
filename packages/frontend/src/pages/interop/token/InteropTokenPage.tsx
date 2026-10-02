@@ -106,6 +106,7 @@ function Content({
   const header = (
     <>
       <ProjectHeader
+        pinnable={false}
         className="mb-0 md:mb-4"
         project={{
           name: token.symbol,

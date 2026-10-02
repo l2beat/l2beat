@@ -28,6 +28,8 @@ import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { CropsMiniBanner } from '../../garden/CropsMiniBanner'
 import { Logo } from '../../Logo'
 import { SocialLinks } from '../../SocialLinks'
+import { NavWhatsNew } from '../../whats-new/NavWhatsNew'
+import { NavYourProjects } from '../../your-projects/NavYourProjects'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
 import type { NavGroup } from '../types'
 
@@ -92,6 +94,8 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
               />
             ))}
         </div>
+        <NavYourProjects onNavigate={closeMobileSidebar} />
+        <NavWhatsNew onNavigate={closeMobileSidebar} />
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center gap-3.5 pl-1.5">

@@ -4,20 +4,24 @@ import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
 import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
-import { HomeDomainCard, HomeDomainSection, HomeKpiRow } from './HomeDomainCard'
+import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import { HomePrivacyDot } from './HomePrivacyDot'
 import {
-  HomeRankedChange,
   HomeRankedTable,
   HomeRankedValue,
+  HomeRankedValueWithChange,
+  VALUE_WITH_CHANGE_HEADER_CLASS,
 } from './HomeRankedTable'
 
 export function HomePrivacyCard({
   data,
+  projectCount,
   className,
 }: {
   data: HomePrivacyData
+  /** Every privacy project we track, for the link under the ranking. */
+  projectCount: number
   className?: string
 }) {
   const tvlChartData = useMemo<HomeSparklineDataPoint[]>(
@@ -38,7 +42,15 @@ export function HomePrivacyCard({
   const hasDeposits = data.deposits.chart.length > 0
 
   return (
-    <HomeDomainCard title="Privacy" href="/privacy" className={className}>
+    <HomeDomainCard
+      title="Privacy"
+      href="/privacy"
+      viewAll={{
+        href: '/privacy',
+        label: `View all ${projectCount} privacy projects`,
+      }}
+      className={className}
+    >
       <HomeKpiRow>
         <HomeKpiTile
           label="Value locked"
@@ -69,39 +81,49 @@ export function HomePrivacyCard({
               data={depositsChartData}
               tooltipLabel="Deposited"
               formatValue={(value) => formatCurrency(value, 'usd')}
-              tooltipDayRange
+              weeklyAverage
             />
           }
         />
       </HomeKpiRow>
-      <HomeDomainSection title="Top protocols">
-        <HomeRankedTable
-          rows={data.topProtocols}
-          columns={[
-            {
-              id: 'privacy',
-              middle: true,
-              cell: (protocol) => (
-                <HomePrivacyDot adversaries={protocol.adversaries} />
-              ),
-            },
-            {
-              id: 'tvl',
-              align: 'right',
-              cell: (protocol) => (
-                <HomeRankedValue label="TVL" value={protocol.tvl} />
-              ),
-            },
-            {
-              id: 'change',
-              align: 'right',
-              cell: (protocol) => (
-                <HomeRankedChange change={protocol.tvlChange} />
-              ),
-            },
-          ]}
-        />
-      </HomeDomainSection>
+      <HomeRankedTable
+        title="Top protocols"
+        rows={data.topProtocols}
+        columns={[
+          {
+            id: 'privacy',
+            header: 'Privacy',
+            middle: true,
+            cell: (protocol) => (
+              <HomePrivacyDot
+                adversaries={protocol.adversaries}
+                href={protocol.href}
+              />
+            ),
+          },
+          {
+            id: 'tvl',
+            header: 'TVL',
+            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
+            align: 'right',
+            cell: (protocol) => (
+              <HomeRankedValueWithChange
+                value={protocol.tvl}
+                change={protocol.tvlChange}
+              />
+            ),
+          },
+          {
+            id: 'deposited30d',
+            header: 'Vol 30d',
+            align: 'right',
+            minTableWidth: 480,
+            cell: (protocol) => (
+              <HomeRankedValue value={protocol.deposited30d} />
+            ),
+          },
+        ]}
+      />
     </HomeDomainCard>
   )
 }

@@ -2,7 +2,6 @@ import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo } from 'react'
 import { EM_DASH } from '~/consts/characters'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
@@ -16,7 +15,10 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type {
+  Flow,
+  InteropFlowsData,
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -88,89 +90,80 @@ function Content({
         subtitle="Last 24h"
         href="/interop/summary"
       />
-      {data && <Stats data={data} chains={chains} />}
       {/* From lg the section is as tall as the column beside it and the graph
-          takes what the figures leave (a 0px basis, so it never sets the
-          height itself); below lg it is a fixed-size square. */}
-      <div className="pointer-events-none flex min-h-[360px] min-w-0 flex-col items-center lg:flex-1 lg:basis-0">
-        <FlowsGraphPanel
-          activeChains={activeChains}
-          data={data}
-          hasEnoughChains={hasEnoughChains}
-          hasEnoughProtocols={hasEnoughProtocols}
-          isLoading={isLoading}
-          // Chain labels hang below the bubbles; pb keeps them in the section.
-          className="pb-6 max-lg:order-none"
-          maxSizeClassName="max-w-[460px] lg:max-w-[680px]"
-        />
+          fills its body: the largest square it fits (a 0px basis, so it never
+          sets the height itself). The chains sit on a ring, so the corners of
+          that square are free, and the figures go there. Below lg it all
+          stacks, the graph a fixed-size square. */}
+      <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0">
+        {data && <Stats data={data} chains={chains} className="lg:hidden" />}
+        <div className="pointer-events-none flex min-h-[360px] min-w-0 flex-col items-center lg:absolute lg:inset-0 lg:min-h-0">
+          <FlowsGraphPanel
+            activeChains={activeChains}
+            data={data}
+            hasEnoughChains={hasEnoughChains}
+            hasEnoughProtocols={hasEnoughProtocols}
+            isLoading={isLoading}
+            // Chain labels hang below the bubbles; pb keeps them in the section.
+            className="pb-6 max-lg:order-none"
+            maxSizeClassName="max-w-[460px] lg:max-w-none"
+          />
+        </div>
+        {data && (
+          <>
+            <TopRoutes
+              flows={data.flows}
+              chains={chains}
+              className="lg:hidden"
+            />
+            <CornerStats data={data} chains={chains} />
+          </>
+        )}
       </div>
     </HomeCard>
   )
 }
 
+const TOP_ROUTES_COUNT = 5
+/** A corner fits fewer rows than the list under the graph. */
+const CORNER_ROUTES_COUNT = 3
+
 /**
- * The interop page's general stats: volume and transfers, then the top route,
- * chain, token and protocol, in columns split by hairlines like the KPI pairs.
+ * The interop page's general stats: volume, transfers and routes, then the
+ * top chain, token and protocol, in columns split by hairlines like the KPI
+ * pairs. The busiest routes are listed apart, in TopRoutes.
  */
 function Stats({
   data,
   chains,
+  className,
 }: {
   data: InteropFlowsData
   chains: InteropChainWithIcon[]
+  className?: string
 }) {
   const { stats } = data
-  const chain = (id: string | undefined) =>
-    id ? chains.find((c) => c.id === id) : undefined
-  const topChain = chain(stats.topChain?.chainId)
-  const routeSrc = chain(stats.topRoute?.srcChain)
-  const routeDst = chain(stats.topRoute?.dstChain)
+  const topChain = stats.topChain
+    ? chains.find((c) => c.id === stats.topChain?.chainId)
+    : undefined
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className={cn('flex flex-col gap-5', className)}>
       <div className={STAT_ROW_CLASS}>
-        {/* Two columns each, so the line between them meets the one
-            between the top chain and the top token below. */}
         <Figure
           label="Volume"
           value={formatCurrency(stats.totalVolume, 'usd')}
-          className="@min-[640px]/home:col-span-2"
         />
         <Figure
           label="Transfers"
           value={formatInteger(stats.totalTransferCount)}
-          className="@min-[640px]/home:col-span-2"
+        />
+        <Figure
+          label="Active routes"
+          value={formatInteger(stats.activeFlows)}
         />
       </div>
       <div className={cn(STAT_ROW_CLASS, 'border-divider border-t pt-5')}>
-        <Top
-          label="Top route"
-          href={
-            routeSrc && routeDst
-              ? buildInteropUrl('/interop/summary', {
-                  from: [routeSrc.id],
-                  to: [routeDst.id],
-                })
-              : undefined
-          }
-          value={stats.topRoute && formatCurrency(stats.topRoute.volume, 'usd')}
-        >
-          {routeSrc && routeDst && (
-            <>
-              <img
-                src={routeSrc.iconUrl}
-                alt={routeSrc.name}
-                className={HOME_ICON_CLASS}
-              />
-              <ArrowRightIcon className="size-3 shrink-0 fill-secondary" />
-              <img
-                src={routeDst.iconUrl}
-                alt={routeDst.name}
-                className={HOME_ICON_CLASS}
-              />
-            </>
-          )}
-        </Top>
         <Top
           label="Top chain"
           href={topChain?.href}
@@ -234,24 +227,13 @@ function Stats({
   )
 }
 
-/** Four columns split by hairlines; two by two, without them, on phones. */
-const STAT_ROW_CLASS = cn(
-  'grid grid-cols-2 gap-x-4 gap-y-5',
-  '@min-[640px]/home:grid-cols-4 @min-[640px]/home:gap-x-0 @min-[640px]/home:divide-x @min-[640px]/home:divide-divider',
-  '@min-[640px]/home:*:px-4 @min-[640px]/home:*:first:pl-0 @min-[640px]/home:*:last:pr-0',
-)
+/** Three columns split by hairlines. */
+const STAT_ROW_CLASS =
+  'grid grid-cols-3 divide-x divide-divider *:px-3 *:first:pl-0 *:last:pr-0 sm:*:px-4'
 
-function Figure({
-  label,
-  value,
-  className,
-}: {
-  label: string
-  value: string
-  className?: string
-}) {
+function Figure({ label, value }: { label: string; value: string }) {
   return (
-    <div className={cn('flex min-w-0 flex-col gap-1', className)}>
+    <div className="flex min-w-0 flex-col gap-1">
       <span className={cn('truncate', HOME_TEXT.meta)}>{label}</span>
       <span className={cn('truncate', HOME_TEXT.number)}>{value}</span>
     </div>
@@ -284,3 +266,242 @@ function Top({
     </div>
   )
 }
+
+/** The busiest routes, one direction each, ranked like the other cards. */
+function useTopRoutes(
+  flows: Flow[],
+  chains: InteropChainWithIcon[],
+  count: number,
+) {
+  return useMemo(
+    () =>
+      flows
+        .toSorted((a, b) => b.volume - a.volume)
+        .slice(0, count)
+        .flatMap((flow) => {
+          const src = chains.find((c) => c.id === flow.srcChain)
+          const dst = chains.find((c) => c.id === flow.dstChain)
+          return src && dst
+            ? [
+                {
+                  src,
+                  dst,
+                  volume: flow.volume,
+                  href: buildInteropUrl('/interop/summary', {
+                    from: [src.id],
+                    to: [dst.id],
+                  }),
+                },
+              ]
+            : []
+        }),
+    [flows, chains, count],
+  )
+}
+
+function RouteIcons({
+  src,
+  dst,
+}: {
+  src: InteropChainWithIcon
+  dst: InteropChainWithIcon
+}) {
+  return (
+    <span className="-space-x-1 flex shrink-0">
+      {[src, dst].map((chain) => (
+        <img
+          key={chain.id}
+          src={chain.iconUrl}
+          alt=""
+          className={cn(HOME_ICON_CLASS, 'ring-2 ring-surface-primary')}
+        />
+      ))}
+    </span>
+  )
+}
+
+/** The busiest routes, one direction each, ranked like the other cards. */
+function TopRoutes({
+  flows,
+  chains,
+  className,
+}: {
+  flows: Flow[]
+  chains: InteropChainWithIcon[]
+  className?: string
+}) {
+  const routes = useTopRoutes(flows, chains, TOP_ROUTES_COUNT)
+  if (routes.length === 0) {
+    return null
+  }
+  return (
+    <div className={cn('flex min-w-0 flex-col gap-2', className)}>
+      <h3 className={HOME_TEXT.sectionTitle}>Top routes</h3>
+      <ol className="divide-y divide-divider">
+        {routes.map(({ src, dst, volume, href }, index) => (
+          <li
+            key={`${src.id}-${dst.id}`}
+            className="flex min-h-10 items-center gap-2 py-2"
+          >
+            <span
+              className={cn(
+                'w-3 shrink-0 text-right tabular-nums',
+                HOME_TEXT.meta,
+              )}
+            >
+              {index + 1}
+            </span>
+            <a
+              href={href}
+              className="group flex min-w-0 flex-1 items-center gap-1.5"
+            >
+              <RouteIcons src={src} dst={dst} />
+              <span
+                className={cn(
+                  'truncate underline-offset-2 group-hover:underline',
+                  HOME_TEXT.row,
+                )}
+              >
+                {src.name} → {dst.name}
+              </span>
+            </a>
+            <span className={cn('shrink-0', HOME_TEXT.value)}>
+              {formatCurrency(volume, 'usd')}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+/**
+ * The figures in the four corners the graph's ring leaves free: totals top
+ * left, routes and the top chain top right, the top token and protocol
+ * bottom left, the busiest routes bottom right.
+ */
+function CornerStats({
+  data,
+  chains,
+}: {
+  data: InteropFlowsData
+  chains: InteropChainWithIcon[]
+}) {
+  const { stats } = data
+  const topChain = stats.topChain
+    ? chains.find((c) => c.id === stats.topChain?.chainId)
+    : undefined
+  const routes = useTopRoutes(data.flows, chains, CORNER_ROUTES_COUNT)
+
+  return (
+    <div className="pointer-events-none absolute inset-0 max-lg:hidden">
+      <div className={cn(CORNER_CLASS, 'top-0 left-0')}>
+        <Figure
+          label="Volume"
+          value={formatCurrency(stats.totalVolume, 'usd')}
+        />
+        <Figure
+          label="Transfers"
+          value={formatInteger(stats.totalTransferCount)}
+        />
+      </div>
+      <div className={cn(CORNER_CLASS, 'top-0 right-0 items-end text-right')}>
+        <Figure
+          label="Active routes"
+          value={formatInteger(stats.activeFlows)}
+        />
+        <Top
+          label="Top chain"
+          href={topChain?.href}
+          value={
+            stats.topChain && stats.totalVolume > 0
+              ? `${formatPercent(stats.topChain.totalVolume / stats.totalVolume)} of volume`
+              : undefined
+          }
+        >
+          {topChain && (
+            <>
+              <img src={topChain.iconUrl} alt="" className={HOME_ICON_CLASS} />
+              <span className={cn('truncate', HOME_TEXT.row)}>
+                {topChain.name}
+              </span>
+            </>
+          )}
+        </Top>
+      </div>
+      <div className={cn(CORNER_CLASS, 'bottom-0 left-0')}>
+        <Top
+          label="Top token"
+          href={stats.topToken && getInteropTokenUrl(stats.topToken)}
+          value={stats.topToken && formatCurrency(stats.topToken.volume, 'usd')}
+        >
+          {stats.topToken && (
+            <>
+              <img
+                src={stats.topToken.iconUrl}
+                alt=""
+                className={HOME_ICON_CLASS}
+              />
+              <span className={cn('truncate', HOME_TEXT.row)}>
+                {stats.topToken.symbol}
+              </span>
+            </>
+          )}
+        </Top>
+        <Top
+          label="Top protocol"
+          href={
+            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
+          }
+          value={
+            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
+          }
+        >
+          {stats.topProtocol && (
+            <>
+              <img
+                src={stats.topProtocol.iconUrl}
+                alt=""
+                className={HOME_ICON_CLASS}
+              />
+              <span className={cn('truncate', HOME_TEXT.row)}>
+                {stats.topProtocol.name}
+              </span>
+            </>
+          )}
+        </Top>
+      </div>
+      {routes.length > 0 && (
+        <div
+          className={cn(CORNER_CLASS, 'right-0 bottom-0 items-end text-right')}
+        >
+          <span className={HOME_TEXT.meta}>Top routes</span>
+          <ol className="flex flex-col items-end gap-2">
+            {routes.map(({ src, dst, volume, href }) => (
+              <li key={`${src.id}-${dst.id}`}>
+                <a
+                  href={href}
+                  title={`${src.name} → ${dst.name}`}
+                  className="group flex items-center gap-2"
+                >
+                  <RouteIcons src={src} dst={dst} />
+                  <span
+                    className={cn(
+                      'underline-offset-2 group-hover:underline',
+                      HOME_TEXT.value,
+                    )}
+                  >
+                    {formatCurrency(volume, 'usd')}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </div>
+  )
+}
+
+const CORNER_CLASS =
+  'pointer-events-auto absolute flex max-w-[180px] flex-col gap-4'

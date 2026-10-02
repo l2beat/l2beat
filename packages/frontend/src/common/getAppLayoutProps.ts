@@ -6,6 +6,7 @@ import {
   getActiveChangelogWhatsNewWidget,
   getChangelogEntries,
 } from '~/server/features/changelog/getChangelogEntries'
+import { getWhatsNewItem } from '~/server/features/changelog/getWhatsNewItem'
 import { getRecentlyAddedProjects } from '~/server/features/search-bar/getRecentlyAddedProjects'
 
 export async function getAppLayoutProps(): Promise<AppLayoutProps> {
@@ -27,6 +28,7 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
     recentlyAddedProjects,
     recentChangelogEntriesIds,
     whatsNew,
+    whatsNewItem: getWhatsNewItem(),
     countdowns: PROJECT_COUNTDOWNS,
   }
 }
