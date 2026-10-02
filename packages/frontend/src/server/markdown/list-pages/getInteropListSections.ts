@@ -6,12 +6,12 @@ import { ps } from '~/server/projects'
 import { interopProtocolUrl } from '../interopMarkdown'
 import {
   firstSentence,
+  type LinkListSection,
   type MarkdownLink,
-  type MarkdownSection,
   withFacts,
 } from '../listPageMarkdown'
 
-export async function getInteropListSections(): Promise<MarkdownSection[]> {
+export async function getInteropListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['interopConfig'],
     optional: ['display', 'scalingInfo'],

@@ -8,7 +8,7 @@ describe(getProjectUrl.name, () => {
   it('links an interop-only protocol to its interop page', () => {
     expect(
       getProjectUrl(
-        { slug: 'ccip', scalingInfo: undefined, interopConfig: INTEROP_CONFIG },
+        { ...NO_PAGE, slug: 'ccip', interopConfig: INTEROP_CONFIG },
         [],
       ),
     ).toEqual('/interop/protocols/ccip')
@@ -18,6 +18,7 @@ describe(getProjectUrl.name, () => {
     expect(
       getProjectUrl(
         {
+          ...NO_PAGE,
           slug: 'gnosis',
           scalingInfo: {} as ProjectScalingInfo,
           interopConfig: INTEROP_CONFIG,
@@ -29,3 +30,12 @@ describe(getProjectUrl.name, () => {
 })
 
 const INTEROP_CONFIG = {} as InteropConfig
+
+const NO_PAGE = {
+  daBridge: undefined,
+  scalingInfo: undefined,
+  daLayer: undefined,
+  privacyInfo: undefined,
+  defiInfo: undefined,
+  interopConfig: undefined,
+}

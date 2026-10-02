@@ -1,9 +1,9 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
 import {
+  type LinkListSection,
   type MarkdownLink,
-  type MarkdownSection,
-  renderMarkdown,
+  renderLinkListMarkdown,
 } from '~/server/markdown/listPageMarkdown'
 import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
@@ -17,7 +17,7 @@ import type { MarkdownAlternatePath } from './MarkdownAlternatesRouter'
  */
 export function createLlmsTxtRouter() {
   const router = express.Router()
-  const body = renderMarkdown(
+  const body = renderLinkListMarkdown(
     LLMS_TXT,
     [
       ...PAGE_SECTIONS,
@@ -59,7 +59,7 @@ const LLMS_TXT = {
 }
 
 /** Markdown of a page that is switched off (e.g. behind a feature flag) would be a 404. */
-function withoutUnservedMarkdown(section: MarkdownSection): MarkdownSection {
+function withoutUnservedMarkdown(section: LinkListSection): LinkListSection {
   return { ...section, links: section.links.filter(isServed) }
 }
 
@@ -74,7 +74,7 @@ function isMarkdownPath(
 }
 
 /** To list a new page, add one entry to the matching section. */
-const PAGE_SECTIONS: MarkdownSection[] = [
+const PAGE_SECTIONS: LinkListSection[] = [
   {
     heading: 'Scaling (layer 2s and layer 3s)',
     links: [
@@ -339,7 +339,7 @@ const PAGE_SECTIONS: MarkdownSection[] = [
   },
 ]
 
-const MARKDOWN_PAGES_SECTION: MarkdownSection = {
+const MARKDOWN_PAGES_SECTION: LinkListSection = {
   heading: 'Markdown pages',
   links: [
     {
@@ -388,7 +388,7 @@ const MARKDOWN_PAGES_SECTION: MarkdownSection = {
 }
 
 /** To list a new endpoint, add one entry here; a test compares this with the public API router. */
-const API_SECTION: MarkdownSection = {
+const API_SECTION: LinkListSection = {
   heading: 'Public API',
   links: [
     {
@@ -430,7 +430,7 @@ const API_SECTION: MarkdownSection = {
   ],
 }
 
-const OPTIONAL_SECTION: MarkdownSection = {
+const OPTIONAL_SECTION: LinkListSection = {
   heading: 'Optional',
   links: [
     {

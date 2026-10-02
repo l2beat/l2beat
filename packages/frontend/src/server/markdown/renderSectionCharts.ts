@@ -7,9 +7,13 @@ import type { DataPostedSectionProps } from '~/components/projects/sections/data
 import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import {
+  ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
+  anonymitySetByHoldingDurationDescription,
+  anonymitySetHistoricDescription,
   COSTS_DESCRIPTION,
   DA_BRIDGE_LIVENESS_DESCRIPTION,
   DATA_POSTED_DESCRIPTION,
+  EIGENLAYER_DATA_SOURCE,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
   THROUGHPUT_DESCRIPTION,
@@ -22,6 +26,7 @@ import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
@@ -87,7 +92,7 @@ export function renderDataPostedSection(
     `${DATA_POSTED_DESCRIPTION} ${describeDaLayers(props)}`.trimEnd(),
     renderDataSource(
       allLayers.some((layer) => layer.name === 'EigenDA')
-        ? 'API provided by EigenLayer'
+        ? EIGENLAYER_DATA_SOURCE
         : undefined,
     ),
     htmlPagePointer('The interactive data posted chart is shown', props.id),
@@ -115,7 +120,7 @@ export function renderLivenessSection(
   >,
   level: number,
 ) {
-  const ongoing = props.anomalies.filter(isOngoing)
+  const ongoing = props.anomalies.filter(isAnomalyOngoing)
   return joinBlocks([
     props.isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION,
     renderTrackedTxsOutage(),
@@ -162,14 +167,14 @@ export function renderPrivacyAnonymitySetSection(
       level,
       `${days} day historic anonymity set`,
       joinBlocks([
-        `How many unique addresses you could have blended in with if you withdrew on a particular day after depositing during the previous ${days} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`,
-        'The metric looks backwards: it counts deposits that already happened, including from addresses that have since withdrawn. Your real anonymity also depends on deposits made after yours, which cannot be known in advance.',
+        anonymitySetHistoricDescription(days),
+        ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
       ]),
     ),
     subsection(
       level,
       'Estimated anonymity set by holding duration',
-      `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${days} days effectively means blending in with everyone who deposited during the last ${days} days.`,
+      anonymitySetByHoldingDurationDescription(days),
     ),
     htmlPagePointer('The interactive charts are shown', props.id),
   ])
@@ -257,15 +262,11 @@ function formatAnomaly(anomaly: LivenessAnomaly) {
   const what = anomalySubtypeToLabel(anomaly.subtype).toLowerCase()
   const duration = formatSeconds(anomaly.durationInSeconds)
   const usually = `These typically occur every ${formatSeconds(anomaly.avgInterval)} on average.`
-  if (isOngoing(anomaly)) {
+  if (isAnomalyOngoing(anomaly)) {
     return `No ${what} have been performed for the past ${duration} (since ${formatUtcDateTime(anomaly.start)}). ${usually}`
   }
   const until = anomaly.end ? ` until ${formatUtcDateTime(anomaly.end)}` : ''
   return `No ${what} were performed for ${duration} (from ${formatUtcDateTime(anomaly.start)}${until}). ${usually}`
-}
-
-function isOngoing(anomaly: LivenessAnomaly) {
-  return anomaly.status === 'ongoing'
 }
 
 /** Collapsed on the HTML page, with historical ones behind a checkbox; here all are listed and marked. */

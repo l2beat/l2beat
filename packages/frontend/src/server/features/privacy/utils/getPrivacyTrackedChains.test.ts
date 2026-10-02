@@ -3,7 +3,14 @@ import { expect } from 'earl'
 import { getPrivacyTrackedChains } from './getPrivacyTrackedChains'
 
 describe(getPrivacyTrackedChains.name, () => {
-  const NO_PAGE = { scalingInfo: undefined, interopConfig: undefined }
+  const NO_PAGE = {
+    daBridge: undefined,
+    scalingInfo: undefined,
+    daLayer: undefined,
+    privacyInfo: undefined,
+    defiInfo: undefined,
+    interopConfig: undefined,
+  }
   const ethereum = {
     slug: 'ethereum',
     name: 'Ethereum',

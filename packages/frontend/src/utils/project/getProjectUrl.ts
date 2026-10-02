@@ -1,36 +1,30 @@
-import type {
-  InteropConfig,
-  Project,
-  ProjectDaBridge,
-  ProjectDaLayer,
-  ProjectDefiInfo,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
-} from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 
-export type ProjectWithPageMetadata = Project<
-  never,
-  | 'daBridge'
-  | 'scalingInfo'
-  | 'daLayer'
-  | 'privacyInfo'
-  | 'defiInfo'
-  | 'interopConfig'
+/**
+ * The fields that decide which kind of page a project has. Queries spread this
+ * list, so a new page kind reaches every caller of `getProjectUrl` at once.
+ */
+export const PROJECT_PAGE_METADATA_FIELDS = [
+  'daBridge',
+  'scalingInfo',
+  'daLayer',
+  'privacyInfo',
+  'defiInfo',
+  'interopConfig',
+] as const
+
+type PageMetadataField = (typeof PROJECT_PAGE_METADATA_FIELDS)[number]
+
+export type ProjectWithPageMetadata = Project<never, PageMetadataField>
+
+export type ProjectPageMetadata = Pick<
+  ProjectWithPageMetadata,
+  'slug' | PageMetadataField
 >
 
 export function getProjectUrl(
-  project: {
-    slug: string
-    daBridge?: ProjectDaBridge | undefined
-    daLayer?: ProjectDaLayer | undefined
-    privacyInfo?: ProjectPrivacyInfo | undefined
-    defiInfo?: ProjectDefiInfo | undefined
-    // Required, so a caller that never loads them fails to compile instead of
-    // linking an interop protocol to a scaling page that does not exist.
-    scalingInfo: ProjectScalingInfo | undefined
-    interopConfig: InteropConfig | undefined
-  },
+  project: ProjectPageMetadata,
   daLayers: { id: ProjectId; slug: string }[],
 ): string {
   if (project.daBridge) {

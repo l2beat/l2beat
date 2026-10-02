@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PRIVACY_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -28,7 +29,7 @@ export function PrivacySummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader description="Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).">
+          <MainPageHeader description={PRIVACY_SUMMARY_DESCRIPTION}>
             Privacy
           </MainPageHeader>
           <PrivacySummaryChartsSection

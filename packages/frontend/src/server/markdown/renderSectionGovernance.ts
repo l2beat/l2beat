@@ -1,4 +1,5 @@
 import type { ProjectGovernanceInfo } from '@l2beat/config'
+import { GOVERNANCE_INFO_SECTIONS } from '~/components/projects/sections/governanceInfoSections'
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import { PAST_UPGRADES_DESCRIPTION } from '~/components/projects/sections/sectionCopy'
 import type { UpgradesAndGovernanceSectionProps } from '~/components/projects/sections/UpgradesAndGovernanceSection'
@@ -25,17 +26,6 @@ export function renderUpgradesAndGovernance(
   ])
 }
 
-/** Same order and titles as the HTML governance profile tables. */
-const GOVERNANCE_PROFILE_TABLES: {
-  key: keyof ProjectGovernanceInfo
-  title: string
-}[] = [
-  { key: 'securityCouncil', title: 'Security Council' },
-  { key: 'guardians', title: 'Guardians' },
-  { key: 'upgrades', title: 'Upgrades' },
-  { key: 'tokenGovernance', title: 'Token governance' },
-]
-
 function renderGovernanceProfile(
   governanceInfo: ProjectGovernanceInfo | undefined,
   level: number,
@@ -44,7 +34,7 @@ function renderGovernanceProfile(
     level,
     'Governance profile',
     joinBlocks(
-      GOVERNANCE_PROFILE_TABLES.map(({ key, title }) => {
+      GOVERNANCE_INFO_SECTIONS.map(({ key, title }) => {
         const rows = Object.entries(governanceInfo?.[key] ?? {})
         return subsection(
           level + 1,

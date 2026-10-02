@@ -21,7 +21,10 @@ import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
-import { UsedInProjectEntry } from './permissions/UsedInProject'
+import {
+  splitUsedInProjects,
+  UsedInProjectEntry,
+} from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
 import {
   ESCROW_ALL_TOKENS_INCLUDED,
@@ -79,15 +82,11 @@ export function ContractEntry({
   className,
   expandableAddresses = false,
 }: ContractEntryProps) {
-  const sharedProxies = contract.usedInProjects?.filter(
-    (c) => c.type === 'proxy',
-  )
-  const sharedImplementations = contract.usedInProjects
-    ?.filter((c) => c.type === 'implementation')
-    .filter((c) => !sharedProxies?.map((k) => k.id).includes(c.id))
-  const sharedPermissions = contract.usedInProjects?.filter(
-    (c) => c.type === 'permission',
-  )
+  const {
+    proxies: sharedProxies,
+    implementations: sharedImplementations,
+    permissions: sharedPermissions,
+  } = splitUsedInProjects(contract.usedInProjects ?? [])
 
   const { color, icon } = getCalloutProps(contract)
 
@@ -204,19 +203,19 @@ export function ContractEntry({
           {contract.participants && (
             <ParticipantsEntry participants={contract.participants} />
           )}
-          {sharedProxies && sharedProxies.length !== 0 && (
+          {sharedProxies.length !== 0 && (
             <UsedInProjectEntry
               label="Proxy used in"
               implementations={sharedProxies}
             />
           )}
-          {sharedImplementations && sharedImplementations.length !== 0 && (
+          {sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
               label="Implementation used in"
               implementations={sharedImplementations}
             />
           )}
-          {sharedPermissions && sharedPermissions.length !== 0 && (
+          {sharedPermissions.length !== 0 && (
             <UsedInProjectEntry
               label="Used in"
               implementations={sharedPermissions}

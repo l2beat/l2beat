@@ -5,7 +5,7 @@ import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
  * pages: an H1, a blockquote summary and H2 sections of described links.
  */
 
-export interface MarkdownSection {
+export interface LinkListSection {
   heading: string
   description?: string
   links: MarkdownLink[]
@@ -17,9 +17,9 @@ export type MarkdownLink = { name: string; description: string } & (
 )
 
 /** Same shape as llms.txt (H1, blockquote, H2 link lists) so one parser reads both. */
-export function renderMarkdown(
+export function renderLinkListMarkdown(
   document: { title: string; summary: string; notes?: string },
-  sections: MarkdownSection[],
+  sections: LinkListSection[],
 ): string {
   const rendered = sections.map((section) =>
     [

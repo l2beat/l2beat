@@ -8,17 +8,22 @@ import type { StageSectionProps } from '~/components/projects/sections/StageSect
 import {
   APPCHAIN_STAGE_RISK,
   APPCHAIN_STAGES_NOTE,
+  STAGE_DOWNGRADE_PENDING,
   STAGES_DISCLAIMER,
   WALKAWAY_TEST,
 } from '~/components/projects/sections/sectionCopy'
-import { getStageRequirementGroups } from '~/components/projects/sections/stageRequirementGroups'
+import {
+  getStageRequirementGroups,
+  isBelowStage0,
+  issuesToFixText,
+  requirementsMetText,
+} from '~/components/projects/sections/stageRequirementGroups'
 import { externalLinks } from '~/consts/externalLinks'
-import { bulletList, joinBlocks, link, subsection } from './markdown'
+import { bulletList, joinBlocks, link, note, subsection } from './markdown'
 import type { SectionContext } from './renderProjectSection'
 import { formatUtcDateTime, renderWarnings } from './renderSectionParts'
 
 type StageProps = Omit<StageSectionProps, 'id' | 'title' | 'sectionOrder'>
-type Requirement = StageSummary['requirements'][number]
 
 /**
  * The HTML lists upcoming guidelines apart only until the stage changes take
@@ -62,9 +67,7 @@ function describeStage(props: StageProps, stageConfig: StageConfigured) {
   const stage = props.isAppchain
     ? `${stageConfig.stage} Appchain`
     : stageConfig.stage
-  const notEvenAStage0 =
-    props.type === 'Other' && !!stageConfig.missing?.requirements
-  return notEvenAStage0
+  return isBelowStage0(props.type, stageConfig)
     ? `${props.name} is not even a ${stage} project.`
     : `${props.name} is a ${stage} ${props.type}.`
 }
@@ -102,7 +105,7 @@ function renderAdditionalConsiderations(props: StageProps) {
       ? `${APPCHAIN_STAGE_RISK.before} **${APPCHAIN_STAGE_RISK.emphasized}** ${APPCHAIN_STAGE_RISK.after}`
       : '',
     props.additionalConsiderations.long,
-    props.isAppchain ? `**Note:** ${APPCHAIN_STAGES_NOTE}` : '',
+    props.isAppchain ? note(APPCHAIN_STAGES_NOTE) : '',
   ])
 }
 
@@ -111,10 +114,10 @@ function renderDowngradePending(
 ) {
   if (!downgradePending) return ''
   return joinBlocks([
-    `**New requirements coming soon** (effective ${formatUtcDateTime(downgradePending.expiresAt)})`,
-    'The project will be downgraded to Stage 0 because it does not satisfy upcoming Stage 1 requirements.',
+    `**${STAGE_DOWNGRADE_PENDING.title}** (effective ${formatUtcDateTime(downgradePending.expiresAt)})`,
+    `${STAGE_DOWNGRADE_PENDING.before} ${STAGE_DOWNGRADE_PENDING.stage} ${STAGE_DOWNGRADE_PENDING.after}`,
     bulletList(downgradePending.reasons),
-    `${link('Learn more about the new requirements', externalLinks.articles.stageOneRequirementsChange)}.`,
+    `${link(STAGE_DOWNGRADE_PENDING.learnMore, externalLinks.articles.stageOneRequirementsChange)}.`,
   ])
 }
 
@@ -139,7 +142,11 @@ function renderStageRequirements(
           '**Guidelines**',
         ])
       : '',
-    bulletList(orderLikeHtml(effective).map(formatRequirement)),
+    bulletList(
+      [...effective.met, ...effective.underReview, ...effective.missing].map(
+        formatRequirement,
+      ),
+    ),
     upcoming.length > 0
       ? joinBlocks([
           '**Upcoming guidelines**',
@@ -150,29 +157,16 @@ function renderStageRequirements(
 }
 
 /** The label on the collapsed HTML stage row. */
-function countRequirements(requirements: Pick<Requirement, 'satisfied'>[]) {
-  const missing = requirements.filter((r) => r.satisfied === false).length
-  if (missing > 0) {
-    return missing === 1
-      ? '1 issue needs fixing.'
-      : `${missing} issues need fixing.`
-  }
-  const met = requirements.filter((r) => r.satisfied === true).length
-  const underReview = requirements.filter(
-    (r) => r.satisfied === 'UnderReview',
-  ).length
-  const metText = met === 1 ? '1 requirement met' : `${met} requirements met`
-  return underReview > 0
-    ? `${metText}, ${underReview} under review.`
+function countRequirements({
+  met,
+  underReview,
+  missing,
+}: ReturnType<typeof getStageRequirementGroups>['forLabel']) {
+  if (missing.length > 0) return `${issuesToFixText(missing.length)}.`
+  const metText = requirementsMetText(met.length)
+  return underReview.length > 0
+    ? `${metText}, ${underReview.length} under review.`
     : `${metText}.`
-}
-
-function orderLikeHtml(requirements: Requirement[]) {
-  return [
-    ...requirements.filter((r) => r.satisfied === true),
-    ...requirements.filter((r) => r.satisfied === 'UnderReview'),
-    ...requirements.filter((r) => r.satisfied === false),
-  ]
 }
 
 /** Config words a met requirement as the goal and an unmet one as the issue, as the HTML ✓ and ✗ rows read. */

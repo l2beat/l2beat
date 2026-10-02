@@ -5,6 +5,7 @@ import {
   pluralize,
 } from '@l2beat/shared-pure'
 import type { InteropVolumeSectionProps } from '~/components/projects/sections/interop/InteropVolumeSection'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import {
@@ -12,6 +13,7 @@ import {
   formatCount,
   formatUsd,
   joinBlocks,
+  link,
   subsection,
 } from './markdown'
 import { htmlPagePointer } from './renderSectionParts'
@@ -123,4 +125,25 @@ export function formatAverageDuration(duration: AverageDuration) {
 
 export function interopProtocolUrl(slug: string) {
   return `/interop/protocols/${slug}` as const
+}
+
+/** Protocols L2BEAT has no page for are named without a link. */
+export function linkInteropProtocol(protocol: {
+  name: string
+  slug: string | undefined
+}) {
+  return protocol.slug
+    ? link(protocol.name, interopProtocolUrl(protocol.slug))
+    : protocol.name
+}
+
+/** The unknown token has no page, so it is named without a link, as on the HTML pages. */
+export function linkInteropToken(token: {
+  id: string
+  symbol: string
+  /** Only decorates the URL: the page is found by id alone. */
+  issuer?: string | null
+}) {
+  const url = getInteropTokenUrl({ ...token, issuer: token.issuer ?? null })
+  return url ? link(token.symbol, url) : token.symbol
 }

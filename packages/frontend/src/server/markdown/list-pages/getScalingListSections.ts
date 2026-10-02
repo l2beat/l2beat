@@ -1,12 +1,12 @@
 import { ps } from '~/server/projects'
 import {
   firstSentence,
+  type LinkListSection,
   type MarkdownLink,
-  type MarkdownSection,
   withFacts,
 } from '../listPageMarkdown'
 
-export async function getScalingListSections(): Promise<MarkdownSection[]> {
+export async function getScalingListSections(): Promise<LinkListSection[]> {
   const [scaling, ecosystems] = await Promise.all([
     ps.getProjects({
       select: ['scalingInfo'],

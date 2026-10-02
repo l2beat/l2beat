@@ -21,6 +21,7 @@ import {
   formatUsd,
   joinBlocks,
   link,
+  NO_DATA,
   subsection,
   table,
 } from './markdown'
@@ -62,8 +63,6 @@ export function renderProtocolsTable(entries: ProtocolEntry[]) {
     ]),
   )
 }
-
-const NO_DATA = 'No data'
 
 function renderDeploymentsTable(graph: InteropTokenRelationsGraph) {
   return table(

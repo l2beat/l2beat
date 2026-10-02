@@ -1,11 +1,11 @@
 import { ps } from '~/server/projects'
 import {
   firstSentence,
-  type MarkdownSection,
+  type LinkListSection,
   withFacts,
 } from '../listPageMarkdown'
 
-export async function getDefiListSections(): Promise<MarkdownSection[]> {
+export async function getDefiListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['defiInfo'],
     optional: ['display'],

@@ -196,7 +196,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     expect(summary).not.toInclude('- Exit window: 2d')
   })
 
-  it('gives the last 24h cross-chain activity, linking protocols and tokens', () => {
+  it('gives the last 24h cross-chain activity, linking the protocols and tokens that have a page', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({
         ...ENTRY,
@@ -225,6 +225,13 @@ describe(renderL2ProjectMarkdown.name, () => {
                   iconUrl: '/icons/eth.png',
                   volume: 7_000_000,
                 },
+                // Transfers of tokens L2BEAT could not identify; it has no page.
+                {
+                  id: 'unknown',
+                  symbol: 'Unknown',
+                  iconUrl: '/icons/unknown.png',
+                  volume: 1_000_000,
+                },
               ],
               remainingCount: 0,
             },
@@ -238,7 +245,7 @@ describe(renderL2ProjectMarkdown.name, () => {
       '- Last 24h cross-chain volume: $12.00 M',
       '- Last 24h cross-chain transfers: 1\n',
       '- Interop protocols used (last 24h volume): [Across](https://l2beat.com/interop/protocols/across) ($8.00 M), and 4 more',
-      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/interop/tokens/C0Hmkq/eth) ($7.00 M)',
+      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/interop/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
     )
   })
 

@@ -1,4 +1,5 @@
 import type { L3RiskAnalysisSectionProps } from '~/components/projects/sections/L3RiskAnalysisSection'
+import { l3RisksShownText } from '~/components/projects/sections/sectionCopy'
 import type { RosetteValue } from '~/components/rosette/types'
 import { configMarkdown } from './configMarkdown'
 import {
@@ -53,7 +54,7 @@ export function renderL3RiskValues(
       level,
       `L3 ${kind} risks`,
       joinBlocks([
-        `The information below reflects ${combined ? 'combined L2 & L3' : 'individual L3'} risks.`,
+        l3RisksShownText(!!combined),
         renderRiskValues(combined ?? l3.risks, level + 1),
       ]),
     ),

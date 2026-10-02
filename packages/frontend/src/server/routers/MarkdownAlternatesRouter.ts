@@ -1,4 +1,9 @@
 import express from 'express'
+import {
+  DEFI_SUMMARY_DESCRIPTION,
+  PRIVACY_SUMMARY_DESCRIPTION,
+  ZK_CATALOG_DESCRIPTION,
+} from '~/consts/summaryPageDescriptions'
 import { getDaListSections } from '~/server/markdown/list-pages/getDaListSections'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
@@ -6,8 +11,8 @@ import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyL
 import { getScalingListSections } from '~/server/markdown/list-pages/getScalingListSections'
 import { getZkListSections } from '~/server/markdown/list-pages/getZkListSections'
 import {
-  type MarkdownSection,
-  renderMarkdown,
+  type LinkListSection,
+  renderLinkListMarkdown,
 } from '~/server/markdown/listPageMarkdown'
 import { sendMarkdownDocument } from '~/server/markdown/markdownAlternate'
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
@@ -31,7 +36,7 @@ export function createMarkdownAlternatesRouter(
     router.get(alternate.path, async (_req, res) => {
       sendMarkdownDocument(
         res,
-        renderMarkdown(alternate, await alternate.getSections()),
+        renderLinkListMarkdown(alternate, await alternate.getSections()),
       )
     })
   }
@@ -47,7 +52,7 @@ export interface MarkdownAlternate {
   summary: string
   /** The intro the HTML page shows above its table. */
   notes?: string
-  getSections: () => Promise<MarkdownSection[]>
+  getSections: () => Promise<LinkListSection[]>
 }
 
 /** Keyed by the registry, so every list page registered as having markdown gets its document. */
@@ -72,7 +77,7 @@ const LIST_PAGE_DOCUMENTS: Record<
     summary:
       'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
     notes: [
-      'ZK Catalog by L2BEAT is a community-driven resource offering detailed insights into the ZK technology utilized by various blockchain projects. It aims to enhance transparency and understanding of ZK tech implementations across the industry.',
+      ZK_CATALOG_DESCRIPTION,
       '',
       `Trusted setup risks (green, yellow, red) follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}.`,
     ].join('\n'),
@@ -82,8 +87,7 @@ const LIST_PAGE_DOCUMENTS: Record<
     title: 'L2BEAT privacy protocols',
     summary:
       'Privacy protocols on Ethereum and its layer 2s tracked by L2BEAT, with their category and exit window.',
-    notes:
-      'Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).',
+    notes: PRIVACY_SUMMARY_DESCRIPTION,
     getSections: getPrivacyListSections,
   },
   '/interop/summary': {
@@ -97,7 +101,7 @@ const LIST_PAGE_DOCUMENTS: Record<
   '/defi/summary': {
     title: 'L2BEAT DeFi protocols',
     summary: 'DeFi protocols tracked by L2BEAT, with their category.',
-    notes: 'Overview of DeFi protocols tracked by L2BEAT.',
+    notes: DEFI_SUMMARY_DESCRIPTION,
     getSections: getDefiListSections,
   },
 }

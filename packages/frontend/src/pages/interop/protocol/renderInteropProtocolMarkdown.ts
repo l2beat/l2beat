@@ -5,23 +5,22 @@ import type {
   ByBridgeTypeData,
   TokenData,
 } from '~/server/features/layer2s/interop/types'
-import type { InteropTopTokenData } from '~/server/features/layer2s/interop/utils/getTopToken'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import {
   formatAverageDuration,
   formatTopPath,
   formatTransferCount,
   interopProtocolUrl,
+  linkInteropToken,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
-import { formatCount, formatUsd, link } from '~/server/markdown/markdown'
+import { formatCount, formatUsd } from '~/server/markdown/markdown'
 import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { TRANSFER_TYPE_DISPLAY } from '../utils/display'
 import { getBridgeTypeVolumes } from '../utils/getBridgeTypeVolumes'
-import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
 
 /** The page props the markdown needs: the headline numbers live next to the entry, not in it. */
@@ -92,7 +91,7 @@ function getFacts({
       },
     topToken && {
       label: 'Last 24h top token',
-      value: `${linkToken(topToken)} (${formatUsd(topToken.volume)} volume, ${formatTransferCount(topToken.transferCount)})`,
+      value: `${linkInteropToken(topToken)} (${formatUsd(topToken.volume)} volume, ${formatTransferCount(topToken.transferCount)})`,
     },
     transferSize && {
       label: 'Last 24h transfer size',
@@ -107,13 +106,8 @@ function getFacts({
 
 function formatTokenVolume(token: TokenData) {
   return token.volume !== null
-    ? `${linkToken(token)} (${formatUsd(token.volume)})`
-    : linkToken(token)
-}
-
-function linkToken(token: InteropTopTokenData | TokenData) {
-  const path = getInteropTokenUrl(token)
-  return path ? link(token.symbol, path) : token.symbol
+    ? `${linkInteropToken(token)} (${formatUsd(token.volume)})`
+    : linkInteropToken(token)
 }
 
 function formatTransferSize(size: TransferSizeDataPoint) {

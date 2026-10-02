@@ -6,12 +6,12 @@ import uniqBy from 'lodash/uniqBy'
 import { ps } from '~/server/projects'
 import {
   firstSentence,
-  type MarkdownSection,
+  type LinkListSection,
   withFacts,
 } from '../listPageMarkdown'
 import { formatVerifierCounts } from '../zkSectionBodies'
 
-export async function getZkListSections(): Promise<MarkdownSection[]> {
+export async function getZkListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['zkCatalogInfo'],
     whereNot: ['archivedAt'],

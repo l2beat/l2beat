@@ -6,8 +6,10 @@ import type {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import {
+  BRIDGE_UNVERIFIED_CONTRACTS_WARNING,
   L3_RISKS_DESCRIPTION,
   NO_EXTERNAL_DEPENDENCIES,
+  PROJECT_UNVERIFIED_CONTRACTS_WARNING,
 } from '~/components/projects/sections/sectionCopy'
 import type {
   ProjectDetailsSection,
@@ -175,7 +177,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
     return joinBlocks([
       renderWarnings(
         props.isVerified === false
-          ? critical('This project includes unverified contracts.')
+          ? critical(PROJECT_UNVERIFIED_CONTRACTS_WARNING)
           : undefined,
         props.redWarning?.text,
         props.warning,
@@ -193,7 +195,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
               renderWarnings(
                 bridge.isVerified
                   ? undefined
-                  : critical('This bridge includes unverified contracts.'),
+                  : critical(BRIDGE_UNVERIFIED_CONTRACTS_WARNING),
               ),
               renderRiskGroups(bridge.risks, level + 1),
             ]),

@@ -20,6 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
@@ -92,15 +93,7 @@ export async function getPrivacyProjectEntry(
   const [contractUtils, allProjects, tvs] = await Promise.all([
     getContractUtils(),
     ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-        'interopConfig',
-      ],
+      optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
     }),
     get7dTvsBreakdown({ type: 'all' }),
   ])

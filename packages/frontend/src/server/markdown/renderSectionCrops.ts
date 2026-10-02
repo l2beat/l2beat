@@ -4,6 +4,7 @@ import {
   toCropEntries,
 } from '~/components/garden/crops'
 import type { GardenCropsSectionProps } from '~/components/projects/sections/GardenCropsSection'
+import { gardenVerdictText } from '~/components/projects/sections/sectionCopy'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { bulletList, joinBlocks, link, subsection } from './markdown'
 
@@ -17,7 +18,7 @@ export function renderGardenCropsSection(
     (entry) => entry.evaluation.sentiment === 'good',
   ).length
   return joinBlocks([
-    `${inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'} ${inBloom} of ${entries.length} in bloom.`,
+    `${gardenVerdictText(inGarden)} ${inBloom} of ${entries.length} in bloom.`,
     ...entries.map((entry) => renderCrop(entry, level)),
     `${link('See the whole garden', GARDEN_PATH)}.`,
   ])

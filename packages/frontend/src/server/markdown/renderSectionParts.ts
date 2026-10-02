@@ -10,7 +10,14 @@ import {
   UNDER_REVIEW_DESCRIPTION,
 } from '~/components/projects/sections/sectionCopy'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
-import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
+import {
+  bulletList,
+  joinBlocks,
+  link,
+  markCritical,
+  note,
+  warning,
+} from './markdown'
 
 /*
  * Pieces shared by several section bodies. They live apart from
@@ -21,7 +28,7 @@ import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
 /** The text of the HTML "Under Review" callout. */
 export const UNDER_REVIEW_NOTE = `**Under review:** ${UNDER_REVIEW_DESCRIPTION.join(' ')}`
 
-export const INCOMPLETE_NOTE = `**Note:** ${SECTION_INCOMPLETE_NOTE}`
+export const INCOMPLETE_NOTE = note(SECTION_INCOMPLETE_NOTE)
 
 /** Only the light variant: the dark one is the same diagram recoloured. */
 export function renderDiagram(diagram: DiagramParams | undefined) {

@@ -3,6 +3,7 @@ import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { Markdown } from '../../markdown/Markdown'
+import { GOVERNANCE_INFO_SECTIONS } from './governanceInfoSections'
 import {
   type PastUpgradesData,
   PastUpgradesDialog,
@@ -11,8 +12,6 @@ import {
 import { ProjectSection } from './ProjectSection'
 import { PAST_UPGRADES_DESCRIPTION } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
-
-type GovernanceInfoSectionKey = keyof ProjectGovernanceInfo
 
 export interface UpgradesAndGovernanceSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
@@ -66,16 +65,6 @@ export function UpgradesAndGovernanceSection({
     </ProjectSection>
   )
 }
-
-const GOVERNANCE_INFO_SECTIONS: {
-  key: GovernanceInfoSectionKey
-  title: string
-}[] = [
-  { key: 'securityCouncil', title: 'Security Council' },
-  { key: 'guardians', title: 'Guardians' },
-  { key: 'upgrades', title: 'Upgrades' },
-  { key: 'tokenGovernance', title: 'Token governance' },
-]
 
 function GovernanceInfoTable({
   governanceInfo,

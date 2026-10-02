@@ -41,7 +41,12 @@ import {
   STAGES_DISCLAIMER,
   WALKAWAY_TEST,
 } from './sectionCopy'
-import { getStageRequirementGroups } from './stageRequirementGroups'
+import {
+  getStageRequirementGroups,
+  isBelowStage0,
+  issuesToFixText,
+  requirementsMetText,
+} from './stageRequirementGroups'
 import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
@@ -97,7 +102,7 @@ export function StageSection({
       ? RoundedWarningIcon
       : UnderReviewIcon
 
-  const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
+  const notEvenAStage0 = isBelowStage0(type, stageConfig)
   const showUpcomingGuidelines = countdowns.stageChanges >= UnixTime.now()
 
   return (
@@ -203,28 +208,9 @@ export function StageSection({
         {stageConfig.summary.map((stage) => {
           const {
             upcoming: upcomingRequirements,
-            effective: effectiveRequirements,
-            forLabel: requirementsForLabel,
+            effective,
+            forLabel,
           } = getStageRequirementGroups(stage, showUpcomingGuidelines)
-          const satisfiedForLabel = requirementsForLabel.filter(
-            (r) => r.satisfied === true,
-          )
-          const missingForLabel = requirementsForLabel.filter(
-            (r) => r.satisfied === false,
-          )
-          const underReviewForLabel = requirementsForLabel.filter(
-            (r) => r.satisfied === 'UnderReview',
-          )
-
-          const satisfiedRequirements = effectiveRequirements.filter(
-            (r) => r.satisfied === true,
-          )
-          const missingRequirements = effectiveRequirements.filter(
-            (r) => r.satisfied === false,
-          )
-          const underReviewRequirements = effectiveRequirements.filter(
-            (r) => r.satisfied === 'UnderReview',
-          )
 
           return (
             <Collapsible
@@ -234,19 +220,19 @@ export function StageSection({
               <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
                 <div className="flex select-none items-center justify-start gap-4 max-md:text-base">
                   <StageBadge stage={stage.stage} isAppchain={false} />
-                  {missingForLabel.length === 0 ? (
+                  {forLabel.missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
                       <div className="flex items-center gap-2 font-bold">
                         <SatisfiedIcon className="-mt-0.5 size-4 shrink-0 fill-positive" />
                         <span className="text-label-value-16 md:text-label-value-18">
-                          {reqTextSatisfied(satisfiedForLabel.length)}
+                          {requirementsMetText(forLabel.met.length)}
                         </span>
                       </div>
-                      {underReviewForLabel.length > 0 && (
+                      {forLabel.underReview.length > 0 && (
                         <div className="flex items-center gap-2">
                           <UnderReviewIcon className="size-4 shrink-0" />
                           <span className="text-label-value-16 md:text-label-value-18">
-                            {underReviewForLabel.length} under review
+                            {forLabel.underReview.length} under review
                           </span>
                         </div>
                       )}
@@ -255,7 +241,7 @@ export function StageSection({
                     <div className="flex items-center gap-2 font-bold">
                       <MissingIcon className="-mt-0.5 size-4 shrink-0 fill-negative" />
                       <span className="text-label-value-16 md:text-label-value-18">
-                        {reqTextMissing(missingForLabel.length)}
+                        {issuesToFixText(forLabel.missing.length)}
                       </span>
                     </div>
                   )}
@@ -310,7 +296,7 @@ export function StageSection({
                     </p>
                   )}
                   <ul className="space-y-1 md:space-y-2">
-                    {satisfiedRequirements.map((req, i) => (
+                    {effective.met.map((req, i) => (
                       <li key={i} className="flex">
                         <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
@@ -318,7 +304,7 @@ export function StageSection({
                         </Markdown>
                       </li>
                     ))}
-                    {underReviewRequirements.map((req, i) => (
+                    {effective.underReview.map((req, i) => (
                       <li key={i} className="flex">
                         <UnderReviewIcon className="relative top-0.5 size-4 shrink-0 md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
@@ -326,7 +312,7 @@ export function StageSection({
                         </Markdown>
                       </li>
                     ))}
-                    {missingRequirements.map((req, i) => (
+                    {effective.missing.map((req, i) => (
                       <li key={i} className="flex">
                         <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
@@ -378,19 +364,4 @@ export function StageSection({
       />
     </ProjectSection>
   )
-}
-
-function reqTextSatisfied(amount: number) {
-  if (amount === 1) {
-    return '1 requirement met'
-  }
-  return `${amount} requirements met`
-}
-
-function reqTextMissing(amount: number) {
-  if (amount === 1) {
-    return '1 issue needs fixing'
-  }
-
-  return `${amount} issues need fixing`
 }

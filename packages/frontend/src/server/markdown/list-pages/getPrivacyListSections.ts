@@ -1,11 +1,11 @@
 import { ps } from '~/server/projects'
 import {
   firstSentence,
-  type MarkdownSection,
+  type LinkListSection,
   withFacts,
 } from '../listPageMarkdown'
 
-export async function getPrivacyListSections(): Promise<MarkdownSection[]> {
+export async function getPrivacyListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['privacyInfo'],
     optional: ['display'],

@@ -6,7 +6,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
-import { DATA_POSTED_DESCRIPTION } from '../sectionCopy'
+import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
@@ -78,7 +78,7 @@ export function DataPostedSection({
       <HorizontalSeparator className="my-4" />
       {[...pastDaLayers, ...currentDaLayers].some(
         (daLayer) => daLayer.name === 'EigenDA',
-      ) && <ChartDataSourceInfo dataSource="API provided by EigenLayer" />}
+      ) && <ChartDataSourceInfo dataSource={EIGENLAYER_DATA_SOURCE} />}
       <ProjectDataPostedChart
         project={project}
         defaultRange={defaultRange}

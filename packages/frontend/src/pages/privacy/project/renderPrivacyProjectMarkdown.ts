@@ -8,6 +8,7 @@ import {
   formatChange,
   formatCount,
   formatUsd,
+  NO_DATA,
   withSentiment,
 } from '~/server/markdown/markdown'
 import {
@@ -106,7 +107,7 @@ function getFacts(entry: ProjectPrivacyEntry) {
 /** The text of the badges the HTML shows in place of the value. */
 function formatTotalValueLocked({ summary, hasTvl }: ProjectPrivacyEntry) {
   if (!hasTvl) return 'N/A'
-  if (summary.totalValueLockedUsd === undefined) return 'No data'
+  if (summary.totalValueLockedUsd === undefined) return NO_DATA
   return compact([
     formatUsd(summary.totalValueLockedUsd),
     summary.totalValueLockedChange7d !== undefined &&

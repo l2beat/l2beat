@@ -34,7 +34,7 @@ export function renderDaProjectMarkdown(entry: DaProjectEntry): string {
 }
 
 export function getDaProjectPagePath(layerSlug: string, bridgeSlug: string) {
-  return `/data-availability/projects/${layerSlug}/${bridgeSlug}`
+  return `/data-availability/projects/${layerSlug}/${bridgeSlug}` as const
 }
 
 type PageDetails = Omit<ProjectMarkdown, 'name' | 'sections'>

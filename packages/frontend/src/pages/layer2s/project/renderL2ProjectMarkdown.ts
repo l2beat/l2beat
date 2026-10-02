@@ -12,10 +12,10 @@ import {
 } from '~/components/projects/sections/sectionCopy'
 import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
-import { getInteropTokenPagePath } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import {
-  interopProtocolUrl,
+  linkInteropProtocol,
+  linkInteropToken,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
 import {
@@ -23,6 +23,7 @@ import {
   formatCount,
   formatUsd,
   link,
+  NO_DATA,
   withSentiment,
 } from '~/server/markdown/markdown'
 import {
@@ -150,8 +151,6 @@ function getFacts({
 }
 
 /** The HTML shows a "No data" badge in place of a missing stat. */
-const NO_DATA = 'No data'
-
 function formatStage(
   stageConfig: ProjectL2Entry['stageConfig'],
   isAppchain: boolean,
@@ -275,15 +274,6 @@ function getSummaryRisks({
 function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
   const interop = header.interop
   if (!interop) return []
-  const linkProtocol = (protocol: {
-    slug: string | undefined
-    name: string
-  }) =>
-    protocol.slug
-      ? link(protocol.name, interopProtocolUrl(protocol.slug))
-      : protocol.name
-  const linkToken = (token: { id: string; symbol: string }) =>
-    link(token.symbol, getInteropTokenPagePath({ ...token, issuer: null }))
   return compact([
     {
       label: 'Last 24h cross-chain volume',
@@ -298,14 +288,14 @@ function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
       value: listTopItems(
         interop.protocols,
         (protocol) =>
-          `${linkProtocol(protocol)} (${formatUsd(protocol.volume)})`,
+          `${linkInteropProtocol(protocol)} (${formatUsd(protocol.volume)})`,
       ).join(', '),
     },
     interop.tokens.items.length > 0 && {
       label: 'Tokens by volume (last 24h)',
       value: listTopItems(
         interop.tokens,
-        (token) => `${linkToken(token)} (${formatUsd(token.volume)})`,
+        (token) => `${linkInteropToken(token)} (${formatUsd(token.volume)})`,
       ).join(', '),
     },
   ])

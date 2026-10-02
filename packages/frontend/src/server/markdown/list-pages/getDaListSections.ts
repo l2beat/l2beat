@@ -1,14 +1,15 @@
 import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
+import { getDaProjectPagePath } from '~/pages/data-availability/project/renderDaProjectMarkdown'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from '~/server/projects'
 import {
   firstSentence,
+  type LinkListSection,
   type MarkdownLink,
-  type MarkdownSection,
   withFacts,
 } from '../listPageMarkdown'
 
-export async function getDaListSections(): Promise<MarkdownSection[]> {
+export async function getDaListSections(): Promise<LinkListSection[]> {
   const [layers, bridges, customSolutions] = await Promise.all([
     ps.getProjects({
       select: ['daLayer'],
@@ -56,7 +57,7 @@ function daLayerLinksPerBridge(
   const layerFacts = [layer.daLayer.type, ...riskFacts(layer.daLayer.risks)]
   const links: MarkdownLink[] = layerBridges.map((bridge) => ({
     name: `${layer.name} via ${bridge.daBridge.name}`,
-    path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
+    path: getDaProjectPagePath(layer.slug, bridge.slug),
     description: withFacts(layerDescription, [
       ...layerFacts,
       ...riskFacts(bridge.daBridge.risks),
@@ -65,7 +66,7 @@ function daLayerLinksPerBridge(
   if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
     links.push({
       name: `${layer.name} without a bridge`,
-      path: `/data-availability/projects/${layer.slug}/no-bridge`,
+      path: getDaProjectPagePath(layer.slug, 'no-bridge'),
       description: withFacts(layerDescription, layerFacts),
     })
   }

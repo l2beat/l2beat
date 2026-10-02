@@ -8,19 +8,25 @@ import type { ContractsSectionProps } from '~/components/projects/sections/contr
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import type { Participant } from '~/components/projects/sections/permissions/Participants'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
-import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
+import {
+  splitUsedInProjects,
+  type UsedInProject,
+} from '~/components/projects/sections/permissions/UsedInProject'
 import {
   CONTRACTS_UPDATED_NOTE,
+  DEPLOYMENT_RISKS_INTRO,
   ESCROW_ALL_TOKENS_INCLUDED,
   ESCROW_TOKENS_INCLUDED,
   impactfulChangesWarning,
 } from '~/components/projects/sections/sectionCopy'
+import { shortenAddress } from '~/utils/project/contracts-and-permissions/shortenAddress'
 import { configMarkdown } from './configMarkdown'
 import {
   bulletList,
   heading,
   joinBlocks,
   link,
+  note,
   subsection,
   warning,
 } from './markdown'
@@ -53,7 +59,7 @@ export function renderContractsSection(
 ) {
   return joinBlocks([
     hasImpactfulChanges(Object.values(props.contracts).flat())
-      ? `**Note:** ${CONTRACTS_UPDATED_NOTE}`
+      ? note(CONTRACTS_UPDATED_NOTE)
       : '',
     renderDiagram(props.diagram),
     renderDiscoUi(props.discoUi),
@@ -64,10 +70,7 @@ export function renderContractsSection(
         renderContractList(contracts, 'contracts', level + 1),
       ),
     ),
-    renderRisks(
-      props.risks,
-      'The current deployment carries some associated risks:',
-    ),
+    renderRisks(props.risks, DEPLOYMENT_RISKS_INTRO),
     renderProgramHashesSubsection(props, level),
   ])
 }
@@ -189,14 +192,10 @@ function contractTitle(entry: TechnologyContract, isNameShared: boolean) {
     : entry.name
 }
 
-function shortenAddress(address: string) {
-  return `${address.slice(0, 6)}…${address.slice(-4)}`
-}
-
 /** Unnamed addresses carry a shortened address as their name, which adds nothing next to the full one. */
 function renderContractAddress(address: TechnologyContractAddress) {
   const notes = [
-    !address.name.includes('…') && address.name,
+    address.name !== shortenAddress(address.address) && address.name,
     address.verificationStatus === 'unverified' && 'unverified',
     address.verificationStatus === 'became-verified' &&
       'recently verified, under review',
@@ -220,17 +219,9 @@ function renderEscrowTokens(escrow: TechnologyContractEscrow) {
     : `${ESCROW_TOKENS_INCLUDED} ${escrow.tokens.join(', ')}`
 }
 
-/**
- * Same split as the HTML entry: an implementation shared by a project that
- * also shares the proxy is listed under the proxy only.
- */
 function renderUsedInProjects(projects: UsedInProject[]) {
-  const proxies = projects.filter((p) => p.type === 'proxy')
-  const proxyIds = new Set(proxies.map((p) => p.id))
-  const implementations = projects.filter(
-    (p) => p.type === 'implementation' && !proxyIds.has(p.id),
-  )
-  const permissions = projects.filter((p) => p.type === 'permission')
+  const { proxies, implementations, permissions } =
+    splitUsedInProjects(projects)
   return joinBlocks(
     (
       [

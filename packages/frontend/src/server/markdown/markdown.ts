@@ -68,6 +68,13 @@ export function warning(text: string) {
   return `**Warning:** ${text}`
 }
 
+export function note(text: string) {
+  return `**Note:** ${text}`
+}
+
+/** What the HTML shows in place of a value it has no data for. */
+export const NO_DATA = 'No data'
+
 export function withSentiment(value: string, sentiment: Sentiment | undefined) {
   return sentiment ? `${value} (${sentimentNote(sentiment)})` : value
 }

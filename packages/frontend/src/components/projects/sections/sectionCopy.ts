@@ -103,3 +103,42 @@ export const ESCROW_TOKENS_INCLUDED =
 /** Follows the percentage of TVS it applies to. */
 export const ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON =
   "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"
+
+export const PROJECT_UNVERIFIED_CONTRACTS_WARNING =
+  'This project includes unverified contracts.'
+
+export const BRIDGE_UNVERIFIED_CONTRACTS_WARNING =
+  'This bridge includes unverified contracts.'
+
+export const DEPLOYMENT_RISKS_INTRO =
+  'The current deployment carries some associated risks:'
+
+export function l3RisksShownText(isCombined: boolean) {
+  return `The information below reflects ${isCombined ? 'combined L2 & L3' : 'individual L3'} risks.`
+}
+
+export const EIGENLAYER_DATA_SOURCE = 'API provided by EigenLayer'
+
+export function anonymitySetHistoricDescription(windowDays: number) {
+  return `How many unique addresses you could have blended in with if you withdrew on a particular day after depositing during the previous ${windowDays} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`
+}
+
+export const ANONYMITY_SET_LOOKS_BACKWARDS_NOTE =
+  'The metric looks backwards: it counts deposits that already happened, including from addresses that have since withdrawn. Your real anonymity also depends on deposits made after yours, which cannot be known in advance.'
+
+export function anonymitySetByHoldingDurationDescription(windowDays: number) {
+  return `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${windowDays} days effectively means blending in with everyone who deposited during the last ${windowDays} days.`
+}
+
+export function gardenVerdictText(inGarden: boolean) {
+  return inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'
+}
+
+/** Split around the stage, which the page shows as a badge. */
+export const STAGE_DOWNGRADE_PENDING = {
+  title: 'New requirements coming soon',
+  before: 'The project will be downgraded to',
+  stage: 'Stage 0',
+  after: 'because it does not satisfy upcoming Stage 1 requirements.',
+  learnMore: 'Learn more about the new requirements',
+} as const
