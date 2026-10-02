@@ -1,18 +1,7 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipVisualOnly,
-} from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
-import { TableLink } from '~/components/table/TableLink'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
-import {
-  getPrivacyAdversariesSectionHref,
-  getPrivacyAdversaryRosetteValues,
-} from '../adversaries/privacyAdversaryUi'
-import { PrivacyRosetteAnalysis } from './PrivacyRosetteAnalysis'
-import { PrivacyRosetteDrawer } from './PrivacyRosetteDrawer'
+import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
+import { PrivacyRosetteTrigger } from './PrivacyRosetteTrigger'
 
 interface Props {
   adversaries: PrivacyAdversariesSummary
@@ -26,52 +15,21 @@ export function PrivacyRosetteCell({
   href,
   isUnderReview,
 }: Props) {
-  const sectionHref = getPrivacyAdversariesSectionHref(href)
-  const icon = (
-    <PizzaRosetteIcon
-      values={getPrivacyAdversaryRosetteValues(adversaries)}
-      className="size-6 md:size-8"
-      isUnderReview={isUnderReview}
-      background={false}
-      disableSectionLinking
-    />
-  )
-
+  const values = getPrivacyAdversaryRosetteValues(adversaries)
   return (
-    <>
-      {/* The reasons appear nowhere else on the summary page. */}
-      <Tooltip contentInHtml>
-        <TooltipTrigger asChild disabledOnMobile>
-          <TableLink
-            href={sectionHref}
-            aria-label="Privacy risk analysis"
-            className="max-md:hidden"
-          >
-            {icon}
-          </TableLink>
-        </TooltipTrigger>
-        <TooltipContent fitContent>
-          <PrivacyRosetteAnalysis
-            adversaries={adversaries}
-            isUnderReview={isUnderReview}
-          />
-          <TooltipVisualOnly>
-            <p className="mt-3 text-secondary text-xs">
-              Click on the rosette to visit the detailed pages for more info.
-            </p>
-          </TooltipVisualOnly>
-        </TooltipContent>
-      </Tooltip>
-      <PrivacyRosetteDrawer
-        adversaries={adversaries}
+    <PrivacyRosetteTrigger
+      values={values}
+      isUnderReview={isUnderReview}
+      href={href}
+      placement="table"
+    >
+      <PizzaRosetteIcon
+        values={values}
+        className="size-6 md:size-8"
         isUnderReview={isUnderReview}
-        sectionHref={sectionHref}
-        linkLabel="Open project page"
-        triggerLabel="Privacy risk analysis"
-        triggerClassName="flex size-full items-center justify-center md:hidden"
-      >
-        {icon}
-      </PrivacyRosetteDrawer>
-    </>
+        background={false}
+        disableSectionLinking
+      />
+    </PrivacyRosetteTrigger>
   )
 }

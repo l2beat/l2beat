@@ -1,5 +1,6 @@
 import type {
-  PrivacyAdversaryId,
+  PrivacyAdversary,
+  PrivacyAdversaryCell,
   PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
@@ -80,24 +81,42 @@ export const PRIVACY_ADVERSARY_VERDICT: Record<
   bad: 'Exposed',
 }
 
-/** One rosette slice per adversary, in spine order. */
+/** One rosette slice per adversary, in spine order, explained by its reason. */
 export function getPrivacyAdversaryRosetteValues(
   adversaries: PrivacyAdversariesSummary,
 ): RosetteValue[] {
-  return adversaries.cells.map((cell) => ({
-    name: cell.label,
-    value: PRIVACY_ADVERSARY_VERDICT[cell.sentiment],
-    sentiment: cell.sentiment,
-  }))
+  return adversaries.cells.map((cell) =>
+    toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
+  )
+}
+
+/** A slice of the project page rosette, explaining who the adversary is. */
+export function getPrivacyAdversarySectionRosetteValue(
+  adversary: PrivacyAdversary,
+  cell: PrivacyAdversaryCell,
+): RosetteValue {
+  return toPrivacyRosetteValue(
+    adversary.label,
+    cell.sentiment,
+    `${adversary.description} Examples: ${adversary.examples}`,
+  )
+}
+
+function toPrivacyRosetteValue(
+  name: string,
+  sentiment: PrivacyAdversarySentiment,
+  description: string,
+): RosetteValue {
+  return {
+    name,
+    value: PRIVACY_ADVERSARY_VERDICT[sentiment],
+    sentiment,
+    description,
+  }
 }
 
 export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
 
 export function getPrivacyAdversariesSectionHref(projectHref: string): string {
   return `${projectHref}#${PRIVACY_ADVERSARIES_SECTION_ID}`
-}
-
-/** Anchor of an adversary block inside the project page section. */
-export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
-  return `${PRIVACY_ADVERSARIES_SECTION_ID}-${id}`
 }

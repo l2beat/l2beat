@@ -64,8 +64,8 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={trustedSetup}
-            label={trustedSetup.label}
             risk={trustedSetup.risk}
+            dotOnly={trustedSetup.label === undefined}
           />
         }
       />
@@ -75,7 +75,6 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={exitWindow}
-            label={exitWindow.value}
             risk={sentimentToRiskDot(exitWindow.sentiment)}
             walkawayTest={exitWindow.walkawayTest}
           />
@@ -87,7 +86,6 @@ export function PrivacyProjectRiskProfile({
         value={
           <RiskValue
             value={reproducibility}
-            label={reproducibility.value}
             risk={sentimentToRiskDot(reproducibility.sentiment)}
           />
         }
@@ -98,15 +96,15 @@ export function PrivacyProjectRiskProfile({
 
 function RiskValue({
   value,
-  label,
   risk,
   walkawayTest,
+  dotOnly,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
-  /** The dot stands alone without one. */
-  label: string | undefined
   risk: TrustedSetupRisk
   walkawayTest?: PrivacyWalkawayTest
+  /** Leaves the value to the tooltip. */
+  dotOnly?: boolean
 }) {
   return (
     <Tooltip>
@@ -115,7 +113,7 @@ function RiskValue({
         aria-label={value.value}
       >
         <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
-        {label && <span>{label}</span>}
+        {!dotOnly && <span>{value.value}</span>}
         {walkawayTest && (
           <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
         )}

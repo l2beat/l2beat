@@ -1,5 +1,4 @@
 import type {
-  PrivacyAdversary,
   PrivacyAdversaryCell,
   PrivacyExposureMap,
   PrivacyFieldInfo,
@@ -13,10 +12,11 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
+import type { RosetteValue } from '~/components/rosette/types'
 import {
   getExposure,
   getExposureNote,
-  getPrivacyAdversaryAnchor,
+  getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
@@ -37,6 +37,14 @@ export function PrivacyAdversariesSection({
   ...sectionProps
 }: PrivacyAdversariesSectionProps) {
   const baseline = adversaries.cells.publicObserver
+  const blocks = adversaries.adversaries.map((adversary) => {
+    const cell = adversaries.cells[adversary.id]
+    return {
+      id: adversary.id,
+      cell,
+      value: getPrivacyAdversarySectionRosetteValue(adversary, cell),
+    }
+  })
 
   return (
     <ProjectSection {...sectionProps}>
@@ -51,23 +59,18 @@ export function PrivacyAdversariesSection({
       </p>
       <div className="flex justify-center">
         <BigPizzaRosette
-          values={adversaries.adversaries.map((adversary) => ({
-            name: adversary.label,
-            value: adversaries.cells[adversary.id].value,
-            sentiment: adversaries.cells[adversary.id].sentiment,
-            description: `${adversary.description} Examples: ${adversary.examples}`,
-          }))}
+          values={blocks.map((block) => block.value)}
           isUnderReview={sectionProps.isUnderReview}
-          className="mx-auto my-6"
+          className="my-6"
         />
       </div>
       <div className="flex flex-col gap-8">
-        {adversaries.adversaries.map((adversary) => (
+        {blocks.map((block) => (
           <AdversaryBlock
-            key={adversary.id}
-            adversary={adversary}
-            cell={adversaries.cells[adversary.id]}
-            baseline={adversary.id === 'publicObserver' ? undefined : baseline}
+            key={block.id}
+            value={block.value}
+            cell={block.cell}
+            baseline={block.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
           />
         ))}
@@ -77,29 +80,21 @@ export function PrivacyAdversariesSection({
 }
 
 function AdversaryBlock({
-  adversary,
+  value,
   cell,
   baseline,
   fields,
 }: {
-  adversary: PrivacyAdversary
+  /** The adversary's rosette slice. */
+  value: RosetteValue
   cell: PrivacyAdversaryCell
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
 }) {
   return (
-    <div
-      id={getPrivacyAdversaryAnchor(adversary.id)}
-      className="flex scroll-mt-24 flex-col gap-3"
-    >
-      <RiskBanner
-        name={adversary.label}
-        value={cell.value}
-        sentiment={cell.sentiment}
-        description={cell.exposure}
-        size="large"
-      />
+    <div className="flex flex-col gap-3">
+      <RiskBanner {...value} description={cell.exposure} size="large" />
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">Advice: </span>

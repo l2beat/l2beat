@@ -1,16 +1,7 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
-import {
-  getPrivacyAdversariesSectionHref,
-  getPrivacyAdversaryRosetteValues,
-} from '../adversaries/privacyAdversaryUi'
-import { PrivacyRosetteAnalysis } from './PrivacyRosetteAnalysis'
-import { PrivacyRosetteDrawer } from './PrivacyRosetteDrawer'
+import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
+import { PrivacyRosetteTrigger } from './PrivacyRosetteTrigger'
 
 interface Props {
   adversaries: PrivacyAdversariesSummary
@@ -25,45 +16,25 @@ export function PrivacyProjectRosette({
   href,
   isUnderReview,
 }: Props) {
-  const sectionHref = getPrivacyAdversariesSectionHref(href)
-  const content = (
-    <span className="flex items-center gap-2 text-left">
-      {/* Taller than the other stats' dots; the margin keeps the rows level. */}
-      <PizzaRosetteIcon
-        values={getPrivacyAdversaryRosetteValues(adversaries)}
-        className="-my-1 size-8 shrink-0"
-        isUnderReview={isUnderReview}
-        background={false}
-        disableSectionLinking
-      />
-      <span>{adversaries.promiseLabel}</span>
-    </span>
-  )
-
+  const values = getPrivacyAdversaryRosetteValues(adversaries)
   return (
-    <>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href={sectionHref} className="flex w-fit max-md:hidden">
-            {content}
-          </a>
-        </TooltipTrigger>
-        <TooltipContent fitContent>
-          <PrivacyRosetteAnalysis
-            adversaries={adversaries}
-            isUnderReview={isUnderReview}
-          />
-        </TooltipContent>
-      </Tooltip>
-      <PrivacyRosetteDrawer
-        adversaries={adversaries}
-        isUnderReview={isUnderReview}
-        sectionHref={sectionHref}
-        linkLabel="See full assessment"
-        triggerClassName="md:hidden"
-      >
-        {content}
-      </PrivacyRosetteDrawer>
-    </>
+    <PrivacyRosetteTrigger
+      values={values}
+      isUnderReview={isUnderReview}
+      href={href}
+      placement="project"
+    >
+      <span className="flex items-center gap-2 text-left">
+        {/* Taller than the other stats' dots; the margin keeps the rows level. */}
+        <PizzaRosetteIcon
+          values={values}
+          className="-my-1 size-8 shrink-0"
+          isUnderReview={isUnderReview}
+          background={false}
+          disableSectionLinking
+        />
+        <span>{adversaries.promiseLabel}</span>
+      </span>
+    </PrivacyRosetteTrigger>
   )
 }
