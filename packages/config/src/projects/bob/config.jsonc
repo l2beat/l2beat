@@ -88,6 +88,26 @@
         "untilTimestamp": 1789547003
       }
     },
+    "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079": {
+      "fields": {
+        "proposerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challengerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
+      }
+    },
     // ProxyAdmin: can upgrade the core BOB contracts (portal, bridges, DGF, SystemConfig).
     "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": {
       "critical": true
