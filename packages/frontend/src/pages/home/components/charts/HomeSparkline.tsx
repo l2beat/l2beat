@@ -147,6 +147,7 @@ export function HomeSparkline({
                       : 'insideTopLeft',
                     fontSize: 10,
                     fill: 'var(--secondary)',
+                    fillOpacity: 0.7,
                   }}
                 />
               ))}
