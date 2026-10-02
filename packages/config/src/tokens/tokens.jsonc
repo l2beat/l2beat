@@ -4680,6 +4680,101 @@
   ],
   "base": [
     {
+      // Coinbase Tokenized Stocks: B20 precompile tokens issued natively on Base,
+      // backed 1:1 by shares held at Alpaca. Mint/redeem is KYC-gated to authorized
+      // participants, secondary transfers are permissionless (issuer blocklist only).
+      // Raw balances do not rebase, dividends/splits go into an onchain multiplier
+      // that is already reflected in the token price.
+      "symbol": "AAPLc",
+      "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+      "coingeckoId": "apple-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079839
+    },
+    {
+      "symbol": "AMZNc",
+      "address": "0xb200000000000000000000d9192b6B456483C2E8",
+      "coingeckoId": "amazon-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785080019
+    },
+    {
+      "symbol": "GOOGLc",
+      "address": "0xb2000000000000000000002D0BA3164cc74f58B7",
+      "coingeckoId": "alphabet-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079783
+    },
+    {
+      "symbol": "METAc",
+      "address": "0xb2000000000000000000008bC8786B856E61707C",
+      "coingeckoId": "meta-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079709
+    },
+    {
+      "symbol": "MSFTc",
+      "address": "0xB200000000000000000000Ab99cFa739E253872B",
+      "coingeckoId": "microsoft-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079943
+    },
+    {
+      "symbol": "MSTRc",
+      "address": "0xb2000000000000000000004884b426556b92883d",
+      "coingeckoId": "microstrategy-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079757
+    },
+    {
+      "symbol": "NVDAc",
+      "address": "0xb20000000000000000000078ee7ce2fE4908108C",
+      "coingeckoId": "nvidia-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079969
+    },
+    {
+      "symbol": "SNDKc",
+      "address": "0xb200000000000000000000397293Cb8cda9a10c5",
+      "coingeckoId": "sandisk-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079731
+    },
+    {
+      "symbol": "SPCXc",
+      "address": "0xb2000000000000000000007b9fcbd005511aCBd5",
+      "coingeckoId": "spacex-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079901
+    },
+    {
+      "symbol": "TSLAc",
+      "address": "0xb2000000000000000000001e800a7f5189430cD0",
+      "coingeckoId": "tesla-coinbase-tokenized-stocks",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1785079921
+    },
+    {
       // Freely transferable Midas RWA token. It can be issued locally through
       // Midas deposit vaults and moved crosschain through a mint/burn OFT adapter.
       "symbol": "mGLO",
@@ -5621,14 +5716,6 @@
       "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
-    },
-    {
-      "symbol": "AAPLc",
-      "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
-      "coingeckoId": "apple-coinbase-tokenized-stock",
-      "source": "native",
-      "supply": "totalSupply",
-      "category": "rwaPublic"
     },
     {
       // Steakhouse High Yield USDC vault share; approximate price with USDC, excluding accrued yield.
