@@ -40,7 +40,7 @@ export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
             {item.title}
           </span>
           {item.description && (
-            <span className="line-clamp-2 text-secondary text-xs leading-normal">
+            <span className="line-clamp-3 text-secondary text-xs leading-normal">
               {item.description}
             </span>
           )}
