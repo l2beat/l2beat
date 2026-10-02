@@ -1207,6 +1207,7 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
+  | 'anonymousAuthorization'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
@@ -1413,6 +1414,8 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
+  /** Additional payout routes for the same bucket, indexed without repeating deposits. */
+  additionalWithdrawals?: PrivacyFlowSource[]
 }
 
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
@@ -1462,6 +1465,11 @@ export type PrivacyAnonymitySetDepositSource = {
 >
 
 export type PrivacyFlowExtractorConfig =
+  | {
+      /** Native vault events use integer gwei. Withdrawals count user payouts. */
+      extractor: 'zkApiDeposit' | 'zkApiWithdrawal'
+      params: { weiPerUnit: string }
+    }
   | {
       /** Credited DAI amount, after the portal's fee sponsorship cut. */
       extractor: 'zkMoneyDeposit'

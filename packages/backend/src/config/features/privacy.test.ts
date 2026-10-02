@@ -19,6 +19,41 @@ const ps = new ProjectService()
 const env = new Env({})
 
 describe(getPrivacyConfig.name, () => {
+  it('tracks both zkapi payout routes without duplicating deposits or inventing an anonymity set', async () => {
+    const project = await ps.getProject({
+      slug: 'zkapi',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('zkapi project not found')
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([project]),
+    })
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
+    )
+    if (!config) throw new Error('Privacy config not created')
+    expect(config.anonymitySetConfigs).toHaveLength(0)
+    expect(
+      config.flowConfigs.filter((c) => c.direction === 'deposit'),
+    ).toHaveLength(1)
+    const withdrawals = config.flowConfigs.filter(
+      (c) => c.direction === 'withdrawal',
+    )
+    expect(withdrawals).toHaveLength(2)
+    expect(new Set(withdrawals.map((c) => c.id)).size).toEqual(2)
+    expect(withdrawals.map((c) => c.bucketId)).toEqual([
+      'zkapi-ETH',
+      'zkapi-ETH',
+    ])
+    expect(withdrawals.map((c) => c.event)).toEqual([
+      '0x1f43fa4711ca18e1d26398f26bf598bd3a62992cdd0e84f055f2bb506e9d7031',
+      '0x163f2e46c4004f0ed9682e2db8c84efac31310720266b17ea9904ba348c26504',
+    ])
+  })
+
   it('returns false if enabled privacy projects have no tracked buckets', async () => {
     const project = await ps.getProject({
       slug: 'privacy-pools',
