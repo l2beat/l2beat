@@ -28,6 +28,7 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import { stickyTableColumnRowProps } from './useStickyTableHeader'
 import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
 import {
   getBasicTableBodyCellClassName,
@@ -145,10 +146,10 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
       )}
       <Table
         tableWrapperClassName={props.tableWrapperClassName}
-        stickyHeader={props.stickyHeader === false ? undefined : header}
+        header={header}
+        stickyHeader={props.stickyHeader ?? true}
         {...getPersistedTableAttributes(props.table)}
       >
-        {header}
         <TableBody>
           {rows.map((row) => (
             <BasicTableRow row={row} key={row.id} {...props} />
@@ -225,7 +226,7 @@ function BasicTableActualHeaderRow<T>({
   compact: boolean | undefined
 }) {
   return (
-    <TableHeaderRow>
+    <TableHeaderRow {...stickyTableColumnRowProps}>
       {getRenderedHeaders(actualHeader.headers).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1

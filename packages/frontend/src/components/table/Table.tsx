@@ -19,19 +19,13 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
-  stickyHeader,
+  header,
+  stickyHeader: isSticky = false,
   children,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
-  /**
-   * A copy of the table's column groups and `thead`, shown in place of the real
-   * header so it stays in view while the page scrolls. See
-   * `useStickyTableHeader`.
-   */
-  stickyHeader?: React.ReactNode
-}) => {
-  const isSticky = stickyHeader !== undefined
+} & TableHeaderProps) => {
   const sticky = useStickyTableHeader(isSticky)
 
   return (
@@ -52,7 +46,7 @@ const Table = ({
             className: getTableElementClassName(cn(className, 'table-fixed')),
           }}
         >
-          {stickyHeader}
+          {header}
         </StickyTableHeader>
       )}
       <div
@@ -70,6 +64,7 @@ const Table = ({
             cellPadding={0}
             {...props}
           >
+            {header}
             {children}
           </table>
         </HighlightedTableRowProvider>
@@ -78,6 +73,16 @@ const Table = ({
   )
 }
 Table.displayName = 'Table'
+
+/**
+ * `header` is the table's column groups and `thead`, rendered before the
+ * children. `stickyHeader` keeps it in view while the page scrolls, by showing
+ * a copy of it in its place, so it needs the header apart from the body. See
+ * `useStickyTableHeader`.
+ */
+type TableHeaderProps =
+  | { header?: React.ReactNode; stickyHeader?: false }
+  | { header: React.ReactNode; stickyHeader: boolean }
 
 const TableHeader = ({
   className,

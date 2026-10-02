@@ -3,7 +3,7 @@ import type * as React from 'react'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
-import { stickyTopBarRef } from '../table/useStickyTableHeader'
+import { stickyTopBarRef } from '../table/stickyTopBar'
 import { OverflowWrapper } from './OverflowWrapper'
 
 /**

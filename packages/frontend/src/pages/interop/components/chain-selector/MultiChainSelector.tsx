@@ -1,4 +1,4 @@
-import { stickyTopBarRef } from '~/components/table/useStickyTableHeader'
+import { stickyTopBarRef } from '~/components/table/stickyTopBar'
 import { SwapIcon } from '~/icons/Swap'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'

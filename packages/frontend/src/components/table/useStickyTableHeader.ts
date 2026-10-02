@@ -7,11 +7,7 @@ import {
 } from './utils/commonPinningStyles'
 
 const READY_ATTRIBUTE = 'data-sticky-table-ready'
-// Holds the values of the attributes it replaced, to put back.
-const HIDDEN_CONTROL_ATTRIBUTE = 'data-sticky-table-hidden'
-const HIDING_ATTRIBUTES = { tabindex: '-1', 'aria-hidden': 'true' }
-const CONTROL_SELECTOR = 'a[href], button, input, select, textarea, [tabindex]'
-const TOP_VARIABLE = '--sticky-table-header-top'
+const COLUMN_ROW_ATTRIBUTE = 'data-sticky-table-column-row'
 const HEIGHT_VARIABLE = '--sticky-table-header-height'
 const BOTTOM_GAP_VARIABLE = '--sticky-table-header-bottom-gap'
 const MAX_SCROLL_VARIABLE = '--sticky-table-max-scroll'
@@ -22,6 +18,12 @@ const VARIABLES = [
   MAX_SCROLL_VARIABLE,
   PINNED_WIDTH_VARIABLE,
 ]
+
+/**
+ * Props for the header row that has one cell per column, whose cells measure
+ * the columns. Grouped rows span several columns and the divider spans all.
+ */
+export const stickyTableColumnRowProps = { [COLUMN_ROW_ATTRIBUTE]: '' }
 
 export const stickyTableHeaderClassNames = {
   root: 'sticky-table',
@@ -68,6 +70,7 @@ export interface StickyTableRefs {
  * unchanged. Browsers without scroll-driven animations keep the real header
  * for good, see `canSlideWithScroller`.
  *
+ * The header row with one cell per column carries `stickyTableColumnRowProps`.
  * Call it in the component that renders all the elements: a parent's layout
  * effect runs once every child's ref is attached.
  */
@@ -93,18 +96,17 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     if (!track || !pinned) return
     const canStick = canSlideWithScroller()
 
-    let pinnedVariables: string[] = []
+    let columns: Columns = { widths: [], pinnedCount: 0 }
     const update = () => {
-      const widths = measureColumnWidths(table)
+      columns = measureColumns(thead)
       // The table's own pinned cells use these whether the header sticks or
       // not.
-      pinnedVariables = publishPinnedColumns(root, table, widths)
+      publishPinnedColumns(root, columns)
       const isAligned = [track, pinned].every((copy) =>
-        alignColumns(table, copy, widths),
+        alignColumns(table, copy, columns.widths),
       )
       const isReady = canStick && isAligned
       root.toggleAttribute(READY_ATTRIBUTE, isReady)
-      setControlsHidden(thead, isReady)
       if (isReady) {
         publishLayout(root, scroller, table, thead)
       }
@@ -116,7 +118,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
       resizeObserver.observe(root)
       resizeObserver.observe(scroller)
       resizeObserver.observe(table)
-      for (const cell of getColumnCells(table)) {
+      for (const cell of getColumnCells(thead)) {
         resizeObserver.observe(cell)
       }
     }
@@ -130,21 +132,19 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     mutationObserver.observe(tbody, { childList: true })
     observeLayout()
     update()
-    window.addEventListener('resize', update)
-    const stopForwarding = forwardStickyHeaderInput(
-      header,
-      scroller,
-      () => pinned.parentElement?.clientWidth ?? 0,
+    const stopForwarding = forwardStickyHeaderInput(header, scroller, () =>
+      getPinnedWidth(columns),
     )
 
     return () => {
       resizeObserver.disconnect()
       mutationObserver.disconnect()
-      window.removeEventListener('resize', update)
       stopForwarding()
       root.removeAttribute(READY_ATTRIBUTE)
-      setControlsHidden(thead, false)
-      for (const variable of [...VARIABLES, ...pinnedVariables]) {
+      for (const variable of [
+        ...VARIABLES,
+        ...getPinnedLeftVariables(columns),
+      ]) {
         root.style.removeProperty(variable)
       }
     }
@@ -161,70 +161,12 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
 }
 
 /**
- * Ref for a bar that sticks to the top of the page, like the directory tabs or
- * a project page's section nav. Sticky table headers after it, within the same
- * parent, stick right below it. Measured rather than declared, because bars
- * change height with the viewport and some hide on wide screens.
- */
-export function stickyTopBarRef(bar: HTMLElement | null) {
-  const parent = bar?.parentElement
-  if (!bar || !parent) return
-
-  const publish = () => {
-    const top = Number.parseFloat(getComputedStyle(bar).top) || 0
-    setVariable(parent, TOP_VARIABLE, top + bar.getBoundingClientRect().height)
-  }
-  const resizeObserver = new ResizeObserver(publish)
-  resizeObserver.observe(bar)
-  publish()
-  return () => {
-    resizeObserver.disconnect()
-    parent.style.removeProperty(TOP_VARIABLE)
-  }
-}
-
-/**
  * Without a scroll-driven animation the copy could only follow the scroller
  * from a scroll listener, which visibly trails sideways scrolling. A header
  * that does not stick reads better than one that lags.
  */
 function canSlideWithScroller() {
   return CSS.supports('animation-timeline', 'scroll()')
-}
-
-/**
- * While the copy shows, the real header is invisible but stays the table's
- * header for screen readers (see `sticky-table.css`). Its controls, all
- * repeated in the copy, leave the tab order and the screen reader's view, so
- * each is met once; the header cells' own text stays.
- */
-function setControlsHidden(thead: HTMLTableSectionElement, isHidden: boolean) {
-  if (!isHidden) {
-    for (const element of thead.querySelectorAll(
-      `[${HIDDEN_CONTROL_ATTRIBUTE}]`,
-    )) {
-      const originals: Record<string, string | null> = JSON.parse(
-        element.getAttribute(HIDDEN_CONTROL_ATTRIBUTE) ?? '{}',
-      )
-      for (const [name, value] of Object.entries(originals)) {
-        if (value === null) element.removeAttribute(name)
-        else element.setAttribute(name, value)
-      }
-      element.removeAttribute(HIDDEN_CONTROL_ATTRIBUTE)
-    }
-    return
-  }
-  for (const element of thead.querySelectorAll(CONTROL_SELECTOR)) {
-    if (element.hasAttribute(HIDDEN_CONTROL_ATTRIBUTE)) continue
-    const names = Object.keys(HIDING_ATTRIBUTES)
-    const originals = Object.fromEntries(
-      names.map((name) => [name, element.getAttribute(name)]),
-    )
-    element.setAttribute(HIDDEN_CONTROL_ATTRIBUTE, JSON.stringify(originals))
-    for (const [name, value] of Object.entries(HIDING_ATTRIBUTES)) {
-      element.setAttribute(name, value)
-    }
-  }
 }
 
 /**
@@ -257,22 +199,21 @@ function publishLayout(
 /**
  * Every pinned column sticks the same 1px before where it starts (see
  * `getPinnedLeftVariable`), so the copy's pinned layer can move as one.
- * Returns the variables set, for cleanup.
  */
-function publishPinnedColumns(
-  root: HTMLElement,
-  table: HTMLTableElement,
-  widths: number[],
-) {
-  const pinnedCount = countPinnedColumns(table)
-  setVariable(root, PINNED_WIDTH_VARIABLE, sum(widths.slice(0, pinnedCount)))
-  return getColumnLefts(widths)
-    .slice(0, pinnedCount)
-    .map((left, i) => {
-      const variable = getPinnedLeftVariable(i)
-      setVariable(root, variable, left - STICKY_OVERLAP_PX)
-      return variable
-    })
+function publishPinnedColumns(root: HTMLElement, columns: Columns) {
+  setVariable(root, PINNED_WIDTH_VARIABLE, getPinnedWidth(columns))
+  getPinnedLeftVariables(columns).forEach((variable, i) => {
+    const left = sum(columns.widths.slice(0, i))
+    setVariable(root, variable, left - STICKY_OVERLAP_PX)
+  })
+}
+
+function getPinnedWidth({ widths, pinnedCount }: Columns) {
+  return sum(widths.slice(0, pinnedCount))
+}
+
+function getPinnedLeftVariables({ pinnedCount }: Columns) {
+  return Array.from({ length: pinnedCount }, (_, i) => getPinnedLeftVariable(i))
 }
 
 /** The last body row a reader would see; decorative rows are `aria-hidden`. */
@@ -281,14 +222,9 @@ function getLastRow(table: HTMLTableElement) {
   return rows.findLast((row) => !row.hasAttribute('aria-hidden'))
 }
 
-/**
- * The cells of the header row that has one cell per column, so they measure
- * the columns. Grouped rows span several columns and the divider spans all.
- */
-function getColumnCells(table: HTMLTableElement) {
-  const columnCount = table.querySelectorAll(':scope > colgroup > col').length
-  const row = Array.from(table.tHead?.rows ?? []).find(
-    (row) => row.cells.length === columnCount,
+function getColumnCells(thead: HTMLTableSectionElement) {
+  const row = thead.querySelector<HTMLTableRowElement>(
+    `tr[${COLUMN_ROW_ATTRIBUTE}]`,
   )
   return row ? Array.from(row.cells) : []
 }
@@ -314,35 +250,34 @@ function alignColumns(
   return true
 }
 
-/**
- * Width of each column, in column order. A cell hidden with `display: none`
- * (columns some tables drop on small screens) takes no column, so the cells
- * after it move into the first free columns and the last ones stay empty.
- */
-function measureColumnWidths(table: HTMLTableElement) {
-  const cells = getShownColumnCells(table)
-  const widths = cells.map((cell) => cell.getBoundingClientRect().width)
-  const columnCount = getColumnCells(table).length
-  return [...widths, ...Array<number>(columnCount - widths.length).fill(0)]
+interface Columns {
+  /** In column order. */
+  widths: number[]
+  /** Pinned columns lead the table. */
+  pinnedCount: number
 }
 
-function getShownColumnCells(table: HTMLTableElement) {
-  return getColumnCells(table).filter(
+/**
+ * A cell hidden with `display: none` (columns some tables drop on small
+ * screens) takes no column, so the cells after it move into the first free
+ * columns and the last ones stay empty.
+ */
+function measureColumns(thead: HTMLTableSectionElement): Columns {
+  const cells = getColumnCells(thead)
+  const shownCells = cells.filter(
     (cell) => getComputedStyle(cell).display !== 'none',
   )
-}
-
-/** Pinned columns lead the table. */
-function countPinnedColumns(table: HTMLTableElement) {
-  const cells = getShownColumnCells(table)
-  const count = cells.findIndex(
+  const emptyColumns = Array<number>(cells.length - shownCells.length).fill(0)
+  const firstUnpinned = shownCells.findIndex(
     (cell) => !cell.hasAttribute(PINNED_CELL_ATTRIBUTE),
   )
-  return count === -1 ? cells.length : count
-}
-
-function getColumnLefts(widths: number[]) {
-  return widths.map((_, i) => sum(widths.slice(0, i)))
+  return {
+    widths: [
+      ...shownCells.map((cell) => cell.getBoundingClientRect().width),
+      ...emptyColumns,
+    ],
+    pinnedCount: firstUnpinned === -1 ? shownCells.length : firstUnpinned,
+  }
 }
 
 function sum(values: number[]) {

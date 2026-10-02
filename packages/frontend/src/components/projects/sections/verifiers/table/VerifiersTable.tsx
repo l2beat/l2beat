@@ -18,29 +18,23 @@ export type VerifierRow =
 interface Props {
   entries: VerifierRow[]
   collapsible?: boolean
-  stickyHeader?: boolean
 }
-export function VerifiersTable({
-  entries,
-  collapsible = true,
-  stickyHeader,
-}: Props) {
+export function VerifiersTable({ entries, collapsible = true }: Props) {
   const table = useTable('VerifiersTable', {
     data: entries,
     columns: collapsible ? verifiersColumns : verifiersColumnsWithoutActions,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    // Verifiers that are not deployed yet share the zero hash, and rows with
-    // the same id get duplicated when sorting reorders them.
-    getRowId: (row, index) => `${row.hash}-${index}`,
     getRowCanExpand: () => true,
     initialState: collapsible ? undefined : { expanded: true },
   })
   return (
     <BasicTable
       table={table}
-      stickyHeader={stickyHeader}
+      // Always-expanded rows read as a list of details, where a moving header
+      // adds nothing.
+      stickyHeader={collapsible}
       renderSubComponent={({ row }) => (
         <VerifierRowDetails verifierHash={row.original} />
       )}

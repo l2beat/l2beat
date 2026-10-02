@@ -35,6 +35,15 @@
   [data-sticky-table-ready] > & > table > thead {
     opacity: 0;
     pointer-events: none;
+
+    /*
+      Its controls are all repeated in the copy. Hidden, they leave the tab
+      order and the screen reader's view, so each is met once, while the
+      header cells' own text stays.
+    */
+    :is(a[href], button, input, select, textarea, [tabindex]) {
+      visibility: hidden;
+    }
   }
 }
 
