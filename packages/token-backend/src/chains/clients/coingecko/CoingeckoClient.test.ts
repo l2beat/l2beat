@@ -62,7 +62,7 @@ describe(CoingeckoClient.name, () => {
     const fetch = mockFetch([])
     const client = new CoingeckoClient({
       apiKey: 'my-api-key',
-      apiUrl: 'https://prices.example.com/api/v3/',
+      apiUrl: 'https://prices.example.com/api/v3',
       callsPerMinute: 100_000,
     })
 

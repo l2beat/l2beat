@@ -33,10 +33,7 @@ export class CoingeckoClient extends ClientCore {
 
   constructor(private readonly $: Dependencies) {
     super($)
-    this.apiUrl = ($.apiUrl ?? ($.apiKey ? PRO_API_URL : API_URL)).replace(
-      /\/+$/,
-      '',
-    )
+    this.apiUrl = $.apiUrl ?? ($.apiKey ? PRO_API_URL : API_URL)
   }
 
   async getCoinMarketChartRange(

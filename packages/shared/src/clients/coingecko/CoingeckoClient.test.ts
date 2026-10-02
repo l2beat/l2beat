@@ -225,7 +225,7 @@ describe(CoingeckoClient.name, () => {
         http,
         logger,
         'myapikey',
-        'https://prices.example.com/api/v3/',
+        'https://prices.example.com/api/v3',
       )
 
       await coingeckoClient.query('/a/b', { foo: 'bar' })

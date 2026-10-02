@@ -27,9 +27,7 @@ export class CoingeckoClient {
     }
 
     this.apiKey = config.apiKey
-    this.baseUrl = (
-      config.apiUrl ?? (config.apiKey ? PRO_API_URL : API_URL)
-    ).replace(/\/+$/, '')
+    this.baseUrl = config.apiUrl ?? (config.apiKey ? PRO_API_URL : API_URL)
     this.rateLimiter = new RateLimiter({
       callsPerMinute: config.callsPerMinute,
     })
