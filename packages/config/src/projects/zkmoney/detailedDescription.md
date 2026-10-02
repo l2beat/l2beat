@@ -1,6 +1,6 @@
 Internal payments are hidden, but names, deposits and withdrawals are public. The first payment to a new contact reveals the recipient. The first sponsored transaction after registration reveals the sender's account.
 
-Every withdrawal and refund needs a proof and a live AWS Nitro enclave. The enclave (TEE) reads operations in plaintext. Its approved binary has not been reproduced from the published source. Aztec Labs controls zk.money names and the released wallets' contract configuration.
+Every withdrawal and refund needs a proof and a live AWS Nitro enclave. Operations are encrypted to the enclave (TEE), which decrypts and reads them. Its approved binary has not been reproduced from the published source. Aztec Labs controls zk.money names and the released wallets' contract configuration.
 
 ### Multiproofs and exits
 The portal releases funds only after Aztec proves the withdrawal message (zk proof of validity) and any one registered enclave signer co-signs it (TEE signature). Stealing escrowed funds requires both layers to fail while privacy leaks depend on either. Anyone can register an enclave running the approved image with a fresh AWS attestation.
@@ -13,6 +13,8 @@ If Aztec governance changes its canonical rollup, anyone can freeze the portal. 
 - **Independent operation:** requires modifying the desktop build to pin verified addresses, remove screening and serve it under auth.zk.money. Users can submit Ethereum transactions themselves and run the approved enclave on AWS. New names still require Aztec Labs' signature. L2BEAT has not run this setup.
 
 Both released wallets allow custom Aztec, Ethereum and enclave endpoints. Their passkeys belong to auth.zk.money, which must authorize wallet.zk.money on every use. Onchain contracts do not check the signature's origin. A modified wallet served under auth.zk.money would bypass this dependency.
+
+Wallets use XMTP, an end-to-end encrypted messaging network, to confirm contacts added by QR code or link and to send payment requests. Messages are encrypted, but each inbox is publicly tied to a name, so XMTP's servers can see which names talk to each other.
 
 The browser stores the master key unencrypted until sign-out, and viewing keys and decrypted notes until local data is cleared. All keys except the spending key derive from the master key (privacy is lost if the master key is leaked).
 

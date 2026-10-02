@@ -153,9 +153,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'Enclaves receive payments, withdrawals and deposit claims in plaintext. Privacy against their operators depends on AWS Nitro and the approved code. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
+        'Wallets encrypt payments, withdrawals and deposit claims to an enclave key registered in the portal. The approved code decrypts them inside the enclave. Privacy against the operator depends on AWS Nitro and that code, whose binary has not been reproduced. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
       advice:
-        'Use zk.money Desktop with your own nodes. Running your own enclave is permissionless onchain but still depends on AWS. Operations remain visible to the enclave and deposits to the resolver operator.',
+        "Run your own enclave, which is permissionless onchain but still depends on AWS. Running your own resolver operator is also permissionless, but its service is unpublished and the released wallets only use Aztec Labs' operator.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -167,6 +167,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         {
           title: 'Enclave requests carry notes and the nullifier hiding key',
           url: `${OX}yarn-project/oxide-lib/src/types.ts#L336-L392`,
+        },
+        {
+          title: 'Wallets encrypt to the enclave key registered in the portal',
+          url: `${OX}yarn-project/oxide-client/src/fleet_signer.ts#L172-L202`,
         },
         {
           title: 'Deposit address secrets derive from the resolver key',
