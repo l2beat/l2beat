@@ -1,31 +1,62 @@
-Generated with discovered.json: 0xea080124f15ef34cbd1e5458499403635039ad2c
+Generated with discovered.json: 0xc9737a0948224a3c5ea9292911defedaaee63b3d
 
-# Diff at Wed, 30 Sep 2026 22:47:29 GMT:
+# Diff at Fri, 02 Oct 2026 08:08:19 GMT:
 
-- id: f99360ef
+- id: 3bc3959d
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1790592527
-- current timestamp: 1790592527
+- comparing to: main@f6e34290bf6b81eca442b61515c2bb91f5fe65e8 block: 1790850950
+- current timestamp: 1790850950
 
 ## Description
 
-Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+Config-only rerun on the same block number. The Cartesi Multisig now matches the GnosisSafe template, which tracks its owners and threshold instead of recording them as raw values. No onchain state changed.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1790592527 (main branch discovery), not current.
+discovery. Values are for block 1790850950 (main branch discovery), not current.
 
 ```diff
     contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [GnosisSafe] {
     +++ description: None
       values.getOwners:
--        ["eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032","eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961","eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E","eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1","eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325","eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"]
+-        ["eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032","eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961","eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E","eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1","eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"]
       values.getThreshold:
 -        3
       template:
 +        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0x4df78961eac52e7c710649994cfcbc2de6b890e3
+
+# Diff at Thu, 01 Oct 2026 11:10:28 GMT:
+
+- id: 25bf6fe1
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592527
+- current timestamp: 1790850950
+
+## Description
+
+Cartesi Multisig removed one signer (eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325): threshold 3/6 -> 3/5.
+
+## Watched changes
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) [N/A] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.getOwners.4:
+-        "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+      values.nonce:
+-        335
++        339
     }
 ```
 

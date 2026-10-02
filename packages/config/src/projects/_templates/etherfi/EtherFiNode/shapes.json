@@ -4,5 +4,11 @@
     "address": "eth:0x556Db8c611FE63e694413F718d795f976dcF5881",
     "chain": "ethereum",
     "blockNumber": 25800000
+  },
+  "EtherFiNode_v2.sol": {
+    "hash": "0x80b1ed8ec04172f6ec2054a38625eb59e0b2aa2b82df212a5533a87610dba4ac",
+    "address": "eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233",
+    "chain": "ethereum",
+    "blockNumber": 26096911
   }
 }

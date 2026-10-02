@@ -303,7 +303,7 @@
       "fieldMeta": {
         "CONSENSUS_TYPE": {
           "severity": "HIGH",
-          "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
+          "description": "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."
         },
         "forceBatchAddress": {
           "severity": "HIGH",
@@ -2194,10 +2194,10 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
-    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
+    "polygon-cdk/AggchainECDSAMultisig": "0x167d25843b059c8a66e8ca209f4229f723b0321f20d52e190e4f658aed063690"
   },
   "usedBlockNumbers": { "ethereum": 25830861 },
-  "permissionsConfigHash": "0x69036b4cd3c13b72f302321229c677f687a8d30f57239871e3977a87060b2fc9",
+  "permissionsConfigHash": "0x2cc5d25ef18ea5216796e67b18c383279879914abba005897de2312bbf947c48",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -2648,6 +2648,12 @@
     },
     "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b",
+          "description": "replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.",
+          "role": ".aggchainManager"
+        },
         {
           "permission": "interact",
           "from": "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b",

@@ -1,7 +1,7 @@
 {
   "name": "shared-circle",
-  "timestamp": 1788793431,
-  "configHash": "0x1bec5e176090ed64ad060381de07cb71e5799dc0bff25d7eb8f38ee0b8cfbac8",
+  "timestamp": 1790852086,
+  "configHash": "0x34742dff8f1d42b54e0b6d3ed1be2dfdc23028fb797b55c15631a2c4d971e890",
   "entries": [
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
@@ -57,7 +57,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 496564,
+        "nextAvailableNonce": 502207,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -82,6 +82,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
       "type": "EOA",
       "proxyType": "EOA"
@@ -98,6 +103,11 @@
     },
     {
       "address": "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -723,7 +733,8 @@
           "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7",
           "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096",
           "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E",
-          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D",
+          "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd"
         ],
         "name": "USD Coin",
         "owner": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
@@ -733,7 +744,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "50590012200656665",
+        "totalSupply": "49291979758946562",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -757,6 +768,38 @@
       "address": "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "UnverifiedUSDCMinter",
+      "address": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable contract with an unverified implementation that is registered as a USDC minter in the USDC token contract. Its minting allowance is set by its MasterMinter controllers.",
+      "deployerAddress": "eth:0xe4b567Ac531c217EEfE01Db45fac7F60ED77F94b",
+      "sinceTimestamp": 1790610479,
+      "sinceBlock": 26076948,
+      "values": {
+        "$admin": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
+        "$implementation": "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC",
+        "$pastUpgrades": [
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0xb69d91adcc3e14284f29914f985df72c01fbcd59774fb94d1cc513cda81ff191",
+            ["eth:0xCCb78B2d0720401AF60026EE33EC469110C9d694"]
+          ],
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0x690834ba932489cfe2c7e15046b02ee5b8f4e7e81a4c882ed100224e82903967",
+            ["eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC"]
+          ]
+        ],
+        "$upgradeCount": 2
+      },
+      "implementationNames": {
+        "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "ERC1967Proxy",
+        "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": ""
+      }
     },
     {
       "address": "eth:0xa820A620F638114F3Eb45df87382383322dDBC49",
@@ -992,7 +1035,9 @@
           "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B",
           "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E",
           "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f",
-          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D",
+          "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
+          "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3"
         ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
@@ -1024,6 +1069,11 @@
     },
     {
       "address": "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1340,6 +1390,14 @@
       "function updateRescuer(address newRescuer)",
       "function usedNonces(bytes32) view returns (uint256)",
       "function version() view returns (uint32)"
+    ],
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
@@ -1751,8 +1809,8 @@
     "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25926250 },
-  "permissionsConfigHash": "0xee49e331d9ff7038a19270765aa66ebeaba77b34beb4505357689ab9a900c39e",
+  "usedBlockNumbers": { "ethereum": 26097002 },
+  "permissionsConfigHash": "0x731991f9de98361fd042bf8f0810dc8e3a9b2951592437cc39bea7db65b9fb54",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -1864,6 +1922,26 @@
         }
       ]
     },
+    "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
     "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B": {
       "receivedPermissions": [
         {
@@ -1943,6 +2021,16 @@
           "role": ".controllers"
         }
       ]
+    },
+    "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186": {
       "receivedPermissions": [
@@ -2860,6 +2948,16 @@
         }
       ]
     },
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
     "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF": {
       "receivedPermissions": [
         {
@@ -3386,6 +3484,26 @@
       ]
     },
     "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c": {
       "receivedPermissions": [
         {
           "permission": "interact",

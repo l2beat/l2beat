@@ -100,7 +100,6 @@ const generateFakeConfig = (
 ): ConfigRegistry => {
   return new ConfigRegistry({
     name: 'test',
-    chain: 'ethereum',
     initialAddresses,
     overrides: overrides ?? {},
   })

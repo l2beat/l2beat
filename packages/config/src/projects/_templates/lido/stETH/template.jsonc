@@ -18,6 +18,7 @@
     "getBufferedEther",
     "getDepositableEther",
     "getDepositsReserve",
+    "getFeeDistribution",
     "getStakeLimitFullInfo",
     "getTotalPooledEther",
     "getTotalShares",
@@ -28,6 +29,9 @@
     "getWithdrawalsReserve"
   ],
   "fields": {
+    "getFeeDistribution": {
+      "description": "Deprecated split of getFee, derived from current staking-module stake weights. Its output labels are swapped relative to StakingRouter.getStakingFeeAggregateDistribution: treasuryFeeBasisPoints holds the staking modules' share and operatorsFeeBasisPoints the treasury's share."
+    },
     "stakeLimitConfiguration": {
       "description": "Configured staking limit, excluding its continuously replenishing current capacity.",
       "copy": "getStakeLimitFullInfo",

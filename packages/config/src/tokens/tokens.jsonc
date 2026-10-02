@@ -5614,6 +5614,67 @@
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "AAPLc",
+      "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+      "coingeckoId": "apple-coinbase-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic"
+    },
+    {
+      // Steakhouse High Yield USDC vault share; approximate price with USDC, excluding accrued yield.
+      "symbol": "bbqUSDC",
+      "address": "0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Gauntlet USDC Frontier vault share; approximate price with USDC, excluding accrued yield.
+      "symbol": "gtusdcf",
+      "address": "0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Gauntlet WETH Balanced vault share; approximate price with WETH, excluding accrued yield.
+      "symbol": "gtwethb",
+      "address": "0xFeFeC33668E22677c4762d0853d56245a800ff08",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "weth",
+      "category": "ether"
+    },
+    {
+      // Clearstar USDC Reactor vault share; approximate price with USDC, excluding accrued yield.
+      "symbol": "CSUSDC",
+      "address": "0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // UltraYield USDC vault share; approximate price with USDC, excluding accrued yield.
+      // A share was worth ~2.1 USDC in October 2026, so this undervalues it.
+      "symbol": "edgeUSDC",
+      "address": "0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
     }
   ],
   "cyber": [
