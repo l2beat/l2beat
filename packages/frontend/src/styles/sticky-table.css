@@ -35,6 +35,12 @@
   [data-sticky-table-ready] > & > table > thead {
     opacity: 0;
     pointer-events: none;
+    /*
+      Its pinned cells are never seen, so they need not stick. Sticky cells
+      under an opacity layer make iOS Safari redo its compositing on every
+      scroll frame, which stalls sideways scrolling of long tables.
+    */
+    --sticky-table-pinned-position: static;
 
     /*
       Its controls are all repeated in the copy. Hidden, they leave the tab
