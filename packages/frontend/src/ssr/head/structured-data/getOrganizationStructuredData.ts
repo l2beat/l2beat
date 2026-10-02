@@ -13,6 +13,8 @@ export const L2BEAT_ORGANIZATION = {
 export function getOrganizationStructuredData() {
   return {
     ...L2BEAT_ORGANIZATION,
+    description:
+      'L2BEAT is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
     sameAs: [
       externalLinks.x,
       externalLinks.github,
