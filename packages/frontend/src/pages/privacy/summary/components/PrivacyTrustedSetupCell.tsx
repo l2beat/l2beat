@@ -4,10 +4,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
-import {
-  getTrustedSetupLabel,
-  type PrivacyTrustedSetup,
-} from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
+import type { PrivacyTrustedSetup } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { DotWithLabel } from './DotWithLabel'
 
 export function PrivacyTrustedSetupCell({
@@ -26,7 +23,7 @@ export function PrivacyTrustedSetupCell({
               className="shrink-0"
             />
           }
-          label={getTrustedSetupLabel(trustedSetup)}
+          label={trustedSetup.label}
         />
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">

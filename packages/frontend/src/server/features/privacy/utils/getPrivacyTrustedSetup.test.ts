@@ -2,7 +2,7 @@ import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   getPrivacyTrustedSetup,
-  getTrustedSetupLabel,
+  type PrivacyTrustedSetup,
   toTrustedSetupSummaryValue,
 } from './getPrivacyTrustedSetup'
 
@@ -13,37 +13,56 @@ describe(getPrivacyTrustedSetup.name, () => {
     name: 'Proof system',
     description: 'Proof system description.',
   }
+  const trustedSetup: TrustedSetup = {
+    id: 'trusted-setup-id',
+    name: 'Trusted setup name',
+    risk: 'red',
+    shortDescription: 'Trusted setup description.',
+    longDescription: 'Long trusted setup description.',
+  }
 
-  it('returns the first trusted setup without the proof system', () => {
-    const trustedSetup: TrustedSetup = {
-      id: 'trusted-setup-id',
-      name: 'Trusted setup name',
-      risk: 'green',
-      shortDescription: 'Trusted setup description.',
-      longDescription: 'Long trusted setup description.',
-    }
-
-    expect(getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }])).toEqual(
-      trustedSetup,
-    )
+  it('returns the first trusted setup without the proof system, labelled with its participants', () => {
+    expect(
+      getPrivacyTrustedSetup([
+        { ...trustedSetup, participantCount: 123, proofSystem },
+      ]),
+    ).toEqual({
+      ...trustedSetup,
+      participantCount: 123,
+      label: '123 participants',
+    })
   })
 
-  it('falls back to No setup when there are no trusted setups', () => {
-    const trustedSetup = getPrivacyTrustedSetup([])
-    expect(trustedSetup.id).toEqual('NoSetup')
-    expect(trustedSetup.name).toEqual('No setup')
-    expect(trustedSetup.risk).toEqual('None')
+  it('leaves a ceremony without a participant count unlabelled', () => {
+    expect(
+      getPrivacyTrustedSetup([{ ...trustedSetup, proofSystem }]).label,
+    ).toEqual(undefined)
+  })
+
+  it('names a transparent setup', () => {
+    expect(
+      getPrivacyTrustedSetup([{ ...trustedSetup, risk: 'N/A', proofSystem }])
+        .label,
+    ).toEqual('Trusted setup name')
+  })
+
+  it('falls back to a named No setup when there are no trusted setups', () => {
+    const noSetup = getPrivacyTrustedSetup([])
+    expect(noSetup.id).toEqual('NoSetup')
+    expect(noSetup.risk).toEqual('None')
+    expect(noSetup.label).toEqual('No setup')
   })
 })
 
 describe(toTrustedSetupSummaryValue.name, () => {
-  const trustedSetup: TrustedSetup = {
+  const trustedSetup: PrivacyTrustedSetup = {
     id: 'trusted-setup-id',
     name: 'Trusted setup name',
     risk: 'green',
     shortDescription: 'Trusted setup description.',
     longDescription: 'Long trusted setup description.',
     participantCount: 123,
+    label: '123 participants',
   }
 
   it('formats the trusted setup as a privacy summary value', () => {
@@ -57,12 +76,9 @@ describe(toTrustedSetupSummaryValue.name, () => {
   })
 
   it('falls back to the trusted setup name without a label', () => {
-    const summary = toTrustedSetupSummaryValue({
-      ...trustedSetup,
-      participantCount: undefined,
-    })
-    expect(summary.value).toEqual('Trusted setup name')
-    expect(summary.label).toEqual(undefined)
+    expect(
+      toTrustedSetupSummaryValue({ ...trustedSetup, label: undefined }).value,
+    ).toEqual('Trusted setup name')
   })
 
   for (const [risk, sentiment] of [
@@ -76,28 +92,6 @@ describe(toTrustedSetupSummaryValue.name, () => {
       expect(
         toTrustedSetupSummaryValue({ ...trustedSetup, risk }).sentiment,
       ).toEqual(sentiment)
-    })
-  }
-})
-
-describe(getTrustedSetupLabel.name, () => {
-  const trustedSetup: TrustedSetup = {
-    id: 'trusted-setup-id',
-    name: 'Trusted setup name',
-    risk: 'red',
-    shortDescription: 'Trusted setup description.',
-    longDescription: 'Long trusted setup description.',
-  }
-
-  it('leaves a ceremony without a participant count unlabelled', () => {
-    expect(getTrustedSetupLabel(trustedSetup)).toEqual(undefined)
-  })
-
-  for (const risk of ['None', 'N/A'] as const) {
-    it(`names a setup with ${risk} risk`, () => {
-      expect(getTrustedSetupLabel({ ...trustedSetup, risk })).toEqual(
-        'Trusted setup name',
-      )
     })
   }
 })
