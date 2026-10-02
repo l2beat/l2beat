@@ -12,6 +12,7 @@ import {
   VERIFIERS_SECTION_INTRO,
   type VerifierStatus,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
+import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { configMarkdown } from './configMarkdown'
 import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
 
@@ -38,6 +39,43 @@ export function renderTrustedSetups(
       ]),
     ),
   ])
+}
+
+/**
+ * One row of the HTML "Trusted setups" table: the setups of one proof system
+ * with the tooltip text of each, its onchain verifiers, where it is used and
+ * how its verifiers checked out. Named by the proof system tag, as a project
+ * can have several of one type (e.g. two Groth16 wraps).
+ */
+export function describeProofSystemTrustedSetups({
+  trustedSetups,
+  onchainVerifiers,
+  projectsUsedIn,
+  verifiers,
+}: TrustedSetupsByProofSystem[string]) {
+  const proofSystem = trustedSetups[0]?.proofSystem
+  if (!proofSystem) return undefined
+  return {
+    proofSystem: formatTag(proofSystem),
+    details: [
+      ...trustedSetups.map(
+        (setup) =>
+          `${setup.name}, risk ${formatTrustedSetupRisk(setup.risk)} per the ${TRUSTED_SETUP_FRAMEWORK_LINK}: ${setup.shortDescription}`,
+      ),
+      ...(onchainVerifiers && onchainVerifiers.length > 0
+        ? [
+            `Onchain verifiers: ${onchainVerifiers
+              .map(
+                (verifier) =>
+                  `${link(verifier.name, verifier.href)} (${formatVerifierCounts(verifier.verifiers)})`,
+              )
+              .join(', ')}`,
+          ]
+        : []),
+      `Used in: ${renderUsedIn(projectsUsedIn)}`,
+      `Verifiers: ${formatVerifierCounts(verifiers)}`,
+    ],
+  }
 }
 
 export const TRUSTED_SETUP_FRAMEWORK_LINK = link(
@@ -237,6 +275,6 @@ function renderVerificationSteps(steps: string | undefined, level: number) {
   return subsection(
     level,
     'Verification steps',
-    configMarkdown(steps ?? '', level + 1),
+    configMarkdown(steps, level + 1),
   )
 }

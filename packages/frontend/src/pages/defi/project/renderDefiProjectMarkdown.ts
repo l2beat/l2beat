@@ -1,5 +1,4 @@
 import compact from 'lodash/compact'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
@@ -15,9 +14,7 @@ export function renderDefiProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/defi/projects/${entry.slug}`,
+    pagePath: `/defi/projects/${entry.slug}`,
     summary: {
       warnings: compact([
         entry.isUnderReview && getUnderReviewText('config'),

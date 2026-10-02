@@ -23,6 +23,11 @@ import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
+import {
+  ESCROW_ALL_TOKENS_INCLUDED,
+  ESCROW_TOKENS_INCLUDED,
+  impactfulChangesWarning,
+} from './sectionCopy'
 
 export interface TechnologyContract {
   id: string
@@ -247,19 +252,14 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
   if (escrow.tokens === '*') {
     return (
       <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
-        <strong className="text-primary">
-          All supported tokens in this escrow are included in the value secured
-          calculation.
-        </strong>
+        <strong className="text-primary">{ESCROW_ALL_TOKENS_INCLUDED}</strong>
       </p>
     )
   }
 
   return (
     <div className="mt-2 flex flex-wrap items-center text-paragraph-15 md:text-paragraph-16">
-      <strong className="text-primary">
-        The following tokens are included in the value secured calculation:
-      </strong>
+      <strong className="text-primary">{ESCROW_TOKENS_INCLUDED}</strong>
       <div className="ml-1.5 flex flex-wrap items-center gap-1.5">
         {escrow.tokenIcons.map((token) => (
           <Tooltip key={token.symbol}>
@@ -333,8 +333,7 @@ export function ContractsWithImpactfulChanges(props: {
   return (
     <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are impactful changes to the following {props.type}, and part of
-        the information might be outdated.
+        {impactfulChangesWarning(props.type)}
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry

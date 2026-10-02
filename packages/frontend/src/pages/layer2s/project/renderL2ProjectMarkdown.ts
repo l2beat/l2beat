@@ -1,16 +1,23 @@
 import type { ReasonForBeingInOther } from '@l2beat/config'
 import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import lowerFirst from 'lodash/lowerFirst'
 import {
   TVS_ASSET_CATEGORIES,
   TVS_ASSET_CATEGORY_LABELS,
 } from '~/components/breakdown/tvsAssetCategories'
+import {
+  ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON,
+  WHY_LISTED_IN_OTHERS_HEADING,
+} from '~/components/projects/sections/sectionCopy'
 import type { RosetteValue } from '~/components/rosette/types'
 import { externalLinks } from '~/consts/externalLinks'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { getInteropTokenPagePath } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
-import { listTopItems } from '~/server/markdown/interopMarkdown'
+import {
+  interopProtocolUrl,
+  listTopItems,
+} from '~/server/markdown/interopMarkdown'
 import {
   formatChange,
   formatCount,
@@ -27,13 +34,11 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
-  const api = `${PRODUCTION_ORIGIN}/api/scaling`
+  const api = '/api/scaling'
   const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/layer2s/projects/${entry.slug}`,
+    pagePath: `/layer2s/projects/${entry.slug}`,
     summary: {
       // Same order as the banners on the HTML page.
       warnings: compact([
@@ -104,7 +109,10 @@ function getFacts({
     header.tvs?.tokens.breakdown &&
       header.tvs.tokens.breakdown.associated > 0 && {
         label: 'Associated tokens',
-        value: formatAssociatedTokens(header.tvs.tokens),
+        value: formatAssociatedTokens(
+          header.tvs.tokens.breakdown,
+          header.tvs.tokens.associatedTokens,
+        ),
       },
     {
       label: 'Past day UOPS',
@@ -174,13 +182,9 @@ function formatTvs(
     `natively minted ${formatUsd(breakdown.native)}`,
     `externally bridged ${formatUsd(breakdown.external)}`,
   ].join(', ')
-  const trust = `${formatPercent(additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS}`
+  const trust = `${formatPercent(additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON}`
   return `${formatUsd(breakdown.total)} (${change}; ${sources}; ${trust})`
 }
-
-/** The wording of the HTML TVS tooltip, which says what the percentage is relative to. */
-const ADDITIONAL_TRUST_ASSUMPTIONS =
-  "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"
 
 type TvsTokens = NonNullable<ProjectL2Entry['header']['tvs']>['tokens']
 type TokensBreakdown = NonNullable<TvsTokens['breakdown']>
@@ -197,11 +201,12 @@ function formatTokensBreakdown(breakdown: TokensBreakdown) {
 }
 
 /** Associated tokens overlap the asset classes, so the HTML lists them apart. */
-function formatAssociatedTokens({ breakdown, associatedTokens }: TvsTokens) {
-  const associated = breakdown?.associated ?? 0
-  const total = breakdown?.total ?? 0
+function formatAssociatedTokens(
+  breakdown: TokensBreakdown,
+  associatedTokens: TvsTokens['associatedTokens'],
+) {
   const symbols = associatedTokens.map((token) => token.symbol).join(', ')
-  return `${symbols}: ${formatUsd(associated)} (${formatPercent(associated / total)} of TVS)`
+  return `${symbols}: ${formatUsd(breakdown.associated)} (${formatPercent(breakdown.associated / breakdown.total)} of TVS)`
 }
 
 /** The notice the HTML page shows under the summary of a project in Others. */
@@ -218,7 +223,7 @@ function getReasonsForBeingOther({
   }
   return [
     [
-      'Why is the project listed in others?',
+      WHY_LISTED_IN_OTHERS_HEADING,
       ...reasonsForBeingOther.map(describeReasonForBeingOther),
       `Learn more about the ${link('recategorisation', externalLinks.articles.recategorisation)}.`,
     ].join(' '),
@@ -229,12 +234,8 @@ function describeReasonForBeingOther(reason: ReasonForBeingInOther) {
   return compact([
     `${reason.shortDescription}.`,
     reason.explanation,
-    `Consequence: ${lowercaseFirstLetter(reason.description)}`,
+    `Consequence: ${lowerFirst(reason.description)}`,
   ]).join(' ')
-}
-
-function lowercaseFirstLetter(text: string) {
-  return text.charAt(0).toLowerCase() + text.slice(1)
 }
 
 /**
@@ -278,7 +279,7 @@ function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
     name: string
   }) =>
     protocol.slug
-      ? link(protocol.name, `/interop/protocols/${protocol.slug}`)
+      ? link(protocol.name, interopProtocolUrl(protocol.slug))
       : protocol.name
   const linkToken = (token: { id: string; symbol: string }) =>
     link(token.symbol, getInteropTokenPagePath({ ...token, issuer: null }))

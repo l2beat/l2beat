@@ -4,6 +4,11 @@ import type { HostChainRisksWarningProps } from '~/components/HostChainRisksWarn
 import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/ProjectDetailsRelatedProjectBanner'
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
+import {
+  hostChainRisksText,
+  SECTION_INCOMPLETE_NOTE,
+  UNDER_REVIEW_DESCRIPTION,
+} from '~/components/projects/sections/sectionCopy'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
 
@@ -14,11 +19,9 @@ import { bulletList, joinBlocks, link, markCritical, warning } from './markdown'
  */
 
 /** The text of the HTML "Under Review" callout. */
-export const UNDER_REVIEW_NOTE =
-  '**Under review:** The information in the section might be incomplete or outdated. The L2BEAT Team is working to research & validate the content before publishing.'
+export const UNDER_REVIEW_NOTE = `**Under review:** ${UNDER_REVIEW_DESCRIPTION.join(' ')}`
 
-export const INCOMPLETE_NOTE =
-  '**Note:** This section requires more research and might not present accurate information.'
+export const INCOMPLETE_NOTE = `**Note:** ${SECTION_INCOMPLETE_NOTE}`
 
 /** Only the light variant: the dark one is the same diagram recoloured. */
 export function renderDiagram(diagram: DiagramParams | undefined) {
@@ -42,9 +45,7 @@ export function renderHostChainWarning(
   if (!hostChainWarning) return ''
   const { hostChainName, hostChainSlug, riskCount } = hostChainWarning
   return renderRelatedProjectBanner({
-    text: riskCount
-      ? `There are ${riskCount} additional risks coming from the host chain`
-      : 'The section considers only the L3 properties. For more details please refer to',
+    text: hostChainRisksText(riskCount),
     href: `/layer2s/projects/${hostChainSlug}`,
     project: { name: hostChainName },
   })
@@ -106,4 +107,9 @@ export function renderLinks(links: ReferenceLink[]) {
 
 export function renderWarnings(...texts: (string | undefined)[]) {
   return joinBlocks(texts.flatMap((text) => (text ? [warning(text)] : [])))
+}
+
+/** What markdown cannot carry (charts, interactive tables) is pointed at instead; `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
+export function htmlPagePointer(whatIsShown: string, sectionId: string) {
+  return `${whatIsShown} on ${link('the HTML page', `#${sectionId}`)}.`
 }

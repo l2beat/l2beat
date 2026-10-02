@@ -323,6 +323,7 @@ async function getTrackedOn(
         'daLayer',
         'privacyInfo',
         'defiInfo',
+        'interopConfig',
       ],
     }),
     ps.getProjects({ where: ['daLayer'] }),

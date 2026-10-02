@@ -1,15 +1,22 @@
 import type {
+  InteropConfig,
   Project,
   ProjectDaBridge,
   ProjectDaLayer,
   ProjectDefiInfo,
   ProjectPrivacyInfo,
+  ProjectScalingInfo,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 
 export type ProjectWithPageMetadata = Project<
   never,
-  'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo'
+  | 'daBridge'
+  | 'scalingInfo'
+  | 'daLayer'
+  | 'privacyInfo'
+  | 'defiInfo'
+  | 'interopConfig'
 >
 
 export function getProjectUrl(
@@ -19,9 +26,10 @@ export function getProjectUrl(
     daLayer?: ProjectDaLayer | undefined
     privacyInfo?: ProjectPrivacyInfo | undefined
     defiInfo?: ProjectDefiInfo | undefined
-    // Only their presence decides the page kind.
-    scalingInfo?: unknown
-    interopConfig?: unknown
+    // Required, so a caller that never loads them fails to compile instead of
+    // linking an interop protocol to a scaling page that does not exist.
+    scalingInfo: ProjectScalingInfo | undefined
+    interopConfig: InteropConfig | undefined
   },
   daLayers: { id: ProjectId; slug: string }[],
 ): string {

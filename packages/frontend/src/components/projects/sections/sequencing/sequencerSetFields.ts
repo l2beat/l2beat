@@ -1,7 +1,7 @@
 import type { ProjectSequencerSetSpec } from '@l2beat/config'
 
 /** Display order of the sequencer set spec fields, shared by the spec sheet and its markdown. */
-export const SEQUENCER_SET_FIELDS = [
+const SEQUENCER_SET_FIELDS = [
   { key: 'blockTime', label: 'L2 block time' },
   { key: 'proposerRotationTime', label: 'Proposer rotation' },
   { key: 'committeeRotationTime', label: 'Committee rotation' },

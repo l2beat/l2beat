@@ -43,7 +43,7 @@ describe(renderProjectSection.name, () => {
     it('words summary risks the same way, with warnings nested under them', () => {
       const markdown = renderProjectMarkdown({
         name: 'Arbitrum One',
-        pageUrl: PAGE_URL,
+        pagePath: '/layer2s/projects/arbitrum',
         summary: {
           warnings: [],
           facts: [],
@@ -235,7 +235,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '![A diagram](https://l2beat.com/images/diagram.png)',
-      '### Prover: [SP1](https://l2beat.com/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16): Aztec Ignition (risk: green; Large ceremony.); verifiers: 2 successful; used in: none',
+      '### Prover: [SP1](https://l2beat.com/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
       '### Program Hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )

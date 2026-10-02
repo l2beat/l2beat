@@ -22,27 +22,26 @@ export async function getDaListSections(): Promise<MarkdownSection[]> {
       optional: ['display'],
     }),
   ])
-  const daLayerLinks = (systemCategory: 'public' | 'custom') =>
-    layers
-      .filter((layer) => layer.daLayer.systemCategory === systemCategory)
-      .flatMap((layer) =>
-        daLayerLinksPerBridge(
-          layer,
-          bridges.filter((b) => b.daBridge.daLayer === layer.id),
-        ),
-      )
+  const publicLayerLinks = layers
+    .filter((layer) => layer.daLayer.systemCategory === 'public')
+    .flatMap((layer) =>
+      daLayerLinksPerBridge(
+        layer,
+        bridges.filter((b) => b.daBridge.daLayer === layer.id),
+      ),
+    )
   return [
     {
       heading: 'Public layers (/data-availability/projects/{layer}/{bridge})',
       description:
         'Public DA layers are data availability solutions designed for broad, general use across multiple scaling projects.',
-      links: daLayerLinks('public'),
+      links: publicLayerLinks,
     },
     {
       heading: 'Custom solutions (/layer2s/projects/{slug})',
       description:
         'Custom DA layers are data availability solutions tightly integrated with a single scaling project, so each links to the page of the project it serves.',
-      links: [...daLayerLinks('custom'), ...customSolutions.map(customDaLink)],
+      links: customSolutions.map(customDaLink),
     },
   ]
 }

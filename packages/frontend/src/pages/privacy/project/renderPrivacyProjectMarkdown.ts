@@ -1,7 +1,6 @@
 import type { PrivacySummaryValue, PrivacyWalkawayTest } from '@l2beat/config'
 import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
@@ -28,9 +27,7 @@ export function renderPrivacyProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/privacy/projects/${entry.slug}`,
+    pagePath: `/privacy/projects/${entry.slug}`,
     summary: {
       warnings: [
         ...getProjectStatusWarnings({

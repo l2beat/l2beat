@@ -1,15 +1,20 @@
 import { INTEROP_CHAINS } from '@l2beat/config'
-import { pluralize } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  formatSeconds,
+  pluralize,
+} from '@l2beat/shared-pure'
 import type { InteropVolumeSectionProps } from '~/components/projects/sections/interop/InteropVolumeSection'
+import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import {
   bulletList,
   formatCount,
   formatUsd,
   joinBlocks,
-  link,
   subsection,
 } from './markdown'
+import { htmlPagePointer } from './renderSectionParts'
 
 /**
  * The HTML section is an interactive flows graph; its props also carry the
@@ -47,7 +52,7 @@ export function renderInteropVolumeSection(
       ]),
     ),
     renderTopRoutes(topRoutes, chainName, level),
-    `The flows between chains are an interactive graph on ${link('the HTML page', `#${id}`)}.`,
+    htmlPagePointer('The flows between chains are an interactive graph', id),
   ])
 }
 
@@ -56,18 +61,16 @@ export function renderTopRoutes(
   routes: { srcChain: string; dstChain: string; volume: number }[],
   chainName: (id: string) => string,
   level: number,
-  more?: number,
 ) {
   return subsection(
     level,
     'Top routes by volume (last 24h)',
-    bulletList([
-      ...routes.map(
+    bulletList(
+      routes.map(
         (route) =>
           `${chainName(route.srcChain)} → ${chainName(route.dstChain)}: ${formatUsd(route.volume)}`,
       ),
-      ...(more ? [`and ${more} more`] : []),
-    ]),
+    ),
   )
 }
 
@@ -88,4 +91,36 @@ export function formatTransferCount(count: number) {
 /** Interop data carries chain ids; the configured name is what the HTML page shows. */
 export function interopChainName(id: string) {
   return INTEROP_CHAINS.find((chain) => chain.id === id)?.name ?? id
+}
+
+/** The path is undirected: its volume counts transfers both ways. */
+export function formatTopPath(topPath: {
+  chainA: string
+  chainB: string
+  volume: number
+}) {
+  return `${interopChainName(topPath.chainA)} ↔ ${interopChainName(topPath.chainB)} (${formatUsd(topPath.volume)})`
+}
+
+/** The unknown case carries the text of the HTML tooltip. */
+export function formatAverageDuration(duration: AverageDuration) {
+  switch (duration.type) {
+    case 'unknown':
+      return 'Unknown (the transfer times for this protocol could not be derived based on onchain data only)'
+    case 'single':
+      return formatSeconds(duration.duration)
+    case 'split':
+      return duration.splits
+        .map(
+          (split) =>
+            `${split.label}: ${split.duration !== null ? formatSeconds(split.duration) : 'N/A'}`,
+        )
+        .join(', ')
+    default:
+      assertUnreachable(duration)
+  }
+}
+
+export function interopProtocolUrl(slug: string) {
+  return `/interop/protocols/${slug}` as const
 }

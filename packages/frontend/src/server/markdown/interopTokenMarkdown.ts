@@ -1,11 +1,4 @@
-import {
-  assertUnreachable,
-  formatAddress,
-  formatCurrency,
-  formatInteger,
-  formatSeconds,
-  unique,
-} from '@l2beat/shared-pure'
+import { formatAddress, formatSeconds, unique } from '@l2beat/shared-pure'
 import upperFirst from 'lodash/upperFirst'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import {
@@ -17,12 +10,20 @@ import type {
   InteropTokenRelationsGraph,
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import type {
-  AverageDuration,
-  ProtocolEntry,
-} from '~/server/features/layer2s/interop/types'
-import { formatTransferCount } from './interopMarkdown'
-import { bulletList, joinBlocks, link, subsection, table } from './markdown'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
+import {
+  formatAverageDuration,
+  formatTransferCount,
+  interopProtocolUrl,
+} from './interopMarkdown'
+import {
+  bulletList,
+  formatUsd,
+  joinBlocks,
+  link,
+  subsection,
+  table,
+} from './markdown'
 
 /** The deployments table, then the backing relations the HTML page draws as a diagram. */
 export function renderOnchainDeployments(
@@ -60,42 +61,6 @@ export function renderProtocolsTable(entries: ProtocolEntry[]) {
       entry.averageValue ? formatUsd(entry.averageValue) : NO_DATA,
     ]),
   )
-}
-
-export function formatAverageDuration(duration: AverageDuration) {
-  switch (duration.type) {
-    case 'single':
-      return formatSeconds(duration.duration)
-    case 'split':
-      return duration.splits
-        .map(
-          (split) =>
-            `${split.label}: ${split.duration === null ? 'N/A' : formatSeconds(split.duration)}`,
-        )
-        .join(', ')
-    case 'unknown':
-      return 'Unknown (cannot be derived from onchain data alone)'
-    default:
-      assertUnreachable(duration)
-  }
-}
-
-export function formatUsd(value: number) {
-  return withPlainSpaces(formatCurrency(value, 'usd'))
-}
-
-/** Abbreviated like the HTML page, e.g. 4.32 K. */
-export function formatCount(value: number) {
-  return withPlainSpaces(formatInteger(value))
-}
-
-/** The HTML page separates the unit with a hair space; plain text reads better with a regular one. */
-function withPlainSpaces(text: string) {
-  return text.replaceAll('\u200A', ' ')
-}
-
-export function interopProtocolUrl(slug: string) {
-  return `/interop/protocols/${slug}`
 }
 
 const NO_DATA = 'No data'

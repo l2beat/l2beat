@@ -3,6 +3,7 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniq from 'lodash/uniq'
 import { ps } from '~/server/projects'
+import { interopProtocolUrl } from '../interopMarkdown'
 import {
   firstSentence,
   type MarkdownLink,
@@ -22,9 +23,7 @@ export async function getInteropListSections(): Promise<MarkdownSection[]> {
   return [
     {
       heading: 'Protocols (/interop/protocols/{slug})',
-      links: protocols.map((p) =>
-        interopLink(p, `/interop/protocols/${p.slug}`),
-      ),
+      links: protocols.map((p) => interopLink(p, interopProtocolUrl(p.slug))),
     },
     {
       heading:

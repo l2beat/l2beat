@@ -68,6 +68,7 @@ export async function getZkCatalogProjectEntry(
           'daLayer',
           'privacyInfo',
           'defiInfo',
+          'interopConfig',
         ],
       }),
       ps.getProjects({

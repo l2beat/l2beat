@@ -1,18 +1,17 @@
-import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type {
-  AverageDuration,
   ByBridgeTypeData,
   TokenData,
 } from '~/server/features/layer2s/interop/types'
 import type { InteropTopTokenData } from '~/server/features/layer2s/interop/utils/getTopToken'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import {
+  formatAverageDuration,
+  formatTopPath,
   formatTransferCount,
-  interopChainName,
+  interopProtocolUrl,
   listTopItems,
 } from '~/server/markdown/interopMarkdown'
 import { formatCount, formatUsd, link } from '~/server/markdown/markdown'
@@ -38,9 +37,7 @@ export function renderInteropProtocolMarkdown({
 }: InteropProtocolPageContent): string {
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/interop/protocols/${entry.slug}`,
+    pagePath: interopProtocolUrl(entry.slug),
     summary: {
       warnings: [
         ...getProjectStatusWarnings(entry),
@@ -78,7 +75,7 @@ function getFacts({
     },
     topPath && {
       label: 'Last 24h top path',
-      value: `${interopChainName(topPath.chainA)} ↔ ${interopChainName(topPath.chainB)} (${formatUsd(topPath.volume)})`,
+      value: formatTopPath(topPath),
     },
     entry?.averageDuration && {
       label: 'Last 24h avg. transfer time',
@@ -106,24 +103,6 @@ function getFacts({
       value: formatTransferTypes(entry.byBridgeType),
     },
   ])
-}
-
-function formatAverageDuration(duration: AverageDuration) {
-  switch (duration.type) {
-    case 'unknown':
-      return 'Unknown (the transfer times for this protocol could not be derived based on onchain data only)'
-    case 'single':
-      return formatSeconds(duration.duration)
-    case 'split':
-      return duration.splits
-        .map(
-          (split) =>
-            `${split.label}: ${split.duration !== null ? formatSeconds(split.duration) : 'N/A'}`,
-        )
-        .join(', ')
-    default:
-      assertUnreachable(duration)
-  }
 }
 
 function formatTokenVolume(token: TokenData) {

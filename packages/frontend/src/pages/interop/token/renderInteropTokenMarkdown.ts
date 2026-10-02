@@ -1,23 +1,25 @@
 import compact from 'lodash/compact'
-import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import type { InteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import {
+  formatAverageDuration,
+  formatTopPath,
   formatTransferCount,
   interopChainName,
+  interopProtocolUrl,
   renderTopRoutes,
 } from '~/server/markdown/interopMarkdown'
+import { renderProtocolsTable } from '~/server/markdown/interopTokenMarkdown'
 import {
-  formatAverageDuration,
   formatCount,
   formatUsd,
-  interopProtocolUrl,
-  renderProtocolsTable,
-} from '~/server/markdown/interopTokenMarkdown'
-import { joinBlocks, link } from '~/server/markdown/markdown'
+  joinBlocks,
+  link,
+} from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
+import type { SectionBodyOverrides } from '~/server/markdown/renderProjectSection'
+import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 
 export interface InteropTokenPage {
@@ -33,11 +35,9 @@ export function renderInteropTokenMarkdown({
   tokenEntry,
   tokenData,
 }: InteropTokenPage): string {
-  // Production URLs, like the canonical link: the document is meant to be
-  // cited, whichever deployment rendered it.
   return renderProjectMarkdown({
     name: token.symbol,
-    pageUrl: `${PRODUCTION_ORIGIN}${getInteropTokenPagePath(token)}`,
+    pagePath: getInteropTokenPagePath(token),
     summary: {
       warnings: tokenData ? [] : [NO_DATA_WARNING],
       facts: getFacts(token, tokenEntry, tokenData),
@@ -45,9 +45,8 @@ export function renderInteropTokenMarkdown({
       description: undefined,
     },
     // Without data the HTML page shows an empty state instead of sections.
-    sections: tokenData
-      ? withDashboardContent(tokenEntry.sections, tokenData)
-      : [],
+    sections: tokenData ? tokenEntry.sections : [],
+    sectionBodies: tokenData ? getDashboardSectionBodies(tokenData) : {},
     apiLinks: {},
   })
 }
@@ -87,7 +86,7 @@ function getFacts(
     },
     data?.topPath && {
       label: 'Last 24h top path',
-      value: `${interopChainName(data.topPath.chainA)} ↔ ${interopChainName(data.topPath.chainB)} (${formatUsd(data.topPath.volume)})`,
+      value: formatTopPath(data.topPath),
     },
     data?.topProtocol && {
       label: 'Top protocol (based on 24h volume)',
@@ -108,46 +107,32 @@ function getFacts(
  * The HTML volume and protocols sections read the dashboard data rather than
  * their props, so their markdown is built here from the same data.
  */
-function withDashboardContent(
-  sections: ProjectDetailsSection[],
+function getDashboardSectionBodies(
   data: InteropTokenDashboardData,
-): ProjectDetailsSection[] {
-  return sections.map((section) => {
-    switch (section.type) {
-      case 'InteropTokenProtocolsSection':
-        return {
-          type: 'MarkdownSection',
-          props: {
-            ...section.props,
-            content: renderProtocolsTable(data.entries),
-          },
-        }
-      case 'InteropTokenVolumeSection':
-        return {
-          type: 'MarkdownSection',
-          props: {
-            ...section.props,
-            content: renderTopFlows(data, section.props.id),
-          },
-        }
-      default:
-        return section
-    }
-  })
+): SectionBodyOverrides {
+  return {
+    InteropTokenProtocolsSection: () => renderProtocolsTable(data.entries),
+    InteropTokenVolumeSection: (props, level) =>
+      renderTopFlows(data, props.id, level),
+  }
 }
 
 /** Only the busiest routes are loaded with the page; the graph queries the rest. */
 function renderTopFlows(
   { flows }: InteropTokenDashboardData,
   sectionId: string,
+  level: number,
 ) {
   return joinBlocks([
     renderTopRoutes(
       flows.filter((flow) => flow.volume > 0),
       interopChainName,
-      1,
+      level,
     ),
-    `The flows between all chains are an interactive graph on ${link('the HTML page', `#${sectionId}`)}.`,
+    htmlPagePointer(
+      'The flows between all chains are an interactive graph',
+      sectionId,
+    ),
   ])
 }
 

@@ -41,6 +41,7 @@ import {
   STAGES_DISCLAIMER,
   WALKAWAY_TEST,
 } from './sectionCopy'
+import { getStageRequirementGroups } from './stageRequirementGroups'
 import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
@@ -200,20 +201,11 @@ export function StageSection({
       <HorizontalSeparator className="my-4" />
       <div className="space-y-2">
         {stageConfig.summary.map((stage) => {
-          const nonUpcomingRequirements = stage.requirements.filter(
-            (r) => !r.upcoming,
-          )
-          const upcomingRequirements = showUpcomingGuidelines
-            ? stage.requirements.filter((r) => r.upcoming)
-            : []
-          const effectiveRequirements = showUpcomingGuidelines
-            ? nonUpcomingRequirements
-            : stage.requirements
-          const requirementsForLabel = stage.principle
-            ? showUpcomingGuidelines
-              ? [stage.principle]
-              : [stage.principle, ...effectiveRequirements]
-            : effectiveRequirements
+          const {
+            upcoming: upcomingRequirements,
+            effective: effectiveRequirements,
+            forLabel: requirementsForLabel,
+          } = getStageRequirementGroups(stage, showUpcomingGuidelines)
           const satisfiedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )

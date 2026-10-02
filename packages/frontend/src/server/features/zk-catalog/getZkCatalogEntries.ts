@@ -53,6 +53,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
           'daLayer',
           'privacyInfo',
           'defiInfo',
+          'interopConfig',
         ],
       }),
       get7dTvsBreakdown({ type: 'all' }),

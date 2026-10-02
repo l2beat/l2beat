@@ -11,6 +11,7 @@ import {
   STAGES_DISCLAIMER,
   WALKAWAY_TEST,
 } from '~/components/projects/sections/sectionCopy'
+import { getStageRequirementGroups } from '~/components/projects/sections/stageRequirementGroups'
 import { externalLinks } from '~/consts/externalLinks'
 import { bulletList, joinBlocks, link, subsection } from './markdown'
 import type { SectionContext } from './renderProjectSection'
@@ -123,18 +124,13 @@ function renderStageRequirements(
   stage1PrincipleDescription: string | undefined,
   showUpcomingGuidelines: boolean,
 ) {
-  const upcoming = showUpcomingGuidelines
-    ? stage.requirements.filter((r) => r.upcoming)
-    : []
-  const guidelines = stage.requirements.filter((r) => !upcoming.includes(r))
-  const counted = stage.principle
-    ? showUpcomingGuidelines
-      ? [stage.principle]
-      : [stage.principle, ...guidelines]
-    : guidelines
+  const { upcoming, effective, forLabel } = getStageRequirementGroups(
+    stage,
+    showUpcomingGuidelines,
+  )
 
   return joinBlocks([
-    countRequirements(counted),
+    countRequirements(forLabel),
     stage.principle
       ? joinBlocks([
           '**Principle**',
@@ -143,7 +139,7 @@ function renderStageRequirements(
           '**Guidelines**',
         ])
       : '',
-    bulletList(orderLikeHtml(guidelines).map(formatRequirement)),
+    bulletList(orderLikeHtml(effective).map(formatRequirement)),
     upcoming.length > 0
       ? joinBlocks([
           '**Upcoming guidelines**',

@@ -64,3 +64,42 @@ export const PAST_UPGRADES_DESCRIPTION =
 
 export const NO_EXTERNAL_DEPENDENCIES =
   'This project has no external dependencies: no oracle, bridge, or other third-party contract is required for its contracts to operate.'
+
+export const WHY_LISTED_IN_OTHERS_HEADING =
+  'Why is the project listed in others?'
+
+/** Continued by the host chain link. */
+export function hostChainRisksText(riskCount: number | undefined) {
+  return riskCount
+    ? `There are ${riskCount} additional risks coming from the host chain`
+    : 'The section considers only the L3 properties. For more details please refer to'
+}
+
+/** One sentence per line on the page. */
+export const UNDER_REVIEW_DESCRIPTION = [
+  'The information in the section might be incomplete or outdated.',
+  'The L2BEAT Team is working to research & validate the content before publishing.',
+] as const
+
+/** Shown after a bold "Note:". */
+export const SECTION_INCOMPLETE_NOTE =
+  'This section requires more research and might not present accurate information.'
+
+/** Shown after a bold "Note:". */
+export const CONTRACTS_UPDATED_NOTE =
+  'Contracts presented in this section had their implementations updated since the last time our team looked at this project. The information presented may be inaccurate.'
+
+export function impactfulChangesWarning(kind: 'contracts' | 'permissions') {
+  return `There are impactful changes to the following ${kind}, and part of the information might be outdated.`
+}
+
+export const ESCROW_ALL_TOKENS_INCLUDED =
+  'All supported tokens in this escrow are included in the value secured calculation.'
+
+/** Continued by the tokens. */
+export const ESCROW_TOKENS_INCLUDED =
+  'The following tokens are included in the value secured calculation:'
+
+/** Follows the percentage of TVS it applies to. */
+export const ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON =
+  "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"

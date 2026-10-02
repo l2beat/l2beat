@@ -9,6 +9,12 @@ import type { PastUpgradesData } from '~/components/projects/sections/PastUpgrad
 import type { Participant } from '~/components/projects/sections/permissions/Participants'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
+import {
+  CONTRACTS_UPDATED_NOTE,
+  ESCROW_ALL_TOKENS_INCLUDED,
+  ESCROW_TOKENS_INCLUDED,
+  impactfulChangesWarning,
+} from '~/components/projects/sections/sectionCopy'
 import { configMarkdown } from './configMarkdown'
 import {
   bulletList,
@@ -47,7 +53,7 @@ export function renderContractsSection(
 ) {
   return joinBlocks([
     hasImpactfulChanges(Object.values(props.contracts).flat())
-      ? CONTRACTS_UPDATED_NOTE
+      ? `**Note:** ${CONTRACTS_UPDATED_NOTE}`
       : '',
     renderDiagram(props.diagram),
     renderDiscoUi(props.discoUi),
@@ -107,9 +113,6 @@ function renderDiscoUi(discoUi: { href: string } | undefined) {
   return `Explore these contracts and permissions in Disco, L2BEAT's contract explorer: ${discoUi.href}`
 }
 
-const CONTRACTS_UPDATED_NOTE =
-  '**Note:** Contracts presented in this section had their implementations updated since the last time our team looked at this project. The information presented may be inaccurate.'
-
 function hasImpactfulChanges(contracts: TechnologyContract[]) {
   return contracts.some((contract) => contract.impactfulChange)
 }
@@ -129,11 +132,7 @@ function renderContractList(
   )
   return joinBlocks([
     ...unchanged.map(render),
-    changed.length > 0
-      ? warning(
-          `There are impactful changes to the following ${kind}, and part of the information might be outdated.`,
-        )
-      : '',
+    changed.length > 0 ? warning(impactfulChangesWarning(kind)) : '',
     ...changed.map(render),
   ])
 }
@@ -217,8 +216,8 @@ function renderParticipants(participants: Participant[]) {
 
 function renderEscrowTokens(escrow: TechnologyContractEscrow) {
   return escrow.tokens === '*'
-    ? 'All supported tokens in this escrow are included in the value secured calculation.'
-    : `The following tokens are included in the value secured calculation: ${escrow.tokens.join(', ')}`
+    ? ESCROW_ALL_TOKENS_INCLUDED
+    : `${ESCROW_TOKENS_INCLUDED} ${escrow.tokens.join(', ')}`
 }
 
 /**
@@ -249,8 +248,15 @@ function renderUsedInProjects(projects: UsedInProject[]) {
 
 /** Project URLs are site paths; the fragment points at the entry on that page, as on the HTML page. */
 function renderUsedInProject(project: UsedInProject) {
-  const url = `${project.url}#${project.targetName}`
+  const url = `${project.url}#${encodeFragment(project.targetName)}`
   return link(project.name, url)
+}
+
+/** Entry names have spaces and brackets, neither of which a markdown link destination allows. */
+function encodeFragment(fragment: string) {
+  return encodeURIComponent(fragment)
+    .replaceAll('(', '%28')
+    .replaceAll(')', '%29')
 }
 
 /** Behind a "View past upgrades" dialog on the HTML page, newest first. */

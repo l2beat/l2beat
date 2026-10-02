@@ -1,3 +1,4 @@
+import type { InteropConfig, ProjectScalingInfo } from '@l2beat/config'
 import { expect } from 'earl'
 import { getProjectUrl } from './getProjectUrl'
 
@@ -5,14 +6,26 @@ import { getProjectUrl } from './getProjectUrl'
 // compare the path with the route that serves that kind of page.
 describe(getProjectUrl.name, () => {
   it('links an interop-only protocol to its interop page', () => {
-    expect(getProjectUrl({ slug: 'ccip', interopConfig: {} }, [])).toEqual(
-      '/interop/protocols/ccip',
-    )
+    expect(
+      getProjectUrl(
+        { slug: 'ccip', scalingInfo: undefined, interopConfig: INTEROP_CONFIG },
+        [],
+      ),
+    ).toEqual('/interop/protocols/ccip')
   })
 
   it('links a scaling project with a canonical bridge to its scaling page, which carries the bridge data', () => {
     expect(
-      getProjectUrl({ slug: 'gnosis', scalingInfo: {}, interopConfig: {} }, []),
+      getProjectUrl(
+        {
+          slug: 'gnosis',
+          scalingInfo: {} as ProjectScalingInfo,
+          interopConfig: INTEROP_CONFIG,
+        },
+        [],
+      ),
     ).toEqual('/layer2s/projects/gnosis')
   })
 })
+
+const INTEROP_CONFIG = {} as InteropConfig

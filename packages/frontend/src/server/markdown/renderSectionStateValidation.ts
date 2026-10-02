@@ -14,10 +14,8 @@ import {
   renderRisks,
 } from './renderSectionParts'
 import {
-  formatTag,
-  formatVerifierCounts,
+  describeProofSystemTrustedSetups,
   renderProgramHashesSubsection,
-  renderUsedIn,
 } from './zkSectionBodies'
 
 export function renderStateValidation(
@@ -78,30 +76,11 @@ function renderProverInfo(prover: ProverInfoData, level: number) {
   ])
 }
 
-function formatProofSystemTrustedSetups({
-  trustedSetups,
-  onchainVerifiers,
-  verifiers,
-  projectsUsedIn,
-}: TrustedSetupsByProofSystem[string]) {
-  const proofSystem = trustedSetups[0]?.proofSystem
-  if (!proofSystem) return []
-  const setups = trustedSetups
-    .map(
-      (setup) =>
-        `${setup.name} (risk: ${setup.risk}; ${setup.shortDescription})`,
-    )
-    .join(', ')
-  const verifierList =
-    onchainVerifiers && onchainVerifiers.length > 0
-      ? `onchain verifiers: ${onchainVerifiers
-          .map(
-            (verifier) =>
-              `${link(verifier.name, verifier.href)} (${formatVerifierCounts(verifier.verifiers)})`,
-          )
-          .join(', ')}`
-      : `verifiers: ${formatVerifierCounts(verifiers)}`
-  return [
-    `${formatTag(proofSystem)}: ${setups}; ${verifierList}; used in: ${renderUsedIn(projectsUsedIn)}`,
-  ]
+/** Laid out like the same fact in the ZK catalog summary: the proof system, then its details nested. */
+function formatProofSystemTrustedSetups(
+  proofSystemSetups: TrustedSetupsByProofSystem[string],
+) {
+  const described = describeProofSystemTrustedSetups(proofSystemSetups)
+  if (!described) return []
+  return [`${described.proofSystem}:\n${bulletList(described.details)}`]
 }

@@ -2,6 +2,7 @@ import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
@@ -15,7 +16,11 @@ import {
   textSubsection,
   warning,
 } from './markdown'
-import { type ApiLinks, renderProjectSection } from './renderProjectSection'
+import {
+  type ApiLinks,
+  renderProjectSection,
+  type SectionBodyOverrides,
+} from './renderProjectSection'
 import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
 
 /**
@@ -27,8 +32,8 @@ import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
 export interface ProjectMarkdown {
   name: string
   apiLinks: ApiLinks
-  /** Absolute URL of the HTML page, which the document's links resolve against. */
-  pageUrl: string
+  /** Site path of the HTML page, which the document's links resolve against. */
+  pagePath: string
   summary: {
     warnings: string[]
     facts: ProjectFact[]
@@ -38,6 +43,7 @@ export interface ProjectMarkdown {
   /** The link bar and badges under the HTML page title. */
   header?: ProjectHeader
   sections: ProjectDetailsSection[]
+  sectionBodies?: SectionBodyOverrides
 }
 
 export interface ProjectHeader {
@@ -63,19 +69,23 @@ export interface ProjectFact {
 }
 
 export function renderProjectMarkdown(page: ProjectMarkdown): string {
+  // Production URLs, like the canonical link: the document is meant to be
+  // cited, whichever deployment rendered it.
+  const pageUrl = PRODUCTION_ORIGIN + page.pagePath
   const markdown = joinBlocks([
     heading(1, page.name),
-    `Markdown version of ${page.pageUrl}`,
+    `Markdown version of ${pageUrl}`,
     renderSummary(page.summary),
     renderHeader(page.header),
     ...page.sections.map((section) =>
       renderProjectSection(section, 2, {
         apiLinks: page.apiLinks,
         countdowns: PROJECT_COUNTDOWNS,
+        sectionBodies: page.sectionBodies,
       }),
     ),
   ])
-  return `${absolutizeLinks(markdown, page.pageUrl)}\n`
+  return `${absolutizeLinks(markdown, pageUrl)}\n`
 }
 
 /**

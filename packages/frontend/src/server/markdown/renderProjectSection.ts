@@ -81,6 +81,8 @@ export interface SectionContext {
   apiLinks: ApiLinks
   /** The dates the HTML reads from its countdowns context, which change what some sections show. */
   countdowns: typeof PROJECT_COUNTDOWNS
+  /** For sections whose HTML reads page data instead of its props, so only the page can render them. */
+  sectionBodies?: SectionBodyOverrides
 }
 
 export type ApiLinks = Partial<Record<ProjectSectionId, ReferenceLink[]>>
@@ -91,9 +93,8 @@ export function renderProjectSection(
   context: SectionContext,
 ): string {
   const { id, title } = section.props
-  const renderBody = SECTION_BODIES[section.type] as SectionBody<
-    typeof section.props
-  >
+  const renderBody = (context.sectionBodies?.[section.type] ??
+    SECTION_BODIES[section.type]) as SectionBody<typeof section.props>
   const isUnderReview = isSectionUnderReview(section)
   const hidesBody =
     isUnderReview &&
@@ -147,6 +148,10 @@ export type SectionBody<Props> = (
   context: SectionContext,
 ) => string
 
+export type SectionBodyOverrides = {
+  [T in SectionType]?: SectionBody<SectionProps<T>>
+}
+
 /**
  * Exhaustive, so a new section type fails the build until it gets a markdown
  * body or is explicitly left to the HTML page with `pointToHtmlPage`.
@@ -158,7 +163,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
       renderUnverifiedContracts(props.unverifiedContracts),
       renderWarnings(
         props.verificationWarnings.programHashes &&
-          markCritical(props.verificationWarnings.programHashes, true),
+          critical(props.verificationWarnings.programHashes),
         props.redWarning?.text,
         props.warning,
       ),
@@ -170,7 +175,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
     return joinBlocks([
       renderWarnings(
         props.isVerified === false
-          ? markCritical('This project includes unverified contracts.', true)
+          ? critical('This project includes unverified contracts.')
           : undefined,
         props.redWarning?.text,
         props.warning,
@@ -188,10 +193,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
               renderWarnings(
                 bridge.isVerified
                   ? undefined
-                  : markCritical(
-                      'This bridge includes unverified contracts.',
-                      true,
-                    ),
+                  : critical('This bridge includes unverified contracts.'),
               ),
               renderRiskGroups(bridge.risks, level + 1),
             ]),
@@ -303,8 +305,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   InteropTransfersSection: pointToHtmlPage(
     'The interactive transfers table is shown',
   ),
-  InteropVolumeSection: (props, level) =>
-    renderInteropVolumeSection(props, level),
+  InteropVolumeSection: renderInteropVolumeSection,
   L2TvsSection: renderL2TvsSection,
   LivenessSection: renderLivenessSection,
   PrivacyAdversariesSection: renderPrivacyAdversaries,
@@ -320,17 +321,16 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   ZkCatalogTvsSection: pointToHtmlPage('The interactive TVS chart is shown'),
 }
 
+function critical(text: string) {
+  return markCritical(text, true)
+}
+
 /** The HTML lists them collapsed behind a count; markdown has no collapsing, so all are listed. */
 function renderUnverifiedContracts(entries: UnverifiedContractEntry[]) {
   if (entries.length === 0) return ''
   const subject = entries.length === 1 ? 'address has' : 'addresses have'
   return joinBlocks([
-    warning(
-      markCritical(
-        `${entries.length} ${subject} unverified source code.`,
-        true,
-      ),
-    ),
+    warning(critical(`${entries.length} ${subject} unverified source code.`)),
     bulletList(
       entries.map((entry) => {
         const address = ChainSpecificAddress.address(entry.address)

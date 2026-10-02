@@ -59,6 +59,7 @@ export async function getL2RiskStateValidationEntries() {
         'daLayer',
         'privacyInfo',
         'defiInfo',
+        'interopConfig',
       ],
     }),
     getContractUtils(),

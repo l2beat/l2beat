@@ -218,6 +218,7 @@ export async function getL2ProjectEntry(
         'daLayer',
         'privacyInfo',
         'defiInfo',
+        'interopConfig',
       ],
     }),
     getL2ProjectInteropData(project.id),

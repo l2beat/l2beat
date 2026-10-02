@@ -1,7 +1,6 @@
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { NO_BRIDGE_RISK } from '~/components/rosette/grissini/noBridgeRisk'
 import type { RosetteValue } from '~/components/rosette/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
@@ -45,7 +44,7 @@ function getEthereumPage(entry: EthereumDaProjectPageEntry): PageDetails {
   const { header } = entry
   return {
     // Ethereum's DA bridge is enshrined: the bridge is the layer project itself.
-    pageUrl: getPageUrl(entry.slug, entry.slug),
+    pagePath: getDaProjectPagePath(entry.slug, entry.slug),
     summary: {
       warnings: getStatusWarnings(entry),
       facts: [
@@ -61,7 +60,7 @@ function getEthereumPage(entry: EthereumDaProjectPageEntry): PageDetails {
       activity: [
         {
           title: 'Activity chart (JSON)',
-          url: `${PRODUCTION_ORIGIN}/api/scaling/activity/${entry.slug}`,
+          url: `/api/scaling/activity/${entry.slug}`,
         },
       ],
     },
@@ -70,9 +69,8 @@ function getEthereumPage(entry: EthereumDaProjectPageEntry): PageDetails {
 
 /** Mirrors RegularDaProjectSummary: the stats, then the selected bridge and its risks. */
 function getRegularPage(entry: DaProjectPageEntry): PageDetails {
-  const pageUrl = getPageUrl(entry.slug, entry.selectedBridge.slug)
   return {
-    pageUrl,
+    pagePath: getDaProjectPagePath(entry.slug, entry.selectedBridge.slug),
     summary: {
       // Same order as the banners above the summary on the HTML page.
       warnings: [
@@ -92,14 +90,6 @@ function getRegularPage(entry: DaProjectPageEntry): PageDetails {
     header: { links: entry.header.links, discoUiHref: entry.discoUiHref },
     apiLinks: {},
   }
-}
-
-/**
- * Production URLs, like the canonical link: the document is meant to be
- * cited, whichever deployment rendered it.
- */
-function getPageUrl(layerSlug: string, bridgeSlug: string) {
-  return `${PRODUCTION_ORIGIN}${getDaProjectPagePath(layerSlug, bridgeSlug)}`
 }
 
 function getStatusWarnings(entry: DaProjectEntry) {
@@ -195,7 +185,10 @@ function getOtherBridges(entry: DaProjectPageEntry): ProjectFact[] {
       return {
         label: 'Other DA bridge',
         value: [
-          link(bridge.name, `${getPageUrl(entry.slug, bridge.slug)}.md`),
+          link(
+            bridge.name,
+            `${getDaProjectPagePath(entry.slug, bridge.slug)}.md`,
+          ),
           `(TVS ${formatUsd(bridge.tvs)}; used by ${formatUsedIn(bridge.usedIn)}${risks ? `; risks: ${risks}` : ''})`,
         ].join(' '),
       }

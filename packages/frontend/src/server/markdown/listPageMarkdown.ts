@@ -43,10 +43,11 @@ export function renderMarkdown(
 }
 
 /** "Fact, fact, fact. Description." keeps each line scannable and one line long. */
-export function withFacts(description: string, facts: unknown[]): string {
-  const known = facts.filter(
-    (fact): fact is string => typeof fact === 'string' && fact !== '',
-  )
+export function withFacts(
+  description: string,
+  facts: (string | false | undefined)[],
+): string {
+  const known = facts.filter((fact): fact is string => !!fact)
   return [known.join(', '), description].filter(Boolean).join('. ')
 }
 

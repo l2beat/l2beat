@@ -99,6 +99,7 @@ export async function getPrivacyProjectEntry(
         'daLayer',
         'privacyInfo',
         'defiInfo',
+        'interopConfig',
       ],
     }),
     get7dTvsBreakdown({ type: 'all' }),

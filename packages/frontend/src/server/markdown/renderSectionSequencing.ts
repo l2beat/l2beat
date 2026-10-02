@@ -6,12 +6,12 @@ import { configMarkdown } from './configMarkdown'
 import {
   heading,
   joinBlocks,
-  link,
   table,
   textSubsection,
   withSentiment,
 } from './markdown'
 import {
+  htmlPagePointer,
   renderDiagram,
   renderReferences,
   renderRisks,
@@ -28,7 +28,7 @@ export function renderSequencing(
     renderSpecSheet(props.sequencingSpec),
     props.inclusionDelay
       ? joinBlocks([
-          `The inclusion delay chart is shown on ${link('the HTML page', `#${props.id}`)}.`,
+          htmlPagePointer('The inclusion delay chart is shown', props.id),
           configMarkdown(props.inclusionDelayChartDescription, level + 1),
         ])
       : '',

@@ -28,7 +28,7 @@ import type {
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import { bulletList, joinBlocks, link, subsection, warning } from './markdown'
 import type { SectionBody } from './renderProjectSection'
-import { formatUtcDateTime } from './renderSectionParts'
+import { formatUtcDateTime, htmlPagePointer } from './renderSectionParts'
 
 /*
  * Sections built around a chart or a client-loaded widget. The data behind
@@ -45,7 +45,6 @@ export function pointToHtmlPage(
 
 export function renderActivitySection(
   props: Pick<ActivitySectionProps, 'id' | 'dataSource'>,
-  _level: number,
 ) {
   return joinBlocks([
     htmlPagePointer('The interactive activity chart is shown', props.id),
@@ -55,7 +54,6 @@ export function renderActivitySection(
 
 export function renderL2TvsSection(
   props: Pick<L2TvsSectionProps, 'id' | 'tvsBreakdownUrl'>,
-  _level: number,
 ) {
   return joinBlocks([
     htmlPagePointer('The interactive TVS charts are shown', props.id),
@@ -142,7 +140,6 @@ export function renderLivenessSection(
 
 export function renderThroughputSection(
   props: Pick<ThroughputSectionProps, 'id' | 'syncStatus'>,
-  _level: number,
 ) {
   return joinBlocks([
     props.syncStatus.warning ? warning(props.syncStatus.warning) : '',
@@ -198,11 +195,6 @@ function describeDaLayers({
       ? `; previously it posted to ${links(pastDaLayers)}`
       : ''
   return `The project currently posts data to ${links(currentDaLayers)}${previously}.`
-}
-
-/** `whatIsShown` starts the sentence, e.g. "The interactive chart is shown". */
-function htmlPagePointer(whatIsShown: string, id: ProjectSectionId) {
-  return `${whatIsShown} on ${link('the HTML page', `#${id}`)}.`
 }
 
 function renderDataSource(dataSource: string | undefined) {

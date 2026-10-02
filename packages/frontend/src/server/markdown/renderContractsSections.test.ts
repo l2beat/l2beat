@@ -44,6 +44,21 @@ describe(renderContractsSection.name, () => {
     expect(markdown).not.toInclude('Implementation used in: [Base]')
   })
 
+  // A link destination cannot hold spaces or unbalanced brackets: left raw,
+  // markdown readers show the whole link as plain text.
+  it('encodes the entry name in a used-in link', () => {
+    const markdown = renderContracts([
+      {
+        ...contract('Bridge', A1),
+        usedInProjects: [usedIn('Base', 'proxy', 'Security Council (old)')],
+      },
+    ])
+
+    expect(markdown).toInclude(
+      'Proxy used in: [Base](https://l2beat.com/scaling/projects/base#Security%20Council%20%28old%29)',
+    )
+  })
+
   it('links Disco like the banner above the HTML section', () => {
     const markdown = resolveLinks(
       renderContractsSection(
@@ -295,7 +310,11 @@ function address(addr: string, name?: string): TechnologyContractAddress {
   }
 }
 
-function usedIn(name: string, type: UsedInProject['type']): UsedInProject {
+function usedIn(
+  name: string,
+  type: UsedInProject['type'],
+  targetName = 'Bridge',
+): UsedInProject {
   const slug = name.toLowerCase()
   return {
     id: ProjectId(slug),
@@ -303,7 +322,7 @@ function usedIn(name: string, type: UsedInProject['type']): UsedInProject {
     slug,
     url: `/scaling/projects/${slug}`,
     icon: `/icons/${slug}.png`,
-    targetName: 'Bridge',
+    targetName,
     type,
   }
 }
