@@ -1151,33 +1151,48 @@ export type ProjectPrivacyOnchainRelayerSource = {
 } & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerExtractorConfig =
-  | {
-      extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
-      params?: undefined
-    }
-  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyDepositConfig }
+  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyDepositPayoutParams }
   | {
       extractor: 'zkMoneyWithdrawalPayout'
-      params: {
-        tokenAddress: EthereumAddress
-        executorAddress: EthereumAddress
-        operationExecutor: EthereumAddress
-      }
+      params: ZkMoneyWithdrawalPayoutParams
     }
 
-/** Immutable deployments and fee parameters used to attribute portal operations. */
-export type ZkMoneyDepositConfig = {
+/** Locates a portal deposit's funding transfer and authenticates its sender with the SIPA factory. */
+export type ZkMoneyDepositParams = {
   tokenAddress: EthereumAddress
+  /** Fee sponsorship the portal keeps: the funding transfer is the credited amount plus this. */
+  fundingCut: string
   factoryAddress: EthereumAddress
   depositImplementation: EthereumAddress
   registrationImplementation: EthereumAddress
+}
+
+/** Traces who funded each deposit address (SIPA) from its token history. */
+export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
+  /** Tokens a SIPA accepts; those other than `tokenAddress` reach it through `exchangeAddress`. */
   fundingTokens: EthereumAddress[]
   exchangeAddress: EthereumAddress
-  /** Earlier balances are checked and treated as unattributed until emptied. */
+  /**
+   * SIPA factory deployment. Funding scans never start earlier; balances held
+   * before a scan starts count as untraceable until the SIPA is emptied.
+   */
   historyFromBlock: number
-  fundingCut: string
+}
+
+/** Confirms the fee paid to whoever finalized a deposit sweep. */
+export type ZkMoneyDepositPayoutParams = ZkMoneyDepositParams & {
   depositFee: string
   registrationSweepFee: string
+  /** Helper that forwards fees to its caller, so the payout is followed through it. */
+  operationExecutor: EthereumAddress
+}
+
+/** Confirms the tip paid to whoever finalized a withdrawal. */
+export type ZkMoneyWithdrawalPayoutParams = {
+  tokenAddress: EthereumAddress
+  executorAddress: EthereumAddress
+  /** Helper that forwards fees to its caller, so the payout is followed through it. */
   operationExecutor: EthereumAddress
 }
 
@@ -1464,16 +1479,6 @@ export type PrivacyAnonymitySetDepositSource = {
 
 export type PrivacyFlowExtractorConfig =
   | {
-      /** Credited DAI amount, after the portal's fee sponsorship cut. */
-      extractor: 'zkMoneyDeposit'
-      params: ZkMoneyDepositConfig
-    }
-  | {
-      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
-      extractor: 'zkMoneyWithdrawal'
-      params: Record<string, never>
-    }
-  | {
       extractor: 'fixedAmount'
       params: {
         amount: string
@@ -1535,6 +1540,16 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Credited DAI amount, after the portal's fee sponsorship cut. */
+      extractor: 'zkMoneyDeposit'
+      params: ZkMoneyFundingParams
+    }
+  | {
+      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
+      extractor: 'zkMoneyWithdrawal'
+      params: Record<string, never>
     }
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']

@@ -5,6 +5,7 @@ import type {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
@@ -29,28 +30,11 @@ const zamaInterface = new utils.Interface([
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
 ])
 
-const zkMoneyInterface = new utils.Interface([
-  'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
-  'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
-])
-
 export function extractPrivacyFlow<T extends PrivacyFlowSource>(
   source: T,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   switch (source.extractor) {
-    case 'zkMoneyDeposit':
-      return {
-        count: 1,
-        amount: BigInt(zkMoneyInterface.parseLog(log).args.amount.toString()),
-      }
-    case 'zkMoneyWithdrawal':
-      return {
-        count: 1,
-        amount: BigInt(
-          zkMoneyInterface.parseLog(log).args.executionAmount.toString(),
-        ),
-      }
     case 'fixedAmount':
       return {
         count: 1,
@@ -73,6 +57,18 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
       return extractZamaWrap(log)
     case 'zamaUnwrap':
       return extractZamaUnwrap(source, log)
+    case 'zkMoneyDeposit':
+      return {
+        count: 1,
+        amount: BigInt(zkMoneyInterface.parseLog(log).args.amount.toString()),
+      }
+    case 'zkMoneyWithdrawal':
+      return {
+        count: 1,
+        amount: BigInt(
+          zkMoneyInterface.parseLog(log).args.executionAmount.toString(),
+        ),
+      }
     default:
       return undefined
   }

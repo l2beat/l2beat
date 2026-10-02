@@ -17,7 +17,9 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type {
   BaseProject,
   ProjectPrivacyToken,
-  ZkMoneyDepositConfig,
+  ZkMoneyDepositParams,
+  ZkMoneyDepositPayoutParams,
+  ZkMoneyFundingParams,
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyAdversaries } from './adversaries'
@@ -149,8 +151,21 @@ const governanceValues = {
 
 const factory = discovery.getContract('SIPAFactory')
 assert(factory.sinceBlock !== undefined, 'SIPAFactory needs sinceBlock')
-const depositMetrics: ZkMoneyDepositConfig = {
+// Hardcoded in the verified SIPA sources, which the hashes below pin.
+const USDC = EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
+const USDT = EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7')
+const CURVE_3POOL = EthereumAddress(
+  '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7',
+)
+const SIPA_SOURCE_HASHES: Record<string, string> = {
+  DepositSIPA:
+    '0x41c845473c02b812629402016668d06e82153233892bc7f22f03f64308dde979',
+  RegistrationSIPA:
+    '0xa7b397e987e86f54ad05cdab6542e576fa6dda31466b5da09bb56ad2f0590dbe',
+}
+const depositLocation: ZkMoneyDepositParams = {
   tokenAddress: underlyingAddress,
+  fundingCut: fpcFundingCut.toString(),
   factoryAddress: ChainSpecificAddress.address(factory.address),
   depositImplementation: ChainSpecificAddress.address(
     discovery.getContract('DepositSIPA').address,
@@ -158,31 +173,25 @@ const depositMetrics: ZkMoneyDepositConfig = {
   registrationImplementation: ChainSpecificAddress.address(
     discovery.getContract('RegistrationSIPA').address,
   ),
-  fundingTokens: [
-    underlyingAddress,
-    EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
-    EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
-  ],
-  exchangeAddress: EthereumAddress(
-    '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7',
-  ),
+}
+const funderTracing: ZkMoneyFundingParams = {
+  ...depositLocation,
+  fundingTokens: [underlyingAddress, USDC, USDT],
+  exchangeAddress: CURVE_3POOL,
   historyFromBlock: factory.sinceBlock,
-  fundingCut: fpcFundingCut.toString(),
+}
+const operationExecutor = ChainSpecificAddress.address(
+  discovery.getContract('OperationExecutor').address,
+)
+const depositFinalizerPayout: ZkMoneyDepositPayoutParams = {
+  ...depositLocation,
   depositFee: depositFee.toString(),
   registrationSweepFee: registrationSweepFee.toString(),
-  operationExecutor: ChainSpecificAddress.address(
-    discovery.getContract('OperationExecutor').address,
-  ),
+  operationExecutor,
 }
-// The verified SIPA sources pin the supported swap tokens and 3pool address.
-for (const name of ['DepositSIPA', 'RegistrationSIPA']) {
-  const contract = discovery.getContract(name)
-  const expected =
-    name === 'DepositSIPA'
-      ? '0x41c845473c02b812629402016668d06e82153233892bc7f22f03f64308dde979'
-      : '0xa7b397e987e86f54ad05cdab6542e576fa6dda31466b5da09bb56ad2f0590dbe'
+for (const [name, sourceHash] of Object.entries(SIPA_SOURCE_HASHES)) {
   assert(
-    contract.sourceHashes?.includes(expected),
+    discovery.getContract(name).sourceHashes?.includes(sourceHash),
     `${name} source changed, recheck funding attribution`,
   )
 }
@@ -223,7 +232,7 @@ const privacyTokens: ProjectPrivacyToken[] = [
         deposit: {
           event: DEPOSIT_EVENT,
           extractor: 'zkMoneyDeposit',
-          params: depositMetrics,
+          params: funderTracing,
         },
         withdrawal: {
           event: WITHDRAWAL_EVENT,
@@ -291,7 +300,7 @@ export const zkmoney: BaseProject = {
           address: portal.address,
           sinceTimestamp: PORTAL_SINCE,
           extractor: 'zkMoneyDepositPayout',
-          params: depositMetrics,
+          params: depositFinalizerPayout,
         },
         {
           address: portal.address,
@@ -302,7 +311,7 @@ export const zkmoney: BaseProject = {
             executorAddress: ChainSpecificAddress.address(
               discovery.getContract('PlainWithdrawalExecutor').address,
             ),
-            operationExecutor: depositMetrics.operationExecutor,
+            operationExecutor,
           },
         },
       ],

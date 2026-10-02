@@ -1,11 +1,9 @@
-import type {
-  PrivacyAnonymitySetDepositSource,
-  ZkMoneyDepositConfig,
-} from '@l2beat/config'
+import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { FUNDING_PARAMS } from '../zkmoney/test/fixtures'
 import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
@@ -87,7 +85,7 @@ describe(extractPrivacyFlow.name, () => {
           {
             extractor: 'zkMoneyDeposit',
             event: log.topics[0]!,
-            params: {} as ZkMoneyDepositConfig,
+            params: FUNDING_PARAMS,
           },
           log,
         ),
