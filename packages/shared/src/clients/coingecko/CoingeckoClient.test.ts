@@ -211,6 +211,26 @@ describe(CoingeckoClient.name, () => {
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
+    it('uses a custom api url with the api key', async () => {
+      const http = mockObject<HttpClient>({
+        async fetch(url) {
+          expect(url).toEqual(
+            'https://prices.example.com/api/v3/a/b?foo=bar&x_cg_pro_api_key=myapikey',
+          )
+          return { status: '1', message: 'OK' }
+        },
+      })
+
+      const coingeckoClient = getMockClient(
+        http,
+        logger,
+        'myapikey',
+        'https://prices.example.com/api/v3/',
+      )
+
+      await coingeckoClient.query('/a/b', { foo: 'bar' })
+    })
+
     it('constructs a correct URL when there are no options', async () => {
       const http = mockObject<HttpClient>({
         async fetch(url) {
@@ -226,10 +246,16 @@ describe(CoingeckoClient.name, () => {
   })
 })
 
-function getMockClient(http: HttpClient, logger: Logger, apiKey?: string) {
+function getMockClient(
+  http: HttpClient,
+  logger: Logger,
+  apiKey?: string,
+  apiUrl?: string,
+) {
   return new CoingeckoClient({
     http,
     apiKey: apiKey,
+    apiUrl,
     retryStrategy: 'TEST',
     logger,
     callsPerMinute: 100000,
