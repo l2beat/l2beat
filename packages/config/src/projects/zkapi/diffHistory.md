@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc8c8ab4dc371d9a517f0fe6f4e658b759f5057ee
 
 ## Description
 
-Initial discovery of the active native ETH vault, its Groth16 proof adapter and linked Poseidon library. All three contracts were verified from public source. The owner can pause new exits and change the treasury. Signing keys and critical protocol parameters are monitored, while routine tree updates do not alert.
+Initial discovery of the active native ETH vault, its Groth16 proof adapter and linked Poseidon library. All three contracts were verified from public source. The owner can pause new exits and change the treasury.
 
 ## Initial discovery
 

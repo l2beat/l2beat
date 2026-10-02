@@ -1,5 +1,3 @@
 The request and withdrawal circuits use separate circuit-specific Groth16 keys over BN254. The published circuit id is `zkapi-v2-note-bound-v1`. The [setup source](https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/protocol/rust/crates/zkapi-proof/src/compact.rs#L288-L383) generates these keys using one process and operating-system randomness. The [provenance note](https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/protocol/setup/v2/README.md) explicitly states that no multi-party ceremony has been conducted.
 
 Security requires that the setup party destroyed the trapdoor material. A party retaining it can forge proofs accepted by the verifier and defeat withdrawal authorization. Public proving keys, verifier keys and matching hashes establish artifact identity, but do not prove that setup secrets were erased.
-
-The Solidity verifier hardcodes both verification keys. The vault fixes its adapter address at deployment. Regenerating the setup produces incompatible keys and does not verify or repair the deployed setup. A replacement would require a different vault and client deployment.
