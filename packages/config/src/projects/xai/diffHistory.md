@@ -9,9 +9,9 @@ Generated with discovered.json: 0x6a36e0aff8ebdf36de5b9f0757daa220d897f267
 
 ## Description
 
-XaiSentryMultisig (owner of the Sentry contracts' ProxyAdmin): 3 members removed, threshold `3 of 7` -> `3 of 4`. 2 of the removed members still sign through XaiSentryMultisig2 (`1 of 3`), which remains a member.
+XaiSentryMultisig: 3 members removed, threshold `3 of 7` -> `3 of 4`. 2 of the removed members remain members of XaiSentryMultisig2 (`1 of 3`), which is still a member.
 
-NodeLicenseRegistry upgraded by XaiSentryMultisig with a reinitializer that sets `mintingPaused` to `true`. `mintingPaused` has no setter and can only be changed by another upgrade.
+NodeLicenseRegistry upgraded by XaiSentryMultisig; the reinitializer sets `mintingPaused` to `true`. `mintingPaused` has no setter.
 
 Version changes and implementation diffs:
 

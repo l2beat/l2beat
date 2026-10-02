@@ -9,7 +9,7 @@ Generated with discovered.json: 0x31c1238581ef6477054818dd8ce0cb83d8ed8955
 
 ## Description
 
-The new Outbox implementation is the previous one with one change: the recipient of one specific withdrawal is replaced with the EOA holding the UpgradeExecutor executor role. The withdrawal (`0.687 ETH`) was executed on 2026-09-19 and paid to the EOA.
+Outbox implementation changed: the recipient of one specific withdrawal (`0.687 ETH`) is replaced with the EOA holding the UpgradeExecutor executor role. The withdrawal was executed on 2026-09-19 and paid to the EOA.
 
 Version changes and implementation diffs:
 
