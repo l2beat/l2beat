@@ -1,5 +1,4 @@
 import type {
-  PrivacyAdversary,
   PrivacyAdversaryCell,
   PrivacyExposureMap,
   PrivacyFieldInfo,
@@ -12,17 +11,19 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
+import type { RosetteValue } from '~/components/rosette/types'
 import {
   getExposure,
   getExposureNote,
-  getPrivacyAdversaryAnchor,
+  getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import { cn } from '~/utils/cn'
+import { RiskBanner } from '../../RiskBanner'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -36,6 +37,14 @@ export function PrivacyAdversariesSection({
   ...sectionProps
 }: PrivacyAdversariesSectionProps) {
   const baseline = adversaries.cells.publicObserver
+  const blocks = adversaries.adversaries.map((adversary) => {
+    const cell = adversaries.cells[adversary.id]
+    return {
+      id: adversary.id,
+      cell,
+      value: getPrivacyAdversarySectionRosetteValue(adversary, cell),
+    }
+  })
 
   return (
     <ProjectSection {...sectionProps}>
@@ -48,13 +57,20 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">at risk</span> stay private only under the
         condition in their note.
       </p>
-      <div className="mt-6 flex flex-col gap-8">
-        {adversaries.adversaries.map((adversary) => (
+      <div className="flex justify-center">
+        <BigPizzaRosette
+          values={blocks.map((block) => block.value)}
+          isUnderReview={sectionProps.isUnderReview}
+          className="my-6"
+        />
+      </div>
+      <div className="flex flex-col gap-8">
+        {blocks.map((block) => (
           <AdversaryBlock
-            key={adversary.id}
-            adversary={adversary}
-            cell={adversaries.cells[adversary.id]}
-            baseline={adversary.id === 'publicObserver' ? undefined : baseline}
+            key={block.id}
+            value={block.value}
+            cell={block.cell}
+            baseline={block.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
           />
         ))}
@@ -64,40 +80,21 @@ export function PrivacyAdversariesSection({
 }
 
 function AdversaryBlock({
-  adversary,
+  value,
   cell,
   baseline,
   fields,
 }: {
-  adversary: PrivacyAdversary
+  /** The adversary's rosette slice. */
+  value: RosetteValue
   cell: PrivacyAdversaryCell
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
 }) {
   return (
-    <div
-      id={getPrivacyAdversaryAnchor(adversary.id)}
-      className="flex scroll-mt-24 flex-col gap-3"
-    >
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <PrivacySentimentDot sentiment={cell.sentiment} />
-        <Tooltip>
-          <TooltipTrigger className="font-bold text-paragraph-16 md:text-paragraph-18">
-            {adversary.label}
-          </TooltipTrigger>
-          <TooltipContent className="max-w-[320px]">
-            <p>{adversary.description}</p>
-            <p className="mt-1 text-secondary text-xs">
-              Examples: {adversary.examples}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-        <span className="font-medium text-paragraph-15 md:text-paragraph-16">
-          {cell.value}
-        </span>
-      </div>
-      <p className="text-paragraph-15 md:text-paragraph-16">{cell.exposure}</p>
+    <div className="flex flex-col gap-3">
+      <RiskBanner {...value} description={cell.exposure} size="large" />
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">Advice: </span>

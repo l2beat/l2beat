@@ -129,13 +129,13 @@ function notTrackedFact(copy: { title: string; description: string }) {
  */
 function getRiskProfile(entry: ProjectPrivacyEntry): RosetteValue[] {
   return [
+    privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
     explainedRisk('Trusted setup', entry.trustedSetup),
     explainedRisk(
       'Exit window',
       entry.exitWindow,
       describeWalkawayTest(entry.exitWindow.walkawayTest),
     ),
-    privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
     explainedRisk('Reproducibility', entry.reproducibility),
   ]
 }
@@ -158,8 +158,9 @@ function explainedRisk(
 }
 
 /**
- * The promise, then the grade against each adversary the HTML dots stand for.
- * No overall grade: the page gives none, only the summary table sorts by one.
+ * The promise, then the grade against each adversary, one per slice of the
+ * HTML rosette. No overall grade: the page gives none, only the summary table
+ * sorts by one.
  */
 function privacyRisk(adversaries: PrivacyAdversariesSummary): RosetteValue {
   const perAdversary = adversaries.cells.map(
