@@ -167,6 +167,15 @@ export const TRUSTED_SETUPS = {
       'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. It was built on top of 55 phase 1 contributions, with 304 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
+  PantherV1: {
+    id: 'PantherV1',
+    name: 'Panther Protocol v1',
+    risk: 'red',
+    participantCount: 11,
+    shortDescription:
+      'Circuit-specific trusted setup for the 6 Groth16 Panther Protocol v1 circuits over BN254. It was built on top of 54 phase 1 contributions, with 11 phase 2 contributions. The proving system could be broken if either phase 1 or 2 is compromised.',
+    longDescription: readMarkdown('common/trustedSetups/PantherV1.md'),
+  },
 } as const satisfies Record<string, TrustedSetup>
 
 export type TrustedSetupId = keyof typeof TRUSTED_SETUPS
