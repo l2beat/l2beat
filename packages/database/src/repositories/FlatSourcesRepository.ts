@@ -63,12 +63,6 @@ export class FlatSourcesRepository extends BaseRepository {
     })
   }
 
-  async getAll(): Promise<FlatSourcesRecord[]> {
-    const rows = await this.db.selectFrom('FlatSources').selectAll().execute()
-
-    return rows.map(toRecord)
-  }
-
   async getProjectIds(): Promise<string[]> {
     const rows = await this.db
       .selectFrom('FlatSources')
