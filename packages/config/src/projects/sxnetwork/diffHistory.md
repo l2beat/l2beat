@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xd100711d872023742304a6690ed775057e58e4f0
+
+# Diff at Thu, 01 Oct 2026 22:03:42 GMT:
+
+- id: 756ef11b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1787669021
+- current timestamp: 1790892129
+
+## Description
+
+SequencerInbox: since 2026-09-28 batches are posted as AnyTrust DAC certificates (`1 of 1` keyset) instead of calldata on Ethereum.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x1510d6f496f6766dfa4c1a728fbc15d3db705617
 
 # Diff at Wed, 23 Sep 2026 05:50:01 GMT:
