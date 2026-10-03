@@ -9,7 +9,6 @@ import {
 import chalk from 'chalk'
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
-import { createInterface } from 'readline'
 import { pipeline, Readable } from 'stream'
 import type { ReadableStream } from 'stream/web'
 import { constants, createZstdDecompress } from 'zlib'
@@ -20,6 +19,7 @@ import {
 } from './common/trackDownloadProgress'
 
 const ENDPOINT = '/api/flat-sources'
+const NEWLINE = 0x0a
 
 export async function syncFlatSources(
   cli: CliLogger,
@@ -102,11 +102,30 @@ function readLines(body: ReadableStream<Uint8Array>): AsyncIterator<string> {
     }),
     () => {},
   )
-  const lines = createInterface({
-    input: decompressed,
-    crlfDelay: Number.POSITIVE_INFINITY,
-  })
-  return lines[Symbol.asyncIterator]()
+  return splitLines(decompressed)
+}
+
+export async function* splitLines(
+  chunks: AsyncIterable<Buffer>,
+): AsyncGenerator<string> {
+  let partial: Buffer[] = []
+  for await (const chunk of chunks) {
+    let lineStart = 0
+    let newline = chunk.indexOf(NEWLINE, lineStart)
+    while (newline !== -1) {
+      partial.push(chunk.subarray(lineStart, newline))
+      yield Buffer.concat(partial).toString('utf8')
+      partial = []
+      lineStart = newline + 1
+      newline = chunk.indexOf(NEWLINE, lineStart)
+    }
+    if (lineStart < chunk.length) {
+      partial.push(chunk.subarray(lineStart))
+    }
+  }
+  if (partial.length > 0) {
+    throw new Error('Flat sources response ends mid line')
+  }
 }
 
 async function* readProjects(
