@@ -87,6 +87,35 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
     })
   })
 
+  describe(FlatSourcesRepository.prototype.getJson.name, () => {
+    it('returns flat as json text', async () => {
+      await repository.upsert({
+        projectId: 'project',
+        timestamp: 1,
+        contentHash: CONTENT_HASH,
+        flat: { 'A.sol': 'contract "A" {\n}' },
+      })
+
+      const result = await repository.getJson('project')
+
+      expect(result).toEqual({
+        projectId: 'project',
+        timestamp: 1,
+        contentHash: CONTENT_HASH,
+        flatJson: '{"A.sol": "contract \\"A\\" {\\n}"}',
+      })
+      expect(JSON.parse(result?.flatJson ?? '')).toEqual({
+        'A.sol': 'contract "A" {\n}',
+      })
+    })
+
+    it('returns undefined for unknown project', async () => {
+      const result = await repository.getJson('unknown')
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(FlatSourcesRepository.prototype.getProjectIds.name, () => {
     it('returns sorted project ids', async () => {
       for (const projectId of ['b', 'c', 'a']) {

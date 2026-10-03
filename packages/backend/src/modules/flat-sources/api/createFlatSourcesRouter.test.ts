@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, FlatSourcesRecord } from '@l2beat/database'
+import type { Database, FlatSourcesJsonRecord } from '@l2beat/database'
 import { FLAT_SOURCES_ZSTD_WINDOW_LOG, Hash256 } from '@l2beat/shared-pure'
 import { randomBytes } from 'crypto'
 import { expect, mockObject } from 'earl'
@@ -23,8 +23,8 @@ describe(createFlatSourcesRouter.name, () => {
   it('streams a header and one zstd compressed json line per project', async () => {
     const flatSources = mockObject<Database['flatSources']>({
       getProjectIds: async () => ['a', 'b'],
-      get: async (projectId) =>
-        record(projectId, { 'A.sol': `contract "${projectId}" {\n}` }),
+      getJson: async (projectId) =>
+        jsonRecord(projectId, { 'A.sol': `contract "${projectId}" {\n}` }),
     })
     const url = await listen(flatSources)
 
@@ -57,7 +57,7 @@ describe(createFlatSourcesRouter.name, () => {
   it('responds with 500 when the database fails before anything is sent', async () => {
     const flatSources = mockObject<Database['flatSources']>({
       getProjectIds: async () => ['a'],
-      get: async () => {
+      getJson: async () => {
         throw new Error('database failed')
       },
     })
@@ -75,12 +75,12 @@ describe(createFlatSourcesRouter.name, () => {
     })
     const flatSources = mockObject<Database['flatSources']>({
       getProjectIds: async () => ['a', 'b'],
-      get: async (projectId) => {
+      getJson: async (projectId) => {
         if (projectId === 'b') {
           await headersReceived
           throw new Error('database failed')
         }
-        return record(projectId, {
+        return jsonRecord(projectId, {
           'A.sol': randomBytes(1_000_000).toString('hex'),
         })
       },
@@ -109,11 +109,16 @@ describe(createFlatSourcesRouter.name, () => {
   }
 })
 
-function record(
+function jsonRecord(
   projectId: string,
   flat: Record<string, string>,
-): FlatSourcesRecord {
-  return { projectId, timestamp: 1, contentHash: CONTENT_HASH, flat }
+): FlatSourcesJsonRecord {
+  return {
+    projectId,
+    timestamp: 1,
+    contentHash: CONTENT_HASH,
+    flatJson: JSON.stringify(flat),
+  }
 }
 
 function decompress(body: ArrayBuffer): string {
