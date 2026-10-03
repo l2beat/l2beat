@@ -86,4 +86,21 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       expect(latest).toEqual(newRecord)
     })
   })
+
+  describe(FlatSourcesRepository.prototype.getProjectIds.name, () => {
+    it('returns sorted project ids', async () => {
+      for (const projectId of ['b', 'c', 'a']) {
+        await repository.upsert({
+          projectId,
+          timestamp: 1,
+          contentHash: CONTENT_HASH,
+          flat: { key: projectId },
+        })
+      }
+
+      const result = await repository.getProjectIds()
+
+      expect(result).toEqual(['a', 'b', 'c'])
+    })
+  })
 })
