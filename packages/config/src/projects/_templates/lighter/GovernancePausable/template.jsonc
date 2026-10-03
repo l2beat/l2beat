@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages the list of validators, the network governor and the emergency pause guardians.",
+  "critical": true,
+  "ignoreRelatives": ["usdc"],
+  "fields": {
+    "networkGovernor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets, appoint the Pause and Emergency Guardians and lift their pauses early."
+        }
+      ]
+    },
+    "validators": {
+      "handler": {
+        "type": "event",
+        "select": "validatorAddress",
+        "add": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["=", "#isActive", true]
+        },
+        "remove": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["!=", "#isActive", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches."
+        }
+      ]
+    },
+    "pauseGuardian": {
+      "severity": "HIGH",
+      "description": "Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause batch commitment, verification, execution and withdrawals for 2h to 24h (extendable up to 24h in total), followed by a 24h cooldown. Does not affect desert mode."
+        }
+      ]
+    },
+    "emergencyGuardian": {
+      "severity": "HIGH",
+      "description": "Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause batch commitment, verification, execution and withdrawals for 24h to 72h (extendable up to 72h in total), followed by a 7d cooldown. Does not affect desert mode."
+        }
+      ]
+    },
+    "pauseGuardianPaused": {
+      "severity": "HIGH",
+      "description": "True while a Pause Guardian pause is active (batch processing and withdrawals halted)."
+    },
+    "emergencyGuardianPaused": {
+      "severity": "HIGH",
+      "description": "True while an Emergency Guardian pause is active (batch processing and withdrawals halted)."
+    }
+  }
+}
