@@ -195,7 +195,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     if (!logsResponse.success) {
       // in EVM chains there can be a limit on the number of logs returned
       const parsedError = RPCError.safeParse(response)
-      if (parsedError.success && isLimitExceededError(parsedError.data.error)) {
+      if (
+        parsedError.success &&
+        isLimitExceededError(parsedError.data.error) &&
+        from < to
+      ) {
         const midpoint = Math.floor((from + to) / 2)
 
         this.$.logger.warn('Limit exceeded for logs. Splitting in half', {

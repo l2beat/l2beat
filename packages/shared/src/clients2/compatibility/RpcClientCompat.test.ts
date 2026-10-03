@@ -91,6 +91,72 @@ describe(RpcClientCompat.name, () => {
         topics,
       })
     })
+
+    it('rejects without splitting when a single block exceeds the limit', async () => {
+      const error = new Error(
+        'RPC call failed. RPC code: -32602, message: Log response size exceeded',
+      )
+      const getLogs = mockFn<EthRpcClient['getLogs']>()
+        .rejectsWithOnce(error)
+        .resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+
+      const result = client.getLogs(100, 100)
+
+      await expect(result).toBeRejectedWith(error.message)
+      expect(await result.catch((e) => e)).toExactlyEqual(error)
+
+      expect(getLogs).toHaveBeenOnlyCalledWith({
+        fromBlock: 100n,
+        toBlock: 100n,
+        address: undefined,
+        topics: undefined,
+      })
+    })
+
+    it('splits a two-block range when the limit is exceeded', async () => {
+      const getLogs = mockFn<EthRpcClient['getLogs']>()
+        .rejectsWithOnce(
+          new Error(
+            'RPC call failed. RPC code: -32602, message: Log response size exceeded',
+          ),
+        )
+        .resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+      const addresses = [
+        EthereumAddress('0x1111111111111111111111111111111111111111'),
+      ]
+      const topics = [[`0x${'aa'.repeat(32)}`], null, `0x${'bb'.repeat(32)}`]
+
+      const result = await client.getLogs(100, 101, addresses, topics)
+
+      expect(result).toEqual([])
+      expect(getLogs).toHaveBeenCalledTimes(3)
+      expect(getLogs).toHaveBeenNthCalledWith(1, {
+        fromBlock: 100n,
+        toBlock: 101n,
+        address: addresses,
+        topics,
+      })
+      expect(getLogs).toHaveBeenNthCalledWith(2, {
+        fromBlock: 100n,
+        toBlock: 100n,
+        address: addresses,
+        topics,
+      })
+      expect(getLogs).toHaveBeenNthCalledWith(3, {
+        fromBlock: 101n,
+        toBlock: 101n,
+        address: addresses,
+        topics,
+      })
+    })
   })
 
   describe(RpcClientCompat.prototype.getBlockTimestamps.name, () => {
