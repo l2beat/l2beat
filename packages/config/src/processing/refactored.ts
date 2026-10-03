@@ -76,6 +76,8 @@ import { zama } from '../projects/zama/zama'
 import { zamaCw } from '../projects/zama-cw/zama-cw'
 import { zcash } from '../projects/zcash/zcash'
 import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
+import { zkapi } from '../projects/zkapi/zkapi'
+import { zkmoney } from '../projects/zkmoney/zkmoney'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -168,4 +170,6 @@ export const refactored: BaseProject[] = [
   moneroCakeWallet,
   zcashNearIntents,
   privacyBoost,
+  zkmoney,
+  zkapi,
 ]

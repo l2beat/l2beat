@@ -11,6 +11,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   OPERATOR,
   RISK_VIEW,
@@ -365,6 +366,13 @@ export const aztecnetwork: ScalingProject = {
       discovery.getEscrowDetails({
         address: feeJuicePortal.address,
         tokens: ['AZTEC'],
+      }),
+      discovery.getEscrowDetails({
+        address: discovery.getContract('ZkMoneyPortal').address,
+        tokens: ['DAI'],
+        ...ESCROW.CANONICAL_ADD_TA,
+        description:
+          'zk.money escrow. Withdrawals need a proven Aztec L2->L1 message and a signature from a TEE signer (AWS Nitro enclave) registered on the portal, so exits depend on a live enclave running the approved image.',
       }),
     ],
     daTracking: [

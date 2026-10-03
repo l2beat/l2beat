@@ -1,4 +1,5 @@
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
+import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 
 type AvailableAnonymitySetSummary = Extract<
@@ -22,6 +23,15 @@ export function getAnonymitySetSyncingNote(
   if (anonymitySet.syncingLabels.length === 0) return undefined
 
   return `The displayed value excludes series still being indexed: ${anonymitySet.syncingLabels.join(', ')}.`
+}
+
+export function getAnonymitySetCoverageNote(
+  coverage: PrivacyAnonymitySetCoverage | undefined,
+): string | undefined {
+  if (coverage === undefined || coverage.total === 0) return undefined
+
+  const percentage = Math.round((100 * coverage.attributed) / coverage.total)
+  return `Depositors were identified for ${coverage.attributed.toLocaleString('en-US')} of ${coverage.total.toLocaleString('en-US')} deposits (${percentage}%) during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days. The remaining deposits are not counted.`
 }
 
 export function getAnonymitySetSteps(

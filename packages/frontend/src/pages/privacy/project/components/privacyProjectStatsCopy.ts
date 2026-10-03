@@ -28,6 +28,11 @@ export const RELAYER_STAT_COPY: Record<
     tooltip:
       'The number of unique relayer addresses observed in relayed withdrawals over the past 30 days.',
   },
+  paidFinalizers: {
+    title: 'Paid finalizers 30D',
+    tooltip:
+      'The number of unique addresses paid to finalize deposits, withdrawals or refunds over the past 30 days. Includes users finalizing their own operations. Addresses do not establish independent relayer services. Zero-tip withdrawals and unsupported or ambiguous payouts are excluded.',
+  },
   avgDailyRelayers: {
     title: 'Avg. Relayers 30D',
     tooltip:

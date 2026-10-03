@@ -1,4 +1,7 @@
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
+import type {
+  PrivacyAnonymitySetDepositSource,
+  ZkMoneyDepositConfig,
+} from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
@@ -25,6 +28,11 @@ const umbraInterface = new utils.Interface([
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
+])
+
+const zkMoneyInterface = new utils.Interface([
+  'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
+  'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
 ])
 
 const ADDRESS = EthereumAddress.random()
@@ -65,6 +73,120 @@ function encodeLog(
 }
 
 describe(extractPrivacyFlow.name, () => {
+  describe('zkapi native ETH events', () => {
+    const iface = new utils.Interface([
+      'event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)',
+      'event MutualClose(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
+      'event EscapeWithdrawalFinalized(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
+      'event EscapeWithdrawalInitiated(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination, uint64 challengeDeadline, uint256 newRoot)',
+    ])
+    const params = { weiPerUnit: '1000000000' }
+
+    it('converts deposits from gwei to wei without losing integer precision', () => {
+      const amount = 9_007_199_254_740_991n
+      const log = encodeLog(iface, 'NoteDeposited', [
+        30,
+        utils.hexZeroPad('0x01', 32),
+        amount,
+        1_793_404_800,
+        123,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'zkApiDeposit', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: amount * 1_000_000_000n })
+    })
+
+    for (const event of ['MutualClose', 'EscapeWithdrawalFinalized']) {
+      it(`counts only the user payout in ${event}`, () => {
+        const log = encodeLog(iface, event, [7, 123, 23_456_789n, ADDRESS])
+        expect(
+          extractPrivacyFlow(
+            { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
+            log,
+          ),
+        ).toEqual({ count: 1, amount: 23_456_789_000_000_000n })
+      })
+    }
+
+    it('counts a zero-balance closure without inventing a payout', () => {
+      const log = encodeLog(iface, 'MutualClose', [7, 123, 0, ADDRESS])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 0n })
+    })
+
+    it('rejects escape initiation because no payout has happened', () => {
+      const log = encodeLog(iface, 'EscapeWithdrawalInitiated', [
+        7,
+        123,
+        23_456_789n,
+        ADDRESS,
+        1_793_404_800,
+        456,
+      ])
+      expect(() =>
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
+          log,
+        ),
+      ).toThrow()
+    })
+  })
+
+  describe('zk.money portal events', () => {
+    it('counts the credited deposit amount', () => {
+      const log = encodeLog(zkMoneyInterface, 'Deposit', [
+        utils.hexZeroPad('0x01', 32),
+        1_234_567_890_123_456_789_012n,
+        utils.hexZeroPad('0x02', 32),
+        1,
+      ])
+
+      expect(
+        extractPrivacyFlow(
+          {
+            extractor: 'zkMoneyDeposit',
+            event: log.topics[0]!,
+            params: {} as ZkMoneyDepositConfig,
+          },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 1_234_567_890_123_456_789_012n })
+    })
+
+    // Flow 0 is a withdrawal, flows 1–3 are the three refund routes.
+    for (const flow of [0, 1, 2, 3]) {
+      it(`counts flow ${flow} with any executor and no additional fee subtraction`, () => {
+        const log = encodeLog(zkMoneyInterface, 'WithdrawalOrRefund', [
+          flow,
+          utils.hexZeroPad('0x03', 32),
+          OTHER_TOKEN_ADDRESS,
+          1_234_567_890_123_456_789_012n,
+        ])
+
+        expect(log.topics[0]).toEqual(
+          '0x0ef2e2e9f18042ca214d1bee833209f28326ffa8f4a6b0dc92172caf71bc5433',
+        )
+        expect(
+          extractPrivacyFlow(
+            {
+              extractor: 'zkMoneyWithdrawal',
+              event: log.topics[0]!,
+              params: {},
+            },
+            log,
+          ),
+        ).toEqual({ count: 1, amount: 1_234_567_890_123_456_789_012n })
+      })
+    }
+  })
+
   describe('erc20Transfer', () => {
     const config: PrivacyFlowIndexerConfig = {
       ...baseFlowConfig,

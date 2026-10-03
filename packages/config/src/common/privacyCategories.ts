@@ -6,6 +6,12 @@ import type { PrivacyCategory } from '../types'
  * keeps the category and gets red adversary cells.
  */
 export const PRIVACY_CATEGORIES = {
+  anonymousAuthorization: {
+    id: 'anonymousAuthorization',
+    label: 'Anonymous authorization',
+    description:
+      'Proves eligibility to use a service without identifying the funding account. Deposits and withdrawals can remain public and linked.',
+  },
   pool: {
     id: 'pool',
     label: 'Pool',

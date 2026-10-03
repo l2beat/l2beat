@@ -106,6 +106,22 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     }))
   }
 
+  async getDepositCount(
+    projectId: string,
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ): Promise<number> {
+    const row = await this.db
+      .selectFrom('PrivacyAnonymitySetEvent')
+      .select(sql<number>`COUNT(*)`.as('depositCount'))
+      .where('projectId', '=', projectId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+
+    return Number(row.depositCount)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

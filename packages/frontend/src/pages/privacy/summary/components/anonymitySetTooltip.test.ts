@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import {
+  getAnonymitySetCoverageNote,
   getAnonymitySetDescription,
   getAnonymitySetSteps,
   getAnonymitySetSyncingNote,
@@ -41,6 +42,23 @@ describe(getAnonymitySetSteps.name, () => {
 
     expect(getAnonymitySetSyncingNote(summary)).toEqual(
       'The displayed value excludes series still being indexed: ≥200 DAI, ≥20 K DAI.',
+    )
+  })
+})
+
+describe(getAnonymitySetCoverageNote.name, () => {
+  it('reports how many deposits count towards the set', () => {
+    expect(
+      getAnonymitySetCoverageNote({ attributed: 1_234, total: 1_500 }),
+    ).toEqual(
+      'Depositors were identified for 1,234 of 1,500 deposits (82%) during the last 30 complete UTC days. The remaining deposits are not counted.',
+    )
+  })
+
+  it('stays silent for fully attributed projects and empty windows', () => {
+    expect(getAnonymitySetCoverageNote(undefined)).toEqual(undefined)
+    expect(getAnonymitySetCoverageNote({ attributed: 0, total: 0 })).toEqual(
+      undefined,
     )
   })
 })

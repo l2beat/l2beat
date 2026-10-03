@@ -3,6 +3,7 @@ import type {
   ChainConfig,
   PrivacyAnonymitySetDepositSource,
   PrivacyBucketAddress,
+  PrivacyFlowSource,
   ProjectPrivacyBucket,
   ProjectPrivacyOnchainRelayerSource,
   ProjectPrivacyRailgunWakuRelayerSource,
@@ -106,6 +107,16 @@ export async function getPrivacyConfig(
             'withdrawal',
             token.token,
             minTimestamp,
+          ),
+          ...(bucket.additionalWithdrawals ?? []).map((source) =>
+            toFlowConfig(
+              project.projectId,
+              bucket,
+              'withdrawal',
+              token.token,
+              minTimestamp,
+              source,
+            ),
           ),
         ]
         for (const config of configs) {
@@ -234,12 +245,12 @@ function toRelayerConfig(
   minTimestamp: UnixTime,
 ): PrivacyRelayerActivityIndexerConfig {
   const base = {
+    ...source,
     projectId,
     chain: ChainSpecificAddress.longChain(source.address),
     address: ChainSpecificAddress.address(source.address),
     sinceTimestamp: Math.max(source.sinceTimestamp, minTimestamp),
     event: getPrivacyRelayerExtractor(source.extractor).event,
-    extractor: source.extractor,
   }
 
   return {
@@ -276,8 +287,8 @@ function toFlowConfig(
   direction: 'deposit' | 'withdrawal',
   token: ProjectPrivacyToken['token'],
   minTimestamp: UnixTime,
+  source: PrivacyFlowSource = bucket[direction],
 ): PrivacyFlowIndexerConfig | StarknetPrivacyFlowIndexerConfig {
-  const source = bucket[direction]
   const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const base = {
     projectId,

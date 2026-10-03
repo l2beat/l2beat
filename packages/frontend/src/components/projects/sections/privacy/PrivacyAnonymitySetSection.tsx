@@ -6,6 +6,7 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
+import { getAnonymitySetCoverageNote } from '~/pages/privacy/summary/components/anonymitySetTooltip'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -45,6 +46,7 @@ export function PrivacyAnonymitySetSection({
     [data],
   )
   const hasSyncedSeries = (data?.series.length ?? 0) > 0
+  const coverageNote = getAnonymitySetCoverageNote(data?.coverage)
 
   return (
     <ProjectSection {...projectSectionProps}>
@@ -60,6 +62,7 @@ export function PrivacyAnonymitySetSection({
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
             {anonymitySetHistoricDescription(ANONYMITY_SET_WINDOW_DAYS)}
+            {coverageNote !== undefined && <> {coverageNote}</>}
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
             <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">

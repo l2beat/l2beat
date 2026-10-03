@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RegistrationSIPA",
+  "critical": true,
+  "category": "core",
+  "description": "Implementation of zk.money registration addresses. Sweeping a funded clone registers the name through the current RegistrationController of the NameRegistry, pays the committed fees and deposits the rest into the PORTAL. The recipient's account can recover any funds from the clone.",
+  "ignoreMethods": [
+    "depositFee",
+    "intentHash",
+    "portal",
+    "recoveryCommitment",
+    "resweepable",
+    "rollupVersion",
+    "swept"
+  ],
+  "ignoreRelatives": ["UNDERLYING"]
+}

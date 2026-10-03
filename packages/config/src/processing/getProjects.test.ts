@@ -489,7 +489,11 @@ describe('getProjects', () => {
           }
         }
 
-        if (privacyInfo.anonymitySet !== undefined && configuredBuckets !== 0) {
+        if (
+          privacyInfo.anonymitySet !== undefined &&
+          privacyInfo.anonymitySet.type !== 'partially-attributed' &&
+          configuredBuckets !== 0
+        ) {
           problems.push(
             `${project.id}: ${privacyInfo.anonymitySet.type} with buckets`,
           )

@@ -37,6 +37,9 @@ import {
   getPrivacyLogKey,
 } from '../utils/privacyLogIndexerUtils'
 
+import { eventKey } from '../utils/zkMoneyEvents'
+import { ZkMoneyMetrics } from '../utils/zkMoneyMetrics'
+
 const TRANSACTION_LOOKUP_BATCH_SIZE = 25
 
 interface PrivacyAnonymitySetIndexerDeps
@@ -204,20 +207,44 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       ),
     )
 
-    return recordsInRange.map((record) => {
+    const funders = new Map<string, string>()
+    const metrics = new ZkMoneyMetrics(this.$.rpcClient)
+    for (const configuration of configurations) {
+      const source = configuration.properties
+      if (source.extractor !== 'zkMoneyDeposit') continue
+      const deposits = recordsInRange
+        .filter((record) => record.configuration.id === configuration.id)
+        .map((record) => record.log)
+      const attributed = await metrics.funders(
+        deposits,
+        source.params,
+        this.$.logsProvider,
+      )
+      for (const [key, funder] of attributed)
+        funders.set(`${configuration.id}:${key}`, funder)
+    }
+
+    return recordsInRange.flatMap((record) => {
       const config = record.configuration.properties
-      return {
-        configurationId: record.configuration.id,
-        projectId: config.projectId,
-        bucketId: config.bucketId,
-        chain: config.chain,
-        timestamp: record.timestamp,
-        blockNumber: record.log.blockNumber,
-        txHash: record.log.transactionHash,
-        logIndex: record.log.logIndex,
-        sender: this.resolveSender(record, transactionSenders),
-        amount: record.amount,
-      }
+      const sender =
+        record.origin.type === 'zkMoney'
+          ? funders.get(`${record.configuration.id}:${eventKey(record.log)}`)
+          : this.resolveSender(record, transactionSenders)
+      if (sender === undefined) return []
+      return [
+        {
+          configurationId: record.configuration.id,
+          projectId: config.projectId,
+          bucketId: config.bucketId,
+          chain: config.chain,
+          timestamp: record.timestamp,
+          blockNumber: record.log.blockNumber,
+          txHash: record.log.transactionHash,
+          logIndex: record.log.logIndex,
+          sender,
+          amount: record.amount,
+        },
+      ]
     })
   }
 

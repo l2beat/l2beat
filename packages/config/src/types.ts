@@ -1110,6 +1110,11 @@ export interface ProjectPrivacyInfo {
         type: 'not-applicable'
         description: string
       }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
     /** Too few users to matter, so exact tracking is not set up. */
     | { type: 'too-small' }
   /**
@@ -1136,15 +1141,46 @@ export interface ProjectPrivacyInfo {
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
+      metric?: 'paidFinalizers'
       sources: ProjectPrivacyOnchainRelayerSource[]
     }
   | ProjectPrivacyRailgunWakuRelayerSource
 
-/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+/** Addresses identified from onchain operations and confirmed fee payouts. */
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+} & PrivacyRelayerExtractorConfig
+
+export type PrivacyRelayerExtractorConfig =
+  | {
+      extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+      params?: undefined
+    }
+  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyDepositConfig }
+  | {
+      extractor: 'zkMoneyWithdrawalPayout'
+      params: {
+        tokenAddress: EthereumAddress
+        executorAddress: EthereumAddress
+        operationExecutor: EthereumAddress
+      }
+    }
+
+/** Immutable deployments and fee parameters used to attribute portal operations. */
+export type ZkMoneyDepositConfig = {
+  tokenAddress: EthereumAddress
+  factoryAddress: EthereumAddress
+  depositImplementation: EthereumAddress
+  registrationImplementation: EthereumAddress
+  fundingTokens: EthereumAddress[]
+  exchangeAddress: EthereumAddress
+  /** Earlier balances are checked and treated as unattributed until emptied. */
+  historyFromBlock: number
+  fundingCut: string
+  depositFee: string
+  registrationSweepFee: string
+  operationExecutor: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1174,6 +1210,7 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
+  | 'anonymousAuthorization'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
@@ -1380,6 +1417,8 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
+  /** Additional payout routes for the same bucket, indexed without repeating deposits. */
+  additionalWithdrawals?: PrivacyFlowSource[]
 }
 
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
@@ -1419,10 +1458,31 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'zkMoneyDeposit'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =
+  | {
+      /** Native vault events use integer gwei. Withdrawals count user payouts. */
+      extractor: 'zkApiDeposit' | 'zkApiWithdrawal'
+      params: { weiPerUnit: string }
+    }
+  | {
+      /** Credited DAI amount, after the portal's fee sponsorship cut. */
+      extractor: 'zkMoneyDeposit'
+      params: ZkMoneyDepositConfig
+    }
+  | {
+      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
+      extractor: 'zkMoneyWithdrawal'
+      params: Record<string, never>
+    }
   | {
       extractor: 'fixedAmount'
       params: {
