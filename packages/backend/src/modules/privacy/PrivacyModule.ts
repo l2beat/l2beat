@@ -8,13 +8,16 @@ import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIn
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
+import { StarknetPrivacyAnonymitySetIndexer } from './indexers/StarknetPrivacyAnonymitySetIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
 import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
 import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
+import { StarknetAnonymitySetFileStore } from './StarknetAnonymitySetFileStore'
 import type {
   PrivacyAnonymitySetIndexerConfig,
   PrivacyFlowIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
+  StarknetPrivacyAnonymitySetIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
 
@@ -84,6 +87,21 @@ export function createPrivacyModule({
     ])
   }
 
+  const starknetAnonymitySetConfigsByChain = new Map<
+    string,
+    StarknetPrivacyAnonymitySetIndexerConfig[]
+  >()
+  for (const anonymitySetConfig of config.privacy.starknetAnonymitySetConfigs) {
+    starknetAnonymitySetConfigsByChain.set(anonymitySetConfig.chain, [
+      ...(starknetAnonymitySetConfigsByChain.get(anonymitySetConfig.chain) ??
+        []),
+      anonymitySetConfig,
+    ])
+  }
+  const starknetAnonymitySetStore = new StarknetAnonymitySetFileStore(
+    config.privacy.starknetAnonymitySetFile,
+  )
+
   const relayerConfigsByChain = new Map<
     string,
     PrivacyRelayerActivityIndexerConfig[]
@@ -105,6 +123,8 @@ export function createPrivacyModule({
       anonymitySetConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const starknetFlowConfigs =
       starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const starknetAnonymitySetConfigs =
+      starknetAnonymitySetConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const relayerConfigs =
       relayerConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const blockProvider = providers.block.getBlockProvider(
@@ -213,6 +233,33 @@ export function createPrivacyModule({
       )
     }
 
+    if (starknetAnonymitySetConfigs.length > 0) {
+      indexers.push(
+        new StarknetPrivacyAnonymitySetIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [hourlyIndexer],
+            indexerService,
+            blockProvider,
+            starknetClient: providers.clients.getStarknetClient(
+              blockTimestampConfig.chain,
+            ),
+            configurations: starknetAnonymitySetConfigs.map(
+              (anonymitySetConfig) => ({
+                id: anonymitySetConfig.id,
+                minHeight: anonymitySetConfig.sinceTimestamp,
+                maxHeight: null,
+                properties: anonymitySetConfig,
+              }),
+            ),
+            store: starknetAnonymitySetStore,
+            db,
+          },
+          logger,
+        ),
+      )
+    }
+
     if (relayerConfigs.length > 0) {
       indexers.push(
         new PrivacyRelayerActivityIndexer(
@@ -256,6 +303,8 @@ export function createPrivacyModule({
     flowConfigs: config.privacy.flowConfigs.length,
     anonymitySetConfigs: config.privacy.anonymitySetConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
+    starknetAnonymitySetConfigs:
+      config.privacy.starknetAnonymitySetConfigs.length,
     relayerConfigs: config.privacy.relayerConfigs.length,
     relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
