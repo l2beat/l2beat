@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf400f76087443384b2848ce55eace65fc9b0d767
+
+# Diff at Fri, 02 Oct 2026 13:18:26 GMT:
+
+- id: 146c2564
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a42dc3443a716e1d14547c3c9dc18bcc823ae3bc block: 1785249452
+- current timestamp: 1790947041
+
+## Description
+
+SystemConfig `gasLimit` raised from `1500000000` to `2250000000` (+50%).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        1500000000
++        2250000000
+    }
+```
+
 Generated with discovered.json: 0x8920d34bb2b5d01241b0ebab9ab790d511afda27
 
 # Diff at Wed, 30 Sep 2026 22:47:38 GMT:

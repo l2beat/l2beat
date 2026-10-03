@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TEEVerifier",
   "critical": true,
-  "description": "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+  "description": "Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the {{TEE_PROVER_REGISTRY}} with the expected enclave image hash. Can be permanently nullified.",
   "fields": {
     "nullified": {
       "severity": "HIGH"
