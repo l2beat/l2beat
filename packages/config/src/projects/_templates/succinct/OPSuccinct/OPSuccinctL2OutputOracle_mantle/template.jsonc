@@ -3,17 +3,21 @@
   "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
   "critical": true,
   "fields": {
+    // Emergency role holder (deletes outputs, toggles optimistic mode, sets the
+    // finalization period). Identity, set only by (re)initialization: MEDIUM
+    // like other guardian-type role holders; raw and legacy twins share it.
     "CHALLENGER": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "FINALIZATION_PERIOD_SECONDS": {
       "severity": "HIGH"
     },
+    // Proposal cadence (minimum L2 blocks per proposal): liveness, not validity.
     "submissionInterval": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "SUBMISSION_INTERVAL": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "initialProposer": {
       "handler": {
@@ -50,6 +54,7 @@
       ]
     },
     "challenger": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

@@ -229,7 +229,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1784,8 +1783,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2": "Proxy",
@@ -2328,7 +2328,6 @@
         "owner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "version": "1.0.0"
       },
-      "fieldMeta": { "addressManager": { "severity": "HIGH" } },
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000018": "Proxy",
         "ink:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F": "L2ProxyAdmin"

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x79ebac93af4e31d161736d3d7c36a942866ca2fc
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: fecaed30
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790850812
+- current timestamp: 1790850812
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790850812 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainMultisigHash.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x9d5dfb9f92f91196391a920725ab4afec8da7ebc
 
 # Diff at Thu, 01 Oct 2026 11:11:00 GMT:

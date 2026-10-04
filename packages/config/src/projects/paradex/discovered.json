@@ -412,7 +412,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {

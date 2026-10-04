@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x321f4fc729d2123990ebf74c6238955449fc74e8
+
+# Diff at Sun, 04 Oct 2026 05:55:34 GMT:
+
+- id: a09e22ac
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789544313
+- current timestamp: 1789544313
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789544313 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x120EB40F5FC6D2B47c67960bDb696a9e317C84b0) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xa21ca36ad44f2cbca4b13432d568715a4310eb17
 
 # Diff at Wed, 30 Sep 2026 22:47:35 GMT:

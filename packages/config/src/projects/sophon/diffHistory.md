@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe3cdbaaede787658850e6633c025c2d32d7b1822
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 916a2b61
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789917662
+- current timestamp: 1789917662
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917662 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x2ca83a5b6c05056516f14ab8180ce33850d1502c
 
 # Diff at Wed, 23 Sep 2026 05:49:49 GMT:

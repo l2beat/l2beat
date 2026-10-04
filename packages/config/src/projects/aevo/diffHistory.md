@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x830fc758c58ac3f88b1aa251b80b89ec5cc353b4
+
+# Diff at Sun, 04 Oct 2026 05:55:30 GMT:
+
+- id: 2e90a7aa
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1787834128
+- current timestamp: 1787834128
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834128 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xF51b386B0391B022604B95cD97DFce58A5c0cFB1) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x4ef9eeb1b7583b22481e02a8a9e2faff4fa9200e
 
 # Diff at Wed, 30 Sep 2026 22:47:29 GMT:

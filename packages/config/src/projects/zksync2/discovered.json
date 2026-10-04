@@ -675,6 +675,7 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
+        "isPermanentRollupString": { "severity": "HIGH" },
         "getDAValidatorPair": {
           "severity": "HIGH",
           "description": "l1da, l2da"
@@ -684,7 +685,7 @@
           "description": "0 - Rollup, 1 - Validium"
         },
         "getProtocolVersion": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
@@ -1112,7 +1113,8 @@
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
         "executionDelay_fmt": { "severity": "HIGH" },
-        "threshold": { "severity": "HIGH" }
+        "threshold": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d": "TransparentUpgradeableProxy",

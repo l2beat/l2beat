@@ -37,7 +37,7 @@
     },
     "protocolFrozenUntil": {
       "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)",
-      "severity": "HIGH"
+      "severity": "MEDIUM" // freeze (pause) state set by the Security Council: reviewed, but does not change the rules
     },
     "emergencyUpgradesExecuted": {
       "handler": {

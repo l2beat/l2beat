@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xaa66ea78c70e62e6b2db6517306fcd78b4bb5b44
+
+# Diff at Sun, 04 Oct 2026 05:55:38 GMT:
+
+- id: 8f23cfc7
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.$threshold:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xe527cbb333e033f93f4a9460eeba2e030b8b946b
 
 # Diff at Wed, 23 Sep 2026 05:56:15 GMT:

@@ -15,8 +15,9 @@
     "paused": {
       "severity": "MEDIUM"
     },
+    // operating mode, entered permissionlessly after a stall, like a pause
     "isEnforcedModeEnabled": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "sequencers": {
       "handler": {

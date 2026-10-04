@@ -575,11 +575,11 @@
       },
       "fieldMeta": {
         "approvedUpgradeNoticePeriod": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
         },
         "approvedUpgradeNoticePeriodFmt": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
         },
         "managedContracts": {

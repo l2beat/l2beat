@@ -757,7 +757,6 @@
         "votingPeriod": 100800
       },
       "fieldMeta": {
-        "VOTE_SUCCESS_DENOMINATOR": { "severity": "HIGH" },
         "voteSuccessNumerator": { "severity": "HIGH" },
         "proposalExpirationBlocks": { "severity": "HIGH" },
         "lateQuorumVoteExtension": { "severity": "HIGH" },
@@ -798,10 +797,6 @@
         "l1TimelockAddr": "arb1:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "arb1:0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-      },
-      "fieldMeta": {
-        "l1TimelockMinDelay": { "severity": "HIGH" },
-        "l1TimelockAddr": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder"
@@ -991,11 +986,9 @@
         "votingPeriod": 50400
       },
       "fieldMeta": {
-        "ROTATION_CUT_OFF_BLOCKS": { "severity": "HIGH" },
         "firstNominationStartDate": { "severity": "HIGH" },
         "cadenceInMonths": { "severity": "HIGH" },
         "nomineeVettingDuration": { "severity": "HIGH" },
-        "nomineeVetter": { "severity": "HIGH" },
         "securityCouncilMemberElectionGovernor": { "severity": "HIGH" },
         "securityCouncilManager": { "severity": "HIGH" },
         "quorumDenominator": { "severity": "HIGH" },
@@ -1097,13 +1090,9 @@
       },
       "fieldMeta": {
         "l1Address": { "severity": "HIGH" },
-        "MIN_MINT_INTERVAL": { "severity": "HIGH" },
-        "MINT_CAP_DENOMINATOR": { "severity": "HIGH" },
-        "MINT_CAP_NUMERATOR": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "mintCapPerYer": {
-          "severity": "HIGH",
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
@@ -1459,10 +1448,9 @@
         "transactionFilteringPrecompile": "arb1:0x0000000000000000000000000000000000000074"
       },
       "fieldMeta": {
-        "transactionFilteringPrecompile": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "HIGH" },
-        "chainOwners": { "severity": "HIGH" }
+        "executors": { "severity": "MEDIUM" },
+        "chainOwners": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "TransparentUpgradeableProxy",
@@ -2145,8 +2133,6 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
-        "isUsingFeeToken": { "severity": "HIGH" },
-        "isDelayBufferable": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
@@ -2154,7 +2140,7 @@
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "MEDIUM" },
         "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" },
         "bufferConfig": { "severity": "HIGH" }
@@ -2263,7 +2249,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "HIGH" }
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": "TransparentUpgradeableProxy",
@@ -3326,6 +3312,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
+      "critical": true,
       "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623867835,
       "sinceBlock": 12647126,

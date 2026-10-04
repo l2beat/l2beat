@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x8c7c684c51111dd690662ff6fea158854f83c44e
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 0384f22d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790862352
+- current timestamp: 1790862352
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862352 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (ink:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xe59178877feaa1fa4fecee29ec5ecdc85c2d8a3a
 
 # Diff at Thu, 01 Oct 2026 13:46:57 GMT:

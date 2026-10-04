@@ -1,48 +1,12 @@
 {
   "events": [
     {
-      "timestamp": 1741870439,
-      "type": "state",
-      "contract": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
-      "transaction": "0x0ca390e0ff6ff0ac7ba8ac53ce10b6f696c6628eebcde0b375b38231543feaf6",
-      "reason": "Changed the Bob Multisig threshold while it controlled the ProxyAdmins and protocol upgrades (Safe is the owner of ProxyAdmin; the Safe itself is outside the perimeter)."
-    },
-    {
-      "timestamp": 1742468147,
-      "type": "state",
-      "contract": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
-      "transaction": "0x43a85e6e4e6e14adfb36563dc8dbf22fba559830c6b9749e283b4be4a13b06af",
-      "reason": "Changed the Bob Multisig threshold while it controlled the ProxyAdmins and protocol upgrades (Safe is the owner of ProxyAdmin; the Safe itself is outside the perimeter)."
-    },
-    {
-      "timestamp": 1752686123,
-      "type": "state",
-      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
-      "transaction": "0x89dc1b9fcdb343663ecc90dba9d11db47b0411a8708c805511f582aa26cdce48",
-      "reason": "Set an initial dispute-game implementation after deploying DisputeGameFactory."
-    },
-    {
       "timestamp": 1752759527,
       "type": "code",
       "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
       "transaction": "0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",
       "updateId": "2f577ebe",
       "reason": "Upgraded L1StandardBridge during BOB's fault-proof migration."
-    },
-    {
-      "timestamp": 1752759527,
-      "type": "state",
-      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-      "transaction": "0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",
-      "updateId": "2f577ebe",
-      "reason": "Initialized L1StandardBridge's security-critical references during BOB's fault-proof migration."
-    },
-    {
-      "timestamp": 1752761915,
-      "type": "code",
-      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
-      "transaction": "0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",
-      "reason": "Upgraded DisputeGameFactory during BOB's fault-proof migration."
     },
     {
       "timestamp": 1752761915,
@@ -83,10 +47,10 @@
     {
       "timestamp": 1755555779,
       "type": "state",
-      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
       "transaction": "0xf7bb19085a64d4cb1d7a01ef94e2dacee677ff4f445a508f043f9d80526fec01",
       "updateId": "5d7229ab",
-      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+      "reason": "RISC Zero timelock executed addVerifier(0x73c457ba, RiscZeroVerifierEmergencyStop 0x9F9994Eb), adding a live Groth16 verifier route that can verify Kailua proofs."
     },
     {
       "timestamp": 1756823843,
@@ -106,25 +70,25 @@
     {
       "timestamp": 1757106887,
       "type": "state",
-      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
       "transaction": "0x73d1b0bc059bf4a920e9017acd31695c2760a6e716b724aa760c893b312c218f",
       "updateId": "d25db477",
-      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+      "reason": "RISC Zero timelock executed addVerifier(0x242f9d5b, RiscZeroVerifierEmergencyStop 0x844D5f01 wrapping the RiscZeroSetVerifier), adding a live verifier route that can verify Kailua proofs."
     },
     {
       "timestamp": 1762813583,
       "type": "state",
-      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
       "transaction": "0x4034a5ff890175a954f604129de7a6971ecf55183c8fd76aec3d20d597936f21",
       "updateId": "c1f6733c",
-      "reason": "Executed a RISC Zero governance call changing a verifier route used by Kailua."
+      "reason": "RISC Zero timelock executed removeVerifier(0x50bd1769), removing a live (unpaused) verifier route from the router used by Kailua."
     },
     {
       "timestamp": 1762813655,
       "type": "state",
-      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
       "transaction": "0x17e31ee3b1308a5b30253935460e6dc8dd6f3e65eadc08893559b8d6e22a88a7",
-      "reason": "Executed a second RISC Zero governance call changing a verifier route used by Kailua."
+      "reason": "RISC Zero timelock executed removeVerifier(0xc101b42b), removing a second live (unpaused) verifier route from the router used by Kailua."
     },
     {
       "timestamp": 1764685823,
@@ -163,14 +127,6 @@
       "transaction": "0xd025dbac937aa7bd1c53511421d35cc97c18a848ebb123cc85e910ab517a8922",
       "updateId": "9a3232bd",
       "reason": "Upgraded L1StandardBridge during BOB's January 2026 system migration."
-    },
-    {
-      "timestamp": 1768920023,
-      "type": "state",
-      "contract": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-      "transaction": "0xd025dbac937aa7bd1c53511421d35cc97c18a848ebb123cc85e910ab517a8922",
-      "updateId": "9a3232bd",
-      "reason": "Updated L1StandardBridge's security-critical references during BOB's January 2026 system migration."
     },
     {
       "timestamp": 1769450699,
@@ -232,31 +188,7 @@
       "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
       "transaction": "0x0982556fcc8f7bd02c808eaca208937d04c1259020581d698129074674156355",
       "updateId": "6e0a0f51",
-      "reason": "Granted the RISC Zero verifier governance timelock roles to the new RISC Zero governance Safe."
-    },
-    {
-      "timestamp": 1779312767,
-      "type": "state",
-      "contract": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
-      "transaction": "0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
-      "updateId": "6e0a0f51",
-      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
-    },
-    {
-      "timestamp": 1779312767,
-      "type": "state",
-      "contract": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
-      "transaction": "0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
-      "updateId": "6e0a0f51",
-      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
-    },
-    {
-      "timestamp": 1779312767,
-      "type": "state",
-      "contract": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
-      "transaction": "0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
-      "updateId": "6e0a0f51",
-      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+      "reason": "Granted PROPOSER_ROLE (EXECUTOR and CANCELLER followed minutes later) on the RISC Zero verifier timelock to the 3-of-5 RISC Zero Safe 0x2E5bcc99, adding a multisig authority path next to the single EOA 0xF616A4f8."
     },
     {
       "timestamp": 1779395783,
@@ -264,7 +196,7 @@
       "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
       "transaction": "0x47727aec55e03cce2663a7a5cdfeb2dc02fc34bd2a5ec27e7850300c4d23fdec",
       "updateId": "6e0a0f51",
-      "reason": "Revoked the former owner's roles on the RISC Zero verifier governance timelock."
+      "reason": "Revoked PROPOSER, EXECUTOR and CANCELLER roles of the single EOA 0xF616A4f8 on the RISC Zero verifier timelock, completing the move from an EOA to the 3-of-5 RISC Zero Safe."
     },
     {
       "timestamp": 1789547003,
@@ -274,5 +206,8 @@
       "updateId": "d963a01d",
       "reason": "Upgraded L1StandardBridge during BOB's migration from Kailua back to a permissioned dispute game."
     }
+  ],
+  "ignoredTransactions": [
+    "0x49ca0455d3479f3dec361e05c5b47ac8634c14ca765ad8770401421a038eb39d"
   ]
 }

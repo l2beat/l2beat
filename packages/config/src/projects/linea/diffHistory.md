@@ -1,3 +1,102 @@
+Generated with discovered.json: 0xf0baf8ad4317589f252201c23ca7883a465ad374
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 7de71404
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789919089
+- current timestamp: 1789919089
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
+      fieldMeta.filteredAddresses.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) [gnosisSafeModules/ZodiacDelay] {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.limitInWei.description:
+-        "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
++        "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
+    }
+```
+
 Generated with discovered.json: 0x4ad2cd3b3504a2297c4e0e2a628c0e487dad488e
 
 # Diff at Wed, 23 Sep 2026 05:55:55 GMT:

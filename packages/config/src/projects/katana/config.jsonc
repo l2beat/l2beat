@@ -119,20 +119,27 @@
       "ignoreDiscovery": true
     },
     // ---- Ossification perimeter ----
-    // Katana's OP-stack deployment has asset bridging disabled: custody and
-    // messaging run through the Agglayer shared bridge, and state validity is
-    // enforced by the AggchainFEP + AgglayerManager/Gateway pessimistic-proof
-    // path. The OP dispute-game withdrawal stack (games, ASR, DelayedWETH,
-    // MIPS/PreimageOracle, messengers, token bridges) secures nothing here, so
-    // the critical flags inherited from the shared opstack templates are
-    // removed. The portal stays critical as the forced-transaction
-    // (self-sequencing) entry, and the SystemConfig governs derivation.
-    // TODO(ossification): the reviewed perimeter excluded the OP dispute-game/bridging stack
-    // (AnchorStateRegistry eth:0xA7A26BbA..., AddressManager eth:0xaA8a6256..., DisputeGameFactory
-    // eth:0xb41151Bf..., L1StandardBridge eth:0x6463dEE3..., L1CrossDomainMessenger eth:0x1fb8cdFc...,
-    // L2CrossDomainMessenger katana:0x42..07, L2StandardBridge katana:0x42..10 and the L1 token escrows).
-    // The critical flag cannot be switched off per address any more, so these contracts inherit the
-    // opstack template flags for now (conservative: extra resets of the ossification clock).
+    // Custody and messaging run through the Agglayer shared bridge (AgglayerBridge in
+    // shared-polygon-cdk, AgglayerBridgeL2 + L2 GER manager here). State validity is the
+    // AggchainFEP (OP Succinct) proof wrapped in the pessimistic proof that the
+    // AgglayerManager verifies through the AgglayerGateway and its SP1 verifiers (module).
+    // The forked OptimismPortal2 rejects ETH deposits and direct L1StandardBridge /
+    // L1ERC721Bridge deposits, and the L2ToL1MessagePasser predeploy reverts every
+    // withdrawal ("Withdrawals are disabled", L2 upgrade 0x8ff7fb4b, 2025-05-08 23:42). The
+    // portal, L1StandardBridge, L1CrossDomainMessenger and DelayedWETH hold 0 ETH, and no
+    // token was ever sent to the L1StandardBridge. The OP dispute-game / messenger / token
+    // bridge stack therefore protects no assets today, but it stays critical through the
+    // shared opstack templates: the critical flag has no per-address "false", ERC20
+    // deposits through L1StandardBridge -> L1CrossDomainMessenger are not blocked by the
+    // portal check, and OPCM upgrades swapped the portal fork for other versions before
+    // (all deposits were disabled from 2025-05-08 23:31 until the 2026-05-22 upgrade
+    // 0x46d8e0a3 re-enabled zero-value forced transactions). Conservative and without
+    // effect on the score: every change to this stack so far shipped in the same OPCM
+    // transaction as a portal / SystemConfig upgrade.
+    // The vault-bridge tokens (vbETH, vbUSDC, vbUSDT, vbWBTC, vbUSDS) and their
+    // MigrationManager are not critical: L1 tokens bridged canonically through the shared
+    // AgglayerBridge (TVS: custom-canonical), not natively minted on Katana. Their config
+    // is watched at MEDIUM through the GenericVaultBridgeToken template.
     // SuperchainConfig fork: its guardian can pause the portal and with it the
     // forced-transaction path (the only censorship-resistance mechanism).
     "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {

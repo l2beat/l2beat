@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x82f12d19d94d605e8fa60c0a8ef32fc1cda8dae3
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: 7e941f14
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1787310854
+- current timestamp: 1787310854
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787310854 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xaae1ec577fc2d31198a345ab515b4f62b4cd6525
 
 # Diff at Wed, 23 Sep 2026 05:45:41 GMT:

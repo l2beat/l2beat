@@ -487,7 +487,6 @@
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
         },
         "callsExecuted": {
-          "severity": "HIGH",
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
         }
       },
@@ -1478,7 +1477,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1576,7 +1574,7 @@
         "participationBond": { "severity": "HIGH" },
         "participationBondFmt": { "severity": "HIGH" },
         "vanguardAdvantageFmt": { "severity": "HIGH" },
-        "vanguard": { "severity": "HIGH" }
+        "vanguard": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53": "KailuaTreasury"
@@ -2032,8 +2030,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c": "Proxy",

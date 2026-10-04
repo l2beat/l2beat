@@ -173,7 +173,7 @@
           "severity": "HIGH",
           "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
         },
-        "aggchainMultisigHash": { "severity": "HIGH" }
+        "aggchainMultisigHash": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",

@@ -166,13 +166,14 @@
           "severity": "HIGH",
           "description": "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
         },
-        "admin": { "severity": "HIGH" },
-        "optimisticModeManager": { "severity": "HIGH" },
-        "aggchainManager": { "severity": "HIGH" },
+        "admin": { "severity": "MEDIUM" },
+        "optimisticModeManager": { "severity": "MEDIUM" },
+        "aggchainManager": { "severity": "MEDIUM" },
         "selectedOpSuccinctConfigName": {
           "severity": "HIGH",
           "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."
         },
+        "selectedOpSuccinctConfig": { "severity": "HIGH" },
         "aggregationVkey": {
           "severity": "LOW",
           "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
@@ -2208,8 +2209,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376": "Proxy",
@@ -2640,7 +2642,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -3073,8 +3074,8 @@
         "isEmergencyState": { "severity": "MEDIUM" },
         "WETHToken": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "getProxiedTokensManager": { "severity": "HIGH" },
-        "bridgeManager": { "severity": "HIGH" },
+        "getProxiedTokensManager": { "severity": "MEDIUM" },
+        "bridgeManager": { "severity": "MEDIUM" },
         "emergencyBridgePauser": { "severity": "MEDIUM" },
         "emergencyBridgeUnpauser": { "severity": "MEDIUM" }
       },
@@ -3852,8 +3853,8 @@
         "pendingGlobalExitRootUpdater": { "severity": "MEDIUM" },
         "pendingGlobalExitRootRemover": { "severity": "MEDIUM" },
         "$admin": { "severity": "HIGH" },
-        "globalExitRootRemover": { "severity": "HIGH" },
-        "globalExitRootUpdater": { "severity": "HIGH" }
+        "globalExitRootRemover": { "severity": "MEDIUM" },
+        "globalExitRootUpdater": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": "TransparentUpgradeableProxy",
