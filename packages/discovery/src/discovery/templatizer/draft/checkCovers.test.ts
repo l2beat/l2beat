@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { buildWorklist } from '../worklist'
 import { checkCovers, naturalCovers } from './checkCovers'
 import type { DraftHandler } from './Draft'
 import type { Finding } from './Finding'
@@ -37,16 +38,46 @@ describe(checkCovers.name, () => {
     )
   }
 
-  it('accepts event fields that claim the getters they enumerate and cover the events they read', () => {
+  it('lets only a constructorArgs field cover the constructor', () => {
+    expect(
+      check(
+        { type: 'constructorArgs', nameArgs: true },
+        ['constructor(address)'],
+        factory,
+        'constructorArgs',
+      ),
+    ).toEqual([])
+    expect(
+      check(
+        { type: 'call', method: 'owner', args: [] },
+        ['constructor(address)'],
+        factory,
+      ),
+    ).toEqual([
+      {
+        path: 'fields.x.covers[0]',
+        message:
+          'only a constructorArgs field reads the constructor; cover constructor(address) with one, or skip it',
+      },
+    ])
+    expect(
+      naturalCovers(
+        'constructorArgs',
+        { type: 'constructorArgs' },
+        factory.worklist,
+      ),
+    ).toEqual({ functions: ['constructor(address)'], events: [] })
+  })
+
+  it('accepts event fields that claim the getters they enumerate and cover the events they name', () => {
     expect(runRule(checkCovers, scrollChainDraft(), scroll)).toEqual([])
   })
 
-  it('rejects an event the field does not read', () => {
+  it('rejects an event the field does not name', () => {
     const draft = scrollChainDraft()
     draft.fields.sequencers!.covers.push('UpdateProver')
     expect(runRule(checkCovers, draft, scroll)).toEqual([
       {
-        severity: 'error',
         path: 'fields.sequencers.covers[2]',
         message:
           "sequencers does not read UpdateProver; read it in one of the handler's actions, or skip UpdateProver as `covered` if its state is what sequencers holds",
@@ -60,7 +91,6 @@ describe(checkCovers.name, () => {
       ),
     ).toEqual([
       {
-        severity: 'error',
         path: 'fields.x.covers[1]',
         message:
           'a hardcoded field reads no events; cover UpdateSequencer with an event field, or skip UpdateSequencer as `covered` if its state is what x holds',
@@ -68,7 +98,24 @@ describe(checkCovers.name, () => {
     ])
   })
 
-  it('lets call and array fields cover only the function they call', () => {
+  it('reads an event named by its full fragment as the bare event', () => {
+    expect(
+      check(
+        {
+          type: 'event',
+          select: 'startBatchIndex',
+          add: {
+            event:
+              'event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)',
+          },
+        },
+        ['RevertBatch'],
+        scroll,
+      ),
+    ).toEqual([])
+  })
+
+  it('lets call and array fields cover only the function they name', () => {
     const poster = '0x798576400F7D662961BA15C6b3F3d813447a26a6'
     expect(
       check(
@@ -85,10 +132,9 @@ describe(checkCovers.name, () => {
       ),
     ).toEqual([
       {
-        severity: 'error',
         path: 'fields.x.covers[0]',
         message:
-          'a call field answers only what it calls (isBatchPoster(address)); move isSequencer(address) to the field that reads it or to skips',
+          'a call field answers only what it names (isBatchPoster(address)); move isSequencer(address) to the field that reads it or to skips',
       },
     ])
     expect(
@@ -113,26 +159,32 @@ describe(checkCovers.name, () => {
         'gameImpls',
       )[0]?.message,
     ).toEqual(
-      'an array field answers only what it calls (gameImpls(uint32)); move initBonds(uint32) to the field that reads it or to skips',
+      'an array field answers only what it names (gameImpls(uint32)); move initBonds(uint32) to the field that reads it or to skips',
     )
   })
 
-  it('leaves an unresolved method to R5', () => {
+  it('does not resolve a method name: a call that names nothing on the worklist covers nothing', () => {
     expect(
       check(
         { type: 'call', method: 'nope', args: [] },
         ['isSequencer(address)'],
         scroll,
       ),
-    ).toEqual([])
+    ).toEqual([
+      {
+        path: 'fields.x.covers[0]',
+        message:
+          'a call field answers only what it names (nothing); move isSequencer(address) to the field that reads it or to skips',
+      },
+    ])
   })
 })
 
 describe(naturalCovers.name, () => {
-  const inbox = contextFor('SequencerInbox').facts
-  const scroll = contextFor('ScrollChain').facts
+  const inbox = contextFor('SequencerInbox').worklist
+  const scroll = contextFor('ScrollChain').worklist
 
-  it('derives covers from what a handler reads, never from claims', () => {
+  it('derives covers from what a handler names, never from claims', () => {
     expect(
       naturalCovers(
         'batchPosters',
@@ -174,18 +226,46 @@ describe(naturalCovers.name, () => {
     )
   })
 
-  it('gives accessControl the role getters and events the ABI declares', () => {
+  it('tells overloads of a bare name apart by the number of arguments, and takes a full fragment as written', () => {
+    const worklist = buildWorklist(
+      [
+        'function get(uint256 a) view returns (uint256)',
+        'function get(uint256 a, uint256 b) view returns (uint256)',
+      ],
+      { fields: {} },
+    )
+    expect(
+      naturalCovers(
+        'x',
+        { type: 'call', method: 'get', args: [1, 2] },
+        worklist,
+      ).functions,
+    ).toEqual(['get(uint256,uint256)'])
+    expect(
+      naturalCovers(
+        'x',
+        {
+          type: 'call',
+          method: 'function get(uint256 a) view returns (uint256)',
+          args: [1],
+        },
+        worklist,
+      ).functions,
+    ).toEqual(['get(uint256)'])
+  })
+
+  it('gives accessControl the role getters and events the worklist has', () => {
     expect(
       naturalCovers(
         'accessControl',
         { type: 'accessControl' },
-        { abi: ACCESS_CONTROL_ABI },
+        buildWorklist(ACCESS_CONTROL_ABI, { fields: {} }),
       ),
     ).toEqual({
       functions: [
-        'hasRole(bytes32,address)',
         'getRoleAdmin(bytes32)',
         'getRoleMember(bytes32,uint256)',
+        'hasRole(bytes32,address)',
       ],
       events: ['RoleGranted', 'RoleRevoked'],
     })

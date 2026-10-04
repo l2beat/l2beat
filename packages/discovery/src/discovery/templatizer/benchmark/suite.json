@@ -1,5 +1,91 @@
 {
-  "description": "Projects and contracts every experiment runs. Add a project here and every later suite run includes it; leave addresses out to run every verified contract of the project that has a committed template. Ported from the discovery-v2 research benchmark so the numbers stay comparable.",
+  "description": "Two suites. `quick` is the default: fourteen contracts chosen for dense use of the handlers the model is offered, one per template, on Ethereum for fast RPC; it runs in about half an hour and is what a change to the prompt, the checks or the loop is measured with. `unreachable` names handler fields the model could not have written, with the reason, so a miss there is expected rather than counted. `projects` is the full suite, ported from the discovery-v2 research benchmark so its numbers stay comparable: add a project there and every later full run includes it; leave addresses out to run every verified contract of the project that has a committed template.",
+  "quick": [
+    {
+      "project": "zora",
+      "chain": "ethereum",
+      "address": "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+      "template": "opstack/DisputeGameFactory_v2"
+    },
+    {
+      "project": "linea",
+      "chain": "ethereum",
+      "address": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "template": "linea/LineaRollup_ForcedTrx_v8_0"
+    },
+    {
+      "project": "interfold",
+      "chain": "ethereum",
+      "address": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
+      "template": "interfold/SlashingManager"
+    },
+    {
+      "project": "rocketpool",
+      "chain": "ethereum",
+      "address": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e",
+      "template": "rocketpool/RocketDAOSecurityProposals"
+    },
+    {
+      "project": "rocketpool",
+      "chain": "ethereum",
+      "address": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
+      "template": "rocketpool/RocketDAONodeTrustedUpgrade"
+    },
+    {
+      "project": "uniswapv3",
+      "chain": "ethereum",
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "template": "uniswapv3/GovernorBravoDelegate"
+    },
+    {
+      "project": "liquityv2",
+      "chain": "ethereum",
+      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+      "template": "liquityv2/TroveManager"
+    },
+    {
+      "project": "liquityv2",
+      "chain": "ethereum",
+      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
+      "template": "liquityv2/BorrowerOperations"
+    },
+    {
+      "project": "lighter",
+      "chain": "ethereum",
+      "address": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "template": "lighter/ZkLighterWithSpot"
+    },
+    {
+      "project": "fluent",
+      "chain": "ethereum",
+      "address": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+      "template": "fluent/FluentRollup"
+    },
+    {
+      "project": "across",
+      "chain": "ethereum",
+      "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+      "template": "acrossv3/HubPool"
+    },
+    {
+      "project": "shared-polygon-cdk",
+      "chain": "ethereum",
+      "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "template": "polygon-cdk/AgglayerGateway"
+    },
+    {
+      "project": "scroll",
+      "chain": "ethereum",
+      "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+      "template": "scroll/ScrollChain"
+    },
+    {
+      "project": "mantle",
+      "chain": "ethereum",
+      "address": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+      "template": "global/TimelockController"
+    }
+  ],
   "projects": [
     {
       "name": "scroll",

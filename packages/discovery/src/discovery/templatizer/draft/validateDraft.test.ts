@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import type { Draft } from './Draft'
 import type { Finding } from './Finding'
-import { contextFor, field, scrollChainDraft } from './test/drafts'
+import { contextFor, draftOf, field, scrollChainDraft } from './test/drafts'
 import { validateDraft, validateDraftText } from './validateDraft'
 
 /**
@@ -11,18 +11,11 @@ import { validateDraft, validateDraftText } from './validateDraft'
  * passing with zero errors shows the rules accept what researchers write.
  */
 describe(validateDraft.name, () => {
-  it('accepts the ScrollChain template as a draft, with only the RevertBatch overload warning', () => {
+  it('accepts the ScrollChain template as a draft', () => {
     const draft = scrollChainDraft()
     const result = validateDraft(draft, contextFor('ScrollChain'))
     expect(result.draft).toEqual(draft)
-    expect(result.findings).toEqual([
-      {
-        severity: 'warning',
-        path: 'fields.revertedBatches.handler.add.event',
-        message:
-          '"RevertBatch" is overloaded and V1 reads only its first declaration, "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)"; if the contract emits "event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)", read it in an action of its own with that full fragment',
-      },
-    ])
+    expect(result.findings).toEqual([])
   })
 
   it('accepts drafts of the other suite contracts', () => {
@@ -46,7 +39,6 @@ describe(validateDraft.name, () => {
     expect(result.draft).toEqual(undefined)
     expect(result.findings).toEqual([
       {
-        severity: 'error',
         path: 'fields.x.handler.args',
         message:
           'missing; expected an array, each element a string or a number',
@@ -62,17 +54,88 @@ describe(validateDraft.name, () => {
     draft.skips = draft.skips.filter((skip) => skip.item !== 'CommitBatch')
     draft.skips.push({ item: 'RevertBatch', reason: 'user-activity' })
     expect(
-      validateDraft(draft, contextFor('ScrollChain'))
-        .findings.filter((finding) => finding.severity !== 'warning')
-        .map((finding) => `${finding.severity} ${finding.path}`),
+      validateDraft(draft, contextFor('ScrollChain')).findings.map(
+        (finding) => finding.path,
+      ),
     ).toEqual([
-      'error fields.owner.covers[0]', // R3: UpdateProver twice
-      'error skips[13].item', // R3: RevertBatch twice
-      'error draft', // R3: CommitBatch has no verdict
-      'error fields.owner', // R4: baseline getter
-      'error fields.owner.covers[0]', // R8: hardcoded reads no events
-      'advisory skips[13].reason', // R9: only privileged code emits RevertBatch
+      'fields.owner.covers[0]', // R3: UpdateProver twice
+      'skips[14].item', // R3: RevertBatch twice
+      'draft', // R3: CommitBatch has no verdict
+      'fields.owner', // R4: baseline getter
+      'fields.owner.covers[0]', // R8: hardcoded reads no events
     ])
+  })
+
+  it('says why an array over a getter keyed by a uint8 cannot be constructed, for a bare name and a full fragment', () => {
+    const ctx = contextFor('NitroEnclaveVerifier')
+    const bare = validateDraft(
+      draftOf({
+        zkConfigs: field(
+          { type: 'array', method: 'getZkConfig', indices: [1, 2] },
+          ['getZkConfig(uint8)'],
+        ),
+      }),
+      ctx,
+    )
+    const construction = bare.findings.filter(
+      (finding) => finding.path === 'fields.zkConfigs.handler',
+    )
+    expect(construction.map((finding) => finding.message)).toEqual([
+      'V1 cannot construct this handler: Cannot find a matching method for getZkConfig; array reads only a getter keyed by uint16, uint32, uint64, uint256, and getZkConfig(uint8) is keyed by uint8, an enum in the source: write one call field per key value with that value in args, or skip it',
+    ])
+
+    const full = validateDraft(
+      draftOf({
+        zkConfigs: field(
+          {
+            type: 'array',
+            method:
+              'function getZkConfig(uint8 zkCoProcessor) view returns (tuple(bytes32 verifierId, bytes32 aggregatorId, address zkVerifier))',
+            indices: [1, 2],
+          },
+          ['getZkConfig(uint8)'],
+        ),
+      }),
+      ctx,
+    )
+    expect(
+      full.findings
+        .filter((finding) => finding.path === 'fields.zkConfigs.handler')
+        .map((finding) => finding.message),
+    ).toEqual([
+      'V1 cannot construct this handler: Invalid method abi; array reads only a getter keyed by uint16, uint32, uint64, uint256, and getZkConfig(uint8) is keyed by uint8, an enum in the source: write one call field per key value with that value in args, or skip it',
+    ])
+
+    const perLiteral = validateDraft(
+      draftOf({
+        zkConfigRiscZero: field(
+          { type: 'call', method: 'getZkConfig', args: [1] },
+          ['getZkConfig(uint8)'],
+        ),
+        zkConfigSuccinct: field(
+          { type: 'call', method: 'getZkConfig', args: [2] },
+          ['getZkConfig(uint8)'],
+        ),
+      }),
+      ctx,
+    )
+    expect(
+      perLiteral.findings.filter((finding) =>
+        finding.path.startsWith('fields.'),
+      ),
+    ).toEqual([])
+  })
+
+  it('refuses a handler V1 cannot construct, with V1’s own reason', () => {
+    const draft = scrollChainDraft()
+    draft.fields.args = field({ type: 'constructorArgs' })
+    const result = validateDraft(draft, contextFor('ScrollChain'))
+    expect(result.findings.map((finding) => finding.path)).toEqual([
+      'fields.args.handler',
+    ])
+    expect(result.findings[0]?.message ?? '').toInclude(
+      'V1 cannot construct this handler:',
+    )
   })
 })
 
@@ -95,7 +158,7 @@ describe(validateDraftText.name, () => {
   })
 
   function errorsOf(findings: Finding[]): Finding[] {
-    return findings.filter((finding) => finding.severity === 'error')
+    return findings
   }
 })
 
@@ -134,6 +197,10 @@ function nitroDraft(): Draft {
       { item: 'ownershipHandoverExpiresAt(address)', reason: 'user-activity' },
       { item: 'trustedIntermediateCerts(bytes32)', reason: 'unbounded' },
       { item: 'zkConfig(uint8)', reason: 'covered' },
+      {
+        item: 'constructor(address,uint64,bytes32[],uint64[],bytes32,address,address,uint8,(bytes32,bytes32,address),bytes32)',
+        reason: 'covered',
+      },
       { item: 'AggregatorIdUpdated', reason: 'covered' },
       { item: 'AttestationSubmitted', reason: 'user-activity' },
       { item: 'BatchAttestationSubmitted', reason: 'user-activity' },
@@ -172,6 +239,7 @@ function factoryDraft(): Draft {
       { item: 'gameAtIndex(uint256)', reason: 'unbounded' },
       { item: 'games(uint32,bytes32,bytes)', reason: 'user-activity' },
       { item: 'getGameUUID(uint32,bytes32,bytes)', reason: 'computation' },
+      { item: 'constructor(address)', reason: 'covered' },
       { item: 'AdminChanged', reason: 'covered' },
       { item: 'DisputeGameCreated', reason: 'user-activity' },
       { item: 'ImplementationArgsSet', reason: 'covered' },
@@ -221,6 +289,7 @@ function inboxDraft(): Draft {
       { item: 'forceInclusionDeadline(uint64)', reason: 'computation' },
       { item: 'getKeysetCreationBlock(bytes32)', reason: 'covered' },
       { item: 'inboxAccs(uint256)', reason: 'unbounded' },
+      { item: 'constructor(address,address,bytes)', reason: 'covered' },
       { item: 'AdminChanged', reason: 'covered' },
       { item: 'BatchPosterManagerSet', reason: 'covered' },
       { item: 'BeaconUpgraded', reason: 'not-state' },

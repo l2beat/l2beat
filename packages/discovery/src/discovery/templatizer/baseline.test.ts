@@ -1,7 +1,14 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { StructureContract } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
+import { getHandlers } from '../handlers/getHandlers'
 import { buildBaseline } from './baseline'
 
 describe(buildBaseline.name, () => {
+  const ADDRESS = ChainSpecificAddress(
+    'eth:0x1111111111111111111111111111111111111111',
+  )
   const abi = [
     'function owner() view returns (address)',
     'function paused() view returns (bool)',
@@ -10,22 +17,38 @@ describe(buildBaseline.name, () => {
     'function $weird() view returns (uint256)',
   ]
 
-  it('keeps the system handlers’ values and errors under their V1 names and kinds', () => {
-    const baseline = buildBaseline(
+  function handlersFor(override: Record<string, unknown> = {}) {
+    return getHandlers(
       abi,
-      [],
+      makeEntryStructureConfig(
+        {
+          overrides: {
+            [ADDRESS.toString()]: StructureContract.parse(override),
+          },
+        },
+        ADDRESS,
+      ),
+    )
+  }
+
+  it('keeps every value and error of the untemplatized run, with the kind V1’s handler list gives its name', () => {
+    const baseline = buildBaseline(
       {
         owner: 'eth:0x1111111111111111111111111111111111111111',
         validatorAt: ['eth:0x2222222222222222222222222222222222222222'],
         _$weird: 1,
-        myOverrideField: 'set by a project override',
+        fromConfig: 'set by a project override',
       },
       { paused: 'Execution reverted' },
+      handlersFor({
+        fields: { fromConfig: { handler: { type: 'hardcoded', value: 'x' } } },
+      }),
     )
 
     expect(baseline).toEqual({
       fields: {
         _$weird: { kind: 'getter', value: 1 },
+        fromConfig: { kind: 'override', value: 'set by a project override' },
         owner: {
           kind: 'getter',
           value: 'eth:0x1111111111111111111111111111111111111111',
@@ -39,26 +62,42 @@ describe(buildBaseline.name, () => {
     })
   })
 
-  it('leaves out ignored methods, as V1 does not read them', () => {
+  it('treats a value no handler produced (a copy field of the override) as an override field', () => {
     const baseline = buildBaseline(
-      abi,
-      ['owner'],
-      { owner: 'eth:0x1111111111111111111111111111111111111111' },
+      {
+        owner: 'eth:0x1111111111111111111111111111111111111111',
+        ownerCopy: 'x',
+      },
       {},
+      handlersFor({ fields: { ownerCopy: { copy: 'owner' } } }),
     )
 
-    expect(baseline.fields).toEqual({})
+    expect(baseline.fields.ownerCopy).toEqual({ kind: 'override', value: 'x' })
   })
 
-  it('names a field after the 0-argument getter when a probe shares its name', () => {
+  it('marks a probe the override shadows as the override’s', () => {
     const baseline = buildBaseline(
-      [
-        'function owners(uint256) view returns (address)',
-        'function owners() view returns (address[])',
-      ],
-      [],
+      { validatorAt: ['eth:0x2222222222222222222222222222222222222222'] },
+      {},
+      handlersFor({
+        fields: {
+          validatorAt: { handler: { type: 'array', method: 'validatorAt' } },
+        },
+      }),
+    )
+
+    expect(baseline.fields.validatorAt?.kind).toEqual('override')
+  })
+
+  it('names a field after the 0-argument getter when a probe shares its name, as V1 does', () => {
+    const owners = [
+      'function owners(uint256) view returns (address)',
+      'function owners() view returns (address[])',
+    ]
+    const baseline = buildBaseline(
       { owners: [] },
       {},
+      getHandlers(owners, makeEntryStructureConfig({}, ADDRESS)),
     )
 
     expect(baseline.fields.owners?.kind).toEqual('getter')

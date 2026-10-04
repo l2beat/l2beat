@@ -1,6 +1,7 @@
 /**
- * Authors a V1 template for a contract no template matches, from inside
- * the analyzer, so a local run with `--ai` comes out fully templatized.
+ * Authors a V1 template for a contract no template matches, and adds to
+ * templates that do, from inside the analyzer, so a local run with `--ai`
+ * comes out fully templatized.
  *
  * Three things here are about the engine rather than about templates:
  * - the engine analyses every address of one depth concurrently, so two
@@ -13,14 +14,23 @@
  *   with a `TemplatizationFailedError`, rather than leaving the contract
  *   untemplatized where nobody can tell a failure from a decision.
  *
+ * An existing template is only ever added to (`appendToTemplate`): its
+ * text is never rebuilt, its fields never removed, its `ignoreMethods`
+ * never changed. And nothing here predicts what V1 would do: the baseline
+ * is what V1 read, the dry run runs V1 with the analyzer's own config, and
+ * what V1 did is written down for the reviewer.
+ *
  * The backend never constructs this class; it is built by
- * `getDiscoveryEngine` only when a CLI run passes templatizer settings.
+ * `createAddressAnalyzer` only when a CLI run passes templatizer settings.
  */
 import type { Logger } from '@l2beat/backend-tools'
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { getHashForMatchingFromSources } from '../../flatten/utils'
 import { getErrorMessage } from '../../utils/getErrorMessage'
 import type { TemplateService } from '../analysis/TemplateService'
+import { StructureContract } from '../config/StructureConfig'
+import type { StructureContractConfig } from '../config/structureUtils'
+import { getHandlers } from '../handlers/getHandlers'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
@@ -28,35 +38,39 @@ import type { ContractSources } from '../source/SourceCodeService'
 import { FileArtifactSink, trailDirectory } from './artifacts'
 import { buildBaseline } from './baseline'
 import { dryRunDraft } from './draft/dryRun'
-import { advisoriesOf, fieldPath } from './draft/Finding'
-import { isFieldPath } from './draft/ruleContext'
+import {
+  analyzeExistingTemplate,
+  type ExistingTemplate,
+  failureNote,
+  remainingWorklist,
+} from './existingTemplate'
 import type { ContractFacts } from './facts'
 import { flattenSources } from './flattenSources'
-import {
-  analyzeFreeze,
-  type FreezeAnalysis,
-  lockedFields,
-  nothingBroke,
-  remainingWorklist,
-} from './freeze'
 import { authorDraft, DEFAULT_MAX_ROUNDS, type LoopResult } from './loop'
 import { describeModel } from './model/createModelClient'
 import { type ModelClient, ModelUnavailableError } from './model/ModelClient'
 import { SerialModelClient } from './model/SerialModelClient'
-import { buildPrompt } from './prompt/buildPrompt'
+import { buildPrompt, type ExistingFieldText } from './prompt/buildPrompt'
 import {
   TemplatizationFailedError,
   type TemplatizationTask,
 } from './TemplatizationFailedError'
 import { buildWorklist, isEmptyWorklist, type Worklist } from './worklist'
+import {
+  appendToTemplate,
+  type TemplateAdditions,
+} from './write/appendToTemplate'
 import { deriveIgnoreMethods } from './write/ignoreMethods'
-import { readFieldEntries, readTopLevelEntries } from './write/jsoncEntries'
-import { renderTemplateFile, schemaPathFor } from './write/templateFile'
+import { readFieldEntries } from './write/jsoncEntries'
+import {
+  renderTemplateFile,
+  schemaPathFor,
+  type TemplateFileField,
+} from './write/templateFile'
 import {
   addShape,
   chooseTemplateId,
   replaceTemplateText,
-  rewriteTemplate,
   writeNewTemplate,
 } from './write/writeTemplate'
 
@@ -71,9 +85,9 @@ export interface TemplatizerSettings {
   maxRounds?: number
   /** Where the per-contract trail goes: `<artifactsRoot>/<project>/<address>/`. */
   artifactsRoot: string
-  /** Address → template id in the committed discovered.json, for the freeze path. */
+  /** Address → template id in the committed discovered.json, for contracts whose code changed. */
   previousTemplates: Record<string, string>
-  /** `--ai-revisit`: also extend templates that already match, see `revisit`. */
+  /** `--ai-revisit`: also add to templates that already match, see `revisit`. */
   revisit?: boolean
   /**
    * `stop` (the default) ends discovery on any failure; the benchmark sets
@@ -87,6 +101,12 @@ export interface TemplatizerSettings {
 export interface TemplatizeRequest {
   provider: IProvider
   address: ChainSpecificAddress
+  /**
+   * The analyzer's config for the address before any template: the global
+   * and project `types`, the override from `config.jsonc`. Dry runs push
+   * the template onto a copy of it, as the analyzer will.
+   */
+  config: StructureContractConfig
   sources: ContractSources
   proxyType?: string
   proxyValues: Record<string, ContractValue | undefined>
@@ -94,7 +114,6 @@ export interface TemplatizeRequest {
   /** What the untemplatized handler run produced: the baseline. */
   values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
-  ignoreMethods: string[]
 }
 
 export class Templatizer {
@@ -188,11 +207,10 @@ export class Templatizer {
     hash: Hash256,
     task: TemplatizationTask,
   ): Promise<string> {
-    const facts = this.buildFacts(request, hash)
-    const worklist = buildWorklist(facts.abi)
+    const { facts, worklist } = this.prepare(request, hash)
     const previous = this.previousTemplateOf(request.address)
     if (previous !== undefined) {
-      return await this.extendPrevious(request, facts, worklist, previous, task)
+      return await this.extendPrevious(request, facts, previous)
     }
     if (isEmptyWorklist(worklist)) {
       return this.writeWithoutModel(request, facts)
@@ -200,9 +218,18 @@ export class Templatizer {
     return await this.authorNew(request, facts, worklist, task)
   }
 
-  private buildFacts(request: TemplatizeRequest, hash: Hash256): ContractFacts {
+  /**
+   * The facts and the worklist, from what the analyzer gathered. V1's own
+   * handler list for the address says which baseline name is a getter, a
+   * probe or an override field, and so which worklist items are probed.
+   */
+  private prepare(
+    request: TemplatizeRequest,
+    hash: Hash256,
+  ): { facts: ContractFacts; worklist: Worklist } {
     const { provider, sources } = request
-    return {
+    const handlers = getHandlers(sources.abi, request.config)
+    const facts: ContractFacts = {
       project: this.settings.project,
       chain: provider.chain,
       address: request.address,
@@ -215,13 +242,9 @@ export class Templatizer {
       bundles: sources.sources,
       sources: flattenSources(sources.sources, this.logger),
       shapeHash: hash,
-      baseline: buildBaseline(
-        sources.abi,
-        request.ignoreMethods,
-        request.values,
-        request.errors,
-      ),
+      baseline: buildBaseline(request.values, request.errors, handlers),
     }
+    return { facts, worklist: buildWorklist(facts.abi, facts.baseline) }
   }
 
   /** Only a template that still exists can be extended; a deleted one means starting over. */
@@ -239,7 +262,7 @@ export class Templatizer {
     const templateId = chooseTemplateId(this.templateService, facts)
     const text = renderTemplateFile({
       schema: schemaPathFor(templateId),
-      header: `Authored by l2b discover --ai on ${this.today()} without a model call: the contract has no view functions with arguments and no events. Review before committing.`,
+      header: `Authored by l2b discover --ai on ${this.today()} without a model call: the contract has no view functions with arguments, no constructor parameters and no events. Review before committing.`,
       ignoreMethods: [],
       fields: [],
     })
@@ -265,8 +288,7 @@ export class Templatizer {
     const text = renderTemplateFile({
       schema: schemaPathFor(templateId),
       header: this.header(result),
-      notes: templateNotes(result),
-      ignoreMethods: deriveIgnoreMethods(worklist, result.draft, facts.abi),
+      ignoreMethods: deriveIgnoreMethods(worklist, result.draft),
       fields: draftFields(result),
     })
     this.touched.add(templateId)
@@ -285,45 +307,39 @@ export class Templatizer {
   }
 
   /**
-   * A contract whose code changed: the old template's fields that still
-   * execute on the new code are kept verbatim, the model rules only on
-   * what they leave undecided, and the new shape joins the old template.
-   * When nothing broke there is nothing to ask.
+   * A contract whose code changed: the new shape joins the old template,
+   * every field is kept, and a field that fails on the new code gets a note
+   * for the reviewer. The model is not asked; `--ai-revisit` is how to ask
+   * it what the template misses.
    */
   private async extendPrevious(
     request: TemplatizeRequest,
     facts: ContractFacts,
-    worklist: Worklist,
     templateId: string,
-    task: TemplatizationTask,
   ): Promise<string> {
-    const freeze = await this.freeze(request, facts, templateId)
-    const target = { facts, sources: request.sources }
-    if (nothingBroke(freeze)) {
-      addShape(this.templateService, templateId, target)
-      this.logger.info(
-        `Templatizer added the shape of ${subjectOf(facts)} to ${templateId}, whose fields all still execute`,
-      )
-      return templateId
-    }
-    const remaining = remainingWorklist(worklist, freeze, facts)
-    const result = await this.runLoop(request, facts, remaining, task, freeze)
-    const text = this.extendedTemplateText(freeze, remaining, result, facts, {
-      header: `${this.header(result)} ${keptAndRemoved(freeze, 'broke on the new shape')}`,
+    const existing = await this.analyzeExisting(request, templateId)
+    const noted = this.writeAdditions(existing, facts, {})
+    addShape(this.templateService, templateId, {
+      facts,
+      sources: request.sources,
     })
     this.touched.add(templateId)
-    rewriteTemplate(this.templateService, templateId, text, target)
-    this.logExtended('extended', facts, freeze, result)
+    this.logger.info(
+      `Templatizer added the shape of ${subjectOf(facts)} to ${templateId}`,
+      {
+        fields: existing.fields.length,
+        failing: existing.failing.map((field) => field.name).join(', '),
+        notesWritten: noted,
+      },
+    )
     return templateId
   }
 
   /**
-   * `--ai-revisit` for a contract its template still matches: the path of
-   * changed code, as if this code were new, except that the model is asked
-   * even when every field executes, because finding what the template
-   * misses is the point, and the shape, already there, is not added again.
-   * A template is revisited once per run, on the first contract that
-   * matches it; contracts that share it wait for that and then use the
+   * `--ai-revisit` for a contract its template still matches: the model is
+   * asked what the template misses for this contract, and its fields are
+   * appended. A template is revisited once per run, on the first contract
+   * that matches it; contracts that share it wait for that and then use the
    * result. A template this run authored or extended is not revisited.
    * A failed revisit stops the run, as a failed authoring does.
    */
@@ -352,8 +368,7 @@ export class Templatizer {
     try {
       const hash = getHashForMatchingFromSources(request.sources.sources)
       if (hash !== undefined) {
-        const facts = this.buildFacts(request, hash)
-        const worklist = buildWorklist(facts.abi)
+        const { facts, worklist } = this.prepare(request, hash)
         await this.revisitTemplate(request, facts, worklist, templateId, task)
       }
     } catch (error) {
@@ -368,96 +383,80 @@ export class Templatizer {
     templateId: string,
     task: TemplatizationTask,
   ): Promise<void> {
-    const freeze = await this.freeze(request, facts, templateId)
-    const remaining = remainingWorklist(worklist, freeze, facts)
-    if (nothingBroke(freeze) && isEmptyWorklist(remaining)) {
+    const existing = await this.analyzeExisting(request, templateId)
+    const remaining = remainingWorklist(worklist, existing)
+    if (isEmptyWorklist(remaining)) {
+      this.writeAdditions(existing, facts, {})
       this.logger.info(
         `Templatizer revisit: ${templateId} already decides every item of ${subjectOf(facts)}`,
       )
       return
     }
-    const result = await this.runLoop(request, facts, remaining, task, freeze)
-    if (nothingBroke(freeze) && addsNothing(freeze, remaining, result, facts)) {
+    const result = await this.runLoop(request, facts, remaining, task, existing)
+    const fields = draftFields(result)
+    const wrote = this.writeAdditions(existing, facts, {
+      provenance: this.header(result, 'Added'),
+      fields,
+    })
+    if (!wrote) {
       this.logger.info(
         `Templatizer revisit found nothing to add to ${templateId} from ${subjectOf(facts)}`,
       )
       return
     }
-    const text = this.extendedTemplateText(freeze, remaining, result, facts, {
-      header: `${this.header(result, 'Revisited', '--ai-revisit')} ${keptAndRemoved(freeze, `failed at block ${facts.blockNumber}`)}`,
-    })
-    this.touched.add(templateId)
-    replaceTemplateText(this.templateService, templateId, text)
-    this.logExtended('revisited', facts, freeze, result)
-  }
-
-  private freeze(
-    request: TemplatizeRequest,
-    facts: ContractFacts,
-    templateId: string,
-  ): Promise<FreezeAnalysis> {
-    return analyzeFreeze(
-      request.provider,
-      this.handlerExecutor,
-      this.templateService,
-      facts,
-      templateId,
-    )
-  }
-
-  private logExtended(
-    verb: 'extended' | 'revisited',
-    facts: ContractFacts,
-    freeze: FreezeAnalysis,
-    result: Accepted,
-  ): void {
     this.logger.info(
-      `Templatizer ${verb} ${freeze.templateId} for ${subjectOf(facts)}`,
+      `Templatizer revisited ${templateId} for ${subjectOf(facts)}`,
       {
-        kept: freeze.locked.length,
-        removed: freeze.broken.map((field) => field.name).join(', '),
-        added: Object.keys(result.draft.fields).length,
+        existing: existing.fields.length,
+        failing: existing.failing.map((field) => field.name).join(', '),
+        added: fields.map((field) => field.name).join(', '),
       },
     )
   }
 
+  private analyzeExisting(
+    request: TemplatizeRequest,
+    templateId: string,
+  ): Promise<ExistingTemplate> {
+    return analyzeExistingTemplate(
+      request.provider,
+      this.handlerExecutor,
+      this.templateService,
+      request.config,
+      request.sources.abi,
+      templateId,
+    )
+  }
+
   /**
-   * The old file's entries travel as text, so comments, descriptions,
-   * severities and permissions of locked fields survive exactly as the
-   * researcher wrote them; only broken fields are left out.
+   * Appends the model's fields and the notes about failing fields to the
+   * template's text. Nothing is written when there is nothing new: no
+   * fields, and every note already there. Returns whether it wrote.
    */
-  private extendedTemplateText(
-    freeze: FreezeAnalysis,
-    worklist: Worklist,
-    result: Accepted,
+  private writeAdditions(
+    existing: ExistingTemplate,
     facts: ContractFacts,
-    { header }: { header: string },
-  ): string {
-    const oldText = this.templateService.readTemplateFile(freeze.templateId)
+    additions: Pick<TemplateAdditions, 'provenance' | 'fields'>,
+  ): boolean {
+    const oldText = this.templateService.readTemplateFile(existing.templateId)
     if (oldText === undefined) {
-      throw new Error(`Template ${freeze.templateId} has no template.jsonc`)
+      throw new Error(`Template ${existing.templateId} has no template.jsonc`)
     }
-    const locked = new Set(freeze.locked)
-    const added = addedIgnoreMethods(freeze, worklist, result, facts)
-    const keepsOldIgnoreMethods = added.length === 0
-    return renderTemplateFile({
-      schema: schemaPathFor(freeze.templateId),
-      header,
-      notes: templateNotes(result),
-      preserved: readTopLevelEntries(oldText).filter(
-        (entry) =>
-          entry.key !== '$schema' &&
-          entry.key !== 'fields' &&
-          (keepsOldIgnoreMethods || entry.key !== 'ignoreMethods'),
+    const { text, insertions } = appendToTemplate(oldText, {
+      ...additions,
+      fieldNotes: Object.fromEntries(
+        existing.failing.map((field) => [
+          field.name,
+          [failureNote(facts.blockNumber, field)],
+        ]),
       ),
-      ignoreMethods: keepsOldIgnoreMethods
-        ? []
-        : [...freeze.template.ignoreMethods, ...added],
-      lockedFields: readFieldEntries(oldText).filter((entry) =>
-        locked.has(entry.name),
-      ),
-      fields: draftFields(result),
     })
+    if (insertions.length === 0) {
+      return false
+    }
+    this.touched.add(existing.templateId)
+    replaceTemplateText(this.templateService, existing.templateId, text)
+    return true
   }
 
   /** Throws `TemplatizationFailedError` unless a draft is accepted. */
@@ -466,13 +465,17 @@ export class Templatizer {
     facts: ContractFacts,
     worklist: Worklist,
     task: TemplatizationTask,
-    freeze?: FreezeAnalysis,
+    existing?: ExistingTemplate,
   ): Promise<Accepted> {
     const artifacts = new FileArtifactSink(
       trailDirectory(this.settings.artifactsRoot, facts.project, facts.address),
     )
-    const locked = freeze === undefined ? undefined : this.lockedTexts(freeze)
-    const { prompt, truncated } = buildPrompt({ facts, worklist, locked })
+    const { prompt, truncated } = buildPrompt({
+      facts,
+      worklist,
+      existing:
+        existing === undefined ? undefined : this.existingTexts(existing),
+    })
     const subject = subjectOf(facts)
     if (truncated) {
       this.logger.warn(`Templatizer cut the source of ${subject} to fit`)
@@ -482,7 +485,7 @@ export class Templatizer {
     this.logger.info(`Templatizer queued ${subject} for the model`, {
       functions: worklist.items.length,
       events: worklist.events.length,
-      lockedFields: freeze?.locked.length ?? 0,
+      existingFields: existing?.fields.length ?? 0,
     })
     const maxRounds = Math.max(1, this.settings.maxRounds ?? DEFAULT_MAX_ROUNDS)
     const model = this.model.reporting(({ turn, waiting }) =>
@@ -496,16 +499,22 @@ export class Templatizer {
         model,
         artifacts,
         logger: this.logger,
+        // The dry run sees the template the file will hold: the existing
+        // one as it is, or a new one with the ignoreMethods this draft gets.
         dryRun: (draft) =>
           dryRunDraft(request.provider, this.handlerExecutor, facts, draft, {
-            locked: freeze === undefined ? undefined : lockedFields(freeze),
-            ignoreMethods: freeze?.template.ignoreMethods,
+            config: request.config,
+            base:
+              existing?.template ??
+              StructureContract.parse({
+                ignoreMethods: deriveIgnoreMethods(worklist, draft),
+              }),
           }),
       },
       {
         prompt,
         subject,
-        validation: { facts, worklist, lockedFieldNames: freeze?.locked },
+        validation: { facts, worklist, existingFieldNames: existing?.fields },
         trail: {
           address: facts.address,
           name: facts.name,
@@ -513,9 +522,9 @@ export class Templatizer {
           blockNumber: facts.blockNumber,
           effort: this.settings.effort,
           promptTruncated: truncated,
-          previousTemplate: freeze?.templateId,
-          lockedFields: freeze?.locked,
-          brokenFields: freeze?.broken,
+          existingTemplate: existing?.templateId,
+          existingFields: existing?.fields,
+          failingFields: existing?.failing,
         },
       },
       { maxRounds: this.settings.maxRounds },
@@ -541,13 +550,29 @@ export class Templatizer {
     return result
   }
 
-  private lockedTexts(freeze: FreezeAnalysis) {
-    const text = this.templateService.readTemplateFile(freeze.templateId) ?? ''
-    const locked = new Set(freeze.locked)
-    return readFieldEntries(text).filter((entry) => locked.has(entry.name))
+  /** The existing fields as the researcher wrote them, each marked when it fails here. */
+  private existingTexts(existing: ExistingTemplate): ExistingFieldText[] {
+    const text =
+      this.templateService.readTemplateFile(existing.templateId) ?? ''
+    const failing = new Map(
+      existing.failing.map((field) => [field.name, field.error]),
+    )
+    return readFieldEntries(text).map(({ name, text }) => {
+      const field = existing.template.fields[name]
+      return {
+        name,
+        text,
+        ...(failing.has(name) ? { error: failing.get(name) } : {}),
+        ...(field?.handler === undefined ? {} : { handler: field.handler }),
+        ...(field?.edit === undefined ? {} : { edit: field.edit }),
+      }
+    })
   }
 
-  private header(result: Accepted, verb = 'Authored', flag = '--ai') {
+  private header(result: Accepted, verb = 'Authored') {
+    // The flag names the run that wrote the line, so a reviewer knows how to
+    // reproduce it: a template authored during a revisit run came from --ai-revisit.
+    const flag = this.settings.revisit === true ? '--ai-revisit' : '--ai'
     const model =
       result.model === undefined
         ? this.settings.modelLabel
@@ -564,34 +589,17 @@ export class Templatizer {
 
 type Accepted = Extract<LoopResult, { status: 'accepted' }>
 
-/** The accepted draft's fields, each with what the reviewer should check. */
-function draftFields(result: Accepted) {
+/** The accepted draft's fields, each with what the dry run saw that the reviewer should check. */
+function draftFields(result: Accepted): TemplateFileField[] {
   const runs = result.acceptedRound.dryRun?.fields ?? []
-  const advisories = advisoriesOf(result.acceptedRound.findings)
-  return Object.entries(result.draft.fields).map(([name, field]) => {
-    const dryRunNote = runs.find((run) => run.name === name)?.note
-    const kept = advisories.filter((advisory) =>
-      isFieldPath(advisory.path, fieldPath(name)),
-    )
-    return {
-      name,
-      reason: field.reason,
-      covers: field.covers,
-      notes: [
-        ...(dryRunNote === undefined ? [] : [dryRunNote]),
-        ...kept.map((advisory) => reviewNote(advisory.message)),
-      ],
-      handler: field.handler,
-      edit: field.edit,
-    }
-  })
-}
-
-/** Advisories the model kept that are about no single field, e.g. a skip. */
-function templateNotes(result: Accepted): string[] {
-  return advisoriesOf(result.acceptedRound.findings)
-    .filter((advisory) => !advisory.path.startsWith('fields'))
-    .map((advisory) => reviewNote(advisory.message))
+  return Object.entries(result.draft.fields).map(([name, field]) => ({
+    name,
+    reason: field.reason,
+    covers: field.covers,
+    notes: (runs.find((run) => run.name === name)?.notes ?? []).map(reviewNote),
+    handler: field.handler,
+    edit: field.edit,
+  }))
 }
 
 /** How every log line names the contract: the logs of contracts in one depth interleave. */
@@ -621,42 +629,9 @@ function revisitTask(
   }
 }
 
+/** Every line the templatizer writes for the reviewer starts the same way. */
 function reviewNote(message: string): string {
   return `review: ${message}`
-}
-
-function keptAndRemoved(freeze: FreezeAnalysis, failure: string): string {
-  const kept = `Kept ${freeze.locked.length} field(s) that still execute`
-  if (freeze.broken.length === 0) {
-    return `${kept}.`
-  }
-  const names = freeze.broken.map((field) => field.name).join(', ')
-  return `${kept}, removed ${freeze.broken.length} that ${failure} (${names}).`
-}
-
-/** Skipped probed getters the old template did not ignore yet. */
-function addedIgnoreMethods(
-  freeze: FreezeAnalysis,
-  worklist: Worklist,
-  result: Accepted,
-  facts: ContractFacts,
-): string[] {
-  return deriveIgnoreMethods(worklist, result.draft, facts.abi).filter(
-    (name) => !freeze.template.ignoreMethods.includes(name),
-  )
-}
-
-/** A draft of skips only, none of which hides a probed getter, would rewrite the file for a new header alone. */
-function addsNothing(
-  freeze: FreezeAnalysis,
-  worklist: Worklist,
-  result: Accepted,
-  facts: ContractFacts,
-): boolean {
-  return (
-    Object.keys(result.draft.fields).length === 0 &&
-    addedIgnoreMethods(freeze, worklist, result, facts).length === 0
-  )
 }
 
 function isDiamond(proxyType: string | undefined): boolean {

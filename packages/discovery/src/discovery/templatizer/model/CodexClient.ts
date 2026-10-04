@@ -1,15 +1,24 @@
 /**
- * `ModelClient` over the `codex` command line (codex-cli 0.159.0).
+ * `ModelClient` over the `codex` command line (codex-cli 0.160.0).
  *
  * Every turn is one `codex exec` process. The prompt goes in on stdin so the
  * model never needs to read a file, and the model gets nothing else: a
  * read-only sandbox, the shell tool disabled, web search disabled and the
  * user's `config.toml` ignored (which is where MCP servers would come from;
- * `--ignore-user-config` still uses the stored login). The event stream is
- * then checked for any tool item, and a turn that shows one is refused, so
- * "no tool ran" is verified, not assumed. The first turn is not `--ephemeral`
- * because repair rounds resume the thread by id, and an ephemeral thread
- * cannot be resumed.
+ * `--ignore-user-config` still uses the stored login). Codex's own
+ * coding-agent instructions are replaced by the templatizer's system prompt
+ * (`model_instructions_file`), no `AGENTS.md` is looked for
+ * (`project_doc_max_bytes=0`; the turn runs in a fresh temporary directory
+ * outside any repository anyway), the sub-agent tools and the developer
+ * message that introduces them are off (`agents.enabled=false`), and the
+ * environment message naming the cwd and shell is not sent
+ * (`include_environment_context=false`). What Codex still adds, and no
+ * documented setting removes, is its catalogue of the skills installed on
+ * the machine (4 KB of names and descriptions of local SKILL.md files, which
+ * the model has no tool to read). The event stream is then checked for any
+ * tool item, and a turn that shows one is refused, so "no tool ran" is
+ * verified, not assumed. The first turn is not `--ephemeral` because repair
+ * rounds resume the thread by id, and an ephemeral thread cannot be resumed.
  *
  * `--output-schema` is off by default. The OpenAI structured-output endpoint
  * behind it is strict: it rejects `const` without `type`, and demands that
@@ -39,6 +48,7 @@ import type {
   ModelTurnInput,
 } from './ModelClient'
 import { type ProcessRun, runProcess } from './process'
+import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
 import { notAnswering, type TurnProblem, unusableAnswer } from './turnProblem'
 
 /** What the OpenAI API accepts as `reasoning.effort` (its own error lists them); a model may take fewer. */
@@ -66,7 +76,7 @@ export interface CodexClientOptions {
   codexHome?: string
 }
 
-/** Every turn, first or resumed, runs with exactly these. */
+/** Every turn, first or resumed, runs with exactly these, plus the instructions file of its directory. */
 export const CODEX_ISOLATION_FLAGS: readonly string[] = [
   '--skip-git-repo-check',
   '--ignore-user-config',
@@ -76,7 +86,16 @@ export const CODEX_ISOLATION_FLAGS: readonly string[] = [
   'features.shell_tool=false',
   '-c',
   'web_search="disabled"',
+  '-c',
+  'project_doc_max_bytes=0',
+  '-c',
+  'agents.enabled=false',
+  '-c',
+  'include_environment_context=false',
 ]
+
+/** Holds `TOOL_SYSTEM_PROMPT` in the turn's directory; Codex sends its contents in place of its built-in instructions. */
+export const CODEX_INSTRUCTIONS_FILE = 'instructions.md'
 
 export const DEFAULT_CODEX_TIMEOUT_MS = 15 * 60 * 1_000
 
@@ -116,6 +135,7 @@ export class CodexClient implements ModelClient {
       const args = [
         ...command,
         ...CODEX_ISOLATION_FLAGS,
+        ...instructionsFlags(workDir),
         '--json',
         '--output-last-message',
         lastMessageFile,
@@ -239,6 +259,12 @@ function describeProblem(
     return unusableAnswer('codex produced no final message')
   }
   return undefined
+}
+
+function instructionsFlags(workDir: string): string[] {
+  const file = path.join(workDir, CODEX_INSTRUCTIONS_FILE)
+  fs.writeFileSync(file, TOOL_SYSTEM_PROMPT)
+  return ['-c', `model_instructions_file=${JSON.stringify(file)}`]
 }
 
 function readLastMessage(file: string): string | undefined {

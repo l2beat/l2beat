@@ -1,6 +1,7 @@
 /**
  * The handler reference the model reads, condensed from the researcher
- * README to the seven handler types and two `edit` forms a draft may use.
+ * README to the seven handler types a draft may use and the `edit` and
+ * `where` forms researchers write.
  *
  * It states V1's run-time behaviour rather than the README's prose where
  * the two differ in ways a draft trips over: how a bare method name is
@@ -20,7 +21,7 @@ export const HANDLER_DOCS = [
   '',
   'A string that is exactly `{{ name }}` stands for the value of another field. References are accepted in `args` and `address` (call), `length` and `indices` (array), `slot` and `offset` (storage), and nowhere else.',
   '',
-  '- `name` is a baseline field, another field of your draft, or a locked field. `{{ $.address }}` is this contract’s own address.',
+  '- `name` is a baseline field, another field of your draft, or a field of the existing template. `{{ $.address }}` is this contract’s own address.',
   '- Proxy values (`$admin`, `$implementation`, `$pastUpgrades`, …) are not referenceable.',
   '- `{{ name.key }}` reaches into an object value, e.g. `{{ constructorArgs._owner }}` of a `constructorArgs` field with `nameArgs: true`. It cannot index into arrays, and the outputs of a function returning several values are positional, so it cannot reach into those either.',
   '- A reference resolves to the raw handler value: before `edit`, with addresses unprefixed, so it can be passed straight into `args`.',
@@ -38,6 +39,7 @@ export const HANDLER_DOCS = [
   '- `args` (required, `[]` for none): one entry per input, each a literal or a reference. Integers as JSON numbers (decimal strings above 2^53), booleans as booleans, bytes as `0x` hex, addresses as plain `0x…` hex without the chain prefix: arguments reach the ABI encoder as written.',
   '- `address` (optional): call another contract, given as a reference to a field that holds its address (`"{{ registry }}"`). `method` must then be the full fragment, because the other contract’s ABI is not available.',
   '- `expectRevert` (optional): for a call that reverts today by design; the field then holds `"EXPECT_REVERT"`.',
+  '- Several `call` fields may read the same function with different literal `args`, one field per key that is fixed in the source (the values of an enum, the ids of known quorums). Name each after the function and its key, the way `getOperatorSetParams(uint8)` is read for quorums 0, 1 and 2 as `operatorSetParamsQuorum1`, `operatorSetParamsQuorum2`, `operatorSetParamsQuorum3`, and list the function in the `covers` of each.',
   '',
   'Examples. The Succinct entry of a verifier config keyed by an enum value that is fixed in the source; a getter of another contract whose address a field holds:',
   '',
@@ -55,6 +57,7 @@ export const HANDLER_DOCS = [
   '- Without `length` and `indices`, the method is called from `startIndex` upwards until it reverts, at most `maxLength` times (default 100). Reading `maxLength` values is an error (also when `length` exceeds `maxLength`), so raise it for longer arrays.',
   '- `indices` (optional): the literal indices to read, e.g. `[0, 1, 2, 3]` for the values of an enum, or a reference to a field holding an array of indices. Not together with `length`.',
   '- `startIndex` (optional, default 0): the first index when enumerating.',
+  '- A `uint8` key is not accepted, and the handler fails to construct. A getter keyed by a `uint8` is keyed by an enum in the source: read it with one `call` per enum value whose state matters (see `call`), or skip it.',
   '- Discovery already reads every getter with one `uint256` argument at indices 0–4 (marked "probed" in section 4). An `array` field named exactly like that getter replaces the probe with the full array.',
   '',
   'Examples. Pools 1 … maxAssetId, with the length taken from a baseline getter; the holders of the four roles of an enum:',
@@ -76,7 +79,7 @@ export const HANDLER_DOCS = [
   '- `flatten` (optional, `add` form only): with exactly one `select`ed parameter that is an array, one row per element.',
   '- An action is `{ "event": …, "where": … }`. `event` is a bare event name, a full fragment such as `event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)`, or a list of them. A bare name resolves to the first declaration of that name in the ABI listed in section 4; to read another overload, write its full fragment. Several events in one action must be compatible: every parameter of the event with the fewest parameters must appear, with the same name, type and indexed flag, in each other event of the action.',
   '- `select`, `groupBy`, `dedupBy` and every `#name` in `where` must be parameters of every event the field reads.',
-  '- `where` (optional) filters the logs of the action. Exactly two forms are accepted: `["=", "#name", literal]` and `["!=", "#name", literal]`, where `#name` is a log parameter and the comparison is exact (`===`). Log values are compared as: integers as JSON numbers (decimal strings above 2^53), booleans as booleans, bytes and bytes32 as lowercase `0x` hex, and addresses chain-prefixed and checksummed, because log values are chain-prefixed before the comparison. So an address literal is written like the addresses in the baseline, `["=", "#account", "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"]`; a bare `0x…` never matches.',
+  '- `where` (optional) filters the logs of the action. The forms researchers write are `["=", "#name", literal]` and `["!=", "#name", literal]`, where `#name` is a log parameter and the comparison is exact (`===`); other operators of the same small language exist and are documented in the discovery README. Log values are compared as: integers as JSON numbers (decimal strings above 2^53), booleans as booleans, bytes and bytes32 as lowercase `0x` hex, and addresses chain-prefixed and checksummed, because log values are chain-prefixed before the comparison. So an address literal is written like the addresses in the baseline, `["=", "#account", "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"]`; a bare `0x…` never matches.',
   '',
   'Examples. Distinct pooled tokens with their LP token, one row per `l1Token`; the latest owner of every token id:',
   '',
@@ -117,7 +120,7 @@ export const HANDLER_DOCS = [
   '',
   '### constructorArgs',
   '',
-  'Decodes the constructor arguments of this address’s deployment with the constructor in the ABI. The field must be named `constructorArgs`. For a proxy that is the proxy’s own constructor (logic, admin, init data), not the implementation’s, so use it for contracts without a proxy whose constructor sets state no getter exposes.',
+  'Decodes the constructor arguments of this address’s deployment with the constructor in the ABI, the one section 4 lists when it has parameters; the field covers it. The field must be named `constructorArgs`. For a proxy that is the proxy’s own constructor (logic, admin, init data), not the implementation’s, so use it for contracts without a proxy whose constructor sets state no getter exposes.',
   '',
   '- `nameArgs` (optional): `true` makes the value an object keyed by the constructor parameter names instead of a positional array, so other fields can reference `{{ constructorArgs.<name> }}`.',
   '',
@@ -141,10 +144,10 @@ export const HANDLER_DOCS = [
   '',
   '### edit',
   '',
-  '`edit` (optional, next to `handler`) transforms the field’s value after all handlers ran. Exactly two forms are accepted:',
+  '`edit` (optional, next to `handler`) transforms the field’s value after all handlers ran. The two forms researchers write:',
   '',
   '- `["format", "FormatSeconds"]`: a number of seconds becomes a duration, `86400` → `"1d"`. For delays, periods and timeouts.',
   '- `["get", key, …]`: keeps one part of the value. A string key selects an object property (output or parameter names, as the baseline shows objects), a number selects an array element, several keys walk deeper, e.g. `["get", "lastFinalizeTimestamp"]` on the result of `miscData()`.',
   '',
-  'Anything else (`pipe`, `map`, other `format` names, …) is an error.',
+  'Other operators of the same small language exist (`pipe`, `map`, other `format` type casters, …) and are documented in the discovery README; an edit that does not fit its value fails when the field runs.',
 ].join('\n')

@@ -18,7 +18,6 @@ describe(checkSchema.name, () => {
   }
 
   const error = (path: string, message: string): Finding => ({
-    severity: 'error',
     path,
     message,
   })
@@ -153,7 +152,7 @@ describe(checkSchema.name, () => {
     ])
   })
 
-  it('applies the blip whitelist to edit and to every where', () => {
+  it('rejects an edit or where that is not a blip program, and accepts any that is', () => {
     const draft = scrollChainDraft() as unknown as {
       fields: Record<
         string,
@@ -161,13 +160,26 @@ describe(checkSchema.name, () => {
       >
     }
     draft.fields.sequencers!.handler.remove = [
+      { event: 'UpdateSequencer', where: { status: true } },
+    ]
+    draft.fields.provers!.edit = { op: 'format' }
+    expect(check(draft)).toEqual([
+      error(
+        'fields.sequencers.handler.remove[0].where',
+        '`where` must be a blip program V1 parses: an array whose first element is an operator, such as ["=", "#status", true]; got {"status":true}',
+      ),
+      error(
+        'fields.provers.edit',
+        '`edit` must be a blip program V1 parses: an array whose first element is an operator, such as ["format", "FormatSeconds"] or ["get", "owner"]; got {"op":"format"}',
+      ),
+    ])
+
+    const other = scrollChainDraft() as unknown as typeof draft
+    other.fields.sequencers!.handler.remove = [
       { event: 'UpdateSequencer', where: ['not', ['=', '#status', true]] },
     ]
-    draft.fields.provers!.edit = ['format', 'Undecimal']
-    expect(check(draft).map((finding) => finding.path)).toEqual([
-      'fields.sequencers.handler.remove[0].where',
-      'fields.provers.edit',
-    ])
+    other.fields.provers!.edit = ['format', 'Undecimal']
+    expect(check(other)).toEqual([])
   })
 
   it('lists the skip reasons with their meaning', () => {

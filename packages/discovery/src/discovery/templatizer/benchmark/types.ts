@@ -11,18 +11,24 @@
  * a `v2-only` verdict.
  *
  * Every V1 field gets an *attribution* before it gets a verdict, because a
- * missed field means different things by origin: a missed proxy `$` value or
- * 0-arg getter would be a bug in the analyzer, a missed handler field is the
- * model missing an enumeration, and a missed template projection
+ * missed field means different things by origin: a missed proxy `$` value,
+ * 0-arg getter or override field is a *regression* (the generated template
+ * lost a value the committed run had), a missed handler field is the model
+ * missing an enumeration, and a missed template projection
  * (`pickRoleMembers`, `copy`, a formatted `call`) is a display convenience
- * the templatizer does not author by design. The report separates them so
- * nobody reads a "v1-only" count without knowing which kind it is.
+ * the templatizer does not author by design. Handler fields are further
+ * split into *reachable* ones, which the model could have written with the
+ * handlers it is offered, and unreachable ones (`hardcoded`, `eventCount`,
+ * a project-specific handler, or a field the suite marks with a reason);
+ * recall is measured on the reachable ones. The report separates all of
+ * this so nobody reads a "v1-only" count without knowing which kind it is.
  */
 import type { StructureContract } from '../../config/StructureConfig'
 
 export const ATTRIBUTION_KINDS = [
   'proxy',
   'getter',
+  'override',
   'handler',
   'template-projection',
 ] as const
@@ -31,18 +37,38 @@ export type AttributionKind = (typeof ATTRIBUTION_KINDS)[number]
 export type V1Attribution =
   | { kind: 'proxy' }
   | { kind: 'getter'; edited?: true }
-  | { kind: 'handler'; handlerType: string }
+  /** A field the address override in `config.jsonc` defines; it runs with or without the template. */
+  | { kind: 'override' }
+  | {
+      kind: 'handler'
+      handlerType: string
+      /** Why the model could not have written this field; absent when it could. */
+      unreachable?: string
+    }
   | {
       kind: 'template-projection'
       via: 'pickRoleMembers' | 'edit' | 'copy'
       handlerType?: string
     }
 
+/** The handler types a draft may use and whose fields the benchmark expects back; `hardcoded` values are a researcher's knowledge, not the chain's. */
+export const REACHABLE_HANDLER_TYPES = [
+  'call',
+  'array',
+  'event',
+  'accessControl',
+  'storage',
+  'constructorArgs',
+] as const
+
 /** The committed template merged under the address override, as V1 applied it to the entry. */
 export type EffectiveConfig = Pick<
   StructureContract,
   'fields' | 'ignoreMethods'
->
+> & {
+  /** Fields the override defines a handler or copy for: theirs, not the template's. */
+  overrideFields: string[]
+}
 
 export const V2_ONLY_CLASSES = ['ignored-by-v1', 'new'] as const
 export type V2OnlyClass = (typeof V2_ONLY_CLASSES)[number]
@@ -92,6 +118,12 @@ export interface VerdictCounts {
   handlerFields: number
   /** Of those, the ones the generated values hold, under any name or shape. */
   handlerFound: number
+  /** Handler fields the model could have written: the headline denominator. */
+  reachableFields: number
+  /** Of those, the ones found. The target is every one of them. */
+  reachableFound: number
+  /** Committed values that were not the template's work and are missing or changed: the target is zero. */
+  regressions: number
 }
 
 /** What the loop's `summary.json` says about one contract's authoring. */

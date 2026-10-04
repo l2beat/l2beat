@@ -2,11 +2,12 @@ import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 import { StructureContract } from '../../config/StructureConfig'
+import { makeEntryStructureConfig } from '../../config/structureUtils'
 import { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import type { IProvider } from '../../provider/IProvider'
 import { loadFixture } from '../test/fixtures'
 import type { Draft, DraftField } from './Draft'
-import { dryRunDraft, runTemplateFields } from './dryRun'
+import { type DryRunOptions, dryRunDraft, runTemplateFields } from './dryRun'
 
 const facts = loadFixture('ScrollChain')
 const BLOCK = facts.blockNumber
@@ -92,6 +93,11 @@ function draftOf(fields: Record<string, DraftField>): Draft {
   return { fields, skips: [] }
 }
 
+/** The analyzer's config for the address: no override, no project types. */
+const plain = (): DryRunOptions => ({
+  config: makeEntryStructureConfig({}, facts.address),
+})
+
 describe(dryRunDraft.name, () => {
   const executor = new HandlerExecutor()
 
@@ -101,10 +107,14 @@ describe(dryRunDraft.name, () => {
       executor,
       facts,
       draftOf({ sequencers: SEQUENCERS }),
+      plain(),
     )
 
     expect(result).toEqual({
-      record: { blockNumber: BLOCK, fields: [{ name: 'sequencers', size: 1 }] },
+      record: {
+        blockNumber: BLOCK,
+        fields: [{ name: 'sequencers', size: 1, notes: [] }],
+      },
       findings: [],
     })
   })
@@ -118,11 +128,32 @@ describe(dryRunDraft.name, () => {
       executor,
       facts,
       draftOf({ sequencerB: call('isSequencer', [SEQUENCER_B]) }),
+      plain(),
     )
 
     expect(result.findings).toEqual([])
     expect(result.record.fields).toEqual([
-      { name: 'sequencerB', size: 'scalar' },
+      { name: 'sequencerB', size: 'scalar', notes: [] },
+    ])
+  })
+
+  it('notes which function a bare method name read when it is not the one written', async () => {
+    const result = await dryRunDraft(
+      provider([], { isSequencer: () => true }),
+      executor,
+      facts,
+      // `isSequence` is a prefix V1 resolves to isSequencer(address).
+      draftOf({ sequencerB: call('isSequence', [SEQUENCER_B]) }),
+      plain(),
+    )
+
+    expect(result.findings).toEqual([])
+    expect(result.record.fields).toEqual([
+      {
+        name: 'sequencerB',
+        size: 'scalar',
+        notes: ['reads function isSequencer(address) view returns (bool)'],
+      },
     ])
   })
 
@@ -132,21 +163,52 @@ describe(dryRunDraft.name, () => {
       executor,
       facts,
       draftOf({ finalized: call('isBatchFinalized', [1]) }),
+      plain(),
     )
 
     expect(result.findings).toEqual([
       {
-        severity: 'error',
         path: 'fields.finalized',
         message: `dry run at block ${BLOCK} failed: Execution reverted; fix the handler or skip the item`,
       },
     ])
     expect(result.record.fields).toEqual([
-      { name: 'finalized', size: 'error', error: 'Execution reverted' },
+      {
+        name: 'finalized',
+        size: 'error',
+        error: 'Execution reverted',
+        notes: [],
+      },
     ])
   })
 
-  it('pins an edit that throws on its field and keeps the other fields', async () => {
+  it('runs with the analyzer’s own types, so a format edit over a project type passes', async () => {
+    const config = makeEntryStructureConfig(
+      {
+        types: {
+          BatchTag: { typeCaster: 'Mapping', arg: { 7: 'lucky', 8: 'other' } },
+        },
+      },
+      facts.address,
+    )
+
+    const result = await dryRunDraft(
+      provider([], { isBatchFinalized: () => 7 }),
+      executor,
+      facts,
+      draftOf({
+        tag: { ...call('isBatchFinalized', [1]), edit: ['format', 'BatchTag'] },
+      }),
+      { config },
+    )
+
+    expect(result.findings).toEqual([])
+    expect(result.record.fields).toEqual([
+      { name: 'tag', size: 'scalar', notes: [] },
+    ])
+  })
+
+  it('reports an edit that throws as V1 reports it: the whole run fails, naming the field', async () => {
     const result = await dryRunDraft(
       provider([], { isBatchFinalized: () => true }),
       executor,
@@ -163,22 +225,22 @@ describe(dryRunDraft.name, () => {
           reason: 'test',
         },
       }),
+      plain(),
     )
 
     expect(result.findings).toEqual([
       {
-        severity: 'error',
-        path: 'fields.finalized',
-        message: `dry run at block ${BLOCK} failed: the edit ["get","members"] throws: Assertion Error: String keys only work on objects; fix the handler or skip the item`,
+        path: 'draft',
+        message: `dry run at block ${BLOCK} failed as a whole: The edit of field finalized failed: Assertion Error: String keys only work on objects; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
       },
     ])
     expect(result.record.fields.map((field) => field.size)).toEqual([
       'error',
-      'scalar',
+      'error',
     ])
   })
 
-  it('pins a reference that resolves to nothing on its field', async () => {
+  it('reports a reference to nothing as V1 reports it: the whole run fails, naming the field and the reference', async () => {
     const result = await dryRunDraft(
       provider([]),
       executor,
@@ -188,14 +250,18 @@ describe(dryRunDraft.name, () => {
           '{{ lastFinalizedBatchIndex }}',
         ]),
       }),
-      { ignoreMethods: ['lastFinalizedBatchIndex'] },
+      {
+        ...plain(),
+        base: StructureContract.parse({
+          ignoreMethods: ['lastFinalizedBatchIndex'],
+        }),
+      },
     )
 
     expect(result.findings).toEqual([
       {
-        severity: 'error',
-        path: 'fields.lastFinalized',
-        message: `dry run at block ${BLOCK} failed: references {{ lastFinalizedBatchIndex }}, but no field or getter has that name; fix the handler or skip the item`,
+        path: 'draft',
+        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies: lastFinalized waits for {{ lastFinalizedBatchIndex }}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
       },
     ])
   })
@@ -209,6 +275,7 @@ describe(dryRunDraft.name, () => {
         sequencers: SEQUENCERS,
         revertedBatches: REVERTED_BATCHES,
       }),
+      plain(),
     )
 
     expect(result).toEqual({
@@ -218,12 +285,12 @@ describe(dryRunDraft.name, () => {
           {
             name: 'sequencers',
             size: 0,
-            note: `empty at block ${BLOCK}: no logs yet for UpdateSequencer`,
+            notes: [`empty at block ${BLOCK}: no logs yet for UpdateSequencer`],
           },
           {
             name: 'revertedBatches',
             size: 0,
-            note: `empty at block ${BLOCK}: no logs yet for RevertBatch`,
+            notes: [`empty at block ${BLOCK}: no logs yet for RevertBatch`],
           },
         ],
       },
@@ -250,6 +317,7 @@ describe(dryRunDraft.name, () => {
           reason: 'test',
         },
       }),
+      plain(),
     )
 
     expect(result.findings).toEqual([])
@@ -257,12 +325,14 @@ describe(dryRunDraft.name, () => {
       {
         name: 'sequencerA',
         size: 0,
-        note: `empty at block ${BLOCK}: the 3 logs for UpdateSequencer fold to nothing`,
+        notes: [
+          `empty at block ${BLOCK}: the 3 logs for UpdateSequencer fold to nothing`,
+        ],
       },
     ])
   })
 
-  it('advises reading another declaration of the event when it has the logs this fold lacks', async () => {
+  it('notes another declaration of the event that has the logs this fold lacks', async () => {
     const legacy = log(
       'RevertBatch(uint256,bytes32)',
       [7, `0x${'ab'.repeat(32)}`],
@@ -284,18 +354,16 @@ describe(dryRunDraft.name, () => {
           },
         },
       }),
+      plain(),
     )
 
-    expect(result.findings).toEqual([
-      {
-        severity: 'advisory',
-        path: 'fields.revertedBatches',
-        message: `no logs for ${current} up to block ${BLOCK}, but another declaration of the same event has logs: \`event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)\` (1 log(s)); the contract most likely recorded this state under that declaration (older code), so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
-      },
+    expect(result.findings).toEqual([])
+    expect(result.record.fields[0]?.notes).toEqual([
+      `empty at block ${BLOCK}: no logs for ${current}, but another declaration of the same event has logs: event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash) (1 log(s)); the contract most likely recorded this state under that declaration (older code), so read it too`,
     ])
   })
 
-  it('advises ignoreRelative when a field would make discovery follow more addresses than a system has parts', async () => {
+  it('notes a field that would make discovery follow more addresses than a system has parts', async () => {
     const tokens = Array.from(
       { length: 21 },
       (_, i) => `0x${(i + 1).toString(16).padStart(40, '0')}`,
@@ -310,6 +378,7 @@ describe(dryRunDraft.name, () => {
       executor,
       facts,
       draftOf({ sequencers: listing }),
+      plain(),
     )
     const ignored = await dryRunDraft(
       provider(logs),
@@ -321,28 +390,26 @@ describe(dryRunDraft.name, () => {
           handler: { ...listing.handler, ignoreRelative: true },
         },
       }),
+      plain(),
     )
 
-    expect(unbounded.findings).toEqual([
-      {
-        severity: 'advisory',
-        path: 'fields.sequencers',
-        message:
-          'the value holds 21 addresses and discovery would analyse every one of them as part of this system, more than the 20 that any one system usually has; when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add `"ignoreRelative": true` to the handler',
-      },
+    expect(unbounded.findings).toEqual([])
+    expect(unbounded.record.fields[0]?.notes).toEqual([
+      'holds 21 addresses discovery will follow as parts of this system; if they are instances (deployed tokens, created games or pools, users), add "ignoreRelative": true to the handler',
     ])
     expect(ignored.findings).toEqual([])
+    expect(ignored.record.fields[0]?.notes).toEqual([])
   })
 
-  it('runs locked fields with the draft and reports only draft fields', async () => {
-    const locked = StructureContract.parse({
+  it('runs the existing template with the draft and reports only draft fields', async () => {
+    const base = StructureContract.parse({
       fields: {
         batchIndex: { handler: { type: 'hardcoded', value: 7 } },
         broken: {
           handler: { type: 'call', method: 'isProver', args: [SEQUENCER_A] },
         },
       },
-    }).fields
+    })
 
     const result = await dryRunDraft(
       provider([], {
@@ -353,43 +420,41 @@ describe(dryRunDraft.name, () => {
       draftOf({
         batchFinalized: call('isBatchFinalized', ['{{ batchIndex }}']),
       }),
-      { locked },
+      { ...plain(), base },
     )
 
     expect(result).toEqual({
       record: {
         blockNumber: BLOCK,
-        fields: [{ name: 'batchFinalized', size: 'scalar' }],
+        fields: [{ name: 'batchFinalized', size: 'scalar', notes: [] }],
       },
       findings: [],
     })
   })
 
   it('reports a run that fails as a whole once, at the draft', async () => {
-    const locked = StructureContract.parse({
+    const base = StructureContract.parse({
       fields: { a: { copy: 'b' }, b: { copy: 'a' } },
-    }).fields
+    })
 
     const result = await dryRunDraft(
       provider(SEQUENCER_LOGS),
       executor,
       facts,
       draftOf({ sequencers: SEQUENCERS }),
-      { locked },
+      { ...plain(), base },
     )
 
-    expect(result.findings).toEqual([
-      {
-        severity: 'error',
-        path: 'draft',
-        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies; fix the fields involved or skip their items`,
-      },
-    ])
+    expect(result.findings.map((finding) => finding.path)).toEqual(['draft'])
+    expect(result.findings[0]?.message ?? '').toInclude(
+      `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies`,
+    )
   })
 })
 
 describe(runTemplateFields.name, () => {
   const executor = new HandlerExecutor()
+  const config = () => makeEntryStructureConfig({}, facts.address)
 
   it('returns the values the analyzer computes, getters included', async () => {
     const template = StructureContract.parse({
@@ -406,7 +471,8 @@ describe(runTemplateFields.name, () => {
         lastFinalizedBatchIndex: () => 42,
       }),
       executor,
-      facts,
+      facts.abi,
+      config(),
       template,
     )
 
@@ -417,32 +483,36 @@ describe(runTemplateFields.name, () => {
     expect(errors.sequencerB).toEqual(undefined)
   })
 
-  it('pins a reference cycle on its fields and runs the rest', async () => {
-    const template = StructureContract.parse({
-      fields: {
-        x: { handler: call('isBatchFinalized', ['{{ y }}']).handler },
-        y: { handler: call('isBatchFinalized', ['{{ x }}']).handler },
-        sequencers: { handler: SEQUENCERS.handler },
+  it('applies the address override on top of the template, as the analyzer does', async () => {
+    const address = facts.address.toString()
+    const overriding = makeEntryStructureConfig(
+      {
+        overrides: {
+          [address]: StructureContract.parse({
+            fields: {
+              fixed: { handler: { type: 'hardcoded', value: 'override' } },
+            },
+          }),
+        },
       },
+      facts.address,
+    )
+    const template = StructureContract.parse({
+      fields: { fixed: { handler: { type: 'hardcoded', value: 'template' } } },
     })
 
-    const { values, errors } = await runTemplateFields(
-      provider(SEQUENCER_LOGS),
+    const { values } = await runTemplateFields(
+      provider([]),
       executor,
-      facts,
+      facts.abi,
+      overriding,
       template,
     )
 
-    expect(errors.x).toEqual(
-      'references {{ y }}, which never resolve (a reference cycle, or a field that cannot run)',
-    )
-    expect(errors.y).toEqual(
-      'references {{ x }}, which never resolve (a reference cycle, or a field that cannot run)',
-    )
-    expect(values.sequencers).toEqual([`eth:${SEQUENCER_B}`])
+    expect(values.fixed).toEqual('override')
   })
 
-  it('gives a failure it cannot pin to every template field', async () => {
+  it('gives a failure of the whole run to every template field', async () => {
     const template = StructureContract.parse({
       fields: {
         a: { copy: 'b' },
@@ -454,17 +524,15 @@ describe(runTemplateFields.name, () => {
     const result = await runTemplateFields(
       provider(SEQUENCER_LOGS),
       executor,
-      facts,
+      facts.abi,
+      config(),
       template,
     )
 
-    expect(result).toEqual({
-      values: {},
-      errors: {
-        a: 'Impossible to resolve dependencies',
-        b: 'Impossible to resolve dependencies',
-        sequencers: 'Impossible to resolve dependencies',
-      },
-    })
+    expect(result.values).toEqual({})
+    expect(Object.keys(result.errors)).toEqual(['a', 'b', 'sequencers'])
+    expect(result.errors.sequencers ?? '').toInclude(
+      'Impossible to resolve dependencies',
+    )
   })
 })

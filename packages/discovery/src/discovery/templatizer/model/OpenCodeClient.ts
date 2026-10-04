@@ -1,5 +1,5 @@
 /**
- * `ModelClient` over the `opencode` command line (opencode 1.18.32).
+ * `ModelClient` over the `opencode` command line (opencode 1.18.34).
  *
  * opencode is the way to put other providers' models (DeepSeek, Gemini, …)
  * behind the same templatizer loop as Codex, so `--ai-model` varies the model
@@ -7,10 +7,12 @@
  * with the prompt on stdin. Isolation is by configuration rather than flags:
  * the process runs in a scratch directory whose `opencode.json` disables
  * every tool (`"tools": {"*": false}`), which also drops the tool schemas
- * from the request, and `--pure` keeps user plugins out. The event stream is
- * then checked for tool parts and a turn that shows one is refused, so the
- * guarantee is verified, not assumed. Repair rounds continue the session by
- * id with `--session`.
+ * from the request, and defines the agent the turn runs as, whose `prompt`
+ * stands in for opencode's own coding-agent system prompt; `--pure` keeps
+ * user plugins out and an environment flag keeps the user's `CLAUDE.md`
+ * out. The event stream is then checked for tool parts and a turn that
+ * shows one is refused, so the guarantee is verified, not assumed. Repair
+ * rounds continue the session by id with `--session`.
  *
  * Structured output is not requested: the draft schema travels in the prompt
  * as text, as it does for Codex, and the loop validates the reply.
@@ -29,6 +31,7 @@ import {
   parseOpenCodeEvents,
 } from './opencodeEvents'
 import { type ProcessRun, runProcess } from './process'
+import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
 import { notAnswering, type TurnProblem, unusableAnswer } from './turnProblem'
 
 export interface OpenCodeClientOptions {
@@ -48,20 +51,37 @@ export interface OpenCodeClientOptions {
  */
 export const DEFAULT_OPENCODE_TIMEOUT_MS = 15 * 60 * 1_000
 
-/** Written into the scratch working directory before every turn. */
+/** The agent every turn runs as; `--agent` names it, the config below defines it. */
+export const OPENCODE_AGENT = 'templatizer'
+
+/**
+ * Written into the scratch working directory once per run. A configured
+ * agent's `prompt` replaces opencode's default system prompt outright
+ * (`session/llm/request.ts`: `agent.prompt ? [agent.prompt] :
+ * SystemPrompt.provider(model)`); what opencode still adds after it is its
+ * environment block (model, the scratch directory, platform, date) and any
+ * instruction file it finds, which the empty directory and
+ * `OPENCODE_DISABLE_CLAUDE_CODE_PROMPT` keep to none.
+ */
 export const OPENCODE_ISOLATION_CONFIG = {
   $schema: 'https://opencode.ai/config.json',
   tools: { '*': false },
-  instructions: ['NO_TOOLS.md'],
+  agent: {
+    [OPENCODE_AGENT]: { mode: 'primary', prompt: TOOL_SYSTEM_PROMPT },
+  },
 } as const
 
 /**
- * Some models emit tool calls from habit even when no tool is offered; the
- * turn is then refused. Saying so in the system prompt is cheaper than the
- * retry it would cost.
+ * opencode cuts a turn at 32,000 output tokens unless told otherwise, and a
+ * reasoning model's thinking counts against that budget: in quick-suite
+ * run 3 every turn that "produced no text" had thought for exactly 32,000
+ * tokens and was cut before its answer, and two more answers were cut
+ * mid-JSON at the same mark. 128,000 is four times that. It is not the
+ * model's own maximum because opencode reserves the budget out of the
+ * context window and compacts the session when the rest cannot hold the
+ * prompt, and some gateway models allow as much output as they have context.
  */
-export const NO_TOOLS_INSTRUCTION =
-  'You have no tools in this session. Never call a tool. Answer from the message alone, with exactly the output it asks for.\n'
+export const OPENCODE_OUTPUT_TOKEN_MAX = 128_000
 
 export class OpenCodeTurnError extends Error {
   constructor(
@@ -77,6 +97,9 @@ export class OpenCodeTurnError extends Error {
 }
 
 export class OpenCodeClient implements ModelClient {
+  /** See `scratchDir`. */
+  private scratch: string | undefined
+
   constructor(private readonly options: OpenCodeClientOptions) {}
 
   start(input: ModelTurnInput): Promise<ModelTurn> {
@@ -111,38 +134,72 @@ export class OpenCodeClient implements ModelClient {
     sessionArgs: string[],
     input: ModelTurnInput,
   ): Promise<ModelTurn> {
-    const workDir = fs.mkdtempSync(
-      path.join(os.tmpdir(), 'discovery-templatizer-opencode-'),
+    const workDir = this.scratchDir()
+    const args = [
+      'run',
+      '--format',
+      'json',
+      '--pure',
+      // opencode takes its directory from $PWD, not from the process cwd,
+      // so without these two the model is told it works in the discovery
+      // package, inside a git repository, and reads the repository's
+      // AGENTS.md: that is what made DeepSeek "explore the repository"
+      // with shell commands instead of answering.
+      '--dir',
+      workDir,
+      '--model',
+      this.options.model,
+      '--agent',
+      OPENCODE_AGENT,
+      ...(this.options.variant === undefined
+        ? []
+        : ['--variant', this.options.variant]),
+      ...sessionArgs,
+    ]
+    const started = Date.now()
+    const run = await runProcess(
+      this.options.binary ?? 'opencode',
+      args,
+      input.prompt,
+      workDir,
+      {
+        ...process.env,
+        PWD: workDir,
+        OPENCODE_CONFIG: path.join(workDir, 'opencode.json'),
+        OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX: String(
+          OPENCODE_OUTPUT_TOKEN_MAX,
+        ),
+        // Without it opencode appends the user's ~/.claude/CLAUDE.md, the
+        // one instruction file the empty scratch directory does not keep out.
+        OPENCODE_DISABLE_CLAUDE_CODE_PROMPT: '1',
+      },
+      this.options.timeoutMs ?? DEFAULT_OPENCODE_TIMEOUT_MS,
     )
-    try {
-      const configFile = path.join(workDir, 'opencode.json')
-      fs.writeFileSync(configFile, JSON.stringify(OPENCODE_ISOLATION_CONFIG))
-      fs.writeFileSync(path.join(workDir, 'NO_TOOLS.md'), NO_TOOLS_INSTRUCTION)
-      const args = [
-        'run',
-        '--format',
-        'json',
-        '--pure',
-        '--model',
-        this.options.model,
-        ...(this.options.variant === undefined
-          ? []
-          : ['--variant', this.options.variant]),
-        ...sessionArgs,
-      ]
-      const started = Date.now()
-      const run = await runProcess(
-        this.options.binary ?? 'opencode',
-        args,
-        input.prompt,
-        workDir,
-        { ...process.env, OPENCODE_CONFIG: configFile },
-        this.options.timeoutMs ?? DEFAULT_OPENCODE_TIMEOUT_MS,
+    return this.toTurn(run, Date.now() - started)
+  }
+
+  /**
+   * One empty directory per client, holding only the isolation config, for
+   * every turn of the run. One and not one per turn, because opencode keeps
+   * its sessions per directory: a repair turn resumed from another
+   * directory fails with "Unexpected server error". Removed when the
+   * process exits, which is when the sessions end.
+   */
+  private scratchDir(): string {
+    if (this.scratch === undefined) {
+      const workDir = fs.mkdtempSync(
+        path.join(os.tmpdir(), 'discovery-templatizer-opencode-'),
       )
-      return this.toTurn(run, Date.now() - started)
-    } finally {
-      fs.rmSync(workDir, { recursive: true, force: true })
+      fs.writeFileSync(
+        path.join(workDir, 'opencode.json'),
+        JSON.stringify(OPENCODE_ISOLATION_CONFIG),
+      )
+      process.once('exit', () =>
+        fs.rmSync(workDir, { recursive: true, force: true }),
+      )
+      this.scratch = workDir
     }
+    return this.scratch
   }
 
   private toTurn(run: ProcessRun, durationMs: number): ModelTurn {

@@ -68,6 +68,8 @@ export interface BenchmarkOptions {
   onlyAddresses?: string[]
   /** First n contracts per project, for smoke runs. */
   limit?: number
+  /** Per lowercased address, the handler fields the model could not have written, with the reason. */
+  unreachable?: Record<string, Record<string, string>>
 }
 
 export const REPORT_JSON = 'benchmark.json'
@@ -175,7 +177,13 @@ class BenchmarkRun {
       })
       const elapsed = Date.now() - started
       this.saveAuthoredTemplate(project.name, entry.address, result.template)
-      const contract = comparedContract(project, entry, result, elapsed)
+      const contract = comparedContract(
+        project,
+        entry,
+        result,
+        elapsed,
+        this.options.unreachable?.[entry.address.toLowerCase()] ?? {},
+      )
       this.quota = quotaFailure(contract)
       this.logContract(contract)
       return contract
@@ -213,6 +221,8 @@ class BenchmarkRun {
       address: contract.address,
       authoring: contract.authoring?.kind ?? 'none',
       rounds: contract.rounds,
+      reachable: `${contract.counts.reachableFound}/${contract.counts.reachableFields}`,
+      regressions: contract.counts.regressions,
       handlerFields: `${contract.counts.handlerFound}/${contract.counts.handlerFields}`,
     })
   }
@@ -259,11 +269,13 @@ function comparedContract(
   entry: TemplatedEntry,
   result: HiddenTemplateResult,
   wallMs: number,
+  unreachable: Record<string, string>,
 ): ContractBenchmark {
   const config = project.committedConfig(entry)
   const proxyNames = new Set(result.proxyValueNames)
   const fields = compareValues(entry.values ?? {}, result.values, {
-    attribute: (name) => attributeV1Field(name, config, proxyNames),
+    attribute: (name) =>
+      attributeV1Field(name, config, proxyNames, unreachable),
     ignoreMethods: config.ignoreMethods,
   })
   return {

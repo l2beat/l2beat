@@ -6,6 +6,8 @@ import { join } from 'path'
 import type { EntryParameters } from '../../output/types'
 import {
   loadProject,
+  quickSuiteProjects,
+  quickUnreachable,
   readSuite,
   selectContracts,
   selectSuiteProjects,
@@ -96,6 +98,58 @@ describe(selectSuiteProjects.name, () => {
   })
 })
 
+describe(quickSuiteProjects.name, () => {
+  const suite = readSuite()
+
+  it('has ten to fifteen contracts, one per template, each on its project’s chain with a checksummed address', () => {
+    expect(suite.quick.length).toBeGreaterThanOrEqual(10)
+    expect(suite.quick.length).toBeLessThanOrEqual(15)
+    expect(new Set(suite.quick.map((c) => c.template)).size).toEqual(
+      suite.quick.length,
+    )
+    for (const contract of suite.quick) {
+      const address = ChainSpecificAddress(contract.address)
+      expect(contract.address).toEqual(address.toString())
+      expect(String(ChainSpecificAddress.longChain(address))).toEqual(
+        contract.chain,
+      )
+    }
+  })
+
+  it('groups the contracts by project in listing order and keeps their addresses', () => {
+    const projects = quickSuiteProjects(suite, [])
+    expect(projects.map((p) => p.name)).toEqual([
+      ...new Set(suite.quick.map((c) => c.project)),
+    ])
+    expect(projects.flatMap((p) => p.addresses ?? []).sort()).toEqual(
+      suite.quick.map((c) => c.address).sort(),
+    )
+    expect(
+      quickSuiteProjects(suite, ['scroll', 'zora']).map((p) => p.name),
+    ).toEqual(['scroll', 'zora'])
+    expect(() => quickSuiteProjects(suite, ['arbitrum'])).toThrow(
+      'arbitrum is not in the quick suite',
+    )
+  })
+
+  it('collects the unreachable fields by lowercased address', () => {
+    const marked = quickUnreachable({
+      quick: [
+        {
+          project: 'p',
+          chain: 'ethereum',
+          address: A,
+          template: 'p/T',
+          unreachable: { slot: 'not derivable' },
+        },
+        { project: 'p', chain: 'ethereum', address: B, template: 'p/U' },
+      ],
+      projects: [],
+    })
+    expect(marked).toEqual({ [A.toLowerCase()]: { slot: 'not derivable' } })
+  })
+})
+
 describe(loadProject.name, () => {
   let root: string
 
@@ -149,7 +203,7 @@ describe(loadProject.name, () => {
     expect(project.entries.map((e) => e.address.toString())).toEqual([A])
   })
 
-  it('merges the committed template under the address override, as the analyzer did', () => {
+  it('merges the committed template under the address override, as the analyzer did, and names the override’s fields', () => {
     const project = loadProject(root, { name: 'proj', chain: 'ethereum' })
     const config = project.committedConfig({
       ...entry(A),
@@ -159,6 +213,7 @@ describe(loadProject.name, () => {
       type: 'hardcoded',
       value: 'override',
     })
+    expect(config.overrideFields).toEqual(['owner'])
     expect(config.fields.sequencers?.handler?.type).toEqual('event')
     expect([...config.ignoreMethods].sort()).toEqual([
       'fromOverride',

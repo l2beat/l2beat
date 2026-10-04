@@ -1,5 +1,8 @@
 /**
- * The `template.jsonc` text an accepted draft becomes.
+ * The `template.jsonc` text an accepted draft becomes, for a new template.
+ * (An existing template is never re-rendered: `appendToTemplate` inserts
+ * into its text, using `renderFieldEntry` from here so appended fields
+ * look like authored ones.)
  *
  * The file is what a researcher would have written, plus the model's
  * reason above each field and a provenance header, because researchers
@@ -26,14 +29,8 @@ export interface TemplateFileInput {
   schema: string
   /** The provenance line, without `//`. */
   header: string
-  /** Lines for the reviewer under the header, without `//`, e.g. advisories about skips. */
-  notes?: string[]
-  /** Freeze path: top-level entries of the old file, verbatim, in its order. */
-  preserved?: { key: string; text: string }[]
   displayName?: string
   ignoreMethods: string[]
-  /** Freeze path: whole field entries of the old file, verbatim. */
-  lockedFields?: { name: string; text: string }[]
   /** The model's fields, in the model's order. */
   fields: TemplateFileField[]
 }
@@ -42,7 +39,7 @@ export interface TemplateFileField {
   name: string
   reason: string
   covers: string[]
-  /** What the reviewer should check, one comment line each: an empty fold, a kept advisory. */
+  /** What the reviewer should check, one comment line each, without `//`. */
   notes?: string[]
   handler: unknown
   edit?: unknown
@@ -60,29 +57,23 @@ export function schemaPathFor(templateId: string): string {
 
 /** Throws when the result would not load as a template; nothing is written. */
 export function renderTemplateFile(input: TemplateFileInput): string {
-  assertUnique('top-level key', topLevelKeys(input))
-  assertUnique('field name', fieldNames(input))
   const text = renderDocument(input)
   assertLoadsAsTemplate(text)
   return text
 }
 
 const WIDTH = 80
-const INDENT = '  '
+export const INDENT = '  '
 const FIELD_INDENT = INDENT.repeat(2)
 
 /**
- * The header and its notes stand apart from the next key by a blank line,
- * so that reading the file back (`readTopLevelEntries`) does not attach
- * them to that key and a later freeze does not copy old notes along.
+ * The header stands apart from the next key by a blank line, so that
+ * reading the file back (`readTopLevelEntries`) does not attach it to that
+ * key.
  */
 function renderDocument(input: TemplateFileInput): string {
   const [schema, ...rest] = joinMembers(topLevelMembers(input), INDENT)
-  const comments = [input.header, ...(input.notes ?? [])]
-  const lines = [
-    schema,
-    ...comments.map((comment) => `${INDENT}${lineComment(comment)}`),
-  ]
+  const lines = [schema, `${INDENT}${lineComment(input.header)}`]
   if (rest.length > 0) {
     lines.push('', ...rest)
   }
@@ -90,16 +81,13 @@ function renderDocument(input: TemplateFileInput): string {
 }
 
 function topLevelMembers(input: TemplateFileInput): string[] {
-  const preserved = (input.preserved ?? []).map((entry) => entry.text)
   const fields = fieldsMember(input)
-  const ignoreMethodsIsLast = preserved.length === 0 && fields.length === 0
   return [
     `"$schema": ${JSON.stringify(input.schema)}`,
     ...(input.displayName !== undefined
       ? [`"displayName": ${JSON.stringify(input.displayName)}`]
       : []),
-    ...ignoreMethodsMember(input.ignoreMethods, ignoreMethodsIsLast),
-    ...preserved,
+    ...ignoreMethodsMember(input.ignoreMethods, fields.length === 0),
     ...fields,
   ]
 }
@@ -112,19 +100,26 @@ function ignoreMethodsMember(names: string[], isLast: boolean): string[] {
 }
 
 function fieldsMember(input: TemplateFileInput): string[] {
-  const members = [
-    ...(input.lockedFields ?? []).map((field) => field.text),
-    ...input.fields.map(renderField),
-  ]
-  if (members.length === 0) {
+  if (input.fields.length === 0) {
     return []
   }
+  const members = input.fields.map((field) =>
+    renderFieldEntry(field, FIELD_INDENT),
+  )
   const body = joinMembers(members, FIELD_INDENT).join('\n')
   return [`"fields": {\n${body}\n${INDENT}}`]
 }
 
-function renderField(field: TemplateFileField): string {
-  const inner = FIELD_INDENT + INDENT
+/**
+ * One field as a member of `fields`: its comment lines, then the entry,
+ * expanded. Lines after the first carry `indent`; the first does not, so
+ * `joinMembers` can place it.
+ */
+export function renderFieldEntry(
+  field: TemplateFileField,
+  indent: string,
+): string {
+  const inner = indent + INDENT
   const handler = `"handler": ${renderExpanded(toJson(field.handler), inner)}`
   const edit =
     field.edit === undefined
@@ -133,8 +128,8 @@ function renderField(field: TemplateFileField): string {
   const body = joinMembers([handler, ...edit], inner).join('\n')
   return [
     ...fieldComments(field),
-    `${JSON.stringify(field.name)}: {\n${body}\n${FIELD_INDENT}}`,
-  ].join(`\n${FIELD_INDENT}`)
+    `${JSON.stringify(field.name)}: {\n${body}\n${indent}}`,
+  ].join(`\n${indent}`)
 }
 
 function fieldComments(field: TemplateFileField): string[] {
@@ -156,20 +151,20 @@ function fieldComments(field: TemplateFileField): string[] {
  * it takes to keep model text from escaping the comment; `*\/` has no
  * meaning inside one.
  */
-function lineComment(text: string): string {
+export function lineComment(text: string): string {
   return `// ${oneLine(text)}`
 }
 
-function oneLine(text: string): string {
+export function oneLine(text: string): string {
   return text.replace(/\s+/g, ' ').trim()
 }
 
 /**
  * Members of one object, each with the indentation of its first line and
- * a comma after all but the last. Continuation lines already carry theirs:
- * verbatim entries from their old file, rendered ones from `renderValue`.
+ * a comma after all but the last. Continuation lines already carry theirs,
+ * from `renderValue`.
  */
-function joinMembers(members: string[], indent: string): string[] {
+export function joinMembers(members: string[], indent: string): string[] {
   return members.map(
     (member, i) =>
       indent + (i < members.length - 1 ? withTrailingComma(member) : member),
@@ -293,37 +288,8 @@ function isNumberArray(value: unknown[]): value is number[] {
   return value.length > 1 && value.every((item) => typeof item === 'number')
 }
 
-function topLevelKeys(input: TemplateFileInput): string[] {
-  const hasFields =
-    (input.lockedFields ?? []).length > 0 || input.fields.length > 0
-  return [
-    '$schema',
-    ...(input.displayName !== undefined ? ['displayName'] : []),
-    ...(input.ignoreMethods.length > 0 ? ['ignoreMethods'] : []),
-    ...(input.preserved ?? []).map((entry) => entry.key),
-    ...(hasFields ? ['fields'] : []),
-  ]
-}
-
-function fieldNames(input: TemplateFileInput): string[] {
-  return [
-    ...(input.lockedFields ?? []).map((field) => field.name),
-    ...input.fields.map((field) => field.name),
-  ]
-}
-
-/** A repeated key parses silently with the last value winning, so refuse it. */
-function assertUnique(what: string, names: string[]): void {
-  const repeated = names.filter((name, i) => names.indexOf(name) !== i)
-  if (repeated.length > 0) {
-    throw new Error(
-      `template.jsonc would repeat the ${what} ${[...new Set(repeated)].map((name) => JSON.stringify(name)).join(', ')}`,
-    )
-  }
-}
-
 /** The three schemas `TemplateService` reads a template with. */
-function assertLoadsAsTemplate(text: string): void {
+export function assertLoadsAsTemplate(text: string): void {
   try {
     const json = parseJsonc<unknown>(text)
     StructureContract.parse(json)

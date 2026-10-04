@@ -1,46 +1,90 @@
 /**
- * Entries of an existing `template.jsonc`, cut out of its text verbatim.
+ * Entries of an existing `template.jsonc`, cut out of its text verbatim,
+ * with their offsets.
  *
- * The freeze path keeps the fields of an old template that still execute
- * byte-identical, together with the comments, descriptions, severities and
- * permissions researchers wrote around them. Parsing and re-serialising
- * would drop every comment and redo hand-made layout, so entries are sliced
- * from the original text instead. The scanner knows only as much JSONC as
- * slicing needs: strings with escapes, `//` and `/* *\/` comments,
+ * An existing template is only ever added to: fields appended, review
+ * notes inserted above a field. Parsing and re-serialising would drop every
+ * comment and redo hand-made layout, so the writer inserts into the
+ * original text at offsets found here, and the prompt shows existing
+ * fields as the researcher wrote them. The scanner knows only as much JSONC
+ * as that needs: strings with escapes, `//` and `/* *\/` comments,
  * brackets, colons and commas (trailing ones included).
  *
  * An entry owns the comments directly above it (no blank line in between)
  * and the comments after its value on the same line. A comment separated
  * from the next key by a blank line belongs to no entry: it is a note about
  * the file or a section, like the provenance header `renderTemplateFile`
- * writes, and attaching it to a key would copy it along with that key.
+ * writes.
  */
 
 export interface JsoncEntry {
   key: string
   /** `"key": value` with its comments, without the comma that followed it. */
   text: string
+  span: EntrySpan
+}
+
+/** Offsets into the source text, for inserting around an entry without rewriting it. */
+export interface EntrySpan {
+  /** Where the entry's text starts: its first leading comment, or its key. */
+  start: number
+  /** Where the key token starts. */
+  keyStart: number
+  /** Just past the value. A comma or a same-line comment may follow. */
+  valueEnd: number
+  /** Just past the entry: past its same-line trailing comment when it has one. */
+  end: number
+  /** Offset of the comma that followed the value, when there was one. */
+  comma?: number
+}
+
+/** An object value with its members and the offsets of its braces. */
+export interface JsoncObject {
+  /** Offset of `{`. */
+  open: number
+  /** Offset of the matching `}`. */
+  close: number
+  entries: JsoncEntry[]
+}
+
+export interface FieldEntry {
+  name: string
+  text: string
+  span: EntrySpan
+}
+
+export function readTopLevelObject(text: string): JsoncObject {
+  const tokens = tokenize(text)
+  return readObject(text, tokens, topLevelObject(tokens))
 }
 
 export function readTopLevelEntries(text: string): JsoncEntry[] {
-  const tokens = tokenize(text)
-  return readMembers(text, tokens, topLevelObject(tokens)).map(toEntry)
+  return readTopLevelObject(text).entries
 }
 
-/** Entries of the top-level `fields` object; none when there is none. */
-export function readFieldEntries(
-  text: string,
-): { name: string; text: string }[] {
+/** The top-level `fields` object; none when the key is absent or not an object. */
+export function readFieldsObject(text: string): JsoncObject | undefined {
   const tokens = tokenize(text)
   const fields = readMembers(text, tokens, topLevelObject(tokens)).find(
     (member) => member.key === 'fields',
   )
-  if (fields === undefined || tokens[fields.valueIndex]?.kind !== 'open') {
-    return []
+  const value = tokens[fields?.valueIndex ?? -1]
+  if (
+    fields === undefined ||
+    value === undefined ||
+    text.charAt(value.start) !== '{'
+  ) {
+    return undefined
   }
-  return readMembers(text, tokens, fields.valueIndex).map((member) => ({
-    name: member.key,
-    text: member.text,
+  return readObject(text, tokens, fields.valueIndex)
+}
+
+/** Entries of the top-level `fields` object; none when there is none. */
+export function readFieldEntries(text: string): FieldEntry[] {
+  return (readFieldsObject(text)?.entries ?? []).map((entry) => ({
+    name: entry.key,
+    text: entry.text,
+    span: entry.span,
   }))
 }
 
@@ -85,7 +129,13 @@ interface Member extends JsoncEntry {
 }
 
 function toEntry(member: Member): JsoncEntry {
-  return { key: member.key, text: member.text }
+  return { key: member.key, text: member.text, span: member.span }
+}
+
+function readObject(text: string, tokens: Token[], open: number): JsoncObject {
+  const entries = readMembers(text, tokens, open).map(toEntry)
+  const close = tokens[lastTokenOfValue(tokens, open)] as Token
+  return { open: (tokens[open] as Token).start, close: close.start, entries }
 }
 
 function tokenize(text: string): Token[] {
@@ -219,11 +269,21 @@ function readMember(
   const valueEnd = (tokens[valueLast] as Token).end
   const trailing = readTrailing(text, tokens, valueLast + 1, valueEnd)
   const start = leadingCommentsStart(text, tokens, floor, keyIndex)
+  const span: EntrySpan = {
+    start,
+    keyStart: key.start,
+    valueEnd,
+    end: trailing.end,
+  }
+  if (trailing.comma !== undefined) {
+    span.comma = trailing.comma
+  }
   return {
     member: {
       key: JSON.parse(text.slice(key.start, key.end)) as string,
       text: text.slice(start, valueEnd) + trailing.text,
       valueIndex,
+      span,
     },
     next: trailing.next,
   }
@@ -274,7 +334,7 @@ function readTrailing(
   tokens: Token[],
   index: number,
   valueEnd: number,
-): { text: string; next: number } {
+): { text: string; next: number; end: number; comma?: number } {
   let comma: Token | undefined
   let end = valueEnd
   let i = index
@@ -295,7 +355,9 @@ function readTrailing(
     comma !== undefined && comma.start < end
       ? text.slice(valueEnd, comma.start) + text.slice(comma.end, end)
       : text.slice(valueEnd, end)
-  return { text: trailing, next: i }
+  return comma === undefined
+    ? { text: trailing, next: i, end }
+    : { text: trailing, next: i, end, comma: comma.start }
 }
 
 function leadingCommentsStart(

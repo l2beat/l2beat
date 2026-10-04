@@ -4,13 +4,21 @@
  * Coarse to fine: one summary row per project and a total, one row per
  * contract, then every handler field that was not `equal` with its verdict
  * and diff, because a total says how far the templatizer is and the list
- * says why. The headline is handler fields found: every setup reproduces
- * the proxy values and 0-arg getters (over 90% of all committed values), so
- * only handler fields separate one model or prompt from another. Failures
- * are listed in full: a benchmark that hides its crashes is measuring a
- * smaller problem than it claims.
+ * says why. Two numbers lead: reachable handler fields found (the fields
+ * the model could have written; the target is all of them) and regressions
+ * (committed values that were not the template's work and went missing or
+ * changed; the target is none). The older "handler fields found" stays for
+ * comparability with earlier runs. Unreachable fields are listed with their
+ * reason, so a reader sees what the headline leaves out. Failures are
+ * listed in full: a benchmark that hides its crashes is measuring a smaller
+ * problem than it claims.
  */
-import { describeVerdict, isHandlerField } from './compare'
+import {
+  describeVerdict,
+  isHandlerField,
+  isReachable,
+  isRegression,
+} from './compare'
 import type {
   BenchmarkReport,
   ContractBenchmark,
@@ -32,9 +40,17 @@ export function renderMarkdown(report: BenchmarkReport): string {
     '## Contracts',
     '',
     ...report.projects.flatMap(renderContractsOfProject),
+    '## Regressions',
+    '',
+    ...renderRegressions(report.projects),
+    '',
     '## Non-equal handler fields',
     '',
     ...renderNonEqualHandlerFields(report.projects),
+    '',
+    '## Unreachable handler fields',
+    '',
+    ...renderUnreachable(report.projects),
     '',
     '## Failures',
     '',
@@ -68,6 +84,8 @@ function renderSummaryTable(report: BenchmarkReport): string[] {
   const header = [
     'Project',
     'Contracts (failed, skipped)',
+    'Reachable found',
+    'Regressions',
     'Handler fields found',
     'Handler different',
     'Handler missed',
@@ -100,6 +118,8 @@ function summaryRow(
   return [
     failure === undefined ? label : `${label} (FAILED)`,
     `${totals.contracts} (${totals.failed}, ${totals.skipped})`,
+    ratio(totals.reachableFound, totals.reachableFields),
+    String(totals.regressions),
     ratio(totals.handlerFound, totals.handlerFields),
     String(totals.handlerFields - totals.handlerFound - handlerMissed),
     String(handlerMissed),
@@ -137,6 +157,8 @@ function renderContractsOfProject(project: ProjectBenchmark): string[] {
     'Generated template',
     'Rounds',
     'Tokens in / out',
+    'Reachable found',
+    'Regressions',
     'Handler fields found',
   ]
   const rows = project.contracts.map((contract) => [
@@ -146,6 +168,10 @@ function renderContractsOfProject(project: ProjectBenchmark): string[] {
     describeGenerated(contract),
     String(contract.rounds),
     `${contract.tokens.input} / ${contract.tokens.output}`,
+    contract.status === 'compared'
+      ? `${contract.counts.reachableFound}/${contract.counts.reachableFields}`
+      : '-',
+    contract.status === 'compared' ? String(contract.counts.regressions) : '-',
     contract.status === 'compared'
       ? `${contract.counts.handlerFound}/${contract.counts.handlerFields}`
       : '-',
@@ -170,6 +196,34 @@ function describeGenerated(contract: ContractBenchmark): string {
     case 'failed':
       return `FAILED: ${truncate(contract.authoring.failure, CELL_FAILURE_CHARS)}`
   }
+}
+
+function renderRegressions(projects: ProjectBenchmark[]): string[] {
+  const lines = projects.flatMap((project) =>
+    project.contracts.flatMap((contract) =>
+      contract.fields
+        .filter(isRegression)
+        .map(
+          (field) =>
+            `- ${project.project}: ${nameOf(contract)} \`${field.name}\`: ${describeVerdict(field)}`,
+        ),
+    ),
+  )
+  return lines.length === 0 ? ['(none)'] : lines
+}
+
+function renderUnreachable(projects: ProjectBenchmark[]): string[] {
+  const lines = projects.flatMap((project) =>
+    project.contracts.flatMap((contract) =>
+      contract.fields
+        .filter((field) => isHandlerField(field) && !isReachable(field))
+        .map(
+          (field) =>
+            `- ${project.project}: ${nameOf(contract)} \`${field.name}\`: ${describeVerdict(field)}`,
+        ),
+    ),
+  )
+  return lines.length === 0 ? ['(none)'] : lines
 }
 
 function renderNonEqualHandlerFields(projects: ProjectBenchmark[]): string[] {

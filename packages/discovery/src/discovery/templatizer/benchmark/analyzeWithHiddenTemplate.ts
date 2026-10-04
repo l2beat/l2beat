@@ -19,16 +19,14 @@ import { v } from '@l2beat/validate'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import { AddressAnalyzer, type Analysis } from '../../analysis/AddressAnalyzer'
+import type { Analysis } from '../../analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from '../../analysis/TemplateService'
-import { HandlerExecutor } from '../../handlers/HandlerExecutor'
+import { createAddressAnalyzer } from '../../getDiscoveryEngine'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import type { ProxyResult } from '../../proxies/types'
-import { SourceCodeService } from '../../source/SourceCodeService'
 import { trailDirectory } from '../artifacts'
 import type { ModelClient } from '../model/ModelClient'
-import { Templatizer } from '../Templatizer'
 import type { Values } from './compare'
 import type { BenchmarkProject, TemplatedEntry } from './loadProject'
 import type { TokenUsage, TrailSummary } from './types'
@@ -105,17 +103,18 @@ export async function analyzeWithHiddenTemplate(
   }
 }
 
+/** The analyzer a `--ai` run builds, over the template copy and with a detector that records what it produced. */
 function buildAnalyzer(
   env: HiddenTemplateEnv,
   project: BenchmarkProject,
   templateService: TemplateService,
   proxyDetector: ProxyDetector,
-): AddressAnalyzer {
-  const handlerExecutor = new HandlerExecutor()
-  const templatizer = new Templatizer(
+) {
+  return createAddressAnalyzer({
     templateService,
-    handlerExecutor,
-    {
+    proxyDetector,
+    logger: env.logger,
+    templatizerSettings: {
       project: project.name,
       model: env.model,
       modelLabel: env.modelLabel,
@@ -127,15 +126,7 @@ function buildAnalyzer(
       onFailure: 'leave-untemplatized',
       now: env.now,
     },
-    env.logger,
-  )
-  return new AddressAnalyzer(
-    proxyDetector,
-    new SourceCodeService(),
-    handlerExecutor,
-    templateService,
-    templatizer,
-  )
+  })
 }
 
 /** Copies `_templates` to `target`, then removes the hidden template's files (not its subdirectories). */

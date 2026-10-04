@@ -1,154 +1,102 @@
 /**
- * What a draft field reads from the contract: the function a `call` or
- * `array` handler calls and the events each action of an `event` handler
- * reads, resolved the way V1 resolves them.
+ * What a draft field reads from the contract, read off the handler's own
+ * text: the function a `call` or `array` handler names and the events an
+ * `event` handler's actions name.
  *
- * Names, ABI checks and covers all depend on this, and the freeze path asks
- * the same question of an old template's fields, so it is one pure function
- * of the handler and the ABI.
+ * Nothing is resolved against the ABI here. Which function or event V1
+ * actually reads for a bare name is V1's business, and the dry run reports
+ * it. These names decide only what a field may claim to cover and which
+ * worklist items an existing template's fields already answer.
  */
-import type { utils } from 'ethers'
-import type { AbiIndex } from '../abi/AbiIndex'
-import { sighash } from '../abi/AbiIndex'
+import { utils } from 'ethers'
+import { nameOf } from '../closest'
 import { type DraftHandler, eventActions, eventNamesOf } from './Draft'
-import { type EventResolution, resolveEvent } from './resolveEvent'
-import {
-  type MethodRequest,
-  type MethodResolution,
-  resolveMethod,
-} from './resolveMethod'
 
 export interface FieldReads {
-  /** Set for `call` and `array` handlers. */
-  method?: MethodResolution
-  /** Set for `event` handlers, in `set`, `add`, `remove` order. */
-  actions: ActionReads[]
+  /** For `call` and `array`: the function the handler names. */
+  method?: MethodReference
+  /** For `event`: the bare names of the events the actions name, each once, in action order. */
+  events: string[]
 }
 
-export interface ActionReads {
-  /** Path inside the handler, e.g. `add` or `add[1]`. */
-  path: string
-  events: EventRead[]
-  where?: unknown
+export interface MethodReference {
+  /** A bare `method`, the name of a full fragment, or the field name when `method` is absent. */
+  name: string
+  /** `name(types)` when `method` is a full fragment; absent for a bare name. */
+  signature?: string
+  /** How many arguments the handler passes, to tell overloads of a bare name apart. */
+  arity: number
+  /** A `call` on another contract (`address` given) answers nothing on this contract's worklist. */
+  foreign: boolean
 }
 
-export interface EventRead {
-  reference: string
-  /** Path inside the handler, e.g. `add.event` or `add.event[1]`. */
-  path: string
-  resolution: EventResolution
-}
-
-export function readsOf(
-  fieldName: string,
-  handler: DraftHandler,
-  abi: readonly string[],
-  index: AbiIndex,
-): FieldReads {
+export function readsOf(fieldName: string, handler: DraftHandler): FieldReads {
   switch (handler.type) {
     case 'call':
       return {
-        method: resolveMethod(callRequest(fieldName, handler), abi, index),
-        actions: [],
+        method: methodReference(
+          fieldName,
+          handler,
+          Array.isArray(handler.args) ? handler.args.length : 0,
+        ),
+        events: [],
       }
     case 'array':
-      return {
-        method: resolveMethod(arrayRequest(fieldName, handler), abi, index),
-        actions: [],
-      }
+      return { method: methodReference(fieldName, handler, 1), events: [] }
     case 'event':
-      return { actions: actionReads(handler, abi, index) }
+      return {
+        events: [
+          ...new Set(
+            eventActions(handler).flatMap(({ action }) =>
+              eventNamesOf(action).map(eventName),
+            ),
+          ),
+        ],
+      }
     default:
-      return { actions: [] }
+      return { events: [] }
   }
 }
 
-/** Every event the field reads that resolved, once per declaration. */
-export function readEvents(reads: FieldReads): utils.EventFragment[] {
-  const seen = new Map<string, utils.EventFragment>()
-  for (const action of reads.actions) {
-    for (const event of action.events) {
-      const fragment = event.resolution.fragment
-      if (fragment !== undefined && !seen.has(sighash(fragment))) {
-        seen.set(sighash(fragment), fragment)
-      }
-    }
-  }
-  return [...seen.values()]
-}
-
-function actionReads(
+function methodReference(
+  fieldName: string,
   handler: DraftHandler,
-  abi: readonly string[],
-  index: AbiIndex,
-): ActionReads[] {
-  return eventActions(handler).map(({ path, action }) => {
-    const references = eventNamesOf(action)
-    const many = Array.isArray(action.event)
+  arity: number,
+): MethodReference {
+  const method =
+    typeof handler.method === 'string' ? handler.method.trim() : fieldName
+  const foreign = handler.type === 'call' && handler.address !== undefined
+  const fragment = parseFragment(method, 'function')
+  if (fragment !== undefined) {
     return {
-      path,
-      where: action.where,
-      events: references.map((reference, i) => ({
-        reference,
-        path: many ? `${path}.event[${i}]` : `${path}.event`,
-        resolution: resolveEvent(reference, abi, index),
-      })),
+      name: fragment.name,
+      signature: fragment.format(utils.FormatTypes.sighash),
+      arity,
+      foreign,
     }
-  })
-}
-
-/** CallHandler: `method ?? field`, a view or pure function taking exactly `args.length` inputs. */
-function callRequest(fieldName: string, handler: DraftHandler): MethodRequest {
-  const method = handler.method as string | undefined
-  const arity = (handler.args as unknown[]).length
-  return {
-    method: method ?? fieldName,
-    defaulted: method === undefined,
-    foreign: handler.address !== undefined,
-    rejects: (fragment) => {
-      if (!isCallable(fragment)) {
-        return `${sighash(fragment)} is ${fragment.stateMutability}; V1's call handler only calls view or pure functions`
-      }
-      if (fragment.inputs.length !== arity) {
-        return `${sighash(fragment)} takes ${fragment.inputs.length} argument(s) but \`args\` has ${arity}`
-      }
-      return undefined
-    },
   }
+  return { name: nameOf(method), arity, foreign }
 }
 
-const ARRAY_INDEX_TYPES = ['uint16', 'uint32', 'uint64', 'uint256']
+/** The bare name of an event reference: `Foo`, `Foo(uint256)` or `event Foo(uint256 a)`. */
+export function eventName(reference: string): string {
+  const trimmed = reference.trim()
+  return parseFragment(trimmed, 'event')?.name ?? nameOf(trimmed)
+}
 
-/** ArrayHandler: `method ?? field`, a view or pure function of one unsigned index. */
-function arrayRequest(fieldName: string, handler: DraftHandler): MethodRequest {
-  const method = handler.method as string | undefined
-  return {
-    method: method ?? fieldName,
-    defaulted: method === undefined,
-    foreign: false,
-    rejects: (fragment) => {
-      if (
-        fragment.stateMutability !== 'view' &&
-        fragment.stateMutability !== 'pure'
-      ) {
-        return `${sighash(fragment)} is ${fragment.stateMutability}; V1's array handler only calls view or pure functions`
-      }
-      const [input] = fragment.inputs
-      if (
-        fragment.inputs.length !== 1 ||
-        !ARRAY_INDEX_TYPES.includes(input?.type ?? '')
-      ) {
-        return `${sighash(fragment)} does not take a single ${ARRAY_INDEX_TYPES.join(', ')} index, which is all V1's array handler calls with; read fixed keys with one \`call\` field each, or skip it`
-      }
-      return undefined
-    },
+function parseFragment(
+  text: string,
+  type: 'function' | 'event',
+): utils.FunctionFragment | utils.EventFragment | undefined {
+  if (!text.startsWith(`${type} `)) {
+    return undefined
   }
-}
-
-function isCallable(fragment: utils.FunctionFragment): boolean {
-  return (
-    fragment.stateMutability === 'view' ||
-    fragment.stateMutability === 'pure' ||
-    fragment.constant
-  )
+  try {
+    const fragment = utils.Fragment.from(text)
+    return fragment.type === type
+      ? (fragment as utils.FunctionFragment | utils.EventFragment)
+      : undefined
+  } catch {
+    return undefined
+  }
 }

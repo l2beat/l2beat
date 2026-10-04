@@ -3,18 +3,21 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import {
+  CODEX_INSTRUCTIONS_FILE,
   CODEX_ISOLATION_FLAGS,
   CodexClient,
   CodexTurnError,
   readModelFromRollout,
 } from './CodexClient'
+import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
 
 /**
  * Runs the client against a stand-in `codex` executable that records its
  * arguments and stdin and replays a scripted event stream. Network is never
  * touched; what is pinned is the contract with the real binary: the exact
- * isolation flags on first and resumed turns, the prompt arriving on stdin,
- * the thread id and usage read from events, the final message taken from
+ * isolation flags on first and resumed turns, the instructions file that
+ * replaces Codex's own prompt, the prompt arriving on stdin, the thread id
+ * and usage read from events, the final message taken from
  * `--output-last-message`, and the three ways a turn is refused (tool item,
  * reported error, timeout).
  */
@@ -51,11 +54,16 @@ describe(CodexClient.name, () => {
     fs.rmSync(directory, { recursive: true, force: true })
   })
 
-  function record(): { args: string[]; stdin: string; cwd: string } {
+  function record(): {
+    args: string[]
+    stdin: string
+    cwd: string
+    instructions: string | undefined
+  } {
     return JSON.parse(fs.readFileSync(recordFile, 'utf8'))
   }
 
-  it('starts a thread with the isolation flags, the prompt on stdin and no --ephemeral, and reads the turn', async () => {
+  it('starts a thread with the isolation flags, the templatizer instructions, the prompt on stdin and no --ephemeral, and reads the turn', async () => {
     fs.writeFileSync(eventsFile, cleanTurn)
     const client = new CodexClient({
       binary,
@@ -65,11 +73,18 @@ describe(CodexClient.name, () => {
     })
     const turn = await client.start({ prompt: 'hello model', schema: {} })
 
-    const { args, stdin, cwd } = record()
+    const { args, stdin, cwd, instructions } = record()
     expect(args[0]).toEqual('exec')
     expect(args.slice(1, 1 + CODEX_ISOLATION_FLAGS.length)).toEqual([
       ...CODEX_ISOLATION_FLAGS,
     ])
+    expect(CODEX_ISOLATION_FLAGS).toInclude('project_doc_max_bytes=0')
+    expect(CODEX_ISOLATION_FLAGS).toInclude('agents.enabled=false')
+    expect(CODEX_ISOLATION_FLAGS).toInclude('include_environment_context=false')
+    expect(args[1 + CODEX_ISOLATION_FLAGS.length + 1] ?? '').toEqual(
+      `model_instructions_file=${JSON.stringify(path.join(cwd, CODEX_INSTRUCTIONS_FILE))}`,
+    )
+    expect(instructions).toEqual(TOOL_SYSTEM_PROMPT)
     expect(args).toInclude('--json')
     expect(args).toInclude('--output-last-message')
     expect(args).toInclude('--model')
@@ -98,11 +113,15 @@ describe(CodexClient.name, () => {
     fs.writeFileSync(eventsFile, cleanTurn)
     const client = new CodexClient({ binary, codexHome: directory })
     await client.resume({ threadId: THREAD, prompt: 'fix it', schema: {} })
-    const { args, stdin } = record()
+    const { args, stdin, instructions } = record()
     expect(args.slice(0, 3)).toEqual(['exec', 'resume', THREAD])
     expect(args.slice(3, 3 + CODEX_ISOLATION_FLAGS.length)).toEqual([
       ...CODEX_ISOLATION_FLAGS,
     ])
+    expect(args[3 + CODEX_ISOLATION_FLAGS.length + 1] ?? '').toMatchRegex(
+      /^model_instructions_file="/,
+    )
+    expect(instructions).toEqual(TOOL_SYSTEM_PROMPT)
     expect(stdin).toEqual('fix it')
   })
 
@@ -214,10 +233,12 @@ interface FakeOptions {
 }
 
 /**
- * A `codex` stand-in: records argv, cwd and stdin to `recordFile`, reads its
- * behaviour from `optionsFile`, sleeps if asked, prints the events file to
- * stdout, writes the last-message file named by `--output-last-message`, and
- * exits with the requested code.
+ * A `codex` stand-in: records argv, cwd, stdin and the contents of the
+ * `model_instructions_file` named in argv to `recordFile` (read now, because
+ * the client deletes the directory after the turn), reads its behaviour from
+ * `optionsFile`, sleeps if asked, prints the events file to stdout, writes
+ * the last-message file named by `--output-last-message`, and exits with the
+ * requested code.
  */
 function writeFakeCodex(
   directory: string,
@@ -232,7 +253,9 @@ function writeFakeCodex(
 const fs = require('fs')
 const args = process.argv.slice(2)
 const stdin = fs.readFileSync(0, 'utf8')
-fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({ args, stdin, cwd: process.cwd() }))
+const instructionsArg = args.find((arg) => arg.startsWith('model_instructions_file='))
+const instructions = instructionsArg === undefined ? undefined : fs.readFileSync(JSON.parse(instructionsArg.slice('model_instructions_file='.length)), 'utf8')
+fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({ args, stdin, cwd: process.cwd(), instructions }))
 const options = fs.existsSync(${JSON.stringify(optionsFile)}) ? JSON.parse(fs.readFileSync(${JSON.stringify(optionsFile)}, 'utf8')) : {}
 setTimeout(() => {
   process.stdout.write(fs.readFileSync(${JSON.stringify(eventsFile)}, 'utf8') + '\\n')

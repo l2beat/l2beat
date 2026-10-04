@@ -287,7 +287,12 @@ export class AddressAnalyzer {
     )
   }
 
-  /** Runs before the template is pushed, so the values are the untemplatized baseline. */
+  /**
+   * Runs before the template is pushed, so the values are the untemplatized
+   * baseline and `config` is the address's own config: the templatizer dry
+   * runs drafts through it, with the same `types` and override this run
+   * applies them with.
+   */
   private async templatizeRequest(
     provider: IProvider,
     address: ChainSpecificAddress,
@@ -304,13 +309,13 @@ export class AddressAnalyzer {
     return {
       provider,
       address,
+      config,
       sources,
       proxyType: proxy.type,
       proxyValues: proxy.values,
       implementationNames: getImplementationNames(address, sources) ?? {},
       values: values ?? {},
       errors,
-      ignoreMethods: config.ignoreMethods,
     }
   }
 }

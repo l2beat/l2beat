@@ -392,6 +392,33 @@ export function isHandlerField(verdict: FieldVerdict): boolean {
   return verdict.verdict !== 'v2-only' && verdict.attribution.kind === 'handler'
 }
 
+/** A handler field the model could have written: the headline denominator. */
+export function isReachable(verdict: FieldVerdict): boolean {
+  return (
+    verdict.verdict !== 'v2-only' &&
+    verdict.attribution.kind === 'handler' &&
+    verdict.attribution.unreachable === undefined
+  )
+}
+
+/**
+ * A committed value that was not the template's work and is missing or
+ * changed: a proxy value, a getter the generated template ignored or
+ * renamed, an override field. A formatted getter is left out, because its
+ * committed value went through the hidden template's `edit`.
+ */
+export function isRegression(verdict: FieldVerdict): boolean {
+  if (verdict.verdict !== 'v1-only' && verdict.verdict !== 'different') {
+    return false
+  }
+  const attribution = verdict.attribution
+  return (
+    attribution.kind === 'proxy' ||
+    attribution.kind === 'override' ||
+    (attribution.kind === 'getter' && attribution.edited === undefined)
+  )
+}
+
 export function countVerdicts(verdicts: FieldVerdict[]): VerdictCounts {
   const counts = emptyCounts()
   for (const verdict of verdicts) {
@@ -400,6 +427,11 @@ export function countVerdicts(verdicts: FieldVerdict[]): VerdictCounts {
       counts.handlerFields++
       if (isFound(verdict)) counts.handlerFound++
     }
+    if (isReachable(verdict)) {
+      counts.reachableFields++
+      if (isFound(verdict)) counts.reachableFound++
+    }
+    if (isRegression(verdict)) counts.regressions++
   }
   return counts
 }
@@ -452,6 +484,9 @@ export function emptyCounts(): VerdictCounts {
     ) as VerdictCounts['v2Only'],
     handlerFields: 0,
     handlerFound: 0,
+    reachableFields: 0,
+    reachableFound: 0,
+    regressions: 0,
   }
 }
 
@@ -470,6 +505,9 @@ export function addCounts(into: VerdictCounts, more: VerdictCounts): void {
   }
   into.handlerFields += more.handlerFields
   into.handlerFound += more.handlerFound
+  into.reachableFields += more.reachableFields
+  into.reachableFound += more.reachableFound
+  into.regressions += more.regressions
 }
 
 /** `different (handler (event)): arrays: …` for lists of non-equal fields. */

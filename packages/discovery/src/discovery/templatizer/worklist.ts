@@ -7,12 +7,18 @@
  * field that `covers` it or a `skips` entry with a reason. Events are items
  * too, because event-only state (a list of reverted batches, a history of
  * routes) has no getter to put on the list and was silently dropped when
- * events were only offered as a means of enumeration. Listing both here,
- * rather than letting the model pick from the ABI, is what makes "nothing
- * was forgotten" a mechanical check.
+ * events were only offered as a means of enumeration. The constructor is
+ * an item when it has parameters: its arguments are state only a
+ * `constructorArgs` field can read, and until it was listed no draft of
+ * the quick suite ever wrote that field, while four committed templates of
+ * the suite have it. Listing all of them here, rather than letting the
+ * model pick from the ABI, is what makes "nothing was forgotten" a
+ * mechanical check.
  */
 import { utils } from 'ethers'
+import { rewriteSolidityIdentifier } from '../handlers/utils/rewriteSolidityIdentifier'
 import { AbiIndex } from './abi/AbiIndex'
+import type { Baseline } from './facts'
 
 export interface WorklistParam {
   name: string
@@ -28,7 +34,7 @@ export interface WorklistItem {
   fragment: string
   inputs: WorklistParam[]
   outputs: WorklistParam[]
-  /** V1's system handlers read this one at indices 0–4 unless it is ignored. */
+  /** V1's system handlers read this one at indices 0–4 for this address. */
   probed: boolean
 }
 
@@ -40,8 +46,18 @@ export interface WorklistEvent {
   inputs: (WorklistParam & { indexed: boolean })[]
 }
 
+export interface WorklistConstructor {
+  /** `constructor(type,type)`, the token used in `covers` and `skips[].item`. */
+  signature: string
+  /** With parameter names, so the model sees what the deployment set. */
+  fragment: string
+  inputs: WorklistParam[]
+}
+
 export interface Worklist {
   items: WorklistItem[]
+  /** Present when the constructor has parameters; see `toConstructorItem`. */
+  constructorItem?: WorklistConstructor
   events: WorklistEvent[]
 }
 
@@ -49,27 +65,44 @@ export interface Worklist {
  * Items and events are sorted so two runs over the same ABI produce
  * byte-identical worklists, which keeps prompts stable. Overloaded events
  * collapse to one entry per name because V1 resolves an event by name.
+ * Whether an item is probed is read off the baseline, where V1's handler
+ * list put it, rather than derived from the ABI again.
  */
-export function buildWorklist(abi: readonly string[]): Worklist {
+export function buildWorklist(
+  abi: readonly string[],
+  baseline: Baseline,
+): Worklist {
   const index = AbiIndex.from(abi)
   const items = index.functions
     .filter(needsVerdict)
-    .map(toWorklistItem)
+    .map((fragment) => toWorklistItem(fragment, baseline))
     .sort(bySignature)
   const events = uniqueByName(index.events)
     .map(toWorklistEvent)
     .sort(bySignature)
-  return { items, events }
+  const constructorItem = toConstructorItem(index.deploy)
+  return {
+    items,
+    ...(constructorItem !== undefined && { constructorItem }),
+    events,
+  }
 }
 
 export function isEmptyWorklist(worklist: Worklist): boolean {
-  return worklist.items.length === 0 && worklist.events.length === 0
+  return (
+    worklist.items.length === 0 &&
+    worklist.constructorItem === undefined &&
+    worklist.events.length === 0
+  )
 }
 
-/** Every token that needs a verdict: function signatures, then event names. */
+/** Every token that needs a verdict: function signatures, the constructor's, then event names. */
 export function worklistTokens(worklist: Worklist): string[] {
   return [
     ...worklist.items.map((item) => item.signature),
+    ...(worklist.constructorItem === undefined
+      ? []
+      : [worklist.constructorItem.signature]),
     ...worklist.events.map((event) => event.name),
   ]
 }
@@ -82,19 +115,38 @@ function needsVerdict(fragment: utils.FunctionFragment): boolean {
   )
 }
 
-/** The same condition under which `getSystemHandlers` adds a `LimitedArrayHandler`. */
-export function isProbed(fragment: utils.FunctionFragment): boolean {
-  return fragment.inputs.length === 1 && fragment.inputs[0]?.type === 'uint256'
-}
-
-function toWorklistItem(fragment: utils.FunctionFragment): WorklistItem {
+function toWorklistItem(
+  fragment: utils.FunctionFragment,
+  baseline: Baseline,
+): WorklistItem {
+  const field = baseline.fields[rewriteSolidityIdentifier(fragment.name)]
   return {
     signature: fragment.format(utils.FormatTypes.sighash),
     name: fragment.name,
     fragment: fragment.format(utils.FormatTypes.full),
     inputs: fragment.inputs.map(toParam),
     outputs: (fragment.outputs ?? []).map(toParam),
-    probed: isProbed(fragment),
+    probed: field?.kind === 'probe',
+  }
+}
+
+/**
+ * The ABI's first constructor, because that is the one V1's handler decodes
+ * the deployment with. One without parameters has nothing to read and is
+ * not listed. The token is `constructor(types)` without the mutability,
+ * as a constructor has no sighash and `payable` is not part of what it set.
+ */
+function toConstructorItem(
+  fragment: utils.ConstructorFragment | undefined,
+): WorklistConstructor | undefined {
+  if (fragment === undefined || fragment.inputs.length === 0) {
+    return undefined
+  }
+  const inputs = fragment.inputs.map(toParam)
+  return {
+    signature: `constructor(${inputs.map((input) => input.type).join(',')})`,
+    fragment: fragment.format(utils.FormatTypes.full),
+    inputs,
   }
 }
 

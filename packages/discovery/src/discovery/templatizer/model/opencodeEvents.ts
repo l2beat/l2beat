@@ -9,6 +9,12 @@
  * working directory's config, and any part that only a tool call could have
  * produced refuses the turn.
  *
+ * DeepSeek models sometimes write their tool-call markup into the text
+ * itself when no tool is offered (`<｜｜DSML｜｜ calls>` … `<｜｜DSML｜｜ invoke
+ * name="bash">`); such a text is a tool call that never ran, not an answer,
+ * and is recorded as a tool part so the turn is refused and sampled again
+ * instead of being sent back as a JSON error the model would repeat.
+ *
  * Verified against opencode 1.18.32; fields are read defensively so an
  * unknown part is kept in the artifact rather than failing the turn.
  */
@@ -30,6 +36,9 @@ const HARMLESS_PART_TYPES: ReadonlySet<string> = new Set([
   'text',
   'reasoning',
 ])
+
+/** DeepSeek's tool-call markup, with fullwidth bars (U+FF5C). */
+const TOOL_CALL_MARKUP = /<｜｜DSML｜｜\s*(calls|invoke)\b/
 
 export interface ParsedOpenCodeEvents {
   events: OpenCodeEvent[]
@@ -96,6 +105,9 @@ function readEvent(
   }
   if (TEXT_PART_TYPES.has(part.type) && typeof part.text === 'string') {
     texts.push(part.text)
+    if (TOOL_CALL_MARKUP.test(part.text)) {
+      parsed.toolParts.push('text holding tool-call markup (DSML)')
+    }
   }
   if (part.type === 'step-finish' || part.type === 'step_finish') {
     parsed.usage = readUsage(part.tokens)

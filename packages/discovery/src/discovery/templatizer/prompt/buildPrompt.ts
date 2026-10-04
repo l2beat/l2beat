@@ -2,13 +2,14 @@
  * The authoring prompt: everything the model needs to draft a template for
  * one contract.
  *
- * The prompt is a pure function of the facts, the worklist and the locked
- * fields, in a fixed section order, so two runs over the same contract send
- * byte-identical prompts and any difference between drafts is the model's
- * alone. The rules state what the validator and the dry run enforce, in
- * the words their findings use, so the model is told what will be checked
- * and nothing that would be refused; the wording of the research prompt's
- * rules, tuned over several benchmark runs, is kept where it still applies.
+ * The prompt is a pure function of the facts, the worklist and the fields
+ * of an existing template, in a fixed section order, so two runs over the
+ * same contract send byte-identical prompts and any difference between
+ * drafts is the model's alone. Section 1 says what is checked (little:
+ * parsing, one verdict per item, covers that match the handler, and the
+ * handlers run at the block) and then gives the guidance researchers'
+ * practice has produced; the wording of the research prompt's rules, tuned
+ * over several benchmark runs, is kept where it still applies.
  *
  * The flattened source is last and is the only part that is cut: a draft is
  * decided from the ABI, the baseline and the worklist, and the source is
@@ -18,25 +19,44 @@
 import type { ContractValue } from '../../output/types'
 import type { Draft } from '../draft/Draft'
 import type { BaselineField, ContractFacts, FlatSource } from '../facts'
-import type { Worklist, WorklistEvent, WorklistItem } from '../worklist'
+import type {
+  Worklist,
+  WorklistConstructor,
+  WorklistEvent,
+  WorklistItem,
+} from '../worklist'
 import { draftJsonSchema } from './draftJsonSchema'
 import { HANDLER_DOCS } from './handlerDocs'
+import {
+  editOperatorsOf,
+  type ReadmeIndex,
+  readmeReferenceFor,
+} from './readmeSections'
 
-/** Original JSON text of a field kept verbatim from an older template. */
-export interface LockedFieldText {
+/** A field of the existing template, as the researcher wrote it. */
+export interface ExistingFieldText {
   name: string
+  /** The entry's original JSONC text, comments included. */
   text: string
+  /** Set when the field errors at this block on this contract. */
+  error?: string
+  /** The field's parsed handler and edit, to know which README sections the model needs. */
+  handler?: { type: string }
+  edit?: unknown
 }
 
 export interface PromptInput {
   facts: ContractFacts
   worklist: Worklist
-  locked?: LockedFieldText[]
+  /** Set when the contract's template already exists and is being added to. */
+  existing?: ExistingFieldText[]
 }
 
 export interface PromptOptions {
   /** Total characters of flattened source across all bundles. */
   sourceCharCap?: number
+  /** The parsed README; tests pass one, a run reads the package's. */
+  readme?: ReadmeIndex
 }
 
 export interface AuthoringPrompt {
@@ -64,7 +84,7 @@ export function buildPrompt(
   input: PromptInput,
   options: PromptOptions = {},
 ): AuthoringPrompt {
-  const locked = input.locked ?? []
+  const existing = input.existing ?? []
   const source = renderSources(
     input.facts,
     options.sourceCharCap ?? DEFAULT_SOURCE_CHAR_CAP,
@@ -72,10 +92,10 @@ export function buildPrompt(
   const prompt = [
     '# Discovery template draft for one contract',
     '',
-    renderRules(locked.length > 0),
+    renderRules(existing.length > 0),
     renderSchemaAndExample(),
-    renderHandlerDocs(),
-    renderFacts(input.facts, input.worklist, locked),
+    renderHandlerDocs(existing, options.readme),
+    renderFacts(input.facts, input.worklist, existing),
     source.text,
   ].join('\n')
   return { prompt, truncated: source.truncated }
@@ -86,14 +106,14 @@ interface Rule {
   lines: string[]
 }
 
-function renderRules(hasLocked: boolean): string {
-  const rules = [...RULES_BEFORE_LOCKED, ...(hasLocked ? [LOCKED_RULE] : [])]
+function renderRules(hasExisting: boolean): string {
+  const rules = [...RULES, ...(hasExisting ? [EXISTING_RULE] : [])]
   return [
     SECTION_HEADERS.rules,
     '',
-    'You write a *draft* of a discovery template for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Your draft adds a field for each such piece of state, each with one handler that reads it, and gives a verdict on every function and event of the worklist. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
+    'You write a *draft* of a discovery template for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Your draft adds a field for each such piece of state, each with one handler that reads it, and gives a verdict on every function and event of the worklist, and on the constructor when section 4 lists it. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
     '',
-    'Rules. Each is checked by a validator or by a dry run of your handlers at the block in section 4, and a violation comes back to you as a finding to repair.',
+    'What is checked: your reply parses as one JSON object matching the schema in section 2, every worklist item gets exactly one verdict, a field covers only what its handler names, no field takes the name of a value discovery already produces, and every handler is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
     '',
     ...[...rules, OUTPUT_RULE].flatMap(renderRule),
     '',
@@ -105,11 +125,11 @@ function renderRule(rule: Rule, index: number): string[] {
   return [`${index + 1}. **${rule.title}** ${first}`, ...rest]
 }
 
-const RULES_BEFORE_LOCKED: Rule[] = [
+const RULES: Rule[] = [
   {
     title: 'Shape.',
     lines: [
-      'Use only the seven handler types of section 3 (`call`, `array`, `event`, `accessControl`, `storage`, `constructorArgs`, `hardcoded`), each with only the keys documented for it. `edit` is either `["format", "FormatSeconds"]` or `["get", key, …]`, and an event `where` is either `["=", "#arg", literal]` or `["!=", "#arg", literal]`; no other form of either is accepted. Do not describe transformations in prose; if no handler fits, skip the item.',
+      'Use only the seven handler types of section 3 (`call`, `array`, `event`, `accessControl`, `storage`, `constructorArgs`, `hardcoded`), each with only the keys documented for it. `edit` and an event `where` are small programs; the forms researchers use are `["format", "FormatSeconds"]` and `["get", key, …]` for `edit`, and `["=", "#arg", literal]` or `["!=", "#arg", literal]` for `where` (section 3). Do not describe transformations in prose; if no handler fits, skip the item.',
     ],
   },
   {
@@ -127,7 +147,7 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   {
     title: 'Selection.',
     lines: [
-      'Give exactly one verdict to every worklist function and every event listed in section 4. The token is the function signature exactly as listed (`isSequencer(address)`) or the bare event name (`UpdateSequencer`, never its fragment), and it appears either in exactly one field’s `covers` or exactly once as a `skips[].item` with a reason. Leave nothing out, rule on nothing twice, and name nothing that is not listed. Skip reasons are only the five below; pick the one whose definition fits, not the softest one. They apply to events too, `covered` meaning that a getter or field already holds the state the event announces.',
+      'Give exactly one verdict to every worklist function, to the constructor when it is listed, and to every event listed in section 4. The token is the function signature exactly as listed (`isSequencer(address)`), the constructor’s signature as listed (`constructor(address)`) or the bare event name (`UpdateSequencer`, never its fragment), and it appears either in the `covers` of the field that reads it (several `call` fields that read one function with different literal `args` each list it) or exactly once as a `skips[].item` with a reason. Leave nothing out, rule on nothing twice, and name nothing that is not listed. Skip reasons are only the five below; pick the one whose definition fits, not the softest one. They apply to events too, `covered` meaning that a getter or field already holds the state the event announces.',
       '   - `computation`: a pure function of its inputs, or derivable from values already fetched. Example: `isBatchFinalized(uint256)` is `batchIndex <= lastFinalizedBatchIndex`, a baseline getter; `hashOperation(address,uint256,bytes,bytes32,bytes32)` hashes its arguments.',
       '   - `user-activity`: per-user, per-message or per-operation state written through unprivileged calls, even when an event would let you enumerate it. Example: `balanceOf(address)`, `isMessageDropped(bytes32)`, `getTimestamp(bytes32)` for operations anyone can schedule; events such as `Transfer`, `Deposit` or `SentMessage` emitted for any caller.',
       '   - `unbounded`: state written only by privileged callers whose keys cannot be enumerated from events, getters or literals, or which grows with every batch or block the operator posts. Example: `committedBatches(uint256)`, one hash per batch committed by whitelisted sequencers, with no fixed key set to read; the events `CommitBatch` and `FinalizeBatch`, one per batch.',
@@ -144,7 +164,7 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   {
     title: 'Enumeration source.',
     lines: [
-      'To enumerate a mapping, prefer the events emitted by its privileged setters (functions guarded by `onlyOwner`, `onlyRole`, `onlyGovernor` or similar) and fold them with an `event` field: `add` + `remove` for membership, `add` alone for an append-only list, `set` for the latest value, `set` + `groupBy` for the latest value per key. Use `call` with literal `args` only when the keys are fixed in the source (enum values, constants); `array` with `length` when a length getter is in the baseline; `array` without `length` for an array that reverts past its end; `array` with `indices` for the keys of a getter with one unsigned integer argument: literal keys, or keys collected by an `event` field. When events announce the keys of such a getter (versions, ids) but the value per key is read best from the getter, list the keys with an `event` field (`add`, `select` the key) and read the getter for each with an `array` field whose `indices` references that field, e.g. `"indices": "{{ verifierVersions }}"`.',
+      'To enumerate a mapping, prefer the events emitted by its privileged setters (functions guarded by `onlyOwner`, `onlyRole`, `onlyGovernor` or similar) and fold them with an `event` field: `add` + `remove` for membership, `add` alone for an append-only list, `set` for the latest value, `set` + `groupBy` for the latest value per key. Use `call` with literal `args`, one field per key, only when the keys are fixed in the source (enum values, constants), which is also how a getter keyed by a `uint8` is read, since `array` takes no `uint8` key; `array` with `length` when a length getter is in the baseline; `array` without `length` for an array that reverts past its end; `array` with `indices` for the keys of a getter with one unsigned integer argument: literal keys, or keys collected by an `event` field. When events announce the keys of such a getter (versions, ids) but the value per key is read best from the getter, list the keys with an `event` field (`add`, `select` the key) and read the getter for each with an `array` field whose `indices` references that field, e.g. `"indices": "{{ verifierVersions }}"`.',
     ],
   },
   {
@@ -168,7 +188,7 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   {
     title: 'References.',
     lines: [
-      '`{{ name }}` refers only to a baseline field, a field of your draft, a locked field, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
+      '`{{ name }}` refers only to a baseline field, a field of your draft, a field of the existing template, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
     ],
   },
   {
@@ -186,7 +206,7 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   {
     title: 'User activity is never fetched.',
     lines: [
-      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; the dry run questions a field that would make discovery follow more than 20 addresses without it.',
+      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; a field that would make discovery follow more than 20 addresses without it is noted for the reviewer.',
     ],
   },
   {
@@ -197,10 +217,10 @@ const RULES_BEFORE_LOCKED: Rule[] = [
   },
 ]
 
-const LOCKED_RULE: Rule = {
-  title: 'Locked fields.',
+const EXISTING_RULE: Rule = {
+  title: 'Existing fields.',
   lines: [
-    'Section 4 lists fields kept verbatim from the previous template of this contract. They are read-only and already part of the template: do not redefine them or reuse their names, and do not rule on what they cover, because those items are not on the worklist. You may reference them as `{{ name }}`.',
+    'Section 4 lists the fields the template of this contract already has. They stay exactly as they are and your fields are appended after them: do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. You may reference them as `{{ name }}`.',
   ],
 }
 
@@ -272,14 +292,56 @@ export const WORKED_EXAMPLE: Draft = {
   ],
 }
 
-function renderHandlerDocs(): string {
-  return [SECTION_HEADERS.handlers, '', HANDLER_DOCS, ''].join('\n')
+function renderHandlerDocs(
+  existing: ExistingFieldText[],
+  readme: ReadmeIndex | undefined,
+): string {
+  return [
+    SECTION_HEADERS.handlers,
+    '',
+    HANDLER_DOCS,
+    '',
+    ...renderReadmeReference(existing, readme),
+  ].join('\n')
 }
+
+/**
+ * Only when the existing fields use a handler type or an edit operator the
+ * condensed reference leaves out, so the prompt for a template of generic
+ * fields is unchanged: the model has no tools to look these up, and it
+ * must know what an existing field does to tell what the template still
+ * misses.
+ */
+function renderReadmeReference(
+  existing: ExistingFieldText[],
+  readme: ReadmeIndex | undefined,
+): string[] {
+  const sections = readmeReferenceFor(
+    existing.flatMap((field) =>
+      field.handler === undefined ? [] : [field.handler.type],
+    ),
+    existing.flatMap((field) => editOperatorsOf(field.edit)),
+    readme,
+  )
+  if (sections.length === 0) {
+    return []
+  }
+  return [
+    README_REFERENCE_HEADER,
+    '',
+    'The existing fields in section 4 use handlers or edit operators beyond the seven types above. They stay as they are; this is what they do, from the discovery README, so that you can tell what state the template already holds and reference their values.',
+    '',
+    ...sections.flatMap((section) => [section, '']),
+  ]
+}
+
+export const README_REFERENCE_HEADER =
+  '### Reference for handlers and edits used by existing fields'
 
 function renderFacts(
   facts: ContractFacts,
   worklist: Worklist,
-  locked: LockedFieldText[],
+  existing: ExistingFieldText[],
 ): string {
   return [
     SECTION_HEADERS.facts,
@@ -295,8 +357,9 @@ function renderFacts(
     '```',
     '',
     ...renderBaseline(facts.baseline.fields),
-    ...renderLocked(locked),
+    ...renderExisting(existing, facts.blockNumber),
     ...renderWorklistItems(worklist.items),
+    ...renderWorklistConstructor(worklist.constructorItem),
     ...renderWorklistEvents(worklist.events, facts.abi),
   ].join('\n')
 }
@@ -338,8 +401,13 @@ function renderBaseline(fields: Record<string, BaselineField>): string[] {
 }
 
 function renderBaselineField(name: string, field: BaselineField): string {
-  const probed = field.kind === 'probe' ? ' (probed at indices 0–4)' : ''
-  return `- \`${name}\`${probed} = ${renderBaselineValue(field)}`
+  const origin =
+    field.kind === 'probe'
+      ? ' (probed at indices 0–4)'
+      : field.kind === 'override'
+        ? ' (from the project config)'
+        : ''
+  return `- \`${name}\`${origin} = ${renderBaselineValue(field)}`
 }
 
 function renderBaselineValue(field: BaselineField): string {
@@ -357,19 +425,25 @@ function renderValue(value: ContractValue): string {
   return `${text.slice(0, VALUE_CHAR_CAP)}… [${text.length - VALUE_CHAR_CAP} more characters elided]`
 }
 
-/** Absent rather than empty when nothing is locked, so a first draft's prompt does not mention freezing at all. */
-function renderLocked(locked: LockedFieldText[]): string[] {
-  if (locked.length === 0) {
+/** Absent rather than empty for a new template, so a first draft's prompt does not mention an existing one at all. */
+function renderExisting(
+  existing: ExistingFieldText[],
+  blockNumber: number,
+): string[] {
+  if (existing.length === 0) {
     return []
   }
   return [
-    `### Locked fields (${locked.length})`,
+    `### Existing fields (${existing.length})`,
     '',
-    'Kept verbatim from the previous template of this contract, because they still run on this code. Read-only: do not redefine them and do not rule on what they cover; reference them as `{{ name }}` if useful.',
+    'Already in the template of this contract and kept exactly as they are; your fields are appended after them. Do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. Reference them as `{{ name }}` if useful. A field that fails at this block is marked; it is kept too.',
     '',
-    ...locked.flatMap((field) => [
+    ...existing.flatMap((field) => [
       '```jsonc',
-      `${JSON.stringify(field.name)}: ${field.text}`,
+      ...(field.error === undefined
+        ? []
+        : [`// fails at block ${blockNumber}: ${field.error}`]),
+      field.text,
       '```',
       '',
     ]),
@@ -390,6 +464,23 @@ function renderWorklistItems(items: WorklistItem[]): string[] {
 function renderWorklistItem(item: WorklistItem): string {
   const probed = item.probed ? ' (probed)' : ''
   return `- \`${item.signature}\`: ${item.fragment}${probed}`
+}
+
+/** Absent when the constructor has no parameters: nothing to decode, nothing to rule on. */
+function renderWorklistConstructor(
+  item: WorklistConstructor | undefined,
+): string[] {
+  if (item === undefined) {
+    return []
+  }
+  return [
+    '### Constructor needing a verdict',
+    '',
+    `- \`${item.signature}\`: ${item.fragment}`,
+    '',
+    'Only a `constructorArgs` field reads it: the arguments of this address’s deployment, decoded with this constructor (for a proxy, the proxy’s own constructor). It is owed a verdict like any item: that field, or a skip, `covered` when getters or proxy values already show what the arguments set, `not-state` when they set nothing a reviewer would look at.',
+    '',
+  ]
 }
 
 function renderWorklistEvents(

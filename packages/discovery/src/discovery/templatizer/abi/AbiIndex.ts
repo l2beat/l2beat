@@ -1,17 +1,12 @@
 /**
- * One parsed view of a human-readable ABI, shared by the worklist builder,
- * the draft validator and the prompt.
+ * One parsed view of a human-readable ABI, shared by the worklist builder
+ * and the coverage check's hints.
  *
- * The model names methods and events in whatever form it finds handy: a
- * bare name, a `name(types)` signature, or a full fragment. All three are
- * normalised here so every rule agrees on what a reference means, and a
- * miss produces a hint naming the nearest existing fragments instead of a
- * bare "not found". Which spellings V1 itself accepts is a separate
- * question, answered by the validator.
- *
- * Duplicate fragments are dropped before parsing because merged proxy and
- * implementation ABIs repeat signatures and ethers logs a warning per
- * repeat.
+ * A stray token in a draft is explained by what it names: a function the
+ * baseline already reads, one that changes state, or the nearest existing
+ * signatures. Duplicate fragments are dropped before parsing because merged
+ * proxy and implementation ABIs repeat signatures and ethers logs a warning
+ * per repeat.
  */
 import { utils } from 'ethers'
 import { closest, nameOf } from '../closest'
@@ -23,24 +18,20 @@ export type Lookup<T> =
 export class AbiIndex {
   readonly functions: utils.FunctionFragment[]
   readonly events: utils.EventFragment[]
-  readonly constructorFragment: utils.ConstructorFragment | undefined
+  /** The ABI's first constructor, the one V1's `constructorArgs` handler decodes with; undefined when none is declared. */
+  readonly deploy: utils.ConstructorFragment | undefined
   private readonly bySignature: Map<string, utils.FunctionFragment>
-  private readonly eventsBySignature: Map<string, utils.EventFragment>
-  private readonly coder: utils.Interface
 
   private constructor(fragments: utils.Fragment[]) {
-    this.coder = new utils.Interface(fragments)
-    this.functions = Object.values(this.coder.functions)
-    this.events = Object.values(this.coder.events)
-    this.constructorFragment = fragments.find(
+    const coder = new utils.Interface(fragments)
+    this.functions = Object.values(coder.functions)
+    this.events = Object.values(coder.events)
+    this.deploy = fragments.find(
       (fragment): fragment is utils.ConstructorFragment =>
         fragment.type === 'constructor',
     )
     this.bySignature = new Map(
       this.functions.map((fragment) => [sighash(fragment), fragment]),
-    )
-    this.eventsBySignature = new Map(
-      this.events.map((fragment) => [sighash(fragment), fragment]),
     )
   }
 
@@ -88,44 +79,6 @@ export class AbiIndex {
     )
   }
 
-  /** `RoleGranted`, `RoleGranted(bytes32,address,address)` or a full `event …` fragment. */
-  lookupEvent(reference: string): Lookup<utils.EventFragment> {
-    const parsed = parseFragment(reference, 'event')
-    if (parsed.kind === 'invalid') {
-      return { inAbi: false, error: parsed.reason }
-    }
-    if (parsed.kind === 'fragment') {
-      const known = this.eventsBySignature.get(sighash(parsed.fragment))
-      return known
-        ? { fragment: known, inAbi: true }
-        : { fragment: parsed.fragment as utils.EventFragment, inAbi: false }
-    }
-    if (parsed.kind === 'signature') {
-      const known = this.eventsBySignature.get(parsed.signature)
-      return known
-        ? { fragment: known, inAbi: true }
-        : { inAbi: false, error: this.missingEvent(parsed.signature) }
-    }
-    return this.byName(
-      this.events,
-      parsed.name,
-      'event',
-      this.missingEvent(parsed.name),
-    )
-  }
-
-  topic(event: utils.EventFragment): string {
-    return this.coder.getEventTopic(event)
-  }
-
-  functionNames(): string[] {
-    return [...new Set(this.functions.map((fragment) => fragment.name))]
-  }
-
-  eventNames(): string[] {
-    return [...new Set(this.events.map((fragment) => fragment.name))]
-  }
-
   private byName<T extends utils.FunctionFragment | utils.EventFragment>(
     fragments: T[],
     name: string,
@@ -150,25 +103,19 @@ export class AbiIndex {
     const signatures = this.functions.map(sighash)
     return describeMiss('function', reference, signatures)
   }
-
-  private missingEvent(reference: string): string {
-    return describeMiss('event', reference, this.events.map(sighash))
-  }
 }
 
-/** Deduplication key; constructors have no sighash, so they use the minimal form. */
+/**
+ * Deduplication key. A merged ABI can hold the proxy's constructor and an
+ * implementation's; V1 decodes with the first, so every later one is dropped
+ * like a repeat (ethers would keep the first too, with a warning per repeat).
+ */
 function identity(fragment: utils.Fragment): string {
-  return fragment.type === 'constructor'
-    ? fragment.format(utils.FormatTypes.minimal)
-    : sighash(fragment)
+  return fragment.type === 'constructor' ? 'constructor' : sighash(fragment)
 }
 
 export function sighash(fragment: utils.Fragment): string {
   return fragment.format(utils.FormatTypes.sighash)
-}
-
-export function fullSignature(fragment: utils.Fragment): string {
-  return fragment.format(utils.FormatTypes.full)
 }
 
 type ParsedReference =

@@ -50,6 +50,16 @@ describe(renderMarkdown.name, () => {
       },
     },
     { verdict: 'v2-only', name: 'committedBatches', class: 'ignored-by-v1' },
+    {
+      verdict: 'v1-only',
+      name: 'layer2ChainId',
+      attribution: {
+        kind: 'handler',
+        handlerType: 'hardcoded',
+        unreachable: 'hardcoded handler',
+      },
+    },
+    { verdict: 'v1-only', name: 'paused', attribution: { kind: 'getter' } },
   ]
   const authored: ContractBenchmark = {
     address: 'eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
@@ -148,32 +158,43 @@ describe(renderMarkdown.name, () => {
     expect(md).toInclude('  - base: ethereum @ unknown')
   })
 
-  it('leads the summary with handler fields found, per project and in total', () => {
+  it('leads the summary with reachable fields found and regressions, per project and in total', () => {
     expect(md).toInclude(
-      '| Project | Contracts (failed, skipped) | Handler fields found | Handler different | Handler missed | V1 fields found |',
+      '| Project | Contracts (failed, skipped) | Reachable found | Regressions | Handler fields found | Handler different | Handler missed | V1 fields found |',
     )
-    // 2 of 4 handler fields found (equal and renamed), 1 different, 1 missed;
-    // the missed projection is out of the V1 denominator (6 - 1).
+    // 2 of 4 reachable handler fields found (equal and renamed), the
+    // hardcoded one is unreachable; the missed getter is the one regression;
+    // 2 of 5 handler fields found, 1 different, 2 missed; the missed
+    // projection is out of the V1 denominator (8 - 1).
     expect(md).toInclude(
-      '| scroll | 5 (1, 1) | 2/4 (50.0%) | 1 | 1 | 3/5 (60.0%) | 2 | 1 | 0 | 1 | 2 | 1 | 1 / 1 / 1 | 2 | 24k / 3k |',
+      '| scroll | 5 (1, 1) | 2/4 (50.0%) | 1 | 2/5 (40.0%) | 1 | 2 | 3/7 (42.9%) | 2 | 1 | 0 | 1 | 4 | 1 | 1 / 1 / 1 | 2 | 24k / 3k |',
     )
-    expect(md).toInclude('| base (FAILED) | 0 (0, 0) | - | 0 | 0 | - |')
-    expect(md).toInclude('| Total | 5 (1, 1) | 2/4 (50.0%) |')
+    expect(md).toInclude('| base (FAILED) | 0 (0, 0) | - | 0 | - | 0 | 0 | - |')
+    expect(md).toInclude('| Total | 5 (1, 1) | 2/4 (50.0%) | 1 |')
+  })
+
+  it('lists every regression and every unreachable handler field with its reason', () => {
+    expect(md).toInclude(
+      '## Regressions\n\n- scroll: ScrollChain (0xa13B…E556) `paused`: v1-only (getter)\n',
+    )
+    expect(md).toInclude(
+      '## Unreachable handler fields\n\n- scroll: ScrollChain (0xa13B…E556) `layer2ChainId`: v1-only (handler (hardcoded), unreachable: hardcoded handler)\n',
+    )
   })
 
   it('has one row per contract naming the generated template or why there is none', () => {
     expect(md).toInclude('### scroll (ethereum @ 26076168)')
     expect(md).toInclude(
-      '| ScrollChain | eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556 | scroll/ScrollChain | scroll/ScrollChain | 2 | 12000 / 1500 | 2/4 |',
+      '| ScrollChain | eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556 | scroll/ScrollChain | scroll/ScrollChain | 2 | 12000 / 1500 | 2/4 | 1 | 2/5 |',
     )
     expect(md).toInclude(
-      '| Verifier | eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F | scroll/Verifier | matched committed shared/Verifier | 0 | 0 / 0 | 0/0 |',
+      '| Verifier | eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F | scroll/Verifier | matched committed shared/Verifier | 0 | 0 / 0 | 0/0 | 0 | 0/0 |',
     )
     expect(md).toInclude(
       '| scroll/Stubborn | FAILED: no acceptable draft after 3 round(s); last errors: x | 3 |',
     )
     expect(md).toInclude(
-      '| Odd\\|Name | eth:0x0000000000000000000000000000000000000001 | scroll/Odd | ERROR: explorer returned 500 | 0 | 0 / 0 | - |',
+      '| Odd\\|Name | eth:0x0000000000000000000000000000000000000001 | scroll/Odd | ERROR: explorer returned 500 | 0 | 0 / 0 | - | - | - |',
     )
     expect(md).toInclude('| scroll/Odd | SKIPPED |')
     expect(md).toInclude('### base (ethereum @ unknown)\n\n(no contracts)')
@@ -188,6 +209,9 @@ describe(renderMarkdown.name, () => {
     )
     expect(md).toInclude(
       '- scroll: ScrollChain (0xa13B…E556) `verifierVersions`: different (handler (event)): arrays: V1 has 2 item(s), generated 1; only in V1: a|b (1)',
+    )
+    expect(md).toInclude(
+      '- scroll: ScrollChain (0xa13B…E556) `layer2ChainId`: v1-only (handler (hardcoded), unreachable: hardcoded handler)',
     )
     expect(md).not.toInclude('`provers`')
     expect(md).not.toInclude('`Proposer`')

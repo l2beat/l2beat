@@ -488,8 +488,10 @@ describe(AddressAnalyzer.name, () => {
         await analyzer.analyze(provider, address, config)
 
         expect(calls).toEqual(['revisit', 'load'])
+        // The request carries the address's own config, before the
+        // template is pushed, so the templatizer dry-runs with it.
         expect(templatizer.revisit).toHaveBeenOnlyCalledWith(
-          expect.subset({ address }),
+          expect.subset({ address, config }),
           'proj/Registry',
         )
       })

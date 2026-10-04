@@ -2,20 +2,30 @@
  * R10: the draft runs for real before it is accepted.
  *
  * The validator proves a draft is well-formed; only execution proves it
- * reads something. The run goes through V1's own `HandlerExecutor` with a
- * config built the way the analyzer builds one from a template, so a draft
- * that passes here yields the same values once written. Failures become
- * findings for the next repair round rather than exceptions, because the
- * model can usually fix them (a method that reverts, a wrong argument, an
- * edit that does not fit the value).
+ * reads something. The run goes through V1's own `HandlerExecutor` with the
+ * analyzer's own config for the address (the project and global `types`,
+ * the override from `config.jsonc`) plus the template the file will hold,
+ * so a draft that passes here yields the same values once written, and a
+ * draft that fails here failed for the reason V1 gives.
+ *
+ * A field that errors is a finding for the next repair round, because the
+ * model can usually fix it (a method that reverts, a wrong argument, an
+ * edit that does not fit the value). Everything else the run observed that
+ * a reviewer should know (an empty fold, which function a bare name read,
+ * how many addresses discovery will follow, logs under another declaration
+ * of the event) is a note, written above the field in the template. None
+ * of it blocks: logs cannot tell "nothing happened yet" from "the wrong
+ * events", and a count of addresses says nothing certain about what they
+ * are.
  */
 import { getErrorMessage } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { StructureContract } from '../../config/StructureConfig'
-import { makeEntryStructureConfig } from '../../config/structureUtils'
-import { decodeHandlerResults } from '../../handlers/decodeHandlerResults'
-import { getHandlers } from '../../handlers/getHandlers'
-import type { Handler, HandlerResult } from '../../handlers/Handler'
+import {
+  type StructureContractConfig,
+  withTemplate,
+} from '../../config/structureUtils'
+import type { HandlerResult } from '../../handlers/Handler'
 import type { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import { getEventFragment } from '../../handlers/utils/getEventFragment'
 import type { ContractValue } from '../../output/types'
@@ -34,8 +44,8 @@ export interface FieldRun {
   /** Items of an array, keys of an object, `empty` when there is no value. */
   size: number | 'scalar' | 'empty' | 'error'
   error?: string
-  /** For the reviewer, written next to the field in the template; never a finding. */
-  note?: string
+  /** What the run observed that the reviewer should check; written above the field, never a finding. */
+  notes: string[]
 }
 
 export interface DryRunRecord {
@@ -44,10 +54,15 @@ export interface DryRunRecord {
 }
 
 export interface DryRunOptions {
-  /** Fields kept from an older template; run too, so references resolve. */
-  locked?: StructureContract['fields']
-  /** As `deriveIgnoreMethods` gives them, so the run sees what V1 will. */
-  ignoreMethods?: string[]
+  /** The analyzer's config for the address before any template. */
+  config: StructureContractConfig
+  /**
+   * What the template file will hold besides the draft's fields: an
+   * existing template as it is (its fields run too, so references resolve
+   * and the model's additions are judged next to them), or the
+   * `ignoreMethods` a new template gets.
+   */
+  base?: StructureContract
 }
 
 type Facts = Pick<ContractFacts, 'address' | 'abi'>
@@ -55,71 +70,84 @@ type Facts = Pick<ContractFacts, 'address' | 'abi'>
 interface FieldValues {
   values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
+  /** The raw results, which carry the fragment a method handler resolved to. */
+  results: HandlerResult[]
 }
 
-/** A run that failed as a whole and could not be pinned on any field. */
+/** A run that failed as a whole: `execute` threw before any field had a value. */
 interface RunFailure {
   failure: string
 }
 
 /**
- * Runs template fields (handler + edit) exactly as the analyzer would, at
- * the provider's block. Never throws for a handler/edit failure: that
- * becomes the field's error. A failure that cannot be pinned on a field
- * is given to every field of the template, since none of them is proven.
+ * Runs a template exactly as the analyzer would for this address, at the
+ * provider's block: `config` with `template` pushed, through
+ * `HandlerExecutor`. Never throws for a handler/edit failure: that becomes
+ * the field's error. A failure of the run as a whole is given to every
+ * field of the template, since none of them is proven.
  */
 export async function runTemplateFields(
   provider: IProvider,
   handlerExecutor: HandlerExecutor,
-  facts: Facts,
+  abi: string[],
+  config: StructureContractConfig,
   template: StructureContract,
 ): Promise<FieldValues> {
-  const run = await runPinned(provider, handlerExecutor, facts, template)
+  const run = await runOrFail(
+    provider,
+    handlerExecutor,
+    abi,
+    withTemplate(config, template),
+  )
   if ('failure' in run) {
-    return { values: {}, errors: sameErrorForAll(template, run.failure) }
+    return {
+      values: {},
+      errors: sameErrorForAll(template, run.failure),
+      results: [],
+    }
   }
   return run
 }
 
-/** R10 over a draft. Findings are for draft fields only, never locked ones. */
+/** R10 over a draft. Findings and notes are for draft fields only, never the base's. */
 export async function dryRunDraft(
   provider: IProvider,
   handlerExecutor: HandlerExecutor,
   facts: ContractFacts,
   draft: Draft,
-  options: DryRunOptions = {},
+  options: DryRunOptions,
 ): Promise<{ record: DryRunRecord; findings: Finding[] }> {
   const blockNumber = provider.blockNumber
-  const template = draftTemplate(draft, options)
+  const template = draftTemplate(draft, options.base)
   if ('failure' in template) {
     return failedDryRun(blockNumber, draft, template.failure)
   }
-  const run = await runPinned(provider, handlerExecutor, facts, template)
+  const run = await runOrFail(
+    provider,
+    handlerExecutor,
+    facts.abi,
+    withTemplate(options.config, template),
+  )
   if ('failure' in run) {
     return failedDryRun(blockNumber, draft, run.failure)
   }
   const findings = new Findings()
-  const notes: Record<string, string> = {}
+  const fields: FieldRun[] = []
   for (const [name, field] of Object.entries(draft.fields)) {
-    const note = await checkField(provider, facts, name, field, run, findings)
-    if (note !== undefined) {
-      notes[name] = note
-    }
+    fields.push(await checkField(provider, facts, name, field, run, findings))
   }
-  return {
-    record: { blockNumber, fields: fieldRuns(draft, run, notes) },
-    findings: findings.list,
-  }
+  return { record: { blockNumber, fields }, findings: findings.list }
 }
 
+/** The template the file will hold: the base as it is, plus the draft's fields. */
 function draftTemplate(
   draft: Draft,
-  options: DryRunOptions,
+  base: StructureContract | undefined,
 ): StructureContract | RunFailure {
   try {
     return StructureContract.parse({
-      ignoreMethods: options.ignoreMethods ?? [],
-      fields: { ...options.locked, ...draftTemplateFields(draft) },
+      ...base,
+      fields: { ...base?.fields, ...draftTemplateFields(draft) },
     })
   } catch (error) {
     return {
@@ -140,6 +168,13 @@ function draftTemplateFields(draft: Draft): Record<string, unknown> {
   )
 }
 
+/**
+ * `execute` throws as a whole, before any field has a value, when a
+ * `{{ reference }}` never resolves (V1 cannot order the handlers) or when
+ * an `edit` throws (edits run after all handlers, unguarded). V1's message
+ * names what it can; the finding passes it on and says what usually causes
+ * it, without guessing which field.
+ */
 function failedDryRun(
   blockNumber: number,
   draft: Draft,
@@ -148,15 +183,15 @@ function failedDryRun(
   const findings = new Findings()
   findings.error(
     'draft',
-    `dry run at block ${blockNumber} failed as a whole: ${failure}; fix the fields involved or skip their items`,
+    `dry run at block ${blockNumber} failed as a whole: ${failure}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
   )
   const fields = Object.keys(draft.fields).map(
-    (name): FieldRun => ({ name, size: 'error', error: failure }),
+    (name): FieldRun => ({ name, size: 'error', error: failure, notes: [] }),
   )
   return { record: { blockNumber, fields }, findings: findings.list }
 }
 
-/** Adds the field's findings; returns its note for the reviewer, if any. */
+/** The field's error as a finding, or what the run observed as notes. */
 async function checkField(
   provider: IProvider,
   facts: Facts,
@@ -164,33 +199,48 @@ async function checkField(
   field: DraftField,
   run: FieldValues,
   findings: Findings,
-): Promise<string | undefined> {
-  const path = fieldPath(name)
+): Promise<FieldRun> {
   const error = run.errors[name]
   if (error !== undefined) {
     findings.error(
-      path,
+      fieldPath(name),
       `dry run at block ${provider.blockNumber} failed: ${error}; fix the handler or skip the item`,
     )
-    return undefined
+    return { name, size: 'error', error, notes: [] }
   }
-  const followed = followedAddressCount(field, run.values[name])
-  if (followed > MAX_FOLLOWED_ADDRESSES) {
-    findings.list.push(tooManyRelativesFinding(path, followed))
+  const value = run.values[name]
+  const notes = [
+    ...resolvedMethodNote(name, field, run.results),
+    ...followedAddressesNote(field, value),
+    ...(await emptyFoldNotes(provider, facts, field, value)),
+  ]
+  return { name, size: sizeOf(value), notes }
+}
+
+/**
+ * V1 resolves a bare `method` by prefix, so `owner` with one argument can
+ * read `owners(uint256)`. The handler's result carries the fragment it
+ * read; when its name is not the name the model wrote, the reviewer
+ * should see which function the field reads.
+ */
+function resolvedMethodNote(
+  name: string,
+  field: DraftField,
+  results: HandlerResult[],
+): string[] {
+  if (field.handler.type !== 'call' && field.handler.type !== 'array') {
+    return []
   }
-  if (field.handler.type !== 'event' || !isEmpty(run.values[name])) {
-    return undefined
+  const method =
+    typeof field.handler.method === 'string' ? field.handler.method : name
+  if (method.startsWith('function ')) {
+    return []
   }
-  const events = eventsOf(field)
-  const unread = await unreadDeclarationsWithLogs(provider, facts, events)
-  if (unread.length > 0) {
-    findings.list.push(
-      unreadDeclarationFinding(path, provider.blockNumber, events, unread),
-    )
-    return undefined
+  const fragment = results.find((result) => result.field === name)?.fragment
+  if (fragment === undefined || fragment.name === method) {
+    return []
   }
-  const logCount = await countLogs(provider, facts, events)
-  return emptyFoldNote(provider.blockNumber, events, logCount)
+  return [`reads ${fragment.format(utils.FormatTypes.full)}`]
 }
 
 /**
@@ -200,20 +250,26 @@ async function checkField(
  * deployed) turned a 96-contract scroll run into one that hit
  * `maxAddresses` and dropped 41 addresses. Twenty is above any committee
  * or verifier set the suite has, but a count says nothing certain about
- * what the addresses are, so going over it is an advisory.
+ * what the addresses are, so going over it is a note.
  */
 export const MAX_FOLLOWED_ADDRESSES = 20
 
 const CHAIN_SPECIFIC_ADDRESS = /^[a-z0-9]+:0x[0-9a-fA-F]{40}$/
 
-function followedAddressCount(
+function followedAddressesNote(
   field: DraftField,
   value: ContractValue | undefined,
-): number {
+): string[] {
   if (field.handler.ignoreRelative === true || value === undefined) {
-    return 0
+    return []
   }
-  return new Set(addressesIn(value)).size
+  const count = new Set(addressesIn(value)).size
+  if (count <= MAX_FOLLOWED_ADDRESSES) {
+    return []
+  }
+  return [
+    `holds ${count} addresses discovery will follow as parts of this system; if they are instances (deployed tokens, created games or pools, users), add "ignoreRelative": true to the handler`,
+  ]
 }
 
 function addressesIn(value: ContractValue): string[] {
@@ -232,12 +288,49 @@ function addressesIn(value: ContractValue): string[] {
   return []
 }
 
-function tooManyRelativesFinding(path: string, count: number): Finding {
-  return {
-    severity: 'advisory',
-    path,
-    message: `the value holds ${count} addresses and discovery would analyse every one of them as part of this system, more than the ${MAX_FOLLOWED_ADDRESSES} that any one system usually has; when they are instances rather than parts of the system (deployed tokens, created games or pools, users), add \`"ignoreRelative": true\` to the handler`,
+/**
+ * An empty fold is a note for the reviewer, never a finding, because logs
+ * cannot tell "nothing happened yet" from "this state was written without
+ * these events". It used to be an error whenever the field also claimed a
+ * getter, and the model answered by dropping the field: 17 of 27 times in
+ * the first benchmark, `blacklistedGames` and `tokenMapping` among them,
+ * which the committed templates keep although they are empty. A dropped
+ * field is invisible, and it is the one that would have announced the
+ * first blacklisted game. The price is that a fold over the wrong events is
+ * accepted as empty too (Plume's batch posters were set by an older
+ * implementation that did not emit `BatchPosterSet`); the note is what
+ * makes the reviewer check it. When another declaration of the same event
+ * does have logs, the note says so: ScrollChain's reverted batches sit
+ * under the legacy `RevertBatch(batchIndex, batchHash)` although the
+ * current code emits `RevertBatch(startBatchIndex, finishBatchIndex)`.
+ */
+async function emptyFoldNotes(
+  provider: IProvider,
+  facts: Facts,
+  field: DraftField,
+  value: ContractValue | undefined,
+): Promise<string[]> {
+  if (field.handler.type !== 'event' || !isEmpty(value)) {
+    return []
   }
+  const events = eventsOf(field)
+  const blockNumber = provider.blockNumber
+  const unread = await unreadDeclarationsWithLogs(provider, facts, events)
+  if (unread.length > 0) {
+    const others = unread
+      .map((d) => `${d.fragment} (${d.logCount} log(s))`)
+      .join(', ')
+    return [
+      `empty at block ${blockNumber}: no logs for ${events.join(', ')}, but another declaration of the same event has logs: ${others}; the contract most likely recorded this state under that declaration (older code), so read it too`,
+    ]
+  }
+  const logCount = await countLogs(provider, facts, events)
+  const names = events.join(', ')
+  return [
+    logCount === 0
+      ? `empty at block ${blockNumber}: no logs yet for ${names}`
+      : `empty at block ${blockNumber}: the ${logCount} logs for ${names} fold to nothing`,
+  ]
 }
 
 interface UnreadDeclaration {
@@ -247,13 +340,9 @@ interface UnreadDeclaration {
 
 /**
  * Contracts that changed an event's parameters across upgrades declare it
- * twice, and the merged ABI keeps both. A fold over one declaration that
- * comes back empty while the other has logs has read the wrong half of the
- * history: ScrollChain's reverted batches sit under the legacy
- * `RevertBatch(batchIndex, batchHash)` although the current code emits
- * `RevertBatch(startBatchIndex, finishBatchIndex)`. It is an advisory
- * rather than an error: the other declaration's logs are strong evidence
- * that this state exists, but not proof that they belong to this field.
+ * twice, and the merged ABI keeps both. The declarations the field does
+ * not read are counted for logs, one topic at a time as the event handler
+ * fetches them, so a caching provider answers from the same entries.
  */
 async function unreadDeclarationsWithLogs(
   provider: IProvider,
@@ -294,22 +383,6 @@ function otherDeclarations(
   })
 }
 
-function unreadDeclarationFinding(
-  path: string,
-  blockNumber: number,
-  events: string[],
-  unread: UnreadDeclaration[],
-): Finding {
-  const others = unread
-    .map((d) => `\`${d.fragment}\` (${d.logCount} log(s))`)
-    .join(', ')
-  return {
-    severity: 'advisory',
-    path,
-    message: `no logs for ${events.join(', ')} up to block ${blockNumber}, but another declaration of the same event has logs: ${others}; the contract most likely recorded this state under that declaration (older code), so read it too: in this field when its argument names fit the same select, otherwise in a second field named after the same subject`,
-  }
-}
-
 function topicOf(event: string, abi: readonly string[]): string | undefined {
   try {
     return utils.Interface.getEventTopic(getEventFragment(event, [...abi]))
@@ -338,30 +411,6 @@ async function countTopicLogs(
   }
 }
 
-/**
- * An empty fold is a note for the reviewer, never a finding, because logs
- * cannot tell "nothing happened yet" from "this state was written without
- * these events". It used to be an error whenever the field also claimed a
- * getter, and the model answered by dropping the field: 17 of 27 times in
- * the first benchmark, `blacklistedGames` and `tokenMapping` among them,
- * which the committed templates keep although they are empty. A dropped
- * field is invisible, and it is the one that would have announced the
- * first blacklisted game. The price is that a fold over the wrong events is
- * accepted as empty too (Plume's batch posters were set by an older
- * implementation that did not emit `BatchPosterSet`); the note is what
- * makes the reviewer check it.
- */
-function emptyFoldNote(
-  blockNumber: number,
-  events: string[],
-  logCount: number,
-): string {
-  const names = events.join(', ')
-  return logCount === 0
-    ? `empty at block ${blockNumber}: no logs yet for ${names}`
-    : `empty at block ${blockNumber}: the ${logCount} logs for ${names} fold to nothing`
-}
-
 function eventsOf(field: DraftField): string[] {
   const names = eventActions(field.handler).flatMap(({ action }) =>
     eventNamesOf(action),
@@ -369,11 +418,7 @@ function eventsOf(field: DraftField): string[] {
   return [...new Set(names)]
 }
 
-/**
- * The logs the event handler read, fetched the way it fetches them (one
- * topic at a time), so a caching provider answers from the same entries.
- * A count that cannot be taken reads as zero: the value is empty either way.
- */
+/** A count that cannot be taken reads as zero: the value is empty either way. */
 async function countLogs(
   provider: IProvider,
   facts: Facts,
@@ -392,22 +437,6 @@ async function countLogs(
   } catch {
     return 0
   }
-}
-
-function fieldRuns(
-  draft: Draft,
-  run: FieldValues,
-  notes: Record<string, string>,
-): FieldRun[] {
-  return Object.keys(draft.fields).map((name): FieldRun => {
-    const error = run.errors[name]
-    if (error !== undefined) {
-      return { name, size: 'error', error }
-    }
-    const note = notes[name]
-    const size = sizeOf(run.values[name])
-    return note === undefined ? { name, size } : { name, size, note }
-  })
 }
 
 function sizeOf(value: ContractValue | undefined): FieldRun['size'] {
@@ -437,208 +466,21 @@ function sameErrorForAll(
   )
 }
 
-async function runPinned(
+async function runOrFail(
   provider: IProvider,
   handlerExecutor: HandlerExecutor,
-  facts: Facts,
-  template: StructureContract,
+  abi: string[],
+  config: StructureContractConfig,
 ): Promise<FieldValues | RunFailure> {
   try {
-    const { values, errors } = await handlerExecutor.execute(
+    const { values, errors, results } = await handlerExecutor.execute(
       provider,
-      facts.address,
-      facts.abi,
-      configFor(facts, template),
+      config.address,
+      abi,
+      config,
     )
-    return { values: values ?? {}, errors }
+    return { values: values ?? {}, errors, results }
   } catch (error) {
-    return await pinFailure(
-      provider,
-      handlerExecutor,
-      facts,
-      template,
-      getErrorMessage(error),
-    )
+    return { failure: getErrorMessage(error) }
   }
-}
-
-/** The config the analyzer builds for an address its template matched. */
-function configFor(facts: Facts, template: StructureContract) {
-  const config = makeEntryStructureConfig({}, facts.address)
-  config.pushValues(template)
-  return config
-}
-
-/**
- * `execute` throws as a whole in two places the handlers do not guard: a
- * `{{ reference }}` that never resolves (dependency ordering) and an `edit`
- * that throws (edits run after all handlers, unguarded). Fields with the
- * first are found without running anything and left out; then handlers run
- * once without edits and each edit is decoded on its own, so a throwing
- * edit is pinned on its field and the other fields keep their values.
- */
-async function pinFailure(
-  provider: IProvider,
-  handlerExecutor: HandlerExecutor,
-  facts: Facts,
-  template: StructureContract,
-  failure: string,
-): Promise<FieldValues | RunFailure> {
-  try {
-    const unresolved = unresolvedReferences(facts, template)
-    const runnable = withoutFields(template, Object.keys(unresolved))
-    const { results } = await handlerExecutor.execute(
-      provider,
-      facts.address,
-      facts.abi,
-      configFor(facts, withoutEdits(runnable, Object.keys(runnable.fields))),
-    )
-    const decode = (fields: StructureContract['fields']) =>
-      decodeAsExecutor(provider, facts, runnable, results, fields)
-    const editErrors = failingEdits(runnable, decode)
-    const decoded = decode(
-      withoutEdits(runnable, Object.keys(editErrors)).fields,
-    )
-    const failed = [...Object.keys(unresolved), ...Object.keys(editErrors)]
-    return {
-      values: withoutKeys(decoded.values, failed),
-      errors: { ...decoded.errors, ...editErrors, ...unresolved },
-    }
-  } catch {
-    return { failure }
-  }
-}
-
-/**
- * The decode step of `HandlerExecutor.execute`, repeated here so it can
- * run over the same handler results with different edits.
- */
-function decodeAsExecutor(
-  provider: IProvider,
-  facts: Facts,
-  template: StructureContract,
-  results: HandlerResult[],
-  fields: StructureContract['fields'],
-): FieldValues {
-  const config = configFor(facts, { ...template, fields })
-  const { values, errors } = decodeHandlerResults(
-    provider.chain,
-    results,
-    config.fields,
-    config.types,
-    {
-      blockNumber: provider.blockNumber,
-      timestamp: provider.timestamp,
-      chainName: provider.chain,
-      address: facts.address.toString(),
-    },
-  )
-  return { values: values ?? {}, errors }
-}
-
-function failingEdits(
-  template: StructureContract,
-  decode: (fields: StructureContract['fields']) => FieldValues,
-): Record<string, string> {
-  const errors: Record<string, string> = {}
-  const edited = Object.keys(template.fields).filter(
-    (name) => template.fields[name]?.edit !== undefined,
-  )
-  for (const name of edited) {
-    const others = edited.filter((other) => other !== name)
-    try {
-      decode(withoutEdits(template, others).fields)
-    } catch (error) {
-      const edit = JSON.stringify(template.fields[name]?.edit)
-      errors[name] = `the edit ${edit} throws: ${getErrorMessage(error)}`
-    }
-  }
-  return errors
-}
-
-/**
- * Fields whose `{{ references }}` never resolve, found by the same
- * fixpoint `executeHandlers` orders handlers by: a field is ready once
- * every field it references is (`$` values always are).
- */
-function unresolvedReferences(
-  facts: Facts,
-  template: StructureContract,
-): Record<string, string> {
-  const handlers = getHandlers(facts.abi, configFor(facts, template))
-  const names = new Set(handlers.map((handler) => handler.field))
-  const ready = new Set<string>()
-  const isReady = (handler: Handler) =>
-    handler.dependencies.every(
-      (dependency) => ready.has(dependency) || dependency.startsWith('$'),
-    )
-  let pending: Handler[] = handlers
-  let progressed = true
-  while (progressed) {
-    const batch = pending.filter(isReady)
-    for (const handler of batch) {
-      ready.add(handler.field)
-    }
-    pending = pending.filter((handler) => !batch.includes(handler))
-    progressed = batch.length > 0
-  }
-  return Object.fromEntries(
-    pending.map((handler) => [
-      handler.field,
-      unresolvedMessage(handler.dependencies, names),
-    ]),
-  )
-}
-
-function unresolvedMessage(dependencies: string[], names: Set<string>): string {
-  const missing = dependencies.filter(
-    (dependency) => !names.has(dependency) && !dependency.startsWith('$'),
-  )
-  if (missing.length > 0) {
-    return `references ${missing.map(reference).join(', ')}, but no field or getter has that name`
-  }
-  return `references ${dependencies.map(reference).join(', ')}, which never resolve (a reference cycle, or a field that cannot run)`
-}
-
-function reference(name: string): string {
-  return `{{ ${name} }}`
-}
-
-function withoutFields(
-  template: StructureContract,
-  names: string[],
-): StructureContract {
-  return {
-    ...template,
-    fields: Object.fromEntries(
-      Object.entries(template.fields).filter(([name]) => !names.includes(name)),
-    ),
-  }
-}
-
-function withoutEdits(
-  template: StructureContract,
-  names: string[],
-): StructureContract {
-  return {
-    ...template,
-    fields: Object.fromEntries(
-      Object.entries(template.fields).map(([name, field]) => {
-        if (!names.includes(name)) {
-          return [name, field]
-        }
-        const { edit: _edit, ...rest } = field
-        return [name, rest]
-      }),
-    ),
-  }
-}
-
-function withoutKeys<T>(
-  record: Record<string, T>,
-  keys: string[],
-): Record<string, T> {
-  return Object.fromEntries(
-    Object.entries(record).filter(([key]) => !keys.includes(key)),
-  )
 }

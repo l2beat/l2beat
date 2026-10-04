@@ -1,9 +1,9 @@
 /**
- * What the draft rules R3–R9 read, built once per validation.
+ * What the draft rules read, built once per validation.
  *
- * The rules run only after the schema passed, so the draft is typed. Which
- * function and events each field reads is resolved once, up front, because
- * three rules need it (names, ABI checks, covers) and they must agree.
+ * The rules run only after the schema passed, so the draft is typed. What
+ * each field names (its function, its events) is read once, up front,
+ * because two rules need it and they must agree.
  */
 import { AbiIndex } from '../abi/AbiIndex'
 import type { ContractFacts } from '../facts'
@@ -14,18 +14,19 @@ import { type FieldReads, readsOf } from './fieldReads'
 
 export interface ValidationContext {
   facts: ContractFacts
-  /** May be reduced by the caller (freeze path); the draft is checked against what is given. */
+  /** Reduced by what an existing template already decides; the draft is checked against what is given. */
   worklist: Worklist
-  /** Fields of an older template kept verbatim: their names are reserved and referenceable. */
-  lockedFieldNames?: string[]
+  /** Fields of the existing template: their names are taken and referenceable. */
+  existingFieldNames?: string[]
 }
 
 export interface RuleContext {
   draft: Draft
   facts: ContractFacts
   worklist: Worklist
+  /** For the hints of the coverage check: which function a stray token names. */
   abi: AbiIndex
-  lockedFieldNames: ReadonlySet<string>
+  existingFieldNames: ReadonlySet<string>
   reads: ReadonlyMap<string, FieldReads>
   findings: Findings
 }
@@ -35,27 +36,25 @@ export function buildRuleContext(
   ctx: ValidationContext,
   findings: Findings,
 ): RuleContext {
-  const abi = abiIndexOf(ctx.facts.abi)
-  const reads = new Map(
-    Object.entries(draft.fields).map(([name, field]) => [
-      name,
-      readsOf(name, field.handler, ctx.facts.abi, abi),
-    ]),
-  )
   return {
     draft,
     facts: ctx.facts,
     worklist: ctx.worklist,
-    abi,
-    lockedFieldNames: new Set(ctx.lockedFieldNames ?? []),
-    reads,
+    abi: abiIndexOf(ctx.facts.abi),
+    existingFieldNames: new Set(ctx.existingFieldNames ?? []),
+    reads: new Map(
+      Object.entries(draft.fields).map(([name, field]) => [
+        name,
+        readsOf(name, field.handler),
+      ]),
+    ),
     findings,
   }
 }
 
 const indexes = new WeakMap<readonly string[], AbiIndex>()
 
-/** One parsed index per ABI array: `naturalCovers` is called once per field by the freeze path. */
+/** One parsed index per ABI array, since every round validates against the same one. */
 export function abiIndexOf(abi: readonly string[]): AbiIndex {
   let index = indexes.get(abi)
   if (index === undefined) {
@@ -63,12 +62,4 @@ export function abiIndexOf(abi: readonly string[]): AbiIndex {
     indexes.set(abi, index)
   }
   return index
-}
-
-export function isFieldPath(path: string, fieldPrefix: string): boolean {
-  return (
-    path === fieldPrefix ||
-    path.startsWith(`${fieldPrefix}.`) ||
-    path.startsWith(`${fieldPrefix}[`)
-  )
 }

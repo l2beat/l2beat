@@ -1,13 +1,14 @@
-import { parseJsonc } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFileSync } from 'fs'
 import path from 'path'
 import {
+  type FieldEntry,
   readFieldEntries,
+  readFieldsObject,
   readTopLevelEntries,
+  readTopLevelObject,
   withTrailingComma,
 } from './jsoncEntries'
-import { renderTemplateFile } from './templateFile'
 
 const TEMPLATES = path.join(
   __dirname,
@@ -66,15 +67,53 @@ describe(readTopLevelEntries.name, () => {
   })
 })
 
+function withoutSpans(entries: FieldEntry[]) {
+  return entries.map(({ name, text }) => ({ name, text }))
+}
+
 describe(readFieldEntries.name, () => {
   it('attaches only the comments directly above a field', () => {
-    expect(readFieldEntries(SYNTHETIC)).toEqual([
+    expect(withoutSpans(readFieldEntries(SYNTHETIC))).toEqual([
       {
         name: 'f',
         text: '// about f\n    // more about f\n    "f": { "handler": { "type": "hardcoded", "value": "/* no */" } }',
       },
       { name: 'g', text: '"g": 1' },
     ])
+  })
+
+  it('reports where each entry sits in the text, and the comma that followed it', () => {
+    const [f, g] = readFieldEntries(SYNTHETIC)
+    const at = (needle: string) => SYNTHETIC.indexOf(needle)
+
+    expect(f?.span).toEqual({
+      start: at('// about f'),
+      keyStart: at('"f"'),
+      valueEnd: at(' } },\n') + ' } }'.length,
+      end: at(' } },\n') + ' } }'.length,
+      comma: at(' } },\n') + ' } }'.length,
+    })
+    expect(g?.span).toEqual({
+      start: at('"g"'),
+      keyStart: at('"g"'),
+      valueEnd: at('"g": 1') + '"g": 1'.length,
+      end: at('"g": 1') + '"g": 1'.length,
+      comma: at('"g": 1') + '"g": 1'.length,
+    })
+    expect(f?.text).toEqual(SYNTHETIC.slice(f?.span.start ?? 0, f?.span.end))
+  })
+
+  it('ends an entry after its same-line comment, with the comma placed before it', () => {
+    const text = '{\n  "a": [1], // note\n  "b": 2\n}\n'
+    const [a] = readTopLevelEntries(text)
+
+    expect(a?.span).toEqual({
+      start: text.indexOf('"a"'),
+      keyStart: text.indexOf('"a"'),
+      valueEnd: text.indexOf(','),
+      end: text.indexOf('// note') + '// note'.length,
+      comma: text.indexOf(','),
+    })
   })
 
   it('reads several comment lines above a field', () => {
@@ -94,54 +133,25 @@ describe(readFieldEntries.name, () => {
   it('returns nothing for a template without fields', () => {
     expect(readFieldEntries('{ "$schema": "x" }')).toEqual([])
   })
+})
 
-  describe('rendered back by renderTemplateFile', () => {
-    function renderKeepingEverything(original: string): string {
-      return renderTemplateFile({
-        schema: parseJsonc<{ $schema: string }>(original).$schema,
-        header: 'Authored by test',
-        ignoreMethods: [],
-        preserved: withoutSchemaAndFields(readTopLevelEntries(original)),
-        lockedFields: readFieldEntries(original),
-        fields: [],
-      })
-    }
+describe(readFieldsObject.name, () => {
+  it('locates the braces of the fields object and the document', () => {
+    const fields = readFieldsObject(SYNTHETIC)
+    const document = readTopLevelObject(SYNTHETIC)
 
-    function withoutSchemaAndFields<T extends { key: string }>(entries: T[]) {
-      return entries.filter(
-        (entry) => entry.key !== '$schema' && entry.key !== 'fields',
-      )
-    }
+    expect(fields?.open).toEqual(
+      SYNTHETIC.indexOf('"fields": {') + '"fields": '.length,
+    )
+    expect(SYNTHETIC.slice(fields?.close ?? 0)).toEqual('},\n}\n')
+    expect(fields?.entries.map((entry) => entry.key)).toEqual(['f', 'g'])
+    expect(document.open).toEqual(0)
+    expect(document.close).toEqual(SYNTHETIC.lastIndexOf('}'))
+  })
 
-    it('reproduces scroll/ScrollChain with only the header added', () => {
-      const original = readTemplate('scroll/ScrollChain')
-
-      expect(renderKeepingEverything(original)).toEqual(
-        original.replace(
-          /^(\{\n {2}"\$schema": .*\n)/,
-          '$1  // Authored by test\n\n',
-        ),
-      )
-    })
-
-    const IDS = [
-      'scroll/ScrollOwner',
-      'risc0/RiscZeroVerifierRouter',
-      'rocketpool/RocketStorage',
-      'kinto/AccessManager',
-    ]
-    for (const id of IDS) {
-      it(`reproduces every entry of ${id} byte for byte`, () => {
-        const original = readTemplate(id)
-
-        const rendered = renderKeepingEverything(original)
-
-        expect(withoutSchemaAndFields(readTopLevelEntries(rendered))).toEqual(
-          withoutSchemaAndFields(readTopLevelEntries(original)),
-        )
-        expect(readFieldEntries(rendered)).toEqual(readFieldEntries(original))
-      })
-    }
+  it('is absent for a template without fields, or whose fields is not an object', () => {
+    expect(readFieldsObject('{ "$schema": "x" }')).toEqual(undefined)
+    expect(readFieldsObject('{ "fields": [] }')).toEqual(undefined)
   })
 })
 

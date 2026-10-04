@@ -15,6 +15,7 @@ import {
   buildPrompt,
   DEFAULT_SOURCE_CHAR_CAP,
   type PromptInput,
+  README_REFERENCE_HEADER,
   SECTION_HEADERS,
   TRUNCATION_MARKER,
   VALUE_CHAR_CAP,
@@ -23,11 +24,12 @@ import {
 } from './buildPrompt'
 import { draftJsonSchema } from './draftJsonSchema'
 import { HANDLER_DOCS } from './handlerDocs'
+import { parseReadme } from './readmeSections'
 
 /**
  * Renders prompts for the real fixture contracts and pins what the model is
  * shown: the five sections in order and byte-identical across runs, every
- * worklist item and event, baseline values with long ones elided, locked
+ * worklist item and event, baseline values with long ones elided, existing
  * fields only when there are some, the proxy source first and the source
  * budget. The worked example and the handler docs examples are checked
  * against the same schemas the validator uses, so the prompt never teaches
@@ -36,7 +38,7 @@ import { HANDLER_DOCS } from './handlerDocs'
 describe(buildPrompt.name, () => {
   const inputFor = (facts: ContractFacts): PromptInput => ({
     facts,
-    worklist: buildWorklist(facts.abi),
+    worklist: buildWorklist(facts.abi, facts.baseline),
   })
   const scrollChain = () => inputFor(loadFixture('ScrollChain'))
 
@@ -85,10 +87,12 @@ describe(buildPrompt.name, () => {
     expect(rules).toInclude('`["!=", "#arg", literal]`')
     expect(rules).toInclude('`eth:0x…`')
     expect(rules).toInclude('`ignoreMethods` is derived from your skips')
+    expect(rules).toInclude('since `array` takes no `uint8` key')
+    expect(HANDLER_DOCS).toInclude('A `uint8` key is not accepted')
     expect(rules).toMatchRegex(
       /\n15\. \*\*Output\.\*\* Reply with exactly one JSON object/,
     )
-    expect(rules).not.toInclude('**Locked fields.**')
+    expect(rules).not.toInclude('**Existing fields.**')
   })
 
   it('shows the schema and a worked example that has the draft shape', () => {
@@ -141,16 +145,35 @@ describe(buildPrompt.name, () => {
       for (const event of input.worklist.events) {
         expect(facts).toInclude(`- \`${event.name}\`: ${event.fragment}`)
       }
+      const ctor = input.worklist.constructorItem
+      if (ctor === undefined) {
+        expect(facts).not.toInclude('### Constructor needing a verdict')
+      } else {
+        expect(facts).toInclude(
+          `### Constructor needing a verdict\n\n- \`${ctor.signature}\`: ${ctor.fragment}`,
+        )
+      }
     }
   })
 
-  it('flags probed worklist items and overloaded events', () => {
-    const facts = section(buildPrompt(scrollChain()).prompt, 'facts')
+  it('flags the worklist items V1 probes for this address, and overloaded events', () => {
+    const input = scrollChain()
+    input.facts.baseline.fields.committedBatches = { kind: 'probe', value: [] }
+    const facts = section(
+      buildPrompt({
+        ...input,
+        worklist: buildWorklist(input.facts.abi, input.facts.baseline),
+      }).prompt,
+      'facts',
+    )
     expect(facts).toInclude(
       '- `committedBatches(uint256)`: function committedBatches(uint256) view returns (bytes32) (probed)',
     )
     expect(facts).toInclude(
       '- `isSequencer(address)`: function isSequencer(address) view returns (bool)\n',
+    )
+    expect(facts).toInclude(
+      '- `finalizedStateRoots(uint256)`: function finalizedStateRoots(uint256) view returns (bytes32)\n',
     )
     expect(facts).toInclude(
       '- `RevertBatch`: event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash) (overloaded:',
@@ -160,7 +183,7 @@ describe(buildPrompt.name, () => {
     )
   })
 
-  it('shows baseline values, probes and errors, and elides long values with a marker', () => {
+  it('shows baseline values, probes, override fields and errors, and elides long values with a marker', () => {
     const input = scrollChain()
     const long = 'x'.repeat(VALUE_CHAR_CAP + 50)
     input.facts.baseline.fields.description = { kind: 'getter', value: long }
@@ -172,12 +195,14 @@ describe(buildPrompt.name, () => {
       kind: 'getter',
       error: 'Execution reverted',
     }
+    input.facts.baseline.fields.fromConfig = { kind: 'override', value: 7 }
     const facts = section(buildPrompt(input).prompt, 'facts')
     expect(facts).toInclude('- `lastFinalizedBatchIndex` = 519245')
     expect(facts).toInclude('- `miscData` = {"lastCommittedBatchIndex":519245,')
     expect(facts).toInclude(
       '- `committedBatches` (probed at indices 0–4) = ["0x01","0x02"]',
     )
+    expect(facts).toInclude('- `fromConfig` (from the project config) = 7')
     expect(facts).toInclude('- `brokenGetter` = error: Execution reverted')
     expect(facts).toInclude('[52 more characters elided]')
     expect(facts).not.toInclude(long)
@@ -189,27 +214,97 @@ describe(buildPrompt.name, () => {
     )
   })
 
-  it('renders locked fields and their rule only when there are some', () => {
-    const input = {
+  it('renders existing fields, marked when they fail, and their rule only when there are some', () => {
+    const input: PromptInput = {
       ...scrollChain(),
-      locked: [
+      existing: [
         {
           name: 'sequencers',
-          text: '{\n  // kept\n  "handler": { "type": "event", "select": "account", "add": { "event": "UpdateSequencer" } }\n}',
+          text: '// kept\n    "sequencers": {\n      "handler": { "type": "event", "select": "account", "add": { "event": "UpdateSequencer" } }\n    }',
+        },
+        {
+          name: 'broken',
+          text: '"broken": { "handler": { "type": "call", "method": "nope", "args": [] } }',
+          error: 'Execution reverted',
         },
       ],
     }
     const { prompt } = buildPrompt(input)
-    expect(section(prompt, 'facts')).toInclude('### Locked fields (1)')
-    expect(section(prompt, 'facts')).toInclude(
-      ['```jsonc', `"sequencers": ${input.locked[0]?.text}`, '```'].join('\n'),
+    const facts = section(prompt, 'facts')
+    expect(facts).toInclude('### Existing fields (2)')
+    expect(facts).toInclude(
+      ['```jsonc', input.existing?.[0]?.text, '```'].join('\n'),
     )
-    expect(section(prompt, 'rules')).toInclude('**Locked fields.**')
+    expect(facts).toInclude(
+      [
+        '```jsonc',
+        `// fails at block ${input.facts.blockNumber}: Execution reverted`,
+        input.existing?.[1]?.text,
+        '```',
+      ].join('\n'),
+    )
+    expect(facts).toInclude('kept exactly as they are')
+    expect(section(prompt, 'rules')).toInclude('**Existing fields.**')
     expect(section(prompt, 'rules')).toMatchRegex(/\n16\. \*\*Output\.\*\*/)
 
-    const unlocked = buildPrompt({ ...scrollChain(), locked: [] }).prompt
-    expect(unlocked).not.toInclude('### Locked fields')
-    expect(unlocked).not.toInclude('**Locked fields.**')
+    const fresh = buildPrompt({ ...scrollChain(), existing: [] }).prompt
+    expect(fresh).not.toInclude('### Existing fields')
+    expect(fresh).not.toInclude('**Existing fields.**')
+  })
+
+  it('adds the README sections for handlers and edits the existing fields use beyond the seven types, and only then', () => {
+    const readme = parseReadme(
+      [
+        '## Handlers',
+        '### Scroll access control handler',
+        'Reads the roles of Scroll.',
+        '```json',
+        '{ "type": "scrollAccessControl" }',
+        '```',
+        '## Edit',
+        '### Filters',
+        '#### `pipe`',
+        'Runs programs in sequence.',
+        '### `get`',
+        'Accesses a property.',
+      ].join('\n'),
+    )
+    const generic: PromptInput = {
+      ...scrollChain(),
+      existing: [
+        {
+          name: 'a',
+          text: '"a": {}',
+          handler: { type: 'event' },
+          edit: ['get', 'x'],
+        },
+      ],
+    }
+    const specific: PromptInput = {
+      ...scrollChain(),
+      existing: [
+        {
+          name: 'roles',
+          text: '"roles": {}',
+          handler: { type: 'scrollAccessControl' },
+        },
+        { name: 'b', text: '"b": {}', edit: ['pipe', ['get', 'x']] },
+      ],
+    }
+
+    const plain = buildPrompt(generic, { readme }).prompt
+    expect(plain).not.toInclude(README_REFERENCE_HEADER)
+
+    const handlers = section(
+      buildPrompt(specific, { readme }).prompt,
+      'handlers',
+    )
+    expect(handlers).toInclude(README_REFERENCE_HEADER)
+    expect(handlers).toInclude(
+      '### Scroll access control handler\nReads the roles of Scroll.',
+    )
+    expect(handlers).toInclude('#### `pipe`\nRuns programs in sequence.')
+    expect(handlers).not.toInclude('### `get`')
   })
 
   it('puts the proxy source first and cuts the sources at the shared budget with a marker', () => {

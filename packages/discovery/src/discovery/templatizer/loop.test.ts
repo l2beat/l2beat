@@ -51,7 +51,7 @@ describe(authorDraft.name, () => {
       },
     },
   }
-  const validation = { facts, worklist: buildWorklist(ABI) }
+  const validation = { facts, worklist: buildWorklist(ABI, facts.baseline) }
   const PROMPT = 'the authoring prompt'
 
   const VALID: Draft = {
@@ -155,7 +155,6 @@ describe(authorDraft.name, () => {
       const findings: Finding[] = failing
         ? [
             {
-              severity: 'error',
               path: 'fields.validators',
               message: 'dry run at block 100 failed: boom',
             },
@@ -219,62 +218,6 @@ describe(authorDraft.name, () => {
     expect(artifacts.files.has('round-1.refused-events.jsonl')).toEqual(true)
   })
 
-  describe('advisories', () => {
-    const ADVISORY: Finding = {
-      severity: 'advisory',
-      path: 'fields.validators',
-      message: 'the value holds 21 addresses',
-    }
-
-    it('asks about them once and accepts the reply even when they still apply', async () => {
-      const { model, result } = run(
-        [JSON.stringify(VALID), JSON.stringify(VALID)],
-        dryRunReturning([ADVISORY]).run,
-      )
-
-      const outcome = await result
-      expect(outcome.status).toEqual('accepted')
-      expect(outcome.rounds.length).toEqual(2)
-      expect(
-        outcome.status === 'accepted' && outcome.acceptedRound.index,
-      ).toEqual(2)
-      expect(model.prompts[1] ?? '').toInclude('judgments, not errors')
-      expect(model.prompts[1] ?? '').toInclude(
-        '1. advisory at fields.validators: the value holds 21 addresses',
-      )
-    })
-
-    it('accepts the draft it asked about when the reply cannot be repaired', async () => {
-      const { result } = run(
-        [
-          JSON.stringify(VALID),
-          JSON.stringify(MISSING_SKIP),
-          JSON.stringify(MISSING_SKIP),
-        ],
-        dryRunReturning([ADVISORY]).run,
-      )
-
-      const outcome = await result
-      expect(outcome.status).toEqual('accepted')
-      expect(outcome.rounds.length).toEqual(3)
-      expect(outcome.status === 'accepted' && outcome.draft).toEqual(VALID)
-      expect(
-        outcome.status === 'accepted' && outcome.acceptedRound.index,
-      ).toEqual(1)
-    })
-
-    it('does not spend the last round asking about them', async () => {
-      const { model, result } = run(
-        [JSON.stringify(VALID)],
-        dryRunReturning([ADVISORY]).run,
-        1,
-      )
-
-      expect((await result).status).toEqual('accepted')
-      expect(model.calls.length).toEqual(1)
-    })
-  })
-
   it('stops at once when the model does not answer, and says so in the trail', async () => {
     const { model, artifacts, result } = run([
       new Error('opencode reported an error: insufficient quota'),
@@ -303,37 +246,22 @@ describe(authorDraft.name, () => {
 })
 
 describe(repairMessage.name, () => {
-  it('lists errors before warnings, numbered, with their paths', () => {
+  it('numbers the findings with their paths and asks for the whole draft back', () => {
     const message = repairMessage([
-      { severity: 'warning', path: 'fields.a', message: 'check this' },
-      { severity: 'error', path: 'skips[0].item', message: 'unknown item' },
+      { path: 'skips[0].item', message: 'unknown item' },
+      { path: 'fields.a', message: 'check this' },
     ])
 
     expect(message).toEqual(
       [
-        'The draft has 1 error(s) and 1 warning(s). Fix every error; treat warnings as hints to check.',
+        'The draft has 2 error(s). Fix every one of them.',
         '',
-        '1. error at skips[0].item: unknown item',
-        '2. warning at fields.a: check this',
+        '1. at skips[0].item: unknown item',
+        '2. at fields.a: check this',
         '',
+        'You have no tools: do not try to read files or run commands, fix the draft from the messages above alone.',
         'Return the whole corrected draft as one JSON object and nothing else.',
       ].join('\n'),
     )
-  })
-
-  it('puts advisories between errors and warnings and says they may stand', () => {
-    const message = repairMessage([
-      { severity: 'warning', path: 'fields.a', message: 'check this' },
-      { severity: 'advisory', path: 'skips[1].reason', message: 'privileged' },
-      { severity: 'error', path: 'skips[0].item', message: 'unknown item' },
-    ])
-
-    expect(message.split('\n').slice(0, 5)).toEqual([
-      'The draft has 1 error(s), 1 advisory point(s) and 1 warning(s). Fix every error; reconsider each advisory point, which may be right as it is; treat warnings as hints to check.',
-      '',
-      '1. error at skips[0].item: unknown item',
-      '2. advisory at skips[1].reason: privileged',
-      '3. warning at fields.a: check this',
-    ])
   })
 })

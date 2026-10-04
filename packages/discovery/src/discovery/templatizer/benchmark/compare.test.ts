@@ -3,6 +3,7 @@ import {
   canonicalJson,
   compareValues,
   countVerdicts,
+  isRegression,
   normaliseValue,
   summariseDifference,
   valuesEqual,
@@ -299,11 +300,77 @@ describe(countVerdicts.name, () => {
       equalRenamed: 1,
       equalByValue: 0,
       different: 1,
-      v1Only: { proxy: 0, getter: 0, handler: 1, 'template-projection': 1 },
+      v1Only: {
+        proxy: 0,
+        getter: 0,
+        override: 0,
+        handler: 1,
+        'template-projection': 1,
+      },
       v2Only: { 'ignored-by-v1': 1, new: 2 },
       handlerFields: 2,
       handlerFound: 1,
+      reachableFields: 2,
+      reachableFound: 1,
+      // The proxy value that differs.
+      regressions: 1,
     })
+  })
+
+  it('counts reachable handler fields apart from unreachable ones, and regressions apart from the template’s own misses', () => {
+    const counts = countVerdicts([
+      {
+        verdict: 'equal',
+        name: 'a',
+        attribution: { kind: 'handler', handlerType: 'event' },
+      },
+      {
+        verdict: 'v1-only',
+        name: 'b',
+        attribution: { kind: 'handler', handlerType: 'array' },
+      },
+      {
+        verdict: 'v1-only',
+        name: 'c',
+        attribution: {
+          kind: 'handler',
+          handlerType: 'hardcoded',
+          unreachable: 'hardcoded handler',
+        },
+      },
+      {
+        verdict: 'equal',
+        name: 'd',
+        attribution: {
+          kind: 'handler',
+          handlerType: 'storage',
+          unreachable: 'slot not derivable',
+        },
+      },
+      { verdict: 'v1-only', name: 'e', attribution: { kind: 'getter' } },
+      {
+        verdict: 'different',
+        name: 'f',
+        attribution: { kind: 'getter', edited: true },
+        diff: '',
+      },
+      {
+        verdict: 'different',
+        name: 'g',
+        attribution: { kind: 'override' },
+        diff: '',
+      },
+      {
+        verdict: 'v1-only',
+        name: 'h',
+        attribution: { kind: 'template-projection', via: 'copy' },
+      },
+    ])
+    expect([counts.handlerFound, counts.handlerFields]).toEqual([2, 4])
+    expect([counts.reachableFound, counts.reachableFields]).toEqual([1, 2])
+    // The missed getter and the changed override field; not the formatted
+    // getter (its edit was the template's), not the template's own misses.
+    expect(counts.regressions).toEqual(2)
   })
 
   it('counts a handler field as found when equal, renamed or equal by value, and not when different or missed', () => {
@@ -337,5 +404,49 @@ describe(countVerdicts.name, () => {
       { verdict: 'equal', name: 'g', attribution: { kind: 'getter' } },
     ])
     expect([counts.handlerFound, counts.handlerFields]).toEqual([3, 5])
+  })
+})
+
+describe(isRegression.name, () => {
+  it('is true only for a missing or changed proxy value, plain getter or override field', () => {
+    const getter = { kind: 'getter' } as const
+    expect(
+      isRegression({ verdict: 'v1-only', name: 'a', attribution: getter }),
+    ).toEqual(true)
+    expect(
+      isRegression({
+        verdict: 'different',
+        name: 'a',
+        attribution: { kind: 'proxy' },
+        diff: '',
+      }),
+    ).toEqual(true)
+    expect(
+      isRegression({
+        verdict: 'v1-only',
+        name: 'a',
+        attribution: { kind: 'override' },
+      }),
+    ).toEqual(true)
+    expect(
+      isRegression({ verdict: 'equal', name: 'a', attribution: getter }),
+    ).toEqual(false)
+    expect(
+      isRegression({
+        verdict: 'v1-only',
+        name: 'a',
+        attribution: { kind: 'getter', edited: true },
+      }),
+    ).toEqual(false)
+    expect(
+      isRegression({
+        verdict: 'v1-only',
+        name: 'a',
+        attribution: { kind: 'handler', handlerType: 'event' },
+      }),
+    ).toEqual(false)
+    expect(
+      isRegression({ verdict: 'v2-only', name: 'a', class: 'new' }),
+    ).toEqual(false)
   })
 })

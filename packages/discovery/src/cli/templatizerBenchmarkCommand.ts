@@ -17,7 +17,10 @@ import { SQLiteCache } from '../discovery/provider/SQLiteCache'
 import { analyzeWithHiddenTemplate } from '../discovery/templatizer/benchmark/analyzeWithHiddenTemplate'
 import {
   loadProject,
+  quickSuiteProjects,
+  quickUnreachable,
   readSuite,
+  type SuiteName,
   selectSuiteProjects,
 } from '../discovery/templatizer/benchmark/loadProject'
 import {
@@ -38,6 +41,13 @@ export const TemplatizerBenchmarkCommand = command({
       long: 'out',
       description:
         'directory for benchmark.json, benchmark.md, the authored templates and the model trail',
+    }),
+    suite: option({
+      type: string,
+      long: 'suite',
+      defaultValue: () => 'quick',
+      description:
+        'quick (default: fourteen contracts chosen for dense use of the generic handlers, about half an hour) or full (the research suite: scroll, 25 base contracts, 6 plumenetwork)',
     }),
     aiModel: option({
       type: optional(string),
@@ -61,7 +71,7 @@ export const TemplatizerBenchmarkCommand = command({
       long: 'project',
       defaultValue: () => [],
       description:
-        'suite project to run; repeat or comma-separate (default: every suite project)',
+        'suite project to run; repeat or comma-separate (default: every project of the chosen suite)',
     }),
     addresses: option({
       type: optional(string),
@@ -82,6 +92,7 @@ export const TemplatizerBenchmarkCommand = command({
 
 interface TemplatizerBenchmarkArgs {
   out: string
+  suite: string
   aiModel?: string
   aiEffort?: string
   aiRounds?: number
@@ -111,6 +122,8 @@ export async function templatizerBenchmark(
   const model = chosen.client
   const modelLabel = chosen.label
   const maxRounds = args.aiRounds ?? DEFAULT_MAX_ROUNDS
+  const suiteName = parseSuiteName(args.suite)
+  const suite = readSuite()
   const report = await runBenchmark(
     {
       logger,
@@ -126,12 +139,14 @@ export async function templatizerBenchmark(
             modelLabel,
             effort: chosen.effort,
             maxRounds,
-            logger: logger.for('Templatizer'),
+            logger,
           },
           run,
         ),
     },
-    selectSuiteProjects(readSuite(), splitList(args.projects)),
+    suiteName === 'quick'
+      ? quickSuiteProjects(suite, splitList(args.projects))
+      : selectSuiteProjects(suite, splitList(args.projects)),
     {
       outDir,
       model: modelLabel,
@@ -139,12 +154,22 @@ export async function templatizerBenchmark(
       onlyAddresses:
         args.addresses === undefined ? undefined : splitList([args.addresses]),
       limit: args.limit,
+      unreachable: suiteName === 'quick' ? quickUnreachable(suite) : undefined,
     },
   )
   logger.info('Benchmark written', {
     report: path.join(outDir, REPORT_MARKDOWN),
+    reachableFound: `${report.totals.reachableFound}/${report.totals.reachableFields}`,
+    regressions: report.totals.regressions,
     handlerFieldsFound: `${report.totals.handlerFound}/${report.totals.handlerFields}`,
   })
+}
+
+function parseSuiteName(value: string): SuiteName {
+  if (value === 'quick' || value === 'full') {
+    return value
+  }
+  throw new Error(`--suite must be quick or full, got ${value}`)
 }
 
 function splitList(values: readonly string[]): string[] {

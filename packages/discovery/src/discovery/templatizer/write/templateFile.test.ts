@@ -54,24 +54,12 @@ describe(schemaPathFor.name, () => {
 })
 
 describe(renderTemplateFile.name, () => {
-  it('writes the header, verbatim entries and commented fields in order', () => {
+  it('writes the header and the commented fields in order', () => {
     const text = renderTemplateFile({
       schema: schemaPathFor('scroll/ScrollChain'),
       header: HEADER,
       displayName: 'Scroll Chain',
       ignoreMethods: ['committedBatches', 'finalizedStateRoots'],
-      preserved: [
-        {
-          key: 'ignoreRelatives',
-          text: '"ignoreRelatives": ["messageQueueV1"] // deprecated',
-        },
-      ],
-      lockedFields: [
-        {
-          name: 'paused',
-          text: '// kept\n    "paused": {\n      "severity": "MEDIUM"\n    }',
-        },
-      ],
       fields: fieldsOf({
         fields: { sequencers: SEQUENCERS, maxDelay: MAX_DELAY },
         skips: [],
@@ -84,12 +72,7 @@ describe(renderTemplateFile.name, () => {
 
   "displayName": "Scroll Chain",
   "ignoreMethods": ["committedBatches", "finalizedStateRoots"],
-  "ignoreRelatives": ["messageQueueV1"], // deprecated
   "fields": {
-    // kept
-    "paused": {
-      "severity": "MEDIUM"
-    },
     // ${SEQUENCERS.reason}
     // covers: isSequencer(address), UpdateSequencer
     "sequencers": {
@@ -258,22 +241,6 @@ describe(renderTemplateFile.name, () => {
         ]),
       ),
     )
-  })
-
-  it('refuses a key or field name that would appear twice', () => {
-    expect(() =>
-      renderTemplateFile({
-        ...minimal([]),
-        displayName: 'A',
-        preserved: [{ key: 'displayName', text: '"displayName": "B"' }],
-      }),
-    ).toThrow('would repeat the top-level key "displayName"')
-    expect(() =>
-      renderTemplateFile({
-        ...minimal([{ ...MAX_DELAY, name: 'maxDelay' }]),
-        lockedFields: [{ name: 'maxDelay', text: '"maxDelay": {}' }],
-      }),
-    ).toThrow('would repeat the field name "maxDelay"')
   })
 
   it('refuses a result the template schemas reject', () => {

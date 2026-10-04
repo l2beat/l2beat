@@ -30,14 +30,80 @@ export const SuiteProject = v.object({
   addresses: v.array(v.string()).optional(),
 })
 
+/** One contract of the quick suite, chosen for dense use of the handlers the model is offered. */
+export type QuickContract = v.infer<typeof QuickContract>
+export const QuickContract = v.object({
+  project: v.string(),
+  chain: v.string(),
+  address: v.string(),
+  /** The committed template, for the reader; the run hides whatever the entry names. */
+  template: v.string(),
+  /** Handler fields the model could not have written, with the reason, so a miss there is expected. */
+  unreachable: v.record(v.string(), v.string()).optional(),
+})
+
 export type BenchmarkSuite = v.infer<typeof BenchmarkSuite>
 export const BenchmarkSuite = v.object({
   description: v.string().optional(),
+  /** The default: fourteen contracts that run in about half an hour. */
+  quick: v.array(QuickContract),
+  /** The research suite, for comparability with the research numbers. */
   projects: v.array(SuiteProject),
 })
 
+export type SuiteName = 'quick' | 'full'
+
 export function readSuite(): BenchmarkSuite {
   return BenchmarkSuite.parse(suiteJson)
+}
+
+/**
+ * The quick suite as projects with address lists, one per project in the
+ * order contracts are listed, so it runs through the same code as the full
+ * suite. `names` restricts it to some projects.
+ */
+export function quickSuiteProjects(
+  suite: BenchmarkSuite,
+  names: readonly string[],
+): SuiteProject[] {
+  const projects: SuiteProject[] = []
+  for (const contract of suite.quick) {
+    const project = projects.find((p) => p.name === contract.project)
+    if (project === undefined) {
+      projects.push({
+        name: contract.project,
+        chain: contract.chain,
+        addresses: [contract.address],
+      })
+    } else {
+      project.addresses?.push(contract.address)
+    }
+  }
+  if (names.length === 0) {
+    return projects
+  }
+  return names.map((name) => {
+    const project = projects.find((p) => p.name === name)
+    if (project === undefined) {
+      const known = projects.map((p) => p.name).join(', ')
+      throw new Error(`${name} is not in the quick suite (suite: ${known})`)
+    }
+    return project
+  })
+}
+
+/** The quick suite's unreachable fields by lowercased address, for the comparison. */
+export function quickUnreachable(
+  suite: BenchmarkSuite,
+): Record<string, Record<string, string>> {
+  return Object.fromEntries(
+    suite.quick
+      .filter((contract) => contract.unreachable !== undefined)
+      .map((contract) => [
+        contract.address.toLowerCase(),
+        contract.unreachable as Record<string, string>,
+      ]),
+  )
 }
 
 /** The suite's projects by name, in the order asked; every project when none is asked for. */
@@ -91,9 +157,20 @@ export function loadProject(
     entries: discovered.entries,
     entryConfig: (address) => makeEntryStructureConfig(structure, address),
     committedConfig(entry) {
+      const override = makeEntryStructureConfig(structure, entry.address)
+      const overrideFields = Object.entries(override.fields)
+        .filter(
+          ([, field]) =>
+            field.handler !== undefined || field.copy !== undefined,
+        )
+        .map(([name]) => name)
       const merged = makeEntryStructureConfig(structure, entry.address)
       merged.pushValues(templates.loadContractTemplate(entry.template))
-      return { fields: merged.fields, ignoreMethods: merged.ignoreMethods }
+      return {
+        fields: merged.fields,
+        ignoreMethods: merged.ignoreMethods,
+        overrideFields,
+      }
     },
   }
 }

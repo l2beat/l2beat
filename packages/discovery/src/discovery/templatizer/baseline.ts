@@ -1,63 +1,51 @@
 /**
  * The baseline: what V1 already read for an address before any template.
  *
- * The analyzer runs the system handlers either way, so the templatizer
- * takes their output instead of calling the chain again. Selection repeats
- * `getSystemHandlers` (same ABI filter, same `ignoreMethods`, same field
- * naming) so a name is in the baseline exactly when V1 would write it into
- * `values` or `errors` of an untemplatized entry. Fields a project override
- * configured are left out: they are the researcher's, not V1's defaults.
+ * The analyzer runs the handlers of the untemplatized config either way
+ * (every 0-argument getter, the 0–4 probe of single-`uint256` getters, and
+ * the fields of the address override) and hands their values and errors
+ * over, so the templatizer takes that output instead of calling the chain
+ * again. Which handler produced which name comes from V1's own
+ * `getHandlers` over the same config, so a name is a getter, a probe or an
+ * override field exactly when V1 made it one; nothing here repeats V1's
+ * selection. A value no handler produced (a `copy` field of the override)
+ * is an override field too.
  */
-import { utils } from 'ethers'
-import { rewriteSolidityIdentifier } from '../handlers/utils/rewriteSolidityIdentifier'
+import type { Handler } from '../handlers/Handler'
+import { LimitedArrayHandler } from '../handlers/system/LimitedArrayHandler'
+import { SimpleMethodHandler } from '../handlers/system/SimpleMethodHandler'
 import type { ContractValue } from '../output/types'
 import type { Baseline, BaselineField } from './facts'
-import { isProbed } from './worklist'
 
 export function buildBaseline(
-  abi: readonly string[],
-  ignoreMethods: readonly string[],
   values: Record<string, ContractValue | undefined>,
   errors: Record<string, string>,
+  handlers: readonly Handler[],
 ): Baseline {
+  const byField = new Map(handlers.map((handler) => [handler.field, handler]))
+  const names = new Set([...Object.keys(values), ...Object.keys(errors)])
   const fields: [string, BaselineField][] = []
-  for (const [name, kind] of systemFieldNames(abi, ignoreMethods)) {
+  for (const name of names) {
     const value = values[name]
     const error = errors[name]
     if (value === undefined && error === undefined) {
       continue
     }
+    const kind = kindOf(byField.get(name))
     fields.push([name, withoutEmpty({ kind, value, error })])
   }
   fields.sort(([a], [b]) => a.localeCompare(b))
   return { fields: Object.fromEntries(fields) }
 }
 
-function systemFieldNames(
-  abi: readonly string[],
-  ignoreMethods: readonly string[],
-): Map<string, BaselineField['kind']> {
-  const names = new Map<string, BaselineField['kind']>()
-  const coder = new utils.Interface(dedupe(abi))
-  for (const fragment of Object.values(coder.functions)) {
-    if (!fragment.constant || (fragment.outputs?.length ?? 0) === 0) {
-      continue
-    }
-    if (ignoreMethods.includes(fragment.name)) {
-      continue
-    }
-    const name = rewriteSolidityIdentifier(fragment.name)
-    if (fragment.inputs.length === 0) {
-      names.set(name, 'getter')
-    } else if (isProbed(fragment) && !names.has(name)) {
-      names.set(name, 'probe')
-    }
+function kindOf(handler: Handler | undefined): BaselineField['kind'] {
+  if (handler instanceof LimitedArrayHandler) {
+    return 'probe'
   }
-  return names
-}
-
-function dedupe(abi: readonly string[]): string[] {
-  return [...new Set(abi)]
+  if (handler instanceof SimpleMethodHandler) {
+    return 'getter'
+  }
+  return 'override'
 }
 
 function withoutEmpty(field: BaselineField): BaselineField {

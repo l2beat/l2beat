@@ -4,9 +4,11 @@
  * It is a V1 template's `fields` plus the verdicts a template file cannot
  * hold (`covers`, `skips`, `reason`), so the file is derived from it by
  * dropping the verdicts and turning reasons into comments, nothing else.
- * The vocabulary is closed on purpose: seven handler types researchers use
- * for 97% of committed handler fields, and `edit` restricted to two blip
- * forms. The census behind that choice is in docs/ai-templatizer.md.
+ * The handler vocabulary is closed on purpose: seven handler types
+ * researchers use for 97% of committed handler fields (the census behind
+ * that choice is in docs/ai-templatizer.md). `edit` and `where` are any
+ * blip program V1 parses; what a program does at the block is the dry
+ * run's to report.
  *
  * Handler definitions are V1's own schemas, so a draft that passes here is
  * a template V1 parses. They are applied one type at a time rather than
@@ -43,19 +45,6 @@ export const SKIP_REASONS = [
   'not-state',
 ] as const
 export type SkipReason = (typeof SKIP_REASONS)[number]
-
-/** Handlers whose field name V1 convention fixes, whatever the ABI says. */
-export const FIXED_FIELD_NAMES: Partial<Record<HandlerType, string>> = {
-  accessControl: 'accessControl',
-  constructorArgs: 'constructorArgs',
-}
-
-/**
- * Type casters an `edit` may name. `Undecimal` is not here although the
- * census has it: without a `types` entry carrying `decimals` it throws at
- * decode time, and a draft has no `types`.
- */
-export const FORMAT_TYPE_CASTERS = ['FormatSeconds'] as const
 
 export interface DraftField {
   handler: DraftHandler

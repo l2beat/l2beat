@@ -45,18 +45,20 @@ export interface FlatSource {
 }
 
 /**
- * The values V1 computes for an address with no template at all: every
- * 0-argument getter (`getter`) and every single-`uint256` getter probed at
- * indices 0–4 (`probe`). A draft field named like one of these would
- * replace it (`getHandlers` keeps the first field of a name, and user
- * handlers come first), so the names are reserved.
+ * The values V1 computes for an address before any template: every
+ * 0-argument getter (`getter`), every single-`uint256` getter probed at
+ * indices 0–4 (`probe`), and whatever the address override in
+ * `config.jsonc` adds (`override`). Which is which comes from V1's own
+ * handler list for the address, not from the ABI. A draft field named like
+ * one of these would replace it (`getHandlers` keeps the first field of a
+ * name, and template fields come first), so the names are reserved.
  */
 export interface Baseline {
   fields: Record<string, BaselineField>
 }
 
 export interface BaselineField {
-  kind: 'getter' | 'probe'
+  kind: 'getter' | 'probe' | 'override'
   value?: ContractValue
   error?: string
 }

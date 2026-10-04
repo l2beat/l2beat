@@ -26,4 +26,27 @@ describe(parseOpenCodeEvents.name, () => {
     )
     expect(parsed.toolParts).toEqual(['tool read'])
   })
+
+  it('records tool-call markup written into the text as a tool part', () => {
+    const markup =
+      '<｜｜DSML｜｜ calls>\n<｜｜DSML｜｜ invoke name="bash">\n<｜｜DSML｜｜ parameter name="command" string="true">ls</｜｜DSML｜｜ parameter>\n</｜｜DSML｜｜ invoke>\n</｜｜DSML｜｜ calls>'
+    const parsed = parseOpenCodeEvents(
+      JSON.stringify({
+        type: 'text',
+        sessionID: 'ses_1',
+        part: { type: 'text', text: markup },
+      }),
+    )
+    expect(parsed.toolParts).toEqual(['text holding tool-call markup (DSML)'])
+    expect(parsed.text).toEqual(markup)
+
+    const plain = parseOpenCodeEvents(
+      JSON.stringify({
+        type: 'text',
+        sessionID: 'ses_1',
+        part: { type: 'text', text: '{"fields":{},"skips":[]}' },
+      }),
+    )
+    expect(plain.toolParts).toEqual([])
+  })
 })

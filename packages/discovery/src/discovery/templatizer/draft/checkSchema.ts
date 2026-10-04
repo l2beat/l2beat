@@ -3,13 +3,13 @@
  *
  * Checked piece by piece so one reply gets every shape mistake back at
  * once: the envelope (`fields`, `skips`), each field, each handler against
- * the V1 definition its `type` selects, the two blip positions (R7) and
- * each skip. A handler is only checked against its own type's schema,
- * because a failure against V1's 33-member union cannot say which key was
- * wrong.
+ * the V1 definition its `type` selects, each `edit` and `where` against
+ * V1's own blip check, and each skip. A handler is only checked against its
+ * own type's schema, because a failure against V1's 33-member union cannot
+ * say which key was wrong.
  */
 
-import { editProblem, whereProblem } from './checkBlips'
+import { validateBlip } from '../../../blip/validateBlip'
 import {
   type DraftHandler,
   DraftShape,
@@ -55,7 +55,7 @@ function checkField(
     )
   }
   if (field.edit !== undefined) {
-    const problem = editProblem(field.edit)
+    const problem = blipProblem('edit', field.edit)
     if (problem !== undefined) {
       findings.error(joinPath(path, 'edit'), problem)
     }
@@ -130,13 +130,28 @@ function checkWheres(
       if (!isPlainObject(action) || action.where === undefined) {
         return
       }
-      const problem = whereProblem(action.where)
+      const problem = blipProblem('where', action.where)
       if (problem !== undefined) {
         const actionPath = Array.isArray(value) ? `${key}[${i}]` : key
         findings.error(joinPath(path, `${actionPath}.where`), problem)
       }
     })
   }
+}
+
+/** V1's own parser of blip programs; what a program does at run time is the dry run's to report. */
+function blipProblem(
+  what: 'edit' | 'where',
+  value: unknown,
+): string | undefined {
+  if (validateBlip(value)) {
+    return undefined
+  }
+  const example =
+    what === 'edit'
+      ? '["format", "FormatSeconds"] or ["get", "owner"]'
+      : '["=", "#status", true]'
+  return `\`${what}\` must be a blip program V1 parses: an array whose first element is an operator, such as ${example}; got ${show(value)}`
 }
 
 function withSkipReasonHint(path: string, message: string): string {

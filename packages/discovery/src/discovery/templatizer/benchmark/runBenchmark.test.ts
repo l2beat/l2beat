@@ -72,6 +72,7 @@ describe(runBenchmark.name, () => {
       },
     } as EffectiveConfig['fields'],
     ignoreMethods: ['registry'],
+    overrideFields: [],
   }
 
   function entry(
@@ -203,6 +204,9 @@ describe(runBenchmark.name, () => {
     const report = await runBenchmark(fakes, suite('fixture'), {
       ...options,
       outDir,
+      unreachable: {
+        [AUTHORED.toLowerCase()]: { batchers: 'the length getter reverts' },
+      },
     })
 
     const [authored, threw, matched, unauthored] =
@@ -239,6 +243,22 @@ describe(runBenchmark.name, () => {
       authored?.counts.handlerFound,
       authored?.counts.handlerFields,
     ]).toEqual([1, 3])
+    // batchers is marked unreachable for this contract, so it leaves the
+    // headline denominator; nothing the template did not author was lost.
+    expect([
+      authored?.counts.reachableFound,
+      authored?.counts.reachableFields,
+      authored?.counts.regressions,
+    ]).toEqual([1, 2, 0])
+    expect(authored?.fields.find((f) => f.name === 'batchers')).toEqual({
+      verdict: 'v1-only',
+      name: 'batchers',
+      attribution: {
+        kind: 'handler',
+        handlerType: 'array',
+        unreachable: 'the length getter reverts',
+      },
+    })
     expect(authored?.authoring).toEqual({
       kind: 'authored',
       template: 'fixture/Foo',
@@ -265,7 +285,8 @@ describe(runBenchmark.name, () => {
     expect([
       unauthored?.counts.handlerFound,
       unauthored?.counts.handlerFields,
-    ]).toEqual([0, 1])
+      unauthored?.counts.reachableFields,
+    ]).toEqual([0, 1, 1])
 
     const totals = report.totals
     expect([totals.contracts, totals.compared, totals.failed]).toEqual([
@@ -275,6 +296,8 @@ describe(runBenchmark.name, () => {
       1, 1, 1,
     ])
     expect([totals.handlerFound, totals.handlerFields]).toEqual([1, 4])
+    expect([totals.reachableFound, totals.reachableFields]).toEqual([1, 3])
+    expect(totals.regressions).toEqual(0)
     expect(totals.tokens).toEqual({
       input: 600,
       cached: 40,

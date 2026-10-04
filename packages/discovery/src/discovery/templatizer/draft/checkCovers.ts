@@ -1,23 +1,22 @@
 /**
- * R8: a field covers only what its handler can answer.
+ * R8: a field covers only what its handler names.
  *
  * `covers` is the model's claim that a worklist token is answered by this
  * field. For handlers that read one function (`call`, `array`) or a fixed
- * set (`accessControl`) the claim can be checked exactly. An `event` field
- * may claim any getter (it enumerates what `isSequencer(address)` holds,
- * which no ABI fact can confirm) but only the events it actually reads,
- * and the other handlers read no events at all. A claimed getter stays
- * unconfirmed: when the fold comes back empty, the dry run notes it for
- * the reviewer rather than rejecting it.
+ * set (`accessControl`) the claim is checked against the names the handler
+ * carries. An `event` field may claim any getter (it enumerates what
+ * `isSequencer(address)` holds, which nothing but judgment can confirm) but
+ * only the events its actions name, and the other handlers read no events
+ * at all. A `constructorArgs` field answers the constructor, and no other
+ * field does. Without this a missed item could hide behind a false claim.
+ * A claimed getter stays unconfirmed: when the fold comes back empty, the
+ * dry run notes it for the reviewer rather than rejecting it.
  */
-
-import type { AbiIndex } from '../abi/AbiIndex'
-import { sighash } from '../abi/AbiIndex'
-import type { ContractFacts } from '../facts'
+import type { Worklist, WorklistItem } from '../worklist'
 import type { DraftHandler } from './Draft'
 import { fieldPath } from './Finding'
-import { type FieldReads, readEvents, readsOf } from './fieldReads'
-import { abiIndexOf, type RuleContext } from './ruleContext'
+import { type FieldReads, type MethodReference, readsOf } from './fieldReads'
+import type { RuleContext } from './ruleContext'
 
 export interface NaturalCovers {
   functions: string[]
@@ -35,72 +34,95 @@ const ACCESS_CONTROL_FUNCTIONS = [
 const ACCESS_CONTROL_EVENTS = ['RoleGranted', 'RoleRevoked', 'RoleAdminChanged']
 
 /**
- * Worklist tokens a handler answers by what it reads, never by claim, so
- * the freeze path can tell what an old template's field covers.
+ * Worklist tokens a handler answers by what it names, never by claim, so
+ * an existing template's fields can be subtracted from the worklist.
  */
 export function naturalCovers(
   fieldName: string,
   handler: DraftHandler,
-  facts: Pick<ContractFacts, 'abi'>,
+  worklist: Worklist,
 ): NaturalCovers {
-  const index = abiIndexOf(facts.abi)
-  return naturalCoversOf(
-    handler,
-    readsOf(fieldName, handler, facts.abi, index),
-    index,
-  )
+  return naturalCoversOf(handler, readsOf(fieldName, handler), worklist)
 }
 
-function naturalCoversOf(
+export function naturalCoversOf(
   handler: DraftHandler,
   reads: FieldReads,
-  index: AbiIndex,
+  worklist: Worklist,
 ): NaturalCovers {
-  const fragment = reads.method?.fragment
   switch (handler.type) {
     case 'call':
+    case 'array': {
+      const method = reads.method
+      if (method === undefined || method.foreign) {
+        return { functions: [], events: [] }
+      }
       return {
-        functions:
-          fragment !== undefined && handler.address === undefined
-            ? [sighash(fragment)]
-            : [],
+        functions: worklist.items
+          .filter((item) => namesItem(method, item))
+          .map((item) => item.signature),
         events: [],
       }
-    case 'array':
-      return { functions: fragment ? [sighash(fragment)] : [], events: [] }
+    }
     case 'event':
       return {
         functions: [],
-        events: [...new Set(readEvents(reads).map((event) => event.name))],
+        events: worklist.events
+          .filter((event) => reads.events.includes(event.name))
+          .map((event) => event.name),
       }
     case 'accessControl':
       return {
-        functions: ACCESS_CONTROL_FUNCTIONS.filter(
-          (signature) => index.lookupFunction(signature).fragment !== undefined,
-        ),
-        events: ACCESS_CONTROL_EVENTS.filter((name) =>
-          index.eventNames().includes(name),
-        ),
+        functions: worklist.items
+          .filter((item) => ACCESS_CONTROL_FUNCTIONS.includes(item.signature))
+          .map((item) => item.signature),
+        events: worklist.events
+          .filter((event) => ACCESS_CONTROL_EVENTS.includes(event.name))
+          .map((event) => event.name),
+      }
+    case 'constructorArgs':
+      return {
+        functions:
+          worklist.constructorItem === undefined
+            ? []
+            : [worklist.constructorItem.signature],
+        events: [],
       }
     default:
       return { functions: [], events: [] }
   }
 }
 
+/** A full fragment names one signature; a bare name names the overloads of that arity. */
+function namesItem(method: MethodReference, item: WorklistItem): boolean {
+  if (method.signature !== undefined) {
+    return item.signature === method.signature
+  }
+  return item.name === method.name && item.inputs.length === method.arity
+}
+
 export function checkCovers(ctx: RuleContext): void {
   const functions = new Set(ctx.worklist.items.map((item) => item.signature))
   const events = new Set(ctx.worklist.events.map((event) => event.name))
+  const constructorToken = ctx.worklist.constructorItem?.signature
   for (const [name, field] of Object.entries(ctx.draft.fields)) {
     const reads = ctx.reads.get(name) as FieldReads
-    const natural = naturalCoversOf(field.handler, reads, ctx.abi)
+    const natural = naturalCoversOf(field.handler, reads, ctx.worklist)
     field.covers.forEach((token, i) => {
       const path = `${fieldPath(name)}.covers[${i}]`
       if (events.has(token) && !natural.events.includes(token)) {
         ctx.findings.error(path, unreadEvent(name, field.handler, token))
       } else if (
+        token === constructorToken &&
+        field.handler.type !== 'constructorArgs'
+      ) {
+        ctx.findings.error(
+          path,
+          `only a constructorArgs field reads the constructor; cover ${token} with one, or skip it`,
+        )
+      } else if (
         functions.has(token) &&
-        answersOnlyWhatItReads(field.handler) &&
-        reads.method?.error === undefined &&
+        answersOnlyWhatItNames(field.handler) &&
         !natural.functions.includes(token)
       ) {
         ctx.findings.error(
@@ -112,7 +134,7 @@ export function checkCovers(ctx: RuleContext): void {
   }
 }
 
-function answersOnlyWhatItReads(handler: DraftHandler): boolean {
+function answersOnlyWhatItNames(handler: DraftHandler): boolean {
   return (
     handler.type === 'call' ||
     handler.type === 'array' ||
@@ -145,7 +167,7 @@ function unansweredFunction(
   }
   const answered =
     natural.functions.length > 0 ? natural.functions.join(', ') : 'nothing'
-  return `${withArticle(handler.type)} field answers only what it calls (${answered}); move ${token} to the field that reads it or to skips`
+  return `${withArticle(handler.type)} field answers only what it names (${answered}); move ${token} to the field that reads it or to skips`
 }
 
 function withArticle(type: string): string {

@@ -23,7 +23,11 @@ export function contextFor(
   overrides: Partial<ValidationContext> = {},
 ): ValidationContext {
   const facts = loadFixture(name)
-  return { facts, worklist: buildWorklist(facts.abi), ...overrides }
+  return {
+    facts,
+    worklist: buildWorklist(facts.abi, facts.baseline),
+    ...overrides,
+  }
 }
 
 /** Runs one rule over a draft that already passed the schema. */
@@ -92,6 +96,7 @@ export function scrollChainDraft(): Draft {
       { item: 'finalizedStateRoots(uint256)', reason: 'unbounded' },
       { item: 'isBatchFinalized(uint256)', reason: 'computation' },
       { item: 'withdrawRoots(uint256)', reason: 'unbounded' },
+      { item: 'constructor(address,address,bytes)', reason: 'covered' },
       { item: 'AdminChanged', reason: 'covered' },
       { item: 'BeaconUpgraded', reason: 'not-state' },
       { item: 'CommitBatch', reason: 'unbounded' },
