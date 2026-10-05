@@ -36,13 +36,10 @@ export async function getDefiDependencyProjectsById(
     return new Map()
   }
 
-  const [projects, daLayers] = await Promise.all([
-    ps.getProjects({
-      ids: trackedIds,
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
+  const projects = await ps.getProjects({
+    ids: trackedIds,
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
 
   return new Map(
     projects.map((project) => [
@@ -50,7 +47,7 @@ export async function getDefiDependencyProjectsById(
       {
         name: project.name,
         slug: project.slug,
-        href: getProjectUrl(project, daLayers),
+        href: getProjectUrl(project),
       },
     ]),
   )

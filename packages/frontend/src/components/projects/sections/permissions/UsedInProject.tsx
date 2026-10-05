@@ -9,7 +9,7 @@ export interface UsedInProject {
   id: ProjectId
   name: string
   slug: string
-  url: string
+  url: string | undefined
   icon: string
   targetName: string
   type: 'implementation' | 'proxy' | 'permission'
@@ -30,7 +30,11 @@ export function UsedInProjectEntry({
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
               <a
-                href={`${project.url}#${project.targetName}`}
+                href={
+                  project.url
+                    ? `${project.url}#${project.targetName}`
+                    : undefined
+                }
                 className="size-5"
               >
                 <img

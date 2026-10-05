@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
 
 /**
  * The fields that decide which kind of page a project has. Queries spread this
@@ -25,14 +24,10 @@ export type ProjectPageMetadata = Pick<
 
 export function getProjectUrl(
   project: ProjectPageMetadata,
-  daLayers: { id: ProjectId; slug: string }[],
-): string {
-  if (project.daBridge) {
-    const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
-    return `/data-availability/projects/${layer?.slug}/${project.slug}`
-  }
-  if (project.daLayer) {
-    return `/data-availability/projects/${project.slug}/no-bridge`
+): string | undefined {
+  // DA layers and bridges have no pages of their own.
+  if (project.daBridge || project.daLayer) {
+    return undefined
   }
   if (project.privacyInfo) {
     return `/privacy/projects/${project.slug}`

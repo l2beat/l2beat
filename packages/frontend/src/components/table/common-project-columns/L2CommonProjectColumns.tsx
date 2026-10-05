@@ -10,7 +10,7 @@ import { getCommonProjectColumns } from './CommonProjectColumns'
 
 export function getL2CommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,
-  getHref: (row: T) => string,
+  getHref: (row: T) => string | undefined,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
