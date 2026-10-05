@@ -128,9 +128,6 @@ const mainPages: MainPage[] = [
     title: 'Icon preview',
   },
   {
-    title: 'DA Risk Framework',
-  },
-  {
     title: 'Native Rollups',
   },
   {
