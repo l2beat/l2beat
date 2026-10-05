@@ -146,12 +146,21 @@ export class Templatizer {
    * diamonds, whose facets change independently, are not templatized by V1
    * either. Two-implementation proxies (Arbitrum's RollupProxy) are: V1
    * matches them on the implementations' combined hash.
+   *
+   * A `manualSourcePaths` link counts as verified for the analysis and
+   * gives its bundle a hash V1 matches on, but the explorer holds no code
+   * behind it: there is nothing to show the model, and
+   * `TemplateService.addToShape` hashes the explorer's source, so no shape
+   * could be recorded. The bundles V1 matches on must carry that source.
    */
   canTemplatize(sources: ContractSources, proxyType: string | undefined) {
     return (
       sources.isVerified &&
       !isDiamond(proxyType) &&
-      getHashForMatchingFromSources(sources.sources) !== undefined
+      getHashForMatchingFromSources(sources.sources) !== undefined &&
+      matchedBundles(sources.sources).every(
+        (bundle) => bundle.source.isVerified,
+      )
     )
   }
 

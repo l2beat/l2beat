@@ -8,15 +8,22 @@
  * collisions and the identifier pattern (a `$` prefix is V1's proxy
  * namespace) are errors. The one sanctioned reuse is an `array` field over
  * the single-`uint256` getter V1 probes under that name: it replaces the
- * 0–4 probe with the whole array, which is what researchers write.
+ * 0–4 probe with the whole array, which is what researchers write. Which
+ * function that field reads is resolved as V1's `ArrayHandler` resolves it,
+ * not taken from the name: an overload keyed by a narrower integer
+ * (`foo(uint32)` beside the probed `foo(uint256)`) would take the name and
+ * drop the probe.
  *
  * Whether a name says what the field holds is for the reviewer.
  */
+import type { utils } from 'ethers'
+import { isArrayFragment } from '../../handlers/user/ArrayHandler'
+import { getFunctionFragment } from '../../handlers/utils/getFunctionFragment'
 import { rewriteSolidityIdentifier } from '../../handlers/utils/rewriteSolidityIdentifier'
+import { sighash } from '../abi/AbiIndex'
 import type { BaselineField } from '../facts'
 import type { DraftField } from './Draft'
 import { fieldPath } from './Finding'
-import type { FieldReads } from './fieldReads'
 import type { RuleContext } from './ruleContext'
 import { show } from './schemaProblems'
 
@@ -52,24 +59,48 @@ function nameProblem(
     return undefined
   }
   if (baseline.kind === 'probe') {
-    if (replacesProbe(name, field, ctx.reads.get(name) as FieldReads)) {
+    const read = arrayRead(name, field, ctx.facts.abi)
+    if (read !== undefined && replacesProbe(name, read)) {
       return undefined
     }
-    return `"${name}" is V1's 5-index probe of ${name}(uint256); only an \`array\` field reading ${name}(uint256) may take this name (it replaces the probe with the whole array), so pick another name`
+    const rule = `"${name}" is V1's 5-index probe of ${name}(uint256); only an \`array\` field reading ${name}(uint256) may take this name (it replaces the probe with the whole array)`
+    if (read === undefined) {
+      return `${rule}, so pick another name`
+    }
+    return `${rule}, and this one reads ${sighash(read)}: write the method as the full fragment of ${name}(uint256), or pick another name`
   }
   return `"${name}" is ${describeBaseline(baseline)}; V1 keeps the first field of a name and template fields come first, so this field would replace that value; pick another name and reference it as {{ ${name} }} if you need it`
 }
 
-/** An `array` over the function of the probe's own name takes the probe over. */
-function replacesProbe(
+/**
+ * The function V1's `ArrayHandler` reads for the field, resolved as its
+ * constructor resolves it: a full fragment as written, a bare name by
+ * prefix over the ABI, first array-keyed match. Absent for other handler
+ * types and when the handler would not construct (the dry run reports
+ * that).
+ */
+function arrayRead(
   name: string,
   field: DraftField,
-  reads: FieldReads,
-): boolean {
+  abi: string[],
+): utils.FunctionFragment | undefined {
+  if (field.handler.type !== 'array') {
+    return undefined
+  }
+  const method =
+    typeof field.handler.method === 'string' ? field.handler.method : name
+  try {
+    return getFunctionFragment(method, abi, isArrayFragment)
+  } catch {
+    return undefined
+  }
+}
+
+/** An `array` over the probe's own function, `name(uint256)`, takes the probe over. */
+function replacesProbe(name: string, read: utils.FunctionFragment): boolean {
   return (
-    field.handler.type === 'array' &&
-    reads.method !== undefined &&
-    rewriteSolidityIdentifier(reads.method.name) === name
+    rewriteSolidityIdentifier(read.name) === name &&
+    read.inputs[0]?.type === 'uint256'
   )
 }
 

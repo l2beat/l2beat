@@ -1157,11 +1157,29 @@ Benchmark: from `packages/discovery`,
   the error, when the resample is refused too). The resample itself stays
   inside the round, as designed and as run 3 (12.4c) measured it: it is the
   client asking for a usable answer, not the loop asking for a repair.
+- **Codex review, round three (2026-10-05).** Two comments on `e21fd3d699`,
+  both taken. A contract whose source is a `manualSourcePaths` link passed
+  `canTemplatize`: `SourceCodeService` counts the link as verified and
+  hashes the link string in place of the code, so V1 matches templates on
+  that hash, but the explorer's `ContractSource` stays unverified with no
+  files. The model would have been shown no code, and
+  `TemplateService.addToShape`, which hashes the explorer's source, threw
+  `Could not find hash` after `template.jsonc` was written, leaving an
+  orphan template (eleven project configs have such links). `canTemplatize`
+  now also requires every bundle V1 matches on to carry verified explorer
+  source, the condition under which V1's own shape tools (the `AddShape`
+  command, the discovery UI) can record a shape; such contracts stay
+  untemplatized like unverified ones. And `checkNames` let an `array` field
+  take a probe's name on the name alone, so an array over `foo(uint32)`
+  beside the probed `foo(uint256)` would have replaced the probe (rule 1);
+  the check now resolves the function as `ArrayHandler` does (a full
+  fragment as written, a bare name by prefix over the ABI) and requires
+  `name(uint256)`, naming what the field reads instead when it refuses.
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,274 tests as of 2026-10-05, about 220 of them the templatizer's;
+clean (1,275 tests as of 2026-10-05, about 220 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`

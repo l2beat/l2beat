@@ -138,6 +138,54 @@ describe(checkNames.name, () => {
     ])
   })
 
+  it('requires the array to read the probed overload, resolved as V1 resolves it', () => {
+    const probedUint256 =
+      'function committedBatches(uint256) view returns (bytes32)'
+    const narrower = 'function committedBatches(uint32) view returns (bytes32)'
+    const probed = (abi: string[]): ValidationContext => ({
+      ...scroll,
+      facts: {
+        ...scroll.facts,
+        abi,
+        baseline: {
+          fields: {
+            ...scroll.facts.baseline.fields,
+            committedBatches: { kind: 'probe', value: ['0x00'] },
+          },
+        },
+      },
+    })
+    const overloaded = probed([...scroll.facts.abi, narrower])
+    const narrowerFirst = probed([narrower, ...scroll.facts.abi])
+    const array = (method: string): DraftHandler => ({
+      type: 'array',
+      method,
+      length: 3,
+    })
+    const refused = [
+      {
+        path: 'fields.committedBatches',
+        message:
+          '"committedBatches" is V1\'s 5-index probe of committedBatches(uint256); only an `array` field reading committedBatches(uint256) may take this name (it replaces the probe with the whole array), and this one reads committedBatches(uint32): write the method as the full fragment of committedBatches(uint256), or pick another name',
+      },
+    ]
+
+    expect(
+      names({ committedBatches: array(probedUint256) }, overloaded),
+    ).toEqual([])
+    expect(names({ committedBatches: array(narrower) }, overloaded)).toEqual(
+      refused,
+    )
+    // V1 resolves a bare name to the first array-keyed function of that
+    // prefix in the ABI, so the same draft passes or fails with the order.
+    expect(
+      names({ committedBatches: array('committedBatches') }, overloaded),
+    ).toEqual([])
+    expect(
+      names({ committedBatches: array('committedBatches') }, narrowerFirst),
+    ).toEqual(refused)
+  })
+
   it('protects proxy detector values whose names do not start with a dollar sign', () => {
     const ctx = {
       ...scroll,

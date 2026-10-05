@@ -12,6 +12,7 @@ import {
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
+import { sha2_256bit } from '../../flatten/utils'
 import { TemplateService } from '../analysis/TemplateService'
 import { StructureContract } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
@@ -306,9 +307,19 @@ describe(Templatizer.name, () => {
     expect(unavailable.failure).toEqual('model-unavailable')
   })
 
-  it('refuses unverified code and EIP-2535 diamonds', () => {
+  it('refuses unverified code, code known only by a manual source link, and EIP-2535 diamonds', () => {
     const instance = templatizer(new FakeModelClient([]))
     const sources = contractSources([bundle('Registry', ADDRESS, BODY)])
+    // `manualSourcePaths` makes the analysis count the contract as verified
+    // and hashes the link in place of the code; the explorer holds none.
+    const linked = (address: string): PerContractSource => {
+      const explorer = bundle('Registry', address, BODY)
+      return {
+        ...explorer,
+        hash: sha2_256bit(`https://explorer.example/address/${address}`),
+        source: { ...explorer.source, isVerified: false, files: {} },
+      }
+    }
 
     expect(instance.canTemplatize(sources, 'EIP1967 proxy')).toEqual(true)
     expect(instance.canTemplatize(sources, 'EIP2535 diamond proxy')).toEqual(
@@ -317,6 +328,22 @@ describe(Templatizer.name, () => {
     expect(
       instance.canTemplatize({ ...sources, isVerified: false }, undefined),
     ).toEqual(false)
+    expect(
+      instance.canTemplatize(contractSources([linked(ADDRESS)]), undefined),
+    ).toEqual(false)
+    expect(
+      instance.canTemplatize(
+        contractSources([bundle('Proxy', ADDRESS, BODY), linked(TWIN)]),
+        'EIP1967 proxy',
+      ),
+    ).toEqual(false)
+    // Only the bundles V1 matches on need explorer source: not the proxy.
+    expect(
+      instance.canTemplatize(
+        contractSources([linked(ADDRESS), bundle('Registry', TWIN, BODY)]),
+        'EIP1967 proxy',
+      ),
+    ).toEqual(true)
   })
 
   describe('when the address had a template for older code', () => {

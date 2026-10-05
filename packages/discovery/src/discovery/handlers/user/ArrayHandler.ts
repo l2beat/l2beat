@@ -209,7 +209,7 @@ function resolveDependencies(
 /** The key types an `array` enumerates; a getter keyed by anything else (a `uint8` enum, say) is not an array to this handler. */
 export const ARRAY_INDEX_TYPES = ['uint16', 'uint32', 'uint64', 'uint256']
 
-function isArrayFragment(fragment: utils.FunctionFragment): boolean {
+export function isArrayFragment(fragment: utils.FunctionFragment): boolean {
   return (
     (fragment.stateMutability === 'view' ||
       fragment.stateMutability === 'pure') &&
