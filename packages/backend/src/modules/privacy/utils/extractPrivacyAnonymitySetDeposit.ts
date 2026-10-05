@@ -2,6 +2,7 @@ import type {
   PrivacyAnonymitySetDepositSource,
   ZkMoneyFundingParams,
 } from '@l2beat/config'
+import type { PrivacyAnonymitySetEventRecord } from '@l2beat/database'
 import {
   assert,
   assertUnreachable,
@@ -10,10 +11,13 @@ import {
 import type { PrivacyRpcLog } from '../types'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
+import { extractZkApiNote } from './extractZkApiNote'
 
 export type PrivacyAnonymitySetDeposit = {
   amount: bigint
+  note?: PrivacyAnonymitySetEventRecord['note']
   origin:
+    | { type: 'note' }
     | { type: 'event'; sender: EthereumAddress }
     | { type: 'transaction' }
     /** Funded through a zk.money deposit address, traced by replaying its history. */
@@ -24,6 +28,12 @@ export function extractPrivacyAnonymitySetDeposit(
   source: PrivacyAnonymitySetDepositSource,
   log: PrivacyRpcLog,
 ): PrivacyAnonymitySetDeposit | undefined {
+  if (source.extractor === 'zkApiDeposit') {
+    return {
+      ...extractZkApiNote(log, source.params.weiPerUnit),
+      origin: { type: 'note' },
+    }
+  }
   if (source.extractor === 'privacyPoolsValue') {
     const result = extractPrivacyPoolsEvent(log)
     assert(result.depositor, 'Privacy Pools deposit is missing depositor')

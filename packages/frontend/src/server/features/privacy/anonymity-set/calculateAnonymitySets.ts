@@ -1,4 +1,7 @@
-import type { PrivacyAnonymitySetSenderDayRecord } from '@l2beat/database'
+import type {
+  PrivacyAnonymitySetEventRecord,
+  PrivacyAnonymitySetSenderDayRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
@@ -19,9 +22,12 @@ export function calculateAnonymitySetHistory(
   rows: PrivacyAnonymitySetSenderDayRecord[],
   series: PrivacyAnonymitySetSeries[],
   endpoints: number[],
+  noteEvents: PrivacyAnonymitySetEventRecord[] = [],
 ): PrivacyAnonymitySetHistoryPoint[] {
   const valuesBySeries = series.map((item) =>
-    calculateSeriesHistory(rows, item, endpoints),
+    item.unit === 'note'
+      ? calculateActiveNoteHistory(noteEvents, item, endpoints)
+      : calculateSeriesHistory(rows, item, endpoints),
   )
 
   return endpoints.map((timestamp, index) => [
@@ -129,4 +135,64 @@ function calculateSeriesHistory(
   }
 
   return result
+}
+
+/** Replays lifecycle events at each daily endpoint, without using future state. */
+function calculateActiveNoteHistory(
+  events: PrivacyAnonymitySetEventRecord[],
+  series: PrivacyAnonymitySetSeries,
+  endpoints: number[],
+): number[] {
+  const ordered = events
+    .filter((event) => event.configurationId === series.configurationId)
+    .toSorted(
+      (a, b) => a.blockNumber - b.blockNumber || a.logIndex - b.logIndex,
+    )
+  const notes = new Map<
+    number,
+    {
+      depositedAt: number
+      amount: bigint
+      expiresAt: number
+      active: boolean
+    }
+  >()
+  const threshold = BigInt(series.minimumAmount)
+  let index = 0
+
+  return endpoints.map((endpoint) => {
+    while (index < ordered.length) {
+      const event = ordered[index]
+      if (event === undefined || event.timestamp >= endpoint) break
+      index++
+      const note = event.note
+      if (!note) continue
+      if (note.expiresAt !== null) {
+        notes.set(note.id, {
+          depositedAt: event.timestamp,
+          amount: event.amount,
+          expiresAt: note.expiresAt,
+          active: note.active,
+        })
+      } else {
+        const existing = notes.get(note.id)
+        if (existing) existing.active = note.active
+      }
+    }
+
+    const windowStart = endpoint - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
+    let count = 0
+    for (const [id, note] of notes) {
+      if (note.depositedAt < windowStart) {
+        notes.delete(id)
+      } else if (
+        note.active &&
+        note.expiresAt >= endpoint &&
+        note.amount >= threshold
+      ) {
+        count++
+      }
+    }
+    return count
+  })
 }

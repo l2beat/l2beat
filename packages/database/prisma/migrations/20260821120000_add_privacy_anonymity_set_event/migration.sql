@@ -8,8 +8,11 @@ CREATE TABLE "PrivacyAnonymitySetEvent" (
     "blockNumber" INTEGER NOT NULL,
     "txHash" VARCHAR(66) NOT NULL,
     "logIndex" INTEGER NOT NULL,
-    "sender" VARCHAR(42) NOT NULL,
+    "sender" VARCHAR(42),
     "amount" DECIMAL(80,0) NOT NULL,
+    "noteId" BIGINT,
+    "active" BOOLEAN,
+    "expiresAt" TIMESTAMP(6),
 
     CONSTRAINT "PrivacyAnonymitySetEvent_pkey" PRIMARY KEY ("configurationId","txHash","logIndex")
 );

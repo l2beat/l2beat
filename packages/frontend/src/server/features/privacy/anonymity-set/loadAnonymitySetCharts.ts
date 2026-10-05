@@ -1,4 +1,7 @@
-import type { PrivacyAnonymitySetSenderDayRecord } from '@l2beat/database'
+import type {
+  PrivacyAnonymitySetEventRecord,
+  PrivacyAnonymitySetSenderDayRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import {
@@ -37,6 +40,10 @@ export async function loadAnonymitySetCharts(
   series: PrivacyAnonymitySetSeries[],
   endpoints: UnixTime[],
   fetchSenderDays: FetchSenderDays,
+  fetchNoteEvents?: (
+    from: UnixTime,
+    to: UnixTime,
+  ) => Promise<PrivacyAnonymitySetEventRecord[]>,
 ): Promise<AnonymitySetCharts> {
   const firstEndpoint = endpoints[0]
   const lastEndpoint = endpoints.at(-1)
@@ -48,19 +55,25 @@ export async function loadAnonymitySetCharts(
   let holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[] = []
 
   for (const page of getPages(firstEndpoint, lastEndpoint)) {
-    const rows = await fetchSenderDays(
-      UnixTime(page.start - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY),
-      page.end,
-    )
+    const from = UnixTime(page.start - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY)
+    const [rows, noteEvents] = await Promise.all([
+      fetchSenderDays(from, page.end),
+      fetchNoteEvents?.(from, page.end) ?? [],
+    ])
     const pageEndpoints = endpoints.filter(
       (endpoint) =>
         (endpoint > page.start ||
           (page.start === firstEndpoint && endpoint === firstEndpoint)) &&
         endpoint <= page.end,
     )
-    history.push(...calculateAnonymitySetHistory(rows, series, pageEndpoints))
+    history.push(
+      ...calculateAnonymitySetHistory(rows, series, pageEndpoints, noteEvents),
+    )
 
-    if (page.end === lastEndpoint) {
+    if (
+      page.end === lastEndpoint &&
+      !series.some((item) => item.unit === 'note')
+    ) {
       holdingDuration = calculateAnonymitySetHoldingDuration(
         rows,
         series,

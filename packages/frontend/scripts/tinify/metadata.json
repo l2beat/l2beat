@@ -1664,5 +1664,8 @@
   "static/icons/monero-cake-wallet.png": "f89fb53c67150ccce59166c7487dc75c",
   "static/meta-images/privacy/projects/monero-cake-wallet/opengraph-image.png": "408c06b6fcef8db017ce810943f61114",
   "static/meta-images/ossification/opengraph-image.png": "91a3ca4a8e017d0f4d0096cdd2ecc930",
-  "static/images/da-layer-technology/anytrust/architecture5.png": "a7d9b3e8dd1e614895350ee2877223cc"
+  "static/images/da-layer-technology/anytrust/architecture5.png": "a7d9b3e8dd1e614895350ee2877223cc",
+  "static/icons/zkapi.png": "786c2a0ddf6c5deea8a56bb4085e43bd",
+  "static/meta-images/privacy/projects/zkapi/opengraph-image.png": "14ca4ef75b4765d2d260746ac83f7859",
+  "static/meta-images/zk-catalog/projects/zkapi/opengraph-image.png": "a3fc9515fe5b792b978f60351717a2b2"
 }

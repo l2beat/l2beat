@@ -1,6 +1,9 @@
-import type { PrivacyAnonymitySetSenderDayRecord } from '@l2beat/database'
+import type {
+  PrivacyAnonymitySetEventRecord,
+  PrivacyAnonymitySetSenderDayRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import range from 'lodash/range'
 import {
   ANONYMITY_SET_WINDOW_DAYS,
@@ -22,6 +25,48 @@ const ENDPOINTS = range(SPAN_DAYS + 1).map((day) =>
 )
 
 describe(loadAnonymitySetCharts.name, () => {
+  it('replays note lifecycles across chart pages and omits the holding-duration estimate', async () => {
+    const series = [{ ...makeSeries('1'), unit: 'note' as const }]
+    const events = range(SPAN_DAYS).flatMap((day) => {
+      const timestamp = UnixTime(FIRST_DAY + day * UnixTime.DAY)
+      const deposit = mockObject<PrivacyAnonymitySetEventRecord>({
+        configurationId: 'configuration',
+        timestamp,
+        blockNumber: day * 2,
+        logIndex: 0,
+        amount: 1n,
+        note: {
+          id: day,
+          active: true,
+          expiresAt: UnixTime(timestamp + 31 * UnixTime.DAY),
+        },
+      })
+      return [
+        deposit,
+        {
+          ...deposit,
+          timestamp: UnixTime(timestamp + 10 * UnixTime.DAY),
+          blockNumber: (day + 10) * 2 + 1,
+          amount: 0n,
+          note: { id: day, active: false, expiresAt: null },
+        },
+      ]
+    })
+    const result = await loadAnonymitySetCharts(
+      series,
+      ENDPOINTS,
+      async () => [],
+      async (from, to) =>
+        events.filter(
+          (event) => event.timestamp >= from && event.timestamp < to,
+        ),
+    )
+    expect(result.history).toEqual(
+      calculateAnonymitySetHistory([], series, ENDPOINTS, events),
+    )
+    expect(result.history.at(-1)).toEqual([LAST_DAY, 10])
+    expect(result.holdingDuration).toEqual([])
+  })
   it('matches the unpaged calculation while bounding every fetch', async () => {
     const series = [makeSeries('1'), makeSeries('5')]
     const rows = makeRows()

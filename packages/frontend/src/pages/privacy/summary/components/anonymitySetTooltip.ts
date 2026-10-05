@@ -9,6 +9,9 @@ type AvailableAnonymitySetSummary = Extract<
 export function getAnonymitySetDescription(
   anonymitySet: AvailableAnonymitySetSummary,
 ): string {
+  if (anonymitySet.unit === 'note') {
+    return `Active notes deposited during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days, with unexpired authorization eligibility and original deposits of at least ${anonymitySet.formattedAmount} ${anonymitySet.token}. This is an upper bound for API authorization anonymity: remaining balances are private, larger request budgets narrow the set, and multiple notes can belong to one user. Withdrawals identify their original deposits.`
+  }
   if (anonymitySet.bucketType === 'denomination') {
     return `Number of unique depositors in the ${anonymitySet.formattedAmount} ${anonymitySet.token} bucket during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`
   }

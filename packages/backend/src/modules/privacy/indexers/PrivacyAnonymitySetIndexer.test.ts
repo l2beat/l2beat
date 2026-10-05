@@ -42,6 +42,73 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
 
+  it('indexes zkapi deposits and zero-amount lifecycle events under one configuration without sender lookups', async () => {
+    const abi = new utils.Interface([
+      'event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)',
+      'event EscapeWithdrawalInitiated(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination, uint64 challengeDeadline, uint256 newRoot)',
+      'event EscapeWithdrawalChallenged(uint32 indexed noteId, uint256 nullifier, uint256 restoredRoot)',
+    ])
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const timestamp = UnixTime(from + UnixTime.HOUR)
+    const expiry = UnixTime(timestamp + 30 * UnixTime.DAY)
+    const configuration = baseConfiguration({
+      event: abi.getEventTopic('NoteDeposited'),
+      extractor: 'zkApiDeposit',
+      params: { weiPerUnit: '1000000000' },
+    })
+    const encoded = [
+      abi.encodeEventLog(abi.getEvent('NoteDeposited'), [
+        0,
+        `0x${'11'.repeat(32)}`,
+        50000,
+        expiry,
+        1,
+      ]),
+      abi.encodeEventLog(abi.getEvent('EscapeWithdrawalInitiated'), [
+        0,
+        1,
+        0,
+        POOL,
+        expiry,
+        2,
+      ]),
+      abi.encodeEventLog(abi.getEvent('EscapeWithdrawalChallenged'), [0, 1, 3]),
+    ]
+    const logs = encoded.map((event, logIndex) =>
+      makeLog({ ...event, timestamp, logIndex }),
+    )
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(3)
+    const getTransaction = mockFn<IRpcClient['getTransaction']>()
+    const indexer = makeIndexer({
+      configuration,
+      logs,
+      timestamps: new Map([[100, timestamp]]),
+      getTransaction,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
+    })
+    const save = await indexer.multiUpdate(from, timestamp, [configuration])
+    await save()
+    expect(upsertMany).toHaveBeenOnlyCalledWith(
+      logs.map((log, i) => ({
+        configurationId: 'config-1',
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        chain: 'ethereum',
+        timestamp,
+        blockNumber: 100,
+        txHash: log.transactionHash,
+        logIndex: i,
+        sender: null,
+        amount: i === 0 ? 50_000_000_000_000n : 0n,
+        note: { id: 0, active: i !== 1, expiresAt: i === 0 ? expiry : null },
+      })),
+    )
+    expect(getTransaction).not.toHaveBeenCalled()
+  })
+
   it('stores a fixed deposit with its transaction sender', async () => {
     const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
     const to = from + 5 * UnixTime.HOUR

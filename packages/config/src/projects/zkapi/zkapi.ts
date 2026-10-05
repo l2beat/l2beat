@@ -69,6 +69,9 @@ const challengeSeconds = discovery.getContractValue<number>(
   'ZkApiVault',
   'challengePeriod',
 )
+const requestChargeCap =
+  discovery.getContractValueBigInt('ZkApiVault', 'requestChargeCap') *
+  weiPerUnit
 const values = {
   challengePeriod: formatSeconds(challengeSeconds, { fullUnit: true }),
   noteTtl: formatSeconds(
@@ -79,10 +82,7 @@ const values = {
     discovery.getContractValue<number>('ZkApiVault', 'EXPIRY_BUCKET'),
     { fullUnit: true },
   ),
-  requestChargeCap: utils.formatEther(
-    discovery.getContractValueBigInt('ZkApiVault', 'requestChargeCap') *
-      weiPerUnit,
-  ),
+  requestChargeCap: utils.formatEther(requestChargeCap),
 }
 const eth = getTokenByAddress(
   EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'),
@@ -175,11 +175,6 @@ export const zkapi: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.anonymousAuthorization,
     trackedOn: ['ethereum'],
-    anonymitySet: {
-      type: 'not-applicable',
-      description:
-        'API authorization proofs hide their note among eligible active deposits. Each withdrawal identifies its original deposit by note id, so there is no deposit-to-withdrawal anonymity set.',
-    },
     tokens: [
       {
         token: {
@@ -199,6 +194,9 @@ export const zkapi: BaseProject = {
             label: 'ETH API balances',
             address: vault.address,
             sinceTimestamp,
+            anonymitySet: {
+              minimumAmounts: [requestChargeCap.toString()],
+            },
             deposit: {
               event: utils.id(
                 'NoteDeposited(uint32,bytes32,uint128,uint64,uint256)',
@@ -239,7 +237,7 @@ export const zkapi: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'Vault and verifier creation bytecode match public source, and all three contracts are verified on Etherscan. Circuits, setup artifacts, browser SDK, local client and protocol services are public. The single-party setup has no public ceremony, and the deployed hosted app, credential issuer and production services have not been independently reproduced.',
+        'Circuits, setup artifacts, browser SDK, local client and protocol services are public. The single-party setup has no public ceremony, and the deployed hosted app, credential issuer and production services have not been independently reproduced.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,

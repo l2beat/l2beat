@@ -187,6 +187,7 @@ export async function getPrivacyProjectEntry(
         title: 'Anonymity sets',
         defaultRange: defaultChartRange,
         project: chartProject,
+        unit: details.anonymitySetUnit,
       },
     })
   }

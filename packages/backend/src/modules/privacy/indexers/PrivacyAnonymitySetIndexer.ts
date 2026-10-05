@@ -33,6 +33,7 @@ import {
   extractPrivacyAnonymitySetDeposit,
   type PrivacyAnonymitySetDeposit,
 } from '../utils/extractPrivacyAnonymitySetDeposit'
+import { ZK_API_NOTE_EVENTS } from '../utils/extractZkApiNote'
 import {
   buildPrivacyLogConfigMap,
   buildPrivacyLogFilter,
@@ -171,7 +172,17 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     // atOrBefore can make adjacent time ranges share boundary blocks. Filtering
     // by timestamp below keeps the exact range; repository upserts deduplicate
     // any boundary logs fetched again by the following update.
-    const { addresses, events } = buildPrivacyLogFilter(configurations)
+    // One configuration indexes the whole lifecycle so sync and rollback cover
+    // deposits and state changes together. Keep its original configuration id.
+    const eventConfigurations = configurations.flatMap((configuration) =>
+      configuration.properties.extractor === 'zkApiDeposit'
+        ? ZK_API_NOTE_EVENTS.map((event) => ({
+            ...configuration,
+            properties: { ...configuration.properties, event },
+          }))
+        : [configuration],
+    )
+    const { addresses, events } = buildPrivacyLogFilter(eventConfigurations)
     const logs = await this.$.logsProvider.getLogs(
       blockFrom,
       blockTo,
@@ -179,7 +190,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       [events],
     )
 
-    const configMap = buildPrivacyLogConfigMap(configurations)
+    const configMap = buildPrivacyLogConfigMap(eventConfigurations)
     const rawRecords = extractRawRecords(logs, configMap)
     if (rawRecords.length === 0) return []
 
@@ -223,6 +234,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
           logIndex: record.log.logIndex,
           sender: this.resolveSender(record, transactionSenders, tracedFunders),
           amount: record.amount,
+          ...(record.note && { note: record.note }),
         }
       },
     )
@@ -232,8 +244,10 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     record: RawRecord,
     transactionSenders: Map<string, string>,
     tracedFunders: Map<RawRecord, EthereumAddress>,
-  ): string {
+  ): string | null {
     switch (record.origin.type) {
+      case 'note':
+        return null
       case 'event':
         return record.origin.sender.toString()
       case 'transaction': {
@@ -338,6 +352,7 @@ interface RawRecord {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   log: Log
   amount: bigint
+  note?: PrivacyAnonymitySetDeposit['note']
   origin: PrivacyAnonymitySetDeposit['origin']
 }
 
@@ -384,12 +399,13 @@ function extractRawRecords(
         configuration.properties,
         log,
       )
-      if (!result || result.amount === 0n) continue
+      if (!result || (result.amount === 0n && !result.note)) continue
 
       records.push({
         configuration,
         log,
         amount: result.amount,
+        ...(result.note && { note: result.note }),
         origin: result.origin,
       })
     }

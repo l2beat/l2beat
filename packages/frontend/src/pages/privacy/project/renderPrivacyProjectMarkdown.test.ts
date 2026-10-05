@@ -187,6 +187,27 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('describes active-note history without withdrawal anonymity or a holding-duration estimate', () => {
+    const entry = {
+      ...ENTRY,
+      sections: ENTRY.sections.map((section) =>
+        section.type === 'PrivacyAnonymitySetSection'
+          ? { ...section, props: { ...section.props, unit: 'note' as const } }
+          : section,
+      ),
+    }
+    const content = getSection(
+      renderPrivacyProjectMarkdown(entry),
+      'Anonymity sets',
+    )
+    expect(content).toInclude('eligible active notes')
+    expect(content).toInclude('Withdrawals identify their original deposits')
+    expect(content).not.toInclude('Estimated anonymity set by holding duration')
+    expect(content).not.toInclude(
+      'including from addresses that have since withdrawn',
+    )
+  })
+
   describe('privacy section', () => {
     const privacy = () =>
       getSection(renderPrivacyProjectMarkdown(ENTRY), 'Privacy')

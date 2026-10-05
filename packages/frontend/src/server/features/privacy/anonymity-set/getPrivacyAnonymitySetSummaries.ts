@@ -1,6 +1,7 @@
 import type {
   Database,
   IndexerConfigurationRecord,
+  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
 import { UnixTime, unique } from '@l2beat/shared-pure'
@@ -33,6 +34,7 @@ export type PrivacyAnonymitySetSummary =
       /** Labels of configured series excluded from the value while their history is indexed. */
       syncingLabels: string[]
       coverage?: PrivacyAnonymitySetCoverage
+      unit?: 'note'
     } & Pick<
       PrivacyAnonymitySetSeries,
       'bucketType' | 'chain' | 'formattedAmount' | 'token'
@@ -62,15 +64,26 @@ export async function getPrivacyAnonymitySetSummaries(
   const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const [configurations, rows, coverageByProject] = await Promise.all([
-    getPrivacyAnonymitySetConfigurations(db, allSeries),
-    db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-      trackedProjectIds,
-      cutoff,
-      currentDay,
-    ),
-    getCoverageByProject(db, projects, currentDay),
-  ])
+  const noteProjectIds = unique(
+    allSeries
+      .filter((item) => item.unit === 'note')
+      .map((item) => item.projectId),
+  )
+  const [configurations, rows, coverageByProject, noteEvents] =
+    await Promise.all([
+      getPrivacyAnonymitySetConfigurations(db, allSeries),
+      db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+        trackedProjectIds,
+        cutoff,
+        currentDay,
+      ),
+      getCoverageByProject(db, projects, currentDay),
+      db.privacyAnonymitySetEvent.getNoteEventsByProjectIds(
+        noteProjectIds,
+        cutoff,
+        currentDay,
+      ),
+    ])
 
   return new Map(
     projects.map((project) => [
@@ -82,6 +95,7 @@ export async function getPrivacyAnonymitySetSummaries(
         rows,
         currentDay,
         coverageByProject.get(project.id),
+        noteEvents,
       ),
     ]),
   )
@@ -94,6 +108,7 @@ export function getPrivacyAnonymitySetSummary(
   rows: PrivacyAnonymitySetSenderDayRecord[],
   currentDay: UnixTime,
   coverage?: PrivacyAnonymitySetCoverage,
+  noteEvents: PrivacyAnonymitySetEventRecord[] = [],
 ): PrivacyAnonymitySetSummary {
   const state = project.privacyInfo.anonymitySet
   if (state?.type === 'not-applicable') {
@@ -111,7 +126,12 @@ export function getPrivacyAnonymitySetSummary(
     configurations,
     currentDay,
   )
-  const [point] = calculateAnonymitySetHistory(rows, syncedSeries, [currentDay])
+  const [point] = calculateAnonymitySetHistory(
+    rows,
+    syncedSeries,
+    [currentDay],
+    noteEvents,
+  )
   const largest = pickLargestSeries(syncedSeries, point?.slice(1) ?? [])
   if (largest === undefined) {
     return { status: 'syncing' }
@@ -127,6 +147,7 @@ export function getPrivacyAnonymitySetSummary(
     chain: largest.series.chain,
     formattedAmount: largest.series.formattedAmount,
     token: largest.series.token,
+    ...(largest.series.unit && { unit: largest.series.unit }),
   }
 }
 
@@ -148,7 +169,7 @@ async function getCoverageByProject(
 }
 
 /**
- * The headline is the series with the most distinct depositors. Ties keep the
+ * The headline is the series with the most candidates. Ties keep the
  * earlier series, so the configuration order decides between equal sets.
  */
 function pickLargestSeries(
@@ -197,6 +218,7 @@ function getMockSummaries(
             chain: series.chain,
             formattedAmount: series.formattedAmount,
             token: series.token,
+            ...(series.unit && { unit: series.unit }),
           },
         ]
       }

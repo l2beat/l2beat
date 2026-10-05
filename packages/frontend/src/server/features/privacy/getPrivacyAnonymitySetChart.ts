@@ -124,12 +124,23 @@ async function getPrivacyAnonymitySetSnapshot(
     'day',
   )
   const [{ history, holdingDuration }, coverage] = await Promise.all([
-    loadAnonymitySetCharts(syncedSeries, historyEndpoints, (from, to) =>
-      db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-        [project.id],
-        from,
-        to,
-      ),
+    loadAnonymitySetCharts(
+      syncedSeries,
+      historyEndpoints,
+      (from, to) =>
+        db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+          [project.id],
+          from,
+          to,
+        ),
+      syncedSeries.some((item) => item.unit === 'note')
+        ? (from, to) =>
+            db.privacyAnonymitySetEvent.getNoteEventsByProjectIds(
+              [project.id],
+              from,
+              to,
+            )
+        : undefined,
     ),
     getPrivacyAnonymitySetCoverage(db, project, currentDay),
   ])
