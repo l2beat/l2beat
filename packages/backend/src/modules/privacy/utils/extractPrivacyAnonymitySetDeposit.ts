@@ -1,4 +1,7 @@
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
+import type {
+  PrivacyAnonymitySetDepositSource,
+  ZkMoneyFundingParams,
+} from '@l2beat/config'
 import {
   assert,
   assertUnreachable,
@@ -13,7 +16,8 @@ export type PrivacyAnonymitySetDeposit = {
   origin:
     | { type: 'event'; sender: EthereumAddress }
     | { type: 'transaction' }
-    | { type: 'zkMoney' }
+    /** Funded through a zk.money deposit address, traced by replaying its history. */
+    | { type: 'tracedFunder'; params: ZkMoneyFundingParams }
 }
 
 export function extractPrivacyAnonymitySetDeposit(
@@ -34,13 +38,16 @@ export function extractPrivacyAnonymitySetDeposit(
   if (result === undefined) return undefined
 
   switch (source.extractor) {
-    case 'zkMoneyDeposit':
-      return { amount: result.amount, origin: { type: 'zkMoney' } }
     case 'fixedAmount':
     case 'railgunShield':
       return {
         amount: result.amount,
         origin: { type: 'transaction' },
+      }
+    case 'zkMoneyDeposit':
+      return {
+        amount: result.amount,
+        origin: { type: 'tracedFunder', params: source.params },
       }
     default:
       return assertUnreachable(source)

@@ -2,8 +2,9 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
 import {
   type BlockProvider,
-  createPrivacyFlowConfigurationId,
+  createPrivacyConfigurationId,
   type LogsProvider,
+  stringifyPrivacyConfigurationParams,
 } from '@l2beat/shared'
 import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -240,10 +241,17 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   static idToConfigurationId(
     config: Omit<PrivacyFlowIndexerConfig, 'id'>,
   ): string {
-    return createPrivacyFlowConfigurationId({
-      ...config,
-      address: config.address.toString(),
-    })
+    return createPrivacyConfigurationId([
+      'privacy-flow',
+      config.projectId,
+      config.bucketId,
+      config.direction,
+      config.chain,
+      config.address.toString(),
+      config.event,
+      config.extractor,
+      stringifyPrivacyConfigurationParams(config.params),
+    ])
   }
 }
 

@@ -1,9 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyRelayerActivityRecord } from '@l2beat/database'
 import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
-import { createPrivacyRelayerConfigurationId } from '@l2beat/shared'
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  createPrivacyConfigurationId,
+  stringifyPrivacyConfigurationParams,
+} from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import chunk from 'lodash/chunk'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -12,14 +16,16 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { PrivacyRelayerActivityIndexerConfig } from '../types'
+import type {
+  PrivacyRelayerActivityIndexerConfig,
+  PrivacyRelayerActivityIndexerConfigProperties,
+} from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
 import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
+import { ReceiptLogCache } from '../utils/ReceiptLogCache'
 
-import {
-  extractZkMoneyWithdrawalPayout,
-  ZkMoneyMetrics,
-} from '../utils/zkMoneyMetrics'
+// Receipt-based extractors make several RPC requests per log.
+const EXTRACTION_BATCH_SIZE = 20
 
 interface PrivacyRelayerActivityIndexerDeps
   extends Omit<
@@ -139,45 +145,51 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       logger: this.logger,
     })
 
-    const metrics = new ZkMoneyMetrics(this.$.rpcClient)
-    const records: PrivacyRelayerActivityRecord[] = []
-    for (const { log, timestamp, configuration } of matches) {
-      const source = configuration.properties
-      let activity: EthereumAddress | undefined
-      if (source.extractor === 'zkMoneyDepositPayout') {
-        activity = await metrics.depositFinalizer(log, source.params)
-      } else if (source.extractor === 'zkMoneyWithdrawalPayout') {
-        activity = extractZkMoneyWithdrawalPayout(
-          await metrics.receipt(log.transactionHash),
-          log,
-          source.params,
-        )
-      } else {
-        activity = extractPrivacyRelayerActivity(source, log)?.relayerAddress
-      }
-      if (!activity) continue
-
-      records.push({
-        configurationId: configuration.id,
-        projectId: configuration.properties.projectId,
-        chain: configuration.properties.chain,
-        timestamp,
-        blockNumber: log.blockNumber,
-        txHash: log.transactionHash,
-        logIndex: log.logIndex,
-        relayerAddress: activity,
-      })
+    const context = {
+      rpc: this.$.rpcClient,
+      receipts: new ReceiptLogCache(this.$.rpcClient),
     }
-
+    const records: PrivacyRelayerActivityRecord[] = []
+    for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
+      const extracted = await Promise.all(
+        batch.map(async ({ log, timestamp, configuration }) => {
+          const activity = await extractPrivacyRelayerActivity(
+            configuration.properties,
+            log,
+            context,
+          )
+          if (!activity) return undefined
+          return {
+            configurationId: configuration.id,
+            projectId: configuration.properties.projectId,
+            chain: configuration.properties.chain,
+            timestamp,
+            blockNumber: log.blockNumber,
+            txHash: log.transactionHash,
+            logIndex: log.logIndex,
+            relayerAddress: activity.relayerAddress,
+          }
+        }),
+      )
+      records.push(...extracted.filter((record) => record !== undefined))
+    }
     return records
   }
 
   static idToConfigurationId(
-    config: Omit<PrivacyRelayerActivityIndexerConfig, 'id'>,
+    config: PrivacyRelayerActivityIndexerConfigProperties,
   ): string {
-    return createPrivacyRelayerConfigurationId({
-      ...config,
-      address: config.address.toString(),
-    })
+    return createPrivacyConfigurationId([
+      'privacy-relayer-activity',
+      config.projectId,
+      config.chain,
+      config.address.toString(),
+      config.event,
+      config.extractor,
+      // Only appended when present, so ids of extractors without params stay unchanged.
+      ...('params' in config
+        ? [stringifyPrivacyConfigurationParams(config.params)]
+        : []),
+    ])
   }
 }

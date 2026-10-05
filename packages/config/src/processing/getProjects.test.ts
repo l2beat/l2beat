@@ -489,10 +489,14 @@ describe('getProjects', () => {
           }
         }
 
-        if (privacyInfo.anonymitySet !== undefined && configuredBuckets !== 0) {
-          problems.push(
-            `${project.id}: ${privacyInfo.anonymitySet.type} with buckets`,
-          )
+        // Every state but partially-attributed means the set is not tracked.
+        const state = privacyInfo.anonymitySet?.type
+        if (state === 'partially-attributed') {
+          if (configuredBuckets === 0) {
+            problems.push(`${project.id}: ${state} without buckets`)
+          }
+        } else if (state !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${state} with buckets`)
         }
       }
       expect(problems).toEqual([])

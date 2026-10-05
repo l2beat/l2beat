@@ -46,7 +46,7 @@ describe(RpcClientCompat.name, () => {
   })
 
   describe(RpcClientCompat.prototype.getTransactionReceipt.name, () => {
-    it('keeps the block hash and event emitter', async () => {
+    it('keeps the block hash, event emitter and log index', async () => {
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({
           getTransactionReceipt: mockFn().resolvesTo({
@@ -56,7 +56,7 @@ describe(RpcClientCompat.name, () => {
                 address: EthereumAddress.ZERO,
                 topics: ['0x1'],
                 data: '0x2',
-                logIndex: 0n,
+                logIndex: 7n,
               },
             ],
           }),
@@ -73,9 +73,32 @@ describe(RpcClientCompat.name, () => {
             address: EthereumAddress.ZERO.toString(),
             topics: ['0x1'],
             data: '0x2',
+            logIndex: 7,
           },
         ],
       })
+    })
+
+    it('rejects a receipt with a pending log', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getTransactionReceipt: mockFn().resolvesTo({
+            logs: [
+              {
+                address: EthereumAddress.ZERO,
+                topics: [],
+                data: '0x',
+                logIndex: null,
+              },
+            ],
+          }),
+        }),
+        'avalanche',
+      )
+
+      await expect(client.getTransactionReceipt('0xtx')).toBeRejectedWith(
+        'pending log',
+      )
     })
   })
 

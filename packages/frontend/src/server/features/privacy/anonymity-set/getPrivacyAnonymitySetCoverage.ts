@@ -1,5 +1,5 @@
 import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, unique } from '@l2beat/shared-pure'
 import { ANONYMITY_SET_WINDOW_DAYS } from './calculateAnonymitySets'
 import {
   getPrivacyAnonymitySetSeries,
@@ -26,16 +26,23 @@ export async function getPrivacyAnonymitySetCoverage(
   }
 
   const from = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
-  const trackedBucketIds = new Set(
+  const trackedBucketIds = unique(
     getPrivacyAnonymitySetSeries(project).map((series) => series.bucketId),
   )
-  const [attributed, flows] = await Promise.all([
-    db.privacyAnonymitySetEvent.getDepositCount(project.id, from, currentDay),
-    db.privacyFlowEvent.getDailyByProjectIds([project.id], from, currentDay),
+  const [attributed, total] = await Promise.all([
+    db.privacyAnonymitySetEvent.getDepositCount(
+      project.id,
+      trackedBucketIds,
+      from,
+      currentDay,
+    ),
+    db.privacyFlowEvent.getNonZeroDepositCount(
+      project.id,
+      trackedBucketIds,
+      from,
+      currentDay,
+    ),
   ])
-  const total = flows
-    .filter((flow) => trackedBucketIds.has(flow.bucketId))
-    .reduce((sum, flow) => sum + flow.depositCount, 0)
 
   // Totals come from the flow indexer, which may lag behind the anonymity set one.
   if (attributed > total) return undefined
