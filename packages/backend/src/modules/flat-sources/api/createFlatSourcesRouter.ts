@@ -7,8 +7,15 @@ import type { FlatSourcesController } from './FlatSourcesController'
 
 export function createFlatSourcesRouter(controller: FlatSourcesController) {
   const router = new Router()
+  let streaming = false
 
   router.get('/api/flat-sources', (ctx) => {
+    if (streaming) {
+      ctx.status = 503
+      ctx.body = 'Flat sources are already being streamed, retry later'
+      return
+    }
+    streaming = true
     ctx.type = 'application/zstd'
     ctx.compress = false
     ctx.body = pipeline(
@@ -24,6 +31,7 @@ export function createFlatSourcesRouter(controller: FlatSourcesController) {
         },
       }),
       (error) => {
+        streaming = false
         if (error) {
           ctx.res.destroy(error)
         }

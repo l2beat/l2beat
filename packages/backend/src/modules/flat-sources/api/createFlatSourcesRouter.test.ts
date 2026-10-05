@@ -94,6 +94,60 @@ describe(createFlatSourcesRouter.name, () => {
     await expect(response.arrayBuffer()).toBeRejected()
   })
 
+  it('serves one stream at a time', async () => {
+    let releaseSecondProject = () => {}
+    const secondProjectReleased = new Promise<void>((resolve) => {
+      releaseSecondProject = resolve
+    })
+    const flatSources = mockObject<Database['flatSources']>({
+      getProjectIds: async () => ['a', 'b'],
+      getJson: async (projectId) => {
+        if (projectId === 'b') {
+          await secondProjectReleased
+        }
+        return jsonRecord(projectId, {
+          'A.sol': randomBytes(1_000_000).toString('hex'),
+        })
+      },
+    })
+    const url = await listen(flatSources)
+
+    const first = await fetch(url)
+    const concurrent = await fetch(url)
+    releaseSecondProject()
+    await first.arrayBuffer()
+    const later = await fetch(url)
+    await later.arrayBuffer()
+
+    expect(first.status).toEqual(200)
+    expect(concurrent.status).toEqual(503)
+    expect(later.status).toEqual(200)
+  })
+
+  it('accepts a new stream after the client disconnects', async () => {
+    const flatSources = mockObject<Database['flatSources']>({
+      getProjectIds: async () => ['a', 'b'],
+      getJson: async (projectId) =>
+        jsonRecord(projectId, {
+          'A.sol': randomBytes(1_000_000).toString('hex'),
+        }),
+    })
+    const url = await listen(flatSources)
+    const controller = new AbortController()
+    const first = await fetch(url, { signal: controller.signal })
+    expect(first.status).toEqual(200)
+
+    controller.abort()
+    let later = await fetch(url)
+    for (let attempt = 0; later.status === 503 && attempt < 50; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 10))
+      later = await fetch(url)
+    }
+    await later.arrayBuffer()
+
+    expect(later.status).toEqual(200)
+  })
+
   async function listen(flatSources: Database['flatSources']) {
     const controller = new FlatSourcesController(
       mockObject<Database>({ flatSources }),
