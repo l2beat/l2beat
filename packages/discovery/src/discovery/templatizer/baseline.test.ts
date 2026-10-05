@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { StructureContract } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
 import { getHandlers } from '../handlers/getHandlers'
-import { buildBaseline } from './baseline'
+import { buildBaseline, withoutTemplateValues } from './baseline'
 
 describe(buildBaseline.name, () => {
   const ADDRESS = ChainSpecificAddress(
@@ -101,5 +101,39 @@ describe(buildBaseline.name, () => {
     )
 
     expect(baseline.fields.owners?.kind).toEqual('getter')
+  })
+})
+
+describe(withoutTemplateValues.name, () => {
+  it('drops the values the template computes or edits, and keeps getters it only annotates', () => {
+    const baseline = {
+      fields: {
+        owner: { kind: 'getter' as const, value: 'eth:0x01' },
+        paused: { kind: 'getter' as const, value: false },
+        delay: { kind: 'override' as const, value: 3600 },
+        slot: { kind: 'override' as const, value: 0 },
+        secret: { kind: 'override' as const, value: 1 },
+        both: { kind: 'override' as const, value: 2 },
+      },
+    }
+    const template = StructureContract.parse({
+      fields: {
+        owner: { severity: 'HIGH' },
+        paused: { edit: ['format', 'FormatSeconds'] },
+        delay: { handler: { type: 'call', method: 'getDelay', args: [] } },
+        slot: { handler: { type: 'hardcoded', value: 0 } },
+        both: { handler: { type: 'hardcoded', value: 1 } },
+      },
+    })
+    const override = StructureContract.parse({
+      fields: {
+        secret: { handler: { type: 'storage', slot: '{{ slot }}' } },
+        both: { handler: { type: 'hardcoded', value: 2 } },
+      },
+    })
+
+    expect(
+      Object.keys(withoutTemplateValues(baseline, template, override).fields),
+    ).toEqual(['owner', 'secret', 'both'])
   })
 })

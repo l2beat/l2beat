@@ -138,6 +138,20 @@ describe(checkNames.name, () => {
     ])
   })
 
+  it('protects proxy detector values whose names do not start with a dollar sign', () => {
+    const ctx = {
+      ...scroll,
+      facts: { ...scroll.facts, proxyValues: { GnosisSafe_modules: [] } },
+    }
+    expect(names({ GnosisSafe_modules: hardcoded }, ctx)).toEqual([
+      {
+        path: 'fields.GnosisSafe_modules',
+        message:
+          '"GnosisSafe_modules" is produced by the proxy detector; pick another name so this field does not replace it',
+      },
+    ])
+  })
+
   it('rejects the name of a field of the existing template', () => {
     const existing = { ...scroll, existingFieldNames: ['sequencers'] }
     expect(runRule(checkNames, scrollChainDraft(), existing)).toEqual([

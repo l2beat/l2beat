@@ -1,32 +1,30 @@
 /**
- * Every worklist token gets exactly one verdict.
+ * Every worklist token is covered by fields or explicitly skipped.
  *
  * A token is a function signature (`isSequencer(address)`) or an event name
- * (`UpdateSequencer`). It is ruled on by appearing in one field's `covers`
- * or in one `skips[].item`. This is the mechanical "nothing was forgotten"
- * check, so a token that is not on the worklist is an error too, with a
- * hint for the spellings models get wrong: events with parameters,
- * functions without, and 0-argument getters the baseline already read.
+ * (`UpdateSequencer`). It is ruled on by appearing in the `covers` of one
+ * or more fields, or in one `skips[].item`, never both. This is the
+ * mechanical "nothing was forgotten" check, so a token that is not on the
+ * worklist is an error too, with a hint for the spellings models get
+ * wrong: events with parameters, functions without, and 0-argument getters
+ * the baseline already read.
  *
- * The one plurality allowed: a function read by several `call` (or
- * `array`) fields with different literal arguments, one per enum value or
- * known key, is listed in the covers of each, because each of them does
- * read it. That is how researchers write a getter keyed by a `uint8`, which
- * `array` cannot enumerate. A skip, or a field that only claims the
- * function, next to such a field is still a second verdict.
+ * Several fields may cover one item because they can read different parts
+ * of it: one `call` per literal argument (how researchers read a getter
+ * keyed by a `uint8`, which `array` cannot enumerate), or one `event` field
+ * per projection of an event. Coverage is a checklist, not a one-to-one
+ * mapping from the ABI to state; `checkCovers` checks separately that a
+ * field reads what it claims.
  */
 import { closest, nameOf } from '../closest'
 import { buildWorklist, worklistTokens } from '../worklist'
-import { naturalCoversOf } from './checkCovers'
 import { SKIP_REASONS } from './Draft'
 import { fieldPath } from './Finding'
-import type { FieldReads } from './fieldReads'
 import type { RuleContext } from './ruleContext'
 
 interface Verdict {
   path: string
-  /** True when the field's handler names the function it covers; see the header. */
-  reads: boolean
+  covered: boolean
 }
 
 export function checkVerdicts(ctx: RuleContext): void {
@@ -34,7 +32,7 @@ export function checkVerdicts(ctx: RuleContext): void {
   const known = new Set(tokens)
   const verdicts = new Map<string, Verdict>()
 
-  const rule = (token: string, path: string, reads = false) => {
+  const rule = (token: string, path: string, covered = false) => {
     if (!known.has(token)) {
       ctx.findings.error(
         path,
@@ -44,22 +42,21 @@ export function checkVerdicts(ctx: RuleContext): void {
     }
     const previous = verdicts.get(token)
     if (previous !== undefined) {
-      if (reads && previous.reads) {
+      if (covered && previous.covered) {
         return
       }
       ctx.findings.error(
         path,
-        `"${token}" already has a verdict at ${previous.path}; give each worklist item exactly one verdict, in one field's covers or in one skip`,
+        `"${token}" already has a verdict at ${previous.path}; cover an item with fields or skip it once, never both`,
       )
       return
     }
-    verdicts.set(token, { path, reads })
+    verdicts.set(token, { path, covered })
   }
 
   for (const [name, field] of Object.entries(ctx.draft.fields)) {
-    const read = readFunctions(name, field.handler, ctx)
     field.covers.forEach((token, i) =>
-      rule(token, `${fieldPath(name)}.covers[${i}]`, read.includes(token)),
+      rule(token, `${fieldPath(name)}.covers[${i}]`, true),
     )
   }
   ctx.draft.skips.forEach((skip, i) => rule(skip.item, `skips[${i}].item`))
@@ -67,19 +64,6 @@ export function checkVerdicts(ctx: RuleContext): void {
   for (const token of tokens.filter((token) => !verdicts.has(token))) {
     ctx.findings.error('draft', missingVerdict(token, ctx))
   }
-}
-
-/** The worklist functions a call or array field reads by name; nothing for the handlers that only claim. */
-function readFunctions(
-  name: string,
-  handler: RuleContext['draft']['fields'][string]['handler'],
-  ctx: RuleContext,
-): string[] {
-  if (handler.type !== 'call' && handler.type !== 'array') {
-    return []
-  }
-  const reads = ctx.reads.get(name) as FieldReads
-  return naturalCoversOf(handler, reads, ctx.worklist).functions
 }
 
 function missingVerdict(token: string, ctx: RuleContext): string {

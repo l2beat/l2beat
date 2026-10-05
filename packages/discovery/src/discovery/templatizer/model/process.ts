@@ -88,11 +88,25 @@ function killOnExit(child: ChildProcess): void {
   running.add(child)
   if (!exitHookInstalled) {
     exitHookInstalled = true
-    process.once('exit', () => {
-      for (const child of running) {
-        killGroup(child)
+    process.once('exit', killRunning)
+    for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+      const onSignal = () => {
+        killRunning()
+        // Node does not emit `exit` for its default signal termination.
+        // Preserve that default when no other code handles the signal.
+        if (process.listenerCount(signal) === 1) {
+          process.removeListener(signal, onSignal)
+          process.kill(process.pid, signal)
+        }
       }
-    })
+      process.on(signal, onSignal)
+    }
+  }
+}
+
+function killRunning(): void {
+  for (const child of running) {
+    killGroup(child)
   }
 }
 

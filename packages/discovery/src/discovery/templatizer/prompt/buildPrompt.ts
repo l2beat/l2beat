@@ -6,7 +6,7 @@
  * of an existing template, in a fixed section order, so two runs over the
  * same contract send byte-identical prompts and any difference between
  * drafts is the model's alone. Section 1 says what is checked (little:
- * parsing, one verdict per item, covers that match the handler, and the
+ * parsing, coverage or a skip per item, covers that match the handler, and the
  * handlers run at the block) and then gives the guidance researchers'
  * practice has produced; the wording of the research prompt's rules, tuned
  * over several benchmark runs, is kept where it still applies.
@@ -114,7 +114,7 @@ function renderRules(hasExisting: boolean): string {
     '',
     'You write a *draft* of a discovery template for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Your draft adds a field for each such piece of state, each with one handler that reads it, and gives a verdict on every function and event of the worklist, and on the constructor when section 4 lists it. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
     '',
-    'What is checked: your reply parses as one JSON object matching the schema in section 2, every worklist item gets exactly one verdict, a field covers only what its handler names, no field takes the name of a value discovery already produces, and every handler is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
+    'What is checked: your reply parses as one JSON object matching the schema in section 2, every worklist item is covered by fields or explicitly skipped, a field covers only what its handler names, no field takes the name of a value discovery already produces, and every handler is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
     '',
     ...[...rules, OUTPUT_RULE].flatMap(renderRule),
     '',
@@ -148,7 +148,7 @@ const RULES: Rule[] = [
   {
     title: 'Selection.',
     lines: [
-      'Give exactly one verdict to every worklist function, to the constructor when it is listed, and to every event listed in section 4. The token is the function signature exactly as listed (`isSequencer(address)`), the constructor’s signature as listed (`constructor(address)`) or the bare event name (`UpdateSequencer`, never its fragment), and it appears either in the `covers` of the field that reads it (several `call` fields that read one function with different literal `args` each list it) or exactly once as a `skips[].item` with a reason. Leave nothing out, rule on nothing twice, and name nothing that is not listed. Skip reasons are only the five below; pick the one whose definition fits, not the softest one. They apply to events too, `covered` meaning that a getter or field already holds the state the event announces.',
+      'Give a verdict to every worklist function, to the constructor when it is listed, and to every event listed in section 4. The token is the function signature exactly as listed (`isSequencer(address)`), the constructor’s signature as listed (`constructor(address)`) or the bare event name (`UpdateSequencer`, never its fragment), and it appears either in the `covers` of the field that reads it (several fields may cover the same item, for example `call` fields with different literal `args`, or `event` fields that read different parts of one event) or exactly once as a `skips[].item` with a reason. Leave nothing out, never both cover and skip an item, and name nothing that is not listed. Skip reasons are only the five below; pick the one whose definition fits, not the softest one. They apply to events too, `covered` meaning that a getter or field already holds the state the event announces.',
       '   - `computation`: a pure function of its inputs, or derivable from values already fetched. Example: `isBatchFinalized(uint256)` is `batchIndex <= lastFinalizedBatchIndex`, a baseline getter; `hashOperation(address,uint256,bytes,bytes32,bytes32)` hashes its arguments.',
       '   - `user-activity`: per-user, per-message or per-operation state written through unprivileged calls, even when an event would let you enumerate it. Example: `balanceOf(address)`, `isMessageDropped(bytes32)`, `getTimestamp(bytes32)` for operations anyone can schedule; events such as `Transfer`, `Deposit` or `SentMessage` emitted for any caller.',
       '   - `unbounded`: state written only by privileged callers whose keys cannot be enumerated from events, getters or literals, or which grows with every batch or block the operator posts. Example: `committedBatches(uint256)`, one hash per batch committed by whitelisted sequencers, with no fixed key set to read; the events `CommitBatch` and `FinalizeBatch`, one per batch.',
@@ -159,7 +159,7 @@ const RULES: Rule[] = [
   {
     title: 'Covers.',
     lines: [
-      'A field covers only what it reads. A `call` or `array` field covers the function it calls on this contract; an `event` field covers the events its actions name and, by claim, the getters whose state it reproduces (`sequencers` covers `UpdateSequencer` and `isSequencer(address)`); a `storage`, `constructorArgs` or `hardcoded` field covers a getter only by claim. Every event a field reads is in the `covers` of exactly one field that reads it and is never skipped.',
+      'A field covers only what it reads. A `call` or `array` field covers the function it calls on this contract; an `event` field covers the events its actions name and, by claim, the getters whose state it reproduces (`sequencers` covers `UpdateSequencer` and `isSequencer(address)`); a `storage`, `constructorArgs` or `hardcoded` field covers a getter only by claim. Every worklist event a field reads is in its `covers` and is never skipped; several fields may read different parts of the same event.',
     ],
   },
   {
@@ -221,7 +221,7 @@ const RULES: Rule[] = [
 const EXISTING_RULE: Rule = {
   title: 'Existing fields.',
   lines: [
-    'Section 4 lists the fields the template of this contract already has. They stay exactly as they are and your fields are appended after them: do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. You may reference them as `{{ name }}`.',
+    'Section 4 lists the fields the template of this contract already has. They stay exactly as they are and your fields are appended after them: do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. You may reference them as `{{ name }}`. You may also read the same function or event for additional state that the existing fields do not expose; list only remaining worklist tokens in `covers`, or use an empty list.',
   ],
 }
 

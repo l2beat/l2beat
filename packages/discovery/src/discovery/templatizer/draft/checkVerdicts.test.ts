@@ -76,7 +76,7 @@ describe(checkVerdicts.name, () => {
     expect(runRule(checkVerdicts, draft, ctx)).toEqual([
       error(
         'skips[15].item',
-        '"UpdateSequencer" already has a verdict at fields.sequencers.covers[1]; give each worklist item exactly one verdict, in one field\'s covers or in one skip',
+        '"UpdateSequencer" already has a verdict at fields.sequencers.covers[1]; cover an item with fields or skip it once, never both',
       ),
     ])
   })
@@ -106,33 +106,17 @@ describe(checkVerdicts.name, () => {
         ]),
       ),
     ).toEqual([
-      'skips[0].item: "getZkConfig(uint8)" already has a verdict at fields.zkConfigRiscZero.covers[0]; give each worklist item exactly one verdict, in one field\'s covers or in one skip',
+      'skips[0].item: "getZkConfig(uint8)" already has a verdict at fields.zkConfigRiscZero.covers[0]; cover an item with fields or skip it once, never both',
     ])
-    expect(
-      doubles(
-        draftOf({
-          ...perLiteral,
-          claimed: field({ type: 'hardcoded', value: 1 }, [
-            'getZkConfig(uint8)',
-          ]),
-        }),
-      ),
-    ).toEqual([
-      'fields.claimed.covers[0]: "getZkConfig(uint8)" already has a verdict at fields.zkConfigRiscZero.covers[0]; give each worklist item exactly one verdict, in one field\'s covers or in one skip',
-    ])
-    expect(
-      doubles(
-        draftOf({
-          ...perLiteral,
-          other: field(
-            { type: 'call', method: 'getVerifierProofId', args: [1] },
-            ['getZkConfig(uint8)'],
-          ),
-        }),
-      ),
-    ).toEqual([
-      'fields.other.covers[0]: "getZkConfig(uint8)" already has a verdict at fields.zkConfigRiscZero.covers[0]; give each worklist item exactly one verdict, in one field\'s covers or in one skip',
-    ])
+  })
+
+  it('allows separate fields to select different state from the same event', () => {
+    const draft = scrollChainDraft()
+    draft.fields.sequencerUpdates = field(
+      { type: 'event', select: 'status', add: { event: 'UpdateSequencer' } },
+      ['UpdateSequencer'],
+    )
+    expect(runRule(checkVerdicts, draft, ctx)).toEqual([])
   })
 
   it('explains tokens that are not on the worklist', () => {

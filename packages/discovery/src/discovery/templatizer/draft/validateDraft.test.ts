@@ -58,7 +58,6 @@ describe(validateDraft.name, () => {
         (finding) => finding.path,
       ),
     ).toEqual([
-      'fields.owner.covers[0]', // UpdateProver has two verdicts
       'skips[14].item', // RevertBatch has two verdicts
       'draft', // CommitBatch has no verdict
       'fields.owner', // a baseline getter's name

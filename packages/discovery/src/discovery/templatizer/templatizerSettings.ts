@@ -7,6 +7,8 @@ import path from 'path'
 import type { DiscoveryModuleConfig } from '../../config/types'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
+import type { EntryParameters } from '../output/types'
+import type { PreviousTemplate } from './existingTemplate'
 import { chooseModel } from './model/createModelClient'
 import type { TemplatizerSettings } from './Templatizer'
 
@@ -41,18 +43,41 @@ export async function getTemplatizerSettings(
 function readPreviousTemplates(
   configReader: ConfigReader,
   project: string,
-): Record<string, string> {
+): Record<string, PreviousTemplate> {
   let entries
   try {
     entries = configReader.readDiscovery(project).entries
   } catch {
     return {}
   }
-  const previous: Record<string, string> = {}
+  const previous: Record<string, PreviousTemplate> = {}
   for (const entry of entries) {
     if (entry.template !== undefined) {
-      previous[entry.address.toString()] = entry.template
+      previous[entry.address.toString()] = {
+        templateId: entry.template,
+        names: shapeNamesOf(entry),
+        failingFields: Object.keys(entry.errors ?? {}),
+      }
     }
   }
   return previous
+}
+
+/**
+ * `implementationNames` holds the contract's own name under its address
+ * and each implementation's under the implementation's address. The shape
+ * is taken from the implementations when there are any, as
+ * `matchedBundles` takes it; `name` is not used, because a project's
+ * config may replace it with a display name.
+ */
+function shapeNamesOf(entry: EntryParameters): string[] | undefined {
+  const names = entry.implementationNames
+  if (names === undefined) {
+    return undefined
+  }
+  const own = entry.address.toString()
+  const implementations = Object.entries(names)
+    .filter(([address]) => address !== own)
+    .map(([, name]) => name)
+  return implementations.length > 0 ? implementations : Object.values(names)
 }

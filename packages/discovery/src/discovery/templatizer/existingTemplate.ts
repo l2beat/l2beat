@@ -9,6 +9,9 @@
  * does not see; the failure becomes a `review:` note above the field, not
  * a deletion. The model is asked only about the items no field reads and
  * the template does not ignore.
+ *
+ * For a contract whose code changed, the same run decides whether the old
+ * template is kept at all (`misfitOf`).
  */
 import type { TemplateService } from '../analysis/TemplateService'
 import type {
@@ -35,6 +38,19 @@ export interface ExistingTemplate {
 export interface FailingField {
   name: string
   error: string
+}
+
+/** What the committed discovered.json says of an address that had a template. */
+export interface PreviousTemplate {
+  templateId: string
+  /**
+   * The names of the bundles the shape was taken from (`matchedBundles`):
+   * the implementations behind a proxy, else the contract itself.
+   * Undefined when the entry does not record them.
+   */
+  names: string[] | undefined
+  /** The fields that already failed on the old code. */
+  failingFields: string[]
 }
 
 export async function analyzeExistingTemplate(
@@ -118,6 +134,42 @@ function readByFields(
     }
   }
   return read
+}
+
+/**
+ * Why the old template no longer fits a contract whose code changed, or
+ * undefined when it still does. Both tests are read off V1: the contract
+ * kept its name, and every field that computes a value and did not fail on
+ * the old code still runs on the new. A field that already failed before
+ * says nothing about the new code, and keeps its note. A template that
+ * does not fit is left as it is, because the contracts it still matches
+ * rely on it, and the changed contract gets a template of its own.
+ */
+export function misfitOf(
+  existing: ExistingTemplate,
+  previous: PreviousTemplate,
+  names: string[],
+): string | undefined {
+  const reasons: string[] = []
+  if (previous.names !== undefined && !sameNames(previous.names, names)) {
+    reasons.push(
+      `the contract was ${previous.names.join(', ')} and is now ${names.join(', ')}`,
+    )
+  }
+  for (const field of existing.failing) {
+    if (!previous.failingFields.includes(field.name)) {
+      reasons.push(`${field.name} fails on the new code: ${field.error}`)
+    }
+  }
+  return reasons.length === 0 ? undefined : reasons.join('; ')
+}
+
+function sameNames(a: string[], b: string[]): boolean {
+  const left = [...a].sort()
+  const right = [...b].sort()
+  return (
+    left.length === right.length && left.every((name, i) => name === right[i])
+  )
 }
 
 /** The `review:` note an existing field gets when it fails at this block. */

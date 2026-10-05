@@ -67,7 +67,11 @@ inside a discovery run, not a separate tool, and it is off unless the
 researcher switches it on with `--ai`. With the flag, when the analyzer meets
 a verified contract that matches no template, it hands the model the contract
 and the model writes a template; the run then applies that template as if it
-had matched, and the next run matches it for real. With `--ai-revisit` the
+had matched, and the next run matches it for real. A contract whose code
+changed since the committed `discovered.json`, typically a proxy that was
+upgraded, matches no template either. If its old template still fits the new
+code, the model is asked what that template misses and the new shape joins
+it; if not, the contract gets a template of its own. With `--ai-revisit` the
 model is also shown each template that does match, once per run, and asked
 what the template misses for this contract; its additions are appended.
 Either way the output is ordinary template files under `_templates`, and the
@@ -80,7 +84,8 @@ Only a local `l2b discover` can ask a model. The backend never does, so
 | --- | --- | --- |
 | A verified contract matches no template | `--ai` | The model authors a new template. Discovery then applies it as if it had matched. |
 | A contract matches exactly one template | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract that matches it. |
-| A contract that had a template shows new code | `--ai` | The new shape is added to the old template so that it matches again. Fields that fail on the new code get a note. The model is not asked; run `--ai-revisit` to ask it. |
+| A contract that had a template shows new code, and the template still fits | `--ai` | The model is asked what the template leaves undecided for the new code. Additions are appended and the new shape is added, so the template matches again. |
+| A contract that had a template shows new code, and the template no longer fits | `--ai` | The model authors a template of its own for the new code; its header says why the old one no longer fits. The old template is left as it is. |
 | Unverified code, an EIP-2535 diamond, an EOA | any | Not templatized, as without `--ai`. |
 
 Options: `--ai-model` (`opencode-go/<model>`, `opencode/<model>` or a Codex
@@ -101,7 +106,9 @@ of `fields`, and comment lines for the reviewer. The writer checks this before
 writing: removing the inserted blocks must give back the old text byte for
 byte, or the run stops. A field that fails at the current block stays in the
 file and gets a note; the researcher decides what to do with it. The
-`ignoreMethods` of an existing template is never touched.
+`ignoreMethods` of an existing template is never touched. When a contract's
+new code no longer fits its old template, the templatizer does not bend the
+old template to it: the contract gets a template of its own.
 
 Why: a template is shared by every contract whose code matches one of its
 shapes, across projects. A field that looks wrong from one contract's code may
@@ -114,9 +121,13 @@ projects share, before the model was even asked.
 discovery's own code or reports what that code did. The dry run runs the draft
 through the analyzer's own handler executor, with the analyzer's own
 configuration for the address: the global and project `types`, the address
-override from `config.jsonc`, its `ignoreMethods`. The baseline is the values
-the analyzer actually produced before applying a template. No second copy of
-discovery's logic exists in the templatizer.
+override from `config.jsonc`, its `ignoreMethods`. The baseline comes from
+the same executor, run with the address's configuration and, when a template
+is being extended, with that template pushed, as the analyzer will push it.
+Whether a template still fits a contract whose code changed is also read off
+discovery: the old fields run on the new code, and the committed
+`discovered.json` says which of them already failed and what the contract was
+called. No second copy of discovery's logic exists in the templatizer.
 
 Why: a copy drifts. The first implementation re-implemented how discovery
 resolves method names, orders references and decodes edits, so that it could
@@ -127,12 +138,13 @@ wrong about discovery.
 
 **3. Checks block only on structure and on failure.** A draft is rejected only
 when it does not parse, when discovery's own schema rejects it, when a worklist
-item has no verdict or two, when a field claims to cover an event its handler
-does not read, when a field name would overwrite a value discovery already
-produces, or when a field errors in the dry run. Nothing else blocks: not an
-empty result, not a name the templatizer finds odd, not a judgment about what
-an event means. Whatever the dry run observes that a reviewer should know
-becomes a `// review:` comment in the template.
+item has no verdict, is skipped twice, or is both covered and skipped, when a
+field claims to cover an event its handler does not read, when a field name
+would overwrite a value discovery already produces, or when a field errors in
+the dry run. Nothing else blocks: not an empty result, not a name the
+templatizer finds odd, not a judgment about what an event means. Whatever the
+dry run observes that a reviewer should know becomes a `// review:` comment in
+the template.
 
 Why: in all recorded runs the model never invented a function, an event or a
 handler type. Its mistakes were a reply that was not JSON, a missed verdict, a
@@ -145,17 +157,40 @@ saw, and leaves judgment to the researcher.
 
 ## One contract, step by step
 
-1. **Baseline.** The analyzer runs discovery's handlers on the contract
-   without a template: every 0-argument getter, the 0–4 probe of every view
-   with one `uint256` argument, the proxy values, and the address override
-   from `config.jsonc`. These values are the baseline.
+A contract whose code changed starts with a fit check. Every field of the old
+template runs on the new code. The template still fits when the contract kept
+its name and no field that computes a value fails, apart from fields that
+already failed in the committed `discovered.json`. The name compared is the
+source name of the implementation behind a proxy, else of the contract, not a
+display name from the config. A template that fits goes through the steps
+below as an existing template and gets the new shape at the end. One that does
+not is left as it is, and the contract goes through the steps as a new
+contract. Contracts with different new code that share an old template take
+turns on it, so each one's check and prompt see what the previous one added.
+A contract the template matches as it is waits for those turns before
+discovery applies the template, so it gets the added fields too. One analysed
+earlier in the run keeps the template as it was; the run warns, and a second
+`l2b discover` applies the additions to it.
+
+1. **Baseline.** The templatizer runs discovery's handlers on the contract with
+   the address's configuration: every 0-argument getter, the 0–4 probe of
+   every view with one `uint256` argument, and the address override from
+   `config.jsonc`. When a template is being extended it is pushed onto that
+   configuration, because an override field may reference its fields, and
+   the values the template computes or edits are left out: the model sees
+   those as the existing fields. These values are the baseline. The
+   proxy values come from proxy detection and are shown next to it.
 2. **Worklist.** From the ABI: every view or pure function with at least one
    argument, the constructor when it has parameters, and every event. These
    are the things discovery cannot read without being told how; the
    constructor's arguments only a `constructorArgs` field can decode, and a
    constructor is listed so that field is decided on, not forgotten. If the
    contract already has a template, the items its fields read and the methods
-   it ignores leave the list.
+   it ignores leave the list; a new field may still read one of them for
+   state the existing fields do not hold, and lists only worklist items in
+   its `covers`. When nothing is left on the list, the model is not asked: a
+   new contract gets a template with no fields, and an existing template gets
+   only its notes.
 3. **Prompt.** One message, in a fixed order: the guidance (what a draft is,
    the five skip reasons, how to enumerate a mapping, event-only state, roles,
    references, literals), the draft schema with a worked example, the handler
@@ -177,8 +212,10 @@ saw, and leaves judgment to the researcher.
    field that errors goes back to the model. What the run observed is kept for
    the notes.
 7. **Write.** A new template is written to
-   `_templates/<project>/<ContractName>/` with its shape; an existing template
-   gets the new fields appended. For a new template, `ignoreMethods` holds the
+   `_templates/<project>/<ContractName>/` with its shape, with a short shape
+   hash appended to the name when that id is taken, as it is when a changed
+   contract outgrew its old template; an existing template gets the new
+   fields appended. For a new template, `ignoreMethods` holds the
    probed getters the model skipped as not worth reading or covered by a field
    of another name, which is what a researcher writes by hand. A getter
    skipped as `covered` keeps its probe: that skip is a claim, and when it is
@@ -198,9 +235,9 @@ Checked, and blocks until fixed:
 | --- | --- |
 | The reply is one JSON object | Parsing. A stray `}` after the object is tolerated; an object that never closes is reported with the number of braces still open, which a model can act on where a character position was ignored. |
 | Every handler matches discovery's own schema for its type; every `edit` and `where` is a blip program discovery parses | Discovery's own definitions, applied one type at a time so that the message names the wrong key. |
-| Every worklist item has exactly one verdict, in `covers` or in `skips`, and nothing outside the list is named. The one plurality: several `call` fields that read one function with different literal arguments, one per enum value, each list it | Counting over a closed list. This is the "nothing was forgotten" check. The plurality is how researchers read a getter keyed by a `uint8`, which `array` cannot enumerate; each of those fields does read the function. |
+| Every worklist item is covered by one or more fields or skipped once, never both, and nothing outside the list is named | Counting over a closed list. This is the "nothing was forgotten" check. Several fields may cover one item because they can read different parts of it: one `call` per literal argument, as researchers read a getter keyed by a `uint8`, or one `event` field per projection of an event. |
 | A field covers only events its handler names; a `call` or `array` field covers only the function it calls | Read off the handler itself. Without this a missed item could hide behind a false claim. |
-| A field name is a Solidity identifier, does not start with `$`, and is not the name of a value the baseline or the existing template already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array | A field of an existing name replaces that value, which would remove output (rule 1). The exception is what researchers write. |
+| A field name is a Solidity identifier, does not start with `$`, and is not the name of a value the baseline, proxy detection or existing template already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array | A field of an existing name replaces that value, which would remove output (rule 1). The exception is what researchers write. |
 | Every field constructs with discovery's handler factory and runs without error at the block | Discovery itself. The one construction failure that is explained rather than only quoted is an `array` over a getter keyed by a type `array` does not take (a `uint8`): discovery's message names no cause, and the model's next try was the same handler spelled differently. |
 
 Deliberately not checked:
@@ -297,15 +334,15 @@ removes and which the model has no tool to open. Claude Code, not a client
 today, offers the same (`--system-prompt`, `--bare`, `--tools ""`), so the
 approach does not tie the templatizer to these two.
 
-Every turn of a run executes in one empty scratch directory that holds only
-the client's configuration, and the model is told so: the directory is the
-process cwd, the `--dir` argument and `$PWD` alike, because opencode reads
-its directory from `$PWD` and would otherwise tell the model it works inside
-the repository and load the repository's `AGENTS.md`. A model that believes
-it sits in a coding repository goes to explore it; one that is told it is a
-tool answers. The directory is the same for the whole run because opencode
-keeps its sessions per directory, and a repair turn resumes the first turn's
-session.
+Each turn executes in an empty scratch directory that holds only the client's
+configuration, and the model is told so: the directory is the process cwd,
+the `--dir` argument and `$PWD` alike, because opencode reads its directory
+from `$PWD` and would otherwise tell the model it works inside the repository
+and load the repository's `AGENTS.md`. A model that believes it sits in a
+coding repository goes to explore it; one that is told it is a tool answers.
+Codex gets a new directory per turn. For opencode the directory is the same
+for the whole run, because opencode keeps its sessions per directory and a
+repair turn resumes the first turn's session.
 
 The trail of every contract (the prompt, each reply, the findings, the dry run,
 a summary) is written under
@@ -320,8 +357,16 @@ templatizer author one from scratch, analyses the contract with it at the
 committed block, and compares the values with the committed `discovered.json`,
 field by field. Values are compared, not template text: a field is credited
 when its values are there, under the same name, a different name, or a
-different shape. The benchmark is a command, not part of the test suite; the
-tests drive it with fakes.
+different shape, because researchers and models shape the same state
+differently (one field per key against one object). Two limits keep that
+honest. Where both sides keep the same keys, in an object or in every row of
+a list, each key must hold the same values, so values swapped between `admin`
+and `guardian` are a difference, not a reshape. And only fields a template
+handler produced are matched under
+another name or shape: a proxy value, a getter or an override field must
+come back under its own name with its own value, so a copy of it elsewhere
+cannot hide its loss. The benchmark is a command, not part of the test suite;
+the tests drive it with fakes.
 
 Two numbers matter:
 
@@ -354,10 +399,10 @@ loop, and when comparing models or efforts. Contracts whose template has no
 handler field are not in the quick suite: the model cannot do better than the
 baseline there, and about 38% of all templates are like that.
 
-What the benchmark does not yet do: exercise the revisit path (it only measures
-authoring from scratch), and run against synthetic contracts with known
-complete answers. Both are worth adding; neither is needed to use the numbers
-above.
+What the benchmark does not yet do: exercise the revisit and changed-code
+paths (it only measures authoring from scratch), and run against synthetic
+contracts with known complete answers. Both are worth adding; neither is
+needed to use the numbers above.
 
 ## Operations
 
@@ -366,7 +411,7 @@ above.
   reason, advice and the trail path. Rerun after fixing the cause, or rerun
   without `--ai` to leave the contract untemplatized on purpose.
 - Model processes run in their own process group and are killed when discovery
-  exits.
+  exits, including cancellation with SIGINT or SIGTERM.
 - This document is the description of record. A change in behaviour under
   `packages/discovery/src/discovery/templatizer/` is not complete until this
   document says the same. The design history and the log of decisions taken
@@ -398,7 +443,12 @@ in a single-line reply, and did not fix it when told the character position.
 The reply parser has since been changed to take the object that closes when a
 stray `}` follows it, and to say by how many braces an unclosed object is
 open; two of the three failing replies parse under it, so the Lunas would
-probably fail nothing on a rerun. The rows above are from before that change.
+probably fail nothing on a rerun. The comparison has also become stricter
+since: values swapped between the same keys no longer count as found, and a
+getter, proxy value or override field that comes back only under another name
+or shape counts as a regression. The first can only lower a "Found" above,
+the second can only add a regression. The rows above are from before these
+changes.
 GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
 account in Codex and were not run.
 

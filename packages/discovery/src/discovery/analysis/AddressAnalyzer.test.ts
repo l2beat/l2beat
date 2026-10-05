@@ -445,6 +445,9 @@ describe(AddressAnalyzer.name, () => {
           revisit: async () => {
             calls.push('revisit')
           },
+          settledFor: async () => {
+            calls.push('settled')
+          },
         })
         const analyzer = new AddressAnalyzer(
           mockObject<ProxyDetector>({
@@ -487,7 +490,7 @@ describe(AddressAnalyzer.name, () => {
 
         await analyzer.analyze(provider, address, config)
 
-        expect(calls).toEqual(['revisit', 'load'])
+        expect(calls).toEqual(['revisit', 'settled', 'load'])
         // The request carries the address's own config, before the
         // template is pushed, so the templatizer dry-runs with it.
         expect(templatizer.revisit).toHaveBeenOnlyCalledWith(
@@ -502,7 +505,7 @@ describe(AddressAnalyzer.name, () => {
 
         await analyzer.analyze(provider, address, config)
 
-        expect(calls).toEqual(['load'])
+        expect(calls).toEqual(['settled', 'load'])
         expect(templatizer.revisit).not.toHaveBeenCalled()
       })
     })

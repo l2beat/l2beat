@@ -3,8 +3,8 @@
  *
  * Every view/pure function that takes at least one argument is state V1
  * cannot read without a handler (the 5-index probe of single-`uint256`
- * getters is a guess, not a read), so each needs exactly one verdict: a
- * field that `covers` it or a `skips` entry with a reason. Events are items
+ * getters is a guess, not a read), so each needs a verdict: one or
+ * more fields that cover it, or a skip with a reason. Events are items
  * too, because event-only state (a list of reverted batches, a history of
  * routes) has no getter to put on the list and was silently dropped when
  * events were only offered as a means of enumeration. The constructor is

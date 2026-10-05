@@ -30,11 +30,17 @@
  * claimed by name. Short leaves alone (`0`, `false`, small counts) never
  * credit a nameless match, because they would be found anywhere, and
  * generated fields already matched are not searched, so a value that is
- * also the owner does not make a missed `provers` list count as found. This
- * is deliberately generous in one direction: it can credit a field whose
- * values happen to appear elsewhere, never fail one whose values are
- * present. The verdict carries the generated fields involved so a reader
- * can check.
+ * also the owner does not make a missed `provers` list count as found.
+ * Where both sides keep the same keys, the keys say which value is which,
+ * so each key must hold the same leaves: `{ admin: A, guardian: B }`
+ * against `{ admin: B, guardian: A }` is a difference, not a reshape, and
+ * so is a list of such objects whose rows differ, in whatever order. Only
+ * handler and projection fields are matched by value, as for renames: a
+ * proxy value, a getter or an override field keeps its name and shape, so
+ * a copy of its value elsewhere cannot hide its loss. This is deliberately
+ * generous in one direction: it can credit a field whose values happen to
+ * appear elsewhere, never fail one whose values are present. The verdict
+ * carries the generated fields involved so a reader can check.
  *
  * `v2-only` is split by V1's effective `ignoreMethods`: a field the
  * committed template chose not to fetch is a precision question ("did the
@@ -95,7 +101,10 @@ function compareNamesakes(
       if (valuesEqual(v1[name], generated[name])) {
         return { verdict: 'equal', name, attribution }
       }
-      if (sameLeaves(v1[name], generated[name])) {
+      if (
+        canMatchByValue(attribution) &&
+        sameLeaves(v1[name], generated[name])
+      ) {
         return {
           verdict: 'equal-by-value',
           name,
@@ -150,7 +159,9 @@ function matchByLeaves(
   ctx: CompareContext,
 ): FieldVerdict {
   const attribution = ctx.attribute(name)
-  const containing = fieldsContaining(value, unclaimedLeaves)
+  const containing = canMatchByValue(attribution)
+    ? fieldsContaining(value, unclaimedLeaves)
+    : undefined
   return containing === undefined
     ? { verdict: 'v1-only', name, attribution }
     : {
@@ -175,14 +186,18 @@ function findRenamed(
   generated: Values,
   candidates: ReadonlySet<string>,
 ): string | undefined {
-  const matchable =
-    attribution.kind === 'handler' || attribution.kind === 'template-projection'
-  if (!matchable || !isSubstantive(value)) {
+  if (!canMatchByValue(attribution) || !isSubstantive(value)) {
     return undefined
   }
   return [...candidates]
     .sort()
     .find((name) => valuesEqual(value, generated[name]))
+}
+
+function canMatchByValue(attribution: V1Attribution): boolean {
+  return (
+    attribution.kind === 'handler' || attribution.kind === 'template-projection'
+  )
 }
 
 function isSubstantive(value: ContractValue | undefined): boolean {
@@ -211,12 +226,71 @@ export function leavesOf(value: unknown): string[] {
 }
 
 function sameLeaves(a: unknown, b: unknown): boolean {
-  const left = leavesOf(a).sort()
-  const right = leavesOf(b).sort()
   return (
-    left.length > 0 &&
-    left.length === right.length &&
-    left.every((leaf, i) => leaf === right[i])
+    leavesOf(a).length > 0 &&
+    sameLeavesPerKey(normaliseValue(a), normaliseValue(b))
+  )
+}
+
+/**
+ * Objects with the same keys are compared key by key, lists of objects
+ * with the same keys row by row in any order, anything else by its
+ * multiset of leaves.
+ */
+function sameLeavesPerKey(a: unknown, b: unknown): boolean {
+  if (isRecord(a) && isRecord(b) && sameKeys(a, b)) {
+    return Object.keys(a).every((key) => sameLeavesPerKey(a[key], b[key]))
+  }
+  const left = tableOf(a)
+  const right = tableOf(b)
+  if (left !== undefined && right !== undefined && left.keys === right.keys) {
+    return sameMultiset(left.rows, right.rows)
+  }
+  return sameMultiset(leavesOf(a), leavesOf(b))
+}
+
+function sameKeys(
+  a: Record<string, unknown>,
+  b: Record<string, unknown>,
+): boolean {
+  const keys = Object.keys(a)
+  return (
+    keys.length === Object.keys(b).length &&
+    keys.every((key) => Object.hasOwn(b, key))
+  )
+}
+
+/** A non-empty list of objects that all have the same keys; each row is the leaves of each key. */
+function tableOf(value: unknown): { keys: string; rows: string[] } | undefined {
+  if (!Array.isArray(value) || !value.every(isRecord)) {
+    return undefined
+  }
+  const [first] = value
+  if (first === undefined) {
+    return undefined
+  }
+  const keys = canonicalJson(Object.keys(first).sort())
+  if (value.some((row) => canonicalJson(Object.keys(row).sort()) !== keys)) {
+    return undefined
+  }
+  const rows = value.map((row) =>
+    canonicalJson(
+      Object.fromEntries(
+        Object.entries(row).map(([key, entry]) => [
+          key,
+          leavesOf(entry).sort(),
+        ]),
+      ),
+    ),
+  )
+  return { keys, rows }
+}
+
+function sameMultiset(a: readonly string[], b: readonly string[]): boolean {
+  const left = [...a].sort()
+  const right = [...b].sort()
+  return (
+    left.length === right.length && left.every((item, i) => item === right[i])
   )
 }
 
@@ -451,6 +525,11 @@ function countVerdict(counts: VerdictCounts, verdict: FieldVerdict): void {
     case 'equal-by-value':
       counts.v1Fields++
       counts.equalByValue++
+      // A namesake is the generated field itself; a nameless match's
+      // fields are counted as v2-only on their own.
+      if (verdict.generatedNames.includes(verdict.name)) {
+        counts.generatedFields++
+      }
       break
     case 'different':
       counts.v1Fields++

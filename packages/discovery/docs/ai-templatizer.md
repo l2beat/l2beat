@@ -1055,22 +1055,92 @@ Benchmark: from `packages/discovery`,
   A mechanical default (always write the field) was considered and dropped:
   it is what researchers chose in four percent of templates, so it is a
   verdict, not a rule. Measured by run 6 (12.4c).
+- **Changed code: fit check, then add or start a template of its own
+  (2026-10-05).** Until now a contract whose code changed had the new
+  shape added to its old template unconditionally, with a note on each
+  field that failed and no model call; `--ai-revisit` was the only way to
+  ask the model. Nothing measured whether the old template still made
+  sense: a `storage` or `hardcoded` field runs on any code, and a template
+  of only descriptions and permissions fits everything. Now the old
+  template fits when the contract kept its name and no field that
+  computes a value fails on the new code, apart from fields the committed
+  `discovered.json` already lists under `errors` (those say nothing about
+  the new code and keep their note). The name is the source name of the
+  bundles the shape is taken from, read from `implementationNames` with
+  `matchedBundles`' rule; the entry's `name` was rejected because 1,231 of
+  4,349 templated entries carry a display name there. A template that fits
+  takes the revisit path under plain `--ai`: the model is asked about the
+  remaining worklist, its fields are appended, then the shape is added.
+  One that does not fit is left as it is, and the contract is authored as
+  a new contract under `<project>/<Name>` or `<project>/<Name>-<hash>`,
+  with a `review:` line under the header naming the old template and why
+  it no longer fits. Contracts with different new code that share an old
+  template, and a revisit of it, take turns (`inTurn`), so each fit check
+  and prompt sees the previous one's additions. Because the additions change
+  the template's hash, a contract the template matches unchanged would
+  otherwise be discovered with the old version and show
+  `TEMPLATE_CONFIG_CHANGED` on the next run: the analyzer now waits for the
+  template's turns before it applies it (`settledFor`), and a contract
+  analysed earlier in the run, which cannot be redone, is named in a warning
+  that asks for a rerun (found by an independent review pass). Taken over
+  from a second model's review (below), with the fit check added; it
+  resolves the sibling-template variant 12.5 asked for in the freeze-path
+  note.
+- **Review by a second model (2026-10-05).** Another model reviewed the
+  branch and proposed changes; Adrian decided per item. Taken: several
+  fields may cover one worklist item (R3 kept only "skipped once, never
+  both covered and skipped"; `checkCovers` still rejects false claims);
+  proxy values without a `$` prefix (`GnosisSafe_modules`) are protected
+  names; SIGINT and SIGTERM kill running model processes and then end the
+  process as the default handler would, because Node emits no `exit` for
+  a signal and the model runs in its own process group; the benchmark
+  matches only handler and projection fields under another name or shape
+  (a copied owner address no longer hides a lost getter), and counts a
+  same-named by-value match as a generated field. Taken with a fix: the
+  templatizer reads the baseline itself, with the template pushed when it
+  extends one, because an address override may reference template fields;
+  as proposed it listed every template field a second time in the
+  baseline as "from the project config", so `withoutTemplateValues` drops
+  the values the template computes: its handler and `copy` fields, and its
+  edit-only fields too, because discovery runs their edit on the getter's
+  value. Annotation-only fields keep the getter's value. Changed: by-value
+  matches stay "found", as designed, but objects with the same keys are
+  compared key by key, and lists of such objects row by row in any order,
+  so values swapped between `admin` and `guardian` are `different` while a
+  reshape (one field per key against one object, rows as tuples) is still
+  credited. Rejected, each unbenchmarked and against an earlier
+  decision: the whole blip README in every prompt (about 9.4 kB, and in
+  conflict with the guidance's two `edit` forms); a prompt instruction to
+  look for private storage and constants beyond the worklist; asking the
+  model when the worklist is empty (the shortcut stays, for new templates
+  and for additions). Recorded as an idea, not done: making `covers` and
+  `skips` advisory instead of blocking (12.5).
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,242 tests as of 2026-10-04, about 200 of them the templatizer's;
+clean (1,265 tests as of 2026-10-05, about 215 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`
 (accepted first turn, repaired, dry-run repair, exhausted,
 refused-then-retried, unparsable). The orchestrator is tested end to end
 against a temp `TemplateService`, a real `HandlerExecutor` and a mocked
-provider: a new template, code changed (shape added, every field kept, a
-failing field noted, no model call, a note never repeated), and
-`--ai-revisit` (fields appended after the existing ones with a provenance
-line, failing fields noted and shown to the model, nothing written when
-nothing is added, project `types` honoured in the dry run). The additive
+provider: a new template, a new template without a model call when the
+worklist is empty, code changed (a fitting template gets the model's
+additions and the shape, or only the shape when it decides every item; a
+field that newly fails, or a new name, gives the contract a template of
+its own and leaves the old one byte for byte; a field that already failed
+keeps the template and its one note; contracts sharing a template take
+turns, a revisit of it waits for them and is skipped when they kept it, a
+contract that matches it as it is waits for the additions, and one that
+applied it earlier is named in a warning), and `--ai-revisit` (fields
+appended after the existing ones with a
+provenance line, failing fields noted and shown to the model, nothing
+written when nothing is added, only notes when the template decides every
+item, project `types` honoured in the dry run, an override that references
+a template field resolved without the template's fields entering the
+baseline). The signal handling is tested with a real child process. The additive
 writer is tested on committed templates and its invariant (removing the
 insertions gives the old text back) held over all 1,267 committed templates
 in a one-off run on 2026-10-02.
@@ -1528,13 +1598,38 @@ three.
   instances without `ignoreRelative` makes discovery follow every address
   it holds; read every `// review:` line, and expect a `maxAddresses`
   warning if one was kept.
-- **`--ai-revisit` appends to shared templates from one contract's code.**
-  The addition is insertion-only (12.2 "Additive only"), but a field that
-  is right for this contract is applied to every contract the template
-  matches. Run it on one project at a time and review the template diffs.
-  A template is revisited once per process, so a rerun asks about the
-  same templates again and may append more; only `review:` notes are
-  deduplicated, fields are not.
+- **`--ai-revisit` appends to shared templates from one contract's code,
+  and since 2026-10-05 so does plain `--ai` for a contract whose new code
+  still fits its template.** The addition is insertion-only (12.2
+  "Additive only"), but a field that is right for this contract is applied
+  to every contract the template matches. Run it on one project at a time
+  and review the template diffs. A template is revisited once per process,
+  so a rerun asks about the same templates again and may append more; only
+  `review:` notes are deduplicated, fields are not.
+- **The fit check is deliberately coarse.** It reads only what V1 reports:
+  the name, and whether fields run. A field that runs but now means
+  something else (a `storage` slot whose layout moved) passes it. The diff
+  of the next `discovered.json` is where that shows. Its outcome can depend
+  on the order of a depth: a field another contract added this run never
+  ran on the old code, so if it fails on the new code the contract gets a
+  template of its own; and a never-templatized contract with the same new
+  code, handled first, decides the template for both.
+- **Writes continue briefly after a stop.** A turn queued on a template runs
+  after an earlier one failed; one that needs no model call still adds its
+  shape. And `addShape` runs after the additions, so a failure inside it
+  leaves the fields appended without the shape. Both leave valid,
+  insertion-only diffs; neither was worth more machinery.
+- **Signal handling defers to other listeners.** The SIGINT/SIGTERM handler
+  re-raises the signal only when it is the only listener. A library with
+  the same rule (`signal-exit`) would make both wait for the other and the
+  process would survive Ctrl-C; nothing on the discover path loads one
+  today.
+- **Idea from the second review, not done: `covers` and `skips` as
+  advisory.** They would become review metadata, with the schema, name
+  protection and the dry run as the only blocks. Against it: the coverage
+  check is the "nothing was forgotten" check, and missed verdicts were a
+  real model mistake (12.2 "Checks reduced"). Worth one benchmark run and
+  a revisit case before deciding.
 
 - **Resolved 2026-10-02: an existing template is only ever appended to**
   (see 12.2 "Additive only"); the risk below is the one that materialised
@@ -1543,7 +1638,8 @@ three.
   in its `shapes.json`; removing a broken field or adding one changes the
   output of contracts with the older shapes too. The spec asked for it
   (same id, locked fields verbatim); the diff shows it, but a safer variant
-  would write a sibling template for the new shape instead.
+  would write a sibling template for the new shape instead. Done for a
+  template that no longer fits on 2026-10-05 (12.2 "Changed code").
 - **V1 provider change outside the templatizer.** `BatchingAndCachingProvider`
   now also halves a log range when Alchemy answers "Query timeout exceeded.
   Consider reducing your block range". Without it `discover scroll` died on

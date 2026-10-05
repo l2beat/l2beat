@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import type { ContractValue } from '../../output/types'
 import {
   canonicalJson,
   compareValues,
@@ -146,7 +147,7 @@ describe(compareValues.name, () => {
         maxTimeVariation: [7200, 86400],
         batcherHash: A,
       },
-      ctx,
+      { ...ctx, attribute: () => handler },
     )
     expect(verdicts.map((v) => [v.name, v.verdict])).toEqual([
       ['batcherHash', 'equal'],
@@ -184,6 +185,91 @@ describe(compareValues.name, () => {
     const game1 = verdicts[1]
     if (game1?.verdict !== 'equal-by-value') throw new Error('asserted above')
     expect(game1.generatedNames).toEqual(['gameImpls'])
+  })
+
+  it('does not hide lost or rearranged baseline values behind matching leaves', () => {
+    for (const kind of ['getter', 'override', 'proxy'] as const) {
+      const baselineContext = { ...ctx, attribute: () => ({ kind }) }
+      const missing = compareValues(
+        { owner: A },
+        { unrelated: [A] },
+        baselineContext,
+      )
+      expect(countVerdicts(missing).regressions).toEqual(1)
+      const swapped = compareValues(
+        { roles: { admin: A, guardian: B } },
+        { roles: { admin: B, guardian: A } },
+        baselineContext,
+      )
+      expect(countVerdicts(swapped).regressions).toEqual(1)
+    }
+  })
+
+  it('calls values swapped between the same keys different, but credits the same values under other keys', () => {
+    const roles = { roles: { admin: A, guardian: B } }
+    const handlers = { ...ctx, attribute: () => handler }
+
+    const swapped = compareValues(
+      roles,
+      { roles: { admin: B, guardian: A } },
+      handlers,
+    )
+    const reshaped = compareValues(
+      roles,
+      { roles: { ADMIN_ROLE: [A], GUARDIAN_ROLE: [B] } },
+      handlers,
+    )
+
+    expect(swapped.map((v) => v.verdict)).toEqual(['different'])
+    expect(countVerdicts(swapped).reachableFound).toEqual(0)
+    expect(reshaped.map((v) => v.verdict)).toEqual(['equal-by-value'])
+    expect(countVerdicts(reshaped).reachableFound).toEqual(1)
+    expect(countVerdicts(reshaped).generatedFields).toEqual(1)
+  })
+
+  it('compares lists of objects with the same keys row by row, in any order', () => {
+    const handlers = { ...ctx, attribute: () => handler }
+    const routes = {
+      routes: [
+        { chainId: 10, token: A },
+        { chainId: 8453, token: B },
+      ],
+    }
+    const verdictOf = (generated: ContractValue) =>
+      compareValues(routes, { routes: generated }, handlers).map(
+        (v) => v.verdict,
+      )
+
+    // The same leaves, assigned to the other chain.
+    expect(
+      verdictOf([
+        { chainId: 10, token: B },
+        { chainId: 8453, token: A },
+      ]),
+    ).toEqual(['different'])
+    // The same rows in another order, with the numbers as strings.
+    expect(
+      verdictOf([
+        { chainId: '8453', token: B },
+        { chainId: '10', token: A },
+      ]),
+    ).toEqual(['equal-by-value'])
+    // Rows as tuples are another shape of the same values.
+    expect(
+      verdictOf([
+        [10, A],
+        [8453, B],
+      ]),
+    ).toEqual(['equal-by-value'])
+  })
+
+  it('does not take an inherited property for a key the generated object has', () => {
+    const verdicts = compareValues(
+      { roles: { constructor: A } },
+      { roles: { owner: A } },
+      { ...ctx, attribute: () => handler },
+    )
+    expect(verdicts.map((v) => v.verdict)).toEqual(['equal-by-value'])
   })
 
   it('matches a renamed handler field to the first generated candidate by name and consumes it', () => {

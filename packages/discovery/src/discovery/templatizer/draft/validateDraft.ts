@@ -5,7 +5,7 @@
  * rule states what is wrong and what would be right, at the path of the
  * offending value. Rules, in order: the reply is one JSON object; the
  * shape (`checkSchema`), with V1's own schema for each handler type and
- * V1's own blip check for `edit` and `where`; one verdict per worklist
+ * V1's own blip check for `edit` and `where`; coverage or a skip per worklist
  * token (`checkVerdicts`); names that replace nothing (`checkNames`);
  * covers that match what the handler names (`checkCovers`); last, every
  * field is constructed with V1's own handler factory. Each of these is

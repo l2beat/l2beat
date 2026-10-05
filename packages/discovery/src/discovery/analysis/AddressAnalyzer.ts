@@ -165,6 +165,9 @@ export class AddressAnalyzer {
       }
       const template = matchingTemplates[0]
       if (template !== undefined) {
+        // With --ai another contract may be adding to this template; apply
+        // it as that leaves it.
+        await this.templatizer?.settledFor(template, address)
         // extend template even on error to make sure pruning works
         const templateValues =
           this.templateService.loadContractTemplate(template)
@@ -244,9 +247,11 @@ export class AddressAnalyzer {
   }
 
   /**
-   * Runs only with `--ai`. The handlers run untemplatized first because
-   * their values are the baseline the model builds on; the analyzer then
-   * runs them again with the template, from the provider's cache.
+   * Runs only with `--ai`, for a contract no template matches: one never
+   * templatized, or one whose code changed. The templatizer reads the
+   * baseline itself, with the handler executor this analyzer uses; the
+   * analyzer then runs the handlers with the template, from the provider's
+   * cache.
    */
   private async authorTemplate(
     provider: IProvider,
@@ -262,7 +267,7 @@ export class AddressAnalyzer {
       return undefined
     }
     return await this.templatizer.templateFor(
-      await this.templatizeRequest(provider, address, config, sources, proxy),
+      this.templatizeRequest(provider, address, config, sources, proxy),
     )
   }
 
@@ -282,30 +287,23 @@ export class AddressAnalyzer {
       return
     }
     await this.templatizer.revisit(
-      await this.templatizeRequest(provider, address, config, sources, proxy),
+      this.templatizeRequest(provider, address, config, sources, proxy),
       templateId,
     )
   }
 
   /**
-   * Runs before the template is pushed, so the values are the untemplatized
-   * baseline and `config` is the address's own config: the templatizer dry
-   * runs drafts through it, with the same `types` and override this run
-   * applies them with.
+   * Runs before the template is pushed, so `config` is the address's own
+   * config: the templatizer reads the baseline and dry runs drafts through
+   * it, with the same `types` and override this run applies them with.
    */
-  private async templatizeRequest(
+  private templatizeRequest(
     provider: IProvider,
     address: ChainSpecificAddress,
     config: StructureContractConfig,
     sources: ContractSources,
     proxy: ProxyResult,
-  ): Promise<TemplatizeRequest> {
-    const { values, errors } = await this.handlerExecutor.execute(
-      provider,
-      address,
-      sources.abi,
-      config,
-    )
+  ): TemplatizeRequest {
     return {
       provider,
       address,
@@ -314,8 +312,6 @@ export class AddressAnalyzer {
       proxyType: proxy.type,
       proxyValues: proxy.values,
       implementationNames: getImplementationNames(address, sources) ?? {},
-      values: values ?? {},
-      errors,
     }
   }
 }

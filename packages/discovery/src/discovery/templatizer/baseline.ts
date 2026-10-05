@@ -1,16 +1,20 @@
 /**
- * The baseline: what V1 already read for an address before any template.
+ * The baseline: what V1 reads for an address without the model's help.
  *
- * The analyzer runs the handlers of the untemplatized config either way
- * (every 0-argument getter, the 0–4 probe of single-`uint256` getters, and
- * the fields of the address override) and hands their values and errors
- * over, so the templatizer takes that output instead of calling the chain
- * again. Which handler produced which name comes from V1's own
- * `getHandlers` over the same config, so a name is a getter, a probe or an
- * override field exactly when V1 made it one; nothing here repeats V1's
+ * The templatizer runs discovery's own handler executor with the address's
+ * config (every 0-argument getter, the 0–4 probe of single-`uint256`
+ * getters, the fields of the address override), and, when a template is
+ * being extended, with that template pushed, because override fields may
+ * reference its fields. Which handler produced which name comes from V1's
+ * own `getHandlers` over the same config, so a name is a getter, a probe or
+ * an override field exactly when V1 made it one; nothing here repeats V1's
  * selection. A value no handler produced (a `copy` field of the override)
  * is an override field too.
  */
+import type {
+  StructureContract,
+  StructureContractField,
+} from '../config/StructureConfig'
 import type { Handler } from '../handlers/Handler'
 import { LimitedArrayHandler } from '../handlers/system/LimitedArrayHandler'
 import { SimpleMethodHandler } from '../handlers/system/SimpleMethodHandler'
@@ -36,6 +40,37 @@ export function buildBaseline(
   }
   fields.sort(([a], [b]) => a.localeCompare(b))
   return { fields: Object.fromEntries(fields) }
+}
+
+/**
+ * When a template is extended, the values it computes are its existing
+ * fields, which the prompt shows as such, so they leave the baseline: a
+ * field with its own handler or `copy`, and one that only `edit`s a getter,
+ * because discovery runs the edit and the value is no longer the getter's.
+ * A template field that only annotates a getter (`severity`,
+ * `description`) leaves the getter's value as it is, and stays. So does a
+ * field the address override computes itself: the override's handler and
+ * edit are the ones that run.
+ */
+export function withoutTemplateValues(
+  baseline: Baseline,
+  template: StructureContract,
+  override: Pick<StructureContract, 'fields'>,
+): Baseline {
+  const fields = Object.entries(baseline.fields).filter(
+    ([name]) =>
+      !computesValue(template.fields[name]) ||
+      computesValue(override.fields[name]),
+  )
+  return { fields: Object.fromEntries(fields) }
+}
+
+function computesValue(field: StructureContractField | undefined): boolean {
+  return (
+    field?.handler !== undefined ||
+    field?.copy !== undefined ||
+    field?.edit !== undefined
+  )
 }
 
 function kindOf(handler: Handler | undefined): BaselineField['kind'] {

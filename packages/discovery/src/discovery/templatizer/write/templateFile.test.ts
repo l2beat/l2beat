@@ -100,6 +100,23 @@ describe(renderTemplateFile.name, () => {
 `)
   })
 
+  it('writes the notes for the reviewer under the header', () => {
+    const text = renderTemplateFile({
+      schema: schemaPathFor('scroll/ScrollChain'),
+      header: HEADER,
+      headerNotes: ['review: the old template no longer fits'],
+      ignoreMethods: [],
+      fields: [],
+    })
+
+    expect(text).toEqual(`{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json"
+  // ${HEADER}
+  // review: the old template no longer fits
+}
+`)
+  })
+
   it('packs a long array of numbers as many per line as fit', () => {
     const text = renderTemplateFile(
       minimal([

@@ -29,6 +29,8 @@ export interface TemplateFileInput {
   schema: string
   /** The provenance line, without `//`. */
   header: string
+  /** Lines for the reviewer under the header, each without `//`. */
+  headerNotes?: string[]
   displayName?: string
   ignoreMethods: string[]
   /** The model's fields, in the model's order. */
@@ -73,7 +75,12 @@ const FIELD_INDENT = INDENT.repeat(2)
  */
 function renderDocument(input: TemplateFileInput): string {
   const [schema, ...rest] = joinMembers(topLevelMembers(input), INDENT)
-  const lines = [schema, `${INDENT}${lineComment(input.header)}`]
+  const lines = [
+    schema,
+    ...[input.header, ...(input.headerNotes ?? [])].map(
+      (line) => `${INDENT}${lineComment(line)}`,
+    ),
+  ]
   if (rest.length > 0) {
     lines.push('', ...rest)
   }

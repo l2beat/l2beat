@@ -42,6 +42,9 @@ function nameProblem(
   if (ctx.existingFieldNames.has(name)) {
     return `"${name}" is a field of the existing template, kept as it is; pick another name (reference it as {{ ${name} }} if you need its value)`
   }
+  if (Object.hasOwn(ctx.facts.proxyValues, name)) {
+    return `"${name}" is produced by the proxy detector; pick another name so this field does not replace it`
+  }
   const baseline = Object.hasOwn(ctx.facts.baseline.fields, name)
     ? ctx.facts.baseline.fields[name]
     : undefined

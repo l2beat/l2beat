@@ -90,7 +90,7 @@ export const DiscoverCommandArgs = {
     type: boolean,
     long: 'ai',
     description:
-      'author a template with a model for every verified contract no template matches (writes into _templates; review before committing)',
+      'author a template with a model for every verified contract no template matches; when a contract whose code changed still fits its old template, add to that template instead (writes into _templates; review before committing)',
   }),
   aiModel: option({
     type: optional(string),
@@ -114,7 +114,7 @@ export const DiscoverCommandArgs = {
     type: boolean,
     long: 'ai-revisit',
     description:
-      '--ai, and also revisit every template that already matches, as if the code had changed: keep the fields that execute and ask the model about everything the template leaves undecided (rewrites shared templates; review before committing)',
+      '--ai, and also ask the model for additions to every template that already matches (keeps all existing fields; review shared-template changes before committing)',
   }),
 }
 
