@@ -1,21 +1,97 @@
 # AI templatizer
 
-The AI templatizer lets a language model write discovery templates. It runs
-only when a researcher passes `--ai` to a local `l2b discover` run. It writes
-the same `template.jsonc` files researchers write, under
-`packages/config/src/projects/_templates`, and the researcher reviews them as a
-git diff before committing. The backend never calls a model, so
+The AI templatizer lets a language model do the one part of discovery that
+has always needed a researcher's hand: writing the template that tells
+discovery how to read a contract. It runs inside a local `l2b discover` run
+when the researcher asks for it with `--ai`, writes the same `template.jsonc`
+files researchers write, and the researcher reviews them as a git diff before
+committing. This document introduces discovery as far as needed, then
+describes what the templatizer does, the rules it follows, how one contract
+moves through it, what it checks and deliberately leaves alone, how the model
+is driven, how it is benchmarked, and which model is the default and why.
+
+## Discovery, in short
+
+Discovery is how L2BEAT reads the on-chain state of a project. A project is a
+folder under `packages/config/src/projects/<project>/<chain>/` whose
+`config.jsonc` names a few initial addresses. `l2b discover <chain> <project>`
+starts from those and loops: for each address it fetches the ABI and the
+verified source, detects a proxy and reads its implementation, calls every
+view function that takes no arguments, and for every view that takes one
+`uint256` reads indices 0 to 4. Every address found among the values is
+queued and analysed in turn, until no new address appears. The result is
+`discovered.json`, committed next to the config. The differences between runs
+go to `diffHistory.md`, and a monitor watches the same values in production.
+
+What discovery cannot do by itself is read anything it has to be told about:
+a getter with arguments, a mapping, the history of an event, a constructor
+argument, a `private` variable in a storage slot. For those a researcher
+writes a **handler**, a small JSON object naming a handler type and its
+parameters, under a field name of their choosing:
+
+```jsonc
+"minDelay": { "type": "call", "method": "getMinDelay", "args": [] },
+"guardian": { "type": "storage", "slot": 3 }
+```
+
+A handler's value can be reshaped with an `edit`, a program in **blip**
+(Bracket LISP, discovery's small edit language): `["format", "FormatSeconds"]`
+turns a number of seconds into a duration. Discovery has over thirty handler
+types, most of them specific to one protocol. The seven general ones are
+`call`, `array`, `event`, `storage`, `accessControl`, `constructorArgs` and
+`hardcoded`; the discovery README documents them all.
+
+Handlers live in one of two places. An override in `config.jsonc` applies to
+one address of one project. A **template** applies to every contract whose
+code matches it, in every project. A template is a folder under
+`packages/config/src/projects/_templates/`, named after the contract or after
+`<project>/<Contract>`, with two files. `template.jsonc` holds the fields with
+their handlers, the methods to ignore, a description, and the permissions the
+contract grants. `shapes.json` lists known deployments of that code with the
+hash of their flattened source. When discovery meets a contract it hashes the
+contract's flattened source and looks the hash up among all shapes; a hit
+means the template applies as if it were the address's override. There are
+more than twelve hundred templates, and one template is often shared by
+dozens of projects.
+
+Writing a template is research work: read the source, decide which state
+matters and who can change it, write the handlers, run discovery, read the
+diff, fix what errors. It is also the slow part of onboarding a project.
+Everything in discovery up to that point is mechanical and runs without a
+model, in the backend as well as locally.
+
+## What the AI templatizer adds
+
+The AI templatizer puts a language model at that one point. It is a step
+inside a discovery run, not a separate tool, and it is off unless the
+researcher switches it on with `--ai`. With the flag, when the analyzer meets
+a verified contract that matches no template, it hands the model the contract
+and the model writes a template; the run then applies that template as if it
+had matched, and the next run matches it for real. With `--ai-revisit` the
+model is also shown each template that does match, once per run, and asked
+what the template misses for this contract; its additions are appended.
+Either way the output is ordinary template files under `_templates`, and the
+researcher reviews them as a git diff before committing.
+
+Only a local `l2b discover` can ask a model. The backend never does, so
 `discovered.json` stays a function of the repository.
 
-This document is the description of record. Keep it in step with the code: a
-change in behaviour under `packages/discovery/src/discovery/templatizer/` is
-not complete until this document says the same. The design history and the
-log of decisions taken along the way are in
-`packages/discovery/docs/ai-templatizer.md`.
+| Situation | Flag | What happens |
+| --- | --- | --- |
+| A verified contract matches no template | `--ai` | The model authors a new template. Discovery then applies it as if it had matched. |
+| A contract matches exactly one template | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract that matches it. |
+| A contract that had a template shows new code | `--ai` | The new shape is added to the old template so that it matches again. Fields that fail on the new code get a note. The model is not asked; run `--ai-revisit` to ask it. |
+| Unverified code, an EIP-2535 diamond, an EOA | any | Not templatized, as without `--ai`. |
+
+Options: `--ai-model` (`opencode-go/<model>`, `opencode/<model>` or a Codex
+model; default Codex's default), `--ai-effort` (default `high`), `--ai-rounds`
+(model turns per contract, default 3). The templatizer needs `codex` or
+`opencode` on `PATH` and a logged-in account.
 
 ## Three rules
 
-Everything else here follows from three rules.
+The design follows from three rules. Each was learned from a version that
+broke it.
 
 **1. The templatizer only adds.** It never removes, renames, reorders or
 rewrites anything a human wrote in a template, and it never changes what
@@ -67,19 +143,6 @@ fields several times. Every template also goes through human review before it
 is committed. So the templatizer checks what it can know, writes down what it
 saw, and leaves judgment to the researcher.
 
-## When it runs
-
-| Situation | Flag | What happens |
-| --- | --- | --- |
-| A verified contract matches no template | `--ai` | The model authors a new template. Discovery then applies it as if it had matched. |
-| A contract matches exactly one template | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract that matches it. |
-| A contract that had a template shows new code | `--ai` | The new shape is added to the old template so that it matches again. Fields that fail on the new code get a note. The model is not asked; run `--ai-revisit` to ask it. |
-| Unverified code, an EIP-2535 diamond, an EOA | any | Not templatized, as without `--ai`. |
-
-Options: `--ai-model` (`opencode-go/<model>`, `opencode/<model>` or a Codex
-model; default Codex's default), `--ai-effort` (default `high`), `--ai-rounds`
-(model turns per contract, default 3).
-
 ## One contract, step by step
 
 1. **Baseline.** The analyzer runs discovery's handlers on the contract
@@ -96,13 +159,12 @@ model; default Codex's default), `--ai-effort` (default `high`), `--ai-rounds`
 3. **Prompt.** One message, in a fixed order: the guidance (what a draft is,
    the five skip reasons, how to enumerate a mapping, event-only state, roles,
    references, literals), the draft schema with a worked example, the handler
-   reference for the seven handler types the model may use (`call`, `array`,
-   `event`, `accessControl`, `storage`, `constructorArgs`, `hardcoded`), the
-   contract facts (identity, proxy values, baseline, the existing template's
-   fields verbatim, the worklist), and the flattened source, last and the
-   only part cut when the prompt is too long. When an existing field uses a
-   handler or an edit form outside the reference, the matching section of the
-   discovery README is added, so the model knows what that field does.
+   reference for the seven handler types the model may use, the contract
+   facts (identity, proxy values, baseline, the existing template's fields
+   verbatim, the worklist), and the flattened source, last and the only part
+   cut when the prompt is too long. When an existing field uses a handler or
+   an edit form outside the reference, the matching section of the discovery
+   README is added, so the model knows what that field does.
 4. **Draft.** The model replies with one JSON object: `fields`, each with a
    `handler`, an optional `edit`, the worklist tokens it `covers` and a
    one-sentence `reason`; and `skips`, each a worklist token with one of five
@@ -134,7 +196,7 @@ Checked, and blocks until fixed:
 
 | Check | Why it can be certain |
 | --- | --- |
-| The reply is one JSON object | Parsing. |
+| The reply is one JSON object | Parsing. A stray `}` after the object is tolerated; an object that never closes is reported with the number of braces still open, which a model can act on where a character position was ignored. |
 | Every handler matches discovery's own schema for its type; every `edit` and `where` is a blip program discovery parses | Discovery's own definitions, applied one type at a time so that the message names the wrong key. |
 | Every worklist item has exactly one verdict, in `covers` or in `skips`, and nothing outside the list is named. The one plurality: several `call` fields that read one function with different literal arguments, one per enum value, each list it | Counting over a closed list. This is the "nothing was forgotten" check. The plurality is how researchers read a getter keyed by a `uint8`, which `array` cannot enumerate; each of those fields does read the function. |
 | A field covers only events its handler names; a `call` or `array` field covers only the function it calls | Read off the handler itself. Without this a missed item could hide behind a false claim. |
@@ -280,12 +342,12 @@ Alongside: rounds, tokens, wall time and failures.
 
 The **quick suite** is fourteen contracts chosen for dense use of generic
 handlers, one per template, all on Ethereum for fast RPC, with fields the
-model cannot reach marked. It runs in about half an hour on DeepSeek V4.1
-Flash at high effort and in a quarter of an hour on the Codex default model,
-a run differs from its repeat by a few fields on the same four contracts,
-and it is the default. The **full suite** is the research
-suite (scroll, 25 base contracts, 6 plumenetwork) and exists for comparability
-with the research numbers.
+model cannot reach marked. It is the default suite. It runs in about a
+quarter of an hour on the Codex default model and half an hour on DeepSeek
+V4.1 Flash at high effort, and a repeat run differs from the first by a few
+fields on the same four contracts. The **full suite** is the research suite
+(scroll, 25 base contracts, 6 plumenetwork) and exists for comparability with
+the research numbers.
 
 Run the benchmark before and after any change to the prompt, the checks or the
 loop, and when comparing models or efforts. Contracts whose template has no
@@ -299,13 +361,16 @@ above.
 
 ## Operations
 
-- `l2b discover --help` documents the flags. The templatizer needs `opencode`
-  or `codex` on `PATH` and a logged-in account.
+- `l2b discover --help` documents the flags.
 - A stopped run prints `TemplatizationFailedError` with the contract, the
   reason, advice and the trail path. Rerun after fixing the cause, or rerun
   without `--ai` to leave the contract untemplatized on purpose.
 - Model processes run in their own process group and are killed when discovery
   exits.
+- This document is the description of record. A change in behaviour under
+  `packages/discovery/src/discovery/templatizer/` is not complete until this
+  document says the same. The design history and the log of decisions taken
+  along the way are in `packages/discovery/docs/ai-templatizer.md`.
 
 ## Model comparison (2026-10-05)
 
@@ -330,6 +395,10 @@ concentrated: it alone read Lighter's five `storage` slots off the source's
 layout (8/10 against 4/10 for every other model) and HubPool's four fields.
 Both Lunas failed the same contract (FluentRollup) on one stray closing brace
 in a single-line reply, and did not fix it when told the character position.
+The reply parser has since been changed to take the object that closes when a
+stray `}` follows it, and to say by how many braces an unclosed object is
+open; two of the three failing replies parse under it, so the Lunas would
+probably fail nothing on a rerun. The rows above are from before that change.
 GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
 account in Codex and were not run.
 

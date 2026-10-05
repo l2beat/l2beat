@@ -1184,9 +1184,14 @@ comparison" section has the table and the decision (keep the Codex default,
 `gpt-6.1-sol`). Both Lunas failed `fluent/FluentRollup` on a single stray
 closing brace in a one-line reply and did not fix it when told the position
 (5.6 omitted a `}`, 6 added one and resent the same bytes twice); Terra made
-the same slip and fixed it in round 2. The other three Codex models in the
-list (`gpt-6-terra`, `gpt-6.1-luna`, `gpt-6.1-terra`) are refused for a
-ChatGPT account.
+the same slip and fixed it in round 2. After these runs `parseModelJson`
+was changed to also try the first object that closes (braces inside strings
+ignored), so a stray trailing `}` parses, and to say "there are N more `{`
+than `}`" when no object closes, instead of only JSON.parse's character
+position; checked on the three real Fluent replies, Terra's and GPT-6
+Luna's parse and GPT-5.6 Luna's gets the count. Runs 11–13 predate the
+change. The other three Codex models in the list (`gpt-6-terra`,
+`gpt-6.1-luna`, `gpt-6.1-terra`) are refused for a ChatGPT account.
 
 The denominator fell from 120 to 82 between runs 1 and 2 for reasons
 outside the model: metis (22 reachable fields, matched instead of authored)
