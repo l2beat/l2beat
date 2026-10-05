@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1789919089,
-  "configHash": "0xbf30eafb743c614c26e1422d21f8963206900a1b019b02e841d50e62dde4fed4",
+  "configHash": "0x8ed7f59ec46c831458e2b33159629a3c1f0a7490e7b17e594da499052eff2460",
   "entries": [
     {
       "name": "TokenBridge",
@@ -200,8 +200,8 @@
         },
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
-        "pauseTypeToRole": { "severity": "HIGH" },
-        "unpauseTypeToRole": { "severity": "HIGH" },
+        "pauseTypeToRole": { "severity": "MEDIUM" },
+        "unpauseTypeToRole": { "severity": "MEDIUM" },
         "allPausers": { "severity": "MEDIUM" },
         "initiateTokenBridgingPausers": { "severity": "MEDIUM" },
         "completeTokenBridgingPausers": { "severity": "MEDIUM" },
@@ -484,7 +484,7 @@
       },
       "fieldMeta": {
         "filteredAddresses": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses barred from sending forced transactions from L1 through the LineaRollup."
         }
       },
@@ -517,7 +517,6 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.",
-      "critical": true,
       "ignoreInWatchMode": ["txNonce", "queueNonce"],
       "deployerAddress": "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "sinceTimestamp": 1753454807,
@@ -1075,8 +1074,8 @@
         },
         "securityCouncilAC": { "severity": "MEDIUM" },
         "pauseAllAC": { "severity": "MEDIUM" },
-        "pauseTypeToRole": { "severity": "HIGH" },
-        "unpauseTypeToRole": { "severity": "HIGH" },
+        "pauseTypeToRole": { "severity": "MEDIUM" },
+        "unpauseTypeToRole": { "severity": "MEDIUM" },
         "isPaused_GENERAL": { "severity": "MEDIUM" },
         "isPaused_L1_L2": { "severity": "MEDIUM" },
         "isPaused_L2_L1": { "severity": "MEDIUM" },
@@ -1421,8 +1420,8 @@
         "userFundsInYieldProvidersTotal": {
           "description": "User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."
         },
-        "pauseTypeToRole": { "severity": "HIGH" },
-        "unpauseTypeToRole": { "severity": "HIGH" },
+        "pauseTypeToRole": { "severity": "MEDIUM" },
+        "unpauseTypeToRole": { "severity": "MEDIUM" },
         "allPausers": { "severity": "MEDIUM" },
         "allUnpausers": { "severity": "MEDIUM" },
         "securityCouncilAC": { "severity": "MEDIUM" },
@@ -1740,8 +1739,8 @@
         },
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
-        "pauseTypeToRole": { "severity": "HIGH" },
-        "unpauseTypeToRole": { "severity": "HIGH" },
+        "pauseTypeToRole": { "severity": "MEDIUM" },
+        "unpauseTypeToRole": { "severity": "MEDIUM" },
         "allPausers": { "severity": "MEDIUM" },
         "initiateTokenBridgingPausers": { "severity": "MEDIUM" },
         "completeTokenBridgingPausers": { "severity": "MEDIUM" },
@@ -1958,8 +1957,8 @@
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
       "fieldMeta": {
-        "pauseTypeToRole": { "severity": "HIGH" },
-        "unpauseTypeToRole": { "severity": "HIGH" },
+        "pauseTypeToRole": { "severity": "MEDIUM" },
+        "unpauseTypeToRole": { "severity": "MEDIUM" },
         "allPausers": { "severity": "MEDIUM" },
         "allUnpausers": { "severity": "MEDIUM" },
         "l1l2Pausers": { "severity": "MEDIUM" },
@@ -1972,7 +1971,7 @@
         },
         "limitInWei": {
           "severity": "HIGH",
-          "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+          "description": "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
         },
         "periodInSeconds": {
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."

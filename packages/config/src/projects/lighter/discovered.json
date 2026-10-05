@@ -576,11 +576,11 @@
       },
       "fieldMeta": {
         "approvedUpgradeNoticePeriod": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
         },
         "approvedUpgradeNoticePeriodFmt": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
         },
         "managedContracts": {
@@ -748,19 +748,19 @@
       },
       "fieldMeta": {
         "pauseGuardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses."
         },
         "emergencyGuardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses."
         },
         "pauseGuardianPaused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "True while a Pause Guardian pause is active (batch processing and withdrawals halted)."
         },
         "emergencyGuardianPaused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "True while an Emergency Guardian pause is active (batch processing and withdrawals halted)."
         }
       },

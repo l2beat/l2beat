@@ -9,15 +9,11 @@
     "l1Address": {
       "severity": "HIGH"
     },
-    "MIN_MINT_INTERVAL": {
-      "severity": "HIGH"
-    },
-    "MINT_CAP_DENOMINATOR": {
-      "severity": "HIGH"
-    },
-    "MINT_CAP_NUMERATOR": {
-      "severity": "HIGH"
-    },
+    // Mint cap and interval are Solidity constants: they only change with an
+    // implementation upgrade, which is already a code change.
+    "MIN_MINT_INTERVAL": {},
+    "MINT_CAP_DENOMINATOR": {},
+    "MINT_CAP_NUMERATOR": {},
     "owner": {
       "severity": "HIGH"
     },
@@ -25,7 +21,6 @@
       "severity": "HIGH"
     },
     "mintCapPerYer": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "MINT_CAP_NUMERATOR",

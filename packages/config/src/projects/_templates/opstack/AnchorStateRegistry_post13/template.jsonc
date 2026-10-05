@@ -30,8 +30,9 @@
       "severity": "HIGH"
     },
     "retirementTimestamp": {
-      // moving it invalidates every game created before it
-      "severity": "HIGH"
+      // moving it invalidates every game created before it: a guardian
+      // emergency action that does not change the rules, like a pause
+      "severity": "MEDIUM"
     },
     "disputeGameFactory": {
       "severity": "HIGH"

@@ -228,7 +228,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },

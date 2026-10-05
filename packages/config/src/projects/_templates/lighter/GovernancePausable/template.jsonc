@@ -32,8 +32,11 @@
         }
       ]
     },
+    // Pause-role holders and pause state: MEDIUM (spec). Both guardians can only
+    // pause for a bounded time with a cooldown, and the network governor appoints
+    // them and can lift their pauses.
     "pauseGuardian": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses.",
       "permissions": [
         {
@@ -43,7 +46,7 @@
       ]
     },
     "emergencyGuardian": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses.",
       "permissions": [
         {
@@ -53,11 +56,11 @@
       ]
     },
     "pauseGuardianPaused": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "True while a Pause Guardian pause is active (batch processing and withdrawals halted)."
     },
     "emergencyGuardianPaused": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "True while an Emergency Guardian pause is active (batch processing and withdrawals halted)."
     }
   }

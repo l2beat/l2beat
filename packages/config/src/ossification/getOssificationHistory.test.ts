@@ -384,6 +384,33 @@ describe(getOssificationHistory.name, () => {
       ])
     })
 
+    it('dates a state change at the upgrade that installed the new implementation', () => {
+      const history = derive({
+        entries: [
+          entry({
+            values: pastUpgrades(
+              [T0, TX_1],
+              [T0 + DAY, TX_3],
+              [RUN_1 - 5 * DAY, TX_2],
+            ),
+          }),
+        ],
+        // a legacy entry: no previous run time, and the reshaped
+        // $pastUpgrades shows an upgrade of long ago as appended
+        changes: update('u1', RUN_1, undefined, ADDRESS_A, [
+          implementation,
+          appended(T0 + DAY, TX_3),
+          owner,
+        ]),
+        judgement: judgement({}, ['owner']),
+      })
+      expect(changes(history)).toEqual([
+        ['code', T0 + DAY, T0 + DAY, undefined],
+        ['code', RUN_1 - 5 * DAY, RUN_1 - 5 * DAY, undefined],
+        ['state', RUN_1 - 5 * DAY, RUN_1 - 5 * DAY, 'u1'],
+      ])
+    })
+
     it('keeps the history of a retired contract without giving it a row', () => {
       const history = derive({
         changes: [
@@ -478,9 +505,8 @@ describe(getOssificationHistory.name, () => {
       expect(history?.observedSince).toEqual(RUN_1)
     })
 
-    it('always counts a reviewed change and lets it supersede its update for its contract', () => {
+    it('lets a reviewed change supersede its update for its contract', () => {
       const history = derive({
-        projectStart: RUN_2,
         entries: [
           entry(),
           entry({ address: ChainSpecificAddress(ADDRESS_B), name: 'B' }),
@@ -505,10 +531,48 @@ describe(getOssificationHistory.name, () => {
       })
       expect(changes(history)).toEqual([
         ['state', RUN_1 - 3 * DAY, RUN_1 - 3 * DAY, 'u1'],
+        ['state', RUN_1, T0, 'u1'],
       ])
       expect(rows(history)).toEqual([
         ['A', RUN_1 - 3 * DAY, 0, 1],
-        ['B', RUN_1, 0, 0],
+        ['B', RUN_1, 0, 1],
+      ])
+    })
+
+    it('bounds a reviewed change by the project start and the critical window', () => {
+      const history = derive({
+        projectStart: RUN_1,
+        entries: [
+          entry(),
+          entry({
+            address: ChainSpecificAddress(ADDRESS_B),
+            name: 'B',
+            critical: { sinceTimestamp: RUN_2 },
+          }),
+        ],
+        patch: patch({
+          events: [
+            {
+              timestamp: RUN_1 - DAY,
+              type: 'state',
+              contract: ADDRESS_A.toLowerCase(),
+              transaction: TX_3,
+              reason: 'before the project',
+            },
+            {
+              timestamp: RUN_2 - DAY,
+              type: 'state',
+              contract: ADDRESS_B.toLowerCase(),
+              transaction: TX_3,
+              reason: 'before it was critical',
+            },
+          ],
+        }),
+      })
+      expect(changes(history)).toEqual([])
+      expect(rows(history)).toEqual([
+        ['A', RUN_1 - DAY, 0, 0],
+        ['B', RUN_2 - DAY, 0, 0],
       ])
     })
 
@@ -528,6 +592,31 @@ describe(getOssificationHistory.name, () => {
           }),
         }),
       ).toThrow('not in the perimeter')
+    })
+
+    it('refuses a reviewed change after the contract left', () => {
+      expect(() =>
+        derive({
+          entries: [
+            entry(),
+            entry({
+              address: ChainSpecificAddress(ADDRESS_B),
+              critical: { untilTimestamp: RUN_1 },
+            }),
+          ],
+          patch: patch({
+            events: [
+              {
+                timestamp: RUN_1 + DAY,
+                type: 'code',
+                contract: ADDRESS_B,
+                transaction: TX_3,
+                reason: 'x',
+              },
+            ],
+          }),
+        }),
+      ).toThrow('after it left the perimeter')
     })
   })
 })

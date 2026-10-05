@@ -34,8 +34,11 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
+    // Identity of the privileged proposer: review, but the clock resets only on
+    // vanguardAdvantage/participationBond changes. Enabling or disabling the
+    // vanguard mechanism also moves vanguardAdvantage.
     "vanguard": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

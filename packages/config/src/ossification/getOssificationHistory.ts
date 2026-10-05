@@ -55,7 +55,6 @@ interface MemberEvent {
   timestamp: number
   earliest?: number
   contract: string
-  reviewed: boolean
   updateId?: string
   transaction?: string
 }
@@ -90,12 +89,13 @@ export function getOssificationHistory(
   }
 }
 
+// Reviewed changes have the same bounds: a review dates a change, it does not
+// make an earlier change the project's own.
 function isPerimetered(
   event: MemberEvent,
   members: Map<string, Member>,
   sources: OssificationSources,
 ): boolean {
-  if (event.reviewed) return true
   return (
     isNotBefore(event.timestamp, sources.projectStart) &&
     isNotBefore(event.timestamp, members.get(event.contract)?.since)
@@ -266,12 +266,15 @@ function getEvents(
       member !== undefined,
       `reviewed event on ${event.contract}, which is not in the perimeter: mark it critical in config.jsonc`,
     )
+    assert(
+      member.until === undefined || event.timestamp <= member.until,
+      `reviewed event on ${event.contract} after it left the perimeter: move the event or its untilTimestamp`,
+    )
     return {
       type: event.type,
       timestamp: event.timestamp,
       earliest: event.timestamp,
       contract: key(member.address),
-      reviewed: true,
       transaction: event.transaction.toLowerCase(),
       updateId: event.updateId,
     }
@@ -324,7 +327,6 @@ function getUpgradeEvents(
         timestamp: upgrade.timestamp,
         earliest: upgrade.timestamp,
         contract: key(member.address),
-        reviewed: false,
         transaction: upgrade.transaction,
       })),
   )
@@ -369,12 +371,18 @@ function getDiffHistoryEvents(
   }
 
   return [...blocks.values()].flatMap((block) =>
-    getBlockEvents(block, sources.judgement, context),
+    getBlockEvents(
+      block,
+      members.get(key(block[0].address.toString())),
+      sources.judgement,
+      context,
+    ),
   )
 }
 
 function getBlockEvents(
   block: DiffHistoryChange[],
+  member: Member | undefined,
   judgement: OssificationJudgement,
   context: {
     knownUpgrades: ReadonlySet<string>
@@ -383,7 +391,7 @@ function getBlockEvents(
 ): MemberEvent[] {
   const first = block[0]
   const contract = key(first.address.toString())
-  const base = { contract, reviewed: false, updateId: first.entryId }
+  const base = { contract, updateId: first.entryId }
 
   const appended = block.flatMap((change) => change.upgrade ?? [])
   const events: MemberEvent[] = appended
@@ -399,8 +407,14 @@ function getBlockEvents(
       transaction: upgrade.transaction,
     }))
 
+  // A new implementation was installed by the contract's newest upgrade before
+  // the run. Appended items alone mislead when a diff reshapes $pastUpgrades
+  // and shows upgrades of years ago as appended.
+  const installing = block.some((change) => change.kind === 'implementation')
+    ? [member?.initialization, ...(member?.upgrades ?? [])].filter(notUndefined)
+    : []
   const snap = latest(
-    ...appended
+    ...[...appended, ...installing]
       .map((upgrade) => upgrade.timestamp)
       .filter((t) => t <= first.timestamp && isNotBefore(t, first.previous)),
   )
