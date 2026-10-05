@@ -1,6 +1,7 @@
 import { type Difference, diff } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
+import { markComments } from './comments'
 import { isNode, normalize, rangeOf } from './normalize'
 import { pairDeclarations } from './pairDeclarations'
 import {
@@ -33,6 +34,7 @@ export function diffSolidity(
   const afterSide = toSide(after)
   const anchors = markChanges(left, right, differences, beforeSide, afterSide)
   closeChangedLines(beforeSide, afterSide, anchors)
+  markComments(beforeSide, afterSide, anchors)
   const lines = renderLines(beforeSide, afterSide, anchors)
   const added = lines.filter((line) => line.type === 'added').length
   const removed = lines.filter((line) => line.type === 'removed').length

@@ -311,6 +311,107 @@ describe(diffSolidity.name, () => {
       ])
     })
 
+    // Comments are not in the AST, so they follow the code below them: into
+    // the diff when that code was added, into context when it only changed.
+    // Next to an added block they read like `diff -u`.
+    it('add the comments of added declarations', () => {
+      const diff = diffSolidity(
+        lines('contract Proxy {', '    uint256 k = 4;', '}'),
+        lines(
+          'contract Proxy {',
+          '    // abc',
+          '    uint256 a = 1;',
+          '    // bca',
+          '    uint256 d = 2;',
+          '    // kkk',
+          '    uint256 k = 4;',
+          '}',
+        ),
+        [],
+      )
+      expect(render(diff)).toEqual([
+        '  contract Proxy {',
+        '+     // abc',
+        '+     uint256 a = 1;',
+        '+     // bca',
+        '+     uint256 d = 2;',
+        '+     // kkk',
+        '      uint256 k = 4;',
+        '  }',
+      ])
+    })
+
+    it('remove the comments of removed declarations', () => {
+      const diff = diffSolidity(
+        lines(
+          'contract C {',
+          '    /// @notice gone',
+          '    function f() public {}',
+          '',
+          '    /// @notice stays',
+          '    function g() public {}',
+          '}',
+        ),
+        lines(
+          'contract C {',
+          '    /// @notice stays',
+          '    function g() public {}',
+          '}',
+        ),
+        [],
+      )
+      expect(changedLines(diff)).toEqual([
+        '-     /// @notice gone',
+        '-     function f() public {}',
+        '- ',
+      ])
+    })
+
+    it('keep the comments of changed declarations as context', () => {
+      const diff = diffSolidity(
+        lines(
+          'contract C {',
+          '    /// @notice f',
+          '    function f() public {}',
+          '}',
+        ),
+        lines(
+          'contract C {',
+          '    /// @notice f',
+          '    function f() external {}',
+          '}',
+        ),
+        [],
+      )
+      expect(changedLines(diff)).toEqual([
+        '-     function f() public {}',
+        '+     function f() external {}',
+      ])
+    })
+
+    // Comment edits are never shown. Next to added code a line on one side
+    // only is, but an edited line keeps its counterpart.
+    it('hide an edited comment next to added code', () => {
+      const diff = diffSolidity(
+        lines('contract C {', '  // old', '  function f() public {}', '}'),
+        lines(
+          'contract C {',
+          '  function g() public {}',
+          '  // new',
+          '  function f() public {}',
+          '}',
+        ),
+        [],
+      )
+      expect(render(diff)).toEqual([
+        '  contract C {',
+        '+   function g() public {}',
+        '    // new',
+        '    function f() public {}',
+        '  }',
+      ])
+    })
+
     it('ignore added braces next to a changed condition', () => {
       const diff = diffSolidity(
         inFunction('if (x)\n      y();'),
@@ -441,6 +542,52 @@ describe(diffSolidity.name, () => {
         '-       uint256 a,',
         '-       uint256 b',
         '-     )',
+      ])
+    })
+
+    it('add and remove a constructor', () => {
+      const without = lines('contract C {', '  function f() public {}', '}')
+      const withConstructor = lines(
+        'contract C {',
+        '  constructor() {',
+        '    owner = msg.sender;',
+        '  }',
+        '',
+        '  function f() public {}',
+        '}',
+      )
+      expect(render(diffSolidity(without, withConstructor, []))).toEqual([
+        '  contract C {',
+        '+   constructor() {',
+        '+     owner = msg.sender;',
+        '+   }',
+        '+ ',
+        '    function f() public {}',
+        '  }',
+      ])
+      expect(render(diffSolidity(withConstructor, without, []))).toEqual([
+        '  contract C {',
+        '-   constructor() {',
+        '-     owner = msg.sender;',
+        '-   }',
+        '- ',
+        '    function f() public {}',
+        '  }',
+      ])
+    })
+
+    // A comment inside a node's own text is no word of it, else it could
+    // anchor a code line to a comment line.
+    it('skip comments inside the own text', () => {
+      const diff = diffSolidity(
+        inFunction('x = a\n      + // note\n      b;'),
+        inFunction('x = a\n      -\n      // note\n      b;'),
+        [],
+      )
+      expect(changedLines(diff)).toEqual([
+        '-       + // note',
+        '+       -',
+        '+       // note',
       ])
     })
   })
