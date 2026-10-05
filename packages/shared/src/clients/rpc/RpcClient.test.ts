@@ -388,25 +388,6 @@ describe(RpcClient.name, () => {
         },
       ])
     })
-
-    it('splits a range longer than the configured limit into separate requests', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo({ result: [] }),
-      })
-      const rpc = mockClient({ http, getLogsMaxRange: 100 })
-
-      await rpc.getLogs(1_000, 1_249)
-
-      const requested = http.fetch.calls.map(({ args }) => {
-        const [filter] = JSON.parse(String(args[1]?.body)).params
-        return [Number(filter.fromBlock), Number(filter.toBlock)]
-      })
-      expect(requested).toEqual([
-        [1_000, 1_099],
-        [1_100, 1_199],
-        [1_200, 1_249],
-      ])
-    })
   })
 
   describe(RpcClient.prototype.call.name, () => {
@@ -965,7 +946,6 @@ function mockClient(deps: {
   rpcMetrics?: RpcMetricsRecorder
   url?: string
   generateId?: () => string
-  getLogsMaxRange?: number
 }) {
   return new RpcClient({
     chain: 'chain',
@@ -976,7 +956,6 @@ function mockClient(deps: {
     logger: Logger.SILENT,
     generateId: deps.generateId,
     rpcMetrics: deps.rpcMetrics,
-    getLogsMaxRange: deps.getLogsMaxRange,
   })
 }
 

@@ -60,9 +60,6 @@ export async function getChainConfig(
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             ),
             timeout: env.optionalInteger(Env.key(chain, 'RPC_TIMEOUT')),
-            getLogsMaxRange: env.optionalInteger(
-              Env.key(chain, 'RPC_GETLOGS_MAX_RANGE'),
-            ),
             multicallV3: multicallV3
               ? {
                   address: multicallV3.address,

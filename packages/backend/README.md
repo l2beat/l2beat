@@ -140,9 +140,7 @@ FEATURES=*,!interop.relay
 - `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
   60
-- `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. The most blocks your RPC serves in one `eth_getLogs`
-  request, for example `10000`. Longer ranges are split into requests of that size. When unset, a
-  range is sent whole and halved only if the RPC rejects it with a known limit error
+- `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:

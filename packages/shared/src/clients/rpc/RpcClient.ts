@@ -11,7 +11,6 @@ import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
-import { splitBlockRange } from './splitBlockRange'
 import {
   BlockNumberResponse,
   type CallParameters,
@@ -39,8 +38,6 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetrics?: RpcMetricsRecorder
   timeout?: number
-  /** Most blocks the RPC serves in one eth_getLogs; longer ranges are split up front. */
-  getLogsMaxRange?: number
 }
 
 type Param =
@@ -184,23 +181,6 @@ export class RpcClient extends ClientCore implements IRpcClient {
     addresses?: string[],
     topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
-    const logs: EVMLog[] = []
-    for (const [start, end] of splitBlockRange(
-      from,
-      to,
-      this.$.getLogsMaxRange,
-    )) {
-      logs.push(...(await this.getLogsInRange(start, end, addresses, topics)))
-    }
-    return logs
-  }
-
-  private async getLogsInRange(
-    from: number,
-    to: number,
-    addresses?: string[],
-    topics?: LogsTopicFilter,
-  ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
@@ -225,8 +205,8 @@ export class RpcClient extends ClientCore implements IRpcClient {
         })
 
         const results = await Promise.all([
-          this.getLogsInRange(from, midpoint, addresses, topics),
-          this.getLogsInRange(midpoint + 1, to, addresses, topics),
+          this.getLogs(from, midpoint, addresses, topics),
+          this.getLogs(midpoint + 1, to, addresses, topics),
         ])
 
         return results.flat()
