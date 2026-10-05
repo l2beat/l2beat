@@ -4,6 +4,7 @@ import {
   getBatchIntervals,
   getCapacity,
   sumPostedByProject,
+  sumPostedByProjectHourly,
   sumUsed,
 } from './getDaFlows'
 
@@ -50,6 +51,39 @@ describe(sumPostedByProject.name, () => {
 
   it('returns nothing for no records', () => {
     expect(sumPostedByProject([], 'ethereum', RANGE)).toEqual({})
+  })
+})
+
+// Two hours from a round start, so each record's hour is plain to see
+describe(sumPostedByProjectHourly.name, () => {
+  const TWO_HOURS: [number, number] = [0, 2 * UnixTime.HOUR]
+
+  it('puts every record in the hour it was kept under', () => {
+    const posted = sumPostedByProjectHourly(
+      [
+        record('base', 0, 10n),
+        record('base', UnixTime.HOUR, 20n),
+        record('arbitrum', UnixTime.HOUR, 5n),
+      ],
+      'ethereum',
+      TWO_HOURS,
+    )
+
+    expect(posted).toEqual({ base: [10, 20], arbitrum: [0, 5] })
+  })
+
+  it("leaves out the DA layer's own total and records outside the range", () => {
+    const posted = sumPostedByProjectHourly(
+      [
+        record('ethereum', 0, 1000n),
+        record('base', 2 * UnixTime.HOUR, 100n),
+        record('base', 0, 1n),
+      ],
+      'ethereum',
+      TWO_HOURS,
+    )
+
+    expect(posted).toEqual({ base: [1, 0] })
   })
 })
 

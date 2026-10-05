@@ -8,6 +8,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ETHEREUM_FLOWS_SNAPSHOT } from './ethereumFlowsSnapshot'
 
 export const DaFlowsParams = v.object({
   daLayerId: v.string(),
@@ -17,6 +18,11 @@ export type DaFlowsParams = v.infer<typeof DaFlowsParams>
 export interface DaFlowsData {
   /** Bytes each project posted to the DA layer over the range */
   posted: Record<string, number>
+  /**
+   * The same bytes split into the hours of the range, oldest first. A day
+   * total hides when a project posts; some post in a few bursts a day
+   */
+  postedHourly: Record<string, number[]>
   /**
    * Average seconds between a project's batch submissions over the range.
    * Left out for projects whose batches liveness does not follow
@@ -90,6 +96,7 @@ export async function getDaFlows({
   ])
   return {
     posted: sumPostedByProject(records, daLayerId, range),
+    postedHourly: sumPostedByProjectHourly(records, daLayerId, range),
     batchIntervals: getBatchIntervals(aggregates, livenessProjects),
     used: sumUsed(records, daLayerId, range),
     usedSevenDaysAgo: sumUsed(records, daLayerId, sevenDaysAgo),
@@ -112,6 +119,23 @@ export function sumPostedByProject(
     if (record.projectId === daLayerId || !isInRange(record, range)) continue
     posted[record.projectId] =
       (posted[record.projectId] ?? 0) + Number(record.totalSize)
+  }
+  return posted
+}
+
+/** Records are kept by the hour, so each one lands in exactly one hour */
+export function sumPostedByProjectHourly(
+  records: PostedRecord[],
+  daLayerId: string,
+  range: [number, number],
+): Record<string, number[]> {
+  const hours = Math.ceil((range[1] - range[0]) / UnixTime.HOUR)
+  const posted: Record<string, number[]> = {}
+  for (const record of records) {
+    if (record.projectId === daLayerId || !isInRange(record, range)) continue
+    const hour = Math.floor((record.timestamp - range[0]) / UnixTime.HOUR)
+    const byHour = (posted[record.projectId] ??= Array(hours).fill(0))
+    byHour[hour] = (byHour[hour] ?? 0) + Number(record.totalSize)
   }
   return posted
 }
@@ -184,6 +208,9 @@ async function getMockDaFlows(
   capacity: number | undefined,
   range: [number, number],
 ): Promise<DaFlowsData> {
+  if (daLayerId === ProjectId.ETHEREUM) {
+    return getEthereumSnapshotFlows(capacity, range)
+  }
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
     whereNot: ['archivedAt'],
@@ -191,18 +218,19 @@ async function getMockDaFlows(
   const posting = projects.filter((p) =>
     p.daTrackingConfig.some((c) => c.daLayer === daLayerId),
   )
-  // Ethereum counts every blob whole, so there a poster posts whole blobs
-  const toPosted =
-    daLayerId === ProjectId.ETHEREUM
-      ? (bytes: number) =>
-          Math.max(1, Math.round(bytes / MOCK_BLOB_SIZE)) * MOCK_BLOB_SIZE
-      : Math.round
   const posted = Object.fromEntries(
-    posting.map((p, i) => [p.id, toPosted(1_500_000_000 * 0.7 ** i)]),
+    posting.map((p, i) => [p.id, Math.round(1_500_000_000 * 0.7 ** i)]),
   )
   const used = Object.values(posted).reduce((sum, value) => sum + value, 0)
   return {
     posted,
+    // spread evenly, as nothing tells when a made-up project posts
+    postedHourly: Object.fromEntries(
+      Object.entries(posted).map(([id, value]) => [
+        id,
+        Array(24).fill(value / 24),
+      ]),
+    ),
     // the larger the poster, the more often it posts, and everyone who
     // posted did so within the day. The last one is left without, as
     // projects that liveness does not follow are
@@ -214,6 +242,35 @@ async function getMockDaFlows(
           Math.min(Math.round(45 * 1.6 ** i), UnixTime.DAY),
         ]),
     ),
+    used,
+    usedSevenDaysAgo: Math.round(used * 0.9),
+    capacity,
+    range,
+  }
+}
+
+function getEthereumSnapshotFlows(
+  capacity: number | undefined,
+  range: [number, number],
+): DaFlowsData {
+  const { blobsHourly, batchIntervals } = ETHEREUM_FLOWS_SNAPSHOT
+  const postedHourly = Object.fromEntries(
+    Object.entries(blobsHourly).map(([id, blobs]) => [
+      id,
+      blobs.map((count) => count * MOCK_BLOB_SIZE),
+    ]),
+  )
+  const posted = Object.fromEntries(
+    Object.entries(postedHourly).map(([id, bytes]) => [
+      id,
+      bytes.reduce((sum, value) => sum + value, 0),
+    ]),
+  )
+  const used = Object.values(posted).reduce((sum, value) => sum + value, 0)
+  return {
+    posted,
+    postedHourly,
+    batchIntervals,
     used,
     usedSevenDaysAgo: Math.round(used * 0.9),
     capacity,
