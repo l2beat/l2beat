@@ -46,6 +46,13 @@ export function getPrivacyAdversaryTitle(label: string): string {
   return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
 }
 
+/** The full cell description of the project page; the tooltip shows only the short one. */
+export function getPrivacyAdversaryDescription(
+  cell: Pick<PrivacyAdversaryCell, 'shortDescription' | 'longDescription'>,
+): string {
+  return [cell.shortDescription, cell.longDescription].filter(Boolean).join(' ')
+}
+
 /**
  * All adversaries folded into one value: the homepage dot colour and the
  * summary table sort key. The future adversary is left out: it grades a

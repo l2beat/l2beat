@@ -531,6 +531,20 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The tooltip shows the short description alone, so a second sentence would read as cut off.
+    it('every adversary short description is one sentence', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          if (/[.!?]\s/.test(cell.shortDescription)) {
+            problems.push(`${project.id} ${adversaryId}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {

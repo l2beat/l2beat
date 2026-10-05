@@ -302,14 +302,14 @@ function cell(
   id: PrivacyAdversaryId,
   value: string,
   sentiment: PrivacyAdversaryCell['sentiment'],
-  exposure: string,
+  shortDescription: string,
   rest: Partial<PrivacyAdversaryCell> = {},
 ): PrivacyAdversaryCell {
   return {
     id,
     value,
     sentiment,
-    exposure,
+    shortDescription,
     alsoExposed: [],
     interior: PUBLIC_OBSERVER_INTERIOR,
     ...rest,

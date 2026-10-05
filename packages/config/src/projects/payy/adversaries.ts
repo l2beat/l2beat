@@ -13,8 +13,10 @@ export const payyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'bad',
-      exposure:
-        'Every transaction names the notes it spends and creates, so which notes fund which is public by design; only the amount and owner of a note are hidden. Empty padding notes have a zero commitment, so single-input and single-output transactions are recognizable. All blocks and proofs are served openly, and each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor whose authors document that it is not zero-knowledge; how much of a note it leaks is not established.',
+      shortDescription:
+        'Every transaction names the notes it spends and creates, so which notes fund which is public by design; only the amount and owner of a note are hidden.',
+      longDescription:
+        'Empty padding notes have a zero commitment, so single-input and single-output transactions are recognizable. All blocks and proofs are served openly, and each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor whose authors document that it is not zero-knowledge; how much of a note it leaks is not established.',
       advice:
         'Withdraw to an address that cannot be tied to you, and never an amount that matches a deposit.',
       interior: {
@@ -64,8 +66,10 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'bad',
-      exposure:
-        'Along a path without splits or merges the public deposit and withdrawal amounts fix every amount in between, and the graph shows who paid whom end to end. Each wallet has one fixed deposit address, so all its deposits link to each other and to whoever funded them.',
+      shortDescription:
+        'Along a path without splits or merges the public deposit and withdrawal amounts fix every amount in between, and the graph shows who paid whom end to end.',
+      longDescription:
+        'Each wallet has one fixed deposit address, so all its deposits link to each other and to whoever funded them.',
       advice:
         'Keep funds in the network across many transfers; only a split or merge stops amounts from being inferred. Fund the deposit address from a wallet that is not yours to keep.',
       interior: {
@@ -103,8 +107,10 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'bad',
-      exposure:
-        "The payment-link website loads a third-party analytics script that records the page URL, which holds the redeem secret of the link, and reports a device fingerprint to the backend. On the other hand, proofs are built on your device and the app talks only to the operator's servers.",
+      shortDescription:
+        'The payment-link website loads a third-party analytics script that records the page URL, which holds the redeem secret of the link, and reports a device fingerprint to the backend.',
+      longDescription:
+        "On the other hand, proofs are built on your device and the app talks only to the operator's servers.",
       advice: 'Redeem payment links in the app, not in a browser.',
       interior: {
         sender: 'private',
@@ -137,8 +143,10 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        "One company runs the only validator and prover, the node, the note registry, the deposit relayer and the KYC checks. Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports; its diagnostics table has a field for the recovery phrase. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. It can drop your withdrawals, and its owner can rewrite the state root with no delay.",
+      shortDescription:
+        'One company runs the only validator and prover, the node, the note registry, the deposit relayer and the KYC checks.',
+      longDescription:
+        "Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports; its diagnostics table has a field for the recovery phrase. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. It can drop your withdrawals, and its owner can rewrite the state root with no delay.",
       advice:
         'Use only ordinary transfers for anything you want to keep private. Links, ramps and the card hand the operator the note keys.',
       interior: {
@@ -187,8 +195,10 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        'Every per-transaction proof is public forever and not zero-knowledge, so whatever it leaks stays available to future compute, and a discrete-log break opens the commitments inside it. Registry ciphertexts use elliptic-curve key exchange; if the operator retains them, a quantum computer opens every note delivered through it.',
+      shortDescription:
+        'Every per-transaction proof is public forever and not zero-knowledge, so whatever it leaks stays available to future compute, and a discrete-log break opens the commitments inside it.',
+      longDescription:
+        'Registry ciphertexts use elliptic-curve key exchange; if the operator retains them, a quantum computer opens every note delivered through it.',
       advice:
         'Receive notes in person rather than through the registry where the app allows it.',
       interior: {

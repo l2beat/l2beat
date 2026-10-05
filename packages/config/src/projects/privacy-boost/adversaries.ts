@@ -15,7 +15,8 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Transfers inside publish only encrypted notes. ${S.entryExitPublic()} Each epoch's calldata pairs every exit with the nullifiers and the input/output shape of the transfer that funded it.`,
+      shortDescription: 'Transfers inside publish only encrypted notes.',
+      longDescription: `${S.entryExitPublic()} Each epoch's calldata pairs every exit with the nullifiers and the input/output shape of the transfer that funded it.`,
       advice:
         "Exit through the operator's relay; a forced exit reveals your account and the notes you spend. A public gift exit names the destination.",
       interior: {
@@ -52,7 +53,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'bad',
-      exposure:
+      shortDescription:
         'The anonymity set is small, so most withdrawals can be linked to their funding deposits by amount and timing.',
       advice:
         'There is currently no crowd to hide in. Keep funds inside and transfer often, withdraw amounts that match no deposit, and never exit to an address that has deposited.',
@@ -79,8 +80,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        "All shielded actions go to the operator's server as an encrypted envelope, and note keys stay in a local vault. Only the operator's relay submits epochs onchain, so nothing of yours reaches a public node.",
+      shortDescription:
+        "All shielded actions go to the operator's server as an encrypted envelope, and note keys stay in a local vault.",
+      longDescription:
+        "Only the operator's relay submits epochs onchain, so nothing of yours reaches a public node.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -99,8 +102,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        "The operator runs the enclave that holds every transfer in plaintext and the key to every onchain note. The client fetches that key from the operator's web endpoint and the published SDK checks no enclave attestation, so a substituted key would read every note unnoticed. Appointed auditors can pull any account's history without consent, and the audit log is written by the operator's own unpublished code.",
+      shortDescription:
+        'The operator runs the enclave that holds every transfer in plaintext and the key to every onchain note.',
+      longDescription:
+        "The client fetches that key from the operator's web endpoint and the published SDK checks no enclave attestation, so a substituted key would read every note unnoticed. Appointed auditors can pull any account's history without consent, and the audit log is written by the operator's own unpublished code.",
       advice:
         'Treat everything in the pool as visible to the operator. A forced exit is the only path that does not need it, and it is public.',
       interior: {
@@ -123,8 +128,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's. A quantum computer, or a leak of that one key, decrypts the entire history.",
+      shortDescription:
+        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's.",
+      longDescription:
+        'A quantum computer, or a leak of that one key, decrypts the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

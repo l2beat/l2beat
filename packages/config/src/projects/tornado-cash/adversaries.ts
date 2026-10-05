@@ -11,7 +11,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure:
+      shortDescription:
         'Each pool has one fixed amount and no in-pool transfers, so every withdrawal spends exactly one deposit.',
       advice: S.exitViaRelayer('relayer'),
       sources: [
@@ -24,7 +24,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      exposure: `The candidates for a withdrawal are the unspent deposits of the same pool, the anonymity set, which differs sharply between pools. Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
+      shortDescription:
+        'The candidates for a withdrawal are the unspent deposits of the same pool, the anonymity set, which differs sharply between pools.',
+      longDescription: `Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
       advice: `${S.largeAnonymitySet} Deposit a large sum as one note. ${S.freshExit}`,
       sources: [
         {
@@ -39,8 +41,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        'The app downloads all deposits and matches locally, so a node learns only which pool you looked at. The relayer receives only the finished withdrawal.',
+      shortDescription:
+        'The app downloads all deposits and matches locally, so a node learns only which pool you looked at.',
+      longDescription: 'The relayer receives only the finished withdrawal.',
       advice: S.ownNodeAndTor('relayer'),
       sources: [
         {
@@ -55,8 +58,10 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'good',
-      exposure:
-        'The pools cannot be paused, upgraded or made to reveal anything. Governance controls only the website, the router and the relayer list.',
+      shortDescription:
+        'The pools cannot be paused, upgraded or made to reveal anything.',
+      longDescription:
+        'Governance controls only the website, the router and the relayer list.',
       advice: `${S.localBuild} Otherwise load it from its ENS name or IPFS hash.`,
       sources: [
         { contract: 'Pool_0.1_ETH', title: '0.1 ETH pool (no operator)' },
@@ -66,8 +71,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposure:
-        'Commitments use a Pedersen hash on an elliptic curve. A quantum computer could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
+      shortDescription: 'Commitments use a Pedersen hash on an elliptic curve.',
+      longDescription:
+        'A quantum computer could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
       advice: `${S.largeAnonymitySet} Keep the note on your device and skip the onchain backup.`,
       sources: [
         {

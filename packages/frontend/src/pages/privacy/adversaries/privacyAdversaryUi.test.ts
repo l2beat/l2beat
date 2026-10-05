@@ -6,6 +6,7 @@ import { expect } from 'earl'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesTableValue,
+  getPrivacyAdversaryDescription,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -76,5 +77,24 @@ describe(getPrivacyAdversaryTitle.name, () => {
     expect(getPrivacyAdversaryTitle('Public observer')).toEqual(
       'Against public observer',
     )
+  })
+})
+
+describe(getPrivacyAdversaryDescription.name, () => {
+  it('follows the short description with the long one', () => {
+    expect(
+      getPrivacyAdversaryDescription({
+        shortDescription: 'The relayer sees your IP.',
+        longDescription: 'Tor hides it.',
+      }),
+    ).toEqual('The relayer sees your IP. Tor hides it.')
+  })
+
+  it('is the short description alone when there is no long one', () => {
+    expect(
+      getPrivacyAdversaryDescription({
+        shortDescription: 'The relayer sees your IP.',
+      }),
+    ).toEqual('The relayer sees your IP.')
   })
 })

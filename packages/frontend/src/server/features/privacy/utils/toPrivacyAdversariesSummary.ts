@@ -1,6 +1,5 @@
 import type { ProjectPrivacyAdversaries } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { firstSentence } from '~/server/markdown/listPageMarkdown'
 import type { PrivacyAdversariesSummary } from '../types'
 
 /**
@@ -35,7 +34,7 @@ export function toPrivacyAdversariesSummary(
         label: adversary.label,
         value: cell.value,
         sentiment: cell.sentiment,
-        reason: firstSentence(cell.exposure),
+        reason: cell.shortDescription,
       }
     }),
   }

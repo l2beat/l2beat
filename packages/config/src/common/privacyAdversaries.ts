@@ -258,8 +258,11 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */
-  noAnnouncementQuantum: (operator: string) =>
-    `No announcement is published, so a quantum computer cannot replay address derivations from the chain alone. The viewing key held by ${operator} exposes the history regardless.`,
+  noAnnouncementQuantum:
+    'No announcement is published, so a quantum computer cannot replay address derivations from the chain alone.',
+  /** Follows `noAnnouncementQuantum` when the operator holds the viewing key. */
+  operatorViewingKeyRegardless: (operator: string) =>
+    `The viewing key held by ${operator} exposes the history regardless.`,
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,

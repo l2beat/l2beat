@@ -16,6 +16,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import {
   getExposure,
   getExposureNote,
+  getPrivacyAdversaryDescription,
   getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
@@ -94,7 +95,11 @@ function AdversaryBlock({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <RiskBanner {...value} description={cell.exposure} size="large" />
+      <RiskBanner
+        {...value}
+        description={getPrivacyAdversaryDescription(cell)}
+        size="large"
+      />
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">Advice: </span>

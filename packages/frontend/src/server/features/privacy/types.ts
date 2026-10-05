@@ -75,7 +75,7 @@ export interface PrivacyAdversarySummaryCell {
   label: string
   value: string
   sentiment: PrivacyAdversarySentiment
-  /** First sentence of the exposure, which carries the reason for the sentiment. */
+  /** The cell's short description, which carries the reason for the sentiment. */
   reason: string
 }
 
