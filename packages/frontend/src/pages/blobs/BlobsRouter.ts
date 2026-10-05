@@ -1,0 +1,16 @@
+import express from 'express'
+import type { RenderFunction } from '~/ssr/types'
+import type { Manifest } from '~/utils/Manifest'
+import { getBlobsPageData } from './getBlobsPageData'
+
+export function createBlobsRouter(manifest: Manifest, render: RenderFunction) {
+  const router = express.Router()
+
+  router.get('/blobs', async (req, res) => {
+    const data = await getBlobsPageData(manifest, req.originalUrl)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  return router
+}
