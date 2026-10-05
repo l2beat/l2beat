@@ -17,6 +17,7 @@ export function createFlatSourcesRouter(
   router.get('/api/flat-sources', (ctx) => {
     if (streaming) {
       ctx.status = 503
+      ctx.set('Retry-After', '10')
       ctx.body = 'Flat sources are already being streamed, retry later'
       return
     }

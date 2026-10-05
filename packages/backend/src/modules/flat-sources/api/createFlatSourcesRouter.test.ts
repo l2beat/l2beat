@@ -145,6 +145,7 @@ describe(createFlatSourcesRouter.name, () => {
 
     expect(first.status).toEqual(200)
     expect(concurrent.status).toEqual(503)
+    expect(concurrent.headers.get('retry-after')).toEqual('10')
     expect(later.status).toEqual(200)
   })
 
