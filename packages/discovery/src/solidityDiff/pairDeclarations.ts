@@ -1,3 +1,4 @@
+import { diff } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { isDeepStrictEqual } from 'util'
@@ -35,8 +36,9 @@ export function pairDeclarations(left: AST.ASTNode, right: AST.ASTNode): void {
   }
 }
 
-// Paired are, in order: declarations sharing a title and contracts of one
-// kind that share most declarations.
+// Paired are, in order: declarations sharing a title, contracts of one kind
+// that share most declarations, and state variables only where their order
+// holds.
 function pairLists(
   lList: AST.ASTNode[],
   rList: AST.ASTNode[],
@@ -56,6 +58,9 @@ function pairLists(
     pairGroup(lList, rList, left, right, partner)
   }
   pairRenamedContracts(lList, rList, partner)
+  for (const inOrder of ORDERS) {
+    unpairReordered(lList, rList, partner, inOrder)
+  }
   return partner
 }
 
@@ -113,6 +118,54 @@ function pairRenamedContracts(
     if (partner[i] === -1 && taken[j] === 0) {
       partner[i] = j
       taken[j] = 1
+    }
+  }
+}
+
+type StateVariable = AST.StateVariableDeclarationVariable & {
+  // The parser sets it but its types do not declare it.
+  isTransient: boolean
+}
+
+type InOrder = (
+  variable: StateVariable,
+  declaration: AST.StateVariableDeclaration,
+) => boolean
+
+// What the order of state variables decides: their storage slots, their
+// transient slots and the order their initializers run in. A constant has
+// none of these.
+const ORDERS: InOrder[] = [
+  (v) => !v.isDeclaredConst && !v.isImmutable && !v.isTransient,
+  (v) => v.isTransient,
+  (v, declaration) => !v.isDeclaredConst && declaration.initialValue !== null,
+]
+
+// State variables that moved within one of the orders are left unpaired and
+// show as removed and added.
+function unpairReordered(
+  lList: AST.ASTNode[],
+  rList: AST.ASTNode[],
+  partner: Int32Array,
+  inOrder: InOrder,
+): void {
+  const leftOrder: number[] = []
+  const leftOf = new Int32Array(rList.length).fill(-1)
+  lList.forEach((declaration, i) => {
+    const j = partner[i] as number
+    if (
+      j !== -1 &&
+      declaration.type === 'StateVariableDeclaration' &&
+      inOrder(declaration.variables[0] as StateVariable, declaration)
+    ) {
+      leftOrder.push(i)
+      leftOf[j] = i
+    }
+  })
+  const rightOrder = [...leftOf].filter((i) => i !== -1)
+  for (const d of diff(leftOrder, rightOrder)) {
+    if (d.kind === 'remove' || d.kind === 'change') {
+      partner[leftOrder[d.path[0] as number] as number] = -1
     }
   }
 }

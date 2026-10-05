@@ -640,6 +640,76 @@ describe(diffSolidity.name, () => {
       ])
     })
 
+    // Their order decides the storage slots, so a proxy upgrade that
+    // reorders them reads its old storage wrongly.
+    it('show reordered storage variables', () => {
+      const diff = diffSolidity(
+        lines('contract C {', '  address owner;', '  uint256 balance;', '}'),
+        lines('contract C {', '  uint256 balance;', '  address owner;', '}'),
+        [],
+      )
+      expect(render(diff)).toEqual([
+        '  contract C {',
+        '-   address owner;',
+        '    uint256 balance;',
+        '+   address owner;',
+        '  }',
+      ])
+    })
+
+    // Initializers run in declaration order, so `a` reads `b` before or after
+    // `b` is set.
+    it('show reordered immutables', () => {
+      const diff = diffSolidity(
+        lines(
+          'contract C {',
+          '  uint256 immutable a = b;',
+          '  uint256 immutable b = 1;',
+          '}',
+        ),
+        lines(
+          'contract C {',
+          '  uint256 immutable b = 1;',
+          '  uint256 immutable a = b;',
+          '}',
+        ),
+        [],
+      )
+      expect(changedLines(diff)).toEqual([
+        '-   uint256 immutable a = b;',
+        '+   uint256 immutable a = b;',
+      ])
+    })
+
+    // Storage slots follow the storage variables, initializers run in order,
+    // and a constant has neither.
+    it('ignore moves that change no slot and no initializer order', () => {
+      const diff = diffSolidity(
+        lines(
+          'contract C {',
+          '  uint256 constant A = 1;',
+          '  uint256 immutable b;',
+          '  uint256 immutable c = 1;',
+          '  uint256 d;',
+          '  function f() public {}',
+          '  uint256 e;',
+          '}',
+        ),
+        lines(
+          'contract C {',
+          '  uint256 d;',
+          '  uint256 immutable c = 1;',
+          '  uint256 e;',
+          '  uint256 immutable b;',
+          '  function f() public {}',
+          '  uint256 constant A = 1;',
+          '}',
+        ),
+        [],
+      )
+      expect(hasChanges(diff)).toEqual(false)
+    })
+
     it('pair overloads by content first', () => {
       const diff = diffSolidity(
         lines(
