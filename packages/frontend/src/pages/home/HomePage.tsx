@@ -13,12 +13,9 @@ import { HomeCropsBanner } from './components/HomeCropsBanner'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropSection } from './components/HomeInteropSection'
 import { HomeL2Card } from './components/HomeL2Card'
-import { HomeMandateBanner } from './components/HomeMandateBanner'
 import { HomePrivacyCard } from './components/HomePrivacyCard'
-import { HomeQuestionCard } from './components/HomeQuestionCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import {
-  HomeLatestArticlesSection,
   HomeProjectChangesSection,
   type HomeRecentChangesProject,
   HomeWhatsNewProjects,
@@ -26,7 +23,6 @@ import {
 import type { HomeCropsProject } from './getHomeCropsProjects'
 import type { HomeRecentProject, HomeTopL2Project } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
-import type { HomeResearchItem } from './getHomeResearch'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -42,7 +38,6 @@ interface Props extends AppLayoutProps {
   recentProjects: HomeRecentProject[]
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
-  research: HomeResearchItem[]
 }
 
 export function HomePage({
@@ -59,7 +54,6 @@ export function HomePage({
   recentProjects,
   recentChangesCount,
   recentChangesProjects,
-  research,
   ...props
 }: Props) {
   return (
@@ -88,17 +82,12 @@ export function HomePage({
                 counts={projectCounts}
                 className="border-t-0 pt-4 md:pt-0 lg:hidden"
               />
-              {/* CROPS and the mandate. From lg they share a row, the mandate
-                  at the width the old right column had, 16px between them and
-                  the outer edges level with the content below; below lg only
-                  the mandate shows, under the menu. */}
-              <div className="flex flex-col lg:col-span-full lg:mx-(--home-gutter) lg:mb-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,280px)] lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
-                <HomeCropsBanner
-                  projects={cropsProjects}
-                  className="max-lg:hidden"
-                />
-                <HomeMandateBanner />
-              </div>
+              {/* CROPS, from lg, across the row, its outer edges level with
+                  the content below. The mandate lives on the landing page. */}
+              <HomeCropsBanner
+                projects={cropsProjects}
+                className="max-lg:hidden lg:col-span-full lg:mx-(--home-gutter) lg:mb-6"
+              />
               {/* From lg the page has six rows: CROPS; the domain cards'
                   title, charts and rankings; Ethereum; what follows it. */}
               {/* The twin cards subgrid the title, chart and ranking rows, so
@@ -128,33 +117,19 @@ export function HomePage({
                 protocols={flowProtocols}
                 className="lg:col-start-2 lg:row-span-2 lg:row-start-5 lg:border-l"
               />
-              {/* Under Ethereum: articles, new research, project changes and,
-                  always last in its column, the question. */}
-              <div className="@container/recent flex min-w-0 flex-col lg:col-start-1 lg:row-start-6">
-                {/* Two columns once wide enough: articles and the question,
-                    then new research (its rows fill the height the left
-                    column sets) and project changes. Stacked, the columns
-                    dissolve so the question can come last. */}
-                <div className="flex @min-[560px]/recent:grid min-w-0 @min-[560px]/recent:grid-cols-2 flex-col">
-                  <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col">
-                    <HomeLatestArticlesSection
-                      research={research}
-                      className="lg:pr-6"
-                    />
-                    <HomeQuestionCard className="@min-[560px]/recent:order-none order-last lg:pr-6" />
-                  </div>
-                  <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:border-divider @min-[560px]/recent:border-l">
-                    <HomeWhatsNewProjects
-                      projects={recentProjects}
-                      className="@min-[560px]/recent:flex-1 @min-[560px]/recent:pl-6 lg:pr-6"
-                    />
-                    <HomeProjectChangesSection
-                      count={recentChangesCount}
-                      projects={recentChangesProjects}
-                      className="@min-[560px]/recent:pl-6 lg:pr-6"
-                    />
-                  </div>
-                </div>
+              {/* Under Ethereum: new research and project changes, side by
+                  side once wide enough, a line between them; stacked below.
+                  Articles and the forum live on the landing page. */}
+              <div className="@container/recent grid min-w-0 @min-[560px]/recent:grid-cols-2 grid-cols-1 lg:col-start-1 lg:row-start-6">
+                <HomeWhatsNewProjects
+                  projects={recentProjects}
+                  className="@min-[560px]/recent:pr-6"
+                />
+                <HomeProjectChangesSection
+                  count={recentChangesCount}
+                  projects={recentChangesProjects}
+                  className="@min-[560px]/recent:border-divider @min-[560px]/recent:border-l @min-[560px]/recent:pl-6 lg:pr-6"
+                />
               </div>
             </div>
           </div>

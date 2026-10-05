@@ -527,6 +527,14 @@
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
   --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
+  --animate-marquee: marquee 60s linear infinite;
+
+  /* The track holds the list twice; half a track is one full list. */
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   @keyframes badge-dialog-loading {
     0% {

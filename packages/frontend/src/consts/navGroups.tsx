@@ -9,13 +9,14 @@ import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { HOME_PATH } from '~/pages/home/paths'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
     type: 'single',
     title: 'Home',
     match: 'home',
-    href: '/',
+    href: HOME_PATH,
     icon: (
       <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
     ),

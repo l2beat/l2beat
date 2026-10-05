@@ -1,10 +1,8 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
-import { formatPublicationDate } from '~/utils/dates'
 import type { HomeRecentProject } from '../getHomeData'
-import type { HomeResearchItem } from '../getHomeResearch'
-import { HOME_ICON_CLASS, HOME_TEXT, HOME_THUMBNAIL_CLASS } from '../homeStyles'
+import { HOME_ICON_CLASS, HOME_TEXT } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import { HomeStackedIcons } from './HomeStackedIcons'
@@ -24,7 +22,7 @@ const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   privacy: 'Privacy',
 }
 
-/** New projects, under Ethereum beside the articles. */
+/** New projects, under Ethereum. */
 export function HomeWhatsNewProjects({
   projects,
   className,
@@ -36,12 +34,7 @@ export function HomeWhatsNewProjects({
     return null
   }
   return (
-    <HomeCard
-      className={cn(
-        'flex @min-[560px]/recent:min-h-0 flex-col gap-2',
-        className,
-      )}
-    >
+    <HomeCard className={cn('flex flex-col gap-2', className)}>
       <HomeCardHeader title="New research" />
       <NewProjects projects={projects} />
     </HomeCard>
@@ -66,40 +59,12 @@ export function HomeProjectChangesSection({
   )
 }
 
-/** Our research: native rollups first, then the latest publications. */
-export function HomeLatestArticlesSection({
-  research,
-  className,
-}: {
-  research: HomeResearchItem[]
-  className?: string
-}) {
-  return (
-    <HomeCard className={cn('flex flex-col gap-3', className)}>
-      <HomeCardHeader title="Latest articles" href="/publications" />
-      <Research items={research} />
-    </HomeCard>
-  )
-}
-
-const STACKED_PROJECTS_COUNT = 5
-
 function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
   return (
-    // Row height and lines as in the rankings. Beside the articles the list
-    // takes the height they leave (a 0px height, so it never sets it, but
-    // room for five), wrapping the rows that do not fit into a second column,
-    // out of view: whole rows only. Stacked it shows five.
-    <ul className="flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:flex-wrap divide-y divide-divider @min-[560px]/recent:overflow-hidden">
-      {projects.map((project, index) => (
-        <li
-          key={project.id}
-          className={cn(
-            'flex @min-[560px]/recent:h-10 min-h-10 w-full shrink-0',
-            index >= STACKED_PROJECTS_COUNT &&
-              '@min-[560px]/recent:flex hidden',
-          )}
-        >
+    // Row height and lines as in the rankings.
+    <ul className="flex flex-col divide-y divide-divider">
+      {projects.map((project) => (
+        <li key={project.id} className="flex min-h-10 w-full">
           <a
             href={project.href}
             className="group flex min-w-0 flex-1 items-center gap-2 py-2"
@@ -155,48 +120,5 @@ function ProjectChanges({
         </button>
       }
     />
-  )
-}
-
-function Research({ items }: { items: HomeResearchItem[] }) {
-  if (items.length === 0) {
-    return null
-  }
-  return (
-    <ul className="flex flex-col gap-3">
-      {items.map((item) => {
-        const isExternal = !item.url.startsWith('/')
-        return (
-          <li key={item.id}>
-            <a
-              href={item.url}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noreferrer noopener' : undefined}
-              className="group flex items-center gap-3"
-            >
-              <img
-                src={item.thumbnail.src}
-                alt=""
-                loading="lazy"
-                className={HOME_THUMBNAIL_CLASS}
-              />
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span
-                  className={cn(
-                    'line-clamp-2 underline-offset-2 group-hover:underline',
-                    HOME_TEXT.row,
-                  )}
-                >
-                  {item.shortTitle ?? item.title}
-                </span>
-                <span className={HOME_TEXT.meta}>
-                  {formatPublicationDate(new Date(item.publishedOn * 1000))}
-                </span>
-              </span>
-            </a>
-          </li>
-        )
-      })}
-    </ul>
   )
 }

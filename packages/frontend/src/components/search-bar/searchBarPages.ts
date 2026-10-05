@@ -1,11 +1,12 @@
 import { env } from '~/env'
+import { HOME_PATH } from '~/pages/home/paths'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
   {
     category: 'other',
     name: 'Home',
-    href: '/',
+    href: HOME_PATH,
     tags: ['pages'],
   },
   {

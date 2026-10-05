@@ -24,6 +24,7 @@ export interface Page {
 
 export const STATIC_PAGE_PATHS = [
   '/',
+  '/home',
   '/layer2s/summary',
   '/layer2s/activity',
   '/layer2s/risk',

@@ -31,7 +31,7 @@ export const HOME_CHART_HEIGHT_CLASS = 'h-36'
 /** Every project, chain and token icon on the page. */
 export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 
-/** Thumbnails of articles and announcements. */
+/** Thumbnails of articles, on the landing page's research list. */
 export const HOME_THUMBNAIL_CLASS =
   'aspect-video w-16 shrink-0 rounded-sm object-cover'
 

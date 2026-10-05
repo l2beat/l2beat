@@ -19,7 +19,7 @@ export interface DynamicPageToVerify {
  * prefetches are not useful for this check.
  */
 export const STATIC_PAGES: PageToVerify[] = [
-  page('/', ['interop.dashboard', 'interop.flows']),
+  page('/home', ['interop.dashboard', 'interop.flows']),
   page('/layer2s/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',

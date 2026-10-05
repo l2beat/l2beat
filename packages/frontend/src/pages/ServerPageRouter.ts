@@ -21,6 +21,7 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
+import { createLandingRouter } from './landing/LandingRouter'
 import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
@@ -54,6 +55,7 @@ export function createServerPageRouter(
   router.use('/', PageCacheMiddleware())
 
   const routers = [
+    createLandingRouter,
     createHomeRouter,
     createL2Router,
     createInteropRouter,

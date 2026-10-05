@@ -30,12 +30,10 @@ import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
 import { getHomeCropsProjects } from './getHomeCropsProjects'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
-import { getHomeResearch } from './getHomeResearch'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
 const TOP_L2_PROJECTS_COUNT = 5
-/** Beside the articles new research shows as many as fit, at least five. */
-const RECENT_PROJECTS_COUNT = 8
+const RECENT_PROJECTS_COUNT = 5
 
 export async function getHomeData(
   req: Request,
@@ -146,7 +144,6 @@ async function getCachedData(manifest: Manifest) {
       name: group.name,
       iconUrl: group.iconUrl,
     })),
-    research: getHomeResearch(),
   }
 }
 
@@ -235,8 +232,10 @@ export interface HomeRecentProject {
   l2Category: string | undefined
 }
 
-async function getRecentProjectsForHome(
+/** The newest projects across every section, the landing page's too. */
+export async function getRecentProjectsForHome(
   manifest: Manifest,
+  count = RECENT_PROJECTS_COUNT,
 ): Promise<HomeRecentProject[]> {
   const projects = await ps.getProjects({
     optional: [
@@ -261,7 +260,7 @@ async function getRecentProjectsForHome(
         project.privacyInfo,
     )
     .sort((a, b) => b.addedAt - a.addedAt)
-    .slice(0, RECENT_PROJECTS_COUNT)
+    .slice(0, count)
     .map((project) => {
       if (project.scalingInfo) {
         return {
