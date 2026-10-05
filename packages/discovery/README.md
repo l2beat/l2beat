@@ -33,7 +33,7 @@ To run the discovery UI locally:
 
 # AI templatizer
 
-`l2b discover … --ai` lets a language model write `template.jsonc` files for verified contracts that have none, and `--ai-revisit` lets it propose additions to templates that already match. It runs only locally, never in the backend. How it works, what it checks and deliberately does not check, and how it is benchmarked is specified in [docs/mdbook/specs/l2b_specs/ai_templatizer.md](../../docs/mdbook/specs/l2b_specs/ai_templatizer.md). Read that document before changing anything under `src/discovery/templatizer/`, and update it in the same change whenever the behaviour changes: it is the description of record.
+`l2b discover … --ai` lets a language model write `template.jsonc` files for verified contracts that have none, and `--ai-revisit` lets it propose additions to templates that already match. It runs only locally, never in the backend. How it works, and what it checks and deliberately does not check, is specified in [docs/mdbook/specs/l2b_specs/ai_templatizer.md](../../docs/mdbook/specs/l2b_specs/ai_templatizer.md). Read that document before changing anything under `src/discovery/templatizer/`, and update it in the same change whenever the behaviour changes: it is the description of record.
 
 # RPC configuration
 

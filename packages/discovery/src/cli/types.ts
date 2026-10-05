@@ -27,9 +27,8 @@ export const ChainValue: Type<string, string> = {
 }
 
 /**
- * A count the code can honour as given. `AuthoringLoop` would clamp a zero
- * or negative `--ai-rounds` to one turn, while the benchmark report would
- * record the value as typed.
+ * A count the code can honour as given: `AuthoringLoop` would clamp a zero
+ * or negative `--ai-rounds` to one turn without saying so.
  */
 export const PositiveInteger: Type<string, number> = extendType(number, {
   from(value): Promise<number> {

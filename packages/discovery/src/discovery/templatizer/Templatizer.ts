@@ -18,8 +18,8 @@
  * is what V1 read, the dry run runs V1 with the address's own config, and
  * what V1 did is written down for the reviewer.
  *
- * The backend never constructs this class; only a CLI run with `--ai` and
- * the benchmark do.
+ * The backend never constructs this class; only a CLI run with `--ai`
+ * does.
  */
 import type { Logger } from '@l2beat/backend-tools'
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
@@ -87,12 +87,6 @@ export interface TemplatizerSettings {
   previousTemplates: Record<string, PreviousTemplate>
   /** `--ai-revisit`: also add to templates that already match, see `revisit`. */
   revisit?: boolean
-  /**
-   * `stop` (the default) ends discovery on any failure; the benchmark sets
-   * `leave-untemplatized`, because a contract the model cannot author is a
-   * measurement there. A model that does not answer stops both.
-   */
-  onFailure?: 'stop' | 'leave-untemplatized'
   now?: () => Date
 }
 
@@ -192,8 +186,7 @@ export class Templatizer {
   /**
    * The id of the template written or extended for the contract, or
    * undefined when a template written earlier in the pass already matches
-   * it (a contract of the same shape) or the benchmark left it
-   * untemplatized.
+   * it, as it does a contract of the same shape.
    */
   async templateFor(request: TemplatizeRequest): Promise<string | undefined> {
     const hash = getHashForMatchingFromSources(request.sources.sources)
@@ -212,35 +205,8 @@ export class Templatizer {
       this.settled.add(templateId)
       return templateId
     } catch (error) {
-      return this.stopOrLeave(error, task)
+      throw failure(error, task)
     }
-  }
-
-  /**
-   * Discovery stops on any failure (see `TemplatizationFailedError`). The
-   * benchmark instead records a contract the model could not author as a
-   * miss, which is what it measures; a model that does not answer stops it
-   * too.
-   */
-  private stopOrLeave(error: unknown, task: TemplatizationTask): undefined {
-    const failed =
-      error instanceof TemplatizationFailedError
-        ? error
-        : new TemplatizationFailedError(
-            'internal',
-            task,
-            getErrorMessage(error),
-            undefined,
-            { cause: error },
-          )
-    if (
-      this.settings.onFailure === 'leave-untemplatized' &&
-      failed.failure !== 'model-unavailable'
-    ) {
-      this.logger.warn(failed.message)
-      return undefined
-    }
-    throw failed
   }
 
   /**
@@ -475,8 +441,7 @@ export class Templatizer {
       const { facts, worklist } = await this.prepare(request, hash, templateId)
       return await this.addToExisting(request, facts, worklist, existing, task)
     } catch (error) {
-      this.stopOrLeave(error, task)
-      return false
+      throw failure(error, task)
     }
   }
 
@@ -722,6 +687,22 @@ export async function gatherRequest(
     proxyValues: proxy.values,
     implementationNames: getImplementationNames(address, sources) ?? {},
   }
+}
+
+/** Discovery stops on any failure; see `TemplatizationFailedError`. */
+function failure(
+  error: unknown,
+  task: TemplatizationTask,
+): TemplatizationFailedError {
+  return error instanceof TemplatizationFailedError
+    ? error
+    : new TemplatizationFailedError(
+        'internal',
+        task,
+        getErrorMessage(error),
+        undefined,
+        { cause: error },
+      )
 }
 
 /** How every log line names the contract. */
