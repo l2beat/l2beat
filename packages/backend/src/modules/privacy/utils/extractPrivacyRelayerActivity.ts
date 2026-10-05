@@ -9,11 +9,8 @@ import type {
   PrivacyRelayerActivityExtractResult,
   PrivacyRpcContext,
 } from '../types'
-import { DEPOSIT_TOPIC, WITHDRAWAL_TOPIC } from '../zkmoney/abi'
-import {
-  findZkMoneyDepositFinalizer,
-  findZkMoneyWithdrawalFinalizer,
-} from '../zkmoney/paidFinalizers'
+import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
+import { extractZkMoneyWithdrawalRelayer } from '../zkmoney/relayers'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
@@ -61,21 +58,11 @@ export function getPrivacyRelayerExtractor(
       return privacyPoolsWithdrawalRelayed
     case 'tornadoCashWithdrawal':
       return tornadoCashWithdrawal
-    case 'zkMoneyDepositPayout':
-      return {
-        event: DEPOSIT_TOPIC,
-        extract: async (log, context) =>
-          toPaidFinalizer(
-            await findZkMoneyDepositFinalizer(log, source.params, context),
-          ),
-      }
-    case 'zkMoneyWithdrawalPayout':
+    case 'zkMoneyWithdrawalRelayer':
       return {
         event: WITHDRAWAL_TOPIC,
-        extract: async (log, context) =>
-          toPaidFinalizer(
-            await findZkMoneyWithdrawalFinalizer(log, source.params, context),
-          ),
+        extract: (log, context) =>
+          extractZkMoneyWithdrawalRelayer(log, source.params, context),
       }
     default:
       assertUnreachable(source)
@@ -105,10 +92,4 @@ function toRelayerActivity(
   }
 
   return Promise.resolve({ relayerAddress })
-}
-
-function toPaidFinalizer(
-  finalizer: EthereumAddress | undefined,
-): PrivacyRelayerActivityExtractResult | undefined {
-  return finalizer && { relayerAddress: finalizer }
 }

@@ -16,11 +16,13 @@ import { getPrivacyRelayerExtractor } from '../utils/extractPrivacyRelayerActivi
 import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
 import {
   ALICE,
+  BOB,
   mockZkMoneyRpc,
   PORTAL,
+  SIPA,
   transfer,
   WITHDRAWAL_EXECUTOR,
-  WITHDRAWAL_PAYOUT_PARAMS,
+  WITHDRAWAL_RELAYER_PARAMS,
   withdrawal,
 } from '../zkmoney/test/fixtures'
 import { PrivacyRelayerActivityIndexer } from './PrivacyRelayerActivityIndexer'
@@ -128,12 +130,20 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
 
   // The portal event alone does not name the finalizer: the indexer must pass
   // the receipt (served by the RPC mock) to the zk.money extractor.
-  it('resolves a zk.money paid finalizer from the transaction receipt', async () => {
+  it('saves only qualifying zk.money withdrawals without blacklisting an address', async () => {
     const from = UnixTime.toStartOf(UnixTime(0), 'day')
     const to = from + 5 * UnixTime.HOUR
     const blockTimestamp = from + UnixTime.HOUR
     const portalEvent = {
       ...withdrawal(1, { logIndex: 3, blockNumber: 100 }),
+      blockTimestamp,
+    }
+    const zeroTipEvent = {
+      ...withdrawal(2, { logIndex: 5, blockNumber: 100 }),
+      blockTimestamp,
+    }
+    const unsupportedEvent = {
+      ...withdrawal(3, { logIndex: 6, blockNumber: 100 }, SIPA),
       blockTimestamp,
     }
     const properties: PrivacyRelayerActivityIndexerConfig = {
@@ -143,17 +153,20 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       address: PORTAL,
       sinceTimestamp: UnixTime(0),
       event: WITHDRAWAL_TOPIC,
-      extractor: 'zkMoneyWithdrawalPayout',
-      params: WITHDRAWAL_PAYOUT_PARAMS,
+      extractor: 'zkMoneyWithdrawalRelayer',
+      params: WITHDRAWAL_RELAYER_PARAMS,
     }
     const configurations = [
       { id: properties.id, minHeight: 0, maxHeight: null, properties },
     ]
     const rpcClient = mockZkMoneyRpc({
       receipt: [
-        transfer(WITHDRAWAL_EXECUTOR, ALICE, 90n, { logIndex: 1 }),
-        transfer(WITHDRAWAL_EXECUTOR, ALICE, 10n, { logIndex: 2 }),
+        transfer(WITHDRAWAL_EXECUTOR, BOB, 90n, { logIndex: 1 }),
+        transfer(WITHDRAWAL_EXECUTOR, BOB, 10n, { logIndex: 2 }),
         portalEvent,
+        transfer(WITHDRAWAL_EXECUTOR, ALICE, 100n, { logIndex: 4 }),
+        zeroTipEvent,
+        unsupportedEvent,
       ],
     })
     const privacyRelayerActivity = mockObject<
@@ -168,7 +181,11 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
         configurations,
         blockProvider: mockObject<BlockProvider>({}),
         logsProvider: mockObject<LogsProvider>({
-          getLogs: mockFn().returnsOnce([portalEvent]),
+          getLogs: mockFn().returnsOnce([
+            portalEvent,
+            zeroTipEvent,
+            unsupportedEvent,
+          ]),
         }),
         db: mockDatabase({
           privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
@@ -190,6 +207,9 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
     expect(rpcClient.getTransactionReceipt).toHaveBeenOnlyCalledWith(
       portalEvent.transactionHash,
     )
+    expect(rpcClient.getTransaction).toHaveBeenOnlyCalledWith(
+      portalEvent.transactionHash,
+    )
     expect(privacyRelayerActivity.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-zk',
@@ -197,9 +217,9 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
         chain: 'ethereum',
         timestamp: blockTimestamp,
         blockNumber: 100,
-        txHash: portalEvent.transactionHash,
-        logIndex: 3,
-        relayerAddress: ALICE,
+        txHash: zeroTipEvent.transactionHash,
+        logIndex: 5,
+        relayerAddress: BOB,
       },
     ])
   })
