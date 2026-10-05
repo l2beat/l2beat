@@ -545,6 +545,55 @@ describe(diffSolidity.name, () => {
       ])
     })
 
+    it('pair a renamed contract by its declarations', () => {
+      const verifier = (name: string, key: string) =>
+        lines(
+          `contract ${name} {`,
+          '  uint256 constant ONE = 1;',
+          '  uint256 constant TWO = 2;',
+          `  uint256 constant KEY = ${key};`,
+          '}',
+        )
+      const diff = diffSolidity(
+        verifier('VerifierA', '0xaa'),
+        verifier('VerifierB', '0xbb'),
+        [],
+      )
+      expect(render(diff)).toEqual([
+        '- contract VerifierA {',
+        '+ contract VerifierB {',
+        '    uint256 constant ONE = 1;',
+        '    uint256 constant TWO = 2;',
+        '-   uint256 constant KEY = 0xaa;',
+        '+   uint256 constant KEY = 0xbb;',
+        '  }',
+      ])
+    })
+
+    // Flattened files often repeat a library under the same name.
+    it('pair repeated names by content first', () => {
+      const max = lines(
+        'library Math {',
+        '  function max(uint256 a, uint256 b) internal pure returns (uint256) {',
+        '    return a > b ? a : b;',
+        '  }',
+        '}',
+      )
+      const min = lines(
+        'library Math {',
+        '  function min(uint256 a, uint256 b) internal pure returns (uint256) {',
+        '    return a < b ? a : b;',
+        '  }',
+        '}',
+      )
+      const diff = diffSolidity(lines(max, '', min), min, [])
+      expect(render(diff)).toEqual([
+        ...max.split('\n').map((line) => `- ${line}`),
+        '- ',
+        ...min.split('\n').map((line) => `  ${line}`),
+      ])
+    })
+
     it('add and remove a constructor', () => {
       const without = lines('contract C {', '  function f() public {}', '}')
       const withConstructor = lines(
@@ -588,6 +637,25 @@ describe(diffSolidity.name, () => {
         '-       + // note',
         '+       -',
         '+       // note',
+      ])
+    })
+
+    it('pair overloads by content first', () => {
+      const diff = diffSolidity(
+        lines(
+          'interface I {',
+          '  function set(address a) external;',
+          '  function set(bytes32 b) external;',
+          '}',
+        ),
+        lines('interface I {', '  function set(bytes32 b) external;', '}'),
+        [],
+      )
+      expect(render(diff)).toEqual([
+        '  interface I {',
+        '-   function set(address a) external;',
+        '    function set(bytes32 b) external;',
+        '  }',
       ])
     })
   })
