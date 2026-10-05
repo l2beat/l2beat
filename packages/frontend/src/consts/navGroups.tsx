@@ -2,6 +2,7 @@ import compact from 'lodash/compact'
 import type { NavGroup, NavLink } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DefiIcon } from '~/icons/pages/Defi'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -151,6 +152,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/defi',
     icon: (
       <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  {
+    type: 'single',
+    title: 'Blobs',
+    match: 'blobs',
+    href: '/blobs',
+    icon: (
+      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
     ),
   },
   {

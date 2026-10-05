@@ -41,6 +41,7 @@ export const STATIC_PAGE_PATHS = [
   '/interop/token-frameworks',
   '/interop/intent-bridges',
   '/privacy/summary',
+  '/blobs',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
