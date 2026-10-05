@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, FlatSourcesJsonRecord } from '@l2beat/database'
 import { FLAT_SOURCES_ZSTD_WINDOW_LOG, Hash256 } from '@l2beat/shared-pure'
 import { randomBytes } from 'crypto'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import {
   Agent,
   createServer,
@@ -182,7 +182,8 @@ describe(createFlatSourcesRouter.name, () => {
           'A.sol': randomBytes(1_000_000).toString('hex'),
         }),
     })
-    const url = await listen(flatSources, 200)
+    const logger = mockObject<Logger>({ warn: mockFn().returns(undefined) })
+    const url = await listen(flatSources, logger, 200)
     const stalled = await new Promise<IncomingMessage>((resolve) =>
       get(url, resolve),
     )
@@ -203,17 +204,22 @@ describe(createFlatSourcesRouter.name, () => {
     expect(stalled.statusCode).toEqual(200)
     expect(statuses[0]).toEqual(503)
     expect(statuses.at(-1)).toEqual(200)
+    expect(logger.warn).toHaveBeenOnlyCalledWith(
+      'Flat sources stream deadline reached, closing',
+      { bytesWritten: expect.a(Number) },
+    )
   })
 
   async function listen(
     flatSources: Database['flatSources'],
+    logger = Logger.SILENT,
     streamDeadlineMs?: number,
   ) {
     const controller = new FlatSourcesController(
       mockObject<Database>({ flatSources }),
     )
     const apiServer = new ApiServer(0, Logger.SILENT, [
-      createFlatSourcesRouter(controller, streamDeadlineMs),
+      createFlatSourcesRouter(controller, logger, streamDeadlineMs),
     ])
     const listening = createServer(apiServer.getNodeCallback())
     server = listening
