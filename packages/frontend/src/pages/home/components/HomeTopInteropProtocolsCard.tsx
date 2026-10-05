@@ -80,7 +80,12 @@ export function HomeTopInteropProtocolsCard({
         ) : showEmpty ? (
           <NoResultsInfo />
         ) : (
-          <BasicTable table={table} tableWrapperClassName="pb-0" compact />
+          <BasicTable
+            table={table}
+            tableWrapperClassName="pb-0"
+            compact
+            stickyHeader={false}
+          />
         )}
       </div>
     </HomeCard>

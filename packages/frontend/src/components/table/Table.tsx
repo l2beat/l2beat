@@ -4,7 +4,12 @@ import {
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import { StickyTableHeader } from './StickyTableHeader'
 import { TableTooltip } from './TableTooltip'
+import {
+  stickyTableHeaderClassNames,
+  useStickyTableHeader,
+} from './useStickyTableHeader'
 import {
   getTableElementClassName,
   getTableOuterWrapperClassName,
@@ -14,26 +19,70 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  header,
+  stickyHeader: isSticky = false,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
-}) => {
+} & TableHeaderProps) => {
+  const sticky = useStickyTableHeader(isSticky)
+
   return (
-    <div className={getTableOuterWrapperClassName()}>
-      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
+    <div
+      ref={sticky.root}
+      className={cn(
+        getTableOuterWrapperClassName(),
+        isSticky && stickyTableHeaderClassNames.root,
+      )}
+    >
+      {isSticky && (
+        <StickyTableHeader
+          header={sticky.header}
+          track={sticky.track}
+          pinned={sticky.pinned}
+          tableProps={{
+            ...props,
+            className: getTableElementClassName(cn(className, 'table-fixed')),
+          }}
+        >
+          {header}
+        </StickyTableHeader>
+      )}
+      <div
+        ref={sticky.scroller}
+        className={cn(
+          getTableScrollWrapperClassName(tableWrapperClassName),
+          isSticky && stickyTableHeaderClassNames.scroller,
+        )}
+      >
         <HighlightedTableRowProvider>
           <table
+            ref={sticky.table}
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
             {...props}
-          />
+          >
+            {header}
+            {children}
+          </table>
         </HighlightedTableRowProvider>
       </div>
     </div>
   )
 }
 Table.displayName = 'Table'
+
+/**
+ * `header` is the table's column groups and `thead`, rendered before the
+ * children. `stickyHeader` keeps it in view while the page scrolls, by showing
+ * a copy of it in its place, so it needs the header apart from the body. See
+ * `useStickyTableHeader`.
+ */
+type TableHeaderProps =
+  | { header?: React.ReactNode; stickyHeader?: false }
+  | { header: React.ReactNode; stickyHeader: boolean }
 
 const TableHeader = ({
   className,

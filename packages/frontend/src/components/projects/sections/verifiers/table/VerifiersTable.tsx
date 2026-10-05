@@ -26,7 +26,6 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getRowId: (row) => row.hash,
     getRowCanExpand: () => true,
     // No '#' column, so opt out of useTable's default '#' sort.
     initialState: collapsible
@@ -36,6 +35,9 @@ export function VerifiersTable({ entries, collapsible = true }: Props) {
   return (
     <BasicTable
       table={table}
+      // Always-expanded rows read as a list of details, where a moving header
+      // adds nothing.
+      stickyHeader={collapsible}
       renderSubComponent={({ row }) => (
         <VerifierRowDetails verifierHash={row.original} />
       )}

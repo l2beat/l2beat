@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x0b8324367e7d79a45dd61cc4f403123f834b3599
+
+# Diff at Thu, 01 Oct 2026 22:02:56 GMT:
+
+- id: b43ed98f
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1787668924
+- current timestamp: 1790891964
+
+## Description
+
+SequencerInbox: since 2026-08-31 batches are posted as calldata on Arbitrum One instead of AnyTrust DAC certificates.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
 Generated with discovered.json: 0xb51ce86619a61c91ac5aaa73326d893b14be9ea8
 
 # Diff at Wed, 23 Sep 2026 05:45:16 GMT:

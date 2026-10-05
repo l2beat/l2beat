@@ -10,13 +10,17 @@ const discovery = new ProjectDiscovery('apechain')
 
 export const apechain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1729296000), // 2024-10-19
-  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
+  additionalBadges: [
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.RaaS.Caldera,
+    BADGES.Other.EspressoPreconfs,
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'ApeChain',
     slug: 'apechain',
     description:
-      'ApeChain is an Optimium built on the Arbitrum Orbit stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
+      'ApeChain is an Optimistic Rollup built on the Arbitrum Orbit stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
     links: {
       websites: ['https://apechain.com/'],
       bridges: ['https://apechain.com/portal'],
@@ -55,11 +59,11 @@ export const apechain: ScalingProject = orbitStackL3({
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
-      title: 'ApeChain switches from DAC to Ethereum calldata',
-      url: 'https://arbiscan.io/address/0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C',
+      title: 'ApeChain switches from DAC to Arbitrum One calldata',
+      url: 'https://arbiscan.io/tx/0xd28af3043834f4f3cce0675747078d53142435b3feb27697a932110105da3f28',
       date: '2026-07-01T00:00:00Z',
       description:
-        'ApeChain stops posting data via the AnyTrust DAC and starts posting batches directly to Arbitrum as calldata.',
+        'ApeChain stops posting data via the AnyTrust DAC and starts posting batches directly to Arbitrum One as calldata.',
       type: 'general',
     },
     {

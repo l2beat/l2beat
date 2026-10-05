@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x6a36e0aff8ebdf36de5b9f0757daa220d897f267
+
+# Diff at Thu, 01 Oct 2026 22:00:13 GMT:
+
+- id: 64fc0b79
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1788816912
+- current timestamp: 1790891941
+
+## Description
+
+XaiSentryMultisig: 3 members removed, threshold `3 of 7` -> `3 of 4`. 2 of the removed members remain members of XaiSentryMultisig2 (`1 of 3`), which is still a member.
+
+NodeLicenseRegistry upgraded by XaiSentryMultisig; the reinitializer sets `mintingPaused` to `true`. `mintingPaused` has no setter.
+
+Version changes and implementation diffs:
+
+- NodeLicenseRegistry NodeLicense10 -> NodeLicense11: https://disco.l2beat.com/diff/arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6/arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA
+
+## Watched changes
+
+```diff
+    contract XaiSentryMultisig (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f"
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.$members.4:
+-        "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 4 (75%)"
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (arb1:0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) [N/A] {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      sourceHashes.1:
+-        "0x51e845ee54612e798ba42f8f2817f1515ae31d02bc5f2a866db81850f345a0aa"
++        "0x1cfacb9a51bdab359fa5ad8114e490987cdbbd64285b04db4c8ce4fb8f9af18d"
+      values.$implementation:
+-        "arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6"
++        "arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA"
+      values.$pastUpgrades.17:
++        ["2026-09-10T16:37:56.000Z","0xc4cf3a0ecce8ca29e2f6ca89b2251ae0ea279e66a7305ecd4c7696d0ba4e7bd0",["arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA"]]
+      values.$upgradeCount:
+-        17
++        18
+      values.mintingPaused:
+-        false
++        true
+      implementationNames.arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6:
+-        "NodeLicense10"
+      implementationNames.arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA:
++        "NodeLicense11"
+    }
+```
+
+## Source code changes
+
+```diff
+.../NodeLicenseRegistry/NodeLicense11.sol}         | 34 ++++++++++++++--------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816912 (main branch discovery), not current.
+
+```diff
+    contract XaiSentryMultisig2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "XaiSentryMultisig2"
+    }
+```
+
+```diff
+    contract XaiSentryMultisig (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "XaiSentryMultisig"
+    }
+```
+
 Generated with discovered.json: 0xe30a385a973a71ce6128af6edbf5f58550424347
 
 # Diff at Wed, 23 Sep 2026 05:50:34 GMT:
