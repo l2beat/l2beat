@@ -28,7 +28,7 @@ function OssificationDescription() {
     <>
       Ossification measures how battle-tested the code securing a project is:
       the share of recorded code-bug exploits (
-      <CustomLink href="https://github.com/sekuba/ossification-dataset">
+      <CustomLink href="https://github.com/l2beat/ossification-dataset">
         published, onchain-verified dataset
       </CustomLink>
       ) whose exploited code was younger than the project's critical contracts
