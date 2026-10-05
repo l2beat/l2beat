@@ -89,7 +89,9 @@ function killOnExit(child: ChildProcess): void {
   if (!exitHookInstalled) {
     exitHookInstalled = true
     process.once('exit', killRunning)
-    for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+    // SIGHUP too: the children run in groups of their own, so a closed
+    // terminal's hangup reaches only this process.
+    for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP'] as const) {
       const onSignal = () => {
         killRunning()
         // Node does not emit `exit` for its default signal termination.

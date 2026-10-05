@@ -7,7 +7,7 @@ import path from 'path'
 import waitForExpect from 'wait-for-expect'
 
 describe('model process cleanup', () => {
-  for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP'] as const) {
     it(`kills the detached model on ${signal} and preserves default signal termination`, async function () {
       this.timeout(10_000)
       const directory = fs.mkdtempSync(
