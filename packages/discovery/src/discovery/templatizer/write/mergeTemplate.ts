@@ -108,6 +108,10 @@ function planInsertions(
   const topLevel: Insertion = { container: root, path: [], members: [] }
   for (const [key, value] of Object.entries(input.additions)) {
     const existing = propertyOf(root, key)
+    if (isRecord(value) && Object.keys(value).length === 0) {
+      // `"fields": {}`, a reply with nothing to add, adds nothing.
+      continue
+    }
     if (key === 'fields' && existing !== undefined && isRecord(value)) {
       planFields(existing, value, insertions, problems)
     } else if (existing !== undefined) {

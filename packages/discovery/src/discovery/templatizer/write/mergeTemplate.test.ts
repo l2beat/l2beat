@@ -110,7 +110,12 @@ describe(mergeTemplate.name, () => {
 
   it('writes only the header into a new template with nothing to add', () => {
     expect(
-      merged({ text: NEW, isNew: true, header: ['Authored without a model.'] }),
+      merged({
+        text: NEW,
+        isNew: true,
+        additions: { fields: {} },
+        header: ['Authored without a model.'],
+      }),
     ).toEqual(
       '{\n  "$schema": "../../schema.json"\n  // Authored without a model.\n}\n',
     )
