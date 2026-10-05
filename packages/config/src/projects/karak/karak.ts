@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -51,15 +51,6 @@ export const karak: ScalingProject = opStackL2({
     untilTimestamp: UnixTime(1789435379), // 2026-09-15T01:22:59Z, last batch posted
   },
   genesisTimestamp: UnixTime(1703226695), //First sequencer transaction
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
-      untilBlock: 14058896, // 2026-09-15T01:22:04Z, Celestia height of the last batch
-    },
-  ],
   isNodeAvailable: true,
   milestones: [
     {

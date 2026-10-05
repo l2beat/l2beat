@@ -8,7 +8,6 @@ import {
 } from '~/components/core/Collapsible'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import { formatTimestamp } from '~/utils/dates'
 import { SubsectionHeading } from '../Subsection'
 import type { DataPostedSectionProps } from './DataPostedSection'
 
@@ -26,13 +25,9 @@ export function DataPostedTrackedTransactions({
 
   const transactions = showHistoricalTransactions
     ? daTrackingConfig
-    : daTrackingConfig.filter((x) =>
-        x.type === 'eigen-da' ? !x.untilTimestamp : !x.untilBlock,
-      )
+    : daTrackingConfig.filter((x) => !x.untilBlock)
 
-  const hasHistoricalTransactions = daTrackingConfig.some((x) =>
-    x.type === 'eigen-da' ? !!x.untilTimestamp : !!x.untilBlock,
-  )
+  const hasHistoricalTransactions = daTrackingConfig.some((x) => !!x.untilBlock)
 
   return (
     <Collapsible className="group rounded-lg border border-divider">
@@ -82,11 +77,7 @@ function TransactionDetails({
       <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
         <div className="flex items-center gap-2">
           {showHistoricalTransactions ? (
-            (
-              transaction.type === 'eigen-da'
-                ? transaction.untilTimestamp
-                : transaction.untilBlock
-            ) ? (
+            transaction.untilBlock ? (
               <Badge type="gray" size="small">
                 Historical
               </Badge>
@@ -103,78 +94,36 @@ function TransactionDetails({
         <p className="mb-1 text-secondary text-sm">
           DA layer: {transaction.daLayerName}
         </p>
-        {transaction.type === 'eigen-da' ? (
-          <p className="mb-1 text-secondary text-sm">
-            From:{' '}
-            {formatTimestamp(transaction.sinceTimestamp, {
-              mode: 'datetime',
-              longMonthName: false,
-            })}{' '}
-            - To:{' '}
-            {transaction.untilTimestamp
-              ? formatTimestamp(transaction.untilTimestamp, {
-                  mode: 'datetime',
-                  longMonthName: false,
-                })
-              : 'Now'}
-          </p>
-        ) : (
-          <p className="mb-1 text-secondary text-sm">
-            From: {transaction.sinceBlock} block - To:{' '}
-            {transaction.untilBlock ?? 'Now'}
-          </p>
-        )}
-        {transaction.type === 'ethereum' && (
-          <>
-            <div className="mb-1 text-sm">
-              <span className="text-secondary">Inbox: </span>
-              <EtherscanLink address={transaction.inbox} />
+        <p className="mb-1 text-secondary text-sm">
+          From: {transaction.sinceBlock} block - To:{' '}
+          {transaction.untilBlock ?? 'Now'}
+        </p>
+        <div className="mb-1 text-sm">
+          <span className="text-secondary">Inbox: </span>
+          <EtherscanLink address={transaction.inbox} />
+        </div>
+        {transaction.sequencers && transaction.sequencers.length > 0 && (
+          <div className="mb-1 text-sm">
+            <span className="text-secondary">Sequencers: </span>
+            <div className="inline-flex gap-2">
+              {transaction.sequencers?.map((sequencer) => (
+                <EtherscanLink
+                  key={sequencer}
+                  address={sequencer}
+                  className="whitespace-nowrap"
+                />
+              ))}
             </div>
-            {transaction.sequencers && transaction.sequencers.length > 0 && (
-              <div className="mb-1 text-sm">
-                <span className="text-secondary">Sequencers: </span>
-                <div className="inline-flex gap-2">
-                  {transaction.sequencers?.map((sequencer) => (
-                    <EtherscanLink
-                      key={sequencer}
-                      address={sequencer}
-                      className="whitespace-nowrap"
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {transaction.topics && transaction.topics.length > 0 && (
-              <div className="mb-1 text-sm">
-                <span className="text-secondary">Topics: </span>
-                <div>
-                  {transaction.topics?.map((topic) => (
-                    <span key={topic}>{topic}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        )}
-
-        {transaction.type === 'celestia' && (
-          <div className="mb-1 text-secondary text-sm">
-            <span>Namespace: </span>
-            <span className="wrap-break-word">{transaction.namespace}</span>
           </div>
         )}
-
-        {transaction.type === 'avail' && (
-          <div className="mb-1 text-secondary text-sm">
-            <span>App IDs: </span>
-            <span>{transaction.appIds.join(', ')}</span>
-          </div>
-        )}
-
-        {transaction.type === 'eigen-da' && (
-          <div className="mb-1 text-secondary text-sm">
-            <span>Customer ID: </span>
-            <span className="wrap-break-word">{transaction.customerId}</span>
+        {transaction.topics && transaction.topics.length > 0 && (
+          <div className="mb-1 text-sm">
+            <span className="text-secondary">Topics: </span>
+            <div>
+              {transaction.topics?.map((topic) => (
+                <span key={topic}>{topic}</span>
+              ))}
+            </div>
           </div>
         )}
       </div>

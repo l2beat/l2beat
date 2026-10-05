@@ -1,5 +1,5 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
+import type { EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
@@ -100,116 +100,6 @@ describe(DaService.name, () => {
             daLayer: 'ethereum',
             timestamp: UnixTime.toStartOf(TIME, 'hour'),
             totalSize: 300n,
-          },
-        ],
-        latestTimestamp: TIME,
-      })
-    })
-
-    it('should match celestia blobs', async () => {
-      const TIME = UnixTime.now()
-
-      const mockBlobs = [
-        // blob matching avail project-avail-1
-        {
-          type: 'celestia',
-          daLayer: 'celestia',
-          namespace: 'celestia-1',
-          blockTimestamp: TIME,
-          blockNumber: 1,
-          size: BigInt(100),
-        } as CelestiaBlob,
-        // blob not matching any project
-        {
-          type: 'celestia',
-          daLayer: 'celestia',
-          namespace: 'any',
-          size: BigInt(200),
-          blockTimestamp: TIME,
-        } as CelestiaBlob,
-      ]
-
-      const mockRecords: DataAvailabilityRecord[] = []
-
-      const result = service.generateRecords(
-        mockBlobs,
-        mockRecords,
-        MOCK_CELESTIA_CONFIGS,
-      )
-
-      expect(result).toEqual({
-        records: [
-          {
-            configurationId: 'cel-1',
-            projectId: 'celestia',
-            daLayer: 'celestia',
-            timestamp: UnixTime.toStartOf(TIME, 'hour'),
-            totalSize: 300n,
-          },
-          {
-            configurationId: 'cel-2',
-            projectId: 'project-celestia-1',
-            daLayer: 'celestia',
-            timestamp: UnixTime.toStartOf(TIME, 'hour'),
-            totalSize: 100n,
-          },
-        ],
-        latestTimestamp: TIME,
-      })
-    })
-
-    it('should match avail blobs', async () => {
-      const TIME = UnixTime.now()
-
-      const mockBlobs = [
-        // blob matching avail project-avail-1
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'avail-1',
-          blockTimestamp: TIME,
-          size: BigInt(100),
-        } as AvailBlob,
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'avail-2',
-          blockTimestamp: TIME,
-          size: BigInt(150),
-        } as AvailBlob,
-        // blob not matching any project
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'any',
-          size: BigInt(200),
-          blockTimestamp: TIME,
-        } as AvailBlob,
-      ]
-
-      const mockRecords: DataAvailabilityRecord[] = []
-
-      const result = service.generateRecords(
-        mockBlobs,
-        mockRecords,
-        MOCK_AVAIL_CONFIGS,
-      )
-
-      expect(result).toEqual({
-        records: [
-          {
-            configurationId: 'av-1',
-            projectId: 'avail',
-            daLayer: 'avail',
-            timestamp: UnixTime.toStartOf(TIME, 'hour'),
-            totalSize: 450n,
-          },
-          {
-            configurationId: 'av-2',
-            projectId: 'project-avail-1',
-            daLayer: 'avail',
-            timestamp: UnixTime.toStartOf(TIME, 'hour'),
-            totalSize: 250n,
           },
         ],
         latestTimestamp: TIME,
@@ -383,42 +273,6 @@ const MOCK_ETHEREUM_CONFIGS: BlockDaIndexedConfig[] = [
     projectId: ProjectId('project-ethereum-2'),
     inbox: 'Ethereum-2-inbox',
     sequencers: [],
-    sinceBlock: 0,
-  },
-]
-
-const MOCK_CELESTIA_CONFIGS: BlockDaIndexedConfig[] = [
-  {
-    configurationId: 'cel-1',
-    type: 'baseLayer' as const,
-    projectId: ProjectId('celestia'),
-    daLayer: ProjectId('celestia'),
-    sinceBlock: 0,
-  },
-  {
-    configurationId: 'cel-2',
-    type: 'celestia' as const,
-    daLayer: ProjectId('celestia'),
-    projectId: ProjectId('project-celestia-1'),
-    namespace: 'celestia-1',
-    sinceBlock: 0,
-  },
-]
-
-const MOCK_AVAIL_CONFIGS: BlockDaIndexedConfig[] = [
-  {
-    configurationId: 'av-1',
-    type: 'baseLayer' as const,
-    projectId: ProjectId('avail'),
-    daLayer: ProjectId('avail'),
-    sinceBlock: 0,
-  },
-  {
-    configurationId: 'av-2',
-    type: 'avail' as const,
-    daLayer: ProjectId('avail'),
-    projectId: ProjectId('project-avail-1'),
-    appIds: ['avail-1', 'avail-2'],
     sinceBlock: 0,
   },
 ]

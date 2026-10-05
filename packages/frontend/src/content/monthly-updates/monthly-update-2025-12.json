@@ -68,28 +68,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "ELIP-012: Incentive Council Proposed",
-          "content": "EigenFoundation [proposed](https://forum.eigenlayer.xyz/t/elip-012-incentive-council/14753) ELIP-012 to create an Incentive Council under Protocol Council oversight that can actively steer EIGEN emissions for EigenLayer and EigenCloud within the ELIP-approved inflation limits. The goal is to move beyond the rigid, programmatic incentives that jump-started restaking and early AVS launches, toward a more flexible system that rewards productive stake and drives organic AVS yield.\n\nThe council would manage allocation of emissions, keep rewards distribution responsive, and support EigenCloud growth with clear governance accountability. It would also introduce fees that capture value created across EigenCloud and participating AVSs, aligning that value with the EIGEN token while preserving prudent guardrails and stewardship.",
-          "tags": ["governance"]
-        },
-        {
-          "title": "A New Era of EIGEN Incentives",
-          "content": "EigenCloud [outlines](https://blog.eigencloud.xyz/a-new-era-of-eigen-incentives/) “A New Era of EIGEN Incentives” tied to ELIP-12, which would create an Incentives Committee empowered to steer emissions toward productive activity, introduce a fee model, and route value back to EIGEN. On subsidized stake, the committee proposes a 20% fee on AVS rewards flowing to a fee contract for buybacks, and 100% of EigenAI, EigenCompute, and EigenDA cloud fees (after operator costs) going to the same contract.\n\nThe mandate includes reducing rewards to idle stake, prioritizing fee-paying AVSs and slashable or redistributable stake, and gaining the agility to reallocate emissions without repeated contract upgrades; total emission caps would remain under Protocol Council control. If ratified, the rollout will proceed in two steps: forming the committee, then shipping its first policy changes, with an early focus on attracting capital to live, fee-generating AVSs and bootstrapping apps on EigenCloud.",
-          "tags": ["governance"]
-        },
-        {
-          "title": "OpenFront x EigenCloud: Verifiable Tournaments Go Live",
-          "content": "EigenCloud and OpenFront [ran](https://blog.eigencloud.xyz/openfront-eigencloud-verifiable-tournaments/) the first verifiable tournament on OpenFront powered by EigenCompute, turning real-money competitions into a plug-and-play experience while keeping gameplay off-chain and snappy. Results are computed in a way anyone can verify, then payouts settle on-chain automatically in USDC, removing manual reviews, frozen payment accounts, and trust bottlenecks.\n\nThe Winter Championship Finals validated the flow with five teams and 30-plus players, more than 200K impressions, over 20K live viewers, multiple YouTube streams, and strong social engagement, all without changing how the game feels."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

@@ -10,6 +10,7 @@ import {
   optionToRange,
   rangeToResolution,
 } from '~/utils/range/range'
+import { withoutDeprecatedDaLayers } from './utils/consts'
 import {
   groupByTimestampAndDaLayerId,
   sumGroupedDataPosted,
@@ -53,7 +54,7 @@ export async function getProjectsDataPosted(
     [from - 7 * UnixTime.DAY, to],
   )
 
-  return buildProjectsDataPosted(records, from, to)
+  return buildProjectsDataPosted(withoutDeprecatedDaLayers(records), from, to)
 }
 
 export function buildProjectsDataPosted(

@@ -14,14 +14,4 @@ export interface EthereumBlob extends DaBlobBase {
   topics: string[]
 }
 
-export interface AvailBlob extends DaBlobBase {
-  type: 'avail'
-  appId: string
-}
-
-export interface CelestiaBlob extends DaBlobBase {
-  type: 'celestia'
-  namespace: string
-}
-
-export type DaBlob = EthereumBlob | AvailBlob | CelestiaBlob
+export type DaBlob = EthereumBlob

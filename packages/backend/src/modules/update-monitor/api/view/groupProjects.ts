@@ -88,10 +88,7 @@ export function groupProjects(
       name: 'DA Projects',
       assignees: ['🐿', '🐱'],
       predicate: (p) =>
-        projectMap.get(p.name)?.isDaLayer ||
-        p.name === 'blobstream' ||
-        p.name === 'vector' ||
-        p.name === 'shared-eigenlayer',
+        projectMap.get(p.name)?.isDaLayer || p.name === 'shared-eigenlayer',
     },
     {
       name: 'DeFi',

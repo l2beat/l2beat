@@ -13,7 +13,6 @@ import {
   COSTS_DESCRIPTION,
   DA_BRIDGE_LIVENESS_DESCRIPTION,
   DATA_POSTED_DESCRIPTION,
-  EIGENLAYER_DATA_SOURCE,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
   TRACKED_CONTRACTS_CHANGED_WARNING,
@@ -85,14 +84,8 @@ export function renderDataPostedSection(
   >,
   level: number,
 ) {
-  const allLayers = [...props.pastDaLayers, ...props.currentDaLayers]
   return joinBlocks([
     `${DATA_POSTED_DESCRIPTION} ${describeDaLayers(props)}`.trimEnd(),
-    renderDataSource(
-      allLayers.some((layer) => layer.name === 'EigenDA')
-        ? EIGENLAYER_DATA_SOURCE
-        : undefined,
-    ),
     htmlPagePointer('The interactive data posted chart is shown', props.id),
     subsection(
       level,
@@ -318,36 +311,22 @@ function formatDaTrackingConfig(config: DaTrackingConfig) {
   return `DA layer ${config.daLayerName}: ${details.join('; ')}`
 }
 
-/** EigenDA tracking is bounded by time, the other layers by Ethereum block. */
 function describeDaTrackingRange(config: DaTrackingConfig) {
-  return config.type === 'eigen-da'
-    ? `from ${formatUtcDateTime(config.sinceTimestamp)} to ${config.untilTimestamp ? formatUtcDateTime(config.untilTimestamp) : 'now'}`
-    : `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
+  return `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
 }
 
 function isDaTrackingHistorical(config: DaTrackingConfig) {
-  return config.type === 'eigen-da'
-    ? !!config.untilTimestamp
-    : !!config.untilBlock
+  return !!config.untilBlock
 }
 
-/** What identifies the project's data on each layer. */
+/** What identifies the project's blobs on Ethereum. */
 function describeDaTrackingTarget(config: DaTrackingConfig): string[] {
-  switch (config.type) {
-    case 'ethereum':
-      return compact([
-        `inbox: ${etherscanLink(config.inbox)}`,
-        config.sequencers?.length &&
-          `sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`,
-        config.topics?.length && `topics: ${config.topics.join(', ')}`,
-      ])
-    case 'celestia':
-      return [`namespace: ${config.namespace}`]
-    case 'avail':
-      return [`app IDs: ${config.appIds.join(', ')}`]
-    case 'eigen-da':
-      return [`customer ID: ${config.customerId}`]
-  }
+  return compact([
+    `inbox: ${etherscanLink(config.inbox)}`,
+    config.sequencers?.length &&
+      `sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`,
+    config.topics?.length && `topics: ${config.topics.join(', ')}`,
+  ])
 }
 
 /** The HTML links tracked addresses to Etherscan. */

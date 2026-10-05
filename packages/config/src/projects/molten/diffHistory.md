@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xe9ae9c629ac68b1a84e36126904e51fba094b369
+
+# Diff at Mon, 05 Oct 2026 10:59:03 GMT:
+
+- id: 9409cf5f
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@a75295231feb8dffb1ce44d0210944af7687f7e0 block: 1782746641
+- current timestamp: 1782746641
+
+## Description
+
+Blobstream contracts are now discovered here instead of referenced from the blobstream project, which was removed with the rest of the alt-DA projects.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746641 (main branch discovery), not current.
+
+```diff
+    contract SP1Blobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      name:
+-        "ArbitrumBlobstream"
++        "SP1Blobstream"
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "blobstream"
+      template:
++        "succinct/SP1Blobstream"
+      sourceHashes:
++        ["0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858","0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
+      deployerAddress:
++        "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1710651080
+      sinceBlock:
++        191198934
+      values:
++        {"$admin":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],"$implementation":"arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416","$pastUpgrades":[["2024-03-17T04:51:20.000Z","0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",["arb1:0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]],["2024-03-18T01:19:36.000Z","0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",["arb1:0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]],["2024-08-26T18:53:22.000Z","0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",["arb1:0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]],["2024-12-02T19:09:05.000Z","0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",["arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416"]]],"$upgradeCount":4,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]}},"blobstreamProgramVkey":"0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745","checkRelayer":true,"DATA_COMMITMENT_MAX":10000,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","frozen":false,"GUARDIAN_ROLE":"0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041","guardians":["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],"headerRangeFunctionId_deprecated":"0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0","isRelayer1Approved":false,"isRelayer2Approved":true,"isRelayer3Approved":true,"latestBlock":11740800,"nextHeaderFunctionId_depcrecated":"0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef","relayers":["arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"],"state_proofNonce":19228,"TIMELOCK_ROLE":"0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05","verifier":"arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e","VERSION":"1.1.0"}
+    }
+```
+
+```diff
++   Status: CREATED
+    external contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe18cffdc298fc6de0ed682c50b92c961b8f20151
 
 # Diff at Wed, 23 Sep 2026 05:47:59 GMT:

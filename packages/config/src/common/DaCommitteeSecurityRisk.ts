@@ -1,15 +1,5 @@
 import type { DacInfo, TableReadyValue } from '../types'
 
-function RobustAndDiverseCommittee(value?: string): TableReadyValue {
-  return {
-    value: value ?? 'Permissionless',
-    sentiment: 'good',
-    description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment. 
-    Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators processing the new operator's request to join the active set.`,
-    orderHint: 2,
-  }
-}
-
 function LimitedCommitteeSecurity(
   value?: string,
   externalMembersPercentage?: string,
@@ -39,42 +29,6 @@ function NoCommitteeSecurity(value?: string): TableReadyValue {
     description:
       'The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.',
     orderHint: -1,
-  }
-}
-
-function NoDiversityCommitteeSecurity(value?: string): TableReadyValue {
-  return {
-    value: value ?? 'None',
-    sentiment: 'bad',
-    description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
-    However, the committee is not diverse enough to prevent a single entity from controlling the majority of the committee.
-    `,
-    orderHint: -1,
-  }
-}
-
-function NoHonestMinimumCommitteeSecurity(
-  value?: string,
-  honestMembersPercentage?: string,
-): TableReadyValue {
-  return {
-    value: value ?? 'None',
-    sentiment: 'bad',
-    description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
-   Currently, an honest minority is not able to prevent an unavailable data commitment from being accepted, as this committee requires ${honestMembersPercentage}% of members to be honest. `,
-    orderHint: -1,
-  }
-}
-
-function TeeCommitteeSecurity(value?: string): TableReadyValue {
-  return {
-    value: value ?? 'TEE-based',
-    sentiment: 'warning',
-    description: `The committee security is based on Trusted Execution Environments (TEEs) with on-chain key registration and verification. 
-    TEE attestation keys are registered on-chain, providing transparency and governance control over valid TEE configurations. 
-    However, compromised TEE keys can still sign false availability attestations before governance can revoke them, creating a timing window for attacks. 
-    The system also has infrastructure dependencies on the TEE provider (e.g., Intel's Attestation Service) and requires coordinated responses to TCB recovery events when new vulnerabilities are discovered.`,
-    orderHint: 0,
   }
 }
 
@@ -156,11 +110,6 @@ function factorial(num: number): number {
 }
 
 export const DaCommitteeSecurityRisk = {
-  RobustAndDiverseCommittee,
-  LimitedCommitteeSecurity,
   NoCommitteeSecurity,
-  NoDiversityCommitteeSecurity,
-  NoHonestMinimumCommitteeSecurity,
-  TeeCommitteeSecurity,
   AutoDAC,
 }

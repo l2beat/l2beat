@@ -114,8 +114,6 @@ export function l3RisksShownText(isCombined: boolean) {
   return `The information below reflects ${isCombined ? 'combined L2 & L3' : 'individual L3'} risks.`
 }
 
-export const EIGENLAYER_DATA_SOURCE = 'API provided by EigenLayer'
-
 export function anonymitySetHistoricDescription(windowDays: number) {
   return `How many unique addresses you could have blended in with if you withdrew on a particular day after depositing during the previous ${windowDays} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`
 }

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -49,13 +49,5 @@ export const stack: ScalingProject = opStackL3({
     ],
   },
   genesisTimestamp: UnixTime(1709683711),
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M=',
-    },
-  ],
   isNodeAvailable: 'UnderReview',
 })

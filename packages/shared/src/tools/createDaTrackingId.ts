@@ -1,28 +1,12 @@
 import { createHash } from 'crypto'
 
-export type DaTrackingIdInput =
-  | {
-      type: 'ethereum'
-      daLayer: string
-      inbox: string
-      sequencers?: string[]
-      topics?: string[]
-    }
-  | {
-      type: 'celestia'
-      daLayer: string
-      namespace: string
-    }
-  | {
-      type: 'avail'
-      daLayer: string
-      appIds: string[]
-    }
-  | {
-      type: 'eigen-da'
-      daLayer: string
-      customerId: string
-    }
+export interface DaTrackingIdInput {
+  type: 'ethereum'
+  daLayer: string
+  inbox: string
+  sequencers?: string[]
+  topics?: string[]
+}
 
 /**
  * Derives the backend DA indexer configuration id. The id is a content hash of
@@ -39,25 +23,12 @@ export function createDaTrackingId(config: DaTrackingIdInput): string {
   // we're running two versions of DA in parallel to rollout new features
   input.push('v2')
 
-  switch (config.type) {
-    case 'ethereum':
-      input.push(config.inbox)
-      if (config.sequencers) {
-        input.push(...[...config.sequencers].sort((a, b) => a.localeCompare(b)))
-      }
-      if (config.topics) {
-        input.push(...[...config.topics].sort((a, b) => a.localeCompare(b)))
-      }
-      break
-    case 'celestia':
-      input.push(config.namespace)
-      break
-    case 'avail':
-      input.push(...[...config.appIds].sort((a, b) => a.localeCompare(b)))
-      break
-    case 'eigen-da':
-      input.push(config.customerId)
-      break
+  input.push(config.inbox)
+  if (config.sequencers) {
+    input.push(...[...config.sequencers].sort((a, b) => a.localeCompare(b)))
+  }
+  if (config.topics) {
+    input.push(...[...config.topics].sort((a, b) => a.localeCompare(b)))
   }
 
   const hash = createHash('sha1').update(input.join('')).digest('hex')

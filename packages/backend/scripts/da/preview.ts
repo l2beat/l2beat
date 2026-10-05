@@ -22,12 +22,9 @@ import {
 import { type BlobCache, createBlobSource } from './blobSource'
 import { previewBlockLayer } from './blockPreview'
 import { createPreviewClients } from './clients'
-import { previewEigen } from './eigenPreview'
 import { type ExpectedCoverage, findRecordGaps } from './gaps'
 import { summarizeGaps, summarizeRecords, writePreviewJson } from './output'
 import { parseTimeArg, resolveWindow } from './range'
-
-const LAYERS = ['ethereum', 'celestia', 'avail', 'eigenda'] as const
 
 const SNAPSHOT_PATH = path.join(
   __dirname,
@@ -60,12 +57,6 @@ const args = {
     short: 't',
     description: 'Window end - unix seconds or ISO date (default: now)',
   }),
-  layer: option({
-    type: optional(string),
-    long: 'layer',
-    short: 'l',
-    description: `Only preview a single DA layer (${LAYERS.join('|')})`,
-  }),
 }
 
 const cmd = command({
@@ -79,13 +70,6 @@ const cmd = command({
     const logger = initLogger(env)
     const start = Date.now()
 
-    if (args.layer && !LAYERS.includes(args.layer as (typeof LAYERS)[number])) {
-      logger.error(
-        `Unknown layer '${args.layer}' - use one of: ${LAYERS.join(', ')}`,
-      )
-      process.exit(1)
-    }
-
     const snapshotDiff = printSnapshotDiff(logger)
 
     const dbUrl = env.optionalString('DA_PREVIEW_DB_URL')
@@ -98,28 +82,13 @@ const cmd = command({
     const ps = new ProjectService()
     const daConfig = await getDaTrackingConfig(ps, env)
 
-    const enabledLayers = new Set(
-      [...daConfig.blockLayers, ...daConfig.timestampLayers].map((l) => l.name),
+    const blockConfigs = daConfig.blockProjects.filter(
+      (c) => !args.project || c.projectId === args.project,
     )
-    for (const layer of LAYERS.filter((l) => !enabledLayers.has(l))) {
-      logger.warn(`Layer ${layer} disabled - missing env url, skipping it`)
-    }
 
-    const projectFilter = (c: { projectId: string }) =>
-      !args.project || c.projectId === args.project
-    const layerFilter = (c: { daLayer: string }) =>
-      !args.layer || c.daLayer === args.layer
-
-    const blockConfigs = daConfig.blockProjects
-      .filter(projectFilter)
-      .filter(layerFilter)
-    const timestampConfigs = daConfig.timestampProjects
-      .filter(projectFilter)
-      .filter(layerFilter)
-
-    if (blockConfigs.length === 0 && timestampConfigs.length === 0) {
+    if (blockConfigs.length === 0) {
       logger.error(
-        'No matching DA tracking configurations - check the project id, layer filter and env urls',
+        'No matching DA tracking configurations - check the project id and env urls',
       )
       process.exit(1)
     }
@@ -171,17 +140,6 @@ const cmd = command({
         layerConfigs,
         window,
         source,
-        logger,
-      )
-      records.push(...result.records)
-      expected.push(...result.expected)
-    }
-
-    if (clients.eigen && timestampConfigs.length > 0) {
-      const result = await previewEigen(
-        clients.eigen,
-        timestampConfigs,
-        window,
         logger,
       )
       records.push(...result.records)

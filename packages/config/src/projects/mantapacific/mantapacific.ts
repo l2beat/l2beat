@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -44,14 +44,6 @@ export const mantapacific: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
-    },
-  ],
   associatedTokens: ['MANTA'],
   chainConfig: {
     name: 'mantapacific',

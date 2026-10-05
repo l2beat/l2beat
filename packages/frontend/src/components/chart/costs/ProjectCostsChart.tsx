@@ -57,9 +57,6 @@ export function ProjectCostsChart({
         blobsEth,
         blobsUsd,
         ethereum,
-        celestia,
-        avail,
-        eigenda,
       ]) => {
         return {
           timestamp,
@@ -84,9 +81,6 @@ export function ProjectCostsChart({
                 ? overheadEth
                 : overheadGas,
           ethereum,
-          celestia,
-          avail,
-          eigenda,
         }
       },
     )

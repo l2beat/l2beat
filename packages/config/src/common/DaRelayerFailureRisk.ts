@@ -8,12 +8,6 @@ const SelfPropose: TableReadyValue = {
     'Anyone can relay data availability commitments to the DA bridge. In case of current relayer failure, users can collect attestations from committee members and propose new data availability commitments to the DA bridge.',
 }
 
-const Whitelist: TableReadyValue = {
-  value: 'Whitelist',
-  sentiment: 'warning',
-  description: '',
-}
-
 const NoMechanism: TableReadyValue = {
   value: 'No mechanism',
   sentiment: 'bad',
@@ -31,7 +25,6 @@ function Governance(delaySeconds: number): TableReadyValue {
 
 export const DaRelayerFailureRisk = {
   SelfPropose,
-  Whitelist,
   Governance,
   NoMechanism,
 }

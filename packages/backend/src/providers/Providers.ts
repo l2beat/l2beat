@@ -1,10 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  AvailDaProvider,
   BalanceProvider,
   BlockProvider,
   BlockTimestampProvider,
-  CelestiaDaProvider,
   CirculatingSupplyProvider,
   CoingeckoQueryService,
   DaBeatStatsProvider,
@@ -95,14 +93,6 @@ export class Providers {
         new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
       )
     }
-    if (this.clients.celestia) {
-      blobProviders.push(
-        new CelestiaDaProvider(this.clients.celestia, 'celestia'),
-      )
-    }
-    if (this.clients.avail) {
-      blobProviders.push(new AvailDaProvider(this.clients.avail, 'avail'))
-    }
     this.da = new DaProvider(blobProviders)
 
     this.blockTimestamp = new BlockTimestampProvider({
@@ -129,13 +119,7 @@ export class Providers {
       logger,
     )
     this.balance = new BalanceProvider(this.clients.rpcClients, logger)
-    this.daBeatStats = new DaBeatStatsProvider(
-      this.clients.beacon,
-      this.clients.near,
-      this.clients.celestiaDaBeat,
-      this.clients.availDaBeat,
-      this.clients.espresso,
-    )
+    this.daBeatStats = new DaBeatStatsProvider(this.clients.beacon)
 
     if (ethereumRpcClient) {
       this.blobPrice = new BlobPriceProvider(logger, ethereumRpcClient)

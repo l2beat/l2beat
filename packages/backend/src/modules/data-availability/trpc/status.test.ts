@@ -3,14 +3,13 @@ import { expect } from 'earl'
 import type {
   BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
-  TimestampDaIndexedConfig,
 } from '../../../config/Config'
 import { getDaTrackingStatusRows, STALE_AFTER_SECONDS } from './status'
 
 describe(getDaTrackingStatusRows.name, () => {
   const now = UnixTime(1_700_000_000)
 
-  it('returns active block and timestamp configs', () => {
+  it('returns only active configs', () => {
     const result = getDaTrackingStatusRows({
       configs: mockTrackingConfig({
         blockProjects: [
@@ -20,40 +19,26 @@ describe(getDaTrackingStatusRows.name, () => {
             untilBlock: 123,
           }),
         ],
-        timestampProjects: [
-          mockEigenConfig({ configurationId: 'active-eigen-da' }),
-          mockEigenConfig({
-            configurationId: 'ended-eigen-da',
-            untilTimestamp: now,
-          }),
-        ],
       }),
       latestTimestamps: [
         {
           configurationId: 'active-ethereum',
           latestTimestamp: now - UnixTime.HOUR,
         },
-        {
-          configurationId: 'active-eigen-da',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
       ],
       now,
     })
 
-    expect(result.map((row) => row.configId)).toEqual([
-      'active-eigen-da',
-      'active-ethereum',
-    ])
+    expect(result.map((row) => row.configId)).toEqual(['active-ethereum'])
   })
 
   it('marks configs as missing, stale, or fresh and sorts urgent rows first', () => {
     const result = getDaTrackingStatusRows({
       configs: mockTrackingConfig({
         blockProjects: [
-          mockCelestiaConfig({ configurationId: 'fresh' }),
-          mockCelestiaConfig({ configurationId: 'missing' }),
-          mockCelestiaConfig({ configurationId: 'stale' }),
+          mockEthereumConfig({ configurationId: 'fresh' }),
+          mockEthereumConfig({ configurationId: 'missing' }),
+          mockEthereumConfig({ configurationId: 'stale' }),
         ],
       }),
       latestTimestamps: [
@@ -87,21 +72,6 @@ describe(getDaTrackingStatusRows.name, () => {
             sequencers: ['0x456'],
             topics: ['0x789'],
           }),
-          mockCelestiaConfig({
-            configurationId: 'celestia',
-            namespace: 'namespace',
-          }),
-          mockAvailConfig({
-            configurationId: 'avail',
-            appIds: ['1', '2'],
-          }),
-        ],
-        timestampProjects: [
-          mockEigenConfig({
-            configurationId: 'eigenda',
-            customerId: 'customer',
-            sinceTimestamp: now - UnixTime.DAY,
-          }),
         ],
       }),
       latestTimestamps: [],
@@ -115,8 +85,7 @@ describe(getDaTrackingStatusRows.name, () => {
       type: 'baseLayer',
       projectId: 'ethereum',
       daLayer: 'ethereum',
-      since: 100,
-      sinceUnit: 'block',
+      sinceBlock: 100,
       latestTimestamp: undefined,
       ageSeconds: undefined,
       details: 'base layer',
@@ -125,22 +94,6 @@ describe(getDaTrackingStatusRows.name, () => {
     expect(rowsByConfigId.get('ethereum')?.details).toEqual(
       'inbox: 0x123; sequencers: 0x456; topics: 0x789',
     )
-    expect(rowsByConfigId.get('celestia')?.details).toEqual(
-      'namespace: namespace',
-    )
-    expect(rowsByConfigId.get('avail')?.details).toEqual('app IDs: 1, 2')
-    expect(rowsByConfigId.get('eigenda')).toEqual({
-      configId: 'eigenda',
-      type: 'eigen-da',
-      projectId: 'project-a',
-      daLayer: 'eigenda',
-      since: now - UnixTime.DAY,
-      sinceUnit: 'timestamp',
-      latestTimestamp: undefined,
-      ageSeconds: undefined,
-      details: 'customer ID: customer',
-      status: 'missing',
-    })
   })
 })
 
@@ -149,9 +102,7 @@ function mockTrackingConfig(
 ): DataAvailabilityTrackingConfig {
   return {
     blockLayers: [],
-    timestampLayers: [],
     blockProjects: [],
-    timestampProjects: [],
     ...config,
   }
 }
@@ -176,48 +127,6 @@ function mockEthereumConfig(
     daLayer: ProjectId('ethereum'),
     inbox: '0x0000000000000000000000000000000000000001',
     sinceBlock: 100,
-    ...config,
-  }
-}
-
-function mockCelestiaConfig(
-  config: Partial<Extract<BlockDaIndexedConfig, { type: 'celestia' }>> = {},
-): BlockDaIndexedConfig {
-  return {
-    configurationId: 'celestia',
-    projectId: ProjectId('project-a'),
-    type: 'celestia',
-    daLayer: ProjectId('celestia'),
-    namespace: 'namespace',
-    sinceBlock: 100,
-    ...config,
-  }
-}
-
-function mockAvailConfig(
-  config: Partial<Extract<BlockDaIndexedConfig, { type: 'avail' }>> = {},
-): BlockDaIndexedConfig {
-  return {
-    configurationId: 'avail',
-    projectId: ProjectId('project-a'),
-    type: 'avail',
-    daLayer: ProjectId('avail'),
-    appIds: ['1'],
-    sinceBlock: 100,
-    ...config,
-  }
-}
-
-function mockEigenConfig(
-  config: Partial<Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>> = {},
-): TimestampDaIndexedConfig {
-  return {
-    configurationId: 'eigenda',
-    projectId: ProjectId('project-a'),
-    type: 'eigen-da',
-    daLayer: ProjectId('eigenda'),
-    customerId: 'customer',
-    sinceTimestamp: UnixTime(1_600_000_000),
     ...config,
   }
 }
