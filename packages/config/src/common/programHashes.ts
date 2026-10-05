@@ -115,6 +115,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash. The range commitment is the \`hash_u32()\` digest converted to big-endian bytes.
 `
 
+const OP_SUCCINCT_V3141_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.8.1\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.8.1\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [succinctlabs/op-succinct](https://github.com/succinctlabs/op-succinct) repo: \`git checkout v3.14.1\`. Commit hash should be \`35d98244c9b4ccc2b93f016be249788c5d6d5372\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the Ethereum DA range ELF from source: from \`programs/range/ethereum\` run \`cargo prove build --elf-name range-elf-embedded --docker --tag v6.8.1 --output-directory ../../../elf\`.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.8.1 --output-directory ../../elf\`.
+5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -496,6 +512,14 @@ Verify:
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
   },
+  '0x00070992a03760456403e800b0bd1a0e907a85a5c2cffca292b5994b56b5363b': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -538,6 +562,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
+  },
+  '0x5ae13fed447a94f57d6ee8fc44cce8075ef994485121dcd27e75577d264f75b1': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
