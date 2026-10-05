@@ -233,13 +233,14 @@ function toRelayerConfig(
   source: ProjectPrivacyOnchainRelayerSource,
   minTimestamp: UnixTime,
 ): PrivacyRelayerActivityIndexerConfig {
+  const { address, sinceTimestamp, ...extractor } = source
   const base = {
     projectId,
-    chain: ChainSpecificAddress.longChain(source.address),
-    address: ChainSpecificAddress.address(source.address),
-    sinceTimestamp: Math.max(source.sinceTimestamp, minTimestamp),
-    event: getPrivacyRelayerExtractor(source.extractor).event,
-    extractor: source.extractor,
+    chain: ChainSpecificAddress.longChain(address),
+    address: ChainSpecificAddress.address(address),
+    sinceTimestamp: Math.max(sinceTimestamp, minTimestamp),
+    event: getPrivacyRelayerExtractor(extractor).event,
+    ...extractor,
   }
 
   return {

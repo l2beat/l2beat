@@ -8,7 +8,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { anonymitySetCoverageNote } from '~/components/projects/sections/sectionCopy'
 import { UserIcon } from '~/icons/User'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import {
   getAnonymitySetDescription,
@@ -66,6 +68,10 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
   const displayValue = formatInteger(anonymitySet.value)
   const steps = getAnonymitySetSteps(anonymitySet, projectName)
   const syncingNote = getAnonymitySetSyncingNote(anonymitySet)
+  const coverageNote = anonymitySetCoverageNote(
+    anonymitySet.coverage,
+    ANONYMITY_SET_WINDOW_DAYS,
+  )
 
   return (
     <Tooltip>
@@ -90,6 +96,9 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         </p>
         {syncingNote !== undefined && (
           <p className="mt-2 text-secondary">{syncingNote}</p>
+        )}
+        {coverageNote !== undefined && (
+          <p className="mt-2 text-secondary">{coverageNote}</p>
         )}
         <Callout
           className="mt-2 px-3 py-2"
