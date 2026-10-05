@@ -1,0 +1,26 @@
+{
+  "FrozenNotesRefundVerifier.sol": {
+    "hash": "0x5d55267ee005d05d45a308ff6053276ff510b8c1b1cb98729e0e7702c9679d1e",
+    "address": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  },
+  "UnprocessedDepositRefundVerifier.sol": {
+    "hash": "0x3ea198cde16f8721f12298a5e60de6838d18cc87753fa9a9481c6292e4a94f09",
+    "address": "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  },
+  "FrozenDepositRefundVerifier.sol": {
+    "hash": "0x2599443408cdb65c811611ef0f6b0aa4ac75624823fca394f22f8898c1440d5d",
+    "address": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  },
+  "ResolverVerifier.sol": {
+    "hash": "0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2",
+    "address": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  }
+}
