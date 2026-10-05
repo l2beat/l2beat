@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { checkCoverage } from './checkCoverage'
+import { checkVerdicts } from './checkVerdicts'
 import type { Finding } from './Finding'
 import {
   contextFor,
@@ -9,7 +9,7 @@ import {
   scrollChainDraft,
 } from './test/drafts'
 
-describe(checkCoverage.name, () => {
+describe(checkVerdicts.name, () => {
   const ctx = contextFor('ScrollChain')
   const error = (path: string, message: string): Finding => ({
     path,
@@ -17,7 +17,7 @@ describe(checkCoverage.name, () => {
   })
 
   it('accepts one verdict per worklist token', () => {
-    expect(runRule(checkCoverage, scrollChainDraft(), ctx)).toEqual([])
+    expect(runRule(checkVerdicts, scrollChainDraft(), ctx)).toEqual([])
   })
 
   it('reports each token with no verdict', () => {
@@ -27,7 +27,7 @@ describe(checkCoverage.name, () => {
         skip.item !== 'CommitBatch' &&
         skip.item !== 'isBatchFinalized(uint256)',
     )
-    expect(runRule(checkCoverage, draft, ctx)).toEqual([
+    expect(runRule(checkVerdicts, draft, ctx)).toEqual([
       error(
         'draft',
         'function isBatchFinalized(uint256) has no verdict; add it to the covers of the field that reads it, or to skips with one of user-activity, computation, unbounded, covered, not-state',
@@ -44,7 +44,7 @@ describe(checkCoverage.name, () => {
     const draft = draftOf({}, [
       { item: 'constructor(address _admin)', reason: 'covered' },
     ])
-    const messages = runRule(checkCoverage, draft, factory).map(
+    const messages = runRule(checkVerdicts, draft, factory).map(
       (finding) => `${finding.path}: ${finding.message}`,
     )
     expect(messages[0]).toEqual(
@@ -61,7 +61,7 @@ describe(checkCoverage.name, () => {
     const draft = draftOf({}, [
       { item: 'constructor(address)', reason: 'covered' },
     ])
-    const messages = runRule(checkCoverage, draft, {
+    const messages = runRule(checkVerdicts, draft, {
       ...full,
       worklist,
     }).map((finding) => `${finding.path}: ${finding.message}`)
@@ -73,7 +73,7 @@ describe(checkCoverage.name, () => {
   it('reports a second verdict where it appears, naming the first', () => {
     const draft = scrollChainDraft()
     draft.skips.push({ item: 'UpdateSequencer', reason: 'user-activity' })
-    expect(runRule(checkCoverage, draft, ctx)).toEqual([
+    expect(runRule(checkVerdicts, draft, ctx)).toEqual([
       error(
         'skips[15].item',
         '"UpdateSequencer" already has a verdict at fields.sequencers.covers[1]; give each worklist item exactly one verdict, in one field\'s covers or in one skip',
@@ -94,7 +94,7 @@ describe(checkCoverage.name, () => {
       ),
     }
     const doubles = (draft: Parameters<typeof runRule>[1]) =>
-      runRule(checkCoverage, draft, verifier)
+      runRule(checkVerdicts, draft, verifier)
         .filter((finding) => finding.message.includes('already has a verdict'))
         .map((finding) => `${finding.path}: ${finding.message}`)
 
@@ -145,7 +145,7 @@ describe(checkCoverage.name, () => {
       { item: 'addSequencer(address)', reason: 'not-state' },
       { item: 'isSequencr(address)', reason: 'covered' },
     )
-    const messages = runRule(checkCoverage, draft, ctx).map(
+    const messages = runRule(checkVerdicts, draft, ctx).map(
       (finding) => `${finding.path}: ${finding.message}`,
     )
     expect(messages).toEqual([
@@ -168,7 +168,7 @@ describe(checkCoverage.name, () => {
         ),
       },
     }
-    expect(runRule(checkCoverage, scrollChainDraft(), reduced)).toEqual([
+    expect(runRule(checkVerdicts, scrollChainDraft(), reduced)).toEqual([
       error(
         'fields.sequencers.covers[0]',
         '"isSequencer(address)" is not on the worklist; the existing template already decides it (a kept field answers it, or its ignoreMethods leaves it out); drop this verdict',

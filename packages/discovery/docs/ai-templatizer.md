@@ -1175,6 +1175,18 @@ regressions. Run 10 is the same suite on the Codex default model.
 | 8 | run 7 + the templatizer's own system prompt in place of the harness's (high), 2026-10-04 | 54/82 (65.9%) | 0 | 54/103 | 14 / 0 / 0 | 11/2/1 | 0.95M (0.39M) / 21k | 31 min |
 | 9 | run 8 + the `uint8` guidance, the R3 plurality and the construction hint (high), 2026-10-04 | 50/82 (61.0%) | 0 | 50/103 | 14 / 0 / 0 | 13/1/0 | 0.80M (0.24M) / 16k | 32 min |
 | 10 | run 9's code on the Codex default model (`gpt-6.1-sol`, high), 2026-10-04 | 58/82 (70.7%) | 0 | 58/103 | 14 / 0 / 0 | 13/1/0 | 0.95M (0.11M) / 29k | 15 min |
+| 11 | run 9's code on `gpt-5.6-luna` (high), 2026-10-04 | 51/82 (62.2%) | 0 | 51/103 | 13 / 0 / 1 | 9/4/1 | 1.66M (0.49M) / 137k | 30 min |
+| 12 | run 9's code on `gpt-5.6-terra` (high), 2026-10-04 | 53/82 (64.6%) | 0 | 53/103 | 14 / 0 / 0 | 12/2/0 | 1.09M (0.24M) / 52k | 13 min |
+| 13 | run 9's code on `gpt-6-luna` (high), 2026-10-04 | 49/82 (59.8%) | 0 | 49/103 | 13 / 0 / 1 | 9/2/3 | 2.04M (0.78M) / 81k | 22 min |
+
+Runs 11–13 compare Codex models to choose the default; the spec's "Model
+comparison" section has the table and the decision (keep the Codex default,
+`gpt-6.1-sol`). Both Lunas failed `fluent/FluentRollup` on a single stray
+closing brace in a one-line reply and did not fix it when told the position
+(5.6 omitted a `}`, 6 added one and resent the same bytes twice); Terra made
+the same slip and fixed it in round 2. The other three Codex models in the
+list (`gpt-6-terra`, `gpt-6.1-luna`, `gpt-6.1-terra`) are refused for a
+ChatGPT account.
 
 The denominator fell from 120 to 82 between runs 1 and 2 for reasons
 outside the model: metis (22 reachable fields, matched instead of authored)

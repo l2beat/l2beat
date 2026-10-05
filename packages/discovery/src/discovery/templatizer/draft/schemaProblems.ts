@@ -14,7 +14,7 @@ import { Reference } from '../../handlers/reference'
 import { SingleSlot } from '../../handlers/storageCommon'
 import { BytesFromString, NumberFromString } from '../../handlers/types'
 import { StorageHandlerDefinition } from '../../handlers/user/StorageHandler'
-import { closest } from '../closest'
+import { closest, levenshtein } from '../closest'
 
 export interface SchemaProblem {
   path: string
@@ -252,25 +252,9 @@ function unexpectedKey(key: string, allowed: string[]): string {
 /** A typo, not another word: two edits (one swap), or one per three characters. */
 function isNearMiss(a: string, b: string): boolean {
   return (
-    editDistance(a.toLowerCase(), b.toLowerCase()) <=
+    levenshtein(a.toLowerCase(), b.toLowerCase()) <=
     Math.max(2, Math.floor(Math.min(a.length, b.length) / 3))
   )
-}
-
-function editDistance(a: string, b: string): number {
-  let previous = Array.from({ length: b.length + 1 }, (_, j) => j)
-  for (let i = 1; i <= a.length; i++) {
-    const current = [i]
-    for (let j = 1; j <= b.length; j++) {
-      current[j] = Math.min(
-        (previous[j - 1] as number) + (a[i - 1] === b[j - 1] ? 0 : 1),
-        (previous[j] as number) + 1,
-        (current[j - 1] as number) + 1,
-      )
-    }
-    previous = current
-  }
-  return previous[b.length] as number
 }
 
 /** What a schema accepts, in words, for "expected …" messages. */

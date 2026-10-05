@@ -1,5 +1,5 @@
 /**
- * R3: every worklist token gets exactly one verdict.
+ * Every worklist token gets exactly one verdict.
  *
  * A token is a function signature (`isSequencer(address)`) or an event name
  * (`UpdateSequencer`). It is ruled on by appearing in one field's `covers`
@@ -29,7 +29,7 @@ interface Verdict {
   reads: boolean
 }
 
-export function checkCoverage(ctx: RuleContext): void {
+export function checkVerdicts(ctx: RuleContext): void {
   const tokens = worklistTokens(ctx.worklist)
   const known = new Set(tokens)
   const verdicts = new Map<string, Verdict>()
@@ -114,7 +114,7 @@ function unknownTokenHint(
   if (signatures.length > 0) {
     return `functions are written as signatures: ${signatures.join(' or ')}`
   }
-  const fragment = ctx.abi.lookupFunction(token).fragment
+  const fragment = ctx.abi.functionNamed(token)
   if (
     fragment !== undefined &&
     fragment.inputs.length === 0 &&

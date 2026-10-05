@@ -1,5 +1,5 @@
 /**
- * R4: field names V1 can hold without replacing anything.
+ * Field names V1 can hold without replacing anything.
  *
  * `getHandlers` keeps the first field of a name and puts template fields
  * before the system ones, so a draft field named like a baseline value

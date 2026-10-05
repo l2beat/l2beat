@@ -1,5 +1,5 @@
 /**
- * R2: the draft has the shape every later rule assumes.
+ * The draft has the shape every later rule assumes.
  *
  * Checked piece by piece so one reply gets every shape mistake back at
  * once: the envelope (`fields`, `skips`), each field, each handler against
@@ -13,6 +13,7 @@ import { validateBlip } from '../../../blip/validateBlip'
 import {
   type DraftHandler,
   DraftShape,
+  eventActions,
   HANDLER_TYPES,
   handlerSchemaFor,
   isHandlerType,
@@ -123,19 +124,14 @@ function checkWheres(
   handler: DraftHandler,
   findings: Findings,
 ): void {
-  for (const key of ['set', 'add', 'remove'] as const) {
-    const value = handler[key]
-    const actions = Array.isArray(value) ? value : [value]
-    actions.forEach((action, i) => {
-      if (!isPlainObject(action) || action.where === undefined) {
-        return
-      }
-      const problem = blipProblem('where', action.where)
-      if (problem !== undefined) {
-        const actionPath = Array.isArray(value) ? `${key}[${i}]` : key
-        findings.error(joinPath(path, `${actionPath}.where`), problem)
-      }
-    })
+  for (const { path: actionPath, action } of eventActions(handler)) {
+    if (!isPlainObject(action) || action.where === undefined) {
+      continue
+    }
+    const problem = blipProblem('where', action.where)
+    if (problem !== undefined) {
+      findings.error(joinPath(path, `${actionPath}.where`), problem)
+    }
   }
 }
 

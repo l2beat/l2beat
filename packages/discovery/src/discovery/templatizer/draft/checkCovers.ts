@@ -1,5 +1,5 @@
 /**
- * R8: a field covers only what its handler names.
+ * A field covers only what its handler names.
  *
  * `covers` is the model's claim that a worklist token is answered by this
  * field. For handlers that read one function (`call`, `array`) or a fixed

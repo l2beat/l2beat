@@ -24,7 +24,7 @@ export interface RuleContext {
   draft: Draft
   facts: ContractFacts
   worklist: Worklist
-  /** For the hints of the coverage check: which function a stray token names. */
+  /** For the hints of the verdict check: which function a stray token names. */
   abi: AbiIndex
   existingFieldNames: ReadonlySet<string>
   reads: ReadonlyMap<string, FieldReads>
@@ -40,7 +40,7 @@ export function buildRuleContext(
     draft,
     facts: ctx.facts,
     worklist: ctx.worklist,
-    abi: abiIndexOf(ctx.facts.abi),
+    abi: AbiIndex.of(ctx.facts.abi),
     existingFieldNames: new Set(ctx.existingFieldNames ?? []),
     reads: new Map(
       Object.entries(draft.fields).map(([name, field]) => [
@@ -50,16 +50,4 @@ export function buildRuleContext(
     ),
     findings,
   }
-}
-
-const indexes = new WeakMap<readonly string[], AbiIndex>()
-
-/** One parsed index per ABI array, since every round validates against the same one. */
-export function abiIndexOf(abi: readonly string[]): AbiIndex {
-  let index = indexes.get(abi)
-  if (index === undefined) {
-    index = AbiIndex.from(abi)
-    indexes.set(abi, index)
-  }
-  return index
 }

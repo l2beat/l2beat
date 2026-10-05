@@ -30,7 +30,7 @@ export interface ContractFacts {
   abi: string[]
   /** Source bundles as the analyzer holds them, for shapes and flattening. */
   bundles: PerContractSource[]
-  /** Every bundle flattened as V1 does at save time, for the prompt and R9. */
+  /** Every bundle flattened as V1 does at save time, for the prompt. */
   sources: FlatSource[]
   /** `getHashForMatchingFromSources(bundles)`: the shape the template is for. */
   shapeHash: Hash256

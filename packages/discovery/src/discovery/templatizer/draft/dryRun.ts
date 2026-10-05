@@ -1,5 +1,5 @@
 /**
- * R10: the draft runs for real before it is accepted.
+ * The draft runs for real before it is accepted.
  *
  * The validator proves a draft is well-formed; only execution proves it
  * reads something. The run goes through V1's own `HandlerExecutor` with the
@@ -30,6 +30,7 @@ import type { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import { getEventFragment } from '../../handlers/utils/getEventFragment'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
+import { AbiIndex } from '../abi/AbiIndex'
 import type { ContractFacts } from '../facts'
 import {
   type Draft,
@@ -109,7 +110,7 @@ export async function runTemplateFields(
   return run
 }
 
-/** R10 over a draft. Findings and notes are for draft fields only, never the base's. */
+/** The dry run of a draft. Findings and notes are for draft fields only, never the base's. */
 export async function dryRunDraft(
   provider: IProvider,
   handlerExecutor: HandlerExecutor,
@@ -339,10 +340,9 @@ interface UnreadDeclaration {
 }
 
 /**
- * Contracts that changed an event's parameters across upgrades declare it
- * twice, and the merged ABI keeps both. The declarations the field does
- * not read are counted for logs, one topic at a time as the event handler
- * fetches them, so a caching provider answers from the same entries.
+ * The declarations of the field's events that the field does not read are
+ * counted for logs, one topic at a time as the event handler fetches them,
+ * so a caching provider answers from the same entries.
  */
 async function unreadDeclarationsWithLogs(
   provider: IProvider,
@@ -350,9 +350,10 @@ async function unreadDeclarationsWithLogs(
   events: string[],
 ): Promise<UnreadDeclaration[]> {
   const read = new Set(events.map((event) => topicOf(event, facts.abi)))
-  const unread = otherDeclarations(events, facts.abi).filter(
-    (fragment) => !read.has(utils.Interface.getEventTopic(fragment)),
-  )
+  const names = new Set(events.map((event) => eventName(event, facts.abi)))
+  const unread = [...names]
+    .flatMap((name) => AbiIndex.of(facts.abi).eventDeclarations(name))
+    .filter((fragment) => !read.has(utils.Interface.getEventTopic(fragment)))
   const counted = await Promise.all(
     unread.map(async (fragment) => ({
       fragment: fragment.format(utils.FormatTypes.full),
@@ -366,23 +367,7 @@ async function unreadDeclarationsWithLogs(
   return counted.filter((declaration) => declaration.logCount > 0)
 }
 
-function otherDeclarations(
-  events: string[],
-  abi: readonly string[],
-): utils.EventFragment[] {
-  const names = new Set(events.map((event) => eventName(event, abi)))
-  const declarations = [...new Set(abi)]
-    .filter((entry) => [...names].some((n) => entry.startsWith(`event ${n}(`)))
-    .map((entry) => utils.Fragment.from(entry) as utils.EventFragment)
-  const seen = new Set<string>()
-  return declarations.filter((fragment) => {
-    const topic = utils.Interface.getEventTopic(fragment)
-    const fresh = !seen.has(topic)
-    seen.add(topic)
-    return fresh
-  })
-}
-
+/** The topic of the event the model's reference reads, resolved as V1 resolves it. */
 function topicOf(event: string, abi: readonly string[]): string | undefined {
   try {
     return utils.Interface.getEventTopic(getEventFragment(event, [...abi]))

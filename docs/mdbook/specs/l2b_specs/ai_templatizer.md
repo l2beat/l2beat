@@ -306,3 +306,35 @@ above.
   without `--ai` to leave the contract untemplatized on purpose.
 - Model processes run in their own process group and are killed when discovery
   exits.
+
+## Model comparison (2026-10-05)
+
+The quick suite, run once per model at `high` effort on the same code, to
+pick the default. Every committed template of the fourteen contracts is
+hidden, the model writes one, and the values it discovers are compared with
+the committed ones. "Found" counts the 82 handler fields a model could have
+written; a failed contract is one where no draft passed three rounds, which
+in `discover --ai` stops the run.
+
+| Model | Found | Regressions | Contracts failed | Repair rounds | Tokens in / out | Wall |
+| --- | --- | --- | --- | --- | --- | --- |
+| GPT-6.1 Sol (Codex default) | **58/82** | 0 | 0 | 1 of 14 | 0.95M / 29k | 15 min |
+| GPT-5.6 Terra (Codex) | 53/82 | 0 | 0 | 2 of 14 | 1.09M / 52k | 13 min |
+| GPT-5.6 Luna (Codex) | 51/82 | 0 | 1 | 5 of 14 | 1.66M / 137k | 30 min |
+| DeepSeek V4.1 Flash (opencode) | 50/82 | 0 | 0 | 1 of 14 | 0.80M / 303k | 32 min |
+| GPT-6 Luna (Codex) | 49/82 | 0 | 1 | 5 of 14 | 2.04M / 81k | 22 min |
+
+Repeat runs of one model land within a few fields of each other, so the four
+lower rows are indistinguishable from one another. Sol's lead is real and
+concentrated: it alone read Lighter's five `storage` slots off the source's
+layout (8/10 against 4/10 for every other model) and HubPool's four fields.
+Both Lunas failed the same contract (FluentRollup) on one stray closing brace
+in a single-line reply, and did not fix it when told the character position.
+GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
+account in Codex and were not run.
+
+Decision: the default stays the Codex default model, GPT-6.1 Sol. It finds
+the most, fails nothing, reasons least and needs only `codex`, which the
+researchers already have. GPT-5.6 Terra is the fallback if Sol's limits
+bind; the Lunas are not recommended. opencode remains supported for cheap
+models but is not required.

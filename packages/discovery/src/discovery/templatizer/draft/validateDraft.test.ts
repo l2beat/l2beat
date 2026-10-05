@@ -58,11 +58,11 @@ describe(validateDraft.name, () => {
         (finding) => finding.path,
       ),
     ).toEqual([
-      'fields.owner.covers[0]', // R3: UpdateProver twice
-      'skips[14].item', // R3: RevertBatch twice
-      'draft', // R3: CommitBatch has no verdict
-      'fields.owner', // R4: baseline getter
-      'fields.owner.covers[0]', // R8: hardcoded reads no events
+      'fields.owner.covers[0]', // UpdateProver has two verdicts
+      'skips[14].item', // RevertBatch has two verdicts
+      'draft', // CommitBatch has no verdict
+      'fields.owner', // a baseline getter's name
+      'fields.owner.covers[0]', // a hardcoded field reads no events
     ])
   })
 

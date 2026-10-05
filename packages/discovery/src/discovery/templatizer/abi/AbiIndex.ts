@@ -1,26 +1,22 @@
 /**
- * One parsed view of a human-readable ABI, shared by the worklist builder
- * and the coverage check's hints.
+ * One parsed view of a human-readable ABI, for the questions the templatizer
+ * asks of it: which functions need a verdict, which constructor V1 decodes
+ * with, every declaration of an event, and what a stray token names.
  *
- * A stray token in a draft is explained by what it names: a function the
- * baseline already reads, one that changes state, or the nearest existing
- * signatures. Duplicate fragments are dropped before parsing because merged
- * proxy and implementation ABIs repeat signatures and ethers logs a warning
- * per repeat.
+ * Duplicate fragments are dropped before parsing because merged proxy and
+ * implementation ABIs repeat signatures and ethers logs a warning per repeat.
+ * One index per ABI array: the worklist, the checks of every round and the
+ * dry run all ask about the same array.
  */
 import { utils } from 'ethers'
-import { closest, nameOf } from '../closest'
 
-export type Lookup<T> =
-  | { fragment: T; inAbi: boolean; error?: undefined }
-  | { fragment?: undefined; inAbi: false; error: string }
+const indexes = new WeakMap<readonly string[], AbiIndex>()
 
 export class AbiIndex {
   readonly functions: utils.FunctionFragment[]
   readonly events: utils.EventFragment[]
   /** The ABI's first constructor, the one V1's `constructorArgs` handler decodes with; undefined when none is declared. */
   readonly deploy: utils.ConstructorFragment | undefined
-  private readonly bySignature: Map<string, utils.FunctionFragment>
 
   private constructor(fragments: utils.Fragment[]) {
     const coder = new utils.Interface(fragments)
@@ -30,12 +26,18 @@ export class AbiIndex {
       (fragment): fragment is utils.ConstructorFragment =>
         fragment.type === 'constructor',
     )
-    this.bySignature = new Map(
-      this.functions.map((fragment) => [sighash(fragment), fragment]),
-    )
   }
 
-  static from(abi: readonly string[]): AbiIndex {
+  static of(abi: readonly string[]): AbiIndex {
+    let index = indexes.get(abi)
+    if (index === undefined) {
+      index = AbiIndex.parse(abi)
+      indexes.set(abi, index)
+    }
+    return index
+  }
+
+  private static parse(abi: readonly string[]): AbiIndex {
     const seen = new Set<string>()
     const fragments: utils.Fragment[] = []
     for (const entry of abi) {
@@ -50,58 +52,26 @@ export class AbiIndex {
   }
 
   /**
-   * `owner`, `owner()` or `function owner() view returns (address)`. A full
-   * fragment that is not in the ABI is still returned (with `inAbi: false`)
-   * because a field may call another contract whose ABI we do not hold.
+   * The function a token names: `owners(uint256)` by signature, or `owner`
+   * when exactly one function has that name. A bare name that overloads
+   * share names nothing, since a hint about it could be about the wrong one.
    */
-  lookupFunction(reference: string): Lookup<utils.FunctionFragment> {
-    const parsed = parseFragment(reference, 'function')
-    if (parsed.kind === 'invalid') {
-      return { inAbi: false, error: parsed.reason }
+  functionNamed(token: string): utils.FunctionFragment | undefined {
+    const bySignature = this.functions.find((f) => sighash(f) === token)
+    if (bySignature !== undefined) {
+      return bySignature
     }
-    if (parsed.kind === 'fragment') {
-      const known = this.bySignature.get(sighash(parsed.fragment))
-      return known
-        ? { fragment: known, inAbi: true }
-        : { fragment: parsed.fragment as utils.FunctionFragment, inAbi: false }
-    }
-    if (parsed.kind === 'signature') {
-      const known = this.bySignature.get(parsed.signature)
-      return known
-        ? { fragment: known, inAbi: true }
-        : { inAbi: false, error: this.missingFunction(parsed.signature) }
-    }
-    return this.byName(
-      this.functions,
-      parsed.name,
-      'function',
-      this.missingFunction(parsed.name),
-    )
+    const byName = this.functions.filter((f) => f.name === token)
+    return byName.length === 1 ? byName[0] : undefined
   }
 
-  private byName<T extends utils.FunctionFragment | utils.EventFragment>(
-    fragments: T[],
-    name: string,
-    noun: string,
-    missing: string,
-  ): Lookup<T> {
-    const matches = fragments.filter((fragment) => fragment.name === name)
-    if (matches.length === 1) {
-      return { fragment: matches[0] as T, inAbi: true }
-    }
-    if (matches.length === 0) {
-      return { inAbi: false, error: missing }
-    }
-    const signatures = matches.map(sighash).join(', ')
-    return {
-      inAbi: false,
-      error: `${noun} "${name}" is overloaded (${signatures}); use one of these full signatures`,
-    }
-  }
-
-  private missingFunction(reference: string): string {
-    const signatures = this.functions.map(sighash)
-    return describeMiss('function', reference, signatures)
+  /**
+   * Every declaration of the name: a contract that changed an event's
+   * parameters across upgrades declares it twice, and the merged ABI keeps
+   * both. V1 reads a bare name as the first one.
+   */
+  eventDeclarations(name: string): utils.EventFragment[] {
+    return this.events.filter((event) => event.name === name)
   }
 }
 
@@ -116,57 +86,4 @@ function identity(fragment: utils.Fragment): string {
 
 export function sighash(fragment: utils.Fragment): string {
   return fragment.format(utils.FormatTypes.sighash)
-}
-
-type ParsedReference =
-  | { kind: 'name'; name: string }
-  | { kind: 'signature'; signature: string }
-  | { kind: 'fragment'; fragment: utils.Fragment }
-  | { kind: 'invalid'; reason: string }
-
-const IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/
-const FRAGMENT_KEYWORD =
-  /^(function|event|constructor|error|fallback|receive)\b/
-
-function parseFragment(
-  reference: string,
-  type: 'function' | 'event',
-): ParsedReference {
-  const trimmed = reference.trim()
-  if (IDENTIFIER.test(trimmed)) {
-    return { kind: 'name', name: trimmed }
-  }
-  const text = FRAGMENT_KEYWORD.test(trimmed) ? trimmed : `${type} ${trimmed}`
-  let fragment: utils.Fragment
-  try {
-    fragment = utils.Fragment.from(text)
-  } catch (error) {
-    const reason = error instanceof Error ? error.message : String(error)
-    return {
-      kind: 'invalid',
-      reason: `"${reference}" is not a ${type} name, a \`name(types)\` signature or a full fragment (${reason})`,
-    }
-  }
-  if (fragment.type !== type) {
-    return {
-      kind: 'invalid',
-      reason: `"${reference}" parses as a ${fragment.type}, expected a ${type}`,
-    }
-  }
-  const isBareSignature = trimmed === sighash(fragment)
-  return isBareSignature
-    ? { kind: 'signature', signature: trimmed }
-    : { kind: 'fragment', fragment }
-}
-
-function describeMiss(
-  noun: string,
-  reference: string,
-  signatures: string[],
-): string {
-  if (signatures.length === 0) {
-    return `${noun} "${reference}" is not in the ABI, which declares no ${noun}s`
-  }
-  const hints = closest(signatures, reference, 3, nameOf)
-  return `${noun} "${reference}" is not in the ABI; closest: ${hints.join(', ')}`
 }

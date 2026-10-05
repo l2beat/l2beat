@@ -49,7 +49,7 @@ function commonPrefix(a: string, b: string): number {
   return length
 }
 
-function levenshtein(a: string, b: string): number {
+export function levenshtein(a: string, b: string): number {
   let previous = Array.from({ length: b.length + 1 }, (_, i) => i)
   for (let i = 1; i <= a.length; i++) {
     const current = [i]

@@ -17,6 +17,7 @@
  * so the caller can record that the model worked from partial evidence.
  */
 import type { ContractValue } from '../../output/types'
+import { AbiIndex } from '../abi/AbiIndex'
 import type { Draft } from '../draft/Draft'
 import type { BaselineField, ContractFacts, FlatSource } from '../facts'
 import type {
@@ -507,15 +508,10 @@ function renderWorklistEvent(
   abi: readonly string[],
 ): string {
   const overloaded =
-    countEventDeclarations(event.name, abi) > 1
+    AbiIndex.of(abi).eventDeclarations(event.name).length > 1
       ? ' (overloaded: the bare name reads only this declaration; see the ABI for the others)'
       : ''
   return `- \`${event.name}\`: ${event.fragment}${overloaded}`
-}
-
-function countEventDeclarations(name: string, abi: readonly string[]): number {
-  const prefix = `event ${name}(`
-  return new Set(abi.filter((entry) => entry.startsWith(prefix))).size
 }
 
 /**

@@ -21,10 +21,28 @@ describe(parseModelJson.name, () => {
     })
   })
 
+  it('takes the object that closes when a stray brace follows it', () => {
+    expect(parseModelJson('{"a":{"b":"}"}}}')).toEqual({
+      value: { a: { b: '}' } },
+    })
+    expect(parseModelJson('{"a":[1]}}\n')).toEqual({ value: { a: [1] } })
+  })
+
   it('returns the parse error for text without a JSON object', () => {
     const result = parseModelJson('I cannot do that.')
     expect(result.error).toBeA(String)
     expect(parseModelJson('').error).toEqual('the response is empty')
     expect(parseModelJson('{"a":').error ?? '').toMatchRegex(/JSON/)
+  })
+
+  it('says by how many braces an object is never closed', () => {
+    expect(
+      parseModelJson('{"fields":{"a":{"x":"{"}},"skips":[]').error,
+    ).toEqual(
+      'Expected \',\' or \'}\' after property value in JSON at position 36 (line 1 column 37); the object is never closed, there are 1 more "{" than "}"',
+    )
+    expect(parseModelJson('{"a":{"b":1}').error ?? '').toMatchRegex(
+      /there are 1 more "\{" than "\}"$/,
+    )
   })
 })

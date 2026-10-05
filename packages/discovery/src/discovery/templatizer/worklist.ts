@@ -72,7 +72,7 @@ export function buildWorklist(
   abi: readonly string[],
   baseline: Baseline,
 ): Worklist {
-  const index = AbiIndex.from(abi)
+  const index = AbiIndex.of(abi)
   const items = index.functions
     .filter(needsVerdict)
     .map((fragment) => toWorklistItem(fragment, baseline))
