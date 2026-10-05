@@ -1,5 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { ChevronIcon } from '~/icons/Chevron'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
@@ -52,6 +53,13 @@ export function HomeStatsStrip({
       href: '/privacy',
       icon: <PrivacyIcon className="size-5 stroke-green-450" />,
       iconBgClassName: 'bg-green-450/10',
+    },
+    {
+      label: 'Blobs',
+      metric: { count: counts.blobs, unit: 'projects' },
+      href: '/blobs',
+      icon: <BlobsIcon className="size-5 fill-blue-500" />,
+      iconBgClassName: 'bg-blue-500/10',
     },
     {
       label: 'ZK Catalog',
