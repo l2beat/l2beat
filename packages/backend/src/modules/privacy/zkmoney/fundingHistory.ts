@@ -1,9 +1,4 @@
-import type {
-  CallParameters,
-  IRpcClient,
-  LogsProvider,
-  LogsTopicFilter,
-} from '@l2beat/shared'
+import type { CallParameters, IRpcClient, LogsProvider } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -14,12 +9,10 @@ import { utils } from 'ethers'
 import { ERC20_TRANSFER_TOPIC, erc20Interface } from '../utils/erc20'
 import { RECOVERED_TOPIC, SWEEP_TOPIC } from './abi'
 
-// Our RPC proxy serves eth_getLogs for at most this many blocks per request.
-const LOGS_BLOCK_RANGE = 10_000
-
 /**
  * Everything that moves a SIPA balance: token transfers into and out of it,
- * and its own Sweep / Recovered events, which close a funding round.
+ * and its own Sweep / Recovered events, which close a funding round. Range
+ * splitting on provider limits is handled by the logs client.
  */
 export async function fetchFundingHistory(
   logsProvider: LogsProvider,
@@ -29,23 +22,21 @@ export async function fetchFundingHistory(
   toBlock: number,
 ): Promise<Log[]> {
   const sipaTopics = sipas.map((sipa) => utils.hexZeroPad(sipa, 32))
-  const filters: { addresses: EthereumAddress[]; topics: LogsTopicFilter }[] = [
-    { addresses: tokens, topics: [[ERC20_TRANSFER_TOPIC], null, sipaTopics] },
-    { addresses: tokens, topics: [[ERC20_TRANSFER_TOPIC], sipaTopics] },
-    { addresses: sipas, topics: [[SWEEP_TOPIC, RECOVERED_TOPIC]] },
-  ]
-
-  const history: Log[] = []
-  for (let from = fromBlock; from <= toBlock; from += LOGS_BLOCK_RANGE) {
-    const to = Math.min(from + LOGS_BLOCK_RANGE - 1, toBlock)
-    const batches = await Promise.all(
-      filters.map(({ addresses, topics }) =>
-        logsProvider.getLogs(from, to, addresses, topics),
-      ),
-    )
-    history.push(...batches.flat())
-  }
-  return history
+  const batches = await Promise.all([
+    logsProvider.getLogs(fromBlock, toBlock, tokens, [
+      [ERC20_TRANSFER_TOPIC],
+      null,
+      sipaTopics,
+    ]),
+    logsProvider.getLogs(fromBlock, toBlock, tokens, [
+      [ERC20_TRANSFER_TOPIC],
+      sipaTopics,
+    ]),
+    logsProvider.getLogs(fromBlock, toBlock, sipas, [
+      [SWEEP_TOPIC, RECOVERED_TOPIC],
+    ]),
+  ])
+  return batches.flat()
 }
 
 /** @returns balance per SIPA, per token */

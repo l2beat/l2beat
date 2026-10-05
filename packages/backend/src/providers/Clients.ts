@@ -119,6 +119,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 multicallClient,
                 rpcMetricsAggregator,
                 timeout: blockApi.timeout,
+                getLogsMaxRange: blockApi.getLogsMaxRange,
               })
             : new RpcClient({
                 chain: chain.name,
@@ -133,6 +134,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                   rpcClient: RpcClient.name,
                 }),
                 timeout: blockApi.timeout,
+                getLogsMaxRange: blockApi.getLogsMaxRange,
               })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)

@@ -7,6 +7,7 @@ import type {
 } from '../../clients/rpc/multicall/MulticallV3Client'
 import { isLimitExceededError } from '../../clients/rpc/RpcClient'
 import type { RpcMetricsAggregator } from '../../clients/rpc/RpcMetricsAggregator'
+import { splitBlockRange } from '../../clients/rpc/splitBlockRange'
 import type {
   CallParameters,
   EVMBlock,
@@ -52,6 +53,8 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
+  /** Most blocks the RPC serves in one eth_getLogs; longer ranges are split up front. */
+  getLogsMaxRange?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -101,6 +104,7 @@ export class RpcClientCompat implements IRpcClient {
     private ethRpcClient: EthRpcClient,
     readonly chain: string,
     public multicallClient?: MulticallV3Client,
+    private readonly getLogsMaxRange?: number,
   ) {}
 
   static create(deps: Dependencies) {
@@ -123,7 +127,12 @@ export class RpcClientCompat implements IRpcClient {
       }),
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
-    const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
+    const compat = new RpcClientCompat(
+      client,
+      deps.chain,
+      deps.multicallClient,
+      deps.getLogsMaxRange,
+    )
     const wrapped = withRetries(compat, {
       initialTimeoutMs: retryOptions.initialRetryDelayMs,
       maxAttempts: retryOptions.maxRetries,
@@ -248,6 +257,23 @@ export class RpcClientCompat implements IRpcClient {
     addresses?: string[],
     topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
+    const logs: EVMLog[] = []
+    for (const [start, end] of splitBlockRange(
+      from,
+      to,
+      this.getLogsMaxRange,
+    )) {
+      logs.push(...(await this.getLogsInRange(start, end, addresses, topics)))
+    }
+    return logs
+  }
+
+  private async getLogsInRange(
+    from: number,
+    to: number,
+    addresses?: string[],
+    topics?: LogsTopicFilter,
+  ): Promise<EVMLog[]> {
     try {
       const logs = await this.ethRpcClient.getLogs({
         fromBlock: BigInt(from),
@@ -264,8 +290,8 @@ export class RpcClientCompat implements IRpcClient {
       ) {
         const midpoint = Math.floor((from + to) / 2)
         const results = await Promise.all([
-          this.getLogs(from, midpoint, addresses, topics),
-          this.getLogs(midpoint + 1, to, addresses, topics),
+          this.getLogsInRange(from, midpoint, addresses, topics),
+          this.getLogsInRange(midpoint + 1, to, addresses, topics),
         ])
         return results.flat()
       }

@@ -127,6 +127,26 @@ describe(RpcClientCompat.name, () => {
         topics,
       })
     })
+
+    it('splits a range longer than the configured limit into separate requests', async () => {
+      const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+        undefined,
+        100,
+      )
+
+      await client.getLogs(1_000, 1_249)
+
+      expect(
+        getLogs.calls.map(({ args }) => [args[0].fromBlock, args[0].toBlock]),
+      ).toEqual([
+        [1_000n, 1_099n],
+        [1_100n, 1_199n],
+        [1_200n, 1_249n],
+      ])
+    })
   })
 
   describe(RpcClientCompat.prototype.getBlockTimestamps.name, () => {
