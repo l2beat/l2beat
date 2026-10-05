@@ -437,6 +437,39 @@ paths (it only measures authoring from scratch), and run against synthetic
 contracts with known complete answers. Both are worth adding; neither is
 needed to use the numbers above.
 
+## Decisions
+
+The choices that shape the code, with the reason each was taken, so they are
+not reopened without new evidence.
+
+- **A step after discovery, not inside it.** The templatizer used to run in
+  the analyzer, where every untemplatized contract of a depth reached it at
+  once. That needed a queue of model turns, a map of authorings in flight,
+  turns per template, and a record of where each template had already been
+  applied, and a template extended after a contract used it still left that
+  contract's values stale. Running after discovery, one contract at a time,
+  and then discovering again from the RPC cache needs none of it.
+- **The reply is the template itself.** The model writes the part of
+  `template.jsonc` it adds, which discovery's own schema checks and the
+  reviewer reads as is. One writer merges it, insertions only, so a shared
+  template keeps every byte a researcher wrote (rule 1), and describing an
+  existing value (`severity`, `description`, `permissions`) needs no new code.
+- **Never predict discovery** (rule 2) and **block only on structure and
+  failure** (rule 3). Both were learned from code that guessed and was
+  wrong: the dry run without `types`, the deletion on Zora, and a coverage
+  check that cost more rounds than it saved.
+- **No tools for the model.** The contract source in the prompt is written by
+  whoever deployed the contract, and a read tool could reach the RPC keys in
+  `packages/backend/.env`. Both clients switch every tool off, a test checks
+  the request each installed CLI sends, and a turn that shows a tool call is
+  refused.
+- **Command-line agents, not an SDK.** `codex` and `opencode` use the
+  researcher's existing login, so no API key is handled here, and
+  `--ai-model` varies the model and nothing else. Their own system prompts
+  are replaced by the templatizer's.
+- **Only locally.** The backend never builds a templatizer, so
+  `discovered.json` stays a function of the repository.
+
 ## Operations
 
 - `l2b discover --help` documents the flags.
@@ -450,8 +483,7 @@ needed to use the numbers above.
   stops the run.
 - This document is the description of record. A change in behaviour under
   `packages/discovery/src/discovery/templatizer/` is not complete until this
-  document says the same. The design history and the log of decisions taken
-  along the way are in `packages/discovery/docs/ai-templatizer.md`.
+  document says the same.
 
 ## Model comparison (2026-10-05)
 
