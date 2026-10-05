@@ -16,11 +16,5 @@
     "address": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
     "chain": "ethereum",
     "blockNumber": 26081203
-  },
-  "ResolverVerifier.sol": {
-    "hash": "0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2",
-    "address": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451",
-    "chain": "ethereum",
-    "blockNumber": 26081203
   }
 }
