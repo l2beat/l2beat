@@ -1198,11 +1198,31 @@ Benchmark: from `packages/discovery`,
   shape artefact noted in 12.5, left as ported so the numbers stay
   comparable with the research runs; the verdict names the generated
   fields so a reader can check).
+- **Codex review, round five (2026-10-05).** Three comments on `2434173ce7`;
+  two taken, one declined. Taken: the read of `discovered.json` for the
+  previous templates caught every error as "first discovery", so a file
+  that is there but malformed or unreadable would silently have dropped the
+  whole history and given every changed contract a template of its own;
+  now in `previousTemplates.ts`, only a missing file (`ENOENT`) is no
+  history and anything else is thrown. And the spec named the benchmark
+  `l2b templatizer-benchmark`; it lives in the discovery package's own CLI
+  (`discovery templatizer-benchmark`, run with `tsx` and the backend's
+  `.env`, as 12.1 says), and the spec now says so; whether it should be an
+  `l2b` command is a product question left to Adrian. Declined: a third
+  template id when `<project>/<Name>` and `<project>/<Name>-<hash8>` both
+  exist and neither matches the contract. That needs a researcher to have
+  restricted or edited the hash-named template the templatizer wrote for
+  this very shape; the run stops naming both ids, and the researcher who
+  made that template special picks the id. (The stop is wrapped as an
+  `internal` failure, whose advice line calls it a bug; the message itself
+  names the cause.) Codex tied it to the round-four sharing fix, but a
+  waiter V1 rejects takes the hash-suffixed id, which exists only when a
+  template was authored for this shape before.
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,277 tests as of 2026-10-05, about 220 of them the templatizer's;
+clean (1,280 tests as of 2026-10-05, about 220 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`

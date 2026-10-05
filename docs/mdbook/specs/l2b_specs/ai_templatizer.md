@@ -368,8 +368,11 @@ beside its own.
 
 ## Benchmark
 
-`l2b templatizer-benchmark` measures the templatizer against committed work.
-For each contract in the suite it hides the committed template, lets the
+The benchmark, `templatizer-benchmark` in the discovery package's own CLI
+(from `packages/discovery`: `node --env-file=../backend/.env --import tsx
+src/cli.ts templatizer-benchmark …`), measures the templatizer against
+committed work. For each contract in the suite it hides the committed
+template, lets the
 templatizer author one from scratch, analyses the contract with it at the
 committed block, and compares the values with the committed `discovered.json`,
 field by field. Values are compared, not template text: a field is credited
