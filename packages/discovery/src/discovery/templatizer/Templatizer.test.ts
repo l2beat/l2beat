@@ -169,6 +169,20 @@ describe(Templatizer.name, () => {
     expect(existsSync(join(trail, 'summary.json'))).toEqual(true)
   })
 
+  it('replaces the trail an earlier run left for the address', async () => {
+    const trail = join(root, 'trail', 'proj', ADDRESS)
+    mkdirSync(trail, { recursive: true })
+    writeFileSync(join(trail, 'round-3.response.txt'), 'from an earlier run')
+    const model = new FakeModelClient([JSON.stringify(DRAFT)])
+
+    await templatizer(model).templateFor(
+      request([bundle('Registry', ADDRESS, BODY)]),
+    )
+
+    expect(existsSync(join(trail, 'round-3.response.txt'))).toEqual(false)
+    expect(existsSync(join(trail, 'round-1.response.txt'))).toEqual(true)
+  })
+
   it('authors one template for two addresses with the same code analysed at once', async () => {
     const model = new FakeModelClient([JSON.stringify(DRAFT)])
     const instance = templatizer(model)
@@ -424,7 +438,7 @@ describe(Templatizer.name, () => {
       expect(model.calls.length).toEqual(1)
       expect(model.prompts[0] ?? '').not.toInclude('### Existing fields')
       expect(templateText(templateId ?? '')).toInclude(
-        `  // review: ${ADDRESS} had proj/Registry before its code changed, which no longer fits: ${THRESHOLD_FAILS}. proj/Registry is left as it is.`,
+        `  // review: ${ADDRESS} had proj/Registry, which no longer fits: ${THRESHOLD_FAILS}. proj/Registry is left as it is.`,
       )
       expect(templateText('proj/Registry')).toEqual(OLD_TEMPLATE)
       expect(Object.keys(shapes()).length).toEqual(1)
@@ -451,6 +465,47 @@ describe(Templatizer.name, () => {
         'which no longer fits: the contract was RegistryV1 and is now Registry.',
       )
       expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
+    })
+
+    it('gives the contract a template of its own when the old one holds its shape but its criteria exclude it', async () => {
+      const directory = join(root, '_templates', 'proj', 'Registry')
+      mkdirSync(directory, { recursive: true })
+      writeFileSync(join(directory, 'template.jsonc'), FITTING_TEMPLATE)
+      const current = bundle('Registry', ADDRESS, BODY)
+      addShape(templateService, 'proj/Registry', {
+        facts: {
+          chain: 'ethereum',
+          blockNumber: 50,
+          name: 'Registry',
+          shapeHash: getHash(current),
+          address: current.address,
+        } as never,
+        sources: contractSources([current], ABI),
+      })
+      writeFileSync(
+        join(directory, 'criteria.json'),
+        JSON.stringify({ validAddresses: [TWIN] }),
+      )
+      templateService.reload()
+      const model = new FakeModelClient([JSON.stringify(DRAFT)])
+      const req = request([current])
+      expect(
+        templateService.findMatchingTemplates(req.sources, req.address),
+      ).toEqual([])
+
+      const templateId = await templatizer(model, {
+        [ADDRESS]: 'proj/Registry',
+      }).templateFor(req)
+
+      expect(templateId?.startsWith('proj/Registry-')).toEqual(true)
+      expect(templateText(templateId ?? '')).toInclude(
+        `  // review: ${ADDRESS} had proj/Registry, which no longer fits: its criteria exclude the contract, although it holds this shape. proj/Registry is left as it is.`,
+      )
+      expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
+      expect(Object.keys(shapes()).length).toEqual(1)
+      expect(
+        templateService.findMatchingTemplates(req.sources, req.address),
+      ).toEqual([templateId ?? ''])
     })
 
     it('keeps the template when the failing field already failed on the old code, and notes it once', async () => {

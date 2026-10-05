@@ -216,8 +216,10 @@ export class Templatizer {
    * keeps its old template only while that template fits the new code
    * (`misfitOf`); it is then added to, and the new shape joins it.
    * Otherwise the contract gets a template of its own, as one that never
-   * had a template does, and the old one is left as it is. Either way a
-   * worklist with nothing on it is not sent to the model.
+   * had a template does, and the old one is left as it is. So does a
+   * contract whose old template holds its shape and still did not match:
+   * the template's criteria exclude it. Either way a worklist with nothing
+   * on it is not sent to the model.
    */
   private async templatize(
     request: TemplatizeRequest,
@@ -239,7 +241,7 @@ export class Templatizer {
       )
       notes.push(
         reviewNote(
-          `${request.address} had ${previous.templateId} before its code changed, which no longer fits: ${misfit}. ${previous.templateId} is left as it is.`,
+          `${request.address} had ${previous.templateId}, which no longer fits: ${misfit}. ${previous.templateId} is left as it is.`,
         ),
       )
     }
@@ -294,6 +296,15 @@ export class Templatizer {
     previous: PreviousTemplate,
   ): Promise<string | undefined> {
     const { templateId } = previous
+    if (
+      this.templateService.findShapeByTemplateAndHash(templateId, hash) !==
+      undefined
+    ) {
+      // V1 matched nothing although the template holds this very shape,
+      // which only its criteria.json can cause; the shape must not be
+      // added a second time.
+      return 'its criteria exclude the contract, although it holds this shape'
+    }
     const existing = await this.analyzeExisting(request, templateId)
     const names = matchedBundles(request.sources.sources).map((b) => b.name)
     const misfit = misfitOf(existing, previous, names)
@@ -584,7 +595,7 @@ export class Templatizer {
     task: TemplatizationTask,
     existing?: ExistingTemplate,
   ): Promise<Accepted> {
-    const artifacts = new FileArtifactSink(
+    const artifacts = FileArtifactSink.fresh(
       trailDirectory(this.settings.artifactsRoot, facts.project, facts.address),
     )
     const { prompt, truncated } = buildPrompt({

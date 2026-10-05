@@ -1115,11 +1115,41 @@ Benchmark: from `packages/discovery`,
   model when the worklist is empty (the shortcut stays, for new templates
   and for additions). Recorded as an idea, not done: making `covers` and
   `skips` advisory instead of blocking (12.5).
+- **Codex review, round one (2026-10-05).** The repository's Codex
+  reviewer left eight comments on the first commit of the PR; Adrian
+  asked for real bugs to be fixed and the rest pushed back. Fixed: a
+  previous template that already held the contract's shape and still
+  did not match (its `criteria.json` excludes the address) went down the
+  extension path, where `addToShape` asserts on the duplicate hash after
+  the fields were already appended; `extendIfFits` now returns that as a
+  misfit and the contract gets a template of its own, with the note
+  saying why. The trail directory is emptied before a loop writes into
+  it, so a rerun with fewer rounds does not leave an earlier run's
+  `round-3.*` beside its own (the benchmark already did this). The
+  followed-addresses note counts as discovery collects relatives
+  (`toAddressArray`: values, never object keys), where the templatizer's
+  own walk counted keys too and could send a reviewer to `ignoreRelative`
+  for a map keyed by address. The unread-declaration note is written
+  whether or not the fold is empty, since a contract upgraded between two
+  declarations of an event has history under both. A bare method name
+  that several overloads of one arity answer to covers none of them
+  (0.65% of committed contracts have such overloads among their views);
+  the model is told to write the full fragment. Also, after a CodeQL
+  alert on the same PR, benchmark table cells escape backslashes before
+  pipes. Pushed back: `--ai` under `--dry-run` is ignored like every
+  other flag of that mode (dry run writes nothing by definition), and
+  the undercount of generated fields it named was already fixed in
+  `a57f0d26f8`; a probed getter claimed by a non-reading field (an event
+  fold) stays in `ignoreMethods`, because the claimed field is the full
+  view of the state the probe shows five entries of, the dry run runs it
+  and notes an empty fold above the field, and keeping both would
+  duplicate every event-enumerated set, where the `covered` skip that
+  keeps its probe has no field and no dry run at all.
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,265 tests as of 2026-10-05, about 215 of them the templatizer's;
+clean (1,272 tests as of 2026-10-05, about 220 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`
@@ -1131,8 +1161,10 @@ worklist is empty, code changed (a fitting template gets the model's
 additions and the shape, or only the shape when it decides every item; a
 field that newly fails, or a new name, gives the contract a template of
 its own and leaves the old one byte for byte; a field that already failed
-keeps the template and its one note; contracts sharing a template take
-turns, a revisit of it waits for them and is skipped when they kept it, a
+keeps the template and its one note; a template that holds the shape but
+excludes the contract by criteria is left alone; contracts sharing a
+template take turns, a revisit of it waits for them and is skipped when they
+kept it, a
 contract that matches it as it is waits for the additions, and one that
 applied it earlier is named in a warning), and `--ai-revisit` (fields
 appended after the existing ones with a

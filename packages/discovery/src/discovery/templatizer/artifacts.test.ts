@@ -31,4 +31,17 @@ describe(FileArtifactSink.name, () => {
       fs.readFileSync(path.join(directory, 'round-1.prompt.md'), 'utf8'),
     ).toEqual('second')
   })
+
+  it('starts fresh, dropping what an earlier run left in the directory', () => {
+    const directory = path.join(root, 'templatizer', 'project', '0x1234')
+    new FileArtifactSink(directory).write('round-3.response.txt', 'old')
+
+    const sink = FileArtifactSink.fresh(directory)
+    sink.write('round-1.prompt.md', 'new')
+
+    expect(fs.readdirSync(directory)).toEqual(['round-1.prompt.md'])
+    expect(FileArtifactSink.fresh(path.join(root, 'absent')).directory).toEqual(
+      path.join(root, 'absent'),
+    )
+  })
 })

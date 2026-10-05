@@ -296,8 +296,9 @@ export function table(header: string[], rows: string[][]): string[] {
   ]
 }
 
+/** Backslashes first, so an escaped pipe is not itself unescaped by a backslash before it. */
 function escapeCell(cell: string): string {
-  return cell.replace(/\|/g, '\\|').replace(/\n/g, ' ')
+  return cell.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\n/g, ' ')
 }
 
 function nameOf(contract: ContractBenchmark): string {

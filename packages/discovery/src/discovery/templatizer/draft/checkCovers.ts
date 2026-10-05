@@ -9,6 +9,9 @@
  * only the events its actions name, and the other handlers read no events
  * at all. A `constructorArgs` field answers the constructor, and no other
  * field does. Without this a missed item could hide behind a false claim.
+ * A bare method name that several overloads of one arity answer to covers
+ * none of them: V1 reads one, and which one is V1's to say, so the model
+ * is asked for the full fragment.
  * A claimed getter stays unconfirmed: when the fold comes back empty, the
  * dry run notes it for the reviewer rather than rejecting it.
  */
@@ -57,12 +60,11 @@ export function naturalCoversOf(
       if (method === undefined || method.foreign) {
         return { functions: [], events: [] }
       }
-      return {
-        functions: worklist.items
-          .filter((item) => namesItem(method, item))
-          .map((item) => item.signature),
-        events: [],
+      const named = namedItems(method, worklist)
+      if (method.signature === undefined && named.length > 1) {
+        return { functions: [], events: [] }
       }
+      return { functions: named.map((item) => item.signature), events: [] }
     }
     case 'event':
       return {
@@ -93,12 +95,16 @@ export function naturalCoversOf(
   }
 }
 
-/** A full fragment names one signature; a bare name names the overloads of that arity. */
-function namesItem(method: MethodReference, item: WorklistItem): boolean {
-  if (method.signature !== undefined) {
-    return item.signature === method.signature
-  }
-  return item.name === method.name && item.inputs.length === method.arity
+/** A full fragment names one signature; a bare name, the overloads of that arity. */
+function namedItems(
+  method: MethodReference,
+  worklist: Worklist,
+): WorklistItem[] {
+  return worklist.items.filter((item) =>
+    method.signature !== undefined
+      ? item.signature === method.signature
+      : item.name === method.name && item.inputs.length === method.arity,
+  )
 }
 
 export function checkCovers(ctx: RuleContext): void {
@@ -127,7 +133,13 @@ export function checkCovers(ctx: RuleContext): void {
       ) {
         ctx.findings.error(
           path,
-          unansweredFunction(field.handler, natural, token),
+          unansweredFunction(
+            field.handler,
+            reads,
+            natural,
+            token,
+            ctx.worklist,
+          ),
         )
       }
     })
@@ -159,11 +171,21 @@ function unreadEvent(
 
 function unansweredFunction(
   handler: DraftHandler,
+  reads: FieldReads,
   natural: NaturalCovers,
   token: string,
+  worklist: Worklist,
 ): string {
   if (handler.type === 'call' && handler.address !== undefined) {
     return `this field calls another contract (\`address\` is set), so it answers nothing on this contract's worklist; move ${token} to the field that reads it or to skips`
+  }
+  const method = reads.method
+  if (method !== undefined && method.signature === undefined) {
+    const overloads = namedItems(method, worklist)
+    if (overloads.length > 1) {
+      const arguments_ = method.arity === 1 ? 'argument' : 'arguments'
+      return `\`${method.name}\` has ${overloads.length} overloads with ${method.arity} ${arguments_} (${overloads.map((item) => item.signature).join(', ')}) and a bare name reads only the first in the ABI; write \`method\` as the full fragment of the one this field reads, and cover only that one`
+    }
   }
   const answered =
     natural.functions.length > 0 ? natural.functions.join(', ') : 'nothing'

@@ -12,7 +12,7 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import fs from 'fs'
 import path from 'path'
 
-/** One directory per project and address, so reruns overwrite their own trail only. */
+/** One directory per project and address, so a rerun replaces its own trail only. */
 export function trailDirectory(
   artifactsRoot: string,
   project: string,
@@ -27,6 +27,15 @@ export interface ArtifactSink {
 
 export class FileArtifactSink implements ArtifactSink {
   constructor(readonly directory: string) {}
+
+  /**
+   * A sink over an emptied directory: a rerun that takes fewer rounds must
+   * not leave the earlier run's later rounds beside its own as evidence.
+   */
+  static fresh(directory: string): FileArtifactSink {
+    fs.rmSync(directory, { recursive: true, force: true })
+    return new FileArtifactSink(directory)
+  }
 
   write(name: string, content: string): void {
     fs.mkdirSync(this.directory, { recursive: true })

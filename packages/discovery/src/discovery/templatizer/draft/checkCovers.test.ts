@@ -254,6 +254,41 @@ describe(naturalCovers.name, () => {
     ).toEqual(['get(uint256)'])
   })
 
+  it('lets a bare name over overloads of one arity cover nothing until it is written in full', () => {
+    const abi = [
+      'function get(address a) view returns (uint256)',
+      'function get(uint256 a) view returns (uint256)',
+    ]
+    const worklist = buildWorklist(abi, { fields: {} })
+    const bare: DraftHandler = { type: 'call', method: 'get', args: [1] }
+    const ambiguous =
+      '`get` has 2 overloads with 1 argument (get(address), get(uint256)) and a bare name reads only the first in the ABI; write `method` as the full fragment of the one this field reads, and cover only that one'
+
+    expect(naturalCovers('x', bare, worklist).functions).toEqual([])
+    expect(
+      naturalCovers(
+        'x',
+        {
+          type: 'call',
+          method: 'function get(uint256 a) view returns (uint256)',
+          args: [1],
+        },
+        worklist,
+      ).functions,
+    ).toEqual(['get(uint256)'])
+    const ctx = contextFor('ScrollChain')
+    expect(
+      runRule(
+        checkCovers,
+        draftOf({ x: field(bare, ['get(address)', 'get(uint256)']) }),
+        { ...ctx, facts: { ...ctx.facts, abi }, worklist },
+      ),
+    ).toEqual([
+      { path: 'fields.x.covers[0]', message: ambiguous },
+      { path: 'fields.x.covers[1]', message: ambiguous },
+    ])
+  })
+
   it('gives accessControl the role getters and events the worklist has', () => {
     expect(
       naturalCovers(

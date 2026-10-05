@@ -165,12 +165,14 @@ source name of the implementation behind a proxy, else of the contract, not a
 display name from the config. A template that fits goes through the steps
 below as an existing template and gets the new shape at the end. One that does
 not is left as it is, and the contract goes through the steps as a new
-contract. Contracts with different new code that share an old template take
-turns on it, so each one's check and prompt see what the previous one added.
-A contract the template matches as it is waits for those turns before
-discovery applies the template, so it gets the added fields too. One analysed
-earlier in the run keeps the template as it was; the run warns, and a second
-`l2b discover` applies the additions to it.
+contract. So is a template that already holds the contract's shape and still
+did not match: only its `criteria.json` can cause that, and the templatizer
+does not add the shape a second time. Contracts with different new code that
+share an old template take turns on it, so each one's check and prompt see
+what the previous one added. A contract the template matches as it is waits
+for those turns before discovery applies the template, so it gets the added
+fields too. One analysed earlier in the run keeps the template as it was; the
+run warns, and a second `l2b discover` applies the additions to it.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of
@@ -217,10 +219,14 @@ earlier in the run keeps the template as it was; the run warns, and a second
    contract outgrew its old template; an existing template gets the new
    fields appended. For a new template, `ignoreMethods` holds the
    probed getters the model skipped as not worth reading or covered by a field
-   of another name, which is what a researcher writes by hand. A getter
-   skipped as `covered` keeps its probe: that skip is a claim, and when it is
-   wrong the probe is the only copy of the data. The template service reloads
-   and the analyzer applies the template.
+   of another name, whether that field reads the getter (`call`, `array`) or
+   holds the state it shows (an event fold of the set the 0–4 probe shows five
+   entries of), which is what a researcher writes by hand. A getter skipped as
+   `covered` keeps its probe: that skip is a claim with no field behind it,
+   nothing runs for it, and when it is wrong the probe is the only copy of the
+   data. A covering field runs in the dry run, and an empty fold gets its note
+   above the field. The template service reloads and the analyzer applies the
+   template.
 8. **Failure.** If the model does not answer (quota, network, timeout), no
    draft passes within the rounds, or the templatizer hits a bug, discovery
    stops before writing `discovered.json`, with a message naming the contract,
@@ -236,7 +242,7 @@ Checked, and blocks until fixed:
 | The reply is one JSON object | Parsing. A stray `}` after the object is tolerated; an object that never closes is reported with the number of braces still open, which a model can act on where a character position was ignored. |
 | Every handler matches discovery's own schema for its type; every `edit` and `where` is a blip program discovery parses | Discovery's own definitions, applied one type at a time so that the message names the wrong key. |
 | Every worklist item is covered by one or more fields or skipped once, never both, and nothing outside the list is named | Counting over a closed list. This is the "nothing was forgotten" check. Several fields may cover one item because they can read different parts of it: one `call` per literal argument, as researchers read a getter keyed by a `uint8`, or one `event` field per projection of an event. |
-| A field covers only events its handler names; a `call` or `array` field covers only the function it calls | Read off the handler itself. Without this a missed item could hide behind a false claim. |
+| A field covers only events its handler names; a `call` or `array` field covers only the function it calls, and a bare method name that several overloads of one arity answer to covers none of them until it is written as a full fragment | Read off the handler itself. Without this a missed item could hide behind a false claim, and an overload could go unread behind a name that fits two. |
 | A field name is a Solidity identifier, does not start with `$`, and is not the name of a value the baseline, proxy detection or existing template already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array | A field of an existing name replaces that value, which would remove output (rule 1). The exception is what researchers write. |
 | Every field constructs with discovery's handler factory and runs without error at the block | Discovery itself. The one construction failure that is explained rather than only quoted is an `array` over a getter keyed by a type `array` does not take (a `uint8`): discovery's message names no cause, and the model's next try was the same handler spelled differently. |
 
@@ -244,7 +250,7 @@ Deliberately not checked:
 
 | Not checked | Reason |
 | --- | --- |
-| Whether a method or event name exists, or resolves to what the model meant | The dry run errors on a missing one. Which function a bare name resolved to is written as a note. For `covers`, a bare method name is matched to the worklist by name and number of arguments, a full fragment by its signature: a comparison of names the model wrote, not a resolution. |
+| Whether a method or event name exists, or resolves to what the model meant | The dry run errors on a missing one. Which function a bare name resolved to is written as a note. For `covers`, a bare method name is matched to the worklist by name and number of arguments, a full fragment by its signature: a comparison of names the model wrote, not a resolution. When that comparison fits several overloads, the model is asked for the fragment rather than the templatizer guessing which one discovery reads. |
 | Whether `{{ references }}` resolve | The dry run fails on an unresolved one. |
 | Which `edit` or `where` forms are used | Any program discovery parses is allowed. A throwing one fails the dry run; a wrong one is reviewed. |
 | Whether a result is empty | Event-only state can be empty at a block. The note says so. |
@@ -263,10 +269,11 @@ The templatizer writes what it saw as comments, each starting with
 - `reads <fragment>`: a bare method name resolved to this function; check that
   it is the intended one.
 - `holds N addresses discovery will follow`: a field whose values discovery
-  analyses next.
+  analyses next, counted as discovery counts them (values, not object keys).
 - `empty at block N: no logs for <event>, but another declaration of the same
-  event has logs: <fragment> (<n> log(s))`: the field reads one overload of the
-  event while another has the history.
+  event has logs: <fragment> (<n> log(s))`, or `another declaration of <event>
+  has logs too: …` when the fold is not empty: the field reads one overload of
+  the event while another has history.
 
 Above a block of appended fields, one comment states who added them and when:
 `Added by <model>, <effort> effort via l2b discover --ai-revisit on <date>, <n>
@@ -347,7 +354,9 @@ repair turn resumes the first turn's session.
 The trail of every contract (the prompt, each reply, the findings, the dry run,
 a summary) is written under
 `packages/config/cache/templatizer/<project>/<address>/`, next to the sqlite
-cache, and is not committed.
+cache, and is not committed. A rerun for the same address empties that
+directory first, so a shorter run does not leave the earlier run's later rounds
+beside its own.
 
 ## Benchmark
 

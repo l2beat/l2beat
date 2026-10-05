@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { countVerdicts, emptyCounts } from './compare'
-import { renderMarkdown } from './render'
+import { renderMarkdown, table } from './render'
 import { totalsOf } from './runBenchmark'
 import type {
   BenchmarkReport,
@@ -243,5 +243,15 @@ describe(renderMarkdown.name, () => {
     expect(md).toInclude(
       '- Time: 48.3 s across all contracts, of which 40.0 s inside model turns',
     )
+  })
+})
+
+describe(table.name, () => {
+  it('escapes pipes and backslashes in a cell, and keeps a cell on one line', () => {
+    expect(table(['name'], [['a|b\\c\nd']])).toEqual([
+      '| name |',
+      '| --- |',
+      '| a\\|b\\\\c d |',
+    ])
   })
 })

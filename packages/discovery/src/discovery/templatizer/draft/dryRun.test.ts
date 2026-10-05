@@ -13,6 +13,11 @@ const facts = loadFixture('ScrollChain')
 const BLOCK = facts.blockNumber
 const SEQUENCER_A = '0x1111111111111111111111111111111111111111'
 const SEQUENCER_B = '0x2222222222222222222222222222222222222222'
+/** One more than a field may hold before discovery following them all is noted. */
+const MANY_ADDRESSES = Array.from(
+  { length: 21 },
+  (_, i) => `0x${(i + 1).toString(16).padStart(40, '0')}`,
+)
 
 const coder = new utils.Interface([...new Set(facts.abi)])
 
@@ -332,6 +337,38 @@ describe(dryRunDraft.name, () => {
     ])
   })
 
+  it('notes another declaration with logs even when the fold is not empty', async () => {
+    const legacy = log(
+      'RevertBatch(uint256,bytes32)',
+      [7, `0x${'ab'.repeat(32)}`],
+      20,
+    )
+    const current =
+      'event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)'
+    const result = await dryRunDraft(
+      provider([legacy, log('RevertBatch(uint256,uint256)', [8, 9], 21)]),
+      executor,
+      facts,
+      draftOf({
+        revertedBatches: {
+          ...REVERTED_BATCHES,
+          handler: {
+            type: 'event',
+            select: ['startBatchIndex', 'finishBatchIndex'],
+            add: { event: current },
+          },
+        },
+      }),
+      plain(),
+    )
+
+    expect(result.findings).toEqual([])
+    expect(result.record.fields[0]?.size).toEqual(1)
+    expect(result.record.fields[0]?.notes).toEqual([
+      'another declaration of RevertBatch has logs too: event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash) (1 log(s)); the field reads only the declaration it names, so part of this state was most likely recorded under that one (older code): read it too',
+    ])
+  })
+
   it('notes another declaration of the event that has the logs this fold lacks', async () => {
     const legacy = log(
       'RevertBatch(uint256,bytes32)',
@@ -364,11 +401,7 @@ describe(dryRunDraft.name, () => {
   })
 
   it('notes a field that would make discovery follow more addresses than a system has parts', async () => {
-    const tokens = Array.from(
-      { length: 21 },
-      (_, i) => `0x${(i + 1).toString(16).padStart(40, '0')}`,
-    )
-    const logs = tokens.map((token, i) =>
+    const logs = MANY_ADDRESSES.map((token, i) =>
       log('UpdateSequencer', [token, true], 30 + i),
     )
     const listing: DraftField = { ...SEQUENCERS, covers: ['UpdateSequencer'] }
@@ -399,6 +432,32 @@ describe(dryRunDraft.name, () => {
     ])
     expect(ignored.findings).toEqual([])
     expect(ignored.record.fields[0]?.notes).toEqual([])
+  })
+
+  it('does not count addresses that are only keys of an object, which discovery does not follow', async () => {
+    const result = await dryRunDraft(
+      provider([]),
+      executor,
+      facts,
+      draftOf({
+        flags: {
+          handler: {
+            type: 'hardcoded',
+            value: Object.fromEntries(
+              MANY_ADDRESSES.map((address) => [`eth:${address}`, true]),
+            ),
+          },
+          covers: [],
+          reason: 'test',
+        },
+      }),
+      plain(),
+    )
+
+    expect(result.findings).toEqual([])
+    expect(result.record.fields).toEqual([
+      { name: 'flags', size: 21, notes: [] },
+    ])
   })
 
   it('runs the existing template with the draft and reports only draft fields', async () => {

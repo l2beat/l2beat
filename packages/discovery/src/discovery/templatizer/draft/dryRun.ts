@@ -30,6 +30,7 @@ import type { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import { getEventFragment } from '../../handlers/utils/getEventFragment'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
+import { toAddressArray } from '../../utils/extractors'
 import { AbiIndex } from '../abi/AbiIndex'
 import type { ContractFacts } from '../facts'
 import {
@@ -213,7 +214,7 @@ async function checkField(
   const notes = [
     ...resolvedMethodNote(name, field, run.results),
     ...followedAddressesNote(field, value),
-    ...(await emptyFoldNotes(provider, facts, field, value)),
+    ...(await foldNotes(provider, facts, field, value)),
   ]
   return { name, size: sizeOf(value), notes }
 }
@@ -255,8 +256,7 @@ function resolvedMethodNote(
  */
 export const MAX_FOLLOWED_ADDRESSES = 20
 
-const CHAIN_SPECIFIC_ADDRESS = /^[a-z0-9]+:0x[0-9a-fA-F]{40}$/
-
+/** Counted as discovery collects relatives (`toAddressArray`): values only, never the keys of an object. */
 function followedAddressesNote(
   field: DraftField,
   value: ContractValue | undefined,
@@ -264,29 +264,13 @@ function followedAddressesNote(
   if (field.handler.ignoreRelative === true || value === undefined) {
     return []
   }
-  const count = new Set(addressesIn(value)).size
+  const count = new Set(toAddressArray(value)).size
   if (count <= MAX_FOLLOWED_ADDRESSES) {
     return []
   }
   return [
     `holds ${count} addresses discovery will follow as parts of this system; if they are instances (deployed tokens, created games or pools, users), add "ignoreRelative": true to the handler`,
   ]
-}
-
-function addressesIn(value: ContractValue): string[] {
-  if (typeof value === 'string') {
-    return CHAIN_SPECIFIC_ADDRESS.test(value) ? [value] : []
-  }
-  if (Array.isArray(value)) {
-    return value.flatMap(addressesIn)
-  }
-  if (typeof value === 'object' && value !== null) {
-    return Object.entries(value).flatMap(([key, entry]) => [
-      ...addressesIn(key),
-      ...(entry === undefined ? [] : addressesIn(entry)),
-    ])
-  }
-  return []
 }
 
 /**
@@ -301,17 +285,19 @@ function addressesIn(value: ContractValue): string[] {
  * accepted as empty too (Plume's batch posters were set by an older
  * implementation that did not emit `BatchPosterSet`); the note is what
  * makes the reviewer check it. When another declaration of the same event
- * does have logs, the note says so: ScrollChain's reverted batches sit
- * under the legacy `RevertBatch(batchIndex, batchHash)` although the
- * current code emits `RevertBatch(startBatchIndex, finishBatchIndex)`.
+ * does have logs, the note says so whether or not the fold is empty:
+ * ScrollChain's reverted batches sit under the legacy
+ * `RevertBatch(batchIndex, batchHash)` although the current code emits
+ * `RevertBatch(startBatchIndex, finishBatchIndex)`, and a contract that
+ * reverted batches under both has a fold that is not empty but not whole.
  */
-async function emptyFoldNotes(
+async function foldNotes(
   provider: IProvider,
   facts: Facts,
   field: DraftField,
   value: ContractValue | undefined,
 ): Promise<string[]> {
-  if (field.handler.type !== 'event' || !isEmpty(value)) {
+  if (field.handler.type !== 'event') {
     return []
   }
   const events = eventsOf(field)
@@ -321,9 +307,18 @@ async function emptyFoldNotes(
     const others = unread
       .map((d) => `${d.fragment} (${d.logCount} log(s))`)
       .join(', ')
+    if (isEmpty(value)) {
+      return [
+        `empty at block ${blockNumber}: no logs for ${events.join(', ')}, but another declaration of the same event has logs: ${others}; the contract most likely recorded this state under that declaration (older code), so read it too`,
+      ]
+    }
+    const names = [...new Set(unread.map((d) => d.name))].join(', ')
     return [
-      `empty at block ${blockNumber}: no logs for ${events.join(', ')}, but another declaration of the same event has logs: ${others}; the contract most likely recorded this state under that declaration (older code), so read it too`,
+      `another declaration of ${names} has logs too: ${others}; the field reads only the declaration it names, so part of this state was most likely recorded under that one (older code): read it too`,
     ]
+  }
+  if (!isEmpty(value)) {
+    return []
   }
   const logCount = await countLogs(provider, facts, events)
   const names = events.join(', ')
@@ -335,6 +330,7 @@ async function emptyFoldNotes(
 }
 
 interface UnreadDeclaration {
+  name: string
   fragment: string
   logCount: number
 }
@@ -356,6 +352,7 @@ async function unreadDeclarationsWithLogs(
     .filter((fragment) => !read.has(utils.Interface.getEventTopic(fragment)))
   const counted = await Promise.all(
     unread.map(async (fragment) => ({
+      name: fragment.name,
       fragment: fragment.format(utils.FormatTypes.full),
       logCount: await countTopicLogs(
         provider,
