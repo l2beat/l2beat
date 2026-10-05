@@ -133,6 +133,9 @@ FEATURES=*,!interop.relay
 
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
   https://www.coingecko.com/en/api/pricing
+- `COINGECKO_API_URL` - Optional. Replaces the CoinGecko API root (default
+  `https://pro-api.coingecko.com/api/v3` with a key), e.g. with a
+  CoinGecko-compatible proxy.
 
 - `ETHERSCAN_API_URL` - Etherscan API url
 - `ETHERSCAN_API_KEY` - Etherscan API key Blockscout doesn't need it.

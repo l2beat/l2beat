@@ -121,6 +121,7 @@
         "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "delayFormatted": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
           "severity": "HIGH",
@@ -270,7 +271,9 @@
         "votingTokenSymbol": "UNI"
       },
       "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
+        "proposalThresholdFmt": { "severity": "HIGH" },
+        "votingDelayFmt": { "severity": "HIGH" },
+        "votingPeriodFmt": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
           "severity": "HIGH",
@@ -289,7 +292,6 @@
           "description": "Delegated voting tokens required to submit a proposal."
         },
         "quorumVotes": {
-          "severity": "HIGH",
           "description": "For-votes required for a proposal to pass."
         }
       },

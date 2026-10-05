@@ -153,7 +153,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toEqual({ ...mockReceipt, blockHash: '0xabcdef' })
+      expect(result).toEqual({ ...parsedMockReceipt, blockHash: '0xabcdef' })
     })
 
     it('fetches tx receipt from rpc and parses response', async () => {
@@ -166,7 +166,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toEqual(mockReceipt)
+      expect(result).toEqual(parsedMockReceipt)
 
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
@@ -994,5 +994,15 @@ const mockTx = (to: string | undefined) => ({
 })
 
 const mockReceipt = {
-  logs: [{ topics: ['0xabcd', '0xdcba'], data: '0x1234' }],
+  logs: [
+    {
+      address: '0x1111111111111111111111111111111111111111',
+      topics: ['0xabcd', '0xdcba'],
+      data: '0x1234',
+      logIndex: '0x7',
+    },
+  ],
+}
+const parsedMockReceipt = {
+  logs: [{ ...mockReceipt.logs[0], logIndex: 7 }],
 }

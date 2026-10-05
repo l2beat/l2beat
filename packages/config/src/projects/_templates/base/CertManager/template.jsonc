@@ -13,8 +13,10 @@
         }
       ]
     },
+    // Can only revoke non-root certificates (blocks new signer
+    // registrations), a pause-like role.
     "revoker": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

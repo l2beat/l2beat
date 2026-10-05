@@ -27,8 +27,8 @@
         }
       }
     },
+    // identity of the route admin; mechanism changes are reviewed events
     "owner": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

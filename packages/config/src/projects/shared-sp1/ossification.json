@@ -36,13 +36,6 @@
       "reason": "Froze the route for selector 0x801c66ac to SP1Verifier eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
     },
     {
-      "timestamp": 1721692331,
-      "type": "state",
-      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-      "transaction": "0x49f9b69032a68e94aef7e5bad39bbb4ea0cccc27301e2f53c7b9a1078898977a",
-      "reason": "Transferred ownership of the SP1VerifierGateway (controls route additions and freezes) from eth:0xded0000e32f8f40414d3ab3a830f735a3553e18e to eth:0xbab2c2af5b91695e65955da60d63ad1b2ae81126 (OwnershipTransferred)."
-    },
-    {
       "timestamp": 1722645791,
       "type": "state",
       "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
@@ -61,7 +54,7 @@
       "type": "state",
       "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "transaction": "0x50f1624b99eaeea182c8e5240b00ac85f9c83ff06283c178b80d4731d140390a",
-      "reason": "Transferred ownership of the SP1VerifierGateway (controls route additions and freezes) from eth:0xbab2c2af5b91695e65955da60d63ad1b2ae81126 to eth:0xcafef00d348adbd57c37d1b77e0619c6244c6878 (OwnershipTransferred)."
+      "reason": "Transferred ownership of the SP1VerifierGateway (controls route additions and freezes) from the EOA eth:0xbab2c2af5b91695e65955da60d63ad1b2ae81126 to the 2/3 SP1VerifierGatewayMultisig eth:0xcafef00d348adbd57c37d1b77e0619c6244c6878: single signer to multisig. The earlier transfer between two EOAs (deployer eth:0xded0000e... to eth:0xbab2c2af..., tx 0x49f9b690...) was an identity change and is not listed."
     },
     {
       "timestamp": 1725474371,

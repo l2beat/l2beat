@@ -22,6 +22,7 @@ function main() {
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: config.coingeckoApiKey,
+    apiUrl: config.coingeckoApiUrl,
     callsPerMinute: config.coingeckoCallsPerMinute,
   })
 

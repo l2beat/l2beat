@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x893fb7ea182b13dfed409f0c0cf6c31fc4a6deeb
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 04a6c755
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1710490775}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      fieldMeta.CHALLENGER.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.submissionInterval.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.SUBMISSION_INTERVAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challenger:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1687241795}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x40fc2ac205c18b3c157f5b9544a639cbabad1e77
 
 # Diff at Wed, 30 Sep 2026 07:45:39 GMT:

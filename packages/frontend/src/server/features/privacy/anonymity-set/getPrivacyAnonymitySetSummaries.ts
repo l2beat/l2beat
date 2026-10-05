@@ -1,4 +1,5 @@
 import type {
+  Database,
   IndexerConfigurationRecord,
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
@@ -10,6 +11,10 @@ import {
   ANONYMITY_SET_WINDOW_DAYS,
   calculateAnonymitySetHistory,
 } from './calculateAnonymitySets'
+import {
+  getPrivacyAnonymitySetCoverage,
+  type PrivacyAnonymitySetCoverage,
+} from './getPrivacyAnonymitySetCoverage'
 import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
@@ -27,6 +32,7 @@ export type PrivacyAnonymitySetSummary =
       label: string
       /** Labels of configured series excluded from the value while their history is indexed. */
       syncingLabels: string[]
+      coverage?: PrivacyAnonymitySetCoverage
     } & Pick<
       PrivacyAnonymitySetSeries,
       'bucketType' | 'chain' | 'formattedAmount' | 'token'
@@ -56,13 +62,14 @@ export async function getPrivacyAnonymitySetSummaries(
   const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const [configurations, rows] = await Promise.all([
+  const [configurations, rows, coverageByProject] = await Promise.all([
     getPrivacyAnonymitySetConfigurations(db, allSeries),
     db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
       trackedProjectIds,
       cutoff,
       currentDay,
     ),
+    getCoverageByProject(db, projects, currentDay),
   ])
 
   return new Map(
@@ -74,6 +81,7 @@ export async function getPrivacyAnonymitySetSummaries(
         configurations,
         rows,
         currentDay,
+        coverageByProject.get(project.id),
       ),
     ]),
   )
@@ -85,6 +93,7 @@ export function getPrivacyAnonymitySetSummary(
   configurations: IndexerConfigurationRecord[],
   rows: PrivacyAnonymitySetSenderDayRecord[],
   currentDay: UnixTime,
+  coverage?: PrivacyAnonymitySetCoverage,
 ): PrivacyAnonymitySetSummary {
   const state = project.privacyInfo.anonymitySet
   if (state?.type === 'not-applicable') {
@@ -113,11 +122,29 @@ export function getPrivacyAnonymitySetSummary(
     value: largest.value,
     label: largest.series.label,
     syncingLabels,
+    ...(coverage && { coverage }),
     bucketType: largest.series.bucketType,
     chain: largest.series.chain,
     formattedAmount: largest.series.formattedAmount,
     token: largest.series.token,
   }
+}
+
+async function getCoverageByProject(
+  db: Database,
+  projects: PrivacyProject[],
+  currentDay: UnixTime,
+): Promise<Map<string, PrivacyAnonymitySetCoverage | undefined>> {
+  const entries = await Promise.all(
+    projects.map(
+      async (project) =>
+        [
+          project.id,
+          await getPrivacyAnonymitySetCoverage(db, project, currentDay),
+        ] as const,
+    ),
+  )
+  return new Map(entries)
 }
 
 /**
@@ -163,6 +190,9 @@ function getMockSummaries(
             value: Math.round(Math.random() * 1_000),
             label: series.label,
             syncingLabels: [],
+            ...(state?.type === 'partially-attributed' && {
+              coverage: { attributed: 90, total: 100 },
+            }),
             bucketType: series.bucketType,
             chain: series.chain,
             formattedAmount: series.formattedAmount,

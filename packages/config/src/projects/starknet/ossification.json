@@ -3,34 +3,179 @@
     {
       "timestamp": 1672699319,
       "type": "state",
-      "contract": "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "transaction": "0x485fd2299d1ee3ff3c2d914c2a85065dc2633ecc0af5421072f982bf7f688002",
-      "reason": "The core proxy governor Safe changed its signature threshold to 2 after accepting governance."
+      "reason": "Starkware Multisig 1, proxy governor of the Starknet core since the previous day (tx 0x2c4d976a5da00cbeafbac9741bd44659462c0d9a874348527515024d0707671c), went from a single signer to 2-of-3. The EOA proxy governor eth:0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263 kept its own upgrade path until 2025-01-29."
     },
     {
-      "timestamp": 1738755599,
+      "timestamp": 1700572655,
       "type": "state",
-      "contract": "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
-      "transaction": "0xb711708a19da99c1f37dd9cbb73cb50d69cab941e82d8ca3b643f803fee311e6",
-      "reason": "The Security Council Safe changed its signature threshold to 3 after accepting core governance."
+      "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "transaction": "0x3ad09a8b52805bf031c45bcd9e3f99ae1b617abd17fd492c6fdaac169e34782f",
+      "reason": "Starkware Multisig 2 (eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec), proxy governor of the ETH escrow since tx 0x791bd34cd60845c9d93b2fa68d47c6509656a7430985a460f66dbfe832f39058, went from 1-of-3 to 2-of-4. The EOA proxy governor eth:0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae kept its own upgrade path until 2025-01-30."
+    },
+    {
+      "timestamp": 1702921247,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x4131a969982ec958490e399653f84bb356e4c282376320b1d6d2e6cc195597ef",
+      "updateId": "0fcca41a",
+      "reason": "Starknet OS programHash changed by the Starknet governance (exact time of the change the diffHistory entry found)."
+    },
+    {
+      "timestamp": 1704899003,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x28a355fcc9228ed719110e075a3071d20446cfaff5ece324839429680fc87cf4",
+      "updateId": "b1da51ab",
+      "reason": "Starknet OS programHash and configHash changed (tx 0xd15e25aaac8f634fcbe599fe0f47959d087dac5674091e12fc5a5a9808899f46 one block earlier set an intermediate programHash). Exact time of the change the diffHistory entry found five days later."
+    },
+    {
+      "timestamp": 1710252995,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0xb79aedc951cadb6145cd3b1531b8ba65dae93c3dcfb595ad98ff8056537e1f7b",
+      "updateId": "136742c7",
+      "reason": "Starknet OS programHash changed one minute after the 2024-03-12 core upgrade. Exact time of the change the diffHistory entry found two days later."
+    },
+    {
+      "timestamp": 1710625271,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x58aea92e2873db6f83792c948dc77e48c34b25779f1abd9c40f311b12cd11ef2",
+      "updateId": "403be4bd",
+      "reason": "Starknet OS programHash changed (exact time of the change the diffHistory entry found)."
+    },
+    {
+      "timestamp": 1713166199,
+      "type": "state",
+      "contract": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "transaction": "0x3403a8ce32a46410c9366c6ba255b2786676a240220289f54472be8c7973030d",
+      "updateId": "c1033783",
+      "reason": "Governance of the STRK escrow moved from a single EOA (eth:0xcA9fC2Da27ce25F35B994b152d27d480C6f62245, GOVERNANCE_ADMIN and UPGRADE_GOVERNOR since deployment, upgrade delay 0) to the 2-of-4 Starkware Multisig 2 (eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec). This tx revoked the EOA's last role, GOVERNANCE_ADMIN."
+    },
+    {
+      "timestamp": 1724856227,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x3b5c41b3abb8e265b8d58ec3dde79790d4f0ee050de97f8bd0fe68048c070bdd",
+      "updateId": "769dfe3d",
+      "reason": "Starknet OS programHash and aggregatorProgramHash changed after the 2024-08-28 core upgrade (exact time of the change the diffHistory entry found)."
+    },
+    {
+      "timestamp": 1732747391,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0xc19b6734b26e6eab4894b168177ef2f2546e7b17a7c2dea1fb5f2fdcf7b38fdc",
+      "updateId": "5c0c724a",
+      "reason": "Starknet OS programHash and aggregatorProgramHash changed for Starknet v0.13.3 (exact time of the change the diffHistory entry found)."
+    },
+    {
+      "timestamp": 1738189871,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x63c124d281987bc341e2d1aa6523dc88bdba2bcc32a099865fb26f9ac41cbbd8",
+      "updateId": "199b326f",
+      "reason": "Starkware Multisig 1 removed the EOA proxy governor eth:0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263, which could upgrade the Starknet core alone (upgrade delay 0). Two minutes earlier (tx 0x617e74011b3a7a90d33271619ae3d145d1fda2487c282e14c8042825852eaf28) the EOA Starknet governor eth:0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E was removed. Single-key upgrade and program-hash paths removed."
+    },
+    {
+      "timestamp": 1738274867,
+      "type": "state",
+      "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "transaction": "0x7b1af1d6dfc7ab39348dc212a3514803f166792e5c89199be9905999bdcb0e08",
+      "updateId": "199b326f",
+      "reason": "Starkware Multisig 2 removed the EOA proxy governor eth:0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae of the ETH escrow (3d upgrade delay). Single-key upgrade path removed, the 2-of-4 Starkware Multisig 2 remained the only governor."
+    },
+    {
+      "timestamp": 1738755371,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x1f47ef738911d5125334e29a4f5f7d19089666d7c7bb25f6347e61c4bea6d0c6",
+      "updateId": "adf8bd05",
+      "reason": "The Starkware Security Council Safe eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361 accepted proxy governance of the Starknet core (and Starknet governance one minute later, tx 0x3019d8b0d9c59f86fbdb785d50e1d87a6b92645e2c7196ed455a09de67d52e0c): a new instant upgrade and program-hash path, accepted while the Safe was still 1-of-13 (made 3-of-12 in tx 0xb711708a19da99c1f37dd9cbb73cb50d69cab941e82d8ca3b643f803fee311e6)."
     },
     {
       "timestamp": 1738762427,
       "type": "state",
-      "contract": "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "transaction": "0x3a28da18607f4b54d3786e03709e5373886e6123a4658c2b246f57944096fc43",
-      "reason": "The Security Council Safe changed its signature threshold from 3 to 9."
+      "updateId": "adf8bd05",
+      "reason": "The Starkware Security Council Safe, a Starknet core governor since tx 0x1f47ef73, raised its threshold from 3 to 9 of 12 (75%), meeting the Security Council bar."
     },
     {
-      "timestamp": 1739799179,
+      "timestamp": 1740060647,
       "type": "state",
-      "contract": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
-      "transaction": "0x70043bcda31be7720886fc262135f0b10b15d656fbf0d253fca63e0dc841c229",
-      "updateId": "71a58712",
-      "reason": "The Safe authorized to enable canonical bridge withdrawal limits reduced its signature threshold from 2 to 1."
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x619918da1a168d6261c50ffb2cc1ef29de8e0058bacb8f3df9dcb9dd72e4ab9b",
+      "updateId": "021051c4",
+      "reason": "The Security Council removed Starkware Multisig 1 (2-of-6, no delay) as proxy governor of the Starknet core, and two minutes later (tx 0x0ae7fd8287c56d527f6e58a6ee979b4ae135ed3165a041b71cec71dff877de09) the ops multisig eth:0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd as Starknet governor. The Security Council remained the only governor."
     },
     {
-      "timestamp": 1756750079,
+      "timestamp": 1740756167,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x504cc82de1fdcdd4e047c6b78778bb71617b11ceec6134b690dddb0ced37d86e",
+      "updateId": "b1c2521c",
+      "reason": "The DelayedExecutor (8d timelock owned by Starkware Multisig 1) accepted proxy and Starknet governance of the core: a second, delayed upgrade and program-hash path next to the Security Council."
+    },
+    {
+      "timestamp": 1742967335,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0xe7e3d16af351c74c08316a47c5be3891c9244a38b2f8029c0ef4380164be1982",
+      "updateId": "c8776771",
+      "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch that changed the Starknet OS programHash and aggregatorProgramHash (exact time of the change the diffHistory entry found)."
+    },
+    {
+      "timestamp": 1745516039,
+      "type": "state",
+      "contract": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "transaction": "0xf162f9a0e8f4e59157f127f3265466f804883649cd3446457dac7c2c9e7909bf",
+      "updateId": "48d0a736",
+      "reason": "Starkware Multisig 2 granted UPGRADE_GOVERNOR on the STRK escrow to the DelayedExecutor (8d timelock owned by Starkware Multisig 1): a new upgrade path."
+    },
+    {
+      "timestamp": 1746430151,
+      "type": "state",
+      "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "transaction": "0x2b0bba16bde1b88b2598e109827f38cd8cedd22df9888743e6147899f2d7c8bf",
+      "updateId": "ce8be8d5",
+      "reason": "The DelayedExecutor (8d timelock owned by Starkware Multisig 1) accepted proxy governance of the ETH escrow (nominated in tx 0xf162f9a0e8f4e59157f127f3265466f804883649cd3446457dac7c2c9e7909bf): a new upgrade path."
+    },
+    {
+      "timestamp": 1746449747,
+      "type": "state",
+      "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "transaction": "0xab161ac07e153979237f7fccb1ccdcca632abe037e55602fbfa8137881ca594e",
+      "updateId": "ce8be8d5",
+      "reason": "The Starkware Security Council became proxy governor and GOVERNANCE_ADMIN of the ETH escrow: a new instant upgrade path."
+    },
+    {
+      "timestamp": 1746449747,
+      "type": "state",
+      "contract": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "transaction": "0xab161ac07e153979237f7fccb1ccdcca632abe037e55602fbfa8137881ca594e",
+      "updateId": "ce8be8d5",
+      "reason": "The Starkware Security Council was granted GOVERNANCE_ADMIN and UPGRADE_GOVERNOR on the STRK escrow: a new instant upgrade path."
+    },
+    {
+      "timestamp": 1746793403,
+      "type": "state",
+      "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "transaction": "0x837560701ca53e2ee386a693287e73c38012f1e721a6d7ec1cc9fc40f98211ac",
+      "updateId": "2945c807",
+      "reason": "The Security Council removed Starkware Multisig 2 (2-of-4) as proxy governor and GOVERNANCE_ADMIN of the ETH escrow. Governance is now the Security Council and the DelayedExecutor only."
+    },
+    {
+      "timestamp": 1746793403,
+      "type": "state",
+      "contract": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "transaction": "0x837560701ca53e2ee386a693287e73c38012f1e721a6d7ec1cc9fc40f98211ac",
+      "updateId": "2945c807",
+      "reason": "The Security Council revoked GOVERNANCE_ADMIN and UPGRADE_GOVERNOR of Starkware Multisig 2 (2-of-4) on the STRK escrow. Governance is now the Security Council and the DelayedExecutor only."
+    },
+    {
+      "timestamp": 1756737695,
       "type": "state",
       "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "transaction": "0x856ed5c86e3be13f40909ef103ed61137a987e309f38f4c3948cc954e0c3c409",
@@ -46,7 +191,7 @@
       "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash and the aggregatorProgramHash: these hashes decide which state-transition proofs the core accepts from the SHARP verifier."
     },
     {
-      "timestamp": 1783559567,
+      "timestamp": 1783510259,
       "type": "state",
       "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "transaction": "0x1cb0539554280c12c187b73ed0f973108b2b5a26949612dac8921aae68cc875c",

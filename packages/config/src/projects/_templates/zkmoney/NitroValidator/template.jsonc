@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NitroValidator",
+  "critical": true,
+  "category": "core",
+  "description": "Validates AWS Nitro enclave attestations against the certificate chain verified by the CertManager."
+}

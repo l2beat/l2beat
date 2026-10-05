@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x5cf00481296f5f8e04dd452a5210148459815e1a
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 1259a7ec
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790851757
+- current timestamp: 1790851757
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851757 (main branch discovery), not current.
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.
+      description:
+-        "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator."
++        "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator."
+    }
+```
+
 Generated with discovered.json: 0xf755477ff1fe7222cad81e3cd93f56dbc2396c2b
 
 # Diff at Thu, 01 Oct 2026 11:11:05 GMT:

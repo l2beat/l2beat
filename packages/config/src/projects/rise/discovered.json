@@ -322,7 +322,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -1090,15 +1090,15 @@
           "description": "Formatted fallback timeout after which proposing becomes permissionless."
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
         },
         "challengers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to challenge dispute games."
         },
         "proposers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to propose dispute games."
         }
       },

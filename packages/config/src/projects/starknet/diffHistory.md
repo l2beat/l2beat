@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x3460c80233f1d055c58efe76533839b4c620558f
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 420d3c1b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1786612387
+- current timestamp: 1786612387
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786612387 (main branch discovery), not current.
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1738755371}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract FXSBridge (eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Starkware Multisig 4 (eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1727697611}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1672589267}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) [starknet/StarknetEthBridge] {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract USDTBridge (eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract rETHBridge (eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract FRAXBridge (eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1746449747}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UNIBridge (eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xc197a215e3f9de99dfd750a06ec0f5f855c6ca8e
 
 # Diff at Wed, 23 Sep 2026 05:56:05 GMT:

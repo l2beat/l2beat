@@ -34,6 +34,7 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false

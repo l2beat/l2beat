@@ -76,8 +76,9 @@
     },
     // Controller of pausing, batch reverts, the proof window, the finalization
     // period and the verifier pointer.
+    // role holder: mechanism changes are reviewed events
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

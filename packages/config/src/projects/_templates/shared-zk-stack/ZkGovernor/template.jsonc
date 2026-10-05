@@ -20,6 +20,7 @@
       }
     },
     "currentQuorum_MTokens": {
+      "severity": "HIGH", // formatted twin of currentQuorum
       "handler": {
         "type": "call",
         "method": "quorum",

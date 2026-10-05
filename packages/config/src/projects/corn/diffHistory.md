@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x2539de570c509ef464641c26533a5c1e4cd738d3
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: c4ec6309
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1783433878
+- current timestamp: 1783433878
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783433878 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.confirmPeriodBlocks.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x96d4f039b055b8124db9b44fb2292292ece9741a
 
 # Diff at Tue, 29 Sep 2026 17:49:54 GMT:

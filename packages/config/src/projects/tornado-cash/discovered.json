@@ -1772,7 +1772,7 @@
         "0x96acbaf2288d4cc44cf8e9634da42d922960c005a6982e0b54a84823be2776f2"
       ],
       "proxyType": "immutable",
-      "description": "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.",
+      "description": "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.",
       "critical": true,
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576523275,

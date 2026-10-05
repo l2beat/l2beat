@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1e09b844ed1be225089a7086b54f678f87db6cf9
+Generated with discovered.json: 0x5e89c1a13f382a7bfe6fdff026880685ac41f24f
 
-# Diff at Fri, 02 Oct 2026 14:25:16 GMT:
+# Diff at Mon, 05 Oct 2026 12:06:35 GMT:
 
-- id: 8d1a9dc9
+- id: 71d476ea
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@89cb82bb76bcee4c1e82bb3c348ae193f0df6fc8 block: 1785226129
+- comparing to: main@57aafc8ffcefd343a09bd846b1a2ef0f63b2bae3 block: 1785226129
 - current timestamp: 1790951049
 
 ## Description
@@ -63,7 +63,7 @@ TEEProverRegistry: signer attestations are validated by the new NitroValidator, 
       values.$upgradeCount:
 -        1
 +        2
-+++ severity: HIGH
++++ description: TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract.
       values.getExpectedImageHash:
 -        "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a"
 +        "0x45c538bc396fe4a01b3f9ddc999494c3b993480ecac0a917e2f1af230d78b0e0"
@@ -472,6 +472,141 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: None
       receivedPermissions:
 +        [{"permission":"interact","from":"eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA","description":"register and deregister TEE enclave signers and transfer the manager role.","role":".manager"}]
+    }
+```
+
+Generated with discovered.json: 0x6e6cb492472c6ba59bcfbf527d943b5d7d9cc289
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: d876f021
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1785226129
+- current timestamp: 1785226129
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract HistoryStorage (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A] {
+    +++ description: EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.getExpectedImageHash.severity:
+-        "HIGH"
+      fieldMeta.getExpectedImageHash.description:
++        "TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract."
+      fieldMeta.manager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      critical:
+-        true
++        {"untilTimestamp":1779825599}
+    }
+```
+
+```diff
+    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier] {
+    +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+      fieldMeta.revoker.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.disputeGameFinalityDelaySeconds.severity:
+-        "HIGH"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
     }
 ```
 

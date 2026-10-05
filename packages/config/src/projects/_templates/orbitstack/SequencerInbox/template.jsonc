@@ -13,12 +13,9 @@
   "ignoreRelatives": ["reader4844"],
   "category": "core",
   "fields": {
-    "isUsingFeeToken": {
-      "severity": "HIGH"
-    },
-    "isDelayBufferable": {
-      "severity": "HIGH"
-    },
+    // Immutables of the implementation: they only change with a code change.
+    "isUsingFeeToken": {},
+    "isDelayBufferable": {},
     "rollup": {
       "severity": "HIGH"
     },
@@ -50,7 +47,7 @@
       }
     },
     "batchPosterManager": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

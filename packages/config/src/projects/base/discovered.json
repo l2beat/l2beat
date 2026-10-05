@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1790951049,
-  "configHash": "0x5de69439fc2e9bcf611160242480015e4f96637785a6fb8e49d36463a0a5cd95",
+  "configHash": "0x1d732eca1b5e3f09f93bdb6ed4eab9d16463d8b6227f488ecb0cb0a31cddd84b",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -610,7 +610,6 @@
       ],
       "proxyType": "immutable",
       "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
-      "critical": true,
       "deployerAddress": "eth:0x3462413Af4609098e1E27A490f554f260213D685",
       "sinceTimestamp": 1739979839,
       "sinceBlock": 21881387,
@@ -822,8 +821,10 @@
         "version": "0.6.1"
       },
       "fieldMeta": {
-        "getExpectedImageHash": { "severity": "HIGH" },
-        "manager": { "severity": "HIGH" },
+        "getExpectedImageHash": {
+          "description": "TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract."
+        },
+        "manager": { "severity": "MEDIUM" },
         "owner": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "gameType": { "severity": "HIGH" },
@@ -854,7 +855,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -965,7 +966,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -1176,7 +1177,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1399,7 +1399,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -1599,7 +1599,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
@@ -1624,7 +1624,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -1672,7 +1672,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -1794,7 +1794,7 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "revoker": { "severity": "HIGH" }
+        "revoker": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17": "CertManager"
@@ -2303,10 +2303,10 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" },
         "disputeGameFinalityDelaySeconds": {
-          "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
         }
       },
@@ -2720,8 +2720,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xdc32E228636273285Befa5F001dBB5142517C106": "SP1VerifierGateway"
