@@ -35,13 +35,16 @@ export async function syncFlatSources(
     projectCount,
     discoveryPath,
   )
-  for (const projectId of projectIds) {
-    const stagingPath = path.join(discoveryPath, projectId, STAGING_DIRECTORY)
-    if (outputDirectory !== undefined) {
+  if (outputDirectory !== undefined) {
+    for (const projectId of projectIds) {
+      const stagingPath = path.join(discoveryPath, projectId, STAGING_DIRECTORY)
       cpSync(stagingPath, path.join(outputDirectory, projectId), {
         recursive: true,
       })
     }
+  }
+  for (const projectId of projectIds) {
+    const stagingPath = path.join(discoveryPath, projectId, STAGING_DIRECTORY)
     const flatPath = path.join(discoveryPath, projectId, '.flat')
     rmSync(flatPath, { recursive: true, force: true })
     renameSync(stagingPath, flatPath)

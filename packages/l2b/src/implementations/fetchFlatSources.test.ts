@@ -63,6 +63,23 @@ describe(syncFlatSources.name, () => {
     expect(readdirSync(path.join(discoveryPath, 'a'))).toEqual(['.flat'])
   })
 
+  it('keeps existing flat sources when copying to the output fails', async () => {
+    const url = await serve([
+      { projectCount: 2 },
+      entry('a', { 'A.sol': 'new a' }),
+      entry('b', { 'B.sol': 'new b' }),
+    ])
+    const outputDirectory = path.join(discoveryPath, '_output')
+    mkdirSync(outputDirectory)
+    writeFileSync(path.join(outputDirectory, 'b'), 'not a directory')
+
+    await expect(
+      syncFlatSources(quietCli(), url, discoveryPath, outputDirectory),
+    ).toBeRejected()
+
+    expect(readTree('a')).toEqual({ 'Old.sol': 'old' })
+  })
+
   async function serve(lines: object[]): Promise<string> {
     const body = zstdCompressSync(
       Buffer.from(lines.map((line) => `${JSON.stringify(line)}\n`).join('')),
