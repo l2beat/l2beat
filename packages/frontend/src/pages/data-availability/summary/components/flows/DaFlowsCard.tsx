@@ -10,6 +10,7 @@ import { FlowsGraphContext } from '~/pages/interop/components/flows/graph/utils/
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import type { DaFlowsProjects } from '~/server/features/data-availability/flows/getDaFlowsProjects'
 import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { buildDaFlowsGraph, OTHERS_ID } from './buildDaFlowsGraph'
 import { DaFlowsPosters } from './DaFlowsPosters'
 import { type DaFlowsUnit, getDaFlowsUnit, TIME_SCALE } from './daFlowsUnit'
@@ -22,9 +23,11 @@ export function DaFlowsCard({
   daLayer,
   projects,
   detailsHref,
+  className,
 }: DaFlowsProjects & {
   /** Where the posting of every project is broken down further */
   detailsHref: string
+  className?: string
 }) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
@@ -91,7 +94,12 @@ export function DaFlowsCard({
         toggleHighlightedChain,
       }}
     >
-      <PrimaryCard className="grid grid-cols-1 gap-4 max-md:mt-4 md:mt-6 lg:grid-cols-[1fr_320px]">
+      <PrimaryCard
+        className={cn(
+          'grid grid-cols-1 gap-4 max-md:mt-4 md:mt-6 lg:grid-cols-[1fr_320px]',
+          className,
+        )}
+      >
         <div className="flex min-w-0 flex-col lg:h-[44rem]">
           <FlowsGraphPanel
             activeChains={graph?.nodes ?? []}

@@ -15,7 +15,8 @@ import {
   type EthereumSummary,
   EthereumSummaryCard,
 } from './components/EthereumSummaryCard'
-import { DaFlowsCard } from './components/flows/DaFlowsCard'
+import { BlobLab } from './components/flows/lab/BlobLab'
+import { getBlockLimits } from './components/flows/lab/model'
 
 interface Props extends AppLayoutProps {
   ethereumSummary: EthereumSummary
@@ -54,10 +55,11 @@ export function DataAvailabilitySummaryPage({
             className="lg:hidden"
             charts={[tvsChart, throughputChart]}
           />
-          <DaFlowsCard
+          <BlobLab
             daLayer={daFlows.daLayer}
             projects={daFlows.projects}
             detailsHref={throughput.detailsHref}
+            limits={getBlockLimits(throughput.configuredThroughputs)}
           />
         </div>
       </SideNavLayout>
