@@ -150,7 +150,7 @@ describe(CodexClient.name, () => {
     expect(turn.model).toEqual('gpt-5.6-sol')
   })
 
-  it('refuses a turn whose events show a tool ran, even when codex exits cleanly', async () => {
+  it('refuses a turn whose events show a tool ran, even when codex exits cleanly, and keeps what it cost', async () => {
     fs.writeFileSync(
       eventsFile,
       [
@@ -159,10 +159,24 @@ describe(CodexClient.name, () => {
       ].join('\n'),
     )
     const client = new CodexClient({ binary, codexHome: directory })
-    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
-      CodexTurnError,
+    const refused: unknown = await client
+      .start({ prompt: 'p', schema: {} })
+      .then(
+        () => undefined,
+        (error: unknown) => error,
+      )
+
+    expect(refused).toBeA(CodexTurnError)
+    const error = refused as CodexTurnError
+    expect(error.message).toMatchRegex(
       /used tools despite isolation flags: command_execution: cat \/etc\/passwd/,
     )
+    expect(error.usage).toEqual({
+      inputTokens: 12,
+      cachedInputTokens: undefined,
+      outputTokens: 3,
+      reasoningOutputTokens: undefined,
+    })
   })
 
   it('reports the API error and stderr when codex fails', async () => {

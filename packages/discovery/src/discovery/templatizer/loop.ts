@@ -197,7 +197,7 @@ class AuthoringLoop {
     this.deps.artifacts.write('events.jsonl', toJsonl(this.events))
   }
 
-  /** A refused turn still happened; its events are the evidence for why. */
+  /** A refused turn still happened: its events are the evidence for why, and its tokens were spent. */
   private refusedRound(
     index: number,
     error: unknown,
@@ -218,7 +218,14 @@ class AuthoringLoop {
       `Templatizer model ${what}${this.forSubject()}, round ${index}`,
       { reason: refused.slice(0, 300) },
     )
-    return { index, durationMs, refused, findings: [] }
+    const usage = usageOf(error)
+    return {
+      index,
+      durationMs,
+      refused,
+      findings: [],
+      ...(usage === undefined ? {} : { usage }),
+    }
   }
 
   /** The trail says why the loop ended before the error leaves it. */
@@ -323,6 +330,17 @@ function eventsOf(error: unknown): unknown[] {
     return Array.isArray(events) ? events : []
   }
   return []
+}
+
+/** What a refused turn cost, when the client could tell. */
+function usageOf(error: unknown): ModelUsage | undefined {
+  if (typeof error === 'object' && error !== null && 'usage' in error) {
+    const usage = (error as { usage: unknown }).usage
+    return typeof usage === 'object' && usage !== null
+      ? (usage as ModelUsage)
+      : undefined
+  }
+  return undefined
 }
 
 function toJsonl(events: readonly unknown[]): string {

@@ -199,11 +199,12 @@ describe(authorDraft.name, () => {
     )
   })
 
-  it('counts an unusable answer as a round and asks the same message again', async () => {
+  it('counts an unusable answer as a round, with its tokens, and asks the same message again', async () => {
     const { model, artifacts, result } = run([
       Object.assign(new Error('codex turn used tools'), {
         events: [{ type: 'item.completed' }],
         retryable: true,
+        usage: { inputTokens: 7, outputTokens: 2 },
       }),
       JSON.stringify(VALID),
     ])
@@ -211,6 +212,12 @@ describe(authorDraft.name, () => {
     const outcome = await result
     expect(outcome.status).toEqual('accepted')
     expect(outcome.rounds[0]?.refused).toEqual('codex turn used tools')
+    expect(outcome.rounds[0]?.usage).toEqual({
+      inputTokens: 7,
+      outputTokens: 2,
+    })
+    const summary = JSON.parse(artifacts.files.get('summary.json') ?? '')
+    expect(summary.rounds[0].usage).toEqual({ inputTokens: 7, outputTokens: 2 })
     expect(model.calls).toEqual([
       { kind: 'start', prompt: PROMPT },
       { kind: 'start', prompt: PROMPT },

@@ -126,8 +126,18 @@ function toWorklistItem(
     fragment: fragment.format(utils.FormatTypes.full),
     inputs: fragment.inputs.map(toParam),
     outputs: (fragment.outputs ?? []).map(toParam),
-    probed: field?.kind === 'probe',
+    probed: field?.kind === 'probe' && isProbeFragment(fragment),
   }
+}
+
+/**
+ * V1 probes exactly the single-`uint256` getters (`getSystemHandlers`), so
+ * the baseline's probe under a name is of that overload; a namesake keyed
+ * otherwise shares the field name, not the probe, and ruling on it must
+ * not put the name into `ignoreMethods`.
+ */
+function isProbeFragment(fragment: utils.FunctionFragment): boolean {
+  return fragment.inputs.length === 1 && fragment.inputs[0]?.type === 'uint256'
 }
 
 /**

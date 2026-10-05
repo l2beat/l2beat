@@ -94,4 +94,25 @@ describe(deriveIgnoreMethods.name, () => {
 
     expect(deriveIgnoreMethods(buildWorklist(abi, baseline), draft)).toEqual([])
   })
+
+  it('does not ignore a probe because a namesake keyed otherwise was ruled on', () => {
+    const abi = [
+      'function validatorAt(uint256 index) view returns (address)',
+      'function validatorAt(address who) view returns (uint256)',
+    ]
+    const baseline: Baseline = {
+      fields: { validatorAt: { kind: 'probe', value: [] } },
+    }
+    // A field of another name reads the address overload; the probe, of
+    // the uint256 overload, is kept as a `covered` skip does. Ignoring
+    // `validatorAt` would drop that probe.
+    const draft: Draft = {
+      fields: {
+        validatorIndexOf: callField('validatorAt', ['validatorAt(address)']),
+      },
+      skips: [{ item: 'validatorAt(uint256)', reason: 'covered' }],
+    }
+
+    expect(deriveIgnoreMethods(buildWorklist(abi, baseline), draft)).toEqual([])
+  })
 })

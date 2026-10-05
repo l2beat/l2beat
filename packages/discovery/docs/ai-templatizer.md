@@ -1175,11 +1175,34 @@ Benchmark: from `packages/discovery`,
   the check now resolves the function as `ArrayHandler` does (a full
   fragment as written, a bare name by prefix over the ABI) and requires
   `name(uint256)`, naming what the field reads instead when it refuses.
+- **Codex review, round four (2026-10-05).** Five comments on `49674b651e`;
+  three taken, two declined. Taken: a refused turn's tokens were dropped
+  (`refusedRound` recorded no usage although `OpenCodeTurnError` carries
+  it since round two, and `CodexTurnError` never did), so a benchmark's
+  cost left out every refused round; both errors now carry the usage the
+  events reported and the round record keeps it. The worklist marked an
+  item probed by name, so with `foo(uint256)` and `foo(address)` in one ABI
+  a field reading the address overload under another name put `foo` into
+  `ignoreMethods` and dropped the real probe (rule 1); only the
+  single-`uint256` overload is probed now, as `getSystemHandlers` probes.
+  Contracts of one shape analysed together shared one authoring without a
+  check for the waiting ones: an old template extended for the first and
+  restricted to it by `criteria.json` was returned for the second, which V1
+  would not match (rule 2); the shared result is now checked with
+  `findMatchingTemplates` for each waiter, and one V1 rejects authors its
+  own, which later waiters share in turn. Declined: reading the trail into
+  the benchmark's failed-contract record when the model becomes
+  unavailable (that run is aborted and reported as such, the per-round
+  usage stays in the trail, and an aborted run's totals are not what the
+  benchmark compares); and counting object keys in `equal-by-value` (the
+  shape artefact noted in 12.5, left as ported so the numbers stay
+  comparable with the research runs; the verdict names the generated
+  fields so a reader can check).
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,275 tests as of 2026-10-05, about 220 of them the templatizer's;
+clean (1,277 tests as of 2026-10-05, about 220 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`

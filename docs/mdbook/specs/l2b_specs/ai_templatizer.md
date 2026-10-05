@@ -173,7 +173,11 @@ what the previous one added. A contract the template matches as it is, or one
 a referrer's field suggests it for, waits for those turns before discovery
 applies the template, so it gets the added fields too. One analysed earlier in
 the run keeps the template as it was; the run warns, and a second
-`l2b discover` applies the additions to it.
+`l2b discover` applies the additions to it. Contracts of one shape analysed
+together share one authoring, and the template it ends in is checked for each
+of them with discovery's own match: an old template extended for the first
+may admit only that address by its `criteria.json`, and a contract discovery
+would not match gets a template of its own.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of

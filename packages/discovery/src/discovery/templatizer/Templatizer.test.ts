@@ -535,6 +535,37 @@ describe(Templatizer.name, () => {
       ).toEqual([templateId ?? ''])
     })
 
+    it('gives a waiting contract of the same shape its own template when the one the first extends excludes it by criteria', async () => {
+      writeOldTemplate(FITTING_TEMPLATE)
+      writeFileSync(
+        join(root, '_templates', 'proj', 'Registry', 'criteria.json'),
+        JSON.stringify({ validAddresses: [ADDRESS] }),
+      )
+      templateService.reload()
+      const model = new FakeModelClient([
+        JSON.stringify(OWNER_HISTORY),
+        JSON.stringify(DRAFT),
+      ])
+      const instance = templatizer(model, { [ADDRESS]: 'proj/Registry' })
+      const changed = request([bundle('Registry', ADDRESS, BODY)])
+      const twin = request([bundle('Registry', TWIN, BODY)])
+
+      const [extended, own] = await Promise.all([
+        instance.templateFor(changed),
+        instance.templateFor(twin),
+      ])
+
+      expect(extended).toEqual('proj/Registry')
+      expect(own?.startsWith('proj/Registry-')).toEqual(true)
+      expect(model.calls.length).toEqual(2)
+      expect(
+        templateService.findMatchingTemplates(twin.sources, twin.address),
+      ).toEqual([own ?? ''])
+      expect(
+        templateService.findMatchingTemplates(changed.sources, changed.address),
+      ).toEqual(['proj/Registry'])
+    })
+
     it('keeps the template when the failing field already failed on the old code, and notes it once', async () => {
       const noted = OLD_TEMPLATE.replace(
         '    "threshold": {',

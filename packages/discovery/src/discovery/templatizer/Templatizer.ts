@@ -169,14 +169,40 @@ export class Templatizer {
     if (hash === undefined) {
       return Promise.resolve(undefined)
     }
+    return this.shareOrAuthor(request, hash)
+  }
+
+  /**
+   * Contracts of one shape analysed together share one authoring, but the
+   * template it ends in is checked for each of them with V1's own match: an
+   * old template extended for the first contract may admit only that
+   * address by its `criteria.json`. A contract V1 would not match gets an
+   * authoring of its own, which the others still waiting then share in
+   * turn.
+   */
+  private async shareOrAuthor(
+    request: TemplatizeRequest,
+    hash: Hash256,
+  ): Promise<string | undefined> {
     const key = hash.toString()
-    const pending = this.inFlight.get(key)
-    if (pending !== undefined) {
-      return pending
+    let pending = this.inFlight.get(key)
+    while (pending !== undefined) {
+      const shared = await pending
+      if (shared === undefined || this.matchedByV1(shared, request)) {
+        return shared
+      }
+      const current = this.inFlight.get(key)
+      pending = current === pending ? undefined : current
     }
     const authored = this.templatizeOrStop(request, hash)
     this.inFlight.set(key, authored)
     return authored
+  }
+
+  private matchedByV1(templateId: string, request: TemplatizeRequest): boolean {
+    return this.templateService
+      .findMatchingTemplates(request.sources, request.address)
+      .includes(templateId)
   }
 
   private async templatizeOrStop(

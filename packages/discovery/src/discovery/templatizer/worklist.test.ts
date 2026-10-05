@@ -30,10 +30,11 @@ describe(buildWorklist.name, () => {
     )
   })
 
-  it('marks as probed the items the baseline says V1 probed, under V1’s field name', () => {
+  it('marks as probed the items the baseline says V1 probed, under V1’s field name, and only the single-uint256 overload', () => {
     const worklist = buildWorklist(
       [
         'function validatorAt(uint256 index) view returns (address)',
+        'function validatorAt(address who) view returns (uint256)',
         'function $ignored(uint256 index) view returns (address)',
         'function validators(address) view returns (bool)',
         'function thresholds(uint8, uint256) view returns (uint256)',
@@ -50,6 +51,7 @@ describe(buildWorklist.name, () => {
       [
         ['$ignored(uint256)', true],
         ['thresholds(uint8,uint256)', false],
+        ['validatorAt(address)', false],
         ['validatorAt(uint256)', true],
         ['validators(address)', false],
       ],

@@ -46,6 +46,7 @@ import type {
   ModelResumeInput,
   ModelTurn,
   ModelTurnInput,
+  ModelUsage,
 } from './ModelClient'
 import { type ProcessRun, runProcess } from './process'
 import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
@@ -106,6 +107,8 @@ export class CodexTurnError extends Error {
     readonly stderr: string,
     /** See `isRetryable`: only an unusable answer is worth asking again. */
     readonly retryable = false,
+    /** What the refused turn cost, when the events reported it. */
+    readonly usage?: ModelUsage,
   ) {
     super(message)
     this.name = 'CodexTurnError'
@@ -202,6 +205,7 @@ export class CodexClient implements ModelClient {
         parsed.events,
         run.stderr,
         problem.retryable,
+        parsed.usage,
       )
     }
     const threadId = parsed.threadId as string
