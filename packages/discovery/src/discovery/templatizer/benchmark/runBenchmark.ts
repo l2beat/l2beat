@@ -33,6 +33,7 @@ import { attributeV1Field } from './attribution'
 import { addCounts, compareValues, countVerdicts, emptyCounts } from './compare'
 import {
   type BenchmarkProject,
+  missingFromSuite,
   type SuiteProject,
   selectContracts,
   type TemplatedEntry,
@@ -105,10 +106,17 @@ class BenchmarkRun {
   async benchmarkProject(suiteProject: SuiteProject): Promise<void> {
     const report = emptyProject(suiteProject)
     this.projects.push(report)
+    this.discardAuthoredTemplates(suiteProject.name)
     let project: BenchmarkProject
     let provider: IProvider
     try {
       project = this.deps.loadProject(suiteProject)
+      const missing = missingFromSuite(project, suiteProject)
+      if (missing.length > 0) {
+        throw new Error(
+          `The suite lists ${missing.join(', ')} for ${suiteProject.name}, which its committed discovered.json does not hold as a verified contract with a template; update suite.json`,
+        )
+      }
       report.blockNumber = project.blockNumber
       report.timestamp = project.timestamp
       provider = await this.providerAtCommittedBlock(project)
@@ -158,7 +166,6 @@ class BenchmarkRun {
     entry: TemplatedEntry,
     index: string,
   ): Promise<ContractBenchmark> {
-    this.discardAuthoredTemplate(project.name, entry.address)
     if (this.quota !== undefined) {
       return skippedContract(entry, `skipped: ${this.quota}`)
     }
@@ -218,16 +225,16 @@ class BenchmarkRun {
   }
 
   /**
-   * An earlier run into the same `--out` may have authored a template for
-   * this address; it goes before this run decides what the address gets,
-   * so a file there is this run's. Addresses this run does not touch keep
-   * theirs.
+   * An earlier run into the same `--out` may have authored templates for
+   * this project; they go before this run starts on it, so every file there
+   * is this run's, whether the project then fails, a contract is skipped or
+   * nothing is authored.
    */
-  private discardAuthoredTemplate(
-    project: string,
-    address: ChainSpecificAddress,
-  ): void {
-    fs.rmSync(this.authoredTemplatePath(project, address), { force: true })
+  private discardAuthoredTemplates(project: string): void {
+    fs.rmSync(path.join(this.options.outDir, project, 'templates'), {
+      recursive: true,
+      force: true,
+    })
   }
 
   private authoredTemplatePath(

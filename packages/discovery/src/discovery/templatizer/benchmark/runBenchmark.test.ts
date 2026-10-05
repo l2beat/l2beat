@@ -357,11 +357,13 @@ describe(runBenchmark.name, () => {
     expect(fakes.analyzed).toEqual([THROWS])
   })
 
-  it('records a project it cannot load or whose provider is at another block, and runs the next', async () => {
+  it('records a project it cannot load or whose provider is at another block, runs the next, and leaves neither an earlier run’s templates', async () => {
     const fakes = deps(
       [project('elsewhere', [entry(AUTHORED)], 999)],
       async () => ({ values: {}, proxyValueNames: [] }),
     )
+    staleTemplate('broken', AUTHORED)
+    staleTemplate('elsewhere', AUTHORED)
     const report = await runBenchmark(fakes, suite('broken', 'elsewhere'), {
       ...options,
       outDir,
@@ -371,6 +373,9 @@ describe(runBenchmark.name, () => {
       'The ethereum provider at the committed timestamp 1700000000 is at block 1000, but elsewhere/discovered.json was read at block 999',
     ])
     expect(fakes.analyzed).toEqual([])
+    for (const name of ['broken', 'elsewhere']) {
+      expect(existsSync(join(outDir, name, 'templates'))).toEqual(false)
+    }
   })
 
   it('stops authoring after a quota refusal, across projects, and records the rest as skipped', async () => {

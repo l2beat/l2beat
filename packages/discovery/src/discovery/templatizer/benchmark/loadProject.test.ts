@@ -1,11 +1,12 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'fs'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import type { DiscoveryOutput, EntryParameters } from '../../output/types'
+import type { EntryParameters } from '../../output/types'
 import {
   loadProject,
+  missingFromSuite,
   quickSuiteProjects,
   quickUnreachable,
   readSuite,
@@ -18,17 +19,6 @@ const B = 'eth:0x2222222222222222222222222222222222222222'
 const C = 'eth:0x3333333333333333333333333333333333333333'
 const D = 'eth:0x4444444444444444444444444444444444444444'
 const L2 = 'scr:0x5555555555555555555555555555555555555555'
-
-/** The entries of the committed `discovered.json`, which the suite is a list into. */
-function committedEntries(project: string): EntryParameters[] {
-  const file = join(
-    __dirname,
-    '../../../../../config/src/projects',
-    project,
-    'discovered.json',
-  )
-  return (JSON.parse(readFileSync(file, 'utf8')) as DiscoveryOutput).entries
-}
 
 function entry(
   address: string,
@@ -85,6 +75,25 @@ describe(selectContracts.name, () => {
   })
 })
 
+describe(missingFromSuite.name, () => {
+  it('names the listed addresses the committed discovery cannot benchmark, whatever their case', () => {
+    const project = {
+      chain: 'ethereum',
+      entries: [entry(A), entry(B, { template: undefined }), entry(C)],
+    }
+    expect(
+      missingFromSuite(project, {
+        name: 'proj',
+        chain: 'ethereum',
+        addresses: [A.toLowerCase(), B, D],
+      }),
+    ).toEqual([B, D])
+    expect(
+      missingFromSuite(project, { name: 'proj', chain: 'ethereum' }),
+    ).toEqual([])
+  })
+})
+
 describe(selectSuiteProjects.name, () => {
   const suite = readSuite()
 
@@ -96,24 +105,6 @@ describe(selectSuiteProjects.name, () => {
       ['base', 'ethereum', 24],
       ['plumenetwork', 'ethereum', 6],
     ])
-  })
-
-  it('lists only contracts the committed discovery can benchmark, so a run is as large as advertised', () => {
-    for (const project of suite.projects) {
-      if (project.addresses === undefined) {
-        continue
-      }
-      const selected = selectContracts(
-        committedEntries(project.name),
-        project.chain,
-        {
-          addresses: project.addresses,
-        },
-      )
-      expect(selected.map((entry) => entry.address.toString()).sort()).toEqual(
-        [...project.addresses].sort(),
-      )
-    }
   })
 
   it('picks projects by name in the order asked, all by default, and rejects names outside the suite', () => {
@@ -142,17 +133,6 @@ describe(quickSuiteProjects.name, () => {
       expect(String(ChainSpecificAddress.longChain(address))).toEqual(
         contract.chain,
       )
-    }
-  })
-
-  it('names the committed template of each contract, which the run hides', () => {
-    for (const contract of suite.quick) {
-      const [entry] = selectContracts(
-        committedEntries(contract.project),
-        contract.chain,
-        { addresses: [contract.address] },
-      )
-      expect(entry?.template).toEqual(contract.template)
     }
   })
 

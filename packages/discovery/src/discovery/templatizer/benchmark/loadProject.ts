@@ -225,6 +225,25 @@ export function selectContracts(
     : selected.slice(0, selection.limit)
 }
 
+/**
+ * The suite's addresses for the project that its committed discovery does
+ * not hold as a verified contract with a template. The suite is a list
+ * into committed discovery, which moves on, and such a contract would drop
+ * out of the run silently, making it smaller than the suite says.
+ */
+export function missingFromSuite(
+  project: Pick<BenchmarkProject, 'entries' | 'chain'>,
+  suiteProject: SuiteProject,
+): string[] {
+  const listed = suiteProject.addresses ?? []
+  const found = new Set(
+    selectContracts(project.entries, project.chain, { addresses: listed }).map(
+      (entry) => entry.address.toLowerCase(),
+    ),
+  )
+  return listed.filter((raw) => !found.has(parseAddress(project.chain, raw)))
+}
+
 function addressFilter(
   chain: string,
   addresses: readonly string[] | undefined,
