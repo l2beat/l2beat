@@ -38,7 +38,7 @@ export interface FailingField {
 export interface PreviousTemplate {
   templateId: string
   /**
-   * The names of the bundles the shape was taken from (`matchedBundles`):
+   * The names of the bundles the shape was taken from (`getSourcesToBeMatched`):
    * the implementations behind a proxy, else the contract itself.
    * Undefined when the entry does not record them.
    */

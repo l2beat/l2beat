@@ -10,11 +10,9 @@
  * match. So the id is returned only after `findMatchingTemplates` found it.
  */
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
+import { getSourcesToBeMatched } from '../../../flatten/utils'
 import type { TemplateService } from '../../analysis/TemplateService'
-import type {
-  ContractSources,
-  PerContractSource,
-} from '../../source/SourceCodeService'
+import type { ContractSources } from '../../source/SourceCodeService'
 import type { ContractFacts } from '../facts'
 
 export interface ShapeTarget {
@@ -71,7 +69,7 @@ export function addShape(
   templateId: string,
   { facts, sources }: ShapeTarget,
 ): void {
-  const bundles = matchedBundles(sources.sources)
+  const bundles = getSourcesToBeMatched(sources.sources)
   templateService.addToShape(
     templateId,
     facts.chain,
@@ -82,17 +80,6 @@ export function addShape(
   )
   templateService.reload()
   assertMatches(templateService, templateId, facts, sources)
-}
-
-/**
- * The bundles whose hash V1 matches on (`getHashToBeMatched` over
- * `recalculateSourceHashes`): the only bundle, the implementation behind a
- * proxy, or every implementation combined when a proxy has several.
- */
-export function matchedBundles(
-  bundles: readonly PerContractSource[],
-): PerContractSource[] {
-  return bundles.length === 1 ? [...bundles] : bundles.slice(1)
 }
 
 /** `<ContractName>.sol` by the existing convention, `<ContractName>_<hash8>` when a shape already has that key. */
@@ -109,22 +96,6 @@ function shapeFileName(
   return keys.has(conventional)
     ? `${facts.name}_${shortHash(facts.shapeHash)}`
     : conventional
-}
-
-/**
- * Whether the template's `criteria.json` lets V1 match the address: the one
- * criterion `findMatchingTemplatesByHash` applies, a template that lists
- * addresses matching those alone. Asked before a template is added to,
- * since `assertMatches` would throw only after the fields were appended.
- */
-export function admitsAddress(
-  templateService: TemplateService,
-  templateId: string,
-  address: ChainSpecificAddress,
-): boolean {
-  const listed =
-    templateService.getTemplateById(templateId)?.criteria?.validAddresses ?? []
-  return listed.length === 0 || listed.includes(address)
 }
 
 function assertMatches(

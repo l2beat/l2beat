@@ -20,7 +20,12 @@ import type { StructureContract } from '../../config/StructureConfig'
 import type { ContractValue } from '../../output/types'
 import { AbiIndex } from '../abi/AbiIndex'
 import type { FailingField } from '../existingTemplate'
-import type { BaselineField, ContractFacts, FlatSource } from '../facts'
+import {
+  type BaselineField,
+  type ContractFacts,
+  type FlatSource,
+  PROBE_RANGE,
+} from '../facts'
 import type {
   Worklist,
   WorklistConstructor,
@@ -110,7 +115,7 @@ function renderRules(hasExisting: boolean): string {
   return [
     SECTION_HEADERS.rules,
     '',
-    'You write the fields a discovery template (`template.jsonc`) needs for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Add a field for each such piece of state, each with one handler that reads it. The worklist in section 4 lists every function and event discovery does not read by itself, and the constructor when it has parameters: go through all of it, though most items need no field. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
+    'You write the fields a discovery template (`template.jsonc`) needs for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices ${PROBE_RANGE}; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Add a field for each such piece of state, each with one handler that reads it. The worklist in section 4 lists every function and event discovery does not read by itself, and the constructor when it has parameters: go through all of it, though most items need no field. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
     '',
     'What is checked: your reply parses as one JSON object of the shape in section 2, discovery’s own schema accepts it, it replaces nothing the template or the baseline already has, and every field you add is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
     '',
@@ -134,7 +139,7 @@ const RULES: Rule[] = [
   {
     title: 'Name.',
     lines: [
-      'A field name is a Solidity identifier naming the state the field holds: the getter or mapping it reads (`committedBatches`), the members of a boolean membership mapping (`sequencers` for `isSequencer(address)`), or, for event-only state, the event’s subject in lowerCamelCase (`revertedBatches` for `RevertBatch`). An `accessControl` field is named `accessControl` and a `constructorArgs` field `constructorArgs`. Never give a field the name of a baseline value: a field of that name replaces the value. The one exception is an `array` field named exactly like the probed single-`uint256` getter it enumerates, which replaces the 0–4 probe with the whole array. Names never start with `$`.',
+      'A field name is a Solidity identifier naming the state the field holds: the getter or mapping it reads (`committedBatches`), the members of a boolean membership mapping (`sequencers` for `isSequencer(address)`), or, for event-only state, the event’s subject in lowerCamelCase (`revertedBatches` for `RevertBatch`). An `accessControl` field is named `accessControl` and a `constructorArgs` field `constructorArgs`. Never give a field the name of a baseline value: a field of that name replaces the value. The one exception is an `array` field named exactly like the probed single-`uint256` getter it enumerates, which replaces the probe with the whole array. Names never start with `$`.',
     ],
   },
   {
@@ -372,7 +377,7 @@ function renderBaseline(fields: Record<string, BaselineField>): string[] {
   return [
     `### Baseline: values discovery already read (${entries.length})`,
     '',
-    'Every 0-argument getter, and every view function with a single `uint256` argument probed at indices 0–4. Reference these as `{{ name }}`; never fetch them again, and never name a field like one of them, except an `array` field named like the probed getter it enumerates.',
+    `Every 0-argument getter, and every view function with a single \`uint256\` argument probed at indices ${PROBE_RANGE}. Reference these as \`{{ name }}\`; never fetch them again, and never name a field like one of them, except an \`array\` field named like the probed getter it enumerates.`,
     '',
     ...(entries.length === 0
       ? ['(none)']
@@ -384,7 +389,7 @@ function renderBaseline(fields: Record<string, BaselineField>): string[] {
 function renderBaselineField(name: string, field: BaselineField): string {
   const origin =
     field.kind === 'probe'
-      ? ' (probed at indices 0–4)'
+      ? ` (probed at indices ${PROBE_RANGE})`
       : field.kind === 'override'
         ? ' (from the project config)'
         : ''
@@ -442,7 +447,7 @@ function renderWorklistItems(items: WorklistItem[]): string[] {
   return [
     `### Worklist: functions discovery does not read by itself (${items.length})`,
     '',
-    '"(probed)": discovery reads it at indices 0–4 today; an `array` field named like it replaces the probe with the whole array.',
+    `"(probed)": discovery reads it at indices ${PROBE_RANGE} today; an \`array\` field named like it replaces the probe with the whole array.`,
     '',
     ...(items.length === 0 ? ['(none)'] : items.map(renderWorklistItem)),
     '',

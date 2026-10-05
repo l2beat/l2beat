@@ -3,7 +3,7 @@
  * through.
  *
  * Every view/pure function that takes at least one argument is state V1
- * cannot read without a handler (the 5-index probe of single-`uint256`
+ * cannot read without a handler (the probe of single-`uint256`
  * getters is a guess, not a read). Events are listed too, because
  * event-only state (a list of reverted batches, a history of routes) has no
  * getter to put on the list and was silently dropped when events were only
@@ -32,7 +32,7 @@ export interface WorklistItem {
   fragment: string
   inputs: WorklistParam[]
   outputs: WorklistParam[]
-  /** V1's system handlers read this one at indices 0–4 for this address. */
+  /** V1's system handlers probe this one for this address. */
   probed: boolean
 }
 

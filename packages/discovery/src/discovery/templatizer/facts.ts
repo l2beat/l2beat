@@ -6,6 +6,7 @@
  * agreeing on the ABI, the baseline and the source the model was shown.
  */
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
+import { PROBED_INDICES } from '../handlers/getSystemHandlers'
 import type { ContractValue } from '../output/types'
 import type { PerContractSource } from '../source/SourceCodeService'
 
@@ -41,10 +42,13 @@ export interface FlatSource {
   flattened: string
 }
 
+/** The indices V1 probes every single-`uint256` getter at, as the prompt names them: `0–4`. */
+export const PROBE_RANGE = `0–${PROBED_INDICES - 1}`
+
 /**
  * The values V1 computes for an address before any template: every
  * 0-argument getter (`getter`), every single-`uint256` getter probed at
- * indices 0–4 (`probe`), and whatever the address override in
+ * `PROBE_RANGE` (`probe`), and whatever the address override in
  * `config.jsonc` adds (`override`). Which is which comes from V1's own
  * handler list for the address, not from the ABI. A draft field named like
  * one of these would replace it (`getHandlers` keeps the first field of a

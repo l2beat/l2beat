@@ -2,7 +2,7 @@
  * The baseline: what V1 reads for an address without the model's help.
  *
  * The templatizer runs discovery's own handler executor with the address's
- * config (every 0-argument getter, the 0–4 probe of single-`uint256`
+ * config (every 0-argument getter, the probe of single-`uint256`
  * getters, the fields of the address override), and, when a template is
  * being extended, with that template pushed, because override fields may
  * reference its fields. Which handler produced which name comes from V1's

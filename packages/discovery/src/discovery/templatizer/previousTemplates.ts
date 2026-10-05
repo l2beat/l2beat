@@ -51,7 +51,7 @@ function isMissingFile(error: unknown): boolean {
  * `implementationNames` holds the contract's own name under its address
  * and each implementation's under the implementation's address. The shape
  * is taken from the implementations when there are any, as
- * `matchedBundles` takes it; `name` is not used, because a project's
+ * `getSourcesToBeMatched` takes it; `name` is not used, because a project's
  * config may replace it with a display name.
  */
 function shapeNamesOf(entry: EntryParameters): string[] | undefined {

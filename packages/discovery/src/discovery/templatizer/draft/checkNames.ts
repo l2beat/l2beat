@@ -8,7 +8,7 @@
  * of a proxy value replaces that value. Such a name may only be described:
  * `severity`, `description`, `permissions`. The one sanctioned replacement
  * is an `array` field over the single-`uint256` getter V1 probes under that
- * name, which replaces the 0–4 probe with the whole array, as researchers
+ * name, which replaces the probe with the whole array, as researchers
  * write it. Which function that field reads is resolved as V1's
  * `ArrayHandler` resolves it, not taken from the name: an overload keyed by
  * a narrower integer (`foo(uint32)` beside the probed `foo(uint256)`) would
@@ -19,7 +19,7 @@ import { isArrayFragment } from '../../handlers/user/ArrayHandler'
 import { getFunctionFragment } from '../../handlers/utils/getFunctionFragment'
 import { rewriteSolidityIdentifier } from '../../handlers/utils/rewriteSolidityIdentifier'
 import { sighash } from '../abi/AbiIndex'
-import type { BaselineField, ContractFacts } from '../facts'
+import { type BaselineField, type ContractFacts, PROBE_RANGE } from '../facts'
 import { KEYS_ADDED_TO_EXISTING_FIELDS } from '../write/mergeTemplate'
 import { type Findings, fieldPath } from './Finding'
 import { show } from './schemaProblems'
@@ -62,7 +62,7 @@ function nameProblem(
     if (read !== undefined && replacesProbe(name, read)) {
       return undefined
     }
-    const rule = `"${name}" is V1's 5-index probe of ${name}(uint256); only an \`array\` field reading ${name}(uint256) may take this name (it replaces the probe with the whole array)`
+    const rule = `"${name}" is V1's probe of ${name}(uint256) at indices ${PROBE_RANGE}; only an \`array\` field reading ${name}(uint256) may take this name (it replaces the probe with the whole array)`
     if (read === undefined) {
       return `${rule}, so pick another name`
     }

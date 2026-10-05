@@ -113,7 +113,7 @@ describe(checkNames.name, () => {
       {
         path: 'fields.committedBatches',
         message:
-          '"committedBatches" is V1\'s 5-index probe of committedBatches(uint256); only an `array` field reading committedBatches(uint256) may take this name (it replaces the probe with the whole array), so pick another name',
+          '"committedBatches" is V1\'s probe of committedBatches(uint256) at indices 0–4; only an `array` field reading committedBatches(uint256) may take this name (it replaces the probe with the whole array), so pick another name',
       },
     ])
   })
@@ -136,7 +136,7 @@ describe(checkNames.name, () => {
       {
         path: 'fields.committedBatches',
         message:
-          '"committedBatches" is V1\'s 5-index probe of committedBatches(uint256); only an `array` field reading committedBatches(uint256) may take this name (it replaces the probe with the whole array), and this one reads committedBatches(uint32): write the method as the full fragment of committedBatches(uint256), or pick another name',
+          '"committedBatches" is V1\'s probe of committedBatches(uint256) at indices 0–4; only an `array` field reading committedBatches(uint256) may take this name (it replaces the probe with the whole array), and this one reads committedBatches(uint32): write the method as the full fragment of committedBatches(uint256), or pick another name',
       },
     ]
 

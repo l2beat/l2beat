@@ -14,6 +14,8 @@
  * A string constant rather than a markdown file: the package ships the
  * `tsc` output, which would leave a `.md` file behind.
  */
+import { PROBE_RANGE } from '../facts'
+
 export const HANDLER_DOCS = [
   'Every field has exactly one `handler` of one of the seven types below, with only the keys listed for that type; any other key is an error. Values are described as they appear in the discovered output, the way the baseline in section 4 shows them (addresses chain-prefixed, e.g. `eth:0x…`).',
   '',
@@ -58,7 +60,7 @@ export const HANDLER_DOCS = [
   '- `indices` (optional): the literal indices to read, e.g. `[0, 1, 2, 3]` for the values of an enum, or a reference to a field holding an array of indices. Not together with `length`.',
   '- `startIndex` (optional, default 0): the first index when enumerating.',
   '- A `uint8` key is not accepted, and the handler fails to construct. A getter keyed by a `uint8` is keyed by an enum in the source: read it with one `call` per enum value whose state matters (see `call`), or leave it out.',
-  '- Discovery already reads every getter with one `uint256` argument at indices 0–4 (marked "probed" in section 4). An `array` field named exactly like that getter replaces the probe with the full array.',
+  `- Discovery already reads every getter with one \`uint256\` argument at indices ${PROBE_RANGE} (marked "probed" in section 4). An \`array\` field named exactly like that getter replaces the probe with the full array.`,
   '',
   'Examples. Pools 1 … maxAssetId, with the length taken from a baseline getter; the holders of the four roles of an enum:',
   '',

@@ -23,7 +23,10 @@
  */
 import type { Logger } from '@l2beat/backend-tools'
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { getHashForMatchingFromSources } from '../../flatten/utils'
+import {
+  getHashForMatchingFromSources,
+  getSourcesToBeMatched,
+} from '../../flatten/utils'
 import { getErrorMessage } from '../../utils/getErrorMessage'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -64,9 +67,7 @@ import { buildWorklist, isEmptyWorklist, type Worklist } from './worklist'
 import { type MergeResult, mergeTemplate } from './write/mergeTemplate'
 import {
   addShape,
-  admitsAddress,
   chooseTemplateId,
-  matchedBundles,
   replaceTemplateText,
   writeNewTemplate,
 } from './write/writeTemplate'
@@ -182,7 +183,7 @@ export class Templatizer {
       sources.isVerified &&
       !isDiamond(proxyType) &&
       getHashForMatchingFromSources(sources.sources) !== undefined &&
-      matchedBundles(sources.sources).every(
+      getSourcesToBeMatched(sources.sources).every(
         (bundle) => bundle.source.isVerified,
       )
     )
@@ -294,7 +295,7 @@ export class Templatizer {
     previous: PreviousTemplate,
   ): Promise<string | undefined> {
     const { templateId } = previous
-    if (!admitsAddress(this.templateService, templateId, request.address)) {
+    if (!this.templateService.admitsAddress(templateId, request.address)) {
       // V1 matches a template that lists addresses for those alone. The
       // new shape would not change that, and `addShape` would throw after
       // the fields were appended.
@@ -310,7 +311,9 @@ export class Templatizer {
       return 'it holds this shape and still V1 does not match it'
     }
     const existing = await this.analyzeExisting(request, templateId)
-    const names = matchedBundles(request.sources.sources).map((b) => b.name)
+    const names = getSourcesToBeMatched(request.sources.sources).map(
+      (b) => b.name,
+    )
     const misfit = misfitOf(existing, previous, names)
     if (misfit !== undefined) {
       return misfit
