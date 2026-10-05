@@ -40,7 +40,6 @@ export function AuditReportsList({
   const sharedReports = reports.filter((r) => r.origin !== 'own')
   return (
     <div className="flex flex-col gap-3">
-      <h2 className="font-bold text-lg">Audit reports used</h2>
       {context.length > 0 && (
         <p className="text-secondary text-xs">
           Evidence searched with priority:{' '}

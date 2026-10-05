@@ -85,6 +85,9 @@ export type SectionId =
   | 'privacy-adversaries'
   | 'external-dependencies'
   | 'crops'
+  | 'audit-timeline'
+  | 'audit-reports'
+  | 'audit-diff'
 
 type GroupId = 'da-layer' | 'da-bridge'
 

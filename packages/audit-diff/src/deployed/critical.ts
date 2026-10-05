@@ -25,8 +25,8 @@ export class CriticalContracts {
   async get(projectId: string): Promise<string[] | undefined> {
     const project = await this.ps.getProject({
       id: ProjectId(projectId),
-      optional: ['ossification'],
+      optional: ['ossificationHistory'],
     })
-    return project?.ossification?.contracts.map((c) => c.address)
+    return project?.ossificationHistory?.contracts.map((c) => c.address)
   }
 }

@@ -19,6 +19,7 @@ export interface AuditCoverageSource {
   getProject(slug: string): ProjectAuditCoverage | undefined
   getUnit(unitHash: string): UnitRecord | undefined
   getReport(id: string): AuditReportRef | undefined
+  listReports(): AuditReportRef[]
   getCollection(id: string): CollectionRef | undefined
 }
 
@@ -61,11 +62,19 @@ class ContentAuditCoverageSource implements AuditCoverageSource {
   }
 
   getReport(id: string): AuditReportRef | undefined {
+    return this.readReports()[id]
+  }
+
+  listReports(): AuditReportRef[] {
+    return Object.values(this.readReports())
+  }
+
+  private readReports(): Record<string, AuditReportRef> {
     if (!this.reports) {
       const file = path.join(this.dir, 'reports.json')
       this.reports = existsSync(file) ? readJson<ReportsFile>(file).reports : {}
     }
-    return this.reports[id]
+    return this.reports
   }
 
   getCollection(id: string): CollectionRef | undefined {

@@ -3,12 +3,17 @@ import type {
   ProjectAuditCoverage,
   UnitRef,
 } from '@l2beat/audit-diff'
+import { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getOssificationValueSource } from '../projects/ossification/getOssificationSeries'
 import {
   type AuditCoverageSource,
   auditCoverageSource,
 } from './AuditCoverageSource'
+import { getAuditsOwnReports } from './getAuditsOwnReports'
+import { getAuditsProjectTimeline } from './getAuditsProjectTimeline'
 import { toCoverageNumbers } from './getAuditsSummaryEntries'
 import type {
   AuditsContractEntry,
@@ -26,7 +31,17 @@ export async function getAuditsProjectDetails(
 ): Promise<AuditsProjectDetails | undefined> {
   const report = auditCoverageSource.getProject(slug)
   if (!report) return undefined
-  const project = await ps.getProject({ slug })
+  const project = await ps.getProject({
+    slug,
+    optional: [
+      'ossificationHistory',
+      'discoveryInfo',
+      'tvsConfig',
+      'defiInfo',
+      'scalingInfo',
+      'privacyInfo',
+    ],
+  })
 
   const collectionName = (id: string) =>
     auditCoverageSource.getCollection(id)?.name ?? id
@@ -66,10 +81,22 @@ export async function getAuditsProjectDetails(
     })
   }
 
+  const projectHref = project && getProjectHref(project)
+  const timeline = getAuditsProjectTimeline(
+    getAuditsOwnReports(report, auditCoverageSource),
+    {
+      history: project?.ossificationHistory,
+      href: projectHref && `${projectHref}#ossification`,
+    },
+    (project && getOssificationValueSource(project)) ?? null,
+    UnixTime.now(),
+  )
+
   return {
     slug: report.slug,
     projectId: report.projectId,
     name: project?.name ?? report.projectId,
+    shortName: project?.shortName,
     icon: manifest.getUrl(`/icons/${report.slug}.png`),
     contractSelection: report.contractSelection,
     discoveryTimestamp: report.discoveryTimestamp,
@@ -89,6 +116,24 @@ export async function getAuditsProjectDetails(
         relation: describeRelation(c.relation),
       })),
     contractEntries,
+    projectHref,
+    discoUiHref: project?.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
+    timeline,
+  }
+}
+
+function getProjectHref(project: {
+  slug: string
+  scalingInfo?: unknown
+  privacyInfo?: unknown
+  defiInfo?: unknown
+}): string | undefined {
+  if (project.scalingInfo) return `/layer2s/projects/${project.slug}`
+  if (project.privacyInfo) return `/privacy/projects/${project.slug}`
+  if (project.defiInfo && env.CLIENT_SIDE_DEFI_ENABLED) {
+    return `/defi/projects/${project.slug}`
   }
 }
 

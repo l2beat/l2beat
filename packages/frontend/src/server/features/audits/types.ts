@@ -1,4 +1,4 @@
-import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import type { OssificationValueSource } from '~/server/features/projects/ossification/getOssificationSeries'
 
 // View models served to the audits pages. They are derived from the engine's
 // data contract (`@l2beat/audit-diff`) on the server so that page components
@@ -29,6 +29,29 @@ export interface AuditCoverageNumbers {
   lines: { total: number; covered: number; uncovered: number }
 }
 
+/** One of the project's own audit reports, dated. */
+export interface AuditsOwnReport {
+  id: string
+  title: string
+  auditor: string
+  timestamp: number
+  url?: string
+  /** The report matched at least one deployed unit. */
+  matched: boolean
+}
+
+/** A year of value with the project's own audits, see AuditsTimelineChart. */
+export interface AuditsSummaryTimeline {
+  from: number
+  to: number
+  /** Own report dates inside the window, ascending. */
+  audits: number[]
+  /** Newest own report, possibly before the window; null when none is dated. */
+  latestAudit: number | null
+  /** Evenly spread from `from` to `to`, see sampleTimeline */
+  values: (number | null)[] | null
+}
+
 export interface AuditsSummaryEntry {
   id: string
   slug: string
@@ -45,8 +68,8 @@ export interface AuditsSummaryEntry {
   /** Reports from every other collection (upstream, stack, libraries, ...). */
   sharedReportsCount: number
   discoveryTimestamp: number
-  /** Total value secured, absent for projects without TVS tracking. */
-  tvs?: { latest: number; change: number; changePeriod: PercentageChangePeriod }
+  valueSource: OssificationValueSource | null
+  timeline: AuditsSummaryTimeline
 }
 
 export interface AuditsReportEntry {
@@ -139,10 +162,30 @@ export interface AuditsContextEntry {
   relation: string
 }
 
+/** Markers and stats of the audits and upgrades timeline section. */
+export interface AuditsProjectTimeline {
+  /** Dated own reports, ascending. */
+  audits: AuditsOwnReport[]
+  /** 24h-clustered critical changes from the ossification history, ascending. */
+  criticalChanges: number[]
+  /** False for projects outside the ossification perimeter. */
+  hasOssification: boolean
+  /** Where the critical changes are explained. */
+  ossificationHref?: string
+  latestAudit: AuditsOwnReport | null
+  latestCriticalChange: number | null
+  /** Critical changes after the latest audit; null without ossification. */
+  criticalChangesSinceLatestAudit: number | null
+  /** Where the MAX range starts: the earliest marker, at least a year ago. */
+  from: number
+  valueSource: OssificationValueSource | null
+}
+
 export interface AuditsProjectDetails {
   slug: string
   projectId: string
   name: string
+  shortName?: string
   icon: string
   contractSelection: 'critical' | 'all'
   discoveryTimestamp: number
@@ -156,6 +199,10 @@ export interface AuditsProjectDetails {
   /** Own, upstream and stack collections ranked for this project. */
   context: AuditsContextEntry[]
   contractEntries: AuditsContractEntry[]
+  /** The project's own L2BEAT page, when it has one. */
+  projectHref?: string
+  discoUiHref?: string
+  timeline: AuditsProjectTimeline
 }
 
 export interface AuditsDiffLine {

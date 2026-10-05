@@ -5,8 +5,6 @@ import {
   LineCoverageTooltipContent,
 } from '~/components/audits/AuditCoverageBar'
 import {
-  AUDIT_STATUS_META,
-  AUDIT_STATUS_ORDER,
   collectFindingIds,
   formatShare,
   hasUnresolvedMajorFinding,
@@ -20,10 +18,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ChevronIcon } from '~/icons/Chevron'
-import type {
-  AuditsContractEntry,
-  AuditUnitStatus,
-} from '~/server/features/audits/types'
+import type { AuditsContractEntry } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 import { UnitRow } from './UnitRow'
 
@@ -44,9 +39,6 @@ function anchorOf(contract: AuditsContractEntry): string {
 }
 
 export function ContractCoverageList({ contracts }: Props) {
-  const [statuses, setStatuses] = useState<Set<AuditUnitStatus>>(
-    () => new Set(AUDIT_STATUS_ORDER),
-  )
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState<Set<string>>(() => new Set())
   const [hideIgnoredChanges, setHideIgnoredChanges] = useState(true)
@@ -75,26 +67,16 @@ export function ContractCoverageList({ contracts }: Props) {
         file,
         units: file.units.filter(
           (u) =>
-            statuses.has(u.status) &&
-            (needle === '' ||
-              u.name.toLowerCase().includes(needle) ||
-              u.match?.auditedName.toLowerCase().includes(needle)),
+            needle === '' ||
+            u.name.toLowerCase().includes(needle) ||
+            u.match?.auditedName.toLowerCase().includes(needle),
         ),
       })),
     }))
     return isSearching
       ? rows.filter((r) => r.files.some((f) => f.units.length > 0))
       : rows
-  }, [contracts, statuses, needle, isSearching])
-
-  function toggleStatus(status: AuditUnitStatus) {
-    setStatuses((prev) => {
-      const next = new Set(prev)
-      if (next.has(status)) next.delete(status)
-      else next.add(status)
-      return next
-    })
-  }
+  }, [contracts, needle, isSearching])
 
   function toggleOpen(address: string) {
     setOpen((prev) => {
@@ -108,7 +90,13 @@ export function ContractCoverageList({ contracts }: Props) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="font-bold text-lg">Deployed contracts</h2>
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Filter units by name"
+          className="min-w-[200px] rounded-md border border-divider bg-surface-secondary px-2 py-1 text-xs"
+        />
         <div className="flex flex-wrap items-center gap-3 text-xs">
           <label
             htmlFor="hide-ignored-changes"
@@ -151,34 +139,6 @@ export function ContractCoverageList({ contracts }: Props) {
             Collapse all
           </button>
         </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
-        {AUDIT_STATUS_ORDER.map((status) => (
-          <button
-            key={status}
-            type="button"
-            aria-pressed={statuses.has(status)}
-            onClick={() => toggleStatus(status)}
-            className={cn(
-              'flex items-center gap-1.5 rounded-full border border-divider px-2.5 py-1 text-xs',
-              statuses.has(status)
-                ? 'bg-surface-secondary text-primary'
-                : 'text-secondary opacity-60',
-            )}
-          >
-            <span
-              className={cn('size-2 rounded-sm', AUDIT_STATUS_META[status].bg)}
-            />
-            {AUDIT_STATUS_META[status].label}
-          </button>
-        ))}
-        <input
-          type="search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Filter units by name"
-          className="ml-auto min-w-[200px] rounded-md border border-divider bg-surface-secondary px-2 py-1 text-xs"
-        />
       </div>
       {isSearching && (
         <p className="text-secondary text-xs">
@@ -317,7 +277,7 @@ export function ContractCoverageList({ contracts }: Props) {
                     <p className="px-3 py-2 text-secondary text-xs">
                       {contract.noSource
                         ? 'No verified source for this contract.'
-                        : 'No units match the current filter.'}
+                        : 'No units match the name filter.'}
                     </p>
                   )}
                   {files.map(({ file, units }) =>

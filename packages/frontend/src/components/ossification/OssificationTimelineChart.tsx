@@ -9,19 +9,16 @@ import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificatio
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-
-const WIDTH = 132
-const HEIGHT = 30
-const TOP = 2
-// The area sits above it, reset ticks and the arrow below.
-const BASELINE = 24
-const LINE_PROPS = {
-  strokeWidth: 1.5,
-  strokeLinejoin: 'round',
-  strokeLinecap: 'round',
-} as const
-const SCALE_NOTE = "Height is scaled to each project's own peak"
-const CRISP = { shapeRendering: 'crispEdges' } as const
+import {
+  SPARKLINE_BASELINE as BASELINE,
+  SPARKLINE_CRISP as CRISP,
+  getSparklineAreaPaths,
+  SPARKLINE_HEIGHT as HEIGHT,
+  SPARKLINE_LINE_PROPS as LINE_PROPS,
+  SPARKLINE_SCALE_NOTE as SCALE_NOTE,
+  snapToPixel,
+  SPARKLINE_WIDTH as WIDTH,
+} from './timelineSparkline'
 
 type Props = Pick<OssificationStats, 'timeline' | 'valueSource'>
 
@@ -35,7 +32,7 @@ export function OssificationTimelineChart({
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
-  const area = values ? getAreaPaths(values) : undefined
+  const area = values ? getSparklineAreaPaths(values) : undefined
   const description = getDescription({
     timeline,
     valueSource,
@@ -106,8 +103,8 @@ export function OssificationTimelineChart({
           {resets.map((reset) => (
             <line
               key={reset}
-              x1={snap(toX(reset))}
-              x2={snap(toX(reset))}
+              x1={snapToPixel(toX(reset))}
+              x2={snapToPixel(toX(reset))}
               y1={BASELINE + 2}
               y2={HEIGHT}
               stroke="var(--secondary)"
@@ -122,8 +119,8 @@ export function OssificationTimelineChart({
             />
           ) : (
             <line
-              x1={snap(clockX)}
-              x2={snap(clockX)}
+              x1={snapToPixel(clockX)}
+              x2={snapToPixel(clockX)}
               y1={0}
               y2={HEIGHT}
               stroke="var(--chart-pink)"
@@ -144,37 +141,6 @@ export function OssificationTimelineChart({
       </TooltipContent>
     </Tooltip>
   )
-}
-
-/** Centers a 1px line on a device pixel, so it is not blurred over two. */
-function snap(x: number) {
-  return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
-}
-
-/** Area and line through the samples, from a zero baseline to the peak. */
-function getAreaPaths(values: (number | null)[]) {
-  const peak = Math.max(...values.map((value) => value ?? 0))
-  const step = WIDTH / (values.length - 1)
-  const points = values.flatMap((value, i) =>
-    value === null
-      ? []
-      : [
-          {
-            x: i * step,
-            y: BASELINE - (peak > 0 ? value / peak : 0) * (BASELINE - TOP),
-          },
-        ],
-  )
-  const first = points[0]
-  const last = points.at(-1)
-  if (!first || !last) {
-    return undefined
-  }
-  const line = `M${points.map((p) => `${p.x} ${p.y}`).join(' L')}`
-  return {
-    line,
-    fill: `${line} L${last.x} ${BASELINE} L${first.x} ${BASELINE} Z`,
-  }
 }
 
 function getDescription({
