@@ -39,7 +39,7 @@ export function createFlatSourcesRouter(
       (error) => {
         clearTimeout(deadline)
         streaming = false
-        if (error) {
+        if (error && !ctx.res.writableEnded) {
           ctx.res.destroy(error)
         }
       },

@@ -3,7 +3,13 @@ import type { Database, FlatSourcesJsonRecord } from '@l2beat/database'
 import { FLAT_SOURCES_ZSTD_WINDOW_LOG, Hash256 } from '@l2beat/shared-pure'
 import { randomBytes } from 'crypto'
 import { expect, mockObject } from 'earl'
-import { createServer, get, type IncomingMessage, type Server } from 'http'
+import {
+  Agent,
+  createServer,
+  get,
+  type IncomingMessage,
+  type Server,
+} from 'http'
 import type { AddressInfo } from 'net'
 import { constants, zstdDecompressSync } from 'zlib'
 import { ApiServer } from '../../../api/ApiServer'
@@ -66,6 +72,24 @@ describe(createFlatSourcesRouter.name, () => {
     const response = await fetch(url)
 
     expect(response.status).toEqual(500)
+  })
+
+  it('keeps the connection after responding with 500', async () => {
+    const flatSources = mockObject<Database['flatSources']>({
+      getProjectIds: async () => ['a'],
+      getJson: async () => {
+        throw new Error('database failed')
+      },
+    })
+    const url = await listen(flatSources)
+    const agent = new Agent({ keepAlive: true, maxSockets: 1 })
+
+    const first = await request(url, agent)
+    const second = await request(url, agent)
+    agent.destroy()
+
+    expect(first).toEqual({ status: 500, reusedSocket: false })
+    expect(second).toEqual({ status: 500, reusedSocket: true })
   })
 
   it('aborts the body when the database fails after headers are sent', async () => {
@@ -208,6 +232,24 @@ function jsonRecord(
     contentHash: CONTENT_HASH,
     flatJson: JSON.stringify(flat),
   }
+}
+
+function request(
+  url: string,
+  agent: Agent,
+): Promise<{ status: number | undefined; reusedSocket: boolean }> {
+  return new Promise((resolve, reject) => {
+    const outgoing = get(url, { agent }, (response) => {
+      response.resume()
+      response.on('end', () =>
+        resolve({
+          status: response.statusCode,
+          reusedSocket: outgoing.reusedSocket,
+        }),
+      )
+    })
+    outgoing.on('error', reject)
+  })
 }
 
 function decompress(body: ArrayBuffer): string {
