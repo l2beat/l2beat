@@ -37,7 +37,7 @@ import { isPlainObject, schemaProblems, show } from './schemaProblems'
 
 export interface ValidationContext {
   facts: ContractFacts
-  /** The text of the template the draft adds to; a new template's holds only its `$schema`. */
+  /** The text of the template the draft adds to; `{}` for a new one, whose `$schema` discovery writes. */
   templateText: string
   isNew: boolean
 }
