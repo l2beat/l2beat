@@ -8,7 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
-import { mapInBatches } from '../utils/mapInBatches'
 import { ReceiptLogCache } from '../utils/ReceiptLogCache'
 import { attributeFunders, eventKey } from './attributeFunders'
 import { resolveDeposit, type ZkMoneyDeposit } from './deposits'
@@ -51,19 +50,20 @@ export async function traceZkMoneyFunders(
   deps: TraceFundersDependencies,
 ): Promise<Map<Log, EthereumAddress>> {
   const context = { rpc: deps.rpc, receipts: new ReceiptLogCache(deps.rpc) }
-  const resolved = await mapInBatches(
-    deposits,
-    DEPOSIT_RESOLUTION_BATCH_SIZE,
-    async (event): Promise<ResolvedDeposit | undefined> => {
-      const deposit = await resolveDeposit(event.log, params, context)
-      return deposit && { ...deposit, event }
-    },
-  )
+  const resolved: ResolvedDeposit[] = []
+  for (const batch of chunk(deposits, DEPOSIT_RESOLUTION_BATCH_SIZE)) {
+    const batchDeposits = await Promise.all(
+      batch.map(async (event) => {
+        const deposit = await resolveDeposit(event.log, params, context)
+        return deposit && { ...deposit, event }
+      }),
+    )
+    resolved.push(...batchDeposits.filter((deposit) => deposit !== undefined))
+  }
 
   const funders = new Map<Log, EthereumAddress>()
   const depositsBySipa = new Map<EthereumAddress, ResolvedDeposit[]>()
   for (const deposit of resolved) {
-    if (deposit === undefined) continue
     switch (deposit.senderKind) {
       case 'invalid':
         break

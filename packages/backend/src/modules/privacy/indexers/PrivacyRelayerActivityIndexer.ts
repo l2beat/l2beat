@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import chunk from 'lodash/chunk'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -20,7 +21,6 @@ import type {
   PrivacyRelayerActivityIndexerConfigProperties,
 } from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
-import { mapInBatches } from '../utils/mapInBatches'
 import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 import { ReceiptLogCache } from '../utils/ReceiptLogCache'
 
@@ -149,29 +149,31 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       rpc: this.$.rpcClient,
       receipts: new ReceiptLogCache(this.$.rpcClient),
     }
-    const records = await mapInBatches(
-      matches,
-      EXTRACTION_BATCH_SIZE,
-      async ({ log, timestamp, configuration }) => {
-        const activity = await extractPrivacyRelayerActivity(
-          configuration.properties,
-          log,
-          context,
-        )
-        if (!activity) return undefined
-        return {
-          configurationId: configuration.id,
-          projectId: configuration.properties.projectId,
-          chain: configuration.properties.chain,
-          timestamp,
-          blockNumber: log.blockNumber,
-          txHash: log.transactionHash,
-          logIndex: log.logIndex,
-          relayerAddress: activity.relayerAddress,
-        }
-      },
-    )
-    return records.filter((record) => record !== undefined)
+    const records: PrivacyRelayerActivityRecord[] = []
+    for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
+      const extracted = await Promise.all(
+        batch.map(async ({ log, timestamp, configuration }) => {
+          const activity = await extractPrivacyRelayerActivity(
+            configuration.properties,
+            log,
+            context,
+          )
+          if (!activity) return undefined
+          return {
+            configurationId: configuration.id,
+            projectId: configuration.properties.projectId,
+            chain: configuration.properties.chain,
+            timestamp,
+            blockNumber: log.blockNumber,
+            txHash: log.transactionHash,
+            logIndex: log.logIndex,
+            relayerAddress: activity.relayerAddress,
+          }
+        }),
+      )
+      records.push(...extracted.filter((record) => record !== undefined))
+    }
+    return records
   }
 
   static idToConfigurationId(
