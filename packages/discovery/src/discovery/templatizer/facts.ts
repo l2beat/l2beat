@@ -1,12 +1,9 @@
 /**
  * Everything the templatizer knows about one contract when it starts
- * authoring: what the analyzer already gathered, nothing fetched twice.
- *
- * The analyzer has run proxy detection, fetched and merged the sources and
- * read every system handler by the time no template matched, so the facts
- * are assembled from its data rather than recomputed. Prompt, validator and
- * dry run all read this one object, which is what keeps them agreeing on
- * the ABI, the baseline and the source the model was shown.
+ * authoring: what V1's proxy detector, source service and system handlers
+ * produce for the address, read through the provider's cache. Prompt,
+ * validator and dry run all read this one object, which is what keeps them
+ * agreeing on the ABI, the baseline and the source the model was shown.
  */
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'

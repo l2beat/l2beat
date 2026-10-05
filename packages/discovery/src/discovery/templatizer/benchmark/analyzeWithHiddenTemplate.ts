@@ -1,6 +1,7 @@
 /**
- * One benchmarked contract, for real: its committed template hidden, a
- * templatizer asked to author one, the analyzer run with whatever it wrote.
+ * One benchmarked contract, for real: its committed template hidden, the
+ * analyzer run, a templatizer pass over the result, and the analyzer run
+ * again with whatever the pass wrote, as `--ai` does for a whole project.
  *
  * Isolation is a throwaway copy of `_templates`, not a flag on
  * `TemplateService`: the analyzer, the templatizer and the writer then run
@@ -19,14 +20,16 @@ import { v } from '@l2beat/validate'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import type { Analysis } from '../../analysis/AddressAnalyzer'
+import { AddressAnalyzer, type Analysis } from '../../analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from '../../analysis/TemplateService'
-import { createAddressAnalyzer } from '../../getDiscoveryEngine'
+import { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import type { ProxyResult } from '../../proxies/types'
+import { SourceCodeService } from '../../source/SourceCodeService'
 import { trailDirectory } from '../artifacts'
 import type { ModelClient } from '../model/ModelClient'
+import { gatherRequest, Templatizer } from '../Templatizer'
 import type { Values } from './compare'
 import type { BenchmarkProject, TemplatedEntry } from './loadProject'
 import type { TokenUsage, TrailSummary } from './types'
@@ -80,13 +83,31 @@ export async function analyzeWithHiddenTemplate(
     fs.rmSync(trail, { recursive: true, force: true })
     const templateService = new TemplateService(root)
     const proxyDetector = new RecordingProxyDetector()
-    const analyzer = buildAnalyzer(env, project, templateService, proxyDetector)
-    const analysis = await analyzer.analyze(
-      provider,
-      entry.address,
-      project.entryConfig(entry.address),
-      undefined,
+    // A new analyzer each time, as a rerun of discovery builds one: the
+    // first one loaded the templates as they were.
+    const analyze = () =>
+      new AddressAnalyzer(
+        proxyDetector,
+        new SourceCodeService(),
+        new HandlerExecutor(),
+        new TemplateService(root),
+      ).analyze(
+        provider,
+        entry.address,
+        project.entryConfig(entry.address),
+        undefined,
+      )
+    let analysis = await analyze()
+    const wrote = await buildTemplatizer(
+      env,
+      project,
+      templateService,
+    ).templatizeDiscovered([analysis], (address) =>
+      gatherRequest(provider, address, project.entryConfig(address)),
     )
+    if (wrote) {
+      analysis = await analyze()
+    }
     return {
       values: valuesOf(analysis),
       proxyValueNames: proxyDetector.valueNames,
@@ -103,18 +124,16 @@ export async function analyzeWithHiddenTemplate(
   }
 }
 
-/** The analyzer a `--ai` run builds, over the template copy and with a detector that records what it produced. */
-function buildAnalyzer(
+/** The templatizer a `--ai` run builds, over the template copy. */
+function buildTemplatizer(
   env: HiddenTemplateEnv,
   project: BenchmarkProject,
   templateService: TemplateService,
-  proxyDetector: ProxyDetector,
-) {
-  return createAddressAnalyzer({
+): Templatizer {
+  return new Templatizer(
     templateService,
-    proxyDetector,
-    logger: env.logger,
-    templatizerSettings: {
+    new HandlerExecutor(),
+    {
       project: project.name,
       model: env.model,
       modelLabel: env.modelLabel,
@@ -126,7 +145,8 @@ function buildAnalyzer(
       onFailure: 'leave-untemplatized',
       now: env.now,
     },
-  })
+    env.logger.for('Templatizer'),
+  )
 }
 
 /** Copies `_templates` to `target`, then removes the hidden template's files (not its subdirectories). */

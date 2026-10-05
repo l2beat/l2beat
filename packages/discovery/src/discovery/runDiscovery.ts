@@ -17,17 +17,26 @@ import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
+import type { StructureConfig } from './config/StructureConfig'
+import { makeEntryStructureConfig } from './config/structureUtils'
 import type { AddressStats } from './engine/DiscoveryEngine'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
+import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import type { DiscoveryOutput } from './output/types'
+import type { AllProviders } from './provider/AllProviders'
+import type { DiscoveryCache } from './provider/DiscoveryCache'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
-import type { TemplatizerSettings } from './templatizer/Templatizer'
+import {
+  gatherRequest,
+  Templatizer,
+  type TemplatizerSettings,
+} from './templatizer/Templatizer'
 import { getTemplatizerSettings } from './templatizer/templatizerSettings'
 
 function getTimestamp(
@@ -254,12 +263,27 @@ export async function discover(
     cache,
     http,
     logger,
-    undefined,
-    templatizerSettings,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
+  const discovered = await discoveryEngine.discover(
+    allProviders,
+    config.structure,
+    timestamp,
+  )
   const { analyses: result, stats: addressStats } =
-    await discoveryEngine.discover(allProviders, config.structure, timestamp)
+    templatizerSettings === undefined
+      ? discovered
+      : await templatizeAndRediscover(discovered, {
+          paths,
+          chainConfigs,
+          cache,
+          http,
+          logger,
+          allProviders,
+          structure: config.structure,
+          timestamp,
+          settings: templatizerSettings,
+        })
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
@@ -277,4 +301,65 @@ export async function discover(
     providerStats: allProviders.getStats(),
     addressStats,
   }
+}
+
+interface TemplatizeContext {
+  paths: DiscoveryPaths
+  chainConfigs: DiscoveryChainConfig[]
+  cache: DiscoveryCache
+  http: HttpClient
+  logger: Logger
+  allProviders: AllProviders
+  structure: StructureConfig
+  timestamp: UnixTime
+  settings: TemplatizerSettings
+}
+
+/**
+ * `--ai`: the templatizer runs over what discovery found, and discovery
+ * runs again with what it wrote, until a pass writes nothing. Another run
+ * is needed because a new template changes the values of every contract it
+ * matches, and its address fields can reach contracts discovery has not
+ * seen yet. The reruns read the RPC cache the first run filled.
+ */
+async function templatizeAndRediscover(
+  first: { analyses: Analysis[]; stats: AddressStats },
+  context: TemplatizeContext,
+): Promise<{ analyses: Analysis[]; stats: AddressStats }> {
+  const { paths, chainConfigs, cache, http, logger, allProviders } = context
+  const templatizer = new Templatizer(
+    new TemplateService(paths.discovery),
+    new HandlerExecutor(),
+    context.settings,
+    logger.for('Templatizer'),
+  )
+  const requestFor = async (address: ChainSpecificAddress) =>
+    gatherRequest(
+      await allProviders.get(
+        ChainSpecificAddress.longChain(address),
+        context.timestamp,
+      ),
+      address,
+      makeEntryStructureConfig(context.structure, address),
+    )
+  let discovered = first
+  while (
+    await templatizer.templatizeDiscovered(discovered.analyses, requestFor)
+  ) {
+    logger.info('Templatizer wrote templates; discovering again to apply them')
+    // A new engine, because the first one loaded the templates as they were.
+    const { discoveryEngine } = getDiscoveryEngine(
+      paths,
+      chainConfigs,
+      cache,
+      http,
+      logger,
+    )
+    discovered = await discoveryEngine.discover(
+      allProviders,
+      context.structure,
+      context.timestamp,
+    )
+  }
+  return discovered
 }

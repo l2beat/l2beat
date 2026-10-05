@@ -2,8 +2,8 @@
 
 The AI templatizer lets a language model do the one part of discovery that
 has always needed a researcher's hand: writing the template that tells
-discovery how to read a contract. It runs inside a local `l2b discover` run
-when the researcher asks for it with `--ai`, writes the same `template.jsonc`
+discovery how to read a contract. It runs as part of a local `l2b discover`
+run when the researcher asks for it with `--ai`, writes the same `template.jsonc`
 files researchers write, and the researcher reviews them as a git diff before
 committing. This document introduces discovery as far as needed, then
 describes what the templatizer does, the rules it follows, how one contract
@@ -62,28 +62,31 @@ model, in the backend as well as locally.
 
 ## What the AI templatizer adds
 
-The AI templatizer puts a language model at that one point. It is a step
-inside a discovery run, not a separate tool, and it is off unless the
-researcher switches it on with `--ai`. With the flag, when the analyzer meets
-a verified contract that matches no template, it hands the model the contract
-and the model writes a template; the run then applies that template as if it
-had matched, and the next run matches it for real. A contract whose code
-changed since the committed `discovered.json`, typically a proxy that was
-upgraded, matches no template either. If its old template still fits the new
-code, the model is asked what that template misses and the new shape joins
-it; if not, the contract gets a template of its own. With `--ai-revisit` the
-model is also shown each template that does match, once per run, and asked
-what the template misses for this contract; its additions are appended.
-Either way the output is ordinary template files under `_templates`, and the
-researcher reviews them as a git diff before committing.
+The AI templatizer puts a language model at that one point. It is a step of
+a discovery run, not a separate tool, and it is off unless the researcher
+switches it on with `--ai`. With the flag, discovery first runs as it always
+does. The templatizer then goes through what discovery found, one contract at
+a time: for each verified contract that matched no template, it hands the
+model the contract and the model writes a template. Discovery then runs again,
+from the RPC cache, so the new templates are applied and the contracts their
+fields point to are discovered too; the templatizer goes through what is new,
+and so on until a pass writes nothing. A contract whose code changed since
+the committed `discovered.json`, typically a proxy that was upgraded, matches
+no template either. If its old template still fits the new code, the model is
+asked what that template misses and the new shape joins it; if not, the
+contract gets a template of its own. With `--ai-revisit` the model is also
+shown each template that does match, once per run, and asked what the
+template misses for this contract; its additions are appended. Either way the
+output is ordinary template files under `_templates`, and the researcher
+reviews them as a git diff before committing.
 
 Only a local `l2b discover` can ask a model. The backend never does, so
 `discovered.json` stays a function of the repository.
 
 | Situation | Flag | What happens |
 | --- | --- | --- |
-| A verified contract matches no template | `--ai` | The model authors a new template. Discovery then applies it as if it had matched. |
-| A contract matches exactly one template | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract that matches it. |
+| A verified contract matches no template | `--ai` | The model authors a new template. The next discovery pass applies it. |
+| A contract matches exactly one template by its shape | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract, in address order, that matches it. |
 | A contract that had a template shows new code, and the template still fits | `--ai` | The model is asked what the template leaves undecided for the new code. Additions are appended and the new shape is added, so the template matches again. |
 | A contract that had a template shows new code, and the template no longer fits | `--ai` | The model authors a template of its own for the new code; its header says why the old one no longer fits. The old template is left as it is. |
 | Unverified code (also code known only through a `manualSourcePaths` link: the analysis counts it as verified, but the explorer holds none to show the model or to hash a shape from), an EIP-2535 diamond, an EOA | any | Not templatized, as without `--ai`. |
@@ -119,11 +122,11 @@ projects share, before the model was even asked.
 
 **2. The templatizer never predicts what discovery would do.** It either calls
 discovery's own code or reports what that code did. The dry run runs the draft
-through the analyzer's own handler executor, with the analyzer's own
-configuration for the address: the global and project `types`, the address
+through discovery's own handler executor, with the configuration discovery
+uses for the address: the global and project `types`, the address
 override from `config.jsonc`, its `ignoreMethods`. The baseline comes from
 the same executor, run with the address's configuration and, when a template
-is being extended, with that template pushed, as the analyzer will push it.
+is being extended, with that template pushed, as discovery will push it.
 Whether a template still fits a contract whose code changed is also read off
 discovery: the old fields run on the new code, and the committed
 `discovered.json` says which of them already failed and what the contract was
@@ -168,17 +171,13 @@ not is left as it is, and the contract goes through the steps as a new
 contract. So is a template whose `criteria.json` does not list the contract,
 whether or not it already holds the contract's shape: discovery matches such
 a template for the listed addresses alone, so nothing is added to it.
-Contracts with different new code that share an old template take turns on
-it, so each one's check and prompt see what the previous one added. A
-contract the template matches as it is, or one a referrer's field suggests it
-for, waits for those turns before discovery applies the template, so it gets
-the added fields too. One analysed earlier in the run keeps the template as
-it was; the run warns, and a second `l2b discover` applies the additions to
-it. Contracts of one shape analysed together share one authoring, and the
-template it ends in is checked for each of them with discovery's own match:
-an old template extended for the first may admit only that address by its
-`criteria.json`, and a contract discovery would not match gets a template of
-its own.
+
+Contracts go through these steps one at a time, in address order, so each
+one's check and prompt see what the previous ones wrote. A contract that a
+template written earlier in the same pass already matches, because it has
+the same code, is not asked about; the next discovery pass applies that
+template to it. Each contract is asked about once per run, however many
+passes see it.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of
@@ -231,8 +230,7 @@ its own.
    `covered` keeps its probe: that skip is a claim with no field behind it,
    nothing runs for it, and when it is wrong the probe is the only copy of the
    data. A covering field runs in the dry run, and an empty fold gets its note
-   above the field. The template service reloads and the analyzer applies the
-   template.
+   above the field. The next discovery pass applies the template.
 8. **Failure.** If the model does not answer (quota, network, timeout), no
    draft passes within the rounds, or the templatizer hits a bug, discovery
    stops before writing `discovered.json`, with a message naming the contract,
@@ -295,8 +293,8 @@ the handler, the notes, and the `discovered.json` diff next to it.
 
 Two clients drive command-line coding agents and need no SDK: `opencode run`
 for `opencode/…` and `opencode-go/…` models, `codex exec` for everything else.
-Turns run one at a time across the whole discovery run, because the accounts
-behind them are rate-limited. A turn is allowed fifteen minutes. A turn whose
+Turns run one at a time, as contracts do, which also suits the accounts behind
+them: they are rate-limited. A turn is allowed fifteen minutes. A turn whose
 answer is unusable (the model called a tool, wrote tool-call markup into
 its text, or returned no text) is asked again with the same message, and
 that costs one of the rounds; the first turn of a contract gets one extra
@@ -316,8 +314,19 @@ saving that small does not buy a lower setting for the hard kind of turn, and
 the setting will be carried to stronger models, which should be run at their
 best. Every benchmark run since is at `high`.
 
-The model has no tools. Both clients disable them in configuration and refuse
-any turn whose event stream shows a tool call. The reason is not distrust of
+The model has no tools. Both clients disable them in configuration, a test
+runs each installed CLI against a local endpoint and checks that the request
+offers no tool, and both refuse any turn whose event stream shows a tool
+call. For Codex that takes more than the shell and web search switches: with
+a ChatGPT login it also offers the ChatGPT apps (GitHub, a search service
+with internet access) and their MCP resource readers, plus `view_image`,
+goals, plugin installs and `request_user_input`, and each is switched off.
+The one exception is `apply_patch` for a model whose catalogue entry asks for
+it (gpt-5.5 when this was written), which no setting removes and the
+read-only sandbox refuses. opencode merges the turn's config into the user's
+global config, where a `"permission": {"bash": "allow"}` brings `bash` back,
+so the global config directory is pointed at an empty one; the login lives
+in the data directory and stays. The reason is not distrust of
 the model but of what a read tool can reach: `packages/backend/.env` holds RPC
 keys, and neither client can restrict reads to a directory. Instead the prompt
 carries everything the model needs, including the README sections for
@@ -433,6 +442,9 @@ needed to use the numbers above.
   without `--ai` to leave the contract untemplatized on purpose.
 - Model processes run in their own process group and are killed when discovery
   exits, including cancellation with SIGINT or SIGTERM.
+- A Codex turn that reports an error and then completes, as after a dropped
+  stream it reconnected, counts as answered; only a failed or unfinished turn
+  stops the run.
 - This document is the description of record. A change in behaviour under
   `packages/discovery/src/discovery/templatizer/` is not complete until this
   document says the same. The design history and the log of decisions taken

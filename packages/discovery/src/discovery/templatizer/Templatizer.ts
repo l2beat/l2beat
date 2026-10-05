@@ -1,34 +1,30 @@
 /**
  * Authors a V1 template for a contract no template matches, and adds to
- * templates that do, from inside the analyzer, so a local run with `--ai`
- * comes out fully templatized.
+ * templates that do. It runs after discovery, over what discovery found:
+ * every contract left without a template is asked about, one at a time,
+ * and discovery then runs again with what was written, which applies the
+ * new templates and reaches the contracts their address fields point to.
+ * `templatizeDiscovered` is one such pass; the caller repeats discovery and
+ * passes until a pass writes nothing.
  *
- * Three things here are about the engine rather than about templates:
- * - the engine analyses every address of one depth concurrently, so two
- *   addresses with the same code would both author; requests are deduped
- *   by shape hash, and the second waits for the first's result;
- * - contracts that add to one template take turns on it, so each one's
- *   fit check and prompt see the template as the previous one left it;
- * - model turns are serialised process-wide (one at a time), because the
- *   CLIs behind them are rate-limited accounts, not a pool; RPC dry runs
- *   of different contracts may still overlap;
- * - a contract it was asked about and could not templatize stops the run
- *   with a `TemplatizationFailedError`, rather than leaving the contract
- *   untemplatized where nobody can tell a failure from a decision.
+ * A contract it was asked about and could not templatize stops the run
+ * with a `TemplatizationFailedError`, rather than leaving the contract
+ * untemplatized where nobody can tell a failure from a decision.
  *
  * An existing template is only ever added to (`appendToTemplate`): its
  * text is never rebuilt, its fields never removed, its `ignoreMethods`
  * never changed. And nothing here predicts what V1 would do: the baseline
- * is what V1 read, the dry run runs V1 with the analyzer's own config, and
+ * is what V1 read, the dry run runs V1 with the address's own config, and
  * what V1 did is written down for the reviewer.
  *
- * The backend never constructs this class; it is built by
- * `createAddressAnalyzer` only when a CLI run passes templatizer settings.
+ * The backend never constructs this class; only a CLI run with `--ai` and
+ * the benchmark do.
  */
 import type { Logger } from '@l2beat/backend-tools'
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { getHashForMatchingFromSources } from '../../flatten/utils'
 import { getErrorMessage } from '../../utils/getErrorMessage'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { StructureContract } from '../config/StructureConfig'
 import {
@@ -39,7 +35,12 @@ import { getHandlers } from '../handlers/getHandlers'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
-import type { ContractSources } from '../source/SourceCodeService'
+import { ProxyDetector } from '../proxies/ProxyDetector'
+import { getImplementationNames } from '../source/getDerivedName'
+import {
+  type ContractSources,
+  SourceCodeService,
+} from '../source/SourceCodeService'
 import { FileArtifactSink, trailDirectory } from './artifacts'
 import { buildBaseline, withoutTemplateValues } from './baseline'
 import { dryRunDraft } from './draft/dryRun'
@@ -56,7 +57,6 @@ import { flattenSources } from './flattenSources'
 import { authorDraft, DEFAULT_MAX_ROUNDS, type LoopResult } from './loop'
 import { describeModel } from './model/createModelClient'
 import { type ModelClient, ModelUnavailableError } from './model/ModelClient'
-import { SerialModelClient } from './model/SerialModelClient'
 import { buildPrompt, type ExistingFieldText } from './prompt/buildPrompt'
 import {
   TemplatizationFailedError,
@@ -111,9 +111,9 @@ export interface TemplatizeRequest {
   provider: IProvider
   address: ChainSpecificAddress
   /**
-   * The analyzer's config for the address before any template: the global
-   * and project `types`, the override from `config.jsonc`. Dry runs push
-   * the template onto a copy of it, as the analyzer will.
+   * The address's config before any template: the global and project
+   * `types`, the override from `config.jsonc`. Dry runs push the template
+   * onto a copy of it, as the analyzer does.
    */
   config: StructureContractConfig
   sources: ContractSources
@@ -123,23 +123,58 @@ export interface TemplatizeRequest {
 }
 
 export class Templatizer {
-  private readonly inFlight = new Map<string, Promise<string | undefined>>()
-  private readonly revisits = new Map<string, Promise<void>>()
-  /** The last write each template is waiting on; see `inTurn`. */
-  private readonly turns = new Map<string, Promise<unknown>>()
-  /** The addresses the analyzer applied each template to in this run. */
-  private readonly applied = new Map<string, ChainSpecificAddress[]>()
-  /** Templates this run wrote, which a revisit must not ask about again. */
-  private readonly touched = new Set<string>()
-  private readonly model: SerialModelClient
+  /** Addresses asked about in this run, each once however many passes see it. */
+  private readonly asked = new Set<string>()
+  /** Templates this run wrote or revisited, which a revisit does not ask about again. */
+  private readonly settled = new Set<string>()
 
   constructor(
     private readonly templateService: TemplateService,
     private readonly handlerExecutor: HandlerExecutor,
     private readonly settings: TemplatizerSettings,
     private readonly logger: Logger,
-  ) {
-    this.model = new SerialModelClient(settings.model)
+  ) {}
+
+  /**
+   * One pass over the analyses of a finished discovery, one contract at a
+   * time, in address order: every contract left without a template, and
+   * with `--ai-revisit` every contract a template matched by its shape.
+   * Returns whether anything was written, which is when discovery must run
+   * again.
+   */
+  async templatizeDiscovered(
+    analyses: readonly Analysis[],
+    requestFor: (address: ChainSpecificAddress) => Promise<TemplatizeRequest>,
+  ): Promise<boolean> {
+    let wrote = false
+    const contracts = analyses
+      .filter((analysis) => analysis.type === 'Contract')
+      .sort((a, b) => a.address.localeCompare(b.address))
+    for (const contract of contracts) {
+      const matched = contract.extendedTemplate
+      const revisit =
+        this.settings.revisit === true && matched?.reason === 'byShapeMatch'
+          ? matched.template
+          : undefined
+      if (
+        this.asked.has(contract.address) ||
+        (matched !== undefined && revisit === undefined) ||
+        (revisit !== undefined && this.settled.has(revisit))
+      ) {
+        continue
+      }
+      this.asked.add(contract.address)
+      const request = await requestFor(contract.address)
+      if (!this.canTemplatize(request.sources, request.proxyType)) {
+        continue
+      }
+      const wroteNow =
+        revisit === undefined
+          ? (await this.templateFor(request)) !== undefined
+          : await this.revisit(request, revisit)
+      wrote ||= wroteNow
+    }
+    return wrote
   }
 
   /**
@@ -165,62 +200,35 @@ export class Templatizer {
     )
   }
 
-  templateFor(request: TemplatizeRequest): Promise<string | undefined> {
-    const hash = getHashForMatchingFromSources(request.sources.sources)
-    if (hash === undefined) {
-      return Promise.resolve(undefined)
-    }
-    return this.shareOrAuthor(request, hash)
-  }
-
   /**
-   * Contracts of one shape analysed together share one authoring, but the
-   * template it ends in is checked for each of them with V1's own match: an
-   * old template extended for the first contract may admit only that
-   * address by its `criteria.json`. A contract V1 would not match gets an
-   * authoring of its own, which the others still waiting then share in
-   * turn.
+   * The id of the template written or extended for the contract, or
+   * undefined when a template written earlier in the pass already matches
+   * it (a contract of the same shape) or the benchmark left it
+   * untemplatized.
    */
-  private async shareOrAuthor(
-    request: TemplatizeRequest,
-    hash: Hash256,
-  ): Promise<string | undefined> {
-    const key = hash.toString()
-    let pending = this.inFlight.get(key)
-    while (pending !== undefined) {
-      const shared = await pending
-      if (shared === undefined || this.matchedByV1(shared, request)) {
-        return shared
-      }
-      const current = this.inFlight.get(key)
-      pending = current === pending ? undefined : current
+  async templateFor(request: TemplatizeRequest): Promise<string | undefined> {
+    const hash = getHashForMatchingFromSources(request.sources.sources)
+    if (
+      hash === undefined ||
+      this.templateService.findMatchingTemplates(
+        request.sources,
+        request.address,
+      ).length > 0
+    ) {
+      return undefined
     }
-    const authored = this.templatizeOrStop(request, hash)
-    this.inFlight.set(key, authored)
-    return authored
-  }
-
-  private matchedByV1(templateId: string, request: TemplatizeRequest): boolean {
-    return this.templateService
-      .findMatchingTemplates(request.sources, request.address)
-      .includes(templateId)
-  }
-
-  private async templatizeOrStop(
-    request: TemplatizeRequest,
-    hash: Hash256,
-  ): Promise<string | undefined> {
     const task = authoringTask(request)
     try {
-      return await this.templatize(request, hash, task)
+      const templateId = await this.templatize(request, hash, task)
+      this.settled.add(templateId)
+      return templateId
     } catch (error) {
       return this.stopOrLeave(error, task)
     }
   }
 
   /**
-   * Discovery stops on any failure (see `TemplatizationFailedError`), and
-   * the queue is closed so no other contract's turn starts meanwhile. The
+   * Discovery stops on any failure (see `TemplatizationFailedError`). The
    * benchmark instead records a contract the model could not author as a
    * miss, which is what it measures; a model that does not answer stops it
    * too.
@@ -243,7 +251,6 @@ export class Templatizer {
       this.logger.warn(failed.message)
       return undefined
     }
-    this.model.close(failed)
     throw failed
   }
 
@@ -265,9 +272,7 @@ export class Templatizer {
     const previous = this.previousTemplateOf(request.address)
     const notes: string[] = []
     if (previous !== undefined) {
-      const misfit = await this.inTurn(previous.templateId, () =>
-        this.extendIfFits(request, hash, task, previous),
-      )
+      const misfit = await this.extendIfFits(request, hash, task, previous)
       if (misfit === undefined) {
         return previous.templateId
       }
@@ -286,37 +291,6 @@ export class Templatizer {
       return this.writeWithoutModel(request, facts, notes)
     }
     return await this.authorNew(request, facts, worklist, task, notes)
-  }
-
-  /**
-   * The analyzer waits for this before it loads a template to apply it,
-   * and reports the application, so that a contract the template matches
-   * as it is gets the fields another contract's turn is adding to it.
-   */
-  async settledFor(
-    templateId: string,
-    address: ChainSpecificAddress,
-  ): Promise<void> {
-    await (this.turns.get(templateId) ?? Promise.resolve()).catch(
-      () => undefined,
-    )
-    this.applied.set(templateId, [
-      ...(this.applied.get(templateId) ?? []),
-      address,
-    ])
-  }
-
-  /**
-   * Runs `work` once every earlier write to the template has settled.
-   * Contracts with different new code can share one old template, and the
-   * engine analyses a whole depth at once; a revisit can be among them.
-   */
-  private inTurn<T>(templateId: string, work: () => Promise<T>): Promise<T> {
-    const turn = (this.turns.get(templateId) ?? Promise.resolve())
-      .catch(() => undefined)
-      .then(work)
-    this.turns.set(templateId, turn)
-    return turn
   }
 
   /**
@@ -359,7 +333,6 @@ export class Templatizer {
       facts,
       sources: request.sources,
     })
-    this.touched.add(templateId)
     this.logger.info(
       `Templatizer added the shape of ${subjectOf(facts)} to ${templateId}`,
     )
@@ -367,7 +340,7 @@ export class Templatizer {
   }
 
   /**
-   * The facts and the worklist, from what the analyzer gathered. V1's own
+   * The facts and the worklist, from what the request gathered. V1's own
    * handler list for the address says which baseline name is a getter, a
    * probe or an override field, and so which worklist items are probed.
    * With `templateId`, the template is pushed onto the address's config
@@ -444,7 +417,6 @@ export class Templatizer {
       ignoreMethods: [],
       fields: [],
     })
-    this.touched.add(templateId)
     writeNewTemplate(this.templateService, templateId, text, {
       facts,
       sources: request.sources,
@@ -471,7 +443,6 @@ export class Templatizer {
       ignoreMethods: deriveIgnoreMethods(worklist, result.draft),
       fields: draftFields(result),
     })
-    this.touched.add(templateId)
     writeNewTemplate(this.templateService, templateId, text, {
       facts,
       sources: request.sources,
@@ -490,46 +461,27 @@ export class Templatizer {
    * `--ai-revisit` for a contract its template still matches: the model is
    * asked what the template misses for this contract, and its fields are
    * appended. A template is revisited once per run, on the first contract
-   * that matches it; contracts that share it wait for that and then use the
-   * result. A template this run authored or extended is not revisited.
-   * A failed revisit stops the run, as a failed authoring does.
+   * in a pass that matches it; one this run authored or extended is not
+   * revisited. A failed revisit stops the run, as a failed authoring does.
+   * Returns whether it wrote.
    */
-  revisit(request: TemplatizeRequest, templateId: string): Promise<void> {
-    const pending = this.revisits.get(templateId)
-    if (pending !== undefined) {
-      return pending
-    }
-    const revisited = this.inTurn(templateId, () =>
-      this.touched.has(templateId)
-        ? Promise.resolve()
-        : this.revisitOrStop(request, templateId),
-    )
-    this.revisits.set(templateId, revisited)
-    return revisited
-  }
-
-  get revisitsMatchedTemplates(): boolean {
-    return this.settings.revisit === true
-  }
-
-  private async revisitOrStop(
+  async revisit(
     request: TemplatizeRequest,
     templateId: string,
-  ): Promise<void> {
+  ): Promise<boolean> {
+    this.settled.add(templateId)
     const task = revisitTask(request, templateId)
     try {
       const hash = getHashForMatchingFromSources(request.sources.sources)
-      if (hash !== undefined) {
-        const existing = await this.analyzeExisting(request, templateId)
-        const { facts, worklist } = await this.prepare(
-          request,
-          hash,
-          templateId,
-        )
-        await this.addToExisting(request, facts, worklist, existing, task)
+      if (hash === undefined) {
+        return false
       }
+      const existing = await this.analyzeExisting(request, templateId)
+      const { facts, worklist } = await this.prepare(request, hash, templateId)
+      return await this.addToExisting(request, facts, worklist, existing, task)
     } catch (error) {
       this.stopOrLeave(error, task)
+      return false
     }
   }
 
@@ -537,6 +489,7 @@ export class Templatizer {
    * The model is asked about what the template leaves undecided for this
    * contract, and its fields are appended; failing fields get their notes
    * either way. Nothing is asked when the template decides every item.
+   * Returns whether it wrote.
    */
   private async addToExisting(
     request: TemplatizeRequest,
@@ -544,15 +497,14 @@ export class Templatizer {
     worklist: Worklist,
     existing: ExistingTemplate,
     task: TemplatizationTask,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const { templateId } = existing
     const remaining = remainingWorklist(worklist, existing)
     if (isEmptyWorklist(remaining)) {
-      this.writeAdditions(existing, facts, {})
       this.logger.info(
         `Templatizer: ${templateId} already decides every item of ${subjectOf(facts)}`,
       )
-      return
+      return this.writeAdditions(existing, facts, {})
     }
     const result = await this.runLoop(request, facts, remaining, task, existing)
     const fields = draftFields(result)
@@ -564,15 +516,7 @@ export class Templatizer {
       this.logger.info(
         `Templatizer found nothing to add to ${templateId} from ${subjectOf(facts)}`,
       )
-      return
-    }
-    // Contracts this run already analysed with the template keep the values
-    // of the template as it was; only a rerun applies the new fields to them.
-    const before = this.applied.get(templateId) ?? []
-    if (fields.length > 0 && before.length > 0) {
-      this.logger.warn(
-        `Templatizer added fields to ${templateId} after this run applied it to ${before.join(', ')}; their entries are discovered without them. Rerun l2b discover to apply the additions everywhere.`,
-      )
+      return false
     }
     this.logger.info(
       `Templatizer added to ${templateId} for ${subjectOf(facts)}`,
@@ -582,6 +526,7 @@ export class Templatizer {
         added: fields.map((field) => field.name).join(', '),
       },
     )
+    return true
   }
 
   private analyzeExisting(
@@ -624,7 +569,6 @@ export class Templatizer {
     if (insertions.length === 0) {
       return false
     }
-    this.touched.add(existing.templateId)
     replaceTemplateText(this.templateService, existing.templateId, text)
     return true
   }
@@ -650,23 +594,15 @@ export class Templatizer {
     if (truncated) {
       this.logger.warn(`Templatizer cut the source of ${subject} to fit`)
     }
-    // Logged when the contract joins the queue; the turn itself may start
-    // much later, which the line below reports.
-    this.logger.info(`Templatizer queued ${subject} for the model`, {
+    this.logger.info(`Templatizer asking the model about ${subject}`, {
       functions: worklist.items.length,
       events: worklist.events.length,
       existingFields: existing?.fields.length ?? 0,
+      maxRounds: Math.max(1, this.settings.maxRounds ?? DEFAULT_MAX_ROUNDS),
     })
-    const maxRounds = Math.max(1, this.settings.maxRounds ?? DEFAULT_MAX_ROUNDS)
-    const model = this.model.reporting(({ turn, waiting }) =>
-      this.logger.info(
-        `Templatizer asking the model about ${subject}, round ${turn} of ${maxRounds}`,
-        { waiting },
-      ),
-    )
     const result = await authorDraft(
       {
-        model,
+        model: this.settings.model,
         artifacts,
         logger: this.logger,
         // The dry run sees the template the file will hold: the existing
@@ -772,7 +708,39 @@ function draftFields(result: Accepted): TemplateFileField[] {
   }))
 }
 
-/** How every log line names the contract: the logs of contracts in one depth interleave. */
+/**
+ * What the analyzer gathered for the address before applying a template,
+ * gathered again through V1's own detector and source service; the
+ * provider serves it from its cache. `config` is the address's config
+ * before any template.
+ */
+export async function gatherRequest(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+  config: StructureContractConfig,
+): Promise<TemplatizeRequest> {
+  const proxy = await new ProxyDetector().detectProxy(
+    provider,
+    address,
+    config.proxyType,
+  )
+  const sources = await new SourceCodeService().getSources(
+    provider,
+    proxy.addresses,
+    config.manualSourcePaths,
+  )
+  return {
+    provider,
+    address,
+    config,
+    sources,
+    proxyType: proxy.type,
+    proxyValues: proxy.values,
+    implementationNames: getImplementationNames(address, sources) ?? {},
+  }
+}
+
+/** How every log line names the contract. */
 function subjectOf(facts: ContractFacts): string {
   return `${facts.name} (${facts.address})`
 }

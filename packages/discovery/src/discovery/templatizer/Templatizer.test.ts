@@ -13,6 +13,7 @@ import {
 import { tmpdir } from 'os'
 import { join } from 'path'
 import { sha2_256bit } from '../../flatten/utils'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
 import { StructureContract } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
@@ -137,6 +138,36 @@ describe(Templatizer.name, () => {
     }
   }
 
+  /**
+   * One pass over contracts as discovery left them: `matched` names the
+   * template a contract matched by its shape, none when it matched nothing.
+   */
+  function pass(
+    instance: Templatizer,
+    contracts: { request: TemplatizeRequest; matched?: string }[],
+  ): Promise<boolean> {
+    const requests = new Map(
+      contracts.map(({ request }) => [request.address.toString(), request]),
+    )
+    const analyses = contracts.map(
+      ({ request, matched }) =>
+        ({
+          type: 'Contract',
+          address: request.address,
+          extendedTemplate:
+            matched === undefined
+              ? undefined
+              : { template: matched, reason: 'byShapeMatch' },
+        }) as Analysis,
+    )
+    return instance.templatizeDiscovered(analyses, (address) => {
+      const found = requests.get(address.toString())
+      return found === undefined
+        ? Promise.reject(new Error(`no request for ${address}`))
+        : Promise.resolve(found)
+    })
+  }
+
   function templateText(templateId: string): string {
     return readFileSync(
       join(root, '_templates', templateId, 'template.jsonc'),
@@ -184,17 +215,39 @@ describe(Templatizer.name, () => {
     expect(existsSync(join(trail, 'round-1.response.txt'))).toEqual(true)
   })
 
-  it('authors one template for two addresses with the same code analysed at once', async () => {
+  it('authors one template in a pass for two contracts with the same code, in address order, and asks about each contract once per run', async () => {
     const model = new FakeModelClient([JSON.stringify(DRAFT)])
     const instance = templatizer(model)
+    const contracts = [
+      { request: request([bundle('Registry', TWIN, BODY)]) },
+      { request: request([bundle('Registry', ADDRESS, BODY)]) },
+    ]
 
-    const ids = await Promise.all([
-      instance.templateFor(request([bundle('Registry', ADDRESS, BODY)])),
-      instance.templateFor(request([bundle('Registry', TWIN, BODY)])),
+    expect(await pass(instance, contracts)).toEqual(true)
+    expect(await pass(instance, contracts)).toEqual(false)
+
+    expect(model.calls.length).toEqual(1)
+    expect(existsSync(join(root, 'trail', 'proj', ADDRESS))).toEqual(true)
+    expect(existsSync(join(root, 'trail', 'proj', TWIN))).toEqual(false)
+    for (const { request: req } of contracts) {
+      expect(
+        templateService.findMatchingTemplates(req.sources, req.address),
+      ).toEqual(['proj/Registry'])
+    }
+  })
+
+  it('passes over a contract discovery applied a template to', async () => {
+    const model = new FakeModelClient([])
+
+    const wrote = await pass(templatizer(model), [
+      {
+        request: request([bundle('Registry', ADDRESS, BODY)]),
+        matched: 'proj/Other',
+      },
     ])
 
-    expect(ids).toEqual(['proj/Registry', 'proj/Registry'])
-    expect(model.calls.length).toEqual(1)
+    expect(wrote).toEqual(false)
+    expect(model.calls.length).toEqual(0)
   })
 
   it('keeps a field whose events were never emitted and notes it for the reviewer', async () => {
@@ -251,28 +304,28 @@ describe(Templatizer.name, () => {
     expect(model.calls.length).toEqual(3)
   })
 
-  it('stops at the first turn the model does not answer, and starts no other turn', async () => {
+  it('stops the pass at the first turn the model does not answer, and starts no other turn', async () => {
     const model = new FakeModelClient([
       new Error('opencode reported an error: rate_limit_exceeded'),
       JSON.stringify(DRAFT),
     ])
-    const instance = templatizer(model)
 
-    const first = await failureOf(
-      instance.templateFor(request([bundle('Registry', ADDRESS, BODY)])),
-    )
-    const next = await failureOf(
-      instance.templateFor(
-        request([bundle('Other', TWIN, `${BODY}\n  uint256 public other;`)]),
-      ),
+    const failure = await failureOf(
+      pass(templatizer(model), [
+        { request: request([bundle('Registry', ADDRESS, BODY)]) },
+        {
+          request: request([
+            bundle('Other', TWIN, `${BODY}\n  uint256 public other;`),
+          ]),
+        },
+      ]),
     )
 
-    expect(first.failure).toEqual('model-unavailable')
-    expect(first.message).toInclude(
+    expect(failure.failure).toEqual('model-unavailable')
+    expect(failure.message).toInclude(
       'the model did not answer: opencode reported an error: rate_limit_exceeded',
     )
-    expect(first.message).toInclude('the quota is not spent')
-    expect(next.failure).toEqual('model-unavailable')
+    expect(failure.message).toInclude('the quota is not spent')
     expect(model.calls.length).toEqual(1)
   })
 
@@ -562,7 +615,7 @@ describe(Templatizer.name, () => {
       ).toEqual([templateId ?? ''])
     })
 
-    it('gives a waiting contract of the same shape its own template when the one the first extends excludes it by criteria', async () => {
+    it('gives a contract of the same shape its own template when the template another one extended excludes it by criteria', async () => {
       writeOldTemplate(FITTING_TEMPLATE)
       writeFileSync(
         join(root, '_templates', 'proj', 'Registry', 'criteria.json'),
@@ -577,17 +630,14 @@ describe(Templatizer.name, () => {
       const changed = request([bundle('Registry', ADDRESS, BODY)])
       const twin = request([bundle('Registry', TWIN, BODY)])
 
-      const [extended, own] = await Promise.all([
-        instance.templateFor(changed),
-        instance.templateFor(twin),
-      ])
+      await pass(instance, [{ request: changed }, { request: twin }])
 
-      expect(extended).toEqual('proj/Registry')
+      const [own] = templateService.findMatchingTemplates(
+        twin.sources,
+        twin.address,
+      )
       expect(own?.startsWith('proj/Registry-')).toEqual(true)
       expect(model.calls.length).toEqual(2)
-      expect(
-        templateService.findMatchingTemplates(twin.sources, twin.address),
-      ).toEqual([own ?? ''])
       expect(
         templateService.findMatchingTemplates(changed.sources, changed.address),
       ).toEqual(['proj/Registry'])
@@ -617,7 +667,7 @@ describe(Templatizer.name, () => {
       expect(Object.keys(shapes()).length).toEqual(2)
     })
 
-    it('runs a revisit of the same template after the changed contract, and skips it when that contract kept the template', async () => {
+    it('does not revisit a template a changed contract kept and extended in the same pass', async () => {
       writeOldTemplate(FITTING_TEMPLATE)
       const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
       const instance = templatizer(
@@ -631,9 +681,9 @@ describe(Templatizer.name, () => {
         [...ABI, 'function threshold() view returns (uint256)'],
       )
 
-      await Promise.all([
-        instance.templateFor(changed),
-        instance.revisit(unchanged, 'proj/Registry'),
+      await pass(instance, [
+        { request: changed },
+        { request: unchanged, matched: 'proj/Registry' },
       ])
 
       expect(model.calls.length).toEqual(1)
@@ -657,59 +707,21 @@ describe(Templatizer.name, () => {
         [...ABI, 'function threshold() view returns (uint256)'],
       )
 
-      const [templateId] = await Promise.all([
-        instance.templateFor(changed),
-        instance.revisit(unchanged, 'proj/Registry'),
+      await pass(instance, [
+        { request: changed },
+        { request: unchanged, matched: 'proj/Registry' },
       ])
 
-      expect(templateId?.startsWith('proj/Registry-')).toEqual(true)
+      const [own] = templateService.findMatchingTemplates(
+        changed.sources,
+        changed.address,
+      )
+      expect(own?.startsWith('proj/Registry-')).toEqual(true)
       expect(model.calls.length).toEqual(2)
       expect(templateText('proj/Registry')).toInclude('"ownershipHistory": {')
     })
 
-    it('makes a contract that matches the template as it is wait until a changed contract has added to it', async () => {
-      writeOldTemplate(FITTING_TEMPLATE)
-      const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
-      const instance = templatizer(model, { [ADDRESS]: 'proj/Registry' })
-
-      const [, seen] = await Promise.all([
-        instance.templateFor(request([bundle('Registry', ADDRESS, BODY)])),
-        instance
-          .settledFor('proj/Registry', ChainSpecificAddress(TWIN))
-          .then(() => templateText('proj/Registry')),
-      ])
-
-      expect(seen).toInclude('"ownershipHistory": {')
-    })
-
-    it('warns when it adds fields to a template this run already applied', async () => {
-      writeOldTemplate(FITTING_TEMPLATE)
-      const warnings: string[] = []
-      const logger = new Logger({
-        level: 'WARN',
-        transports: [
-          {
-            log: (entry) => warnings.push(entry.message),
-            flush: () => undefined,
-          },
-        ],
-      })
-      const instance = templatizer(
-        new FakeModelClient([JSON.stringify(OWNER_HISTORY)]),
-        { [ADDRESS]: 'proj/Registry' },
-        {},
-        logger,
-      )
-
-      await instance.settledFor('proj/Registry', ChainSpecificAddress(TWIN))
-      await instance.templateFor(request([bundle('Registry', ADDRESS, BODY)]))
-
-      expect(warnings).toEqual([
-        `Templatizer added fields to proj/Registry after this run applied it to ${TWIN}; their entries are discovered without them. Rerun l2b discover to apply the additions everywhere.`,
-      ])
-    })
-
-    it('lets contracts with different new code take turns on a template they share', async () => {
+    it('extends a template two changed contracts share one contract at a time, the second seeing what the first added', async () => {
       writeOldTemplate(FITTING_TEMPLATE)
       const model = new FakeModelClient([
         JSON.stringify(OWNER_HISTORY),
@@ -727,7 +739,10 @@ describe(Templatizer.name, () => {
         request([bundle('Registry', TWIN, `${BODY}\n  uint256 b;`)]),
       ]
 
-      await Promise.all(requests.map((req) => instance.templateFor(req)))
+      await pass(
+        instance,
+        requests.map((req) => ({ request: req })),
+      )
 
       expect(model.calls.length).toEqual(2)
       // The second prompt is built after the first contract's additions.
@@ -969,9 +984,9 @@ describe(Templatizer.name, () => {
       const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
       const instance = revisiting(model)
 
-      await Promise.all([
-        instance.revisit(req, 'proj/Registry'),
-        instance.revisit(twin, 'proj/Registry'),
+      await pass(instance, [
+        { request: req, matched: 'proj/Registry' },
+        { request: twin, matched: 'proj/Registry' },
       ])
 
       expect(model.calls.length).toEqual(1)
@@ -980,10 +995,16 @@ describe(Templatizer.name, () => {
     it('does not revisit a template this run authored', async () => {
       const model = new FakeModelClient([JSON.stringify(DRAFT)])
       const instance = revisiting(model)
-      const req = request([bundle('Registry', ADDRESS, BODY)])
 
-      const templateId = await instance.templateFor(req)
-      await instance.revisit(req, templateId ?? '')
+      await pass(instance, [
+        { request: request([bundle('Registry', ADDRESS, BODY)]) },
+      ])
+      await pass(instance, [
+        {
+          request: request([bundle('Registry', TWIN, BODY)]),
+          matched: 'proj/Registry',
+        },
+      ])
 
       expect(model.calls.length).toEqual(1)
     })

@@ -15,7 +15,6 @@ import type {
   ContractSources,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import type { Templatizer } from '../templatizer/Templatizer'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
@@ -427,105 +426,6 @@ describe(AddressAnalyzer.name, () => {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
         },
-      })
-    })
-
-    describe('with a templatizer', () => {
-      function analyzerWith(revisits: boolean, calls: string[]) {
-        const verified: ContractSources = {
-          name: 'Registry',
-          isVerified: true,
-          abi: [],
-          abis: {},
-          sources: [],
-        }
-        const templatizer = mockObject<Templatizer>({
-          revisitsMatchedTemplates: revisits,
-          canTemplatize: () => true,
-          revisit: async () => {
-            calls.push('revisit')
-          },
-          settledFor: async () => {
-            calls.push('settled')
-          },
-        })
-        const analyzer = new AddressAnalyzer(
-          mockObject<ProxyDetector>({
-            detectProxy: async () => ({
-              type: 'immutable',
-              values: {},
-              addresses: [],
-              deployment: undefined,
-            }),
-          }),
-          mockObject<SourceCodeService>({ getSources: async () => verified }),
-          mockObject<HandlerExecutor>({
-            execute: async () => ({
-              results: [],
-              values: {},
-              errors: {},
-              usedTypes: [],
-            }),
-          }),
-          mockObject<TemplateService>({
-            findMatchingTemplates: () => ['proj/Registry'],
-            loadContractTemplate: () => {
-              calls.push('load')
-              return StructureContract.parse({})
-            },
-            getTemplateHash: () => Hash256.random(),
-          }),
-          templatizer,
-        )
-        return { analyzer, templatizer }
-      }
-      const provider = mockObject<IProvider>({
-        getBytecode: async () => Bytes.fromHex('0x1234'),
-        chain: 'ethereum',
-      })
-
-      it('lets the model extend the matched template before it is applied', async () => {
-        const calls: string[] = []
-        const { analyzer, templatizer } = analyzerWith(true, calls)
-
-        await analyzer.analyze(provider, address, config)
-
-        expect(calls).toEqual(['revisit', 'settled', 'load'])
-        // The request carries the address's own config, before the
-        // template is pushed, so the templatizer dry-runs with it.
-        expect(templatizer.revisit).toHaveBeenOnlyCalledWith(
-          expect.subset({ address, config }),
-          'proj/Registry',
-        )
-      })
-
-      it('applies the matched template as it is without --ai-revisit', async () => {
-        const calls: string[] = []
-        const { analyzer, templatizer } = analyzerWith(false, calls)
-
-        await analyzer.analyze(provider, address, config)
-
-        expect(calls).toEqual(['settled', 'load'])
-        expect(templatizer.revisit).not.toHaveBeenCalled()
-      })
-
-      it('waits for the templatizer before applying a template a referrer suggested', async () => {
-        const calls: string[] = []
-        const { analyzer, templatizer } = analyzerWith(true, calls)
-
-        await analyzer.analyze(
-          provider,
-          address,
-          config,
-          new Set(['proj/Suggested']),
-        )
-
-        expect(calls).toEqual(['settled', 'load'])
-        expect(templatizer.settledFor).toHaveBeenOnlyCalledWith(
-          'proj/Suggested',
-          address,
-        )
-        expect(templatizer.revisit).not.toHaveBeenCalled()
       })
     })
   })

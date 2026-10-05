@@ -1,7 +1,7 @@
 /**
- * Turns `--ai` and friends into the settings the engine builds a
+ * Turns `--ai` and friends into the settings `runDiscovery` builds a
  * templatizer from. Only `runDiscovery` calls this, so only a local CLI run
- * can ever author: the backend builds its engine without settings.
+ * can ever author: the backend never builds a templatizer.
  */
 import path from 'path'
 import type { DiscoveryModuleConfig } from '../../config/types'

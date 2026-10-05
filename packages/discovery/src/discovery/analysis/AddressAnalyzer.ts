@@ -11,15 +11,12 @@ import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
-import type { ProxyResult } from '../proxies/types'
 import { getImplementationNames } from '../source/getDerivedName'
 import { getLibraries } from '../source/getLibraries'
 import type {
-  ContractSources,
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import type { TemplatizeRequest, Templatizer } from '../templatizer/Templatizer'
 import {
   get$Beacons,
   get$Implementations,
@@ -82,7 +79,6 @@ export class AddressAnalyzer {
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
     private readonly templateService: TemplateService,
-    private readonly templatizer?: Templatizer,
   ) {}
 
   async analyze(
@@ -100,9 +96,6 @@ export class AddressAnalyzer {
     if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
-        // With --ai another contract may be adding to this template; apply
-        // it as that leaves it, as for a shape match below.
-        await this.templatizer?.settledFor(template, address)
         // extend template even on error to make sure pruning works
         const templateValues =
           this.templateService.loadContractTemplate(template)
@@ -145,32 +138,8 @@ export class AddressAnalyzer {
         sources,
         address,
       )
-      if (matchingTemplates.length === 0 && !isEOA) {
-        const authored = await this.authorTemplate(
-          provider,
-          address,
-          config,
-          sources,
-          proxy,
-        )
-        if (authored !== undefined) {
-          matchingTemplates.push(authored)
-        }
-      } else if (matchingTemplates.length === 1 && !isEOA) {
-        await this.revisitTemplate(
-          provider,
-          address,
-          config,
-          sources,
-          proxy,
-          matchingTemplates[0] as string,
-        )
-      }
       const template = matchingTemplates[0]
       if (template !== undefined) {
-        // With --ai another contract may be adding to this template; apply
-        // it as that leaves it.
-        await this.templatizer?.settledFor(template, address)
         // extend template even on error to make sure pruning works
         const templateValues =
           this.templateService.loadContractTemplate(template)
@@ -247,74 +216,5 @@ export class AddressAnalyzer {
     } as Analysis
 
     return analysis
-  }
-
-  /**
-   * Runs only with `--ai`, for a contract no template matches: one never
-   * templatized, or one whose code changed. The templatizer reads the
-   * baseline itself, with the handler executor this analyzer uses; the
-   * analyzer then runs the handlers with the template, from the provider's
-   * cache.
-   */
-  private async authorTemplate(
-    provider: IProvider,
-    address: ChainSpecificAddress,
-    config: StructureContractConfig,
-    sources: ContractSources,
-    proxy: ProxyResult,
-  ): Promise<string | undefined> {
-    if (
-      this.templatizer === undefined ||
-      !this.templatizer.canTemplatize(sources, proxy.type)
-    ) {
-      return undefined
-    }
-    return await this.templatizer.templateFor(
-      this.templatizeRequest(provider, address, config, sources, proxy),
-    )
-  }
-
-  /** `--ai-revisit`: the model may extend the matched template before it is applied. */
-  private async revisitTemplate(
-    provider: IProvider,
-    address: ChainSpecificAddress,
-    config: StructureContractConfig,
-    sources: ContractSources,
-    proxy: ProxyResult,
-    templateId: string,
-  ): Promise<void> {
-    if (
-      this.templatizer?.revisitsMatchedTemplates !== true ||
-      !this.templatizer.canTemplatize(sources, proxy.type)
-    ) {
-      return
-    }
-    await this.templatizer.revisit(
-      this.templatizeRequest(provider, address, config, sources, proxy),
-      templateId,
-    )
-  }
-
-  /**
-   * Runs before the template is pushed, so `config` is the address's own
-   * config: the templatizer reads the baseline and dry runs drafts through
-   * it, with the same `types` and override this run applies them with.
-   */
-  private templatizeRequest(
-    provider: IProvider,
-    address: ChainSpecificAddress,
-    config: StructureContractConfig,
-    sources: ContractSources,
-    proxy: ProxyResult,
-  ): TemplatizeRequest {
-    return {
-      provider,
-      address,
-      config,
-      sources,
-      proxyType: proxy.type,
-      proxyValues: proxy.values,
-      implementationNames: getImplementationNames(address, sources) ?? {},
-    }
   }
 }
