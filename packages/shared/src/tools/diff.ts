@@ -46,11 +46,11 @@ export function diff(left: unknown, right: unknown): Difference[] {
   }
 
   const diffs: Difference[] = []
-  for (const key in left) {
+  for (const key of Object.keys(left)) {
     // @ts-ignore: it's fine
     const lhs = left[key]
     const path = isLeftArray ? +key : key
-    if (!(key in right)) {
+    if (!Object.hasOwn(right, key)) {
       diffs.push({ kind: 'remove', path: [path], lhs })
       continue
     }
@@ -89,8 +89,8 @@ export function diff(left: unknown, right: unknown): Difference[] {
     }
   }
 
-  for (const key in right) {
-    if (!(key in left)) {
+  for (const key of Object.keys(right)) {
+    if (!Object.hasOwn(left, key)) {
       // @ts-ignore: it's fine
       const rhs = right[key]
       const path = [isRightArray ? +key : key]
