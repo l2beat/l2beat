@@ -20,8 +20,9 @@ import { OpenCodeClient } from './OpenCodeClient'
  * Codex runs with the user's login, because with a ChatGPT login it adds
  * the ChatGPT apps to the request, and with a model it has no catalogue
  * entry for, so that no model-specific tool hides or adds anything.
- * opencode runs with a global config that allows `bash`, which opencode
- * would merge into the turn's own config.
+ * opencode runs with a global config and a config in a directory above the
+ * scratch one that both allow `bash`, which opencode would merge into the
+ * turn's own config.
  */
 describe('model isolation against the installed CLIs', function () {
   this.timeout(90_000)
@@ -57,7 +58,7 @@ describe('model isolation against the installed CLIs', function () {
     expectNoTools(server.requests)
   })
 
-  it('opencode sends a request with no tools, whatever the global config allows', async function () {
+  it('opencode sends a request with no tools, whatever the global and parent configs allow', async function () {
     const opencode = findBinary('opencode')
     if (opencode === undefined) {
       this.skip()
@@ -84,12 +85,24 @@ describe('model isolation against the installed CLIs', function () {
     ])
     const client = new OpenCodeClient({ binary, model: 'probe/m' })
 
-    const previous = process.env.XDG_CONFIG_HOME
+    // The scratch directory is made under the temporary directory.
+    const parent = path.join(directory, 'tmp')
+    fs.mkdirSync(parent)
+    fs.writeFileSync(
+      path.join(parent, 'opencode.json'),
+      JSON.stringify({ permission: { bash: 'allow' } }),
+    )
+    const previous = {
+      XDG_CONFIG_HOME: process.env.XDG_CONFIG_HOME,
+      TMPDIR: process.env.TMPDIR,
+    }
     process.env.XDG_CONFIG_HOME = globalConfig
+    process.env.TMPDIR = parent
     try {
       await expect(client.start({ prompt: 'hi', schema: {} })).toBeRejected()
     } finally {
-      restoreEnv('XDG_CONFIG_HOME', previous)
+      restoreEnv('XDG_CONFIG_HOME', previous.XDG_CONFIG_HOME)
+      restoreEnv('TMPDIR', previous.TMPDIR)
     }
 
     expectNoTools(server.requests)

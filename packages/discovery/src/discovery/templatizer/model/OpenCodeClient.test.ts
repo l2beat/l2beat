@@ -92,6 +92,7 @@ describe(OpenCodeClient.name, () => {
       configHome,
       configHomeFiles,
       configContent,
+      disableProjectConfig,
       outputTokenMax,
       disableClaudeCodePrompt,
     } = record()
@@ -108,6 +109,7 @@ describe(OpenCodeClient.name, () => {
     expect(configHome).toEqual(path.join(cwd, 'config'))
     expect(configHomeFiles).toEqual([])
     expect(configContent).toEqual(undefined)
+    expect(disableProjectConfig).toEqual('1')
     expect(outputTokenMax).toEqual(String(OPENCODE_OUTPUT_TOKEN_MAX))
     expect(disableClaudeCodePrompt).toEqual('1')
     expect(args[args.indexOf('--model') + 1]).toEqual('opencode-go/test-model')
@@ -220,6 +222,7 @@ interface Record {
   configHome: string | undefined
   configHomeFiles: string[]
   configContent: string | undefined
+  disableProjectConfig: string | undefined
   outputTokenMax: string | undefined
   disableClaudeCodePrompt: string | undefined
 }
@@ -260,6 +263,7 @@ fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({
   configHome: process.env.XDG_CONFIG_HOME,
   configHomeFiles: fs.readdirSync(process.env.XDG_CONFIG_HOME),
   configContent: process.env.OPENCODE_CONFIG_CONTENT,
+  disableProjectConfig: process.env.OPENCODE_DISABLE_PROJECT_CONFIG,
   outputTokenMax: process.env.OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX,
   disableClaudeCodePrompt: process.env.OPENCODE_DISABLE_CLAUDE_CODE_PROMPT,
 }))

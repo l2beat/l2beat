@@ -9,11 +9,14 @@
  * every tool (`"tools": {"*": false}`), which also drops the tool schemas
  * from the request, and defines the agent the turn runs as, whose `prompt`
  * stands in for opencode's own coding-agent system prompt. opencode merges
- * that file into the user's global config rather than using it instead, and
- * a global `"permission": {"bash": "allow"}` brings `bash` back into the
- * request, so the global config directory is pointed at an empty one and
- * the variables that name other config sources are dropped; the login is
- * kept, because it lives in the data directory. `--pure` keeps user plugins
+ * that file into every other config it finds rather than using it instead,
+ * and a `"permission": {"bash": "allow"}` in the user's global config, or
+ * in an `opencode.json` in any directory above the scratch one, brings
+ * `bash` back into the request. So the global config directory is pointed
+ * at an empty one (opencode installs its plugin package there, once per
+ * run), the search for project configs is switched off, and the variables
+ * that name other config sources are dropped; the login is kept, because
+ * it lives in the data directory. `--pure` keeps user plugins
  * out and an environment flag keeps the user's `CLAUDE.md` out. A test runs
  * the installed opencode against a local endpoint and checks that the tool
  * list of the request is empty, and the event stream is checked for tool
@@ -271,6 +274,9 @@ function openCodeEnvironment(workDir: string): NodeJS.ProcessEnv {
     PWD: workDir,
     OPENCODE_CONFIG: path.join(workDir, 'opencode.json'),
     XDG_CONFIG_HOME: path.join(workDir, 'config'),
+    // `OPENCODE_CONFIG` still loads; only the search upwards for an
+    // `opencode.json` stops, which from the scratch directory reaches /tmp.
+    OPENCODE_DISABLE_PROJECT_CONFIG: '1',
     OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX: String(OPENCODE_OUTPUT_TOKEN_MAX),
     // Without it opencode appends the user's ~/.claude/CLAUDE.md, the one
     // instruction file the empty scratch directory does not keep out.
