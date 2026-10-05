@@ -1,7 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { env } from '~/env'
-import { getDb } from '~/server/database'
+// import { env } from '~/env'
+// Prototype: anonymity set data is read from JSON instead of the DB.
+// import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
@@ -16,9 +17,13 @@ import {
   type PrivacyAnonymitySetSeries,
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import {
-  getPrivacyAnonymitySetConfigurations,
+  // getPrivacyAnonymitySetConfigurations,
   getPrivacyAnonymitySetSyncStatus,
 } from './anonymity-set/getPrivacyAnonymitySetSync'
+import {
+  getJsonAnonymitySetConfigurations,
+  getJsonSenderDaysByProjectIds,
+} from './anonymity-set/jsonAnonymitySetSource'
 import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
@@ -60,20 +65,19 @@ export async function getPrivacyAnonymitySetChart(
   if (series.length === 0) return emptyResponse()
 
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const snapshot = env.MOCK
-    ? getMockResponse(series, currentDay)
-    : await cache.get(
-        {
-          key: [
-            'privacy-anonymity-set-chart',
-            project.id,
-            currentDay.toString(),
-          ],
-          ttl: 10 * UnixTime.MINUTE,
-          staleWhileRevalidate: 15 * UnixTime.MINUTE,
-        },
-        () => getPrivacyAnonymitySetSnapshot(project, series, currentDay),
-      )
+  // Prototype: the snapshot reads JSON, not the DB, so it is used in mock mode
+  // too instead of the generated mock response.
+  // const snapshot = env.MOCK
+  //   ? getMockResponse(series, currentDay)
+  //   : await cache.get(
+  const snapshot = await cache.get(
+    {
+      key: ['privacy-anonymity-set-chart', project.id, currentDay.toString()],
+      ttl: 10 * UnixTime.MINUTE,
+      staleWhileRevalidate: 15 * UnixTime.MINUTE,
+    },
+    () => getPrivacyAnonymitySetSnapshot(project, series, currentDay),
+  )
 
   return selectPrivacyAnonymitySetChartRange(
     orderAnonymitySetSeriesByCurrentSize(snapshot),
@@ -86,8 +90,11 @@ async function getPrivacyAnonymitySetSnapshot(
   series: PrivacyAnonymitySetSeries[],
   currentDay: UnixTime,
 ): Promise<PrivacyAnonymitySetChartResponse> {
-  const db = getDb()
-  const configurations = await getPrivacyAnonymitySetConfigurations(db, series)
+  // Prototype: read from the Starknet anonymity set JSON file instead of the
+  // DB. Series without JSON data (all EVM projects) are reported as syncing.
+  // const db = getDb()
+  // const configurations = await getPrivacyAnonymitySetConfigurations(db, series)
+  const configurations = getJsonAnonymitySetConfigurations(series, currentDay)
   const { syncedSeries, syncingLabels } = getPrivacyAnonymitySetSyncStatus(
     series,
     configurations,
@@ -121,12 +128,13 @@ async function getPrivacyAnonymitySetSnapshot(
   const { history, holdingDuration } = await loadAnonymitySetCharts(
     syncedSeries,
     historyEndpoints,
-    (from, to) =>
-      db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-        [project.id],
-        from,
-        to,
-      ),
+    // (from, to) =>
+    //   db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+    //     [project.id],
+    //     from,
+    //     to,
+    //   ),
+    async (from, to) => getJsonSenderDaysByProjectIds([project.id], from, to),
   )
 
   return {
@@ -209,6 +217,7 @@ function emptyResponse(): PrivacyAnonymitySetChartResponse {
   }
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: prototype, mock branch is commented out above
 function getMockResponse(
   series: PrivacyAnonymitySetSeries[],
   endpoint: UnixTime,

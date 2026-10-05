@@ -1,10 +1,12 @@
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import {
   assert,
   assertUnreachable,
   type EthereumAddress,
 } from '@l2beat/shared-pure'
-import type { PrivacyRpcLog } from '../types'
+import type {
+  EvmPrivacyAnonymitySetDepositSource,
+  PrivacyRpcLog,
+} from '../types'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
@@ -14,7 +16,7 @@ export type PrivacyAnonymitySetDeposit = {
 }
 
 export function extractPrivacyAnonymitySetDeposit(
-  source: PrivacyAnonymitySetDepositSource,
+  source: EvmPrivacyAnonymitySetDepositSource,
   log: PrivacyRpcLog,
 ): PrivacyAnonymitySetDeposit | undefined {
   if (source.extractor === 'privacyPoolsValue') {

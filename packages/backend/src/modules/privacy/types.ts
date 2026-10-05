@@ -14,6 +14,9 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
+  starknetAnonymitySetConfigs: StarknetPrivacyAnonymitySetIndexerConfig[]
+  /** Prototype: Starknet anonymity set events are written here, not to DB. */
+  starknetAnonymitySetFile: string
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
@@ -30,11 +33,29 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
   address: EthereumAddress
   event: string
   sinceTimestamp: UnixTime
-} & PrivacyAnonymitySetDepositSource
+} & EvmPrivacyAnonymitySetDepositSource
+
+export type EvmPrivacyAnonymitySetDepositSource = Exclude<
+  PrivacyAnonymitySetDepositSource,
+  { extractor: 'strk20Deposit' }
+>
 
 export type PrivacyAnonymitySetIndexerConfig = {
   id: string
 } & PrivacyAnonymitySetIndexerConfigProperties
+
+export type StarknetPrivacyAnonymitySetIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: string
+  event: string
+  sinceTimestamp: UnixTime
+} & Extract<PrivacyAnonymitySetDepositSource, { extractor: 'strk20Deposit' }>
+
+export type StarknetPrivacyAnonymitySetIndexerConfig = {
+  id: string
+} & StarknetPrivacyAnonymitySetIndexerConfigProperties
 
 /**
  * Filters on the indexed event args starting at topic1, null matching

@@ -3,8 +3,9 @@ import type {
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
 import { UnixTime, unique } from '@l2beat/shared-pure'
-import { env } from '~/env'
-import { getDb } from '~/server/database'
+// Prototype: anonymity set data is read from JSON instead of the DB.
+// import { env } from '~/env'
+// import { getDb } from '~/server/database'
 import type { PrivacyProject } from '../types'
 import {
   ANONYMITY_SET_WINDOW_DAYS,
@@ -16,9 +17,13 @@ import {
   type PrivacyAnonymitySetSeries,
 } from './getPrivacyAnonymitySetSeries'
 import {
-  getPrivacyAnonymitySetConfigurations,
+  // getPrivacyAnonymitySetConfigurations,
   getPrivacyAnonymitySetSyncStatus,
 } from './getPrivacyAnonymitySetSync'
+import {
+  getJsonAnonymitySetConfigurations,
+  getJsonSenderDaysByProjectIds,
+} from './jsonAnonymitySetSource'
 
 export type PrivacyAnonymitySetSummary =
   | ({
@@ -39,6 +44,7 @@ export type PrivacyAnonymitySetSummary =
   | { status: 'syncing' }
   | { status: 'unavailable' }
 
+// biome-ignore lint/suspicious/useAwait: prototype, keeps the async signature of the DB version
 export async function getPrivacyAnonymitySetSummaries(
   projects: PrivacyProject[],
   currentDay: UnixTime,
@@ -49,21 +55,31 @@ export async function getPrivacyAnonymitySetSummaries(
       getPrivacyAnonymitySetSeries(project),
     ]),
   )
-  if (env.MOCK) return getMockSummaries(projects, seriesByProject)
+  // Prototype: JSON is read in mock mode too, instead of random mock values.
+  // if (env.MOCK) return getMockSummaries(projects, seriesByProject)
 
-  const db = getDb()
+  // const db = getDb()
   const allSeries = [...seriesByProject.values()].flat()
   const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const [configurations, rows] = await Promise.all([
-    getPrivacyAnonymitySetConfigurations(db, allSeries),
-    db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-      trackedProjectIds,
-      cutoff,
-      currentDay,
-    ),
-  ])
+  // const [configurations, rows] = await Promise.all([
+  //   getPrivacyAnonymitySetConfigurations(db, allSeries),
+  //   db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+  //     trackedProjectIds,
+  //     cutoff,
+  //     currentDay,
+  //   ),
+  // ])
+  const configurations = getJsonAnonymitySetConfigurations(
+    allSeries,
+    currentDay,
+  )
+  const rows = getJsonSenderDaysByProjectIds(
+    trackedProjectIds,
+    cutoff,
+    currentDay,
+  )
 
   return new Map(
     projects.map((project) => [
@@ -105,7 +121,10 @@ export function getPrivacyAnonymitySetSummary(
   const [point] = calculateAnonymitySetHistory(rows, syncedSeries, [currentDay])
   const largest = pickLargestSeries(syncedSeries, point?.slice(1) ?? [])
   if (largest === undefined) {
-    return { status: 'syncing' }
+    // Prototype: projects without JSON data (all EVM projects) show "No data"
+    // rather than "Syncing".
+    // return { status: 'syncing' }
+    return { status: 'unavailable' }
   }
 
   return {
@@ -138,6 +157,7 @@ function pickLargestSeries(
   return best
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: prototype, mock branch is commented out above
 function getMockSummaries(
   projects: PrivacyProject[],
   seriesByProject: Map<string, PrivacyAnonymitySetSeries[]>,

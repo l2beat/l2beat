@@ -1,3 +1,4 @@
+import type { PrivacyBucketAddress } from '@l2beat/config'
 import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { PrivacyProject } from '../types'
@@ -29,8 +30,7 @@ export function getPrivacyAnonymitySetSeries(
       if (bucket.anonymitySet === undefined) return []
 
       const minimumAmounts = bucket.anonymitySet.minimumAmounts
-      const chain = ChainSpecificAddress.longChain(bucket.address)
-      const address = ChainSpecificAddress.address(bucket.address).toString()
+      const { chain, address } = getBucketChainAndAddress(bucket.address)
       const configurationId = createPrivacyAnonymitySetConfigurationId({
         projectId: project.id,
         bucketId: bucket.id,
@@ -72,6 +72,17 @@ export function hasPrivacyAnonymitySet(
   project: PrivacyAnonymitySetProject,
 ): boolean {
   return getPrivacyAnonymitySetSeries(project).length > 0
+}
+
+function getBucketChainAndAddress(address: PrivacyBucketAddress): {
+  chain: string
+  address: string
+} {
+  if (typeof address !== 'string') return address
+  return {
+    chain: ChainSpecificAddress.longChain(address),
+    address: ChainSpecificAddress.address(address).toString(),
+  }
 }
 
 function formatTokenAmount(amount: string, decimals: number): string {
