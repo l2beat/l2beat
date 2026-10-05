@@ -3,10 +3,7 @@ import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
-import {
-  DEPOSIT_PAYOUT_PARAMS,
-  WITHDRAWAL_PAYOUT_PARAMS,
-} from '../zkmoney/test/fixtures'
+import { WITHDRAWAL_RELAYER_PARAMS } from '../zkmoney/test/fixtures'
 import {
   extractPrivacyRelayerActivity,
   getPrivacyRelayerExtractor,
@@ -36,21 +33,11 @@ describe(extractPrivacyRelayerActivity.name, () => {
     ).toEqual(tornadoCashInterface.getEventTopic('Withdrawal'))
   })
 
-  // The zk.money config hardcodes these topics for its flow and anonymity set
-  // sources, while relayer sources derive them from the backend ABI.
-  it('derives the zk.money portal topics hardcoded in the project config', () => {
+  it('derives the zk.money withdrawal topic hardcoded in the project config', () => {
     expect(
       getPrivacyRelayerExtractor({
-        extractor: 'zkMoneyDepositPayout',
-        params: DEPOSIT_PAYOUT_PARAMS,
-      }).event,
-    ).toEqual(
-      '0x8154af7b1b360f500640de68c82af19c52c4ad4189d7a7c7a41506e19a1fdd6c',
-    )
-    expect(
-      getPrivacyRelayerExtractor({
-        extractor: 'zkMoneyWithdrawalPayout',
-        params: WITHDRAWAL_PAYOUT_PARAMS,
+        extractor: 'zkMoneyWithdrawalRelayer',
+        params: WITHDRAWAL_RELAYER_PARAMS,
       }).event,
     ).toEqual(
       '0x0ef2e2e9f18042ca214d1bee833209f28326ffa8f4a6b0dc92172caf71bc5433',

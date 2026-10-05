@@ -1,7 +1,6 @@
 import type {
-  ZkMoneyDepositPayoutParams,
   ZkMoneyFundingParams,
-  ZkMoneyWithdrawalPayoutParams,
+  ZkMoneyWithdrawalRelayerParams,
 } from '@l2beat/config'
 import type { IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, type Log } from '@l2beat/shared-pure'
@@ -50,14 +49,7 @@ export const FUNDING_PARAMS: ZkMoneyFundingParams = {
   historyFromBlock: 10,
 }
 
-export const DEPOSIT_PAYOUT_PARAMS: ZkMoneyDepositPayoutParams = {
-  ...depositParams,
-  depositFee: DEPOSIT_FEE.toString(),
-  registrationSweepFee: '5',
-  operationExecutor: OPERATION_EXECUTOR,
-}
-
-export const WITHDRAWAL_PAYOUT_PARAMS: ZkMoneyWithdrawalPayoutParams = {
+export const WITHDRAWAL_RELAYER_PARAMS: ZkMoneyWithdrawalRelayerParams = {
   tokenAddress: DAI,
   executorAddress: WITHDRAWAL_EXECUTOR,
   operationExecutor: OPERATION_EXECUTOR,
@@ -123,12 +115,13 @@ export function withdrawal(
   nullifier: number,
   position: LogPosition,
   executor = WITHDRAWAL_EXECUTOR,
+  flow = 0,
 ): Log {
   return encodeLog(
     zkMoneyInterface,
     'WithdrawalOrRefund',
     PORTAL,
-    [0, utils.hexZeroPad(utils.hexlify(nullifier), 32), executor, CREDITED],
+    [flow, utils.hexZeroPad(utils.hexlify(nullifier), 32), executor, CREDITED],
     position,
   )
 }
@@ -143,14 +136,24 @@ export function mockZkMoneyRpc({
   implementation = DEPOSIT_IMPLEMENTATION,
   intent = 1,
   balances = new Map(),
+  submitter = BOB,
+  target = PORTAL,
 }: {
   receipt?: Log[]
   implementation?: EthereumAddress
   intent?: number
   balances?: Map<EthereumAddress, bigint>
+  submitter?: EthereumAddress
+  target?: EthereumAddress
 }) {
   return mockObject<IRpcClient>({
     getTransactionReceipt: mockFn().resolvesTo({ logs: receipt }),
+    getTransaction: mockFn().resolvesTo({
+      hash: TX_HASH,
+      from: submitter.toString(),
+      to: target.toString(),
+      blockNumber: BLOCK_NUMBER,
+    }),
     isMulticallDeployed: mockFn().returns(false),
     call: mockFn<IRpcClient['call']>().executes(async ({ to, input }) => {
       const selector = input.toString().slice(0, 10)
