@@ -76,6 +76,7 @@ import {
 } from './write/templateFile'
 import {
   addShape,
+  admitsAddress,
   chooseTemplateId,
   matchedBundles,
   replaceTemplateText,
@@ -331,14 +332,20 @@ export class Templatizer {
     previous: PreviousTemplate,
   ): Promise<string | undefined> {
     const { templateId } = previous
+    if (!admitsAddress(this.templateService, templateId, request.address)) {
+      // V1 matches a template that lists addresses for those alone. The
+      // new shape would not change that, and `addShape` would throw after
+      // the fields were appended.
+      return 'its criteria.json does not list the contract'
+    }
     if (
       this.templateService.findShapeByTemplateAndHash(templateId, hash) !==
       undefined
     ) {
-      // V1 matched nothing although the template holds this very shape,
-      // which only its criteria.json can cause; the shape must not be
-      // added a second time.
-      return 'its criteria exclude the contract, although it holds this shape'
+      // V1 matched nothing although the template holds this very shape and
+      // its criteria admit the contract. Nothing written here would change
+      // that, and the shape must not be added a second time.
+      return 'it holds this shape and still V1 does not match it'
     }
     const existing = await this.analyzeExisting(request, templateId)
     const names = matchedBundles(request.sources.sources).map((b) => b.name)

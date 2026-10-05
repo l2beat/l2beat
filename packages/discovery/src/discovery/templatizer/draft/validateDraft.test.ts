@@ -125,6 +125,76 @@ describe(validateDraft.name, () => {
     ).toEqual([])
   })
 
+  it('compares a full fragment for a function of this contract with the ABI, outputs included', () => {
+    const result = validateDraft(
+      draftOf({
+        verifierKey: field({
+          type: 'call',
+          method: 'function verifier() view returns (bytes32)',
+          args: [],
+        }),
+        batchHashes: field(
+          {
+            type: 'array',
+            method: 'function committedBatches(uint256) view returns (address)',
+            indices: [0],
+          },
+          ['committedBatches(uint256)'],
+        ),
+        finalized: field({
+          type: 'call',
+          method: 'function isBatchFinalized(uint64) view returns (bool)',
+          args: [1],
+        }),
+        missing: field({
+          type: 'call',
+          method: 'function foo(uint256) view returns (address)',
+          args: [1],
+        }),
+        // As the ABI declares it: no finding.
+        theVerifier: field({
+          type: 'call',
+          method: 'function verifier() view returns (address)',
+          args: [],
+        }),
+        // A call on another contract reads an ABI this draft is not checked against.
+        elsewhere: field({
+          type: 'call',
+          method: 'function foo() view returns (address)',
+          args: [],
+          address: '{{ verifier }}',
+        }),
+      }),
+      contextFor('ScrollChain'),
+    )
+    expect(
+      result.findings.filter((finding) =>
+        finding.path.endsWith('.handler.method'),
+      ),
+    ).toEqual([
+      {
+        path: 'fields.verifierKey.handler.method',
+        message:
+          "the ABI declares verifier() as `function verifier() view returns (address)`, returning (address), and this fragment returns (bytes32): write `method` as the ABI's fragment",
+      },
+      {
+        path: 'fields.batchHashes.handler.method',
+        message:
+          "the ABI declares committedBatches(uint256) as `function committedBatches(uint256) view returns (bytes32)`, returning (bytes32), and this fragment returns (address): write `method` as the ABI's fragment",
+      },
+      {
+        path: 'fields.finalized.handler.method',
+        message:
+          'this contract has no isBatchFinalized(uint64); the ABI declares `function isBatchFinalized(uint256 _batchIndex) view returns (bool)`: write `method` as the one this field reads',
+      },
+      {
+        path: 'fields.missing.handler.method',
+        message:
+          'this contract has no foo(uint256); nothing in the ABI is named foo: name a function of this contract, or set `address` if the field reads another contract',
+      },
+    ])
+  })
+
   it('refuses a handler V1 cannot construct, with V1’s own reason', () => {
     const draft = scrollChainDraft()
     draft.fields.args = field({ type: 'constructorArgs' })

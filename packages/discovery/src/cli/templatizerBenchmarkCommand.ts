@@ -30,6 +30,7 @@ import {
 import { DEFAULT_MAX_ROUNDS } from '../discovery/templatizer/loop'
 import { chooseModel } from '../discovery/templatizer/model/createModelClient'
 import { configureLogger } from './logger'
+import { PositiveInteger } from './types'
 
 export const TemplatizerBenchmarkCommand = command({
   name: 'templatizer-benchmark',
@@ -47,7 +48,7 @@ export const TemplatizerBenchmarkCommand = command({
       long: 'suite',
       defaultValue: () => 'quick',
       description:
-        'quick (default: fourteen contracts chosen for dense use of the generic handlers, about half an hour) or full (the research suite: scroll, 25 base contracts, 6 plumenetwork)',
+        'quick (default: fourteen contracts chosen for dense use of the generic handlers, about half an hour) or full (the research suite: scroll, 24 base contracts, 6 plumenetwork)',
     }),
     aiModel: option({
       type: optional(string),
@@ -62,7 +63,7 @@ export const TemplatizerBenchmarkCommand = command({
         'reasoning effort (default high): for opencode one of the levels of the model, which `opencode models <provider> --verbose` lists under variants (DeepSeek: low, high, max); for Codex none, minimal, low, medium, high, xhigh or max',
     }),
     aiRounds: option({
-      type: optional(number),
+      type: optional(PositiveInteger),
       long: 'ai-rounds',
       description: `model turns per contract, the first included (default ${DEFAULT_MAX_ROUNDS})`,
     }),

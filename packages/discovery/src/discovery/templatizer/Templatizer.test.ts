@@ -494,7 +494,7 @@ describe(Templatizer.name, () => {
       expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
     })
 
-    it('gives the contract a template of its own when the old one holds its shape but its criteria exclude it', async () => {
+    it('gives the contract a template of its own when the old one holds its shape but its criteria.json does not list it', async () => {
       const directory = join(root, '_templates', 'proj', 'Registry')
       mkdirSync(directory, { recursive: true })
       writeFileSync(join(directory, 'template.jsonc'), FITTING_TEMPLATE)
@@ -526,7 +526,34 @@ describe(Templatizer.name, () => {
 
       expect(templateId?.startsWith('proj/Registry-')).toEqual(true)
       expect(templateText(templateId ?? '')).toInclude(
-        `  // review: ${ADDRESS} had proj/Registry, which no longer fits: its criteria exclude the contract, although it holds this shape. proj/Registry is left as it is.`,
+        `  // review: ${ADDRESS} had proj/Registry, which no longer fits: its criteria.json does not list the contract. proj/Registry is left as it is.`,
+      )
+      expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
+      expect(Object.keys(shapes()).length).toEqual(1)
+      expect(
+        templateService.findMatchingTemplates(req.sources, req.address),
+      ).toEqual([templateId ?? ''])
+    })
+
+    it('gives the contract a template of its own when its criteria.json does not list it and its code is new, and adds nothing to the old one', async () => {
+      writeOldTemplate(FITTING_TEMPLATE)
+      writeFileSync(
+        join(root, '_templates', 'proj', 'Registry', 'criteria.json'),
+        JSON.stringify({ validAddresses: [TWIN] }),
+      )
+      templateService.reload()
+      const model = new FakeModelClient([JSON.stringify(DRAFT)])
+      const req = request([bundle('Registry', ADDRESS, BODY)])
+
+      const templateId = await templatizer(model, {
+        [ADDRESS]: 'proj/Registry',
+      }).templateFor(req)
+
+      expect(templateId?.startsWith('proj/Registry-')).toEqual(true)
+      expect(model.calls.length).toEqual(1)
+      expect(model.prompts[0] ?? '').not.toInclude('### Existing fields')
+      expect(templateText(templateId ?? '')).toInclude(
+        `  // review: ${ADDRESS} had proj/Registry, which no longer fits: its criteria.json does not list the contract. proj/Registry is left as it is.`,
       )
       expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
       expect(Object.keys(shapes()).length).toEqual(1)

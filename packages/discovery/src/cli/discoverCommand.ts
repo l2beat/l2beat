@@ -20,6 +20,7 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { configureLogger } from './logger'
+import { PositiveInteger } from './types'
 
 export const DiscoverCommandArgs = {
   project: positional({
@@ -99,7 +100,7 @@ export const DiscoverCommandArgs = {
       'model for --ai: a Codex model name (default: Codex default), or an opencode gateway model, opencode/<model> (Zen) or opencode-go/<model> (Go), e.g. opencode-go/deepseek-v4.1-flash for the cheap option',
   }),
   aiRounds: option({
-    type: optional(number),
+    type: optional(PositiveInteger),
     long: 'ai-rounds',
     description:
       'model turns per contract for --ai, the first included (default 3)',

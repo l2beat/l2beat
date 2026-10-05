@@ -158,6 +158,7 @@ class BenchmarkRun {
     entry: TemplatedEntry,
     index: string,
   ): Promise<ContractBenchmark> {
+    this.discardAuthoredTemplate(project.name, entry.address)
     if (this.quota !== undefined) {
       return skippedContract(entry, `skipped: ${this.quota}`)
     }
@@ -213,7 +214,32 @@ class BenchmarkRun {
     }
     const directory = path.join(this.options.outDir, project, 'templates')
     fs.mkdirSync(directory, { recursive: true })
-    fs.writeFileSync(path.join(directory, `${address}.jsonc`), template.text)
+    fs.writeFileSync(this.authoredTemplatePath(project, address), template.text)
+  }
+
+  /**
+   * An earlier run into the same `--out` may have authored a template for
+   * this address; it goes before this run decides what the address gets,
+   * so a file there is this run's. Addresses this run does not touch keep
+   * theirs.
+   */
+  private discardAuthoredTemplate(
+    project: string,
+    address: ChainSpecificAddress,
+  ): void {
+    fs.rmSync(this.authoredTemplatePath(project, address), { force: true })
+  }
+
+  private authoredTemplatePath(
+    project: string,
+    address: ChainSpecificAddress,
+  ): string {
+    return path.join(
+      this.options.outDir,
+      project,
+      'templates',
+      `${address}.jsonc`,
+    )
   }
 
   private logContract(contract: ContractBenchmark): void {

@@ -1,7 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'fs'
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
 import type { EntryParameters } from '../../output/types'
@@ -150,6 +157,12 @@ describe(runBenchmark.name, () => {
   const suite = (...names: string[]): SuiteProject[] =>
     names.map((name) => ({ name, chain: 'ethereum' }))
 
+  function staleTemplate(project: string, address: string): void {
+    const directory = join(outDir, project, 'templates')
+    mkdirSync(directory, { recursive: true })
+    writeFileSync(join(directory, `${address}.jsonc`), '// stale\n')
+  }
+
   it('compares every templated contract and isolates a throw to its contract', async () => {
     const fixture = project('fixture', [
       entry(AUTHORED, {
@@ -200,6 +213,11 @@ describe(runBenchmark.name, () => {
       if (result === undefined) throw new Error('explorer is down')
       return result
     })
+
+    // Left by an earlier run into the same directory: one for an address this
+    // run matches and one for an address whose analysis throws.
+    staleTemplate('fixture', MATCHED)
+    staleTemplate('fixture', THROWS)
 
     const report = await runBenchmark(fakes, suite('fixture'), {
       ...options,
@@ -316,6 +334,9 @@ describe(runBenchmark.name, () => {
     expect(
       existsSync(join(outDir, 'fixture', 'templates', `${MATCHED}.jsonc`)),
     ).toEqual(false)
+    expect(
+      existsSync(join(outDir, 'fixture', 'templates', `${THROWS}.jsonc`)),
+    ).toEqual(false)
     expect(readReport(outDir)).toEqual(JSON.parse(JSON.stringify(report)))
     expect(readFileSync(join(outDir, REPORT_MARKDOWN), 'utf8')).toInclude(
       '# Templatizer benchmark',
@@ -376,11 +397,15 @@ describe(runBenchmark.name, () => {
         trail: entry.address === AUTHORED ? findingsTrail : quotaTrail,
       }),
     )
+    staleTemplate('first', MATCHED)
     const report = await runBenchmark(fakes, suite('first', 'second'), {
       ...options,
       outDir,
     })
     expect(fakes.analyzed).toEqual([AUTHORED, THROWS])
+    expect(
+      existsSync(join(outDir, 'first', 'templates', `${MATCHED}.jsonc`)),
+    ).toEqual(false)
     const statuses = report.projects.map((p) =>
       p.contracts.map((c) => c.status),
     )

@@ -95,7 +95,6 @@
       "name": "base",
       "chain": "ethereum",
       "addresses": [
-        "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
         "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",

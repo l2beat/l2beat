@@ -90,8 +90,8 @@ Only a local `l2b discover` can ask a model. The backend never does, so
 
 Options: `--ai-model` (`opencode-go/<model>`, `opencode/<model>` or a Codex
 model; default Codex's default), `--ai-effort` (default `high`), `--ai-rounds`
-(model turns per contract, default 3). The templatizer needs `codex` or
-`opencode` on `PATH` and a logged-in account.
+(model turns per contract, a positive integer, default 3). The templatizer
+needs `codex` or `opencode` on `PATH` and a logged-in account.
 
 ## Three rules
 
@@ -165,19 +165,20 @@ source name of the implementation behind a proxy, else of the contract, not a
 display name from the config. A template that fits goes through the steps
 below as an existing template and gets the new shape at the end. One that does
 not is left as it is, and the contract goes through the steps as a new
-contract. So is a template that already holds the contract's shape and still
-did not match: only its `criteria.json` can cause that, and the templatizer
-does not add the shape a second time. Contracts with different new code that
-share an old template take turns on it, so each one's check and prompt see
-what the previous one added. A contract the template matches as it is, or one
-a referrer's field suggests it for, waits for those turns before discovery
-applies the template, so it gets the added fields too. One analysed earlier in
-the run keeps the template as it was; the run warns, and a second
-`l2b discover` applies the additions to it. Contracts of one shape analysed
-together share one authoring, and the template it ends in is checked for each
-of them with discovery's own match: an old template extended for the first
-may admit only that address by its `criteria.json`, and a contract discovery
-would not match gets a template of its own.
+contract. So is a template whose `criteria.json` does not list the contract,
+whether or not it already holds the contract's shape: discovery matches such
+a template for the listed addresses alone, so nothing is added to it.
+Contracts with different new code that share an old template take turns on
+it, so each one's check and prompt see what the previous one added. A
+contract the template matches as it is, or one a referrer's field suggests it
+for, waits for those turns before discovery applies the template, so it gets
+the added fields too. One analysed earlier in the run keeps the template as
+it was; the run warns, and a second `l2b discover` applies the additions to
+it. Contracts of one shape analysed together share one authoring, and the
+template it ends in is checked for each of them with discovery's own match:
+an old template extended for the first may admit only that address by its
+`criteria.json`, and a contract discovery would not match gets a template of
+its own.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of
@@ -249,7 +250,7 @@ Checked, and blocks until fixed:
 | Every worklist item is covered by one or more fields or skipped once, never both, and nothing outside the list is named | Counting over a closed list. This is the "nothing was forgotten" check. Several fields may cover one item because they can read different parts of it: one `call` per literal argument, as researchers read a getter keyed by a `uint8`, or one `event` field per projection of an event. |
 | A field covers only events its handler names; a `call` or `array` field covers only the function it calls, and a bare method name that several overloads of one arity answer to covers none of them until it is written as a full fragment | Read off the handler itself. Without this a missed item could hide behind a false claim, and an overload could go unread behind a name that fits two. |
 | A field name is a Solidity identifier, does not start with `$`, and is not the name of a value the baseline, proxy detection or existing template already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array; which function that field reads is resolved as discovery's `array` handler resolves it, so an overload keyed by a narrower integer does not qualify | A field of an existing name replaces that value, which would remove output (rule 1). The exception is what researchers write; resolving the function keeps `foo(uint32)` from taking the place of the probed `foo(uint256)`. |
-| Every field constructs with discovery's handler factory and runs without error at the block | Discovery itself. The one construction failure that is explained rather than only quoted is an `array` over a getter keyed by a type `array` does not take (a `uint8`): discovery's message names no cause, and the model's next try was the same handler spelled differently. |
+| Every field constructs with discovery's handler factory and runs without error at the block; a full `method` fragment written for a function of this contract agrees with the ABI's declaration, outputs included | Discovery itself. The one construction failure that is explained rather than only quoted is an `array` over a getter keyed by a type `array` does not take (a `uint8`): discovery's message names no cause, and the model's next try was the same handler spelled differently. Discovery parses a full fragment without looking it up, so a wrong return type calls the right function and decodes the same 32 bytes without an error at the block; this is the one wrong template the dry run cannot catch. |
 
 Deliberately not checked:
 
@@ -411,7 +412,7 @@ model cannot reach marked. It is the default suite. It runs in about a
 quarter of an hour on the Codex default model and half an hour on DeepSeek
 V4.1 Flash at high effort, and a repeat run differs from the first by a few
 fields on the same four contracts. The **full suite** is the research suite
-(scroll, 25 base contracts, 6 plumenetwork) and exists for comparability with
+(scroll, 24 base contracts, 6 plumenetwork) and exists for comparability with
 the research numbers.
 
 Run the benchmark before and after any change to the prompt, the checks or the

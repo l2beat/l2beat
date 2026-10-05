@@ -1218,11 +1218,41 @@ Benchmark: from `packages/discovery`,
   names the cause.) Codex tied it to the round-four sharing fix, but a
   waiter V1 rejects takes the hash-suffixed id, which exists only when a
   template was authored for this shape before.
+- **Codex review, round six (2026-10-05).** Five P2 comments on
+  `16549a1390`, all taken, one of them narrowly. A full `method` fragment
+  for a function of this contract is now compared with the ABI's
+  declaration, outputs included (`checkDeclaredFragment` in
+  `validateDraft.ts`): V1 parses a fragment with a space in it and never
+  looks it up, so `function foo(uint256) view returns (bytes32)` over an
+  ABI `foo(uint256)` returning an address constructed, called the right
+  selector and decoded the same 32 bytes without an error at the block,
+  the one wrong template the dry run cannot catch. The fragment compared
+  is the constructed handler's own. A template whose `criteria.json` does
+  not list the contract is no longer extended (`admitsAddress` in
+  `writeTemplate.ts`, asked first in `extendIfFits`): before, only a hash
+  the template already held was caught, and for new code the fields were
+  appended and the shape added before `assertMatches` threw, leaving a
+  partial edit and stopping the run; the predicate mirrors the one
+  criterion `findMatchingTemplatesByHash` scores by. The full suite's
+  Base list named HistoryStorage, which has no template in the committed
+  `discovered.json`, so `selectContracts` dropped it and the run was 24
+  contracts where the CLI said 25 (12.4 already recorded 24); the address
+  is removed, the count corrected, and two tests now check the suite
+  against the committed discovery (every listed full-suite address is
+  selected; every quick-suite template is the committed one).
+  `--ai-rounds` is a `PositiveInteger` type on both CLIs, since the loop
+  clamped zero and negatives to one turn while the benchmark report
+  recorded the value as typed. And the benchmark removes an address's
+  `<project>/templates/<address>.jsonc` from an earlier run into the same
+  `--out` before deciding what the address gets, so a file there is this
+  run's; addresses the run does not touch (`--limit`, `--address`) keep
+  theirs, which is the narrow reading of the comment: clearing a
+  directory the user chose was not taken.
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,280 tests as of 2026-10-05, about 220 of them the templatizer's;
+clean (1,286 tests as of 2026-10-05, about 225 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`

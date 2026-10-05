@@ -106,6 +106,22 @@ function shapeFileName(
     : conventional
 }
 
+/**
+ * Whether the template's `criteria.json` lets V1 match the address: the one
+ * criterion `findMatchingTemplatesByHash` applies, a template that lists
+ * addresses matching those alone. Asked before a template is added to,
+ * since `assertMatches` would throw only after the fields were appended.
+ */
+export function admitsAddress(
+  templateService: TemplateService,
+  templateId: string,
+  address: ChainSpecificAddress,
+): boolean {
+  const listed =
+    templateService.getTemplateById(templateId)?.criteria?.validAddresses ?? []
+  return listed.length === 0 || listed.includes(address)
+}
+
 function assertMatches(
   templateService: TemplateService,
   templateId: string,
