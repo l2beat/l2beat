@@ -326,6 +326,7 @@ export const privacyBoost: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
     trackedOn: ['base'],
+    anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

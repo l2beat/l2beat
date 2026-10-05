@@ -1,5 +1,5 @@
 import type { ProjectScalingStateValidation } from '@l2beat/config'
-import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/ProjectTooltipContent'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/quantumResistanceTooltips'
 import type {
   ProverInfoData,
   StateValidationSectionProps,

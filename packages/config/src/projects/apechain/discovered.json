@@ -1,6 +1,6 @@
 {
   "name": "apechain",
-  "timestamp": 1787668924,
+  "timestamp": 1790891964,
   "configHash": "0xdc9b6ccd1ec4d8d8cbb3806d748898f87af902fc2a51bb92951184c5c81ca120",
   "entries": [
     {
@@ -138,7 +138,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -194,13 +194,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 16943,
+        "firstUnresolvedNode": 17827,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 16942,
-        "latestNodeCreated": 17094,
+        "latestConfirmed": 17826,
+        "latestNodeCreated": 17978,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -432,7 +432,7 @@
         "allowedOutboxList": [
           "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
         ],
-        "delayedMessageCount": 1261,
+        "delayedMessageCount": 1271,
         "inboxHistory": [
           "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
           "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
@@ -443,8 +443,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 89393,
-        "sequencerReportedSubMessageCount": 47348910
+        "sequencerMessageCount": 96131,
+        "sequencerReportedSubMessageCount": 50871806
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -898,7 +898,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 89393,
+        "batchCount": 96131,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -933,9 +933,9 @@
         "postsBlobs": false,
         "reader4844": "arb1:0x0000000000000000000000000000000000000000",
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
-        "sequencerVersion": "0x88",
+        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1261,
+        "totalDelayedMessagesRead": 1271,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1803,7 +1803,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 498266371 },
+  "usedBlockNumbers": { "arbitrum": 510791290 },
   "permissionsConfigHash": "0xc900aa279d43192ebaadc56d8a389e7e546f37a1847b267ddb17c209466fa36c",
   "permissions": {
     "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507": {

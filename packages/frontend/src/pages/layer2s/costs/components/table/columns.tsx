@@ -47,7 +47,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
       id: 'total-cost-group',
       header: undefined,
       columns: [
-        columnHelper.accessor('data.total', {
+        columnHelper.accessor((row) => availableCosts(row)?.total, {
           id: 'total-cost',
           header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
           cell: (ctx) => (
@@ -71,7 +71,9 @@ export function getL2CostsColumns(metric: CostsMetric) {
         }),
       ],
     }),
-    columnHelper.accessor('data.calldata', {
+    columnHelper.accessor((row) => availableCosts(row)?.calldata, {
+      // Ids match the former 'data.x' accessor keys; column visibility is persisted by id.
+      id: 'data_calldata',
       header: 'Calldata',
       cell: (ctx) => (
         <SyncStatusWrapper
@@ -97,7 +99,8 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'The cost for posting data as calldata on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       },
     }),
-    columnHelper.accessor('data.blobs', {
+    columnHelper.accessor((row) => availableCosts(row)?.blobs, {
+      id: 'data_blobs',
       header: 'Blobs',
       cell: (ctx) => {
         if (
@@ -132,7 +135,8 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'The cost for posting data as blobs on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       },
     }),
-    columnHelper.accessor('data.compute', {
+    columnHelper.accessor((row) => availableCosts(row)?.compute, {
+      id: 'data_compute',
       header: 'Compute',
       cell: (ctx) => (
         <SyncStatusWrapper
@@ -158,7 +162,8 @@ export function getL2CostsColumns(metric: CostsMetric) {
           "The transaction gas cost excluding calldata, blobs and the 21'000 intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
-    columnHelper.accessor('data.overhead', {
+    columnHelper.accessor((row) => availableCosts(row)?.overhead, {
+      id: 'data_overhead',
       header: 'Overhead',
       cell: (ctx) => (
         <SyncStatusWrapper
@@ -185,7 +190,8 @@ export function getL2CostsColumns(metric: CostsMetric) {
       },
     }),
 
-    columnHelper.accessor('data.uopsCount', {
+    columnHelper.accessor((row) => availableCosts(row)?.uopsCount, {
+      id: 'data_uopsCount',
       header: 'L2 User ops count',
       cell: (ctx) => {
         const data = ctx.row.original.data
@@ -217,4 +223,8 @@ export function getL2CostsColumns(metric: CostsMetric) {
       },
     }),
   ]
+}
+
+function availableCosts(row: L2CostsTableEntry) {
+  return row.data.type === 'available' ? row.data : undefined
 }

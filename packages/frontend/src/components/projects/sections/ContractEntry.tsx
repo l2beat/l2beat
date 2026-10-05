@@ -19,12 +19,10 @@ import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
+import { splitUsedInProjects } from './permissions/splitUsedInProjects'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
-import {
-  splitUsedInProjects,
-  UsedInProjectEntry,
-} from './permissions/UsedInProject'
+import { UsedInProjectEntry } from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
 import {
   ESCROW_ALL_TOKENS_INCLUDED,

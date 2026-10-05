@@ -45,6 +45,24 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
       </Tooltip>
     )
   }
+  if (anonymitySet.status === 'too-small') {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            className="font-medium text-secondary text-xs leading-[15px] md:text-sm md:leading-[1.2]"
+          >
+            Too small
+          </button>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[320px]">
+          The anonymity set is too small and exact data fetching is not enabled
+          yet.
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
 
   const displayValue = formatInteger(anonymitySet.value)
   const steps = getAnonymitySetSteps(anonymitySet, projectName)
