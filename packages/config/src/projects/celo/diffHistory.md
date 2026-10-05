@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x33f2cb09e6927bc028111b9511ccd0a42b3a07be
+Generated with discovered.json: 0x43ce620514556140ba954b139283d96fa42c5c47
 
-# Diff at Mon, 05 Oct 2026 08:33:39 GMT:
+# Diff at Mon, 05 Oct 2026 16:18:47 GMT:
 
-- id: 1b243a5c
+- id: 85ba7009
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1789044398
-- current timestamp: 1791189150
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1789044398
+- current timestamp: 1791217058
 
 ## Description
 
@@ -73,6 +73,43 @@ discovery. Values are for block 1789044398 (main branch discovery), not current.
 +        "SuperFaultDisputeGame"
       usedTypes.0.arg.5:
 +        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xdb90ccbcd889e7c03abf54097d86902b12a1a7e4
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: d90f147f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789044398
+- current timestamp: 1789044398
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044398 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
     }
 ```
 

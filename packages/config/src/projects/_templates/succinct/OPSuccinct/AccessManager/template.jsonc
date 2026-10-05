@@ -14,7 +14,7 @@
     },
     "owner": {
       "description": "Address that can update the proposer and challenger allowlists and transfer ownership.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -24,7 +24,7 @@
     },
     "challengers": {
       "description": "Addresses allowed to challenge dispute games.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -46,7 +46,7 @@
     },
     "proposers": {
       "description": "Addresses allowed to propose dispute games.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

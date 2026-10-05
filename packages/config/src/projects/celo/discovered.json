@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1791189150,
+  "timestamp": 1791217058,
   "configHash": "0x6c5cb3d109ff6f2adbb6b318f3b4e0be0389e5b3a4a5aac6f595aaf0a96e5739",
   "entries": [
     {
@@ -1170,13 +1170,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x86261ed917857F9Fe943859b4fFD284F5853607d",
+        "anchorGame": "eth:0x62F45ce0358061557c46f1939672381fB08E6C8a",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x3747f9988d001697e7c15663a9be03b7dc04b43b3c5e6e4ceda7596ba1bed59e",
-          78680306
+          "0x5501c89159c85f53a7927b44d756b5d0fda6a6f3b2506d80230fa5c2399ba250",
+          78709106
         ],
         "initVersion": 1,
         "paused": false,
@@ -1191,7 +1191,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -1981,7 +1981,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1791187379,
+        "getLastProposalTimestamp": 1791216179,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -1994,7 +1994,7 @@
           "description": "Formatted fallback timeout after which proposing becomes permissionless."
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
         },
         "challengers": {
@@ -2060,7 +2060,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
-        "gameCount": 40434,
+        "gameCount": 40450,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3496,7 +3496,7 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "celo": 79288392, "ethereum": 26124993 },
+  "usedBlockNumbers": { "celo": 79316300, "ethereum": 26127308 },
   "permissionsConfigHash": "0x6d73448dc7350d9687886e73bb98ba166a08513c3a6f42da6848b1971d5639a7",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"

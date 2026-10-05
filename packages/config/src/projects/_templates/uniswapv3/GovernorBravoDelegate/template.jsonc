@@ -5,9 +5,8 @@
   "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of {{ proposalThresholdFmt }} {{ votingTokenSymbol }} can create proposals. Voting begins {{ votingDelayFmt }} blocks after proposal creation and lasts {{ votingPeriodFmt }} blocks; success requires more for-votes than against-votes and at least {{ quorumVotesFmt }} {{ votingTokenSymbol }} voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
   "ignoreInWatchMode": ["proposalCount"],
   "fields": {
-    "implementation": {
-      "severity": "HIGH"
-    },
+    // Duplicates $implementation.
+    "implementation": {},
     "votingTokenSymbol": {
       "handler": {
         "type": "call",
@@ -17,6 +16,7 @@
       }
     },
     "proposalThresholdFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function proposalThreshold() view returns (uint256)",
@@ -33,6 +33,7 @@
       "edit": ["format", "Undecimal18"]
     },
     "votingDelayFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function votingDelay() view returns (uint256)",
@@ -41,6 +42,7 @@
       "edit": ["format", "Undecimal0"]
     },
     "votingPeriodFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function votingPeriod() view returns (uint256)",
@@ -92,8 +94,8 @@
       "description": "Delegated voting tokens required to submit a proposal.",
       "severity": "HIGH"
     },
+    // A constant of the implementation: it only changes with a code change.
     "quorumVotes": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function quorumVotes() view returns (uint256)",

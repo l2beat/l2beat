@@ -5,8 +5,9 @@
   "category": "shared",
   "fields": {
     "$admin": {
+      // not HIGH: the governor list is identity. Mechanism changes (e.g. removing the EOA
+      // governor) are reviewed events in shared-sharp-verifier/ossification.json.
       "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it.",
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "upgrade",
@@ -83,13 +84,18 @@
       ]
     },
     "callProxyImplementation": {
+      // not HIGH: the default target is only written by initialize() during a proxy upgradeTo,
+      // so every change is already a $pastUpgrades code change of this proxy. HIGH double
+      // counted it and misdated the changes found by pre-$pastUpgrades diffHistory entries.
       "description": "Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.",
-      "severity": "HIGH",
       "type": "CODE_CHANGE"
     },
     "customFactRegistryRoutes": {
       "description": "Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target.",
-      "severity": "HIGH",
+      // MEDIUM: setCustomReference/setReferenceDepth only accept the default registry or an
+      // unexpired member of its reference chain, which isValid already trusts. A route picks
+      // where a caller's submissions land, it cannot add a verifier or a program.
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["operator", "customReference"],

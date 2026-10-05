@@ -34,8 +34,16 @@
       "critical": true
     },
     // Historical Kailua proof path, retired when BOB returned to a permissioned
-    // dispute game on 2026-09-16. Permanently paused verifier routes were never
-    // part of this path.
+    // dispute game on 2026-09-16 (tx 0x6f54452a). New type-1337 games are no
+    // longer respected. The six Kailua games still in progress at the switch
+    // (DGF index 852-857) stay proper and respected (retirementTimestamp was not
+    // bumped), but their root claims are fixed and match the canonical BOB output
+    // roots (checked 2026-10-03), so no later Kailua/RISC Zero change can create
+    // an invalid withdrawal claim. Routes paused before Kailua went live
+    // (0x310fe598, 0x9f39696c) were never part of this path. Routes 0xf536085a
+    // (estop paused 2025-08-04, MEDIUM), 0x50bd1769 and 0xc101b42b (removed
+    // 2025-11-10, reviewed router events) were live for a while but point to
+    // immutable contracts and are not modeled as retired members.
     "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b": {
       "critical": {
         "untilTimestamp": 1789547003
@@ -199,9 +207,11 @@
             }
           }
         },
+        // Not HIGH: route changes are HIGH on the router itself (verifier_*
+        // template fields) and recorded there as reviewed events; executed role
+        // changes are reviewed timelock events. A catch-all HIGH here double counts.
         "callsExecuted": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",
-          "severity": "HIGH",
           "handler": {
             "type": "event",
             "add": {

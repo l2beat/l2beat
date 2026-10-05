@@ -1,6 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CustomGateway",
+  // Canonical escrow: the chain governance upgrades this gateway and its L2
+  // counterpart (L2CustomGateway), so their code gates the escrowed tokens.
+  // The custom L2 token contracts themselves stay outside the perimeter.
+  "critical": true,
   "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
   "ignoreMethods": ["whitelist"], // deprecated
   "category": "bridge-external"

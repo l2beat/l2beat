@@ -22,7 +22,7 @@ export interface OssificationStats {
   criticalChangesPerYear: number
   clusteredEventCount: number
   contractCount: number
-  /** USD·years; null without a value series */
+  /** USD·years; null without a value series or with unverified contracts */
   exposure: number | null
   valueSource: OssificationValueSource | null
   /** Absent for DeFi, which has no exit window in config yet */
@@ -75,9 +75,9 @@ export async function getOssificationStats(
     criticalChangesPerYear: ossification.criticalChangesPerYear,
     clusteredEventCount: ossification.clusteredEventCount,
     contractCount: ossification.contracts.length,
-    exposure: isUnverified
-      ? 0
-      : series
+    // Unaudited code has withstood nothing we can vouch for.
+    exposure:
+      series && !isUnverified
         ? calculateExposure(series.points, clockStart, now)
         : null,
     valueSource: series?.source ?? null,

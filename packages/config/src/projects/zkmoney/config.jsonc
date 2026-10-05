@@ -16,6 +16,18 @@
     "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5": "UnprocessedDepositRefundVerifier",
     "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451": "ResolverVerifier"
   },
+  // Ossification perimeter: the ZkMoneyPortal, its three refund verifiers,
+  // CertManager and NitroValidator, the PlainWithdrawalExecutor, and the
+  // SIPAFactory with the DepositSIPA and RegistrationSIPA implementations, which
+  // hold deposits until they are swept. All are immutable. The portal setup
+  // (initialize, enclave image approval, ownership renounced) finished 64 minutes
+  // after deployment and before the first deposit, so it is not a change.
+  // Not critical: the naming layer (NameRegistry, RegistrationController,
+  // AccountMetadataRegistry, Resolver and ResolverVerifier) only decides where
+  // future payments to names resolve and never touches escrowed funds, proofs or
+  // exits (cf. tornado-cash). Also not critical: OxideAccounts (actor
+  // containers), SwapEscrows (an optional conversion after the portal paid out),
+  // the OperationExecutor and the FPCFunderDAI.
   "overrides": {
     "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": {
       "fields": {

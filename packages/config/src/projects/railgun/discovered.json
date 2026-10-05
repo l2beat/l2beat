@@ -141,7 +141,8 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+          "severity": "HIGH",
+          "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
       "implementationNames": {
@@ -312,7 +313,8 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+          "severity": "HIGH",
+          "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
       "implementationNames": {
@@ -1189,7 +1191,7 @@
           "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
         },
         "shieldFee": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Basis-point fee charged on shield operations.",
           "type": "RISK_PARAMETER"
         },
@@ -1238,6 +1240,7 @@
           "description": "Number of token blocklist removals, including removals later reverted."
         },
         "verificationKeyChangeCount": {
+          "severity": "HIGH",
           "description": "Number of SNARK verification key changes, including keys later replaced or restored."
         },
         "ZERO_VALUE": {

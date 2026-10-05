@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xa8ffd7d2e08390be3e8e6ff150a5666d1270d20c
+Generated with discovered.json: 0xc2c4d2406eac66d0c93297ad3e6a0518a73b0f20
 
-# Diff at Mon, 05 Oct 2026 08:33:29 GMT:
+# Diff at Mon, 05 Oct 2026 16:18:38 GMT:
 
-- id: ac86935d
+- id: 42546ee1
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790778923
-- current timestamp: 1791189140
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1790778923
+- current timestamp: 1791217049
 
 ## Description
 
@@ -48,7 +48,6 @@ discovery. Values are for block 1790778923 (main branch discovery), not current.
 +        "UNRESOLVED"
       values.game5Args:
 +        "0x"
-+++ severity: HIGH
       values.game5Proposer:
 +        "UNRESOLVED"
 +++ severity: HIGH
@@ -76,6 +75,47 @@ discovery. Values are for block 1790778923 (main branch discovery), not current.
 +        {"typeCaster":"SliceAddress","arg":{"offset":0}}
       usedTypes.7:
 +        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
+Generated with discovered.json: 0x4cfb28e4f5f42ec543569501fa9bac72a0968371
+
+# Diff at Sun, 04 Oct 2026 05:55:38 GMT:
+
+- id: 6c528201
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790778923
+- current timestamp: 1790778923
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790778923 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
     }
 ```
 

@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x1572e6f4707c5d69810ee3fa39ceae3bff5d31a8
+Generated with discovered.json: 0x67743923cef504405123c9da07249775fe3c935d
 
-# Diff at Mon, 05 Oct 2026 08:33:20 GMT:
+# Diff at Mon, 05 Oct 2026 16:18:28 GMT:
 
-- id: 4fba3a08
+- id: 45c9bef9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1788793515
-- current timestamp: 1791189132
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1788793515
+- current timestamp: 1791217041
 
 ## Description
 
@@ -33,11 +33,11 @@ Version changes and implementation diffs:
 - EAS 1.4.1-beta.1 -> 1.4.1-beta.3: https://disco.l2beat.com/diff/katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021/katana:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6
 - GasPriceOracle 1.6.0 (source unchanged): https://disco.l2beat.com/diff/katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1/katana:0x547d0fba434877D7237d511cF87FABe2ee26b152
 
-AggchainFEP: Polygon Multisig 2 changed the OP Succinct config twice, to `v3.14.0-agglayer` on 2026-09-23 and to `v3.14.1-agglayer` on 2026-09-30 (op-succinct v3.14.1 aggregation and range vkeys).
+AggchainFEP: new selected OP Succinct config (op-succinct v3.14.1).
 
 Polygon Multisig 2: member added; threshold 3/5 → 3/6.
 
-Safe (one of four signers of the vbToken `yieldRecipient` Safe): member added; threshold 2/11 → 2/12.
+Safe: member added; threshold 2/11 → 2/12.
 
 ## Watched changes
 
@@ -386,8 +386,6 @@ Safe (one of four signers of the vbToken `yieldRecipient` Safe): member added; t
 +        "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction."
       critical:
 +        true
-      fieldMeta:
-+        {"addressManager":{"severity":"HIGH"}}
     }
 ```
 
@@ -571,6 +569,88 @@ discovery. Values are for block 1788793515 (main branch discovery), not current.
 +        "SuperFaultDisputeGame"
       usedTypes.0.arg.5:
 +        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xfbdaf82ca253a793186c31406510104afbb0e1a8
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: f5cac32b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.optimisticModeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.aggchainManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.selectedOpSuccinctConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.getProxiedTokensManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.bridgeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.globalExitRootRemover.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.globalExitRootUpdater.severity:
+-        "HIGH"
++        "MEDIUM"
     }
 ```
 

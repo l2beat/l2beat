@@ -18,24 +18,20 @@
       // Actor shell: proposer, executor and canceller on the L2Timelock.
       "canActIndependently": true
     },
-    // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
+    // active PLONK verifiers referenced by LineaRollup.verifiers (proof types 1 and 0): a code change lets forged proofs finalize arbitrary state and drain the bridge.
+    // Replaced verifiers drop out of discovery and need no override: every rotation is a HIGH `verifiers` change (reviewed events) on LineaRollup.
     "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
       "critical": true
     },
     "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
       "critical": true
     },
-    // former proof-type-0 verifier, replaced by 0xAFF2... in tx 0xbe5ba386... (VerifierAddressChanged, 2026-09-04)
-    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": {
-      "critical": { "untilTimestamp": 1788510683 }
-    },
-    // 90-day module on the secondary proposer Safe; its delay and authority
-    // path directly constrain L1 upgrades.
-    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
-      "critical": true
-    },
-    // Immutable public forwarding mechanism used for the six-month liveness
-    // recovery path in LineaRollup.
+    // Not critical: the Zodiac Delay eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436 only lets the
+    // Security Council act as Linea Multisig 2 after 90 days. Multisig 2 is a PROPOSER on the 0s
+    // Timelock whose only EXECUTOR is the Security Council itself, and its TokenBridge roles are a
+    // subset of the Council's, so the module neither adds nor constrains any upgrade or custody path.
+    // Immutable public forwarding mechanism: LineaRollup.livenessRecoveryOperator, which gets
+    // OPERATOR_ROLE after six months without finalization (permissionless liveness recovery).
     "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
       "critical": true
     },

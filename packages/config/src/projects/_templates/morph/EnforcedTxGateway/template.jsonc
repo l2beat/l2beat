@@ -13,7 +13,6 @@
       ]
     },
     "feeVault": {
-      "severity": "HIGH",
       "description": "Recipient of fees charged for forced transactions."
     },
     "paused": {

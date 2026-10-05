@@ -19,7 +19,6 @@ import type {
   BaseProject,
   ProjectPrivacyToken,
   ZkMoneyDepositParams,
-  ZkMoneyDepositPayoutParams,
   ZkMoneyFundingParams,
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -182,12 +181,6 @@ const funderTracing: ZkMoneyFundingParams = {
 const operationExecutor = ChainSpecificAddress.address(
   discovery.getContract('OperationExecutor').address,
 )
-const depositFinalizerPayout: ZkMoneyDepositPayoutParams = {
-  ...depositLocation,
-  depositFee: depositFee.toString(),
-  registrationSweepFee: registrationSweepFee.toString(),
-  operationExecutor,
-}
 for (const [name, sourceHash] of Object.entries(SIPA_SOURCE_HASHES)) {
   assert(
     discovery.getContract(name).sourceHashes?.includes(sourceHash),
@@ -250,7 +243,9 @@ export const zkmoney: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationHistory: discovery.getOssificationHistory(),
+  // The project starts with the portal. CertManager and NitroValidator were
+  // deployed 37 days earlier.
+  ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -293,18 +288,11 @@ export const zkmoney: BaseProject = {
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',
-      metric: 'paidFinalizers',
       sources: [
         {
           address: portal.address,
           sinceTimestamp: PORTAL_SINCE,
-          extractor: 'zkMoneyDepositPayout',
-          params: depositFinalizerPayout,
-        },
-        {
-          address: portal.address,
-          sinceTimestamp: PORTAL_SINCE,
-          extractor: 'zkMoneyWithdrawalPayout',
+          extractor: 'zkMoneyWithdrawalRelayer',
           params: {
             tokenAddress: underlyingAddress,
             executorAddress: ChainSpecificAddress.address(

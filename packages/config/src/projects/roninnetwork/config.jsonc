@@ -30,8 +30,9 @@
       "critical": true,
       "ignoreRelatives": ["OVM_L1CrossDomainMessenger"],
       "fields": {
+        // Not HIGH: this mapping is the L1CrossDomainMessenger implementation,
+        // already counted as a code change of that ResolvedDelegateProxy.
         "OVM_L1CrossDomainMessenger": {
-          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -45,25 +46,13 @@
     "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c": {
       "ignoreDiscovery": true
     },
-    // Replaced as the system controller by the joint Ronin/Conduit Safe.
-    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
-      "critical": {
-        "sinceTimestamp": 1771964639,
-        "untilTimestamp": 1779285407
-      },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // Effective controller of both ProxyAdmins, the DGF and SystemConfig.
+    // Effective controller of both ProxyAdmins, the DGF and SystemConfig since
+    // 2026-05-20 (took over from the 4-of-11 Conduit Multisig 1). Safes are actor
+    // containers, not critical. The handover was a Safe-to-Safe owner swap
+    // without modules or guards and below the Security Council bar, so it is an
+    // identity change, not a reviewed mechanism change.
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
-      "description": "5-of-6 joint Ronin/Conduit Safe.",
-      "critical": { "sinceTimestamp": 1779285407 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
+      "description": "5-of-6 joint Ronin/Conduit Safe."
     },
     // Legacy MainchainGateway uses overloaded view methods that the default
     // handler can't probe (need explicit indices/length). Ignore them — the
@@ -138,19 +127,25 @@
         "untilTimestamp": 1788777107
       }
     },
-    // Active Kailua proof path (bob precedent): KailuaGame/KailuaTreasury (game
-    // type 1337, the respected game type) verify state roots through the
-    // KailuaVerifier, which routes RISC Zero receipts through the shared
-    // RiscZeroVerifierRouter. Permanently paused verifier routes are
-    // intentionally not flagged (base precedent).
+    // Kailua proof path, critical while game type 1337 was respected: from the
+    // cutover (2026-07-01, tx 0x07bf7a19) until the guardian set the respected
+    // game type back to 1 (2026-09-07, tx 0x7f1b7013). KailuaGame/KailuaTreasury
+    // verify state roots through the KailuaVerifier, which routes RISC Zero
+    // receipts through the shared RiscZeroVerifierRouter. The six Kailua games
+    // still in progress at the switch (DGF index 230-235) stay proper and
+    // respected (retirementTimestamp was not bumped), but their root claims are
+    // fixed and match the canonical Ronin output roots (checked 2026-10-03), so
+    // no later Kailua/RISC Zero change can create an invalid withdrawal claim.
+    // Permanently paused verifier routes are intentionally not flagged (all
+    // were paused before the cutover).
     "eth:0x296e7aD6D441b0627768bC0650179a4206479444": {
       "critical": {
         "sinceTimestamp": 1782901175,
         "untilTimestamp": 1788777107
       }
     },
-    // Active RISC Zero verification path: unpaused emergency stops and the
-    // verifiers they wrap (groth16 verifiers plus the set verifier).
+    // RISC Zero verification path of that period: unpaused emergency stops and
+    // the verifiers they wrap (groth16 verifiers plus the set verifier).
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
       "critical": {
         "sinceTimestamp": 1782901175,
@@ -229,9 +224,6 @@
     },
     // ProxyAdmin: can upgrade the SuperchainConfig fork that holds Ronin's pause authority.
     "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": {
-      "critical": true
-    },
-    "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": {
       "critical": true
     },
     // Permissioned game and its proof dependencies before the September 2026

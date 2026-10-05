@@ -22,14 +22,18 @@ const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
 interface Dependencies extends ClientCoreDependencies {
   apiKey: string | undefined
+  /** Replaces the CoinGecko API root, e.g. with a CoinGecko-compatible proxy */
+  apiUrl?: string
 }
 
 export class CoingeckoClient extends ClientCore {
   static COINS_MARKET_PAGE_SIZE = 250
   private readonly timeoutMs = 10_000
+  private readonly apiUrl: string
 
   constructor(private readonly $: Dependencies) {
     super($)
+    this.apiUrl = $.apiUrl ?? ($.apiKey ? PRO_API_URL : API_URL)
   }
 
   async getCoinMarketChartRange(
@@ -144,7 +148,7 @@ export class CoingeckoClient extends ClientCore {
       ? { ...params, x_cg_pro_api_key: this.$.apiKey }
       : params
     const query = new URLSearchParams(queryParams).toString()
-    let url = `${this.$.apiKey ? PRO_API_URL : API_URL}${endpoint}`
+    let url = `${this.apiUrl}${endpoint}`
     if (query) {
       url += `?${query}`
     }
