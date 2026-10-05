@@ -96,8 +96,10 @@ const EVMTransactionReceipt = z.object({
   blockHash: z.string().optional(),
   logs: z.array(
     z.object({
+      address: z.string(),
       topics: z.array(z.string()),
       data: z.string(),
+      logIndex: Quantity.decode.transform((n) => Number(n)),
     }),
   ),
 })

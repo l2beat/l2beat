@@ -4,20 +4,6 @@ import type { env } from '~/env'
 
 type DeploymentEnv = typeof env.DEPLOYMENT_ENV
 
-/**
- * A crawler that finds a group naming it ignores the `*` group, so these get
- * their own copy of the rules. Naming them makes the allow policy deliberate
- * rather than an accident of the wildcard.
- */
-const AI_USER_AGENTS = [
-  'GPTBot',
-  'OAI-SearchBot',
-  'ClaudeBot',
-  'Claude-SearchBot',
-  'PerplexityBot',
-  'Google-Extended',
-]
-
 /** `/api/scaling/` is the public JSON API; the more specific Allow wins over `Disallow: /api/`. */
 const PRODUCTION_RULES = [
   'Allow: /',
@@ -25,6 +11,12 @@ const PRODUCTION_RULES = [
   'Disallow: /api/',
   'Disallow: /dev/',
 ]
+
+/**
+ * Content Signals (contentsignals.org): L2BEAT is a public good, so search,
+ * AI answers and AI training are all welcome to use the content.
+ */
+const CONTENT_SIGNAL = 'Content-Signal: ai-train=yes, search=yes, ai-input=yes'
 
 export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
   const router = express.Router()
@@ -39,15 +31,19 @@ export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
 
 const DISALLOW_EVERYTHING = 'User-agent: *\nDisallow: /\n'
 
+/**
+ * One `*` group for every crawler, AI ones included. A group naming a crawler
+ * makes it ignore `*`, so add one only when a bot needs different rules.
+ */
 function getRobotsTxtBody(deploymentEnv: DeploymentEnv): string {
   if (deploymentEnv !== 'production') {
     return DISALLOW_EVERYTHING
   }
 
-  const groups = ['*', ...AI_USER_AGENTS].map((userAgent) =>
-    [`User-agent: ${userAgent}`, ...PRODUCTION_RULES].join('\n'),
+  const group = ['User-agent: *', CONTENT_SIGNAL, ...PRODUCTION_RULES].join(
+    '\n',
   )
   const sitemap = `Sitemap: ${PRODUCTION_ORIGIN}/sitemap.xml`
 
-  return `${[...groups, sitemap].join('\n\n')}\n`
+  return `${group}\n\n${sitemap}\n`
 }

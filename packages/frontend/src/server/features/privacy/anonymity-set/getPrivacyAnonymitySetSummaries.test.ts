@@ -39,6 +39,20 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
     })
   })
 
+  it('reports too-small projects', () => {
+    const project = makeProject({ anonymitySet: { type: 'too-small' } })
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      getPrivacyAnonymitySetSeries(project),
+      [],
+      [],
+      CURRENT_DAY,
+    )
+
+    expect(result).toEqual({ status: 'too-small' })
+  })
+
   it('reports projects without configured series as unavailable', () => {
     const project = makeProject({ tokens: [] })
 
@@ -98,6 +112,35 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       value: 3,
       label: '≥1 ETH',
       syncingLabels: ['≥200 DAI'],
+      bucketType: 'pool',
+      chain: 'ethereum',
+      formattedAmount: '1',
+      token: 'ETH',
+    })
+  })
+
+  it('attaches coverage to an available summary', () => {
+    const project = makeProject()
+    const series = getPrivacyAnonymitySetSeries(project)
+    const configurations = series.map((item) =>
+      configuration(item.configurationId, CURRENT_DAY),
+    )
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      series,
+      configurations,
+      [senderDay('eth', 'a', 10n)],
+      CURRENT_DAY,
+      { attributed: 8, total: 10 },
+    )
+
+    expect(result).toEqual({
+      status: 'available',
+      value: 1,
+      label: '≥1 ETH',
+      syncingLabels: [],
+      coverage: { attributed: 8, total: 10 },
       bucketType: 'pool',
       chain: 'ethereum',
       formattedAmount: '1',

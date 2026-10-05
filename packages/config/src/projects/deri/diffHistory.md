@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x8fdc2ec26ad5d91d693eb06c452b6909b7ceba4f
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: 2130dfca
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790940361
+- current timestamp: 1790940361
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790940361 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x31c1238581ef6477054818dd8ce0cb83d8ed8955
+
+# Diff at Fri, 02 Oct 2026 11:27:12 GMT:
+
+- id: 1f492e32
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07e6d8e40567c25e274ee3f04aa03efe68e5dee1 block: 1787668943
+- current timestamp: 1790940361
+
+## Description
+
+Outbox implementation changed: the recipient of one specific withdrawal (`0.687 ETH`) is replaced with the EOA holding the UpgradeExecutor executor role. This was done due to an exploit: on 2026-09-17 an attacker drained `0.685 ETH` from a paymaster on the Deri chain through an inflated gas claim and initiated this withdrawal. The withdrawal was executed on 2026-09-19 and paid to the EOA.
+
+Version changes and implementation diffs:
+
+- Outbox: https://disco.l2beat.com/diff/arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494/arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381
+
+## Watched changes
+
+```diff
+    contract Outbox (arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) [N/A] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
+-        "orbitstack/Outbox"
+      sourceHashes.1:
+-        "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
++        "0xc0f0150134d542551ab981033f0dd34e7462d1fd27028a5a3bf9ea7db360d2c7"
+      values.$implementation:
+-        "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381"
+      values.$pastUpgrades.1:
++        ["2026-09-18T13:25:39.000Z","0x8e12a2fc08a80c84d16a9b9890623a1face19a6db4790d5a1f4b6168c3353fca",["arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
+-        "Outbox"
+      implementationNames.arb1:0xCb6F16eAFA3d805259Bb4149546630eA28db6381:
++        "Outbox"
+    }
+```
+
+## Source code changes
+
+```diff
+./src/projects/deri/{.flat@1787668943 => .flat}/Outbox/Outbox.sol | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0xe890faffdff53157388a909405f62d0a05a9104a
 
 # Diff at Wed, 23 Sep 2026 05:45:48 GMT:

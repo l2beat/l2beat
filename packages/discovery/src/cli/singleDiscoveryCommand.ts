@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { boolean, command, flag, positional } from 'cmd-ts'
 import path from 'path'
@@ -32,8 +33,7 @@ export const SingleDiscoveryCommand = command({
     const paths = getDiscoveryPaths()
     const projectConfig = new ConfigRegistry({
       name: address.toString(),
-      chain: chain,
-      initialAddresses: [address],
+      initialAddresses: [ChainSpecificAddress.fromLong(chain, address)],
     })
     const http = new HttpClient()
 

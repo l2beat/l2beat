@@ -9,7 +9,6 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
@@ -202,7 +201,7 @@ export const optimism: ScalingProject = opStackL2({
       },
       {
         title: 'OptimismPortal2 - source code',
-        url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        url: 'https://etherscan.io/address/0x1005217ad392DC64CEf501FA1777A27D42166748#code',
       },
       {
         title: 'OP Stack specification - fault dispute game resolution',
@@ -352,7 +351,7 @@ export const optimism: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
-  ossification: getOssification('optimism', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,

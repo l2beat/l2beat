@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xbe9b77e736704ef03756ca0a5e9f7bcca9109615
+
+# Diff at Wed, 30 Sep 2026 22:47:32 GMT:
+
+- id: 5184fcbf
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1788816891
+- current timestamp: 1788816891
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816891 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xfb1fe65a6e3676d2076a101256083cce7bdbee29
+
+# Diff at Tue, 29 Sep 2026 17:46:55 GMT:
+
+- id: 1f06e86a
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1788816891
+- current timestamp: 1788816891
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816891 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 1 (eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xefd57e6c8cab9c978fc72328717bdbff36757b18
 
 # Diff at Wed, 23 Sep 2026 05:46:46 GMT:

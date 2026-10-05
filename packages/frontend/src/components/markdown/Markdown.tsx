@@ -1,6 +1,6 @@
-import MarkdownIt from 'markdown-it'
 import { useId } from 'react'
 import { cn } from '~/utils/cn'
+import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
   type GlossaryRenderEnv,
   glossaryPlugin,
@@ -22,10 +22,7 @@ interface MarkdownProps {
   ignoreGlossary?: boolean
 }
 
-const markdown = MarkdownIt({
-  html: true,
-  typographer: true,
-})
+const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
   .use(headingLevelPlugin)

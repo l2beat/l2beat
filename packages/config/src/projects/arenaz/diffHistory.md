@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x58df1170e16f30e1a3c941046892fbd2be96c51c
+
+# Diff at Sun, 04 Oct 2026 05:55:30 GMT:
+
+- id: c3b33840
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1784282781
+- current timestamp: 1784282781
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784282781 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x0C9fF654bCd0769142Fe70951B0634C5AE19BA3C) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x2dca220bcb9a7f03f6b4e34a868189099c2038e8
+
+# Diff at Tue, 29 Sep 2026 17:46:49 GMT:
+
+- id: b31fdd29
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1784282781
+- current timestamp: 1784282781
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784282781 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x658656A14AFdf9c507096aC406564497d13EC754","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x0084266c935b329f3d5feda9ae92b70826d7aff8
 
 # Diff at Wed, 23 Sep 2026 05:45:21 GMT:

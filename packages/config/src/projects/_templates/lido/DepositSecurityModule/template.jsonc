@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Guardian-based circuit breaker for legacy staking-module deposits. Guardians can collectively pause deposits if a malicious or stale deposit is observed, while the owner configures guardians and resumes deposits.",
+  "description": "Guardian-based circuit breaker for staking-module deposits. Buffered ETH can only be deposited into a module with attestations of the current deposit root and module nonce from a quorum of guardians, while any single guardian can pause all deposits or unvet node-operator signing keys. The owner configures guardians, quorum and pause parameters and resumes deposits. Version 5 only accepts ERC-1271 guardian contracts and binds every signed message to the signing guardian.",
   "category": "core",
   "ignoreMethods": [
     "canDeposit",
@@ -20,7 +20,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
+          "description": "attest staking-module deposits (deposits need {{getGuardianQuorum}} guardian attestations), and individually pause all deposits or unvet node-operator signing keys in a staking module."
         }
       ]
     }

@@ -5,15 +5,6 @@ import { createRobotsRouter } from './RobotsRouter'
 // Method: request /robots.txt over HTTP and group the rules the way a crawler
 // does (RFC 9309): consecutive User-agent lines share the rules that follow.
 describe(createRobotsRouter.name, () => {
-  const AI_USER_AGENTS = [
-    'GPTBot',
-    'ClaudeBot',
-    'Claude-SearchBot',
-    'PerplexityBot',
-    'Google-Extended',
-    'OAI-SearchBot',
-  ]
-
   it('serves plain text', async () => {
     const response = await fetchFromRouter(
       createRobotsRouter('production'),
@@ -27,14 +18,10 @@ describe(createRobotsRouter.name, () => {
   })
 
   describe('in production', () => {
-    it('gives every AI user agent the same rules as everyone else', async () => {
+    it('has only the `*` group, so AI crawlers get the same rules as everyone else', async () => {
       const groups = parseRobotsTxt(await getRobotsTxt('production'))
 
-      const everyone = groups.get('*')
-      expect(everyone).not.toEqual(undefined)
-      for (const agent of AI_USER_AGENTS) {
-        expect(groups.get(agent)).toEqual(everyone)
-      }
+      expect([...groups.keys()]).toEqual(['*'])
     })
 
     it('allows the site and the public scaling API, hides the rest of the API and /dev', async () => {
@@ -46,6 +33,14 @@ describe(createRobotsRouter.name, () => {
         'Disallow: /api/',
         'Disallow: /dev/',
       ])
+    })
+
+    it('declares Content Signals allowing search, AI input and AI training in the `*` group', async () => {
+      const body = await getRobotsTxt('production')
+
+      expect(body).toInclude(
+        'User-agent: *\nContent-Signal: ai-train=yes, search=yes, ai-input=yes\n',
+      )
     })
 
     it('points to the sitemap', async () => {

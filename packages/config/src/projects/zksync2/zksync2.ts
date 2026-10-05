@@ -10,7 +10,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -224,7 +223,10 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
-  ossification: getOssification('zksync2', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart, {
+    // v24 upgrade set the Era Diamond's BridgeHub (tx 0x71a3b924)
+    'shared-zk-stack': UnixTime(1717674923),
+  }),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

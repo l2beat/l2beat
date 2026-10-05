@@ -9,6 +9,11 @@ import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
 import { toSearchBarProject } from './utils/toSearchBarProject'
 import { toSearchBarToken } from './utils/toSearchBarToken'
 
+// Limited per type so that dozens of short token symbols (e.g. ROBA, ROBO for
+// "rob") can't outscore and push out a project like "Robinhood Chain".
+const PROJECT_RESULTS_LIMIT = 15
+const TOKEN_RESULTS_LIMIT = 5
+
 type SearchBarSearchEntry = (SearchBarProjectEntry | SearchBarTokenEntry) & {
   searchMatchKind: 'direct' | 'fuzzy'
   searchScore: number
@@ -72,10 +77,22 @@ export async function getSearchBarEntries(search: string) {
 
   const tokenEntries = getSearchBarTokenEntries(tokens)
 
-  const result = searchEntries(search, [...searchBarEntries, ...tokenEntries], {
-    limit: 15,
-    scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
-  }).map(formatSearchResult)
+  // Searched together so that direct matches of either type still hide fuzzy ones.
+  const matches = searchEntries(
+    search,
+    [...searchBarEntries, ...tokenEntries],
+    {
+      scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
+    },
+  )
+  const result = [
+    ...matches
+      .filter((entry) => entry.type !== 'token')
+      .slice(0, PROJECT_RESULTS_LIMIT),
+    ...matches
+      .filter((entry) => entry.type === 'token')
+      .slice(0, TOKEN_RESULTS_LIMIT),
+  ].map(formatSearchResult)
 
   logger.info('Search bar result', {
     search,

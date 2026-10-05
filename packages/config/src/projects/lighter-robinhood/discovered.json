@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1790600981,
+  "timestamp": 1790671691,
   "configHash": "0x7fe33980dbbd6367a2d0feaeb3ff31e2b1379012812521df943d1f179dc1e1bd",
   "entries": [
     {
@@ -60,11 +60,11 @@
       },
       "fieldMeta": {
         "approvedUpgradeNoticePeriod": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
         },
         "approvedUpgradeNoticePeriodFmt": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
         }
       },
@@ -187,21 +187,21 @@
           "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
         ],
         "additionalZkLighter": "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c",
-        "committedBatchesCount": 127578,
-        "committedPriorityRequestCount": 98936,
+        "committedBatchesCount": 128768,
+        "committedPriorityRequestCount": 101225,
         "desertMode": false,
         "desertVerifier": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
-        "executedBatchesCount": 127572,
-        "executedOnChainBatchesCount": 26335,
-        "executedPriorityRequestCount": 98910,
+        "executedBatchesCount": 128762,
+        "executedOnChainBatchesCount": 26929,
+        "executedPriorityRequestCount": 101218,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90",
         "governance": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
         "insuranceFundOperator": "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A",
-        "lastAccountIndex": 37157,
-        "lastVerifiedEndBlockNumber": 29368951,
-        "lastVerifiedStateRoot": "0xb2c399e0de81219e2aeb005b5c894ed31e5e4a986b6f57dc143c61f70d7896d1",
-        "lastVerifiedValidiumRoot": "0x8a3413f2d891a44eafc970ea0ead72ea808089691df40a085355eb37f5cad588",
+        "lastAccountIndex": 37495,
+        "lastVerifiedEndBlockNumber": 29903084,
+        "lastVerifiedStateRoot": "0x112d4d545c9aca7b2a7d751e2e5766f978e313f18148fb987c19ed273602b8b2",
+        "lastVerifiedValidiumRoot": "0x60d3f50b2f19875c5d597b87f5b7b8fa722e6adf33ae2dcb8e72a411a1a28687",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -223,15 +223,15 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 27,
-        "pendingOnChainBatchesCount": 3,
+        "openPriorityRequestCount": 8,
+        "pendingOnChainBatchesCount": 0,
         "PRIORITY_EXPIRATION": 1209600,
         "QUOTE_ASSET_INDEX": 3,
-        "stateRoot": "0xb2c399e0de81219e2aeb005b5c894ed31e5e4a986b6f57dc143c61f70d7896d1",
+        "stateRoot": "0x112d4d545c9aca7b2a7d751e2e5766f978e313f18148fb987c19ed273602b8b2",
         "treasury": "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357",
-        "validiumRoot": "0x8a3413f2d891a44eafc970ea0ead72ea808089691df40a085355eb37f5cad588",
-        "verifiedBatchesCount": 127572,
-        "verifiedPriorityRequestCount": 98910,
+        "validiumRoot": "0x60d3f50b2f19875c5d597b87f5b7b8fa722e6adf33ae2dcb8e72a411a1a28687",
+        "verifiedBatchesCount": 128762,
+        "verifiedPriorityRequestCount": 101218,
         "verifier": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
       },
       "fieldMeta": {
@@ -739,7 +739,7 @@
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
     "lighter/UpgradeGatekeeper": "0x510c4667b3a31f0719ea9fac40e598ae3d96880abc579c8f901e03d153b19bdb"
   },
-  "usedBlockNumbers": { "robinhood": 74821908 },
+  "usedBlockNumbers": { "robinhood": 75525077 },
   "permissionsConfigHash": "0xe34453528dcc473f24d3670eaf9f0dc6703abf00c38f822d7ef47f51e3694155",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {

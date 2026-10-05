@@ -30,6 +30,7 @@ import {
   groupTechnologyContracts,
   hasGroupableTechnologyContractState,
 } from './groupTechnologyContracts'
+import { shortenAddress } from './shortenAddress'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -195,8 +196,7 @@ function makeTechnologyContract(
     name?: string
     anchorId?: string
   }) => {
-    const name =
-      opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
+    const name = opts.name ?? shortenAddress(opts.address)
 
     return {
       name: name,

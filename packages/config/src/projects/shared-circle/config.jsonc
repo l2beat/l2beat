@@ -4,5 +4,14 @@
   "import": ["../globalConfig.jsonc"],
   // Covers the full CCTP graph so transitive permissions resolve to attesters.
   "maxAddresses": 150,
-  "initialAddresses": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+  "initialAddresses": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],
+  "names": {
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "UnverifiedUSDCMinter"
+  },
+  "overrides": {
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      // not part of CCTP or Gateway; UUPS proxy with an unverified implementation, owned by an EOA
+      "description": "Upgradeable contract with an unverified implementation that is registered as a USDC minter in the USDC token contract. Its minting allowance is set by its MasterMinter controllers."
+    }
+  }
 }

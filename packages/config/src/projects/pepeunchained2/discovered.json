@@ -84,11 +84,13 @@
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "getValidators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
+          "severity": "HIGH",
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
@@ -520,8 +522,6 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
-        "isUsingFeeToken": { "severity": "HIGH" },
-        "isDelayBufferable": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
@@ -529,7 +529,7 @@
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "MEDIUM" },
         "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
@@ -1570,12 +1570,12 @@
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
     "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
-    "orbitstack/RollupProxyBoLD": "0x72e5e9e0513e73b78195c53b0ce50cc87b648ac59ec0e226683bdfe568c69a42",
+    "orbitstack/RollupProxyBoLD": "0x407f302b5f7da60a295d65384e306bc867718deec6f095d3b4876474e2f50e15",
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25832884 },
-  "permissionsConfigHash": "0xe499a556325b7c6d0272c8c0b12c181d75222c3907c142cd00aeb22f0b913e4b",
+  "permissionsConfigHash": "0xfc5cc4b6026f8471cd323c0d3e2a79ab35169d03aeca8d5a1fda01c4a11a0635",
   "permissions": {
     "eth:0x16a93209382236236e964b9C22853e34C3095028": {
       "directlyReceivedPermissions": [
@@ -1641,7 +1641,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x53E276D701Fc2338F6F015B0038Ce8ba3d5d01CC" }
@@ -1747,7 +1747,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {

@@ -158,9 +158,19 @@ export const paradex: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
+        untilBlock: 25531490, // operator rotation, last old-operator update @ 25530184
         inbox: EthereumAddress('0xF338cad020D506e8e3d9B4854986E0EcE6C23640'),
         sequencers: [
           EthereumAddress('0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 25531490, // first update by the new operator
+        inbox: EthereumAddress('0xF338cad020D506e8e3d9B4854986E0EcE6C23640'),
+        sequencers: [
+          EthereumAddress('0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044'),
         ],
       },
     ],

@@ -15,12 +15,12 @@ import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { toPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
+import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -38,16 +38,7 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
-  // The header dots are derived from the section so the cells ship only once.
-  const adversariesSection = entry.sections.find(
-    (section) => section.type === 'PrivacyAdversariesSection',
-  )
-  if (!adversariesSection) {
-    throw new Error('Privacy project page without an adversaries section')
-  }
-  const adversaries = toPrivacyAdversariesSummary(
-    adversariesSection.props.adversaries,
-  )
+  const adversaries = getPrivacyAdversariesSummary(entry.sections)
 
   return (
     <AppLayout {...props}>
@@ -58,9 +49,7 @@ export function PrivacyProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <div className="md:-mx-5 sticky top-0 z-100 lg:hidden">
-                <MobileSectionNavigation sections={navigationSections} />
-              </div>
+              <StickyMobileSectionNavigation sections={navigationSections} />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
@@ -154,7 +143,7 @@ export function PrivacyProjectPage({
                           <ProjectSummaryStat
                             title="Attributes"
                             tooltip="Protocol attributes and capabilities."
-                            valueClassName="flex flex-wrap justify-start gap-1"
+                            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
                             value={entry.attributes.map((attribute) => (
                               <PrivacyAttributeTag
                                 key={attribute.id}

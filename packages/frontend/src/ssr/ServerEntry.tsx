@@ -8,8 +8,10 @@ export async function render(
   data: RenderData,
   url: string,
 ): Promise<RenderResult> {
-  globalThis.__FIX_SSR_URL__ = url
   const pageElement = await getPageElement(data.ssr)
+  // Set after the await: concurrent requests would otherwise overwrite it
+  // before this synchronous render reads it.
+  globalThis.__FIX_SSR_URL__ = url
   const html = renderToString(<StrictMode>{pageElement}</StrictMode>)
   const head = renderToStaticMarkup(
     <StrictMode>

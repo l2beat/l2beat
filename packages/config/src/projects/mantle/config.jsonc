@@ -81,24 +81,12 @@
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
       "critical": true
     },
-    // This Safe has controlled the MNT token since its initialization and now
-    // controls the core ProxyAdmin, SystemConfig and OP Succinct owner role.
-    "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": {
-      "critical": { "sinceTimestamp": 1687241795 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // This Safe became the withdrawal guardian and output-oracle challenger
-    // when Mantle's current portal/oracle architecture was activated.
-    "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": {
-      "critical": { "sinceTimestamp": 1710490775 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
+    // MantleSecurityMultisig (owner of the core ProxyAdmin, SystemConfig, MNT and
+    // the OP Succinct oracle) and MantleEngineeringMultisig (portal guardian and
+    // oracle challenger) are actor containers, not critical. Their only changes
+    // since project start are owner swaps at unchanged thresholds (6 and 3), no
+    // modules or guards; mechanism changes would go to ossification.json against
+    // the contract they control.
     "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": {
       "fields": {
         "paused": { "severity": "MEDIUM" }

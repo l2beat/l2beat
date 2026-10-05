@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xdb90ccbcd889e7c03abf54097d86902b12a1a7e4
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: d90f147f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789044398
+- current timestamp: 1789044398
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044398 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x39da7f5242fffee845563d76265e08bae2ec24b6
+
+# Diff at Tue, 29 Sep 2026 17:46:51 GMT:
+
+- id: 1c4eb64f
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789044398
+- current timestamp: 1789044398
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044398 (main branch discovery), not current.
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x93fee96f02edc710a34835eb28c5040544a55c47
 
 # Diff at Wed, 23 Sep 2026 05:45:38 GMT:

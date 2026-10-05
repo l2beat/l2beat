@@ -510,7 +510,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -526,6 +526,8 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "1337": "KailuaGame"
           }
         }
@@ -819,7 +821,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -2047,7 +2051,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xbc6c120f84172c0414f15256052417774931321f36fe76c54725f11ff7bcd84e",
+    "opstack/AnchorStateRegistry_post13": "0xd839b610a19100df970dc2ed05368dad5641c1112a6849be123e37e217c97ed2",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
@@ -2055,14 +2059,14 @@
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
+    "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25846596 },
-  "permissionsConfigHash": "0x8b48bc3a1f7e7d2ed949f78c91ebacb7b820e6506c80a69f2b53a1e7442fe01e",
+  "permissionsConfigHash": "0xd3f8668de28b6de30b3668a2767fbd8c315f955859d0098c0bbfc6f5affe12f0",
   "permissions": {
     "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
       "receivedPermissions": [
@@ -2086,6 +2090,12 @@
           "via": [
             { "address": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",

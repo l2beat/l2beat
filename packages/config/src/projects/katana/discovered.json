@@ -166,13 +166,14 @@
           "severity": "HIGH",
           "description": "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
         },
-        "admin": { "severity": "HIGH" },
-        "optimisticModeManager": { "severity": "HIGH" },
-        "aggchainManager": { "severity": "HIGH" },
+        "admin": { "severity": "MEDIUM" },
+        "optimisticModeManager": { "severity": "MEDIUM" },
+        "aggchainManager": { "severity": "MEDIUM" },
         "selectedOpSuccinctConfigName": {
           "severity": "HIGH",
           "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."
         },
+        "selectedOpSuccinctConfig": { "severity": "HIGH" },
         "aggregationVkey": {
           "severity": "LOW",
           "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
@@ -2208,8 +2209,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376": "Proxy",
@@ -2221,7 +2223,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -2580,6 +2584,10 @@
         "game1": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
+        "game5": "eth:0x0000000000000000000000000000000000000000",
+        "game5AnchorStateRegistry": "UNRESOLVED",
+        "game5Args": "0x",
+        "game5Proposer": "UNRESOLVED",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8AbsolutePrestate": "UNRESOLVED",
@@ -2588,12 +2596,20 @@
         "game8ChainId": "UNRESOLVED",
         "game8Vm": "UNRESOLVED",
         "game8Weth": "UNRESOLVED",
+        "game9": "eth:0x0000000000000000000000000000000000000000",
+        "game9AbsolutePrestate": "UNRESOLVED",
+        "game9AnchorStateRegistry": "UNRESOLVED",
+        "game9Args": "0x",
+        "game9Vm": "UNRESOLVED",
+        "game9Weth": "UNRESOLVED",
         "gameCount": 0,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
+        "initBondGame5": 0,
         "initBondGame621": 0,
         "initBondGame8": 0,
+        "initBondGame9": 0,
         "initVersion": 1,
         "owner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfaaa8a62563cfe4e36118ed479b5486f503b43837699e1fe97767683bbba69ff570b4bbed7c3e0649e00000000000000000000000000000000000000000000000000000000000b67d24a6f5889409bf4bf3bff0fef585d7a29fda642584a4962275df8c60a80d3a25faec5aa7de116a746",
@@ -2612,6 +2628,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "game9": { "severity": "HIGH" },
+        "game5": { "severity": "HIGH" },
         "absolutePrestateFromDGF": { "severity": "HIGH" },
         "vmFromDGF": { "severity": "HIGH" },
         "game8AbsolutePrestate": { "severity": "HIGH" },
@@ -2619,6 +2637,11 @@
         "game8AnchorStateRegistry": { "severity": "HIGH" },
         "game8Weth": { "severity": "HIGH" },
         "game8ChainId": { "severity": "HIGH" },
+        "game9AbsolutePrestate": { "severity": "HIGH" },
+        "game9Vm": { "severity": "HIGH" },
+        "game9AnchorStateRegistry": { "severity": "HIGH" },
+        "game9Weth": { "severity": "HIGH" },
+        "game5AnchorStateRegistry": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -2634,6 +2657,8 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
         { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 0 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 20 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
@@ -3049,8 +3074,8 @@
         "isEmergencyState": { "severity": "MEDIUM" },
         "WETHToken": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "getProxiedTokensManager": { "severity": "HIGH" },
-        "bridgeManager": { "severity": "HIGH" },
+        "getProxiedTokensManager": { "severity": "MEDIUM" },
+        "bridgeManager": { "severity": "MEDIUM" },
         "emergencyBridgePauser": { "severity": "MEDIUM" },
         "emergencyBridgeUnpauser": { "severity": "MEDIUM" }
       },
@@ -3828,8 +3853,8 @@
         "pendingGlobalExitRootUpdater": { "severity": "MEDIUM" },
         "pendingGlobalExitRootRemover": { "severity": "MEDIUM" },
         "$admin": { "severity": "HIGH" },
-        "globalExitRootRemover": { "severity": "HIGH" },
-        "globalExitRootUpdater": { "severity": "HIGH" }
+        "globalExitRootRemover": { "severity": "MEDIUM" },
+        "globalExitRootUpdater": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": "TransparentUpgradeableProxy",
@@ -6715,9 +6740,9 @@
     "katana/OptimismPortal2": "0xb05e64d3dbcd4f4ed0e43955bdd068116d5f37d13b108fe4e8e4a0af9d807db2",
     "katana/TokenWrappedBridgeUpgradeable": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/AnchorStateRegistry_post20": "0x7a20ab279102d43f00d8981d9ba7240b97b1e33531ab7ea639effbf9cb3267d4",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0xaa57a6d06b584640b5e7df1b1ca0605b79f694c4380d21737d81c645b3d617d1",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
@@ -6746,7 +6771,7 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25926257, "katana": 42050704 },
-  "permissionsConfigHash": "0x936249325f4e549ecfe9e39058f7269bb619a301b9404ce66066666a01597f44",
+  "permissionsConfigHash": "0x82c556b90c382382176065f6325bceff065bb8c4109640849f3995050c7ffaec",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },
@@ -7263,6 +7288,12 @@
           "permission": "interact",
           "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+          "description": "set the dispute game implementation and initial bond for any game type.",
           "role": ".owner"
         },
         {

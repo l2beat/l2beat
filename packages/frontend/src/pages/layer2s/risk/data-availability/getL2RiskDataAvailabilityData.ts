@@ -27,7 +27,7 @@ export async function getL2RiskDataAvailabilityData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability - L2BEAT',
+        name: 'Data Availability',
         description:
           'Compare data availability solutions used by Ethereum scaling projects.',
         url: req.originalUrl,

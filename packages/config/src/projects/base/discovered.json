@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1785226129,
-  "configHash": "0x5de69439fc2e9bcf611160242480015e4f96637785a6fb8e49d36463a0a5cd95",
+  "configHash": "0x1d732eca1b5e3f09f93bdb6ed4eab9d16463d8b6227f488ecb0cb0a31cddd84b",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -610,7 +610,6 @@
       ],
       "proxyType": "immutable",
       "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
-      "critical": true,
       "deployerAddress": "eth:0x3462413Af4609098e1E27A490f554f260213D685",
       "sinceTimestamp": 1739979839,
       "sinceBlock": 21881387,
@@ -759,7 +758,10 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "getMinDelayFormatted": { "severity": "HIGH" }
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -875,8 +877,10 @@
         "version": "0.5.0"
       },
       "fieldMeta": {
-        "getExpectedImageHash": { "severity": "HIGH" },
-        "manager": { "severity": "HIGH" },
+        "getExpectedImageHash": {
+          "description": "TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract."
+        },
+        "manager": { "severity": "MEDIUM" },
         "owner": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "gameType": { "severity": "HIGH" },
@@ -939,7 +943,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -1076,7 +1080,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -1293,6 +1297,10 @@
         "game1": "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
+        "game5": "eth:0x0000000000000000000000000000000000000000",
+        "game5AnchorStateRegistry": "UNRESOLVED",
+        "game5Args": "0x",
+        "game5Proposer": "UNRESOLVED",
         "game621": "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2",
         "game8": "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
         "game8AbsolutePrestate": "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa",
@@ -1301,12 +1309,20 @@
         "game8ChainId": 8453,
         "game8Vm": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
         "game8Weth": "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec",
+        "game9": "eth:0x0000000000000000000000000000000000000000",
+        "game9AbsolutePrestate": "UNRESOLVED",
+        "game9AnchorStateRegistry": "UNRESOLVED",
+        "game9Args": "0x",
+        "game9Vm": "UNRESOLVED",
+        "game9Weth": "UNRESOLVED",
         "gameCount": 18567,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
+        "initBondGame5": 0,
         "initBondGame621": "50000000000000000",
         "initBondGame8": "80000000000000000",
+        "initBondGame9": 0,
         "initVersion": 1,
         "owner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e7264ae5250958cdeb83f6b61f913b5ac6ebe8efd4d0000000000000000000000000000000000000000000000000000000000002105642229f238fb9de03374be34b0ed8d9de80752c58ca1e12404d16373aef756179b185f27b2994f3a",
@@ -1325,6 +1341,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "game9": { "severity": "HIGH" },
+        "game5": { "severity": "HIGH" },
         "absolutePrestateFromDGF": { "severity": "HIGH" },
         "vmFromDGF": { "severity": "HIGH" },
         "game8AbsolutePrestate": { "severity": "HIGH" },
@@ -1332,6 +1350,11 @@
         "game8AnchorStateRegistry": { "severity": "HIGH" },
         "game8Weth": { "severity": "HIGH" },
         "game8ChainId": { "severity": "HIGH" },
+        "game9AbsolutePrestate": { "severity": "HIGH" },
+        "game9Vm": { "severity": "HIGH" },
+        "game9AnchorStateRegistry": { "severity": "HIGH" },
+        "game9Weth": { "severity": "HIGH" },
+        "game5AnchorStateRegistry": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1347,6 +1370,8 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 52 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
         { "typeCaster": "SliceUint256", "arg": { "offset": 92 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 0 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 20 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
       ],
@@ -1503,7 +1528,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -1585,7 +1612,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -1785,7 +1812,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
@@ -1810,7 +1837,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -1889,7 +1916,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1779825599 },
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -2273,7 +2300,7 @@
         ]
       },
       "fieldMeta": {
-        "revoker": { "severity": "HIGH" },
+        "revoker": { "severity": "MEDIUM" },
         "proofSubmitter": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "rootCert": { "severity": "HIGH" },
@@ -2579,10 +2606,10 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" },
         "disputeGameFinalityDelaySeconds": {
-          "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
         }
       },
@@ -2596,7 +2623,9 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "5": "SuperPermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "9": "SuperFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -3099,8 +3128,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xdc32E228636273285Befa5F001dBB5142517C106": "SP1VerifierGateway"
@@ -5348,9 +5376,9 @@
     "maker/SkyLinkBridge": "0xf70bddcf366c7944313a6fa9a91cccfeb78e4742b69a11ae40242f7ea49fc0e2",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AggregateVerifier": "0x81754fdafe6192d4454c14c2e5ebb15c616a3e439e1e5fb4d605153ccc3b4ca8",
-    "opstack/AnchorStateRegistry_post20": "0x5315ca0f9c5f0ae6bf9a22fc29ea4aa8f123373fa496c690fd7142c622b99cba",
+    "opstack/AnchorStateRegistry_post20": "0x7a20ab279102d43f00d8981d9ba7240b97b1e33531ab7ea639effbf9cb3267d4",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory_v2": "0x3da00afe4028d59253c3ff75b7581f84911005e1b3edebdc09a90d85068152f9",
+    "opstack/DisputeGameFactory_v2": "0xaa57a6d06b584640b5e7df1b1ca0605b79f694c4380d21737d81c645b3d617d1",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -5371,7 +5399,7 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x59e78145e2339f385e016c4f321edd5249d1c66af715ca1bb717a89afd4c05ff",
+    "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_base": "0x31564fdf9bec741a56ea08dd6bbd0423e6717dc796eedf852d342d24f9bb349e",
@@ -5385,7 +5413,7 @@
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "base": 49218391, "ethereum": 25630023 },
-  "permissionsConfigHash": "0xdd40ddf31aeaf5989f675d8d729962bf4bc12b39db9a43ede13b2f93c2d26be8",
+  "permissionsConfigHash": "0xaf5831f13c932eded5c81e83908717393773a55414a4bf9cc35d67ece8e61f6d",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [
@@ -5796,6 +5824,12 @@
     },
     "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",

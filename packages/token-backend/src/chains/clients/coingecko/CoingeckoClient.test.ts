@@ -58,6 +58,24 @@ describe(CoingeckoClient.name, () => {
     })
   })
 
+  it('uses a custom api url with the API key header', async () => {
+    const fetch = mockFetch([])
+    const client = new CoingeckoClient({
+      apiKey: 'my-api-key',
+      apiUrl: 'https://prices.example.com/api/v3',
+      callsPerMinute: 100_000,
+    })
+
+    await client.getCoinList({ includePlatform: false })
+
+    expect(fetch.calls[0]?.args[0]).toEqual(
+      'https://prices.example.com/api/v3/coins/list?include_platform=false',
+    )
+    expect(fetch.calls[0]?.args[1]).toEqual({
+      headers: { 'x-cg-pro-api-key': 'my-api-key' },
+    })
+  })
+
   it('constructs the market chart range request', async () => {
     const fetch = mockFetch({
       prices: [[1592611200000, 228.9]],

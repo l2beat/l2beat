@@ -113,8 +113,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -326,8 +325,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -512,8 +510,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
@@ -608,8 +605,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"

@@ -72,7 +72,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Operator heartbeat address',
-          url: 'https://optimistic.etherscan.io/address/0x1b10c04536c01a51cb5d20cf3ac717047303d89c',
+          url: 'https://basescan.org/address/0xf977237b7d978dde922ee4909619740c73d8a49b',
         },
         { contract: 'PrivacyBoost', title: 'Withdrawal fee in basis points' },
       ],
@@ -92,7 +92,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
         { title: 'SDK package, closed Rust core', url: SDK },
         {
           title: 'Server info endpoint',
-          url: 'https://optimism.privacyboost.io/api/v1/info',
+          url: 'https://base.privacyboost.io/api/v1/info',
         },
         { contract: 'PrivacyBoost', title: 'Single permitted relay' },
       ],

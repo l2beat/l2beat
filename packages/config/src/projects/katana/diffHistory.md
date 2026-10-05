@@ -1,3 +1,199 @@
+Generated with discovered.json: 0xfbdaf82ca253a793186c31406510104afbb0e1a8
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: f5cac32b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.optimisticModeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.aggchainManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.selectedOpSuccinctConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.getProxiedTokensManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.bridgeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.globalExitRootRemover.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.globalExitRootUpdater.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x5b5287c19b9860ae961673ee37ed1a01b09e9ac2
+
+# Diff at Wed, 30 Sep 2026 22:47:34 GMT:
+
+- id: e463822b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Config-only rerun on the same block number. The DisputeGameFactory template now reads the Upgrade 20 super dispute game types, 9 and 5, together with their init bonds and clone arguments; both types are unset on this chain. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame5:
++        0
+      values.initBondGame9:
++        0
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
++        {"severity":"HIGH"}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
+Generated with discovered.json: 0xb899e1100e258b488f013bfd5fe9f77b307460c2
+
+# Diff at Tue, 29 Sep 2026 17:44:53 GMT:
+
+- id: e8f0d865
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xf60222ae9733f8f9c5fb6a7ee010bf0acf22e97a
 
 # Diff at Wed, 23 Sep 2026 05:47:11 GMT:

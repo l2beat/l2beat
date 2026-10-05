@@ -301,8 +301,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
@@ -383,8 +382,7 @@
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"

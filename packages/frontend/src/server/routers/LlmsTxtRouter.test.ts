@@ -1,24 +1,51 @@
 import { expect } from 'earl'
 import type express from 'express'
+import { env } from '~/env'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
+import {
+  LIST_PAGES_WITH_MARKDOWN,
+  PROJECT_PAGES_WITH_MARKDOWN,
+} from '~/utils/getMarkdownAlternatePath'
 import { createLlmsTxtRouter } from './LlmsTxtRouter'
-import { createMarkdownAlternatesRouter } from './MarkdownAlternatesRouter'
 import { createPublicApiRouter } from './PublicApiRouter'
 
 // Method: request /llms.txt over HTTP and check it against the llms.txt spec
 // (H1 title, blockquote summary, H2 sections of `- [name](url): notes` links,
 // small enough to fit in context). The API list is compared with the routes
-// the public API router registers and the .md links with the routes the
-// markdown alternates router registers, so a new or removed route fails here
-// until llms.txt is updated.
+// the public API router registers and the .md links with the pages registered
+// as having a markdown version, so a new or removed one fails here until
+// llms.txt is updated.
 describe(createLlmsTxtRouter.name, () => {
-  it('serves markdown', async () => {
+  it('serves markdown as plain text', async () => {
     const response = await fetchFromRouter(createLlmsTxtRouter(), '/llms.txt')
+
+    expect(response.status).toEqual(200)
+    expect(response.headers.get('content-type')).toEqual(
+      'text/plain; charset=utf-8',
+    )
+  })
+
+  it('serves the same map as the homepage when Accept prefers markdown', async () => {
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/markdown' },
+    })
 
     expect(response.status).toEqual(200)
     expect(response.headers.get('content-type')).toEqual(
       'text/markdown; charset=utf-8',
     )
+    expect(response.headers.get('vary')).toEqual('Accept')
+    expect(await response.text()).toEqual(await getLlmsTxt())
+  })
+
+  it('leaves the homepage to the HTML page for browsers', async () => {
+    // Nothing else is mounted here, so falling through shows up as a 404.
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/html' },
+    })
+
+    expect(response.status).toEqual(404)
+    expect(response.headers.get('vary')).toEqual('Accept')
   })
 
   it('opens with the L2BEAT title and a one-paragraph summary', async () => {
@@ -55,17 +82,36 @@ describe(createLlmsTxtRouter.name, () => {
       .map((l) => l.url)
       .filter((url) => url.endsWith('.md'))
 
-    const registered = getRegisteredPaths(createMarkdownAlternatesRouter()).map(
-      (path) => `https://l2beat.com${path}`,
-    )
+    const registered = [
+      ...LIST_PAGES_WITH_MARKDOWN,
+      ...PROJECT_PAGES_WITH_MARKDOWN,
+    ].map((page) => `https://l2beat.com${toUrlTemplate(page)}.md`)
     expect(urls.toSorted()).toEqual(registered.toSorted())
+  })
+
+  it('documents the markdown version of project pages', async () => {
+    const urls = getLinks(await getLlmsTxt(), 'Markdown pages').map(
+      (l) => l.url,
+    )
+
+    expect(urls).toEqual([
+      'https://l2beat.com/layer2s/projects/{slug}.md',
+      'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
+      'https://l2beat.com/privacy/projects/{slug}.md',
+      'https://l2beat.com/interop/protocols/{slug}.md',
+      'https://l2beat.com/zk-catalog/{slug}.md',
+      'https://l2beat.com/interop/tokens/{slug}.md',
+      ...(env.CLIENT_SIDE_DEFI_ENABLED
+        ? ['https://l2beat.com/defi/projects/{slug}.md']
+        : []),
+    ])
   })
 
   it('stays small enough to fit in context, with project lists behind links', async () => {
     const body = await getLlmsTxt()
 
     const links = getAllLinks(body)
-    expect(body.length).toBeLessThan(10_000)
+    expect(body.length).toBeLessThan(12_000)
     expect(links.length).toBeLessThan(60)
     expect(links.map((l) => l.url)).not.toInclude(
       'https://l2beat.com/layer2s/projects/arbitrum',
@@ -77,6 +123,15 @@ describe(createLlmsTxtRouter.name, () => {
     const [notes] = body.split('\n## ')
 
     expect(notes ?? '').toInclude('When to use L2BEAT:')
+  })
+
+  // The edge cache caveat applies to every page, not to one entry.
+  it('tells agents to prefer the .md URLs, before the link sections', async () => {
+    const body = await getLlmsTxt()
+    const [notes] = body.split('\n## ')
+
+    expect(notes ?? '').toInclude('Prefer the .md URLs')
+    expect(body.split('edge cache').length - 1).toEqual(1)
   })
 
   it('keeps secondary links in the Optional section', async () => {
@@ -96,7 +151,7 @@ describe(createLlmsTxtRouter.name, () => {
       .filter((url) => url.startsWith('https://l2beat.com/api/'))
 
     const registered = getRegisteredPaths(createPublicApiRouter()).map(
-      (path) => `https://l2beat.com${path.replaceAll(/:(\w+)/g, '{$1}')}`,
+      (path) => `https://l2beat.com${toUrlTemplate(path)}`,
     )
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })
@@ -138,6 +193,12 @@ function parseLink(line: string) {
   const match = line.match(/^- \[(.+?)\]\((.+?)\): (.*)$/)
   expect(match).not.toEqual(null)
   return { url: match?.[2] ?? '', description: match?.[3] ?? '' }
+}
+
+/** Express writes a path parameter as `:slug`, llms.txt as `{slug}`. */
+/** llms.txt documents the shortest URL of a page, without its optional segments. */
+function toUrlTemplate(routePath: string) {
+  return routePath.replaceAll(/\{[^}]*\}/g, '').replaceAll(/:(\w+)/g, '{$1}')
 }
 
 function getRegisteredPaths(router: express.Router) {

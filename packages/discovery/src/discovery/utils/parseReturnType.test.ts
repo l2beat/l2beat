@@ -1,5 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { parseReturnType, type TupleType, type Type } from './parseReturnType'
+import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
+import { type TupleType, type Type, toInternalType } from './parseReturnType'
 
 function BaseT(typeName: string): Type {
   return { kind: 'base', typeName }
@@ -17,7 +19,7 @@ function TupleE(type: Type, name?: string): any {
   return { name, type }
 }
 
-describe(parseReturnType.name, () => {
+describe(toInternalType.name, () => {
   const baseTypes = ['address', 'uint256', 'bytes32']
   for (const baseType of baseTypes) {
     it(`handles a solidity base type (${baseType})`, () => {
@@ -109,3 +111,12 @@ describe(parseReturnType.name, () => {
     expect(() => parseReturnType('uint256')).toThrow()
   })
 })
+
+function parseReturnType(returnType: string): TupleType {
+  assert(
+    returnType.startsWith('(') && returnType.endsWith(')'),
+    'Return type must have parentheses around it',
+  )
+  const fragment = toFunctionFragment(`function f() returns ${returnType}`)
+  return toInternalType(fragment.outputs)
+}

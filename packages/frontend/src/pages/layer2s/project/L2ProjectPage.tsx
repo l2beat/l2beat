@@ -14,7 +14,7 @@ import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -67,9 +67,7 @@ export function L2ProjectPage({
             <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
-              <div className="md:-mx-5 sticky top-0 z-100 lg:hidden">
-                <MobileSectionNavigation sections={navigationSections} />
-              </div>
+              <StickyMobileSectionNavigation sections={navigationSections} />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />

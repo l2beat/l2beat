@@ -28,7 +28,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -366,7 +365,7 @@ export const starknet: ScalingProject = {
       },
     ],
   },
-  ossification: getOssification('starknet', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

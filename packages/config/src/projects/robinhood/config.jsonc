@@ -13,6 +13,14 @@
     "robinhood:0x0000000000000000000000000000000000000074"
   ],
   "names": {
+    "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6": "Robinhood Multisig 1",
+    "eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d": "Robinhood Multisig 2",
+    "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac": "Robinhood Multisig 3",
+    "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5": "Robinhood Multisig 4",
+    "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC": "Robinhood L2 Multisig 1",
+    "robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462": "Robinhood L2 Multisig 2",
+    "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": "Robinhood L2 Multisig 3",
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": "Robinhood L2 Multisig 4",
     "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3": "Bridge",
     "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94": "RollupProxy",
     "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96": "SequencerInbox",
@@ -91,7 +99,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
+              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2."
             }
           ]
         }

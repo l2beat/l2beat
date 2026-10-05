@@ -7,7 +7,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -61,13 +60,17 @@ export const mantle: ScalingProject = opStackL2({
         url: 'https://rpc.mantle.xyz',
         callsPerMinute: 300,
       },
+      { type: 'etherscan', chainId: 5000 },
       {
         type: 'blockscout',
         url: 'https://explorer.mantle.xyz/api',
       },
     ],
   },
-  ossification: getOssification('mantle', genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
+    // OPSuccinctL2OutputOracle verifier set to the SP1 Groth16 gateway (tx 0xf9fc68ef)
+    'shared-sp1': UnixTime(1758005207),
+  }),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],

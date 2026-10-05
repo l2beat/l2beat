@@ -99,6 +99,8 @@ export const pageLoaders = {
     (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
   DefiProjectPage: async () =>
     (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
+  OssificationPage: async () =>
+    (await import('./ossification/OssificationPage')).OssificationPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>

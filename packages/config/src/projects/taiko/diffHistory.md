@@ -1,3 +1,244 @@
+Generated with discovered.json: 0x60fd6a305048865307d52ddb386ddc6ceca6f6ba
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 8f586d18
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790850875
+- current timestamp: 1790850875
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790850875 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
+-        true
++        {"sinceTimestamp":1772638115}
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      fieldMeta.quotaPeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.tokenQuotas.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      critical:
+-        true
++        {"sinceTimestamp":1749196415}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      critical:
+-        true
++        {"sinceTimestamp":1749710483}
+    }
+```
+
+Generated with discovered.json: 0x4bb43a3e4f908b7a7f26772432ec7858abebc5db
+
+# Diff at Thu, 01 Oct 2026 11:11:03 GMT:
+
+- id: 8abd4ccf
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790078329
+- current timestamp: 1790850875
+
+## Description
+
+- Two new standard DAO proposals (25 and 26), both still open in their veto period:
+  - veto ends 2026-10-04: upgrades MainnetBridge, MainnetERC20Vault, MainnetERC721Vault, MainnetERC1155Vault, registers addresses in DefaultResolver and sends an L1->L2 message.
+  - veto ends 2026-10-10: upgrades MainnetInbox, changes trusted RISC Zero image IDs and SP1 programs, changes MrEnclave values in both AutomataDcapV3Attestation contracts and deletes SGX instances in both SecureSgxVerifiers. Reviewed here: https://gist.github.com/sekuba/fd963174c4054a34ffb8c49f2c8bbf29.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        40
++        42
+      values.proposalIds.40:
++        "609192021977025249345447570106396801273767657512"
+      values.proposalIds.41:
++        "609381197194961808191081799941267350559458852905"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
+      values.proposalCount:
+-        25
++        27
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
++        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
+Generated with discovered.json: 0xfc11d74360ada478a3dbe79ae86e4e2667feca2a
+
+# Diff at Wed, 30 Sep 2026 07:45:37 GMT:
+
+- id: 5c7a9937
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790078329
+- current timestamp: 1790078329
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790078329 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
 Generated with discovered.json: 0x7240d255bb31e3d673fd8580c9e25aff1fc3e122
 
 # Diff at Tue, 22 Sep 2026 13:48:20 GMT:

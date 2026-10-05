@@ -5,22 +5,10 @@ import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-
-const RELAYER_STAT_COPY: Record<
-  PrivacyRelayerStat['kind'],
-  { title: string; tooltip: string }
-> = {
-  activeRelayers: {
-    title: 'Active Relayers 30D',
-    tooltip:
-      'The number of unique relayer addresses observed in relayed withdrawals over the past 30 days.',
-  },
-  avgDailyRelayers: {
-    title: 'Avg. Relayers 30D',
-    tooltip:
-      'The average number of unique relayers seen advertising their services in daily network observations over the past 30 days.',
-  },
-}
+import {
+  PRIVACY_PROJECT_STATS_COPY as COPY,
+  RELAYER_STAT_COPY,
+} from './privacyProjectStatsCopy'
 
 interface Props {
   totalValueLockedUsd: number | undefined
@@ -59,11 +47,7 @@ export function PrivacyProjectStats({
   if (!hasFlowTracking && !hasRelayerTracking && !hasTvl) {
     return (
       <div className="grid gap-4 md:grid-cols-4">
-        <NotTrackedStat
-          className="md:col-span-4"
-          title="Metrics"
-          description="Data tracking is not available for this project."
-        />
+        <NotTrackedStat className="md:col-span-4" {...COPY.untrackedMetrics} />
       </div>
     )
   }
@@ -78,7 +62,7 @@ export function PrivacyProjectStats({
       >
         {hasTvl && (
           <ProjectSummaryStat
-            title="Total Value Locked"
+            title={COPY.totalValueLocked}
             value={
               <TvlValue
                 totalValueLockedUsd={totalValueLockedUsd}
@@ -87,10 +71,7 @@ export function PrivacyProjectStats({
             }
           />
         )}
-        <NotTrackedStat
-          title="Live asset metrics"
-          description="Onchain asset monitoring is not available for this project."
-        />
+        <NotTrackedStat {...COPY.untrackedAssetMetrics} />
         {relayerStatElement}
       </div>
     )
@@ -105,7 +86,7 @@ export function PrivacyProjectStats({
     >
       <ProjectSummaryStat
         className="max-md:hidden"
-        title="Total Value Locked"
+        title={COPY.totalValueLocked}
         value={
           !hasTvl ? (
             <NotApplicableBadge />
@@ -141,16 +122,16 @@ export function PrivacyProjectStats({
       />
       <ProjectSummaryStat
         className="md:hidden"
-        title="Assets tracked"
+        title={COPY.assetsTracked}
         value={formatInteger(assetsCount ?? 0)}
       />
       <ProjectSummaryStat
         className="md:hidden"
-        title="Buckets tracked"
+        title={COPY.bucketsTracked}
         value={formatInteger(bucketsCount ?? 0)}
       />
       <ProjectSummaryStat
-        title="Deposits 7D"
+        title={COPY.deposits7d}
         value={
           <div className="flex items-center gap-2">
             {formatInteger(deposits.last7d ?? 0)}
@@ -161,11 +142,11 @@ export function PrivacyProjectStats({
         }
       />
       <ProjectSummaryStat
-        title="Deposits 30D"
+        title={COPY.deposits30d}
         value={formatInteger(deposits.last30d ?? 0)}
       />
       <ProjectSummaryStat
-        title="Deposits Total"
+        title={COPY.depositsTotal}
         value={formatInteger(deposits.total ?? 0)}
       />
       {relayerStatElement}
@@ -205,8 +186,8 @@ function NotTrackedStat({
       className={className}
       title={title}
       value={
-        <div className="flex flex-col md:gap-1">
-          <span>Not tracked</span>
+        <div className="flex flex-col max-md:items-end max-md:text-right md:gap-1">
+          <span>{COPY.notTracked}</span>
           <span className="font-medium text-paragraph-12 text-secondary leading-normal">
             {description}
           </span>

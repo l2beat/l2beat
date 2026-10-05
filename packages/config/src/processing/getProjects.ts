@@ -178,7 +178,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
     chainConfig: p.chainConfig,
-    ossification: p.ossification,
+    ossificationHistory: p.ossificationHistory,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,

@@ -24,7 +24,6 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -76,7 +75,7 @@ export const scroll: ScalingProject = {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
+      'Scroll is a ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
     purposes: ['Universal'],
     links: {
       websites: ['https://scroll.io'],
@@ -182,7 +181,7 @@ export const scroll: ScalingProject = {
       { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
-  ossification: getOssification('scroll', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   config: {
     associatedTokens: ['SCR'],
     escrows: [

@@ -570,11 +570,13 @@
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "getValidators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
+          "severity": "HIGH",
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
@@ -722,8 +724,6 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
-        "isUsingFeeToken": { "severity": "HIGH" },
-        "isDelayBufferable": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
@@ -731,7 +731,7 @@
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "MEDIUM" },
         "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
@@ -1401,7 +1401,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 466549741 },
-  "permissionsConfigHash": "0x270ebd3f55e6faf72a730f58d250e23f79952111620828625beedca73840c7de",
+  "permissionsConfigHash": "0x97cb0b00964a5a9f49952171b1b33086ac5fcd85721dd6b2fa4614809726635e",
   "permissions": {
     "arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36": {
       "directlyReceivedPermissions": [
@@ -1413,7 +1413,7 @@
         {
           "permission": "interact",
           "from": "arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
@@ -1467,7 +1467,7 @@
         {
           "permission": "interact",
           "from": "arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36" }

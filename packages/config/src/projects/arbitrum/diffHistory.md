@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x9b0866b471116d8cbbab43b1e94a5b6785eef76b
+
+# Diff at Sun, 04 Oct 2026 05:55:30 GMT:
+
+- id: db619227
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790601621
+- current timestamp: 1790601621
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601621 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) [orbitstack/layer2/SecurityCouncilMemberRemovalGovernor] {
+    +++ description: Token governance contract for the Security Council member removals.
+      fieldMeta.VOTE_SUCCESS_DENOMINATOR:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) [orbitstack/layer2/UpgradeExecRouteBuilder] {
+    +++ description: None
+      fieldMeta:
+-        {"l1TimelockMinDelay":{"severity":"HIGH"},"l1TimelockAddr":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      fieldMeta.ROTATION_CUT_OFF_BLOCKS:
+-        {"severity":"HIGH"}
+      fieldMeta.nomineeVetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      fieldMeta.MIN_MINT_INTERVAL:
+-        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_DENOMINATOR:
+-        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_NUMERATOR:
+-        {"severity":"HIGH"}
+      fieldMeta.mintCapPerYer.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      fieldMeta.transactionFilteringPrecompile:
+-        {"severity":"HIGH"}
+      fieldMeta.executors.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.chainOwners.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.executors.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      critical:
++        true
+    }
+```
+
+Generated with discovered.json: 0xe51381bbd960cab0ed85790b8e51a4a19f17a9ca
+
+# Diff at Tue, 29 Sep 2026 17:49:54 GMT:
+
+- id: f7dece68
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790601621
+- current timestamp: 1790601621
+
+## Description
+
+Config-related: the shared BoLD RollupProxy template now models the `anyTrustFastConfirmer` permission and names the fastConfirmer role in the owner permission. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601621 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      receivedPermissions.5.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      receivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0xf8dc802dfb21e1b06d3ebb9b1f308704e62cbaad
 
 # Diff at Mon, 28 Sep 2026 13:21:58 GMT:

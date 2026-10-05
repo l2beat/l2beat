@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x089ab5a234f441f3eb740a5aaa2221af7ed08d11
+
+# Diff at Sun, 04 Oct 2026 05:55:34 GMT:
+
+- id: 61ebe464
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790851283
+- current timestamp: 1790851283
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851283 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) [morph/L1MessageQueueWithGasPriceOracle] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      fieldMeta.maxGasLimit.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) [morph/L1GatewayRouter] {
+    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
+      fieldMeta.erc20Gateways.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the proof system. Sequencing and proposing are permissioned to the active submitters registered and staked in the Submitter contract. If the EnforcedTxGateway is not paused, any submitter must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the submitters are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      critical:
++        {"sinceTimestamp":1779354407}
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1729764539}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) [morph/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.
+      fieldMeta.feeVault.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) [morph/L1CrossDomainMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      fieldMeta.maxReplayTimes:
+-        {"severity":"HIGH"}
+      fieldMeta.feeVault.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1737455087}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Submitter (eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6) [morph/Submitter] {
+    +++ description: Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x78731ad7bc5525b258480e0764c9fde50ecb4852
+
+# Diff at Thu, 01 Oct 2026 11:10:41 GMT:
+
+- id: 3887ddb4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790080873
+- current timestamp: 1790851283
+
+## Description
+
+A Rollup challenger EOA (eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442) set an EIP-7702 delegation (no previous delegation) to MetaMask's `EIP7702StatelessDeleGator` v1.3.0 (eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B).
+
+## Watched changes
+
+```diff
+    EOA (eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x92af0176a7cce342bb4d9b4a5da3322f3bd575abd9be6d24ec51f986b8f734c8","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0x5abeffdd6e87a7301ae01f5d03c6502ad2cfb0cb
+
+# Diff at Wed, 30 Sep 2026 07:45:40 GMT:
+
+- id: 2baa9adc
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1790080873
+- current timestamp: 1790080873
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790080873 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
 Generated with discovered.json: 0x6408770684e948b9aa3c44876ee01501b42ddc0e
 
 # Diff at Tue, 22 Sep 2026 13:48:16 GMT:

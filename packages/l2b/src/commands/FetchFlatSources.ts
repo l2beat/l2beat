@@ -3,11 +3,7 @@ import chalk from 'chalk'
 import { boolean, command, flag, option, optional } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import { createCliLogger } from '../implementations/common/CliLogger'
-import {
-  fetchFlatSources,
-  saveIntoDirectory,
-  saveIntoDiscovery,
-} from '../implementations/fetchFlatSources'
+import { syncFlatSources } from '../implementations/fetchFlatSources'
 import { Directory, HttpUrl } from './types'
 
 export const FetchFlatSources = command({
@@ -56,11 +52,11 @@ export const FetchFlatSources = command({
 
     const cli = createCliLogger({ output: process.stdout, quiet: args.quiet })
     cli.log(`Fetching flat sources from ${chalk.magenta(args.backendUrl)}`)
-    const flat = await fetchFlatSources(cli, args.backendUrl)
-
-    if (args.outputPath !== undefined) {
-      saveIntoDirectory(cli, flat, args.outputPath)
-    }
-    saveIntoDiscovery(cli, flat, paths.discovery)
+    await syncFlatSources(
+      cli,
+      args.backendUrl,
+      paths.discovery,
+      args.outputPath,
+    )
   },
 })

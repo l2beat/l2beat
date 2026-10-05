@@ -19,6 +19,8 @@
       "arg": {
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame",
+        "9": "SuperFaultDisputeGame",
+        "5": "SuperPermissionedDisputeGame",
         "1337": "KailuaGame"
       }
     }
@@ -28,8 +30,9 @@
       "severity": "HIGH"
     },
     "retirementTimestamp": {
-      // moving it invalidates every game created before it
-      "severity": "HIGH"
+      // moving it invalidates every game created before it: a guardian
+      // emergency action that does not change the rules, like a pause
+      "severity": "MEDIUM"
     },
     "disputeGameFactory": {
       "severity": "HIGH"

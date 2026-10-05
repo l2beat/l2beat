@@ -241,7 +241,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -2533,7 +2533,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 25551698 },
-  "permissionsConfigHash": "0x4dc46d320133d7f119e03611e421777561d865488a116ec7da74234fa7ff57c4",
+  "permissionsConfigHash": "0xc9c8ea210fd36855eafebf3e507c9ccf2f92267bf0eaac7a6614639f51840662",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -2634,6 +2634,12 @@
           "via": [
             { "address": "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x658656A14AFdf9c507096aC406564497d13EC754",
+          "description": "set the dispute game implementation and initial bond for any game type.",
+          "role": ".owner"
         },
         {
           "permission": "interact",

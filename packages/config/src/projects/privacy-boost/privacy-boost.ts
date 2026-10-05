@@ -1,5 +1,7 @@
 import {
+  assert,
   ChainSpecificAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -20,8 +22,8 @@ import { privacyBoostAdversaries } from './adversaries'
 const discovery = new ProjectDiscovery('privacy-boost')
 
 // PrivacyBoost measures exit delays and auth-root staleness in blocks.
-const OP_MAINNET_BLOCK_TIME = 2
-const OP_MAINNET_CHAIN_ID = 10
+const BASE_BLOCK_TIME = 2
+const BASE_CHAIN_ID = 8453
 
 const pool = discovery.getContract('PrivacyBoost')
 const adminMultisigStats = discovery.getMultisigStats('AdminMultisig')
@@ -29,12 +31,12 @@ const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
 
 const forcedWithdrawalDelay =
   discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') *
-  OP_MAINNET_BLOCK_TIME
+  BASE_BLOCK_TIME
 const epochAuthStaleness =
   discovery.getContractValue<number>(
     'PrivacyBoost',
     'maxEpochAuthStalenessBlocks',
-  ) * OP_MAINNET_BLOCK_TIME
+  ) * BASE_BLOCK_TIME
 const maxForcedInputs = discovery.getContractValue<number>(
   'PrivacyBoost',
   'maxForcedInputs',
@@ -58,17 +60,48 @@ const ERC20_TRANSFER_EVENT =
 
 const poolAddress = ChainSpecificAddress.address(pool.address)
 
-const registeredTokens = discovery
-  .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
-  .map((token) => {
-    const address = ChainSpecificAddress.address(
-      token.tokenAddress as ChainSpecificAddress,
-    )
-    return {
-      address,
-      tokenInfo: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
-    }
-  })
+// The registry lists dozens of long-tail tokens and vault shares, most of them
+// unused. Only the tokens below are tracked; others must be added here (and to
+// the token list) to be counted.
+const TRACKED_TOKENS = [
+  '0x4200000000000000000000000000000000000006', // WETH
+  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC
+  '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf', // cbBTC
+  '0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42', // EURC
+  '0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82', // SOL
+  '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', // USDT
+  '0x940181a94A35A4569E4529A3CDfB74e38FD98631', // AERO
+  '0xB2000000000000000000004c27f6523082f41D01', // Basecat
+  '0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452', // wstETH
+  '0xb200000000000000000000C2e324d24d7eEcd1fb', // AAPLc
+  '0xcb585250f852C6c6bf90434AB21A00f02833a4af', // cbXRP
+  '0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4', // TOSHI
+  '0x532f27101965dd16442E59d40670FaF5eBB142E4', // BRETT
+  '0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100', // bbqUSDC
+  '0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765', // gtusdcf
+  '0xFeFeC33668E22677c4762d0853d56245a800ff08', // gtwethb
+  '0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657', // CSUSDC
+  '0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0', // edgeUSDC
+].map(EthereumAddress)
+
+const registryTokens = new Set(
+  discovery
+    .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
+    .map((token) =>
+      ChainSpecificAddress.address(token.tokenAddress as ChainSpecificAddress),
+    ),
+)
+
+const registeredTokens = TRACKED_TOKENS.map((address) => {
+  assert(
+    registryTokens.has(address),
+    `Privacy Boost: ${address} is not in the TokenRegistry`,
+  )
+  return {
+    address,
+    tokenInfo: getTokenByAddress(address.toString(), BASE_CHAIN_ID),
+  }
+})
 
 // The pool's own events carry no usable amounts: epoch withdrawals settle in
 // batches without per-withdrawal events, and the deposit event signature
@@ -131,7 +164,7 @@ export const privacyBoost: BaseProject = {
   },
   display: {
     description:
-      'A shielded pool for ERC-20 tokens on OP Mainnet, designed for institutional users. Provides TEE-backed privacy, balancing better UX with worse privacy trust assumptions.',
+      'A shielded pool for ERC-20 tokens on Base, designed for institutional users. Provides TEE-backed privacy, balancing better UX with worse privacy trust assumptions.',
     detailedDescription: readProjectMarkdown(
       'privacy-boost',
       'detailedDescription',
@@ -204,7 +237,7 @@ export const privacyBoost: BaseProject = {
         knownDeployments: [
           {
             address: ChainSpecificAddress(
-              'oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B',
+              'base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e',
             ),
           },
         ],
@@ -220,7 +253,7 @@ export const privacyBoost: BaseProject = {
         knownDeployments: [
           {
             address: ChainSpecificAddress(
-              'oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5',
+              'base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d',
             ),
           },
         ],
@@ -242,7 +275,7 @@ export const privacyBoost: BaseProject = {
         knownDeployments: [
           {
             address: ChainSpecificAddress(
-              'oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE',
+              'base:0x40e93d3357A5A3d249437717Da936f6141ba85cE',
             ),
           },
         ],
@@ -259,7 +292,7 @@ export const privacyBoost: BaseProject = {
         knownDeployments: [
           {
             address: ChainSpecificAddress(
-              'oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6',
+              'base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63',
             ),
           },
         ],
@@ -281,7 +314,7 @@ export const privacyBoost: BaseProject = {
         knownDeployments: [
           {
             address: ChainSpecificAddress(
-              'oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670',
+              'base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05',
             ),
           },
         ],
@@ -292,7 +325,8 @@ export const privacyBoost: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
-    trackedOn: ['optimism'],
+    trackedOn: ['base'],
+    anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

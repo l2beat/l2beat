@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x85152aa107ad6582942e669ec9d13248a1b5c004
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 5824c767
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789711666
+- current timestamp: 1789711666
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
++        "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
+      fieldMeta.state.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
++        "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
+      fieldMeta.state.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      fieldMeta.shieldFee.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verificationKeyChangeCount.severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x395f2073968f74ae5b30ee3ab7b19a8353f01c92
 
 # Diff at Wed, 23 Sep 2026 05:56:02 GMT:

@@ -24,7 +24,6 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getSP1Verifiers } from '../../templates/opStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -449,7 +448,12 @@ export const taiko: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: getOssification('taiko', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart, {
+    // Shasta TaikoSP1Verifier deployed with the SP1VerifierGateway as its
+    // immutable verifier (tx 0xe29fb424); earlier SP1 verifiers called
+    // SP1Verifier instances directly
+    'shared-sp1': UnixTime(1772638115),
+  }),
   type: 'layer2',
   riskView: {
     stateValidation: {

@@ -1,3 +1,285 @@
+Generated with discovered.json: 0x9363e201a33c7138bd48f90902119e89f6cd97a0
+
+# Diff at Thu, 01 Oct 2026 11:10:36 GMT:
+
+- id: 7e4e9584
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790089928
+- current timestamp: 1790850461
+
+## Description
+
+BondingRegistry and CiphernodeRegistry upgraded. The same tx enabled a 3-day admission cooldown.
+
+- BondingRegistry: checkpoints bond-owner history and counts distinct active bond owners. New owner-set admission policy: a cooldown for newly registered or re-owned keys, and an admission pause. New E3 requests are blocked until all operators have refreshed after an eligibility bump. [diff](https://disco.l2beat.com/diff/eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2/eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db)
+- CiphernodeRegistry: sortition admits at most one key per bond owner, and new requests need at least N distinct active bond owners. [diff](https://disco.l2beat.com/diff/eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2/eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A)
+- 12 new ciphernode operators (72 registered).
+- The protocol was unpaused by InterfoldSafeB (via AdminPlugin, no delay) on 2026-09-25 right after the upgrade and paused again on 2026-09-29, after one new E3 was requested (earlier window 2026-09-19 to 09-22). Requests are currently paused.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.
+      sourceHashes.1:
+-        "0xb97dc60ab9865caddf8025162df9c53ea501692873fbef50c57733bea73c86ab"
++        "0x80851d52a1fd2a24e68aaf0931069f80c737f25dcfb52c3a02aec5a6d6b3f155"
+      values.$implementation:
+-        "eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2"
++        "eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db"
+      values.$pastUpgrades.4:
++        ["2026-09-24T18:43:35.000Z","0x8e6d53a9137ad0cb441aef11b4752abfa936258661668d1b2692bf6c2678b4a2",["eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db"]]
+      values.$upgradeCount:
+-        4
++        5
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.58:
++        "eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.59:
++        "eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.60:
++        "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.61:
++        "eth:0xAF062fC363c3AE910ec76676346f798792bEB851"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.62:
++        "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.63:
++        "eth:0x60cd23981430e4909957EA1fB214E9A21468175A"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.64:
++        "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.65:
++        "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.66:
++        "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.67:
++        "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.68:
++        "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.69:
++        "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.70:
++        "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.71:
++        "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation.
+      values.numActiveOperators:
+-        56
++        70
++++ description: Latest admission policy for future committees. With the cooldown enabled, an operator key that registers or changes bond owner is not eligible for sortition until cooldownDuration (unbounded) has passed; keys registered before the upgrade and not re-owned since are exempt. Pausing admissions freezes the eligible pool (and the cooldown settings applied to it) at the pause time. Every change resets the bond-owner capacity count, which blocks new E3 requests until enough operators refresh their status.
+      values.admissionPolicy:
++        {"cooldownEnabled":true,"admissionsPaused":false,"cooldownDuration":259200,"pauseTimepoint":0,"pauseCooldownEnabled":false,"pauseCooldownDuration":0}
+      errors:
+-        {"admissionPolicy":"Processing error occurred.","committeeOwnerCapacity":"Processing error occurred."}
+      implementationNames.eth:0x290d5156AAa23cbEb458751A73688d2375220Ad2:
+-        "BondingRegistry"
+      implementationNames.eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db:
++        "BondingRegistry"
+    }
+```
+
+```diff
+    EOA (eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+    }
+```
+
+```diff
+    EOA (eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      sourceHashes.1:
+-        "0xaaf0cc5a82e6d85f4cb4d4b1cdfe655456ddfd34d6a347cf23f5f5acb505fd7c"
++        "0x15fc7691fe2aef9e081c0a4c84c36701c7f1777903a9cd07d2598b200a683055"
+      values.$implementation:
+-        "eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2"
++        "eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.60:
++        "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.61:
++        "eth:0xAF062fC363c3AE910ec76676346f798792bEB851"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.62:
++        "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.63:
++        "eth:0x60cd23981430e4909957EA1fB214E9A21468175A"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.64:
++        "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.65:
++        "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.66:
++        "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.67:
++        "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.68:
++        "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.69:
++        "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.70:
++        "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.71:
++        "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877"
+      values.$pastUpgrades.3:
++        ["2026-09-24T18:43:35.000Z","0x8e6d53a9137ad0cb441aef11b4752abfa936258661668d1b2692bf6c2678b4a2",["eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.unreleasedCommitteeCount:
+-        1
++        2
+      implementationNames.eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2:
+-        "CiphernodeRegistryOwnable"
+      implementationNames.eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A:
++        "CiphernodeRegistryOwnable"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BondingRegistry/BondingRegistry.sol            | 810 +++++++++++++++++----
+ .../CiphernodeRegistryOwnable.sol                  | 185 ++++-
+ 2 files changed, 837 insertions(+), 158 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790089928 (main branch discovery), not current.
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.
+      description:
+-        "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits."
++        "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees."
+      fieldMeta.bondOwners.description:
+-        "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions."
++        "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions, but only one of them can be selected into any committee requested after the bond-owner cap was introduced."
+      fieldMeta.admissionPolicy:
++        {"description":"Latest admission policy for future committees. With the cooldown enabled, an operator key that registers or changes bond owner is not eligible for sortition until cooldownDuration (unbounded) has passed; keys registered before the upgrade and not re-owned since are exempt. Pausing admissions freezes the eligible pool (and the cooldown settings applied to it) at the pause time. Every change resets the bond-owner capacity count, which blocks new E3 requests until enough operators refresh their status.","type":"RISK_PARAMETER"}
+      fieldMeta.committeeOwnerCapacity:
++        {"description":"Number of distinct bond owners with at least one active, admitted operator key. New E3 requests revert unless it is at least the committee size N. It reads zero until every registered operator has refreshed its status after an eligibility-configuration bump."}
+      errors:
++        {"admissionPolicy":"Processing error occurred.","committeeOwnerCapacity":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract CrispTokenVoting (eth:0x197be4E09614285Abb4b74b672377c404FD44d54) [interfold/CrispVoting] {
+    +++ description: Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.
+      values.earliestVotingStart:
+-        1790115719
+    }
+```
+
+```diff
+    contract ProtocolProposalProcessor (eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.0.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
+```diff
+    contract CRISPProgramV2 (eth:0x53FCdb21E73A461CfE6c64B19855204384B91BA3) [interfold/CRISPProgram] {
+    +++ description: CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.
+      values.earliestVotingStart:
+-        1790115719
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.5.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.0.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      description:
+-        "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider."
++        "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider."
+      fieldMeta.$members.description:
+-        "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition."
++        "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner."
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.0.description:
+-        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
++        "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+    }
+```
+
 Generated with discovered.json: 0x26d7683ec1c27463bc66fb76ed502c2927111948
 
 # Diff at Tue, 22 Sep 2026 15:13:21 GMT:

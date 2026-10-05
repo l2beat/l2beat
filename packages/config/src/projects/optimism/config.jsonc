@@ -47,27 +47,13 @@
     "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
   },
   "overrides": {
-    // Effective 2-of-2 owner of the SuperchainProxyAdmin. Its two owners are
-    // the Foundation Upgrade Safe and the Optimism Security Council.
-    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
-      "critical": { "sinceTimestamp": 1707514547 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // One branch of the 2-of-2 upgrade authority.
-    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
-      "critical": { "sinceTimestamp": 1707514547 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // The other upgrade-authority branch and the controller behind the
-    // protocol guardian path.
+    // Safes (SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, Security
+    // Council, Guardian, MintManagerOwner, SafeL2) are actor containers and not
+    // critical. Their mechanism changes (threshold policy, nesting, modules that
+    // can act on upgrades or validation) are reviewed events in ossification.json
+    // on the critical contract they control: SuperchainProxyAdmin (upgrade path),
+    // SuperchainConfig (guardian role) and MintManager (OP minting).
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
-      "critical": { "sinceTimestamp": 1707514547 },
       "references": [
         {
           "text": "Security Council members - Optimism Collective Governance Forum",
@@ -75,8 +61,6 @@
         }
       ],
       "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" },
         "isL2beatStillAnOwner": {
           "handler": {
             "type": "call",
@@ -84,14 +68,6 @@
             "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"]
           }
         }
-      }
-    },
-    // Executes the guardian's pause and dispute-game blacklist powers.
-    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": {
-      "critical": true,
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
       }
     },
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
@@ -104,6 +80,11 @@
     // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
     // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
+    // OPContractsManager 8.0.1: Ignored so discovery doesn't follow it into
+    // bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
       "ignoreDiscovery": true
     },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
@@ -130,6 +111,8 @@
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": {
+      // retired DelayedWETH of the permissionless dispute games: critical until it left discovery (same bound as the permissioned one)
+      "critical": { "untilTimestamp": 1753427192 },
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": {
@@ -145,11 +128,15 @@
         "otherBridge": { "edit": ["format", "OptimismAddress"] }
       }
     },
+    // AddressManager: its owner (SuperchainProxyAdmin) can repoint the
+    // ResolvedDelegateProxy of the L1CrossDomainMessenger, which resolves the
+    // "OVM_L1CrossDomainMessenger" entry; that resolution is already tracked as the
+    // messenger's implementation. The Proxy__OVM_* entries below are static legacy
+    // records of the proxy addresses that nothing reads, so they are not HIGH.
     "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
       "critical": true,
       "fields": {
         "Proxy__OVM_L1CrossDomainMessenger": {
-          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -157,7 +144,6 @@
           }
         },
         "Proxy__OVM_L1StandardBridge": {
-          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -309,7 +295,8 @@
         }
       }
     },
-    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2 that controls the OP minting policy.
+    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2,
+    // the sole owner of the MintManagerOwner Safe since 2026-04-07, so it is on the OP minting path.
     "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
       "critical": true
     },
@@ -318,7 +305,9 @@
     },
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
-      // sole minter of OP, which is counted (natively minted) in the TVS.
+      // sole minter of OP, which is counted (natively minted) in the TVS. Its owner
+      // can also hand the OP token to a new minter via upgrade(), so changes to the
+      // owner Safe structure are reviewed events on this contract.
       "critical": { "sinceTimestamp": 1665503636 },
       "fields": {
         "owner": {
@@ -331,25 +320,11 @@
         }
       }
     },
-    // Safe directly owning the MintManager once OP minting moved to it.
-    "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": {
-      "critical": { "sinceTimestamp": 1665503636 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // Nested Safe that replaced the direct MintManagerOwner signer set.
-    "oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2": {
-      "critical": { "sinceTimestamp": 1775575311 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
     "oeth:0x4200000000000000000000000000000000000042": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
-      // OP is counted (natively minted) in the TVS; a code change can mint or move user balances.
+      // OP is natively minted and counted in the TVS, and the project governs its
+      // supply through the MintManager (decision: tokens stay critical only in this
+      // case). The token itself is an immutable predeploy, so it only adds its age.
       "critical": true,
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"],

@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { getMarkdownAlternatePath } from '~/server/routers/MarkdownAlternatesRouter'
+import { LLMS_TXT_LINK } from '~/server/markdown/markdownAlternate'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 
 /**
  * Tells agents where the site's llms.txt is and, for pages that have one,
@@ -11,13 +12,14 @@ export function LlmsLinkHeaderMiddleware() {
   return (req: Request, res: Response, next: NextFunction) => {
     if (isPageRequest(req) && !hasExtension(req.path)) {
       res.header('Link', getLinkHeader(req.path))
+      dropAlternateFromErrorResponses(res)
     }
     next()
   }
 }
 
 export function getLinkHeader(path: string): string {
-  const links = [`<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`]
+  const links = [LLMS_TXT_LINK]
   const alternate = getMarkdownAlternatePath(path)
   if (alternate) {
     links.unshift(
@@ -25,6 +27,22 @@ export function getLinkHeader(path: string): string {
     )
   }
   return links.join(', ')
+}
+
+/**
+ * The alternate is derived from the URL, before any handler ran. Whether the
+ * page exists is known only once the status is, so an error response loses
+ * the alternate as it is sent: it would point agents at another 404. Done
+ * here rather than by each handler that can answer with an error; like
+ * `SafeSendHandler`, it hooks `send`, which every page and error response
+ * goes through.
+ */
+function dropAlternateFromErrorResponses(res: Response) {
+  const send = res.send.bind(res)
+  res.send = (body) => {
+    if (res.statusCode >= 400) res.setHeader('Link', LLMS_TXT_LINK)
+    return send(body)
+  }
 }
 
 function isPageRequest(req: Request) {

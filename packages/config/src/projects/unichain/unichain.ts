@@ -7,7 +7,6 @@ import {
 import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
@@ -29,7 +28,7 @@ export const unichain: ScalingProject = opStackL2({
     slug: 'unichain',
     stateValidationImage: 'opfp',
     description:
-      'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
+      'Unichain is a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://unichain.org/'],
@@ -129,7 +128,7 @@ export const unichain: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
     ],
   },
-  ossification: getOssification('unichain', genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
   milestones: [
     {
       title: 'UNIfication proposal executed',

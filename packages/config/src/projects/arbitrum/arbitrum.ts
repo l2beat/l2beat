@@ -20,7 +20,6 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOssification } from '../../ossification/getOssification'
 import {
   getNitroGovernance,
   getOrbitStackDaTracking,
@@ -379,7 +378,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  ossification: getOssification('arbitrum', chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(
       l2CoreQuorumPercent,

@@ -27,7 +27,7 @@
     },
     // Cap on the gas of enqueued (incl. forced) L1 -> L2 transactions; lowering it can block the forced-inclusion path.
     "maxGasLimit": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Every enqueue (including forced transactions) calls isSenderAllowed() on this
     // contract to price the message, so a reverting checker blocks the escape hatch.

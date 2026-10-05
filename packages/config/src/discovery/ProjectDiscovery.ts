@@ -13,6 +13,7 @@ import {
   getReachableEntries,
   toAddressArray,
 } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -27,6 +28,8 @@ import isString from 'lodash/isString'
 import mapValues from 'lodash/mapValues'
 import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
+import { loadOssificationHistory } from '../ossification/loadOssificationHistory'
+import { mergeOssificationHistories } from '../ossification/mergeOssificationHistories'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,
@@ -1087,6 +1090,42 @@ export class ProjectDiscovery {
       delete result[chainToRemove]
     }
     return result
+  }
+
+  /**
+   * @param projectStart changes before it are not the project's own.
+   * @param moduleAdoptions per shared module name, when the project started to
+   *   depend on it. The module's earlier changes are not the project's own.
+   */
+  getOssificationHistory(
+    projectStart?: UnixTime,
+    moduleAdoptions: Record<string, UnixTime> = {},
+  ): OssificationHistory | undefined {
+    const modules = this.discoveries.slice(1).map((d) => d.name)
+    for (const name of Object.keys(moduleAdoptions)) {
+      assert(
+        modules.includes(name),
+        `${this.projectName} does not reference the module ${name}`,
+      )
+    }
+    const startOf = (name: string) => {
+      const adoption = moduleAdoptions[name]
+      if (adoption === undefined) return projectStart
+      if (projectStart === undefined) return adoption
+      return UnixTime(Math.max(adoption, projectStart))
+    }
+    return mergeOssificationHistories(
+      this.discoveries
+        .map((discovery) =>
+          loadOssificationHistory(
+            discovery,
+            this.reachableAddresses,
+            this.configReader,
+            startOf(discovery.name),
+          ),
+        )
+        .filter(notUndefined),
+    )
   }
 
   hasEoaWithUpgradePermissions(): boolean {

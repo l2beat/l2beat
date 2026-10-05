@@ -15,6 +15,7 @@ import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
 import { Subsection, SubsectionHeading } from '../Subsection'
+import { DEPLOYMENT_RISKS_INTRO } from '../sectionCopy'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './ContractsUpdated'
 
@@ -109,7 +110,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.risks.length > 0 && (
         <>
           <p className="text-paragraph-15 md:text-paragraph-16">
-            The current deployment carries some associated risks:
+            {DEPLOYMENT_RISKS_INTRO}
           </p>
           <RiskList risks={props.risks} />
         </>

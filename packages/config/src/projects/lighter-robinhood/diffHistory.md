@@ -1,4 +1,35 @@
-Generated with discovered.json: 0x68c41ba1f1f8eef21bf5b193e460aa5e79bc4bb7
+Generated with discovered.json: 0x74db8f3862124920db08fd872fb9b86f97e3fd3b
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 5b20bc62
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790671691
+- current timestamp: 1790671691
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671691 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.approvedUpgradeNoticePeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0xf4585785e3f4d0e7c2eac835f418955049c0536c
 
 # Diff at Mon, 28 Sep 2026 13:34:29 GMT:
 
