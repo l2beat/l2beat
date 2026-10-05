@@ -2,15 +2,21 @@
  * Reads the `codex exec --json` event stream.
  *
  * Codex reports a turn as JSONL: `thread.started` (with the id a resume
- * needs), `item.completed` per item the model produced, `turn.completed`
- * with token usage, or `error` / `turn.failed`. The events are also the
- * evidence for isolation: the model is given no shell, no web search and no
- * MCP servers, and this module checks that the stream contains no item of a
- * kind that would only exist if a tool had run. A turn with such an item is
- * refused, because a draft produced with outside help is not reproducible
- * from the prompt.
+ * needs), `item.completed` per item the model produced, and then either
+ * `turn.completed` with token usage or `turn.failed`. Errors reported along
+ * the way, as `error` events or `error` items, are not fatal by themselves:
+ * Codex reports a dropped stream it then reconnects ("Reconnecting... 1/2")
+ * and a setting it ignores that way, and completes the turn. Only
+ * `turn.failed`, or a stream that ends without `turn.completed`, means the
+ * turn has no answer.
  *
- * Verified against codex-cli 0.155.1; field names are read defensively so an
+ * The events are also the evidence for isolation: the request offers the
+ * model no tool, and this module checks that the stream contains no item of
+ * a kind that would only exist if a tool had run. A turn with such an item
+ * is refused, because a draft produced with outside help is not
+ * reproducible from the prompt.
+ *
+ * Verified against codex-cli 0.160.1; field names are read defensively so an
  * unknown event is kept in the artifact rather than failing the turn.
  */
 import type { ModelUsage } from './ModelClient'
@@ -33,6 +39,11 @@ export interface ParsedCodexEvents {
   usage?: ModelUsage
   /** Text of the last `agent_message` item. */
   lastMessage?: string
+  /** Whether the stream reached `turn.completed`. */
+  completed: boolean
+  /** The message of `turn.failed`. */
+  failure?: string
+  /** `error` events and items, fatal only when the turn did not complete. */
   errors: string[]
   /** Items that only a tool call could have produced. */
   toolItems: string[]
@@ -43,6 +54,7 @@ export interface ParsedCodexEvents {
 export function parseCodexEvents(jsonl: string): ParsedCodexEvents {
   const parsed: ParsedCodexEvents = {
     events: [],
+    completed: false,
     errors: [],
     toolItems: [],
     unparsedLines: [],
@@ -82,16 +94,15 @@ function readEvent(event: CodexEvent, parsed: ParsedCodexEvents): void {
       readItem(event.item, parsed)
       return
     case 'turn.completed':
+      parsed.completed = true
       parsed.usage = readUsage(event.usage)
       return
     case 'error':
       parsed.errors.push(describeError(event.message))
       return
     case 'turn.failed':
-      parsed.errors.push(
-        describeError(
-          isRecord(event.error) ? event.error.message : event.error,
-        ),
+      parsed.failure = describeError(
+        isRecord(event.error) ? event.error.message : event.error,
       )
       return
   }

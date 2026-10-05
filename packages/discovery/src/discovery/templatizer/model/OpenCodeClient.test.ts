@@ -20,8 +20,10 @@ import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
  * otherwise tell the model it works inside the repository and load the
  * repository's AGENTS.md. The scratch directory holds the config that
  * disables every tool and defines the agent whose prompt replaces
- * opencode's own, and nothing else; the turn runs as that agent, and the
- * user's CLAUDE.md is kept out by the flag opencode reads for it. The
+ * opencode's own, and an empty directory that stands in for the user's
+ * global config, which opencode would otherwise merge in; the variables
+ * that name other config sources are dropped. The turn runs as that agent,
+ * and the user's CLAUDE.md is kept out by the flag opencode reads for it. The
  * output token budget is raised above opencode's default, which a reasoning
  * model exhausts before it answers.
  */
@@ -73,7 +75,11 @@ describe(OpenCodeClient.name, () => {
       model: 'opencode-go/test-model',
       variant: 'high',
     })
-    const turn = await client.start({ prompt: 'hello model', schema: {} })
+    const previous = process.env.OPENCODE_CONFIG_CONTENT
+    process.env.OPENCODE_CONFIG_CONTENT = '{"permission":{"bash":"allow"}}'
+    const turn = await client
+      .start({ prompt: 'hello model', schema: {} })
+      .finally(() => restoreEnv('OPENCODE_CONFIG_CONTENT', previous))
 
     const {
       args,
@@ -83,6 +89,9 @@ describe(OpenCodeClient.name, () => {
       configPath,
       config,
       files,
+      configHome,
+      configHomeFiles,
+      configContent,
       outputTokenMax,
       disableClaudeCodePrompt,
     } = record()
@@ -95,7 +104,10 @@ describe(OpenCodeClient.name, () => {
     expect(OPENCODE_ISOLATION_CONFIG.agent[OPENCODE_AGENT].prompt).toEqual(
       TOOL_SYSTEM_PROMPT,
     )
-    expect(files).toEqual(['opencode.json'])
+    expect(files).toEqual(['config', 'opencode.json'])
+    expect(configHome).toEqual(path.join(cwd, 'config'))
+    expect(configHomeFiles).toEqual([])
+    expect(configContent).toEqual(undefined)
     expect(outputTokenMax).toEqual(String(OPENCODE_OUTPUT_TOKEN_MAX))
     expect(disableClaudeCodePrompt).toEqual('1')
     expect(args[args.indexOf('--model') + 1]).toEqual('opencode-go/test-model')
@@ -189,6 +201,14 @@ describe(OpenCodeClient.name, () => {
   })
 })
 
+function restoreEnv(name: string, value: string | undefined): void {
+  if (value === undefined) {
+    Reflect.deleteProperty(process.env, name)
+  } else {
+    process.env[name] = value
+  }
+}
+
 interface Record {
   args: string[]
   stdin: string
@@ -197,6 +217,9 @@ interface Record {
   configPath: string
   config: string
   files: string[]
+  configHome: string | undefined
+  configHomeFiles: string[]
+  configContent: string | undefined
   outputTokenMax: string | undefined
   disableClaudeCodePrompt: string | undefined
 }
@@ -204,8 +227,9 @@ interface Record {
 /**
  * An `opencode` stand-in: records argv, cwd, `$PWD`, the config file
  * `$OPENCODE_CONFIG` names, the scratch directory's contents (read now,
- * because the client deletes the directory after the turn) and the two
- * environment flags, counts its invocations, prints the events file (or
+ * because the client deletes the directory after the turn), the global
+ * config directory and the config environment variables, counts its
+ * invocations, prints the events file (or
  * `<events file>.<n>` on the n-th invocation, when there is one) and exits
  * cleanly.
  */
@@ -233,6 +257,9 @@ fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({
   configPath,
   config: fs.readFileSync(configPath, 'utf8'),
   files: fs.readdirSync(cwd),
+  configHome: process.env.XDG_CONFIG_HOME,
+  configHomeFiles: fs.readdirSync(process.env.XDG_CONFIG_HOME),
+  configContent: process.env.OPENCODE_CONFIG_CONTENT,
   outputTokenMax: process.env.OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX,
   disableClaudeCodePrompt: process.env.OPENCODE_DISABLE_CLAUDE_CODE_PROMPT,
 }))

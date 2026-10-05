@@ -8,11 +8,17 @@
  * the process runs in a scratch directory whose `opencode.json` disables
  * every tool (`"tools": {"*": false}`), which also drops the tool schemas
  * from the request, and defines the agent the turn runs as, whose `prompt`
- * stands in for opencode's own coding-agent system prompt; `--pure` keeps
- * user plugins out and an environment flag keeps the user's `CLAUDE.md`
- * out. The event stream is then checked for tool parts and a turn that
- * shows one is refused, so the guarantee is verified, not assumed. Repair
- * rounds continue the session by id with `--session`.
+ * stands in for opencode's own coding-agent system prompt. opencode merges
+ * that file into the user's global config rather than using it instead, and
+ * a global `"permission": {"bash": "allow"}` brings `bash` back into the
+ * request, so the global config directory is pointed at an empty one and
+ * the variables that name other config sources are dropped; the login is
+ * kept, because it lives in the data directory. `--pure` keeps user plugins
+ * out and an environment flag keeps the user's `CLAUDE.md` out. A test runs
+ * the installed opencode against a local endpoint and checks that the tool
+ * list of the request is empty, and the event stream is checked for tool
+ * parts, a turn that shows one being refused, so the guarantee is verified,
+ * not assumed. Repair rounds continue the session by id with `--session`.
  *
  * Structured output is not requested: the draft schema travels in the prompt
  * as text, as it does for Codex, and the loop validates the reply.
@@ -199,17 +205,7 @@ export class OpenCodeClient implements ModelClient {
       args,
       input.prompt,
       workDir,
-      {
-        ...process.env,
-        PWD: workDir,
-        OPENCODE_CONFIG: path.join(workDir, 'opencode.json'),
-        OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX: String(
-          OPENCODE_OUTPUT_TOKEN_MAX,
-        ),
-        // Without it opencode appends the user's ~/.claude/CLAUDE.md, the
-        // one instruction file the empty scratch directory does not keep out.
-        OPENCODE_DISABLE_CLAUDE_CODE_PROMPT: '1',
-      },
+      openCodeEnvironment(workDir),
       this.options.timeoutMs ?? DEFAULT_OPENCODE_TIMEOUT_MS,
     )
     return this.toTurn(run, Date.now() - started)
@@ -231,6 +227,7 @@ export class OpenCodeClient implements ModelClient {
         path.join(workDir, 'opencode.json'),
         JSON.stringify(OPENCODE_ISOLATION_CONFIG),
       )
+      fs.mkdirSync(path.join(workDir, 'config'))
       process.once('exit', () =>
         fs.rmSync(workDir, { recursive: true, force: true }),
       )
@@ -260,6 +257,24 @@ export class OpenCodeClient implements ModelClient {
       events: parsed.events,
       durationMs,
     }
+  }
+}
+
+function openCodeEnvironment(workDir: string): NodeJS.ProcessEnv {
+  const {
+    OPENCODE_CONFIG_CONTENT: _content,
+    OPENCODE_CONFIG_DIR: _directory,
+    ...env
+  } = process.env
+  return {
+    ...env,
+    PWD: workDir,
+    OPENCODE_CONFIG: path.join(workDir, 'opencode.json'),
+    XDG_CONFIG_HOME: path.join(workDir, 'config'),
+    OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX: String(OPENCODE_OUTPUT_TOKEN_MAX),
+    // Without it opencode appends the user's ~/.claude/CLAUDE.md, the one
+    // instruction file the empty scratch directory does not keep out.
+    OPENCODE_DISABLE_CLAUDE_CODE_PROMPT: '1',
   }
 }
 

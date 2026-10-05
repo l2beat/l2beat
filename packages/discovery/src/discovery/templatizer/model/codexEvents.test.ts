@@ -2,11 +2,11 @@ import { expect } from 'earl'
 import { parseCodexEvents } from './codexEvents'
 
 /**
- * Feeds the parser event streams shaped like codex-cli 0.155.1 emits them
- * (captured from real runs) and asserts what the client reads out of them:
- * thread id, usage, final message, errors, and above all any item that only
- * a tool could have produced, because that check is what makes the "no
- * tools" isolation verifiable.
+ * Feeds the parser event streams shaped like codex-cli emits them (captured
+ * from real runs) and asserts what the client reads out of them: thread id,
+ * usage, final message, whether the turn completed or failed, errors, and
+ * above all any item that only a tool could have produced, because that
+ * check is what makes the "no tools" isolation verifiable.
  */
 describe(parseCodexEvents.name, () => {
   const ok = [
@@ -28,9 +28,31 @@ describe(parseCodexEvents.name, () => {
       outputTokens: 5,
       reasoningOutputTokens: 2,
     })
+    expect(parsed.completed).toEqual(true)
+    expect(parsed.failure).toEqual(undefined)
     expect(parsed.errors).toEqual([])
     expect(parsed.toolItems).toEqual([])
     expect(parsed.events.length).toEqual(6)
+  })
+
+  it('keeps errors reported along a turn that then completes, such as a reconnect or an ignored setting', () => {
+    const parsed = parseCodexEvents(
+      [
+        '{"type":"thread.started","thread_id":"t"}',
+        '{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Model metadata for `x` not found."}}',
+        '{"type":"turn.started"}',
+        '{"type":"error","message":"Reconnecting... 1/2"}',
+        '{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"{}"}}',
+        '{"type":"turn.completed","usage":{"input_tokens":1,"output_tokens":1}}',
+      ].join('\n'),
+    )
+    expect(parsed.completed).toEqual(true)
+    expect(parsed.failure).toEqual(undefined)
+    expect(parsed.errors).toEqual([
+      'Model metadata for `x` not found.',
+      'Reconnecting... 1/2',
+    ])
+    expect(parsed.toolItems).toEqual([])
   })
 
   it('flags command executions, MCP calls, web searches and file changes as tool items', () => {
@@ -69,7 +91,9 @@ describe(parseCodexEvents.name, () => {
         }),
       ].join('\n'),
     )
-    expect(parsed.errors).toEqual([inner, 'plain text'])
+    expect(parsed.errors).toEqual([inner])
+    expect(parsed.failure).toEqual('plain text')
+    expect(parsed.completed).toEqual(false)
   })
 
   it('keeps lines that are not JSON instead of failing, so a stray print never loses a turn', () => {

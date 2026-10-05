@@ -1,24 +1,31 @@
 /**
- * `ModelClient` over the `codex` command line (codex-cli 0.160.0).
+ * `ModelClient` over the `codex` command line (codex-cli 0.160.1).
  *
  * Every turn is one `codex exec` process. The prompt goes in on stdin so the
- * model never needs to read a file, and the model gets nothing else: a
- * read-only sandbox, the shell tool disabled, web search disabled and the
- * user's `config.toml` ignored (which is where MCP servers would come from;
- * `--ignore-user-config` still uses the stored login). Codex's own
- * coding-agent instructions are replaced by the templatizer's system prompt
- * (`model_instructions_file`), no `AGENTS.md` is looked for
+ * model never needs to read a file, and the request offers the model no
+ * tool: the shell, web search, sub-agents, the ChatGPT apps (with the MCP
+ * resource readers that come with them), plugins and the tool suggestions
+ * that install them, `view_image`, goals and `request_user_input` are each
+ * switched off, the sandbox is read-only, and the user's `config.toml` is
+ * ignored (which is where MCP servers would come from;
+ * `--ignore-user-config` still uses the stored login). A test runs the
+ * installed codex against a local endpoint and checks that the tool list of
+ * the request is empty. The one tool no setting removes is `apply_patch`
+ * for a model whose catalogue entry asks for it (gpt-5.5 at the time of
+ * writing); the read-only sandbox refuses the write.
+ *
+ * Codex's own coding-agent instructions are replaced by the templatizer's
+ * system prompt (`model_instructions_file`), no `AGENTS.md` is looked for
  * (`project_doc_max_bytes=0`; the turn runs in a fresh temporary directory
- * outside any repository anyway), the sub-agent tools and the developer
- * message that introduces them are off (`agents.enabled=false`), and the
- * environment message naming the cwd and shell is not sent
- * (`include_environment_context=false`). What Codex still adds, and no
- * documented setting removes, is its catalogue of the skills installed on
- * the machine (4 KB of names and descriptions of local SKILL.md files, which
- * the model has no tool to read). The event stream is then checked for any
- * tool item, and a turn that shows one is refused, so "no tool ran" is
- * verified, not assumed. The first turn is not `--ephemeral` because repair
- * rounds resume the thread by id, and an ephemeral thread cannot be resumed.
+ * outside any repository anyway), and the environment message naming the
+ * cwd and shell is not sent (`include_environment_context=false`). What
+ * Codex still adds, and no documented setting removes, is its catalogue of
+ * the skills installed on the machine (names and descriptions of local
+ * SKILL.md files, which the model has no tool to read). The event stream is
+ * then checked for any tool item, and a turn that shows one is refused, so
+ * "no tool ran" is verified, not assumed. The first turn is not
+ * `--ephemeral` because repair rounds resume the thread by id, and an
+ * ephemeral thread cannot be resumed.
  *
  * `--output-schema` is off by default. The OpenAI structured-output endpoint
  * behind it is strict: it rejects `const` without `type`, and demands that
@@ -88,9 +95,24 @@ export const CODEX_ISOLATION_FLAGS: readonly string[] = [
   '-c',
   'web_search="disabled"',
   '-c',
-  'project_doc_max_bytes=0',
-  '-c',
   'agents.enabled=false',
+  // With a ChatGPT login the apps bring `mcp__codex_apps__*` (GitHub, a
+  // search service with internet access, …) and the MCP resource readers.
+  '-c',
+  'features.apps=false',
+  // Either of these two alone brings back `request_plugin_install`.
+  '-c',
+  'features.plugins=false',
+  '-c',
+  'features.tool_suggest=false',
+  '-c',
+  'features.view_image=false',
+  '-c',
+  'features.goals=false',
+  '-c',
+  'tools.experimental_request_user_input={enabled=false}',
+  '-c',
+  'project_doc_max_bytes=0',
   '-c',
   'include_environment_context=false',
 ]
@@ -233,6 +255,7 @@ export class CodexClient implements ModelClient {
 /**
  * Why a turn is refused, most fundamental first: a killed process has no
  * meaningful events, a tool item taints the answer whatever else happened,
+ * an error matters only when the turn did not complete (see `codexEvents`),
  * and only a clean turn is required to carry a thread id and a message.
  */
 function describeProblem(
@@ -250,7 +273,10 @@ function describeProblem(
       `codex turn used tools despite isolation flags: ${parsed.toolItems.join('; ')}`,
     )
   }
-  if (parsed.errors.length > 0) {
+  if (parsed.failure !== undefined) {
+    return notAnswering(`codex turn failed: ${parsed.failure}`)
+  }
+  if (!parsed.completed && parsed.errors.length > 0) {
     return notAnswering(`codex reported an error: ${parsed.errors.join('; ')}`)
   }
   if (run.exitCode !== 0) {

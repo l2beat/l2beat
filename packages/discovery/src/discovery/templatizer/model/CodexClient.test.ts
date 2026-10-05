@@ -18,8 +18,9 @@ import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
  * isolation flags on first and resumed turns, the instructions file that
  * replaces Codex's own prompt, the prompt arriving on stdin, the thread id
  * and usage read from events, the final message taken from
- * `--output-last-message`, and the three ways a turn is refused (tool item,
- * reported error, timeout).
+ * `--output-last-message`, and the ways a turn is refused (tool item,
+ * failed or unfinished turn, timeout) next to the errors that are not
+ * fatal.
  */
 describe(CodexClient.name, () => {
   let directory: string
@@ -198,6 +199,41 @@ describe(CodexClient.name, () => {
       CodexTurnError,
       /schema must have a type key[\s\S]*boom on stderr/,
     )
+  })
+
+  it('refuses a turn that failed, with the reason codex gave', async () => {
+    fs.writeFileSync(
+      eventsFile,
+      [
+        `{"type":"thread.started","thread_id":"${THREAD}"}`,
+        '{"type":"turn.started"}',
+        '{"type":"error","message":"stream disconnected"}',
+        '{"type":"turn.failed","error":{"message":"stream disconnected"}}',
+      ].join('\n'),
+    )
+    behave({ exitCode: 1 })
+    const client = new CodexClient({ binary, codexHome: directory })
+    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
+      CodexTurnError,
+      /codex turn failed: stream disconnected/,
+    )
+  })
+
+  it('takes the answer of a turn that reported an error and then completed, as after a reconnect', async () => {
+    fs.writeFileSync(
+      eventsFile,
+      [
+        `{"type":"thread.started","thread_id":"${THREAD}"}`,
+        '{"type":"turn.started"}',
+        '{"type":"error","message":"Reconnecting... 1/2"}',
+        '{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"from events"}}',
+        '{"type":"turn.completed","usage":{"input_tokens":12,"output_tokens":3}}',
+      ].join('\n'),
+    )
+    const client = new CodexClient({ binary, codexHome: directory })
+    const turn = await client.start({ prompt: 'p', schema: {} })
+    expect(turn.text).toEqual('last message file')
+    expect(turn.events.length).toEqual(5)
   })
 
   it('kills a turn that exceeds the timeout', async () => {
