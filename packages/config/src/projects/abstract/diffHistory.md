@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x7eb934834abf33e129ec51dec1123066935d61dc
+
+# Diff at Mon, 05 Oct 2026 08:43:56 GMT:
+
+- id: 1492631b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790939141
+- current timestamp: 1790939141
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790939141 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.$threshold:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x021d63885ddf7d73f976f605ae5d310b5440d490
 
 # Diff at Fri, 02 Oct 2026 12:42:15 GMT:

@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xcc1f45ba10d9b1ef318fd5f388dcab97286d5148
+
+# Diff at Mon, 05 Oct 2026 08:49:21 GMT:
+
+- id: 47bbc214
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790947397
+- current timestamp: 1790947397
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790947397 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.approvedUpgradeNoticePeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      fieldMeta.pauseGuardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.emergencyGuardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.pauseGuardianPaused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.emergencyGuardianPaused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x2dfa250ff0c7296f1144a7d594786c70a9c35003
 
 # Diff at Fri, 02 Oct 2026 13:29:44 GMT:
