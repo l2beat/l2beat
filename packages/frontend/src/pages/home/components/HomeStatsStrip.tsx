@@ -1,5 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { ChevronIcon } from '~/icons/Chevron'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -59,6 +60,13 @@ export function HomeStatsStrip({
       metric: { count: counts.dataAvailability, unit: 'projects' },
       href: '/data-availability/summary',
       icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
+      iconBgClassName: 'bg-blue-500/10',
+    },
+    {
+      label: 'Blobs',
+      metric: { count: counts.blobs, unit: 'projects' },
+      href: '/blobs',
+      icon: <BlobsIcon className="size-5 fill-blue-500" />,
       iconBgClassName: 'bg-blue-500/10',
     },
     {
