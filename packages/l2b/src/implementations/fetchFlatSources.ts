@@ -7,7 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { mkdirSync, rmSync, writeFileSync } from 'fs'
+import { cpSync, mkdirSync, renameSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
 import { pipeline, Readable } from 'stream'
 import type { ReadableStream } from 'stream/web'
@@ -20,6 +20,7 @@ import {
 
 const ENDPOINT = '/api/flat-sources'
 const NEWLINE = 0x0a
+const STAGING_DIRECTORY = '.flat@download'
 
 export async function syncFlatSources(
   cli: CliLogger,
@@ -28,32 +29,67 @@ export async function syncFlatSources(
   outputDirectory: string | undefined,
 ): Promise<void> {
   const { projectCount, projects } = await fetchFlatSources(cli, backendUrl)
-  const saving = cli.status()
-  let savedCount = 0
-  let fileCount = 0
-  for await (const project of projects) {
-    saving.update(
-      `Saving ${savedCount + 1}/${projectCount} ${project.projectId}`,
-    )
+  const { projectIds, fileCount } = await stageFlatSources(
+    cli,
+    projects,
+    projectCount,
+    discoveryPath,
+  )
+  for (const projectId of projectIds) {
+    const stagingPath = path.join(discoveryPath, projectId, STAGING_DIRECTORY)
     if (outputDirectory !== undefined) {
-      writeFlatFiles(
-        path.join(outputDirectory, project.projectId),
-        project.flat,
-      )
+      cpSync(stagingPath, path.join(outputDirectory, projectId), {
+        recursive: true,
+      })
     }
-    const flatPath = path.join(discoveryPath, project.projectId, '.flat')
+    const flatPath = path.join(discoveryPath, projectId, '.flat')
     rmSync(flatPath, { recursive: true, force: true })
-    fileCount += writeFlatFiles(flatPath, project.flat)
-    savedCount += 1
+    renameSync(stagingPath, flatPath)
   }
-  assert(savedCount === projectCount)
   const targets = [outputDirectory, discoveryPath]
     .filter((target) => target !== undefined)
     .map((target) => chalk.magenta(target))
     .join(' and ')
-  saving.done(
-    `Saved ${savedCount} projects (${fileCount} files) into ${targets}`,
+  cli.log(
+    `Saved ${projectIds.length} projects (${fileCount} files) into ${targets}`,
   )
+}
+
+async function stageFlatSources(
+  cli: CliLogger,
+  projects: AsyncGenerator<FlatSourcesApiEntry>,
+  projectCount: number,
+  discoveryPath: string,
+): Promise<{ projectIds: string[]; fileCount: number }> {
+  const staging = cli.status()
+  const projectIds: string[] = []
+  let fileCount = 0
+  try {
+    for await (const project of projects) {
+      staging.update(
+        `Staging ${projectIds.length + 1}/${projectCount} ${project.projectId}`,
+      )
+      const stagingPath = path.join(
+        discoveryPath,
+        project.projectId,
+        STAGING_DIRECTORY,
+      )
+      rmSync(stagingPath, { recursive: true, force: true })
+      projectIds.push(project.projectId)
+      fileCount += writeFlatFiles(stagingPath, project.flat)
+    }
+  } catch (error) {
+    for (const projectId of projectIds) {
+      rmSync(path.join(discoveryPath, projectId, STAGING_DIRECTORY), {
+        recursive: true,
+        force: true,
+      })
+    }
+    throw error
+  }
+  assert(projectIds.length === projectCount)
+  staging.done(`Staged ${projectIds.length} projects`)
+  return { projectIds, fileCount }
 }
 
 async function fetchFlatSources(
