@@ -25,6 +25,7 @@ import type {
   ModelResumeInput,
   ModelTurn,
   ModelTurnInput,
+  ModelUsage,
 } from './ModelClient'
 import {
   type ParsedOpenCodeEvents,
@@ -90,6 +91,9 @@ export class OpenCodeTurnError extends Error {
     readonly stderr: string,
     /** See `isRetryable`: only an unusable answer is worth asking again. */
     readonly retryable = false,
+    /** What the refused turn cost, so that a resample can count it. */
+    readonly usage?: ModelUsage,
+    readonly durationMs = 0,
   ) {
     super(message)
     this.name = 'OpenCodeTurnError'
@@ -112,9 +116,9 @@ export class OpenCodeClient implements ModelClient {
 
   /**
    * A model that emits tool-call tokens although no tool was offered gets
-   * one more fresh sample: the turn is refused either way, and a second
-   * sample usually behaves. A resumed turn is not retried, because the
-   * session already holds the first answer.
+   * one more fresh sample within the same round: the turn is refused
+   * either way, and a second sample usually behaves. A resumed turn is not
+   * retried, because the session already holds the first answer.
    */
   private async turn(
     sessionArgs: string[],
@@ -126,7 +130,40 @@ export class OpenCodeClient implements ModelClient {
       if (sessionArgs.length > 0 || !isToolUse(error)) {
         throw error
       }
-      return await this.attempt(sessionArgs, input)
+      return await this.resample(input, error as OpenCodeTurnError)
+    }
+  }
+
+  /**
+   * The refused sample stays part of the turn: its events go to the trail,
+   * which is the evidence that no tool ran, and its tokens and time count
+   * in the turn's.
+   */
+  private async resample(
+    input: ModelTurnInput,
+    refused: OpenCodeTurnError,
+  ): Promise<ModelTurn> {
+    let turn: ModelTurn
+    try {
+      turn = await this.attempt([], input)
+    } catch (error) {
+      if (!(error instanceof OpenCodeTurnError)) {
+        throw error
+      }
+      throw new OpenCodeTurnError(
+        error.message,
+        [...refused.events, ...error.events],
+        error.stderr,
+        error.retryable,
+        addUsage(refused.usage, error.usage),
+        refused.durationMs + error.durationMs,
+      )
+    }
+    return {
+      ...turn,
+      events: [...refused.events, ...turn.events],
+      usage: addUsage(refused.usage, turn.usage),
+      durationMs: refused.durationMs + turn.durationMs,
     }
   }
 
@@ -211,6 +248,8 @@ export class OpenCodeClient implements ModelClient {
         parsed.events,
         run.stderr,
         problem.retryable,
+        parsed.usage,
+        durationMs,
       )
     }
     return {
@@ -254,6 +293,26 @@ function describeProblem(
     return unusableAnswer('opencode produced no text')
   }
   return undefined
+}
+
+function addUsage(
+  a: ModelUsage | undefined,
+  b: ModelUsage | undefined,
+): ModelUsage | undefined {
+  if (a === undefined || b === undefined) {
+    return a ?? b
+  }
+  const add = (x?: number, y?: number) =>
+    x === undefined && y === undefined ? undefined : (x ?? 0) + (y ?? 0)
+  return {
+    inputTokens: add(a.inputTokens, b.inputTokens),
+    cachedInputTokens: add(a.cachedInputTokens, b.cachedInputTokens),
+    outputTokens: add(a.outputTokens, b.outputTokens),
+    reasoningOutputTokens: add(
+      a.reasoningOutputTokens,
+      b.reasoningOutputTokens,
+    ),
+  }
 }
 
 function isToolUse(error: unknown): boolean {

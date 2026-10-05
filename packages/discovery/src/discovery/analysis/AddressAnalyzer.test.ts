@@ -430,7 +430,7 @@ describe(AddressAnalyzer.name, () => {
       })
     })
 
-    describe('with a templatizer that revisits matched templates', () => {
+    describe('with a templatizer', () => {
       function analyzerWith(revisits: boolean, calls: string[]) {
         const verified: ContractSources = {
           name: 'Registry',
@@ -506,6 +506,25 @@ describe(AddressAnalyzer.name, () => {
         await analyzer.analyze(provider, address, config)
 
         expect(calls).toEqual(['settled', 'load'])
+        expect(templatizer.revisit).not.toHaveBeenCalled()
+      })
+
+      it('waits for the templatizer before applying a template a referrer suggested', async () => {
+        const calls: string[] = []
+        const { analyzer, templatizer } = analyzerWith(true, calls)
+
+        await analyzer.analyze(
+          provider,
+          address,
+          config,
+          new Set(['proj/Suggested']),
+        )
+
+        expect(calls).toEqual(['settled', 'load'])
+        expect(templatizer.settledFor).toHaveBeenOnlyCalledWith(
+          'proj/Suggested',
+          address,
+        )
         expect(templatizer.revisit).not.toHaveBeenCalled()
       })
     })

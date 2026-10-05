@@ -1145,11 +1145,23 @@ Benchmark: from `packages/discovery`,
   and notes an empty fold above the field, and keeping both would
   duplicate every event-enumerated set, where the `covered` skip that
   keeps its probe has no field and no dry run at all.
+- **Codex review, round two (2026-10-05).** Two comments on `337c76ff75`,
+  both taken. A template a referrer's field suggests was applied without
+  `settledFor`, so it could be loaded while another contract of the same
+  depth was still adding to it, and its application was not recorded for
+  the rerun warning; the `byReferrer` branch now waits and records like the
+  shape match. The OpenCode client's resample of a first turn with
+  tool-call markup dropped the refused sample: its events never reached the
+  trail, which is the evidence that no tool ran, and its tokens and time
+  were not counted. The refused sample now stays part of the turn (or of
+  the error, when the resample is refused too). The resample itself stays
+  inside the round, as designed and as run 3 (12.4c) measured it: it is the
+  client asking for a usable answer, not the loop asking for a repair.
 
 ### 12.3 Tests
 
 `pnpm test`, `pnpm typecheck` and `pnpm lint` in `packages/discovery` are
-clean (1,272 tests as of 2026-10-05, about 220 of them the templatizer's;
+clean (1,274 tests as of 2026-10-05, about 220 of them the templatizer's;
 the validator deletion removed about 60). Every remaining check has passing
 and failing cases on the real fixtures, including a full ScrollChain draft
 that passes with zero findings. The loop is tested with `FakeModelClient`
@@ -1164,8 +1176,8 @@ its own and leaves the old one byte for byte; a field that already failed
 keeps the template and its one note; a template that holds the shape but
 excludes the contract by criteria is left alone; contracts sharing a
 template take turns, a revisit of it waits for them and is skipped when they
-kept it, a
-contract that matches it as it is waits for the additions, and one that
+kept it, a contract that matches it as it is, or that a referrer suggests it
+for, waits for the additions, and one that
 applied it earlier is named in a warning), and `--ai-revisit` (fields
 appended after the existing ones with a
 provenance line, failing fields noted and shown to the model, nothing

@@ -143,10 +143,15 @@ describe(OpenCodeClient.name, () => {
       model: 'opencode-go/test-model',
     })
 
-    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
-      OpenCodeTurnError,
+    const refused: unknown = await client
+      .start({ prompt: 'p', schema: {} })
+      .catch((error: unknown) => error)
+    expect(refused).toBeA(OpenCodeTurnError)
+    expect((refused as OpenCodeTurnError).message).toInclude(
       'tool-call markup (DSML)',
     )
+    // Both samples are in the trail the loop writes for the refused round.
+    expect((refused as OpenCodeTurnError).events.length).toEqual(2)
     expect(calls()).toEqual(2)
 
     fs.writeFileSync(countFile, '0')
@@ -154,6 +159,33 @@ describe(OpenCodeClient.name, () => {
       client.resume({ threadId: 'ses_1', prompt: 'p', schema: {} }),
     ).toBeRejectedWith(OpenCodeTurnError, 'tool-call markup (DSML)')
     expect(calls()).toEqual(1)
+  })
+
+  it('keeps the refused sample in the turn that replaces it: its events, tokens and time', async () => {
+    fs.writeFileSync(
+      `${eventsFile}.1`,
+      [
+        markupTurn,
+        '{"type":"step_finish","sessionID":"ses_1","part":{"type":"step-finish","tokens":{"input":5,"output":7,"reasoning":2,"cache":{"read":50,"write":0}}}}',
+      ].join('\n'),
+    )
+    fs.writeFileSync(eventsFile, cleanTurn)
+    const client = new OpenCodeClient({
+      binary,
+      model: 'opencode-go/test-model',
+    })
+
+    const turn = await client.start({ prompt: 'p', schema: {} })
+
+    expect(calls()).toEqual(2)
+    expect(turn.text).toEqual('{"fields":{},"skips":[]}')
+    expect(turn.events.length).toEqual(5)
+    expect(turn.usage).toEqual({
+      inputTokens: 165,
+      cachedInputTokens: 150,
+      outputTokens: 10,
+      reasoningOutputTokens: 3,
+    })
   })
 })
 
@@ -173,8 +205,9 @@ interface Record {
  * An `opencode` stand-in: records argv, cwd, `$PWD`, the config file
  * `$OPENCODE_CONFIG` names, the scratch directory's contents (read now,
  * because the client deletes the directory after the turn) and the two
- * environment flags, counts its invocations, prints the events file and
- * exits cleanly.
+ * environment flags, counts its invocations, prints the events file (or
+ * `<events file>.<n>` on the n-th invocation, when there is one) and exits
+ * cleanly.
  */
 function writeFakeOpenCode(
   directory: string,
@@ -205,7 +238,9 @@ fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({
 }))
 const count = fs.existsSync(${JSON.stringify(countFile)}) ? Number(fs.readFileSync(${JSON.stringify(countFile)}, 'utf8')) : 0
 fs.writeFileSync(${JSON.stringify(countFile)}, String(count + 1))
-process.stdout.write(fs.readFileSync(${JSON.stringify(eventsFile)}, 'utf8') + '\\n')
+const numbered = ${JSON.stringify(eventsFile)} + '.' + (count + 1)
+const events = fs.existsSync(numbered) ? numbered : ${JSON.stringify(eventsFile)}
+process.stdout.write(fs.readFileSync(events, 'utf8') + '\\n')
 `,
   )
   const binary = path.join(directory, 'opencode')

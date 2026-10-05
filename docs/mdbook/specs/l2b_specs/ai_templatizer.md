@@ -169,10 +169,11 @@ contract. So is a template that already holds the contract's shape and still
 did not match: only its `criteria.json` can cause that, and the templatizer
 does not add the shape a second time. Contracts with different new code that
 share an old template take turns on it, so each one's check and prompt see
-what the previous one added. A contract the template matches as it is waits
-for those turns before discovery applies the template, so it gets the added
-fields too. One analysed earlier in the run keeps the template as it was; the
-run warns, and a second `l2b discover` applies the additions to it.
+what the previous one added. A contract the template matches as it is, or one
+a referrer's field suggests it for, waits for those turns before discovery
+applies the template, so it gets the added fields too. One analysed earlier in
+the run keeps the template as it was; the run warns, and a second
+`l2b discover` applies the additions to it.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of
@@ -349,7 +350,10 @@ and load the repository's `AGENTS.md`. A model that believes it sits in a
 coding repository goes to explore it; one that is told it is a tool answers.
 Codex gets a new directory per turn. For opencode the directory is the same
 for the whole run, because opencode keeps its sessions per directory and a
-repair turn resumes the first turn's session.
+repair turn resumes the first turn's session. A first opencode turn whose text
+holds tool-call markup is sampled once more within the same round; the refused
+sample's events, tokens and time stay part of the round, so the trail and the
+benchmark's cost show both.
 
 The trail of every contract (the prompt, each reply, the findings, the dry run,
 a summary) is written under

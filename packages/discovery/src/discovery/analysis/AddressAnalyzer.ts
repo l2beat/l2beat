@@ -100,6 +100,9 @@ export class AddressAnalyzer {
     if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
+        // With --ai another contract may be adding to this template; apply
+        // it as that leaves it, as for a shape match below.
+        await this.templatizer?.settledFor(template, address)
         // extend template even on error to make sure pruning works
         const templateValues =
           this.templateService.loadContractTemplate(template)
