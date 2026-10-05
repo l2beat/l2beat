@@ -1,23 +1,30 @@
-import { formatBpsToMbps, UnixTime } from '@l2beat/shared-pure'
+import { formatBpsToMbps, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
-import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
-import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
+  useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { useTRPC } from '~/trpc/React'
-import { rangeToResolution } from '~/utils/range/range'
+import { formatRange } from '~/utils/dates'
+import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
+import { getDaDataParams } from './getDaDataParams'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({
@@ -112,7 +119,7 @@ export function MonthlyUpdateThroughputChart({
           <ChartTooltip
             filterNull={false}
             content={
-              <ProjectDaThroughputCustomTooltip
+              <ThroughputTooltip
                 denominator={denominator}
                 resolution={rangeToResolution([from, to])}
               />
@@ -155,5 +162,53 @@ function Header({
         <MarketShare marketShare={stats.pastDayPosted / stats.dataPosted} />
       </div>
     </div>
+  )
+}
+
+function ThroughputTooltip({
+  payload,
+  label,
+  denominator,
+  resolution,
+}: CustomChartTooltipProps & {
+  denominator: number
+  resolution: ChartResolution
+}) {
+  const { meta: config } = useChart()
+  if (!payload || typeof label !== 'number') return null
+
+  return (
+    <ChartTooltipWrapper>
+      <div className="font-medium text-label-value-14 text-secondary">
+        {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
+      </div>
+      <HorizontalSeparator className="my-2" />
+      <div className="flex flex-col gap-2">
+        {payload.map((entry, index) => {
+          const configEntry = entry.name ? config[entry.name] : undefined
+          if (!configEntry || entry.hide) return null
+
+          return (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-x-6"
+            >
+              <div className="flex items-center gap-1">
+                <ChartDataIndicator
+                  type={configEntry.indicatorType}
+                  backgroundColor={configEntry.color}
+                />
+                <span className="font-medium text-label-value-14">
+                  {configEntry.label}
+                </span>
+              </div>
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                {formatBytes((entry.value ?? 0) * denominator)}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </ChartTooltipWrapper>
   )
 }

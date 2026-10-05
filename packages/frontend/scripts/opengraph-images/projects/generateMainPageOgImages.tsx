@@ -93,22 +93,6 @@ const mainPages: MainPage[] = [
     title: 'Intent Bridges',
   },
   {
-    type: 'data-availability',
-    title: 'Summary',
-  },
-  {
-    type: 'data-availability',
-    title: 'Risk Analysis',
-  },
-  {
-    type: 'data-availability',
-    title: 'Throughput',
-  },
-  {
-    type: 'data-availability',
-    title: 'Liveness',
-  },
-  {
     type: 'privacy',
     title: 'Summary',
   },

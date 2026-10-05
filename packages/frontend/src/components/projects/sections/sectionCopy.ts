@@ -56,9 +56,6 @@ export const COSTS_DESCRIPTION =
 export const DATA_POSTED_DESCRIPTION =
   'This section shows how much data the project publishes to its data-availability (DA) layer over time.'
 
-export const THROUGHPUT_DESCRIPTION =
-  'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.'
-
 export const L3_RISKS_DESCRIPTION =
   'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'
 
@@ -109,9 +106,6 @@ export const ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON =
 
 export const PROJECT_UNVERIFIED_CONTRACTS_WARNING =
   'This project includes unverified contracts.'
-
-export const BRIDGE_UNVERIFIED_CONTRACTS_WARNING =
-  'This bridge includes unverified contracts.'
 
 export const DEPLOYMENT_RISKS_INTRO =
   'The current deployment carries some associated risks:'

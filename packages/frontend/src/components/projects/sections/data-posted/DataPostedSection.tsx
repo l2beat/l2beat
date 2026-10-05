@@ -3,7 +3,6 @@ import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { CustomLink } from '~/components/link/CustomLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
@@ -15,12 +14,10 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
   currentDaLayers: {
     name: string
     logo: string
-    href: string
   }[]
   pastDaLayers: {
     name: string
     logo: string
-    href: string
   }[]
   milestones: Milestone[]
   defaultRange: ChartRange
@@ -44,32 +41,14 @@ export function DataPostedSection({
         {DATA_POSTED_DESCRIPTION} The project currently posts data to
         <span>
           {currentDaLayers.map((daLayer) => (
-            <CustomLink key={daLayer.href} href={daLayer.href} className="ml-1">
-              <img
-                src={daLayer.logo}
-                alt={daLayer.name}
-                className="mr-1 inline-block size-5"
-              />
-              <span>{daLayer.name}</span>
-            </CustomLink>
+            <DaLayerName key={daLayer.name} daLayer={daLayer} />
           ))}
         </span>
         {pastDaLayers.length > 0 && (
           <span>
             ; previously it posted to
             {pastDaLayers.map((daLayer) => (
-              <CustomLink
-                key={daLayer.href}
-                href={daLayer.href}
-                className="ml-1"
-              >
-                <img
-                  src={daLayer.logo}
-                  alt={daLayer.name}
-                  className="mr-1 inline-block size-5"
-                />
-                <span>{daLayer.name}</span>
-              </CustomLink>
+              <DaLayerName key={daLayer.name} daLayer={daLayer} />
             ))}
           </span>
         )}
@@ -87,5 +66,18 @@ export function DataPostedSection({
       <HorizontalSeparator className="my-4" />
       <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
     </ProjectSection>
+  )
+}
+
+function DaLayerName({ daLayer }: { daLayer: { name: string; logo: string } }) {
+  return (
+    <span className="ml-1 font-medium">
+      <img
+        src={daLayer.logo}
+        alt={daLayer.name}
+        className="mr-1 inline-block size-5"
+      />
+      {daLayer.name}
+    </span>
   )
 }

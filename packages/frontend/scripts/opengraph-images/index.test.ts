@@ -10,7 +10,6 @@ describe('opengraph images', () => {
     const projects = await ps.getProjects({
       optional: [
         'scalingInfo',
-        'daLayer',
         'zkCatalogInfo',
         'interopConfig',
         'privacyInfo',

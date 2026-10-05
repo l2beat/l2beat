@@ -29,7 +29,7 @@ import { formatRiskValue, formatRiskWarning } from './renderSectionRiskValues'
  * shared page sections live here, so the markdown outline follows the HTML
  * page outline whichever kind renders it.
  */
-export interface ProjectMarkdown {
+interface ProjectMarkdown {
   name: string
   apiLinks: ApiLinks
   /** Site path of the HTML page, which the document's links resolve against. */

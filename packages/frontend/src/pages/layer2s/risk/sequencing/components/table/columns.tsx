@@ -15,7 +15,7 @@ const columnHelper = createColumnHelper<L2RiskSequencingEntry>()
 
 function getSequencingHref(entry: L2RiskSequencingEntry) {
   if (entry.slug === 'ethereum') {
-    return '/data-availability/projects/ethereum/ethereum'
+    return undefined
   }
   return `/layer2s/projects/${entry.slug}#sequencing`
 }

@@ -3,7 +3,6 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { DefiIcon } from '~/icons/pages/Defi'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
@@ -162,43 +161,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     icon: (
       <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
-  },
-  {
-    type: 'multiple',
-    title: 'Data Availability',
-    match: 'data-availability',
-    icon: (
-      <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
-    ),
-    links: [
-      [
-        {
-          title: 'Summary',
-          href: '/data-availability/summary',
-        },
-        {
-          title: 'Risk Analysis',
-          shortTitle: 'Risks',
-          href: '/data-availability/risk',
-        },
-        {
-          title: 'Throughput',
-          shortTitle: 'Throughput',
-          href: '/data-availability/throughput',
-        },
-        {
-          title: 'Liveness',
-          shortTitle: 'Liveness',
-          href: '/data-availability/liveness',
-        },
-      ],
-      [
-        {
-          title: 'Archived',
-          href: '/data-availability/archived',
-        },
-      ],
-    ],
   },
   {
     type: 'multiple',

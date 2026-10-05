@@ -115,18 +115,6 @@ describe(createMarkdownAlternatesRouter.name, () => {
       active.map((p) => `/zk-catalog/${p.slug}`).toSorted(),
     )
   })
-
-  // The HTML summary shows them in its Custom tab, linked to the project.
-  it('lists every active custom DA solution', async () => {
-    const custom = await ps.getProjects({
-      where: ['customDa'],
-      whereNot: ['archivedAt'],
-    })
-
-    const paths = await getLinkPaths('/data-availability/summary.md')
-
-    expect(paths).toInclude(...custom.map((p) => `/layer2s/projects/${p.slug}`))
-  })
 })
 
 async function getLinkPaths(path: MarkdownAlternatePath): Promise<string[]> {

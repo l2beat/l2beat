@@ -23,10 +23,6 @@ export function getBadgeLink(
     })}`
   }
 
-  if (badge.action.type === 'publicDaHighlight') {
-    return `/data-availability/summary?highlight=${badge.action.slug}`
-  }
-
   if (badge.action.type === 'selfDaHighlight') {
     return `/layer2s/risk/data-availability?tab=${getL2Tab(project)}&highlight=${project.slug}`
   }
