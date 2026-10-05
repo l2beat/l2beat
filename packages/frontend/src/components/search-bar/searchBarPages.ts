@@ -115,6 +115,12 @@ export const searchBarPages = withIndex([
       ]
     : []),
   {
+    category: 'other',
+    name: 'Blobs',
+    href: '/blobs',
+    tags: ['pages', 'blobs', 'da', 'data', 'availability'],
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
