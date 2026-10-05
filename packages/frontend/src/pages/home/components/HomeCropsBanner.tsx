@@ -35,10 +35,10 @@ export function HomeCropsBanner({
     return null
   }
   return (
-    // The one boxed element on the page: a corner of the garden itself.
+    // A card, its background a corner of the garden itself.
     <div
       className={cn(
-        'relative overflow-hidden border-garden-border border-y md:rounded-lg md:border-x dark:border-[#1d2a36]',
+        'relative overflow-hidden rounded-xl border border-garden-border dark:border-[#1d2a36]',
         className,
       )}
     >
