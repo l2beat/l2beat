@@ -5,7 +5,12 @@ import { constants, createZstdCompress } from 'zlib'
 
 import type { FlatSourcesController } from './FlatSourcesController'
 
-export function createFlatSourcesRouter(controller: FlatSourcesController) {
+const STREAM_DEADLINE_MS = 5 * 60 * 1000
+
+export function createFlatSourcesRouter(
+  controller: FlatSourcesController,
+  streamDeadlineMs = STREAM_DEADLINE_MS,
+) {
   const router = new Router()
   let streaming = false
 
@@ -16,6 +21,7 @@ export function createFlatSourcesRouter(controller: FlatSourcesController) {
       return
     }
     streaming = true
+    const deadline = setTimeout(() => ctx.res.destroy(), streamDeadlineMs)
     ctx.type = 'application/zstd'
     ctx.compress = false
     ctx.body = pipeline(
@@ -31,6 +37,7 @@ export function createFlatSourcesRouter(controller: FlatSourcesController) {
         },
       }),
       (error) => {
+        clearTimeout(deadline)
         streaming = false
         if (error) {
           ctx.res.destroy(error)

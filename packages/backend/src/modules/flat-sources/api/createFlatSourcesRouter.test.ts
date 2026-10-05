@@ -3,7 +3,7 @@ import type { Database, FlatSourcesJsonRecord } from '@l2beat/database'
 import { FLAT_SOURCES_ZSTD_WINDOW_LOG, Hash256 } from '@l2beat/shared-pure'
 import { randomBytes } from 'crypto'
 import { expect, mockObject } from 'earl'
-import { createServer, type Server } from 'http'
+import { createServer, get, type IncomingMessage, type Server } from 'http'
 import type { AddressInfo } from 'net'
 import { constants, zstdDecompressSync } from 'zlib'
 import { ApiServer } from '../../../api/ApiServer'
@@ -148,12 +148,47 @@ describe(createFlatSourcesRouter.name, () => {
     expect(later.status).toEqual(200)
   })
 
-  async function listen(flatSources: Database['flatSources']) {
+  it('releases the stream after the deadline when the client stops reading', async () => {
+    const flatSources = mockObject<Database['flatSources']>({
+      getProjectIds: async () =>
+        Array.from({ length: 1000 }, (_, index) => `project-${index}`),
+      getJson: async (projectId) =>
+        jsonRecord(projectId, {
+          'A.sol': randomBytes(1_000_000).toString('hex'),
+        }),
+    })
+    const url = await listen(flatSources, 200)
+    const stalled = await new Promise<IncomingMessage>((resolve) =>
+      get(url, resolve),
+    )
+    stalled.pause()
+
+    const statuses: number[] = []
+    for (let attempt = 0; attempt < 100; attempt++) {
+      const response = await fetch(url)
+      await response.body?.cancel()
+      statuses.push(response.status)
+      if (response.status === 200) {
+        break
+      }
+      await new Promise((resolve) => setTimeout(resolve, 20))
+    }
+    stalled.destroy()
+
+    expect(stalled.statusCode).toEqual(200)
+    expect(statuses[0]).toEqual(503)
+    expect(statuses.at(-1)).toEqual(200)
+  })
+
+  async function listen(
+    flatSources: Database['flatSources'],
+    streamDeadlineMs?: number,
+  ) {
     const controller = new FlatSourcesController(
       mockObject<Database>({ flatSources }),
     )
     const apiServer = new ApiServer(0, Logger.SILENT, [
-      createFlatSourcesRouter(controller),
+      createFlatSourcesRouter(controller, streamDeadlineMs),
     ])
     const listening = createServer(apiServer.getNodeCallback())
     server = listening
