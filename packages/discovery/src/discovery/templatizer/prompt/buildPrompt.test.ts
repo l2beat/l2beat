@@ -1,16 +1,12 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { toJsonSchema } from '@l2beat/validate'
+import { ChainSpecificAddress, parseJsonc } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  type DraftHandler,
-  DraftShape,
-  HANDLER_TYPES,
-  handlerSchemaFor,
-  SKIP_REASONS,
-} from '../draft/Draft'
+import { ContractConfigSchema } from '../../../schemas/schemas'
+import { StructureContract } from '../../config/StructureConfig'
+import { UserHandlers } from '../../handlers/user'
+import { schemaProblems } from '../draft/schemaProblems'
 import type { ContractFacts } from '../facts'
 import { FIXTURE_NAMES, loadFixture } from '../test/fixtures'
-import { buildWorklist, worklistTokens } from '../worklist'
+import { buildWorklist } from '../worklist'
 import {
   buildPrompt,
   DEFAULT_SOURCE_CHAR_CAP,
@@ -21,8 +17,9 @@ import {
   VALUE_CHAR_CAP,
   WORKED_EXAMPLE,
   WORKED_EXAMPLE_INTRO,
+  WORKED_EXAMPLE_OUTRO,
 } from './buildPrompt'
-import { draftJsonSchema } from './draftJsonSchema'
+import { DOCUMENTED_HANDLER_TYPES, draftJsonSchema } from './draftJsonSchema'
 import { HANDLER_DOCS } from './handlerDocs'
 import { parseReadme } from './readmeSections'
 
@@ -30,10 +27,10 @@ import { parseReadme } from './readmeSections'
  * Renders prompts for the real fixture contracts and pins what the model is
  * shown: the five sections in order and byte-identical across runs, every
  * worklist item and event, baseline values with long ones elided, existing
- * fields only when there are some, the proxy source first and the source
+ * template only when there is one, the proxy source first and the source
  * budget. The worked example and the handler docs examples are checked
- * against the same schemas the validator uses, so the prompt never teaches
- * a form the validator refuses.
+ * against V1's own schemas, as the validator checks a reply, so the prompt
+ * never teaches a form the validator refuses.
  */
 describe(buildPrompt.name, () => {
   const inputFor = (facts: ContractFacts): PromptInput => ({
@@ -61,67 +58,87 @@ describe(buildPrompt.name, () => {
     }
   })
 
-  it('states the rules the validator enforces, numbered with output last', () => {
+  it('states the rules, with what needs no field and an example of each, numbered with output last', () => {
     const rules = section(buildPrompt(scrollChain()).prompt, 'rules')
-    for (const reason of SKIP_REASONS) {
+    for (const kind of [
+      'A computation:',
+      'User activity:',
+      'Unbounded state:',
+      'State already shown:',
+      'Not state:',
+    ]) {
       const definition = rules
         .split('\n')
-        .find((line) => line.trimStart().startsWith(`- \`${reason}\`:`))
+        .find((line) => line.trimStart().startsWith(`- ${kind}`))
       expect(definition ?? '').toInclude('Example:')
     }
     for (const title of [
       'Shape.',
       'Name.',
-      'Selection.',
-      'Covers.',
+      'Place.',
+      'What to read.',
+      'Enumeration source.',
       'Event-only state.',
       'Privileged events.',
       'Roles.',
       'References.',
       'Literals.',
-      'Only the draft.',
+      'Reason.',
+      'User activity is never fetched.',
     ]) {
       expect(rules).toInclude(`**${title}**`)
     }
     expect(rules).toInclude('`["format", "FormatSeconds"]`')
     expect(rules).toInclude('`["!=", "#arg", literal]`')
     expect(rules).toInclude('`eth:0x…`')
-    expect(rules).toInclude('`ignoreMethods` is derived from your skips')
+    expect(rules).toInclude('are the researcher’s to write')
     expect(rules).toInclude('since `array` takes no `uint8` key')
     expect(HANDLER_DOCS).toInclude('A `uint8` key is not accepted')
     expect(rules).toMatchRegex(
-      /\n15\. \*\*Output\.\*\* Reply with exactly one JSON object/,
+      /\n13\. \*\*Output\.\*\* Reply with exactly one JSON object/,
     )
-    expect(rules).not.toInclude('**Existing fields.**')
+    expect(rules).not.toInclude('**Existing template.**')
   })
 
-  it('shows the schema and a worked example that has the draft shape', () => {
+  it('shows the schema and a worked example V1’s template schema accepts, every field with a reason', () => {
     const schemaSection = section(buildPrompt(scrollChain()).prompt, 'schema')
     expect(schemaSection).toInclude(JSON.stringify(draftJsonSchema(), null, 2))
+    expect(schemaSection).toInclude(WORKED_EXAMPLE_OUTRO)
 
     const example = JSON.parse(
       jsonBlockAfter(schemaSection, WORKED_EXAMPLE_INTRO),
     )
     expect(example).toEqual(WORKED_EXAMPLE)
-    expect(DraftShape.safeValidate(example).success).toEqual(true)
-    for (const field of Object.values(WORKED_EXAMPLE.fields)) {
-      expect(
-        handlerSchemaFor(field.handler).safeParse(field.handler).success,
-      ).toEqual(true)
-    }
+    const fields: Record<string, Record<string, unknown>> = example.fields
+    const withoutReasons = Object.fromEntries(
+      Object.entries(fields).map(([name, { reason, ...field }]) => {
+        expect(typeof reason).toEqual('string')
+        return [name, field]
+      }),
+    )
+    expect(
+      schemaProblems(ContractConfigSchema, { fields: withoutReasons }, ''),
+    ).toEqual([])
   })
 
   it('takes the worked example from a contract outside the benchmark suite', () => {
-    const suiteTokens = new Set(
-      FIXTURE_NAMES.flatMap((name) =>
-        worklistTokens(inputFor(loadFixture(name)).worklist),
-      ),
+    const suiteNames = new Set(
+      FIXTURE_NAMES.flatMap((name) => {
+        const { items, events } = inputFor(loadFixture(name)).worklist
+        return [...items, ...events].map((item) => item.name)
+      }),
     )
-    const answered = Object.values(WORKED_EXAMPLE.fields).flatMap(
-      (field) => field.covers,
+    const read = JSON.stringify(WORKED_EXAMPLE).match(
+      /"(event|method)":"[A-Za-z]+"/g,
     )
+    const names = (read ?? []).map((pair) => pair.split(':')[1]?.slice(1, -1))
 
-    expect(answered.filter((token) => suiteTokens.has(token))).toEqual([])
+    expect(names).toEqual([
+      'UpdateChallenger',
+      'UpdateChallenger',
+      'rollupDelayPeriod',
+    ])
+    expect(names.filter((name) => suiteNames.has(name ?? ''))).toEqual([])
   })
 
   it('embeds the handler docs as section 3', () => {
@@ -147,10 +164,10 @@ describe(buildPrompt.name, () => {
       }
       const ctor = input.worklist.constructorItem
       if (ctor === undefined) {
-        expect(facts).not.toInclude('### Constructor needing a verdict')
+        expect(facts).not.toInclude('### Constructor')
       } else {
         expect(facts).toInclude(
-          `### Constructor needing a verdict\n\n- \`${ctor.signature}\`: ${ctor.fragment}`,
+          `### Constructor\n\n- \`${ctor.signature}\`: ${ctor.fragment}`,
         )
       }
     }
@@ -214,42 +231,37 @@ describe(buildPrompt.name, () => {
     )
   })
 
-  it('renders existing fields, marked when they fail, and their rule only when there are some', () => {
+  it('renders the existing template verbatim and its failing fields, and its rule only when there is one', () => {
+    const text = `{
+  "fields": {
+    // kept
+    "sequencers": {
+      "handler": { "type": "event", "select": "account", "add": { "event": "UpdateSequencer" } }
+    }
+  }
+}
+`
     const input: PromptInput = {
       ...scrollChain(),
-      existing: [
-        {
-          name: 'sequencers',
-          text: '// kept\n    "sequencers": {\n      "handler": { "type": "event", "select": "account", "add": { "event": "UpdateSequencer" } }\n    }',
-        },
-        {
-          name: 'broken',
-          text: '"broken": { "handler": { "type": "call", "method": "nope", "args": [] } }',
-          error: 'Execution reverted',
-        },
-      ],
+      existing: existingTemplate(text, [
+        { name: 'broken', error: 'Execution reverted' },
+      ]),
     }
     const { prompt } = buildPrompt(input)
     const facts = section(prompt, 'facts')
-    expect(facts).toInclude('### Existing fields (2)')
     expect(facts).toInclude(
-      ['```jsonc', input.existing?.[0]?.text, '```'].join('\n'),
+      '### The template this contract already has (`scroll/ScrollChain`)',
     )
+    expect(facts).toInclude(['```jsonc', text.trimEnd(), '```'].join('\n'))
     expect(facts).toInclude(
-      [
-        '```jsonc',
-        `// fails at block ${input.facts.blockNumber}: Execution reverted`,
-        input.existing?.[1]?.text,
-        '```',
-      ].join('\n'),
+      `- \`broken\` fails at block ${input.facts.blockNumber}: Execution reverted`,
     )
-    expect(facts).toInclude('kept exactly as they are')
-    expect(section(prompt, 'rules')).toInclude('**Existing fields.**')
-    expect(section(prompt, 'rules')).toMatchRegex(/\n16\. \*\*Output\.\*\*/)
+    expect(section(prompt, 'rules')).toInclude('**Existing template.**')
+    expect(section(prompt, 'rules')).toMatchRegex(/\n14\. \*\*Output\.\*\*/)
 
-    const fresh = buildPrompt({ ...scrollChain(), existing: [] }).prompt
-    expect(fresh).not.toInclude('### Existing fields')
-    expect(fresh).not.toInclude('**Existing fields.**')
+    const fresh = buildPrompt(scrollChain()).prompt
+    expect(fresh).not.toInclude('### The template this contract already has')
+    expect(fresh).not.toInclude('**Existing template.**')
   })
 
   it('adds the README sections for handlers and edits the existing fields use beyond the seven types, and only then', () => {
@@ -271,25 +283,27 @@ describe(buildPrompt.name, () => {
     )
     const generic: PromptInput = {
       ...scrollChain(),
-      existing: [
-        {
-          name: 'a',
-          text: '"a": {}',
-          handler: { type: 'event' },
-          edit: ['get', 'x'],
-        },
-      ],
+      existing: existingTemplate(
+        JSON.stringify({
+          fields: {
+            a: {
+              handler: { type: 'event', add: { event: 'X' } },
+              edit: ['get', 'x'],
+            },
+          },
+        }),
+      ),
     }
     const specific: PromptInput = {
       ...scrollChain(),
-      existing: [
-        {
-          name: 'roles',
-          text: '"roles": {}',
-          handler: { type: 'scrollAccessControl' },
-        },
-        { name: 'b', text: '"b": {}', edit: ['pipe', ['get', 'x']] },
-      ],
+      existing: existingTemplate(
+        JSON.stringify({
+          fields: {
+            roles: { handler: { type: 'scrollAccessControl' } },
+            b: { edit: ['pipe', ['get', 'x']] },
+          },
+        }),
+      ),
     }
 
     const plain = buildPrompt(generic, { readme }).prompt
@@ -379,70 +393,67 @@ describe(draftJsonSchema.name, () => {
     )
   })
 
-  it('equals the DraftShape schema except that handler is the union of the handler definitions', () => {
+  it('is V1’s template field cut to handler, edit and reason, handler one of the documented types', () => {
     const schema = draftJsonSchema() as {
       definitions: Record<string, unknown>
       properties: {
         fields: {
-          additionalProperties: { properties: Record<string, unknown> }
+          additionalProperties: {
+            properties: Record<string, unknown>
+            required: string[]
+          }
         }
       }
     }
-    const { definitions, ...shape } = structuredClone(schema)
-    const fieldProperties =
-      shape.properties.fields.additionalProperties.properties
-    expect(fieldProperties.handler).toEqual({
-      anyOf: Object.keys(definitions)
-        .filter((name) => name.endsWith('Handler'))
-        .map((name) => ({ $ref: `#/definitions/${name}` })),
+    const field = schema.properties.fields.additionalProperties
+    expect(Object.keys(field.properties)).toEqual(['handler', 'edit', 'reason'])
+    expect(field.required).toEqual(['handler', 'reason'])
+    expect(field.properties.handler).toEqual({
+      anyOf: DOCUMENTED_HANDLER_TYPES.map((type) => ({
+        $ref: `#/definitions/${type}Handler`,
+      })),
     })
-    fieldProperties.handler = {}
-    expect(shape).toEqual(toJsonSchema(DraftShape) as typeof shape)
-  })
-
-  it('defines every handler type, strict, with its type literal', () => {
-    const { definitions } = draftJsonSchema() as {
-      definitions: Record<
-        string,
-        {
-          properties: { type?: { const: string } }
-          additionalProperties: boolean
-        }
-      >
-    }
-    const types = Object.values(definitions)
-      .map((definition) => definition.properties.type?.const)
-      .filter((type) => type !== undefined)
-    expect([...new Set(types)]).toEqual([...HANDLER_TYPES])
-    for (const definition of Object.values(definitions)) {
-      expect(definition.additionalProperties).toEqual(false)
-    }
+    expect(Object.keys(schema.definitions)).toEqual(
+      DOCUMENTED_HANDLER_TYPES.map((type) => `${type}Handler`),
+    )
   })
 })
 
 describe('HANDLER_DOCS', () => {
-  it('documents every handler type and edit', () => {
-    for (const type of [...HANDLER_TYPES, 'edit']) {
+  it('documents every documented handler type and edit', () => {
+    for (const type of [...DOCUMENTED_HANDLER_TYPES, 'edit']) {
       expect(HANDLER_DOCS).toInclude(`\n### ${type}\n`)
     }
   })
 
-  it('shows only examples that pass the validator’s handler schemas', () => {
+  it('shows only examples V1’s own handler schemas accept, with no key they do not name', () => {
     const examples = jsonBlocks(HANDLER_DOCS).flatMap((block) =>
-      block.split('\n').map((line) => JSON.parse(line) as DraftHandler),
+      block
+        .split('\n')
+        .map((line) => JSON.parse(line) as { type: keyof typeof UserHandlers }),
     )
-    expect(examples.length).toBeGreaterThanOrEqual(HANDLER_TYPES.length)
     expect([...new Set(examples.map((handler) => handler.type))]).toEqual([
-      ...HANDLER_TYPES,
+      ...DOCUMENTED_HANDLER_TYPES,
     ])
     for (const handler of examples) {
-      expect(handlerSchemaFor(handler).safeParse(handler)).toEqual({
-        success: true,
-        data: expect.anything(),
-      })
+      expect(schemaProblems(UserHandlers[handler.type], handler, '')).toEqual(
+        [],
+      )
     }
   })
 })
+
+function existingTemplate(
+  text: string,
+  failing: { name: string; error: string }[] = [],
+): PromptInput['existing'] {
+  return {
+    templateId: 'scroll/ScrollChain',
+    text,
+    template: StructureContract.parse(parseJsonc(text)),
+    failing,
+  }
+}
 
 function section(prompt: string, key: keyof typeof SECTION_HEADERS): string {
   const headers = Object.values(SECTION_HEADERS)

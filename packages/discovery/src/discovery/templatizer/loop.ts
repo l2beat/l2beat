@@ -22,6 +22,7 @@ import type { Draft } from './draft/Draft'
 import type { DryRunRecord } from './draft/dryRun'
 import type { Finding } from './draft/Finding'
 import {
+  type CheckedDraft,
   type ValidationContext,
   validateDraftText,
 } from './draft/validateDraft'
@@ -41,7 +42,7 @@ export interface LoopDeps {
   artifacts: ArtifactSink
   logger: Logger
   dryRun: (
-    draft: Draft,
+    draft: CheckedDraft,
   ) => Promise<{ record: DryRunRecord; findings: Finding[] }>
 }
 
@@ -165,17 +166,17 @@ class AuthoringLoop {
   ): Promise<Draft | undefined> {
     const validated = validateDraftText(text, this.input.validation)
     record.findings.push(...validated.findings)
-    if (validated.draft === undefined || record.findings.length > 0) {
+    if (validated.checked === undefined) {
       return undefined
     }
-    const dry = await this.deps.dryRun(validated.draft)
+    const dry = await this.deps.dryRun(validated.checked)
     record.dryRun = dry.record
     record.findings.push(...dry.findings)
     this.deps.artifacts.write(
       `round-${index}.dryrun.json`,
       JSON.stringify(dry.record, null, 2),
     )
-    return record.findings.length > 0 ? undefined : validated.draft
+    return record.findings.length > 0 ? undefined : validated.checked.draft
   }
 
   private turn(message: string): Promise<ModelTurn> {
@@ -309,7 +310,7 @@ export function repairMessage(findings: readonly Finding[]): string {
     ),
     '',
     'You have no tools: do not try to read files or run commands, fix the draft from the messages above alone.',
-    'Return the whole corrected draft as one JSON object and nothing else.',
+    'Return the whole corrected reply as one JSON object and nothing else.',
   ].join('\n')
 }
 

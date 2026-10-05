@@ -2,11 +2,13 @@
  * The draft runs for real before it is accepted.
  *
  * The validator proves a draft is well-formed; only execution proves it
- * reads something. The run goes through V1's own `HandlerExecutor` with the
- * analyzer's own config for the address (the project and global `types`,
- * the override from `config.jsonc`) plus the template the file will hold,
- * so a draft that passes here yields the same values once written, and a
- * draft that fails here failed for the reason V1 gives.
+ * reads something. The run goes through V1's own `HandlerExecutor` with
+ * discovery's config for the address (the project and global `types`, the
+ * override from `config.jsonc`) plus the template the file will hold, so a
+ * draft that passes here yields the same values once written, and a draft
+ * that fails here failed for the reason V1 gives. Only the fields the draft
+ * adds are judged; the template's own fields run too, so references to
+ * them resolve.
  *
  * A field that errors is a finding for the next repair round, because the
  * model can usually fix it (a method that reverts, a wrong argument, an
@@ -20,25 +22,23 @@
  */
 import { getErrorMessage } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { StructureContract } from '../../config/StructureConfig'
+import type {
+  StructureContract,
+  StructureContractField,
+} from '../../config/StructureConfig'
 import {
   type StructureContractConfig,
   withTemplate,
 } from '../../config/structureUtils'
 import type { HandlerResult } from '../../handlers/Handler'
 import type { HandlerExecutor } from '../../handlers/HandlerExecutor'
+import type { EventHandlerDefinition } from '../../handlers/user/EventHandler'
 import { getEventFragment } from '../../handlers/utils/getEventFragment'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { toAddressArray } from '../../utils/extractors'
 import { AbiIndex } from '../abi/AbiIndex'
 import type { ContractFacts } from '../facts'
-import {
-  type Draft,
-  type DraftField,
-  eventActions,
-  eventNamesOf,
-} from './Draft'
 import { type Finding, Findings, fieldPath } from './Finding'
 
 export interface FieldRun {
@@ -53,18 +53,6 @@ export interface FieldRun {
 export interface DryRunRecord {
   blockNumber: number
   fields: FieldRun[]
-}
-
-export interface DryRunOptions {
-  /** The analyzer's config for the address before any template. */
-  config: StructureContractConfig
-  /**
-   * What the template file will hold besides the draft's fields: an
-   * existing template as it is (its fields run too, so references resolve
-   * and the model's additions are judged next to them), or the
-   * `ignoreMethods` a new template gets.
-   */
-  base?: StructureContract
 }
 
 type Facts = Pick<ContractFacts, 'address' | 'abi'>
@@ -82,7 +70,7 @@ interface RunFailure {
 }
 
 /**
- * Runs a template exactly as the analyzer would for this address, at the
+ * Runs a template exactly as discovery would for this address, at the
  * provider's block: `config` with `template` pushed, through
  * `HandlerExecutor`. Never throws for a handler/edit failure: that becomes
  * the field's error. A failure of the run as a whole is given to every
@@ -111,63 +99,35 @@ export async function runTemplateFields(
   return run
 }
 
-/** The dry run of a draft. Findings and notes are for draft fields only, never the base's. */
+/**
+ * The dry run of the template the file will hold, at the provider's
+ * block, with `config` the address's config before any template. Findings
+ * and notes are for `added` alone, the fields the draft adds.
+ */
 export async function dryRunDraft(
   provider: IProvider,
   handlerExecutor: HandlerExecutor,
   facts: ContractFacts,
-  draft: Draft,
-  options: DryRunOptions,
+  draft: { template: StructureContract; added: string[] },
+  config: StructureContractConfig,
 ): Promise<{ record: DryRunRecord; findings: Finding[] }> {
   const blockNumber = provider.blockNumber
-  const template = draftTemplate(draft, options.base)
-  if ('failure' in template) {
-    return failedDryRun(blockNumber, draft, template.failure)
-  }
   const run = await runOrFail(
     provider,
     handlerExecutor,
     facts.abi,
-    withTemplate(options.config, template),
+    withTemplate(config, draft.template),
   )
   if ('failure' in run) {
-    return failedDryRun(blockNumber, draft, run.failure)
+    return failedDryRun(blockNumber, draft.added, run.failure)
   }
   const findings = new Findings()
   const fields: FieldRun[] = []
-  for (const [name, field] of Object.entries(draft.fields)) {
+  for (const name of draft.added) {
+    const field = draft.template.fields[name] ?? {}
     fields.push(await checkField(provider, facts, name, field, run, findings))
   }
   return { record: { blockNumber, fields }, findings: findings.list }
-}
-
-/** The template the file will hold: the base as it is, plus the draft's fields. */
-function draftTemplate(
-  draft: Draft,
-  base: StructureContract | undefined,
-): StructureContract | RunFailure {
-  try {
-    return StructureContract.parse({
-      ...base,
-      fields: { ...base?.fields, ...draftTemplateFields(draft) },
-    })
-  } catch (error) {
-    return {
-      failure: `the draft is not a valid V1 template: ${getErrorMessage(error)}`,
-    }
-  }
-}
-
-/** What the template file will hold for each field: handler and edit only. */
-function draftTemplateFields(draft: Draft): Record<string, unknown> {
-  return Object.fromEntries(
-    Object.entries(draft.fields).map(([name, field]) => [
-      name,
-      field.edit === undefined
-        ? { handler: field.handler }
-        : { handler: field.handler, edit: field.edit },
-    ]),
-  )
 }
 
 /**
@@ -179,15 +139,15 @@ function draftTemplateFields(draft: Draft): Record<string, unknown> {
  */
 function failedDryRun(
   blockNumber: number,
-  draft: Draft,
+  added: string[],
   failure: string,
 ): { record: DryRunRecord; findings: Finding[] } {
   const findings = new Findings()
   findings.error(
     'draft',
-    `dry run at block ${blockNumber} failed as a whole: ${failure}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
+    `dry run at block ${blockNumber} failed as a whole: ${failure}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
   )
-  const fields = Object.keys(draft.fields).map(
+  const fields = added.map(
     (name): FieldRun => ({ name, size: 'error', error: failure, notes: [] }),
   )
   return { record: { blockNumber, fields }, findings: findings.list }
@@ -198,7 +158,7 @@ async function checkField(
   provider: IProvider,
   facts: Facts,
   name: string,
-  field: DraftField,
+  field: StructureContractField,
   run: FieldValues,
   findings: Findings,
 ): Promise<FieldRun> {
@@ -206,7 +166,7 @@ async function checkField(
   if (error !== undefined) {
     findings.error(
       fieldPath(name),
-      `dry run at block ${provider.blockNumber} failed: ${error}; fix the handler or skip the item`,
+      `dry run at block ${provider.blockNumber} failed: ${error}; fix the handler or leave the field out`,
     )
     return { name, size: 'error', error, notes: [] }
   }
@@ -227,14 +187,14 @@ async function checkField(
  */
 function resolvedMethodNote(
   name: string,
-  field: DraftField,
+  field: StructureContractField,
   results: HandlerResult[],
 ): string[] {
-  if (field.handler.type !== 'call' && field.handler.type !== 'array') {
+  const handler = field.handler
+  if (handler?.type !== 'call' && handler?.type !== 'array') {
     return []
   }
-  const method =
-    typeof field.handler.method === 'string' ? field.handler.method : name
+  const method = typeof handler.method === 'string' ? handler.method : name
   if (method.startsWith('function ')) {
     return []
   }
@@ -258,10 +218,11 @@ export const MAX_FOLLOWED_ADDRESSES = 20
 
 /** Counted as discovery collects relatives (`toAddressArray`): values only, never the keys of an object. */
 function followedAddressesNote(
-  field: DraftField,
+  field: StructureContractField,
   value: ContractValue | undefined,
 ): string[] {
-  if (field.handler.ignoreRelative === true || value === undefined) {
+  const handler = field.handler as { ignoreRelative?: boolean } | undefined
+  if (handler?.ignoreRelative === true || value === undefined) {
     return []
   }
   const count = new Set(toAddressArray(value)).size
@@ -294,13 +255,13 @@ function followedAddressesNote(
 async function foldNotes(
   provider: IProvider,
   facts: Facts,
-  field: DraftField,
+  field: StructureContractField,
   value: ContractValue | undefined,
 ): Promise<string[]> {
-  if (field.handler.type !== 'event') {
+  if (field.handler?.type !== 'event') {
     return []
   }
-  const events = eventsOf(field)
+  const events = eventsOf(field.handler)
   const blockNumber = provider.blockNumber
   const unread = await unreadDeclarationsWithLogs(provider, facts, events)
   if (unread.length > 0) {
@@ -393,10 +354,12 @@ async function countTopicLogs(
   }
 }
 
-function eventsOf(field: DraftField): string[] {
-  const names = eventActions(field.handler).flatMap(({ action }) =>
-    eventNamesOf(action),
+/** The events an event handler's `set`, `add` and `remove` actions name. */
+function eventsOf(handler: EventHandlerDefinition): string[] {
+  const actions = [handler.set, handler.add, handler.remove].flatMap(
+    (action) => (action === undefined ? [] : [action].flat()),
   )
+  const names = actions.flatMap((action) => [action.event].flat())
   return [...new Set(names)]
 }
 

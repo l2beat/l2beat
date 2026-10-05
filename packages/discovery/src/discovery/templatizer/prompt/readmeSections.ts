@@ -15,7 +15,7 @@ import { toJsonSchema } from '@l2beat/validate'
 import fs from 'fs'
 import path from 'path'
 import { UserHandlers } from '../../handlers/user'
-import { HANDLER_TYPES } from '../draft/Draft'
+import { DOCUMENTED_HANDLER_TYPES } from './draftJsonSchema'
 
 /** Same depth below the package root from `src/…` and from `dist/…`. */
 export const README_PATH = path.resolve(__dirname, '../../../../README.md')
@@ -127,7 +127,7 @@ export function readmeReferenceFor(
   readme: ReadmeIndex = readmeIndex(),
 ): string[] {
   const types = [...new Set(handlerTypes)].filter(
-    (type) => !(HANDLER_TYPES as readonly string[]).includes(type),
+    (type) => !(DOCUMENTED_HANDLER_TYPES as readonly string[]).includes(type),
   )
   const operators = [...new Set(editOperators)].filter(
     (operator) => !DOCUMENTED_OPERATORS.has(operator),

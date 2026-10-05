@@ -30,7 +30,7 @@
  * `--output-schema` is off by default. The OpenAI structured-output endpoint
  * behind it is strict: it rejects `const` without `type`, and demands that
  * every object carry `additionalProperties: false` and that every property be
- * required. The draft cannot meet that without changing its format: V1
+ * required. The reply cannot meet that: it is a part of V1's template, whose
  * handler definitions have optional keys, and a blip `edit` or an event
  * `where` is open by design. The prompt carries the schema as text instead
  * and the loop validates the reply; the option remains for the day the

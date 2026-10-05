@@ -1,118 +1,100 @@
 import { expect } from 'earl'
+import type { ContractFacts } from '../facts'
+import { loadFixture } from '../test/fixtures'
 import { checkNames } from './checkNames'
-import type { DraftHandler } from './Draft'
-import type { Finding } from './Finding'
-import type { ValidationContext } from './ruleContext'
-import {
-  contextFor,
-  draftOf,
-  field,
-  runRule,
-  scrollChainDraft,
-} from './test/drafts'
+import { type Finding, Findings } from './Finding'
 
 describe(checkNames.name, () => {
-  const scroll = contextFor('ScrollChain')
-  const hardcoded: DraftHandler = { type: 'hardcoded', value: 1 }
+  const scroll = loadFixture('ScrollChain')
+  const hardcoded = { handler: { type: 'hardcoded', value: 1 } }
 
   function names(
-    fields: Record<string, DraftHandler>,
-    ctx: ValidationContext = scroll,
+    entries: Record<string, Record<string, unknown>>,
+    facts: ContractFacts = scroll,
   ): Finding[] {
-    const draft = draftOf(
-      Object.fromEntries(
-        Object.entries(fields).map(([name, handler]) => [name, field(handler)]),
-      ),
-    )
-    return runRule(checkNames, draft, ctx)
+    const findings = new Findings()
+    checkNames(Object.entries(entries), facts, findings)
+    return findings.list
   }
 
-  it('accepts the names of the ScrollChain template', () => {
-    expect(runRule(checkNames, scrollChainDraft(), scroll)).toEqual([])
-  })
+  function withBaseline(
+    fields: ContractFacts['baseline']['fields'],
+    abi = scroll.abi,
+  ): ContractFacts {
+    return {
+      ...scroll,
+      abi,
+      baseline: { fields: { ...scroll.baseline.fields, ...fields } },
+    }
+  }
 
   it('does not judge whether a name is meaningful', () => {
     expect(
-      names({ data1: hardcoded, lastCommittedBatchIndex: hardcoded }),
+      names({ data1: hardcoded, sequencers: hardcoded, $odd: hardcoded }),
     ).toEqual([])
   })
 
-  it('rejects names V1 cannot hold', () => {
-    expect(names({ $owner: hardcoded, 'my-field': hardcoded })).toEqual([
-      {
-        path: 'fields.$owner',
-        message:
-          '"$owner" is not a field name V1 can hold: use a Solidity identifier (letters, digits and _, not starting with a digit); a leading $ is reserved for proxy values',
-      },
-      {
-        path: 'fields["my-field"]',
-        message:
-          '"my-field" is not a field name V1 can hold: use a Solidity identifier (letters, digits and _, not starting with a digit); a leading $ is reserved for proxy values',
-      },
-    ])
-  })
-
-  it('rejects the name of a baseline getter or of a project config field, which the field would replace', () => {
-    const withOverride: ValidationContext = {
-      ...scroll,
-      facts: {
-        ...scroll.facts,
-        baseline: {
-          fields: {
-            ...scroll.facts.baseline.fields,
-            fromConfig: { kind: 'override', value: 7 },
-            broken: { kind: 'getter', error: 'Execution reverted' },
-          },
-        },
-      },
-    }
+  it('rejects a field that computes a value under the name of a baseline getter or a project config field, which it would replace', () => {
+    const facts = withBaseline({
+      fromConfig: { kind: 'override', value: 7 },
+      broken: { kind: 'getter', error: 'Execution reverted' },
+    })
     expect(
       names(
-        { owner: hardcoded, fromConfig: hardcoded, broken: hardcoded },
-        withOverride,
+        {
+          owner: hardcoded,
+          fromConfig: { edit: ['format', 'FormatSeconds'] },
+          broken: hardcoded,
+        },
+        facts,
       ),
     ).toEqual([
       {
         path: 'fields.owner',
         message:
-          '"owner" is a baseline getter (V1 reads it as "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"); V1 keeps the first field of a name and template fields come first, so this field would replace that value; pick another name and reference it as {{ owner }} if you need it',
+          '"owner" is a baseline getter (V1 reads it as "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"); V1 keeps the first field of a name and template fields come first, so handler would replace that value: pick another name and reference it as {{ owner }} if you need it, or give this entry only severity, description, permissions',
       },
       {
         path: 'fields.fromConfig',
         message:
-          '"fromConfig" is a field of the project config (V1 reads it as 7); V1 keeps the first field of a name and template fields come first, so this field would replace that value; pick another name and reference it as {{ fromConfig }} if you need it',
+          '"fromConfig" is a field of the project config (V1 reads it as 7); V1 keeps the first field of a name and template fields come first, so edit would replace that value: pick another name and reference it as {{ fromConfig }} if you need it, or give this entry only severity, description, permissions',
       },
       {
         path: 'fields.broken',
         message:
-          '"broken" is a baseline getter (V1 reads it, currently with an error: Execution reverted); V1 keeps the first field of a name and template fields come first, so this field would replace that value; pick another name and reference it as {{ broken }} if you need it',
+          '"broken" is a baseline getter (V1 reads it, currently with an error: Execution reverted); V1 keeps the first field of a name and template fields come first, so handler would replace that value: pick another name and reference it as {{ broken }} if you need it, or give this entry only severity, description, permissions',
       },
     ])
   })
 
-  it('lets only an array over the probed function reuse a probe name', () => {
-    const probed: ValidationContext = {
-      ...scroll,
-      facts: {
-        ...scroll.facts,
-        baseline: {
-          fields: {
-            ...scroll.facts.baseline.fields,
-            committedBatches: { kind: 'probe', value: ['0x00'] },
-          },
-        },
-      },
-    }
+  it('lets an entry describe a baseline or proxy value without changing it', () => {
+    const facts = { ...scroll, proxyValues: { $admin: 'eth:0x1' } }
     expect(
-      names({ committedBatches: { type: 'array', length: 3 } }, probed),
+      names(
+        {
+          owner: { severity: 'HIGH', description: 'Can upgrade.' },
+          $admin: { permissions: [{ type: 'upgrade' }] },
+        },
+        facts,
+      ),
+    ).toEqual([])
+  })
+
+  it('lets only an array over the probed function reuse a probe name', () => {
+    const probed = withBaseline({
+      committedBatches: { kind: 'probe', value: ['0x00'] },
+    })
+    expect(
+      names(
+        { committedBatches: { handler: { type: 'array', length: 3 } } },
+        probed,
+      ),
     ).toEqual([])
     expect(
       names(
         {
           committedBatches: {
-            type: 'array',
-            method: 'committedBatches',
-            length: 3,
+            handler: { type: 'array', method: 'committedBatches', length: 3 },
           },
         },
         probed,
@@ -122,9 +104,7 @@ describe(checkNames.name, () => {
       names(
         {
           committedBatches: {
-            type: 'call',
-            method: 'committedBatches',
-            args: [1],
+            handler: { type: 'call', method: 'committedBatches', args: [1] },
           },
         },
         probed,
@@ -142,25 +122,15 @@ describe(checkNames.name, () => {
     const probedUint256 =
       'function committedBatches(uint256) view returns (bytes32)'
     const narrower = 'function committedBatches(uint32) view returns (bytes32)'
-    const probed = (abi: string[]): ValidationContext => ({
-      ...scroll,
-      facts: {
-        ...scroll.facts,
+    const probed = (abi: string[]) =>
+      withBaseline(
+        { committedBatches: { kind: 'probe', value: ['0x00'] } },
         abi,
-        baseline: {
-          fields: {
-            ...scroll.facts.baseline.fields,
-            committedBatches: { kind: 'probe', value: ['0x00'] },
-          },
-        },
-      },
-    })
-    const overloaded = probed([...scroll.facts.abi, narrower])
-    const narrowerFirst = probed([narrower, ...scroll.facts.abi])
-    const array = (method: string): DraftHandler => ({
-      type: 'array',
-      method,
-      length: 3,
+      )
+    const overloaded = probed([...scroll.abi, narrower])
+    const narrowerFirst = probed([narrower, ...scroll.abi])
+    const array = (method: string) => ({
+      committedBatches: { handler: { type: 'array', method, length: 3 } },
     })
     const refused = [
       {
@@ -170,43 +140,21 @@ describe(checkNames.name, () => {
       },
     ]
 
-    expect(
-      names({ committedBatches: array(probedUint256) }, overloaded),
-    ).toEqual([])
-    expect(names({ committedBatches: array(narrower) }, overloaded)).toEqual(
-      refused,
-    )
+    expect(names(array(probedUint256), overloaded)).toEqual([])
+    expect(names(array(narrower), overloaded)).toEqual(refused)
     // V1 resolves a bare name to the first array-keyed function of that
-    // prefix in the ABI, so the same draft passes or fails with the order.
-    expect(
-      names({ committedBatches: array('committedBatches') }, overloaded),
-    ).toEqual([])
-    expect(
-      names({ committedBatches: array('committedBatches') }, narrowerFirst),
-    ).toEqual(refused)
+    // prefix in the ABI, so the same field passes or fails with the order.
+    expect(names(array('committedBatches'), overloaded)).toEqual([])
+    expect(names(array('committedBatches'), narrowerFirst)).toEqual(refused)
   })
 
   it('protects proxy detector values whose names do not start with a dollar sign', () => {
-    const ctx = {
-      ...scroll,
-      facts: { ...scroll.facts, proxyValues: { GnosisSafe_modules: [] } },
-    }
-    expect(names({ GnosisSafe_modules: hardcoded }, ctx)).toEqual([
+    const facts = { ...scroll, proxyValues: { GnosisSafe_modules: [] } }
+    expect(names({ GnosisSafe_modules: hardcoded }, facts)).toEqual([
       {
         path: 'fields.GnosisSafe_modules',
         message:
           '"GnosisSafe_modules" is produced by the proxy detector; pick another name so this field does not replace it',
-      },
-    ])
-  })
-
-  it('rejects the name of a field of the existing template', () => {
-    const existing = { ...scroll, existingFieldNames: ['sequencers'] }
-    expect(runRule(checkNames, scrollChainDraft(), existing)).toEqual([
-      {
-        path: 'fields.sequencers',
-        message:
-          '"sequencers" is a field of the existing template, kept as it is; pick another name (reference it as {{ sequencers }} if you need its value)',
       },
     ])
   })

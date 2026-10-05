@@ -1,7 +1,7 @@
 /**
  * The handler reference the model reads, condensed from the researcher
- * README to the seven handler types a draft may use and the `edit` and
- * `where` forms researchers write.
+ * README to the seven handler types researchers use for nearly every
+ * generic field, and the `edit` and `where` forms they write.
  *
  * It states V1's run-time behaviour rather than the README's prose where
  * the two differ in ways a draft trips over: how a bare method name is
@@ -21,7 +21,7 @@ export const HANDLER_DOCS = [
   '',
   'A string that is exactly `{{ name }}` stands for the value of another field. References are accepted in `args` and `address` (call), `length` and `indices` (array), `slot` and `offset` (storage), and nowhere else.',
   '',
-  '- `name` is a baseline field, another field of your draft, or a field of the existing template. `{{ $.address }}` is this contract’s own address.',
+  '- `name` is a baseline field, another field you add, or a field of the existing template. `{{ $.address }}` is this contract’s own address.',
   '- Proxy values (`$admin`, `$implementation`, `$pastUpgrades`, …) are not referenceable.',
   '- `{{ name.key }}` reaches into an object value, e.g. `{{ constructorArgs._owner }}` of a `constructorArgs` field with `nameArgs: true`. It cannot index into arrays, and the outputs of a function returning several values are positional, so it cannot reach into those either.',
   '- A reference resolves to the raw handler value: before `edit`, with addresses unprefixed, so it can be passed straight into `args`.',
@@ -39,7 +39,7 @@ export const HANDLER_DOCS = [
   '- `args` (required, `[]` for none): one entry per input, each a literal or a reference. Integers as JSON numbers (decimal strings above 2^53), booleans as booleans, bytes as `0x` hex, addresses as plain `0x…` hex without the chain prefix: arguments reach the ABI encoder as written.',
   '- `address` (optional): call another contract, given as a reference to a field that holds its address (`"{{ registry }}"`). `method` must then be the full fragment, because the other contract’s ABI is not available.',
   '- `expectRevert` (optional): for a call that reverts today by design; the field then holds `"EXPECT_REVERT"`.',
-  '- Several `call` fields may read the same function with different literal `args`, one field per key that is fixed in the source (the values of an enum, the ids of known quorums). Name each after the function and its key, the way `getOperatorSetParams(uint8)` is read for quorums 0, 1 and 2 as `operatorSetParamsQuorum1`, `operatorSetParamsQuorum2`, `operatorSetParamsQuorum3`, and list the function in the `covers` of each.',
+  '- Several `call` fields may read the same function with different literal `args`, one field per key that is fixed in the source (the values of an enum, the ids of known quorums). Name each after the function and its key, the way `getOperatorSetParams(uint8)` is read for quorums 0, 1 and 2 as `operatorSetParamsQuorum1`, `operatorSetParamsQuorum2`, `operatorSetParamsQuorum3`.',
   '',
   'Examples. The Succinct entry of a verifier config keyed by an enum value that is fixed in the source; a getter of another contract whose address a field holds:',
   '',
@@ -57,7 +57,7 @@ export const HANDLER_DOCS = [
   '- Without `length` and `indices`, the method is called from `startIndex` upwards until it reverts, at most `maxLength` times (default 100). Reading `maxLength` values is an error (also when `length` exceeds `maxLength`), so raise it for longer arrays.',
   '- `indices` (optional): the literal indices to read, e.g. `[0, 1, 2, 3]` for the values of an enum, or a reference to a field holding an array of indices. Not together with `length`.',
   '- `startIndex` (optional, default 0): the first index when enumerating.',
-  '- A `uint8` key is not accepted, and the handler fails to construct. A getter keyed by a `uint8` is keyed by an enum in the source: read it with one `call` per enum value whose state matters (see `call`), or skip it.',
+  '- A `uint8` key is not accepted, and the handler fails to construct. A getter keyed by a `uint8` is keyed by an enum in the source: read it with one `call` per enum value whose state matters (see `call`), or leave it out.',
   '- Discovery already reads every getter with one `uint256` argument at indices 0–4 (marked "probed" in section 4). An `array` field named exactly like that getter replaces the probe with the full array.',
   '',
   'Examples. Pools 1 … maxAssetId, with the length taken from a baseline getter; the holders of the four roles of an enum:',
@@ -120,7 +120,7 @@ export const HANDLER_DOCS = [
   '',
   '### constructorArgs',
   '',
-  'Decodes the constructor arguments of this address’s deployment with the constructor in the ABI, the one section 4 lists when it has parameters; the field covers it. The field must be named `constructorArgs`. For a proxy that is the proxy’s own constructor (logic, admin, init data), not the implementation’s, so use it for contracts without a proxy whose constructor sets state no getter exposes.',
+  'Decodes the constructor arguments of this address’s deployment with the constructor in the ABI, the one section 4 lists when it has parameters. The field must be named `constructorArgs`. For a proxy that is the proxy’s own constructor (logic, admin, init data), not the implementation’s, so use it for contracts without a proxy whose constructor sets state no getter exposes.',
   '',
   '- `nameArgs` (optional): `true` makes the value an object keyed by the constructor parameter names instead of a positional array, so other fields can reference `{{ constructorArgs.<name> }}`.',
   '',

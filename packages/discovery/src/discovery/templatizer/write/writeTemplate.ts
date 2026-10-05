@@ -40,14 +40,19 @@ export function chooseTemplateId(
   return suffixed
 }
 
+/**
+ * The file `ensureTemplateExists` creates, holding only its `$schema`, with
+ * `render` filling it in; then the shape.
+ */
 export function writeNewTemplate(
   templateService: TemplateService,
   templateId: string,
-  text: string,
+  render: (text: string) => string,
   target: ShapeTarget,
 ): void {
   templateService.ensureTemplateExists(templateId)
-  templateService.writeTemplateFile(templateId, text)
+  const text = templateService.readTemplateFile(templateId) ?? ''
+  templateService.writeTemplateFile(templateId, render(text))
   addShape(templateService, templateId, target)
 }
 

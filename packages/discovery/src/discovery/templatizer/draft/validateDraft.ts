@@ -1,24 +1,24 @@
 /**
- * The static checks a draft passes before it is dry-run and written.
+ * The checks a draft passes before it is dry-run and written.
  *
  * Findings are the only feedback the model gets in a repair round, so every
  * rule states what is wrong and what would be right, at the path of the
- * offending value. Rules, in order: the reply is one JSON object; the
- * shape (`checkSchema`), with V1's own schema for each handler type and
- * V1's own blip check for `edit` and `where`; coverage or a skip per worklist
- * token (`checkVerdicts`); names that replace nothing (`checkNames`);
- * covers that match what the handler names (`checkCovers`); last, every
- * field is constructed with V1's own handler factory, and a full fragment
- * written for a function of this contract is compared with the ABI. Each
- * of these is certain: parsing, counting over a closed list, comparing
- * names the model wrote, or V1 itself. What V1 does at the block is the
- * dry run's to report.
- *
- * Schema findings are returned alone: every later rule reads the value as
- * a `Draft`, which is only safe once the schema holds.
+ * offending value. In order: the reply is one JSON object; V1's own schema
+ * for `template.jsonc` accepts it, every object walked as strict and each
+ * handler against the definition its `type` names; it adds only what the
+ * template does not have (`mergeTemplate`); every field it adds has a
+ * reason, and none replaces a value discovery already produces
+ * (`checkNames`); last, every handler it adds is constructed with V1's own
+ * factory, and a full fragment written for a function of this contract has
+ * the ABI's return types. Each of these is parsing, V1 itself, or a
+ * comparison with what the template and the baseline already hold. Whether
+ * a method or event exists, and what a handler does at the block, is the dry
+ * run's to report.
  */
+import { getErrorMessage, parseJsonc } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { getErrorMessage } from '../../../utils/getErrorMessage'
+import { ContractConfigSchema } from '../../../schemas/schemas'
+import { StructureContract } from '../../config/StructureConfig'
 import type { Handler } from '../../handlers/Handler'
 import { getUserHandler, UserHandlerDefinition } from '../../handlers/user'
 import {
@@ -26,25 +26,33 @@ import {
   ArrayHandler,
 } from '../../handlers/user/ArrayHandler'
 import { CallHandler } from '../../handlers/user/CallHandler'
-import { type AbiIndex, sighash } from '../abi/AbiIndex'
+import { AbiIndex, sighash } from '../abi/AbiIndex'
+import type { ContractFacts } from '../facts'
 import { parseModelJson } from '../model/parseModelJson'
-import { checkCovers } from './checkCovers'
+import { mergeTemplate } from '../write/mergeTemplate'
 import { checkNames } from './checkNames'
-import { checkSchema } from './checkSchema'
-import { checkVerdicts } from './checkVerdicts'
-import type { Draft, DraftHandler } from './Draft'
+import type { Draft } from './Draft'
 import { type Finding, Findings, fieldPath, joinPath } from './Finding'
-import {
-  buildRuleContext,
-  type RuleContext,
-  type ValidationContext,
-} from './ruleContext'
+import { isPlainObject, schemaProblems, show } from './schemaProblems'
 
-export type { ValidationContext } from './ruleContext'
+export interface ValidationContext {
+  facts: ContractFacts
+  /** The text of the template the draft adds to; a new template's holds only its `$schema`. */
+  templateText: string
+  isNew: boolean
+}
+
+export interface CheckedDraft {
+  draft: Draft
+  /** The template the file will hold, as discovery reads it. */
+  template: StructureContract
+  /** The fields the draft adds that compute a value, which the dry run runs. */
+  added: string[]
+}
 
 export interface ValidationResult {
-  /** Set only when the reply parsed and its shape holds, so the caller may read it as a `Draft`. */
-  draft?: Draft
+  /** Set only when nothing blocks, so the caller may dry-run it. */
+  checked?: CheckedDraft
   findings: Finding[]
 }
 
@@ -58,7 +66,7 @@ export function validateDraftText(
       findings: [
         {
           path: 'draft',
-          message: `reply with exactly one JSON object { "fields": { … }, "skips": [ … ] } and nothing else; the reply does not parse as JSON (${parsed.error})`,
+          message: `reply with exactly one JSON object { "fields": { … } } and nothing else; the reply does not parse as JSON (${parsed.error})`,
         },
       ],
     }
@@ -71,17 +79,121 @@ export function validateDraft(
   ctx: ValidationContext,
 ): ValidationResult {
   const findings = new Findings()
-  checkSchema(value, findings)
+  if (!isPlainObject(value)) {
+    findings.error(
+      'draft',
+      `the draft must be one JSON object { "fields": { … } }, got ${show(value)}`,
+    )
+    return { findings: findings.list }
+  }
+  const draft = takeReasons(value, findings)
+  const added = addedEntries(draft, ctx.templateText)
+  requireReasons(added, draft.reasons, findings)
+  for (const problem of schemaProblems(
+    ContractConfigSchema,
+    draft.additions,
+    '',
+  )) {
+    findings.error(problem.path, problem.message)
+  }
   if (findings.list.length > 0) {
     return { findings: findings.list }
   }
-  const draft = value as Draft
-  const rules = buildRuleContext(draft, ctx, findings)
-  checkVerdicts(rules)
-  checkNames(rules)
-  checkCovers(rules)
-  checkConstruction(rules)
-  return { draft, findings: findings.list }
+  // Only a draft discovery's schema accepts can be merged: the merge
+  // refuses a result discovery would not load.
+  const merged = mergeTemplate({
+    text: ctx.templateText,
+    isNew: ctx.isNew,
+    additions: draft.additions,
+  })
+  if ('problems' in merged) {
+    return { findings: merged.problems }
+  }
+  checkNames(added, ctx.facts, findings)
+  checkConstruction(added, ctx.facts.abi, findings)
+  if (findings.list.length > 0) {
+    return { findings: findings.list }
+  }
+  return {
+    checked: {
+      draft,
+      template: StructureContract.parse(parseJsonc(merged.text)),
+      added: added
+        .filter(([, entry]) => computesValue(entry))
+        .map(([name]) => name),
+    },
+    findings: [],
+  }
+}
+
+/** `fields.<name>.reason` out of every entry: a string for the comment, nothing in the template. */
+function takeReasons(
+  value: Record<string, unknown>,
+  findings: Findings,
+): Draft {
+  const reasons: Record<string, string> = {}
+  if (!isPlainObject(value.fields)) {
+    return { additions: value, reasons }
+  }
+  const fields: Record<string, unknown> = {}
+  for (const [name, entry] of Object.entries(value.fields)) {
+    if (!isPlainObject(entry) || !('reason' in entry)) {
+      fields[name] = entry
+      continue
+    }
+    const { reason, ...rest } = entry
+    if (typeof reason === 'string' && reason.trim() !== '') {
+      reasons[name] = reason
+    } else {
+      findings.error(joinPath(fieldPath(name), 'reason'), REASON)
+    }
+    fields[name] = rest
+  }
+  return { additions: { ...value, fields }, reasons }
+}
+
+const REASON =
+  'one sentence naming the function that writes this state and its modifier, e.g. "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer"'
+
+/** The field entries the template does not have yet; `mergeTemplate` already placed the rest. */
+function addedEntries(
+  draft: Draft,
+  templateText: string,
+): [string, Record<string, unknown>][] {
+  const existing = parseJsonc<{ fields?: Record<string, unknown> }>(
+    templateText,
+  ).fields
+  const fields = draft.additions.fields
+  if (!isPlainObject(fields)) {
+    return []
+  }
+  return Object.entries(fields).flatMap(([name, entry]) =>
+    isPlainObject(entry) && existing?.[name] === undefined
+      ? [[name, entry] as [string, Record<string, unknown>]]
+      : [],
+  )
+}
+
+function requireReasons(
+  added: [string, Record<string, unknown>][],
+  reasons: Record<string, string>,
+  findings: Findings,
+): void {
+  const reported = new Set(findings.list.map((finding) => finding.path))
+  for (const [name] of added) {
+    const path = joinPath(fieldPath(name), 'reason')
+    if (reasons[name] === undefined && !reported.has(path)) {
+      findings.error(path, `missing; ${REASON}`)
+    }
+  }
+}
+
+function computesValue(entry: Record<string, unknown>): boolean {
+  return (
+    entry.handler !== undefined ||
+    entry.copy !== undefined ||
+    entry.edit !== undefined
+  )
 }
 
 /**
@@ -89,62 +201,65 @@ export function validateDraft(
  * template is applied; a handler it refuses would become an `ErrorHandler`
  * and an error in discovered.json.
  */
-function checkConstruction(ctx: RuleContext): void {
-  for (const [name, field] of Object.entries(ctx.draft.fields)) {
+function checkConstruction(
+  added: [string, Record<string, unknown>][],
+  abi: string[],
+  findings: Findings,
+): void {
+  for (const [name, entry] of added) {
+    if (entry.handler === undefined) {
+      continue
+    }
+    const path = joinPath(fieldPath(name), 'handler')
     let constructed: Handler
     try {
       constructed = getUserHandler(
         name,
-        UserHandlerDefinition.parse(field.handler),
-        ctx.facts.abi,
+        UserHandlerDefinition.parse(entry.handler),
+        abi,
       )
     } catch (error) {
-      ctx.findings.error(
-        joinPath(fieldPath(name), 'handler'),
-        `V1 cannot construct this handler: ${getErrorMessage(error)}${constructionHint(name, field.handler, ctx)}`,
+      findings.error(
+        path,
+        `V1 cannot construct this handler: ${getErrorMessage(error)}${constructionHint(name, entry.handler, abi)}`,
       )
       continue
     }
-    checkDeclaredFragment(name, field.handler, constructed, ctx)
+    checkReturnTypes(path, entry.handler, constructed, abi, findings)
   }
 }
 
 /**
- * A full fragment written for a function of this contract is compared with
- * the ABI's declaration, outputs included. V1 parses a `method` with a
- * space in it and never looks it up, so `function foo(uint256) view returns
- * (bytes32)` over an ABI `foo(uint256)` that returns an address constructs,
- * calls the right selector and decodes the same 32 bytes without an error
- * at the block: a wrong template the dry run cannot catch. A bare name is
- * V1's own lookup in the ABI; a `call` on another contract (`address` set)
- * reads an ABI the draft is not checked against.
+ * A full fragment written for a function of this contract must have the
+ * return types the ABI declares. V1 parses a `method` with a space in it
+ * and never looks it up, so `function foo(uint256) view returns (bytes32)`
+ * over an ABI `foo(uint256)` that returns an address constructs, calls the
+ * right selector and decodes the same 32 bytes without an error at the
+ * block: a wrong template the dry run cannot catch. A function the ABI does
+ * not declare at all fails the dry run, so it is left to it.
  */
-function checkDeclaredFragment(
-  name: string,
-  handler: DraftHandler,
+function checkReturnTypes(
+  path: string,
+  handler: unknown,
   constructed: Handler,
-  ctx: RuleContext,
+  abi: string[],
+  findings: Findings,
 ): void {
   const written = writtenFragment(handler, constructed)
   if (written === undefined) {
     return
   }
-  const path = joinPath(joinPath(fieldPath(name), 'handler'), 'method')
   const signature = sighash(written)
-  const declared = ctx.abi.functionNamed(signature)
+  const declared = AbiIndex.of(abi).functionBySignature(signature)
   if (declared === undefined) {
-    ctx.findings.error(
-      path,
-      `this contract has no ${signature}; ${namesakes(written.name, ctx.abi)}`,
-    )
     return
   }
   const writtenOutputs = outputTypes(written)
   const declaredOutputs = outputTypes(declared)
   if (writtenOutputs !== declaredOutputs) {
-    ctx.findings.error(
-      path,
-      `the ABI declares ${signature} as \`${fullFragment(declared)}\`, returning (${declaredOutputs}), and this fragment returns (${writtenOutputs}): write \`method\` as the ABI's fragment`,
+    findings.error(
+      joinPath(path, 'method'),
+      `the ABI declares ${signature} as \`${declared.format(utils.FormatTypes.full)}\`, returning (${declaredOutputs}), and this fragment returns (${writtenOutputs}): write \`method\` as the ABI's fragment`,
     )
   }
 }
@@ -155,15 +270,13 @@ function checkDeclaredFragment(
  * `call` on another contract, and for handlers without a method.
  */
 function writtenFragment(
-  handler: DraftHandler,
+  handler: unknown,
   constructed: Handler,
 ): utils.FunctionFragment | undefined {
+  const { type, method, address } = handler as Record<string, unknown>
   // `includes(' ')` is V1's own test for a full fragment (`getFunctionFragment`).
-  const full =
-    typeof handler.method === 'string' && handler.method.includes(' ')
-  const here =
-    handler.type === 'array' ||
-    (handler.type === 'call' && handler.address === undefined)
+  const full = typeof method === 'string' && method.includes(' ')
+  const here = type === 'array' || (type === 'call' && address === undefined)
   if (!full || !here) {
     return undefined
   }
@@ -179,19 +292,6 @@ function outputTypes(fragment: utils.FunctionFragment): string {
     .join(', ')
 }
 
-function fullFragment(fragment: utils.FunctionFragment): string {
-  return fragment.format(utils.FormatTypes.full)
-}
-
-function namesakes(name: string, abi: AbiIndex): string {
-  const declared = abi.functions.filter((fragment) => fragment.name === name)
-  if (declared.length === 0) {
-    return `nothing in the ABI is named ${name}: name a function of this contract, or set \`address\` if the field reads another contract`
-  }
-  const listed = declared.map((f) => `\`${fullFragment(f)}\``).join(', ')
-  return `the ABI declares ${listed}: write \`method\` as the one this field reads`
-}
-
 /**
  * The construction failure models repeat: an `array` over a getter keyed by
  * a `uint8`, which V1's array handler does not take. V1's own message
@@ -202,22 +302,20 @@ function namesakes(name: string, abi: AbiIndex): string {
  */
 function constructionHint(
   name: string,
-  handler: DraftHandler,
-  ctx: RuleContext,
+  handler: unknown,
+  abi: string[],
 ): string {
-  if (handler.type !== 'array') {
+  const { type, method } = handler as Record<string, unknown>
+  if (type !== 'array') {
     return ''
   }
-  const method = ctx.reads.get(name)?.method
-  if (method === undefined) {
-    return ''
-  }
-  const getter = ctx.abi.functions.find(
+  const written = typeof method === 'string' ? method : name
+  const fragmentName = written.includes(' ')
+    ? safeFragmentName(written)
+    : written
+  const getter = AbiIndex.of(abi).functions.find(
     (fragment) =>
-      fragment.name === method.name &&
-      fragment.inputs.length === 1 &&
-      (method.signature === undefined ||
-        sighash(fragment) === method.signature),
+      fragment.name === fragmentName && fragment.inputs.length === 1,
   )
   const key = getter?.inputs[0]?.type
   if (
@@ -228,5 +326,13 @@ function constructionHint(
     return ''
   }
   const enumNote = key === 'uint8' ? ', an enum in the source' : ''
-  return `; array reads only a getter keyed by ${ARRAY_INDEX_TYPES.join(', ')}, and ${sighash(getter)} is keyed by ${key}${enumNote}: write one call field per key value with that value in args, or skip it`
+  return `; array reads only a getter keyed by ${ARRAY_INDEX_TYPES.join(', ')}, and ${sighash(getter)} is keyed by ${key}${enumNote}: write one call field per key value with that value in args, or leave it out`
+}
+
+function safeFragmentName(fragment: string): string | undefined {
+  try {
+    return utils.Fragment.from(fragment)?.name
+  } catch {
+    return undefined
+  }
 }

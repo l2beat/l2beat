@@ -44,13 +44,23 @@ describe(writeNewTemplate.name, () => {
     )
   }
 
-  it('writes a single-bundle contract under <project>/<name> and matches it', () => {
+  it('fills in the file V1 creates for a single-bundle contract under <project>/<name>, and matches it', () => {
     const shape = target([bundle('Foo', PROXY)])
     const templateId = chooseTemplateId(templateService, shape.facts)
 
-    writeNewTemplate(templateService, templateId, TEXT, shape)
+    let skeleton = ''
+    writeNewTemplate(
+      templateService,
+      templateId,
+      (text) => {
+        skeleton = text
+        return TEXT
+      },
+      shape,
+    )
 
     expect(templateId).toEqual('proj/Foo')
+    expect(skeleton).toInclude('"$schema": "../../../../../../discovery/')
     expect(templateService.readTemplateFile(templateId)).toEqual(TEXT)
     expect(shapes(templateId)).toEqual({
       'Foo.sol': {
@@ -68,7 +78,7 @@ describe(writeNewTemplate.name, () => {
   it('records the implementation behind a proxy, which is what V1 matches on', () => {
     const shape = target([bundle('Proxy', PROXY), bundle('Foo', IMPL_A)])
 
-    writeNewTemplate(templateService, 'proj/Foo', TEXT, shape)
+    writeNewTemplate(templateService, 'proj/Foo', () => TEXT, shape)
 
     expect(shapes('proj/Foo')['Foo.sol'].address).toEqual(IMPL_A)
     expect(
@@ -83,7 +93,7 @@ describe(writeNewTemplate.name, () => {
       bundle('Foo', IMPL_B),
     ])
 
-    writeNewTemplate(templateService, 'proj/Foo', TEXT, shape)
+    writeNewTemplate(templateService, 'proj/Foo', () => TEXT, shape)
 
     expect(shapes('proj/Foo')['Foo.sol'].address).toEqual([IMPL_A, IMPL_B])
     expect(
@@ -96,13 +106,13 @@ describe(writeNewTemplate.name, () => {
     writeNewTemplate(
       templateService,
       chooseTemplateId(templateService, first.facts),
-      TEXT,
+      () => TEXT,
       first,
     )
 
     const second = target([bundle('Foo', IMPL_A, 'uint b;')])
     const templateId = chooseTemplateId(templateService, second.facts)
-    writeNewTemplate(templateService, templateId, TEXT, second)
+    writeNewTemplate(templateService, templateId, () => TEXT, second)
 
     const short = second.facts.shapeHash.toString().slice(2, 10)
     expect(templateId).toEqual(`proj/Foo-${short}`)
@@ -116,7 +126,7 @@ describe(writeNewTemplate.name, () => {
 
   it('adds a new shape to an existing template under a hash-suffixed key when the name is taken', () => {
     const old = target([bundle('Foo', PROXY, 'uint a;')])
-    writeNewTemplate(templateService, 'proj/Foo', TEXT, old)
+    writeNewTemplate(templateService, 'proj/Foo', () => TEXT, old)
 
     const next = target([bundle('Foo', IMPL_A, 'uint b;')])
     addShape(templateService, 'proj/Foo', next)

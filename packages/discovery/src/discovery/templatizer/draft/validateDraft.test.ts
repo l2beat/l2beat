@@ -1,177 +1,279 @@
 import { expect } from 'earl'
-import type { Draft } from './Draft'
-import type { Finding } from './Finding'
-import { contextFor, draftOf, field, scrollChainDraft } from './test/drafts'
-import { validateDraft, validateDraftText } from './validateDraft'
+import { type FixtureName, loadFixture } from '../test/fixtures'
+import {
+  type ValidationContext,
+  validateDraft,
+  validateDraftText,
+} from './validateDraft'
 
 /**
- * End to end over the four suite contracts. Each full draft mirrors the
- * committed V1 template of its contract (event folds, literal-key calls,
- * arrays over index getters) and rules on every other worklist token, so
- * passing with zero errors shows the rules accept what researchers write.
+ * End to end over the suite contracts. Each full draft mirrors the committed
+ * V1 template of its contract (event folds, literal-key calls, arrays over
+ * index getters), so passing with zero findings shows the checks accept
+ * what researchers write.
  */
 describe(validateDraft.name, () => {
-  it('accepts the ScrollChain template as a draft', () => {
-    const draft = scrollChainDraft()
-    const result = validateDraft(draft, contextFor('ScrollChain'))
-    expect(result.draft).toEqual(draft)
-    expect(result.findings).toEqual([])
-  })
+  const REASON = 'written only by the owner'
 
-  it('accepts drafts of the other suite contracts', () => {
-    expect(
-      validateDraft(nitroDraft(), contextFor('NitroEnclaveVerifier')).findings,
-    ).toEqual([])
-    expect(
-      validateDraft(factoryDraft(), contextFor('DisputeGameFactory')).findings,
-    ).toEqual([])
-    expect(
-      validateDraft(inboxDraft(), contextFor('SequencerInbox')).findings,
-    ).toEqual([])
-  })
+  function newTemplate(name: FixtureName): ValidationContext {
+    return { facts: loadFixture(name), templateText: '{}', isNew: true }
+  }
 
-  it('returns schema findings alone and no draft when the shape is wrong', () => {
-    const broken = {
-      fields: { x: { handler: { type: 'call' }, covers: [], reason: 'r' } },
-      skips: [],
+  function withReasons(
+    fields: Record<string, Record<string, unknown>>,
+  ): Record<string, Record<string, unknown>> {
+    return Object.fromEntries(
+      Object.entries(fields).map(([name, entry]) => [
+        name,
+        { reason: REASON, ...entry },
+      ]),
+    )
+  }
+
+  function paths(value: unknown, ctx: ValidationContext): string[] {
+    return validateDraft(value, ctx).findings.map((finding) => finding.path)
+  }
+
+  it('accepts the committed templates of four suite contracts, as the template the file will hold', () => {
+    const scroll = validateDraft(
+      { fields: withReasons(SCROLL_CHAIN) },
+      newTemplate('ScrollChain'),
+    )
+    expect(scroll.findings).toEqual([])
+    expect(scroll.checked?.draft.reasons.sequencers).toEqual(REASON)
+    expect(scroll.checked?.added).toEqual([
+      'sequencers',
+      'provers',
+      'revertedBatches',
+    ])
+    expect(Object.keys(scroll.checked?.template.fields ?? {}).sort()).toEqual([
+      'provers',
+      'revertedBatches',
+      'sequencers',
+    ])
+    expect(
+      'reason' in (scroll.checked?.template.fields.sequencers ?? {}),
+    ).toEqual(false)
+
+    for (const [name, fields] of [
+      ['NitroEnclaveVerifier', NITRO_ENCLAVE_VERIFIER],
+      ['DisputeGameFactory', DISPUTE_GAME_FACTORY],
+      ['SequencerInbox', SEQUENCER_INBOX],
+    ] as const) {
+      expect(
+        validateDraft({ fields: withReasons(fields) }, newTemplate(name))
+          .findings,
+      ).toEqual([])
     }
-    const result = validateDraft(broken, contextFor('ScrollChain'))
-    expect(result.draft).toEqual(undefined)
-    expect(result.findings).toEqual([
+  })
+
+  it('adds to an existing template: new fields with their reasons, and severity on a field it has', () => {
+    const ctx: ValidationContext = {
+      ...newTemplate('ScrollChain'),
+      templateText: `{
+  "fields": {
+    // the researcher's
+    "sequencers": {
+      "handler": { "type": "event", "select": "account", "add": { "event": "UpdateSequencer" } }
+    }
+  }
+}`,
+      isNew: false,
+    }
+    const result = validateDraft(
       {
-        path: 'fields.x.handler.args',
+        fields: {
+          sequencers: { severity: 'HIGH' },
+          provers: { reason: REASON, ...SCROLL_CHAIN.provers },
+        },
+      },
+      ctx,
+    )
+    expect(result.findings).toEqual([])
+    expect(result.checked?.added).toEqual(['provers'])
+    expect(result.checked?.template.fields.sequencers?.handler?.type).toEqual(
+      'event',
+    )
+
+    expect(
+      validateDraft(
+        {
+          ignoreMethods: ['x'],
+          fields: { sequencers: { handler: { type: 'hardcoded', value: 1 } } },
+        },
+        ctx,
+      ).findings,
+    ).toEqual([
+      {
+        path: 'ignoreMethods',
         message:
-          'missing; expected an array, each element a string or a number',
+          'this template is shared by every contract of its shapes, so nothing is added at its top level: add new entries under `fields`, and to a field it already has only severity, description, permissions',
+      },
+      {
+        path: 'fields.sequencers.handler',
+        message:
+          'sequencers already has handler, which keeps its value; leave handler out',
       },
     ])
   })
 
-  it('runs every later rule once the shape holds', () => {
-    const draft = scrollChainDraft()
-    draft.fields.owner = field({ type: 'hardcoded', value: 1 }, [
-      'UpdateProver',
+  it('reports every mistake of shape at once against V1’s own schema, by the handler’s type', () => {
+    const result = validateDraft(
+      {
+        feilds: {},
+        fields: {
+          a: { reason: REASON, hanlder: { type: 'call', args: [] } },
+          b: { reason: REASON, handler: { type: 'cal', args: [] } },
+          c: { reason: REASON, handler: { type: 'call' } },
+          d: {
+            reason: REASON,
+            handler: {
+              type: 'event',
+              select: 'account',
+              add: { event: 'UpdateProver', wher: ['=', '#status', true] },
+            },
+          },
+          e: {
+            reason: REASON,
+            handler: { type: 'call', method: 'owner', args: [] },
+            edit: ['formatt', 'FormatSeconds'],
+          },
+        },
+      },
+      newTemplate('ScrollChain'),
+    )
+    expect(result.checked).toEqual(undefined)
+    expect(result.findings).toEqual([
+      {
+        path: 'feilds',
+        message: expect.includes('unexpected key (did you mean "fields"?)'),
+      },
+      {
+        path: 'fields.a.hanlder',
+        message: expect.includes('unexpected key (did you mean "handler"?)'),
+      },
+      {
+        path: 'fields.b.handler.type',
+        message: expect.includes('(did you mean "call"?), got "cal"'),
+      },
+      {
+        path: 'fields.c.handler.args',
+        message:
+          'missing; expected an array, each element a string or a number',
+      },
+      {
+        path: 'fields.d.handler.add.wher',
+        message: expect.includes('unexpected key (did you mean "where"?)'),
+      },
+      {
+        path: 'fields.e.edit',
+        message:
+          'expected a blip program discovery parses: an array whose first element is an operator, such as ["format", "FormatSeconds"] or ["=", "#status", true], got ["formatt","FormatSeconds"]',
+      },
     ])
-    draft.skips = draft.skips.filter((skip) => skip.item !== 'CommitBatch')
-    draft.skips.push({ item: 'RevertBatch', reason: 'user-activity' })
+  })
+
+  it('requires a reason on every field it adds', () => {
     expect(
-      validateDraft(draft, contextFor('ScrollChain')).findings.map(
-        (finding) => finding.path,
-      ),
+      validateDraft(
+        {
+          fields: {
+            provers: SCROLL_CHAIN.provers,
+            blank: { reason: ' ', handler: { type: 'hardcoded', value: 1 } },
+          },
+        },
+        newTemplate('ScrollChain'),
+      ).findings.map(({ path, message }) => [path, message.slice(0, 40)]),
     ).toEqual([
-      'skips[14].item', // RevertBatch has two verdicts
-      'draft', // CommitBatch has no verdict
-      'fields.owner', // a baseline getter's name
-      'fields.owner.covers[0]', // a hardcoded field reads no events
+      ['fields.blank.reason', 'one sentence naming the function that wr'],
+      ['fields.provers.reason', 'missing; one sentence naming the functio'],
     ])
+  })
+
+  it('refuses a field that would replace a baseline value, and a handler V1 cannot construct, once the shape holds', () => {
+    expect(
+      paths(
+        {
+          fields: withReasons({
+            owner: { handler: { type: 'hardcoded', value: 1 } },
+            args: { handler: { type: 'constructorArgs' } },
+          }),
+        },
+        newTemplate('ScrollChain'),
+      ),
+    ).toEqual(['fields.owner', 'fields.args.handler'])
   })
 
   it('says why an array over a getter keyed by a uint8 cannot be constructed, for a bare name and a full fragment', () => {
-    const ctx = contextFor('NitroEnclaveVerifier')
-    const bare = validateDraft(
-      draftOf({
-        zkConfigs: field(
-          { type: 'array', method: 'getZkConfig', indices: [1, 2] },
-          ['getZkConfig(uint8)'],
-        ),
-      }),
-      ctx,
-    )
-    const construction = bare.findings.filter(
-      (finding) => finding.path === 'fields.zkConfigs.handler',
-    )
-    expect(construction.map((finding) => finding.message)).toEqual([
-      'V1 cannot construct this handler: Cannot find a matching method for getZkConfig; array reads only a getter keyed by uint16, uint32, uint64, uint256, and getZkConfig(uint8) is keyed by uint8, an enum in the source: write one call field per key value with that value in args, or skip it',
-    ])
+    const ctx = newTemplate('NitroEnclaveVerifier')
+    const hint =
+      '; array reads only a getter keyed by uint16, uint32, uint64, uint256, and getZkConfig(uint8) is keyed by uint8, an enum in the source: write one call field per key value with that value in args, or leave it out'
+    const messages = (method: string) =>
+      validateDraft(
+        {
+          fields: withReasons({
+            zkConfigs: { handler: { type: 'array', method, indices: [1, 2] } },
+          }),
+        },
+        ctx,
+      ).findings.map((finding) => finding.message)
 
-    const full = validateDraft(
-      draftOf({
-        zkConfigs: field(
-          {
-            type: 'array',
-            method:
-              'function getZkConfig(uint8 zkCoProcessor) view returns (tuple(bytes32 verifierId, bytes32 aggregatorId, address zkVerifier))',
-            indices: [1, 2],
-          },
-          ['getZkConfig(uint8)'],
-        ),
-      }),
-      ctx,
-    )
-    expect(
-      full.findings
-        .filter((finding) => finding.path === 'fields.zkConfigs.handler')
-        .map((finding) => finding.message),
-    ).toEqual([
-      'V1 cannot construct this handler: Invalid method abi; array reads only a getter keyed by uint16, uint32, uint64, uint256, and getZkConfig(uint8) is keyed by uint8, an enum in the source: write one call field per key value with that value in args, or skip it',
+    expect(messages('getZkConfig')).toEqual([
+      `V1 cannot construct this handler: Cannot find a matching method for getZkConfig${hint}`,
     ])
-
-    const perLiteral = validateDraft(
-      draftOf({
-        zkConfigRiscZero: field(
-          { type: 'call', method: 'getZkConfig', args: [1] },
-          ['getZkConfig(uint8)'],
-        ),
-        zkConfigSuccinct: field(
-          { type: 'call', method: 'getZkConfig', args: [2] },
-          ['getZkConfig(uint8)'],
-        ),
-      }),
-      ctx,
-    )
     expect(
-      perLiteral.findings.filter((finding) =>
-        finding.path.startsWith('fields.'),
+      messages(
+        'function getZkConfig(uint8 zkCoProcessor) view returns (tuple(bytes32 verifierId, bytes32 aggregatorId, address zkVerifier))',
       ),
-    ).toEqual([])
+    ).toEqual([`V1 cannot construct this handler: Invalid method abi${hint}`])
   })
 
-  it('compares a full fragment for a function of this contract with the ABI, outputs included', () => {
+  it('compares the return types of a full fragment for a function of this contract with the ABI, and leaves a function the ABI lacks to the dry run', () => {
     const result = validateDraft(
-      draftOf({
-        verifierKey: field({
-          type: 'call',
-          method: 'function verifier() view returns (bytes32)',
-          args: [],
-        }),
-        batchHashes: field(
-          {
-            type: 'array',
-            method: 'function committedBatches(uint256) view returns (address)',
-            indices: [0],
+      {
+        fields: withReasons({
+          verifierKey: {
+            handler: {
+              type: 'call',
+              method: 'function verifier() view returns (bytes32)',
+              args: [],
+            },
           },
-          ['committedBatches(uint256)'],
-        ),
-        finalized: field({
-          type: 'call',
-          method: 'function isBatchFinalized(uint64) view returns (bool)',
-          args: [1],
+          batchHashes: {
+            handler: {
+              type: 'array',
+              method:
+                'function committedBatches(uint256) view returns (address)',
+              indices: [0],
+            },
+          },
+          missing: {
+            handler: {
+              type: 'call',
+              method: 'function foo(uint256) view returns (address)',
+              args: [1],
+            },
+          },
+          theVerifier: {
+            handler: {
+              type: 'call',
+              method: 'function verifier() view returns (address)',
+              args: [],
+            },
+          },
+          elsewhere: {
+            handler: {
+              type: 'call',
+              method: 'function foo() view returns (address)',
+              args: [],
+              address: '{{ verifier }}',
+            },
+          },
         }),
-        missing: field({
-          type: 'call',
-          method: 'function foo(uint256) view returns (address)',
-          args: [1],
-        }),
-        // As the ABI declares it: no finding.
-        theVerifier: field({
-          type: 'call',
-          method: 'function verifier() view returns (address)',
-          args: [],
-        }),
-        // A call on another contract reads an ABI this draft is not checked against.
-        elsewhere: field({
-          type: 'call',
-          method: 'function foo() view returns (address)',
-          args: [],
-          address: '{{ verifier }}',
-        }),
-      }),
-      contextFor('ScrollChain'),
+      },
+      newTemplate('ScrollChain'),
     )
-    expect(
-      result.findings.filter((finding) =>
-        finding.path.endsWith('.handler.method'),
-      ),
-    ).toEqual([
+    expect(result.findings).toEqual([
       {
         path: 'fields.verifierKey.handler.method',
         message:
@@ -182,195 +284,124 @@ describe(validateDraft.name, () => {
         message:
           "the ABI declares committedBatches(uint256) as `function committedBatches(uint256) view returns (bytes32)`, returning (bytes32), and this fragment returns (address): write `method` as the ABI's fragment",
       },
-      {
-        path: 'fields.finalized.handler.method',
-        message:
-          'this contract has no isBatchFinalized(uint64); the ABI declares `function isBatchFinalized(uint256 _batchIndex) view returns (bool)`: write `method` as the one this field reads',
-      },
-      {
-        path: 'fields.missing.handler.method',
-        message:
-          'this contract has no foo(uint256); nothing in the ABI is named foo: name a function of this contract, or set `address` if the field reads another contract',
-      },
     ])
-  })
-
-  it('refuses a handler V1 cannot construct, with V1’s own reason', () => {
-    const draft = scrollChainDraft()
-    draft.fields.args = field({ type: 'constructorArgs' })
-    const result = validateDraft(draft, contextFor('ScrollChain'))
-    expect(result.findings.map((finding) => finding.path)).toEqual([
-      'fields.args.handler',
-    ])
-    expect(result.findings[0]?.message ?? '').toInclude(
-      'V1 cannot construct this handler:',
-    )
   })
 })
 
 describe(validateDraftText.name, () => {
-  const ctx = contextFor('ScrollChain')
+  const ctx: ValidationContext = {
+    facts: loadFixture('ScrollChain'),
+    templateText: '{}',
+    isNew: true,
+  }
 
   it('reads the JSON out of the reply, fenced or not', () => {
-    const text = `Here it is:\n\`\`\`json\n${JSON.stringify(scrollChainDraft())}\n\`\`\``
-    expect(errorsOf(validateDraftText(text, ctx).findings)).toEqual([])
+    const reply = {
+      fields: { provers: { reason: 'r', ...SCROLL_CHAIN.provers } },
+    }
+    const text = `Here it is:\n\`\`\`json\n${JSON.stringify(reply)}\n\`\`\``
+    expect(validateDraftText(text, ctx).findings).toEqual([])
   })
 
   it('asks for exactly one JSON object when the reply does not parse', () => {
     const result = validateDraftText('I could not find any state.', ctx)
-    expect(result.draft).toEqual(undefined)
+    expect(result.checked).toEqual(undefined)
     expect(result.findings).toHaveLength(1)
     expect(result.findings[0]?.path).toEqual('draft')
     expect(String(result.findings[0]?.message)).toMatchRegex(
-      /^reply with exactly one JSON object \{ "fields": \{ … \}, "skips": \[ … \] \} and nothing else; the reply does not parse as JSON \(.+\)$/,
+      /^reply with exactly one JSON object \{ "fields": \{ … \} \} and nothing else; the reply does not parse as JSON \(.+\)$/,
     )
   })
-
-  function errorsOf(findings: Finding[]): Finding[] {
-    return findings
-  }
 })
 
-/** `_templates/base/NitroEnclaveVerifier`: literal-key calls and the zkVerifierRoutes fold. */
-function nitroDraft(): Draft {
-  return {
-    fields: {
-      zkConfigRiscZero: field(
-        { type: 'call', method: 'getZkConfig', args: [1] },
-        ['getZkConfig(uint8)'],
-      ),
-      zkConfigSuccinct: field({
-        type: 'call',
-        method: 'getZkConfig',
-        args: [2],
-      }),
-      verifierProofIdRiscZero: field(
-        { type: 'call', method: 'getVerifierProofId', args: [1] },
-        ['getVerifierProofId(uint8)'],
-      ),
-      zkVerifierRoutes: field(
-        {
-          type: 'event',
-          add: { event: 'ZkRouteAdded' },
-          remove: { event: 'ZkRouteWasFrozen' },
-          dedupBy: ['zkCoProcessor', 'selector'],
-        },
-        ['getZkVerifier(uint8,bytes4)', 'ZkRouteAdded', 'ZkRouteWasFrozen'],
-      ),
+/** `_templates/scroll/ScrollChain`: membership folds and an event-only list. */
+const SCROLL_CHAIN = {
+  sequencers: {
+    handler: {
+      type: 'event',
+      select: 'account',
+      add: { event: 'UpdateSequencer', where: ['=', '#status', true] },
+      remove: { event: 'UpdateSequencer', where: ['!=', '#status', true] },
     },
-    skips: [
-      {
-        item: 'checkTrustedIntermediateCerts(bytes32[][])',
-        reason: 'computation',
-      },
-      { item: 'ownershipHandoverExpiresAt(address)', reason: 'user-activity' },
-      { item: 'trustedIntermediateCerts(bytes32)', reason: 'unbounded' },
-      { item: 'zkConfig(uint8)', reason: 'covered' },
-      {
-        item: 'constructor(address,uint64,bytes32[],uint64[],bytes32,address,address,uint8,(bytes32,bytes32,address),bytes32)',
-        reason: 'covered',
-      },
-      { item: 'AggregatorIdUpdated', reason: 'covered' },
-      { item: 'AttestationSubmitted', reason: 'user-activity' },
-      { item: 'BatchAttestationSubmitted', reason: 'user-activity' },
-      { item: 'CertRevoked', reason: 'unbounded' },
-      { item: 'MaxTimeDiffUpdated', reason: 'covered' },
-      { item: 'OwnershipHandoverCanceled', reason: 'user-activity' },
-      { item: 'OwnershipHandoverRequested', reason: 'user-activity' },
-      { item: 'OwnershipTransferred', reason: 'covered' },
-      { item: 'ProofSubmitterChanged', reason: 'covered' },
-      { item: 'RevokerUpdated', reason: 'covered' },
-      { item: 'RootCertChanged', reason: 'covered' },
-      { item: 'VerifierIdUpdated', reason: 'covered' },
-      { item: 'ZKConfigurationUpdated', reason: 'covered' },
-    ],
-  }
+  },
+  provers: {
+    handler: {
+      type: 'event',
+      select: 'account',
+      add: { event: 'UpdateProver', where: ['=', '#status', true] },
+      remove: { event: 'UpdateProver', where: ['!=', '#status', true] },
+    },
+  },
+  revertedBatches: {
+    handler: {
+      type: 'event',
+      select: 'batchIndex',
+      add: { event: 'RevertBatch' },
+    },
+  },
+}
+
+/** `_templates/base/NitroEnclaveVerifier`: literal-key calls and the zkVerifierRoutes fold. */
+const NITRO_ENCLAVE_VERIFIER = {
+  zkConfigRiscZero: {
+    handler: { type: 'call', method: 'getZkConfig', args: [1] },
+  },
+  zkConfigSuccinct: {
+    handler: { type: 'call', method: 'getZkConfig', args: [2] },
+  },
+  verifierProofIdRiscZero: {
+    handler: { type: 'call', method: 'getVerifierProofId', args: [1] },
+  },
+  zkVerifierRoutes: {
+    handler: {
+      type: 'event',
+      add: { event: 'ZkRouteAdded' },
+      remove: { event: 'ZkRouteWasFrozen' },
+      dedupBy: ['zkCoProcessor', 'selector'],
+    },
+  },
 }
 
 /** `_templates/opstack/DisputeGameFactory`: arrays over uint32 keys and single-key calls. */
-function factoryDraft(): Draft {
-  return {
-    fields: {
-      gameImpls: field({ type: 'array', length: 7 }, ['gameImpls(uint32)']),
-      game1337: field({ type: 'call', method: 'gameImpls', args: [1337] }),
-      initBonds: field({ type: 'array', length: 5 }, ['initBonds(uint32)']),
-      initBondGame42: field({ type: 'call', method: 'initBonds', args: [42] }),
-      permissionedGameArgs: field(
-        { type: 'call', method: 'gameArgs', args: [1] },
-        ['gameArgs(uint32)'],
-      ),
-    },
-    skips: [
-      {
-        item: 'findLatestGames(uint32,uint256,uint256)',
-        reason: 'computation',
-      },
-      { item: 'gameAtIndex(uint256)', reason: 'unbounded' },
-      { item: 'games(uint32,bytes32,bytes)', reason: 'user-activity' },
-      { item: 'getGameUUID(uint32,bytes32,bytes)', reason: 'computation' },
-      { item: 'constructor(address)', reason: 'covered' },
-      { item: 'AdminChanged', reason: 'covered' },
-      { item: 'DisputeGameCreated', reason: 'user-activity' },
-      { item: 'ImplementationArgsSet', reason: 'covered' },
-      { item: 'ImplementationSet', reason: 'covered' },
-      { item: 'InitBondUpdated', reason: 'covered' },
-      { item: 'Initialized', reason: 'not-state' },
-      { item: 'OwnershipTransferred', reason: 'covered' },
-      { item: 'Upgraded', reason: 'covered' },
-    ],
-  }
+const DISPUTE_GAME_FACTORY = {
+  gameImpls: { handler: { type: 'array', length: 7 } },
+  game1337: { handler: { type: 'call', method: 'gameImpls', args: [1337] } },
+  initBonds: { handler: { type: 'array', length: 5 } },
+  initBondGame42: {
+    handler: { type: 'call', method: 'initBonds', args: [42] },
+  },
+  permissionedGameArgs: {
+    handler: { type: 'call', method: 'gameArgs', args: [1] },
+  },
 }
 
 /** Arbitrum SequencerInbox: membership mappings folded from their setters' events. */
-function inboxDraft(): Draft {
-  const membership = (event: string, select: string, flag: string) => ({
-    type: 'event' as const,
-    select,
-    add: { event, where: ['=', `#${flag}`, true] },
-    remove: { event, where: ['!=', `#${flag}`, true] },
-  })
-  return {
-    fields: {
-      batchPosters: field(
-        membership('BatchPosterSet', 'batchPoster', 'isBatchPoster'),
-        ['isBatchPoster(address)', 'BatchPosterSet'],
-      ),
-      sequencers: field(membership('SequencerSet', 'addr', 'isSequencer'), [
-        'isSequencer(address)',
-        'SequencerSet',
-      ]),
-      validKeysets: field(
-        {
-          type: 'event',
-          select: 'keysetHash',
-          add: { event: 'SetValidKeyset' },
-          remove: { event: 'InvalidateKeyset' },
-        },
-        [
-          'isValidKeysetHash(bytes32)',
-          'dasKeySetInfo(bytes32)',
-          'SetValidKeyset',
-          'InvalidateKeyset',
-        ],
-      ),
+const SEQUENCER_INBOX = {
+  batchPosters: {
+    handler: {
+      type: 'event',
+      select: 'batchPoster',
+      add: { event: 'BatchPosterSet', where: ['=', '#isBatchPoster', true] },
+      remove: {
+        event: 'BatchPosterSet',
+        where: ['!=', '#isBatchPoster', true],
+      },
     },
-    skips: [
-      { item: 'forceInclusionDeadline(uint64)', reason: 'computation' },
-      { item: 'getKeysetCreationBlock(bytes32)', reason: 'covered' },
-      { item: 'inboxAccs(uint256)', reason: 'unbounded' },
-      { item: 'constructor(address,address,bytes)', reason: 'covered' },
-      { item: 'AdminChanged', reason: 'covered' },
-      { item: 'BatchPosterManagerSet', reason: 'covered' },
-      { item: 'BeaconUpgraded', reason: 'not-state' },
-      { item: 'BufferConfigSet', reason: 'covered' },
-      { item: 'FeeTokenPricerSet', reason: 'covered' },
-      { item: 'InboxMessageDelivered', reason: 'user-activity' },
-      { item: 'InboxMessageDeliveredFromOrigin', reason: 'user-activity' },
-      { item: 'MaxTimeVariationSet', reason: 'covered' },
-      { item: 'OwnerFunctionCalled', reason: 'covered' },
-      { item: 'SequencerBatchData', reason: 'unbounded' },
-      { item: 'SequencerBatchDelivered', reason: 'unbounded' },
-      { item: 'Upgraded', reason: 'covered' },
-    ],
-  }
+  },
+  sequencers: {
+    handler: {
+      type: 'event',
+      select: 'addr',
+      add: { event: 'SequencerSet', where: ['=', '#isSequencer', true] },
+      remove: { event: 'SequencerSet', where: ['!=', '#isSequencer', true] },
+    },
+  },
+  validKeysets: {
+    handler: {
+      type: 'event',
+      select: 'keysetHash',
+      add: { event: 'SetValidKeyset' },
+      remove: { event: 'InvalidateKeyset' },
+    },
+  },
 }

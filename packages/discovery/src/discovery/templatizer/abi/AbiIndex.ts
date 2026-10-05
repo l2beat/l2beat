@@ -1,7 +1,8 @@
 /**
  * One parsed view of a human-readable ABI, for the questions the templatizer
- * asks of it: which functions need a verdict, which constructor V1 decodes
- * with, every declaration of an event, and what a stray token names.
+ * asks of it: which functions discovery does not read by itself, which
+ * constructor V1 decodes with, every declaration of an event, and which
+ * function a signature names.
  *
  * Duplicate fragments are dropped before parsing because merged proxy and
  * implementation ABIs repeat signatures and ethers logs a warning per repeat.
@@ -51,18 +52,9 @@ export class AbiIndex {
     return new AbiIndex(fragments)
   }
 
-  /**
-   * The function a token names: `owners(uint256)` by signature, or `owner`
-   * when exactly one function has that name. A bare name that overloads
-   * share names nothing, since a hint about it could be about the wrong one.
-   */
-  functionNamed(token: string): utils.FunctionFragment | undefined {
-    const bySignature = this.functions.find((f) => sighash(f) === token)
-    if (bySignature !== undefined) {
-      return bySignature
-    }
-    const byName = this.functions.filter((f) => f.name === token)
-    return byName.length === 1 ? byName[0] : undefined
+  /** The function a signature such as `owners(uint256)` names. */
+  functionBySignature(signature: string): utils.FunctionFragment | undefined {
+    return this.functions.find((f) => sighash(f) === signature)
   }
 
   /**

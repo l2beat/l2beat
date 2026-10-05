@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import type { Baseline } from './facts'
 import { loadFixture } from './test/fixtures'
-import { buildWorklist, isEmptyWorklist, worklistTokens } from './worklist'
+import { buildWorklist, isEmptyWorklist } from './worklist'
 
 describe(buildWorklist.name, () => {
   const NO_BASELINE: Baseline = { fields: {} }
@@ -24,9 +24,8 @@ describe(buildWorklist.name, () => {
       'UpdateProver',
       'CommitBatch',
     )
-    expect(worklistTokens(worklist)).toInclude(
+    expect(worklist.items.map((item) => item.signature)).toInclude(
       'isSequencer(address)',
-      'RevertBatch',
     )
   })
 
@@ -110,9 +109,8 @@ describe(buildWorklist.name, () => {
         { name: '_data', type: 'bytes' },
       ],
     })
-    expect(worklistTokens(worklist)).toEqual([
-      'constructor(address,address,bytes)',
-    ])
+    expect(worklist.items).toEqual([])
+    expect(worklist.events).toEqual([])
     expect(isEmptyWorklist(worklist)).toEqual(false)
   })
 

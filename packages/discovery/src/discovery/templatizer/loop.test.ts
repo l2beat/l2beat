@@ -2,14 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { MemoryArtifactSink } from './artifacts'
-import type { Draft } from './draft/Draft'
 import type { DryRunRecord } from './draft/dryRun'
 import type { Finding } from './draft/Finding'
+import type { CheckedDraft } from './draft/validateDraft'
 import type { ContractFacts } from './facts'
 import { authorDraft, repairMessage } from './loop'
 import { FakeModelClient } from './model/FakeModelClient'
 import { ModelUnavailableError } from './model/ModelClient'
-import { buildWorklist } from './worklist'
 
 describe(authorDraft.name, () => {
   const ADDRESS = ChainSpecificAddress(
@@ -51,35 +50,27 @@ describe(authorDraft.name, () => {
       },
     },
   }
-  const validation = { facts, worklist: buildWorklist(ABI, facts.baseline) }
+  const validation = { facts, templateText: '{}', isNew: true }
   const PROMPT = 'the authoring prompt'
 
-  const VALID: Draft = {
-    fields: {
-      validators: {
-        handler: {
-          type: 'event',
-          select: 'validator',
-          add: { event: 'ValidatorUpdated', where: ['=', '#active', true] },
-          remove: {
-            event: 'ValidatorUpdated',
-            where: ['!=', '#active', true],
-          },
-        },
-        covers: ['isValidator(address)', 'ValidatorUpdated'],
-        reason:
-          'isValidator is written only by setValidator (onlyOwner), which emits ValidatorUpdated',
-      },
-    },
-    skips: [{ item: 'OwnershipTransferred', reason: 'covered' }],
+  const HANDLER = {
+    type: 'event',
+    select: 'validator',
+    add: { event: 'ValidatorUpdated', where: ['=', '#active', true] },
+    remove: { event: 'ValidatorUpdated', where: ['!=', '#active', true] },
   }
-  const MISSING_SKIP: Draft = { ...VALID, skips: [] }
+  const REASON =
+    'isValidator is written only by setValidator (onlyOwner), which emits ValidatorUpdated'
+  const VALID = {
+    fields: { validators: { reason: REASON, handler: HANDLER } },
+  }
+  const NO_REASON = { fields: { validators: { handler: HANDLER } } }
 
   const passingDryRun = () => dryRunReturning([])
 
   function dryRunReturning(findings: Finding[]) {
-    const calls: Draft[] = []
-    const run = (draft: Draft) => {
+    const calls: CheckedDraft[] = []
+    const run = (draft: CheckedDraft) => {
       calls.push(draft)
       const record: DryRunRecord = { blockNumber: 100, fields: [] }
       return Promise.resolve({ record, findings })
@@ -89,7 +80,7 @@ describe(authorDraft.name, () => {
 
   function run(
     responses: (string | Error)[],
-    dryRun: (draft: Draft) => Promise<{
+    dryRun: (draft: CheckedDraft) => Promise<{
       record: DryRunRecord
       findings: Finding[]
     }> = passingDryRun().run,
@@ -110,7 +101,10 @@ describe(authorDraft.name, () => {
 
     const outcome = await result
     expect(outcome.status).toEqual('accepted')
-    expect(outcome.status === 'accepted' && outcome.draft).toEqual(VALID)
+    expect(outcome.status === 'accepted' && outcome.draft).toEqual({
+      additions: { fields: { validators: { handler: HANDLER } } },
+      reasons: { validators: REASON },
+    })
     expect(model.calls).toEqual([{ kind: 'start', prompt: PROMPT }])
     expect([...artifacts.files.keys()].sort()).toEqual([
       'draft.json',
@@ -132,7 +126,7 @@ describe(authorDraft.name, () => {
 
   it('sends the findings back on the same thread and accepts the repaired draft', async () => {
     const { model, result } = run([
-      JSON.stringify(MISSING_SKIP),
+      JSON.stringify(NO_REASON),
       JSON.stringify(VALID),
     ])
 
@@ -141,16 +135,16 @@ describe(authorDraft.name, () => {
     expect(outcome.rounds.length).toEqual(2)
     expect(model.calls[1]?.kind).toEqual('resume')
     expect(model.calls[1]?.threadId).toEqual('fake-thread')
-    expect(model.prompts[1] ?? '').toInclude('OwnershipTransferred')
+    expect(model.prompts[1] ?? '').toInclude('at fields.validators.reason')
     expect(model.prompts[1] ?? '').toInclude(
-      'Return the whole corrected draft as one JSON object',
+      'Return the whole corrected reply as one JSON object',
     )
   })
 
   it('runs the dry run only on statically clean drafts and repairs its errors', async () => {
     let failing = true
-    const calls: Draft[] = []
-    const dryRun = (draft: Draft) => {
+    const calls: CheckedDraft[] = []
+    const dryRun = (draft: CheckedDraft) => {
       calls.push(draft)
       const findings: Finding[] = failing
         ? [
@@ -167,11 +161,7 @@ describe(authorDraft.name, () => {
       })
     }
     const { model, result } = run(
-      [
-        JSON.stringify(MISSING_SKIP),
-        JSON.stringify(VALID),
-        JSON.stringify(VALID),
-      ],
+      [JSON.stringify(NO_REASON), JSON.stringify(VALID), JSON.stringify(VALID)],
       dryRun,
     )
 
@@ -184,9 +174,9 @@ describe(authorDraft.name, () => {
 
   it('gives up after the round cap with the last errors as the failure', async () => {
     const { model, result } = run([
-      JSON.stringify(MISSING_SKIP),
-      JSON.stringify(MISSING_SKIP),
-      JSON.stringify(MISSING_SKIP),
+      JSON.stringify(NO_REASON),
+      JSON.stringify(NO_REASON),
+      JSON.stringify(NO_REASON),
       JSON.stringify(VALID),
     ])
 
@@ -255,7 +245,7 @@ describe(authorDraft.name, () => {
 describe(repairMessage.name, () => {
   it('numbers the findings with their paths and asks for the whole draft back', () => {
     const message = repairMessage([
-      { path: 'skips[0].item', message: 'unknown item' },
+      { path: 'fields.a.reason', message: 'missing' },
       { path: 'fields.a', message: 'check this' },
     ])
 
@@ -263,11 +253,11 @@ describe(repairMessage.name, () => {
       [
         'The draft has 2 error(s). Fix every one of them.',
         '',
-        '1. at skips[0].item: unknown item',
+        '1. at fields.a.reason: missing',
         '2. at fields.a: check this',
         '',
         'You have no tools: do not try to read files or run commands, fix the draft from the messages above alone.',
-        'Return the whole corrected draft as one JSON object and nothing else.',
+        'Return the whole corrected reply as one JSON object and nothing else.',
       ].join('\n'),
     )
   })

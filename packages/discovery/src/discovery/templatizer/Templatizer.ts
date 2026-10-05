@@ -11,9 +11,10 @@
  * with a `TemplatizationFailedError`, rather than leaving the contract
  * untemplatized where nobody can tell a failure from a decision.
  *
- * An existing template is only ever added to (`appendToTemplate`): its
- * text is never rebuilt, its fields never removed, its `ignoreMethods`
- * never changed. And nothing here predicts what V1 would do: the baseline
+ * The model replies with the part of `template.jsonc` it adds, and an
+ * existing template is only ever added to (`mergeTemplate`): its text is
+ * never rebuilt, its fields never removed or changed, nothing is added at
+ * its top level. And nothing here predicts what V1 would do: the baseline
  * is what V1 read, the dry run runs V1 with the address's own config, and
  * what V1 did is written down for the reviewer.
  *
@@ -26,7 +27,6 @@ import { getHashForMatchingFromSources } from '../../flatten/utils'
 import { getErrorMessage } from '../../utils/getErrorMessage'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
-import { StructureContract } from '../config/StructureConfig'
 import {
   type StructureContractConfig,
   withTemplate,
@@ -47,33 +47,21 @@ import { dryRunDraft } from './draft/dryRun'
 import {
   analyzeExistingTemplate,
   type ExistingTemplate,
-  failureNote,
   misfitOf,
   type PreviousTemplate,
-  remainingWorklist,
 } from './existingTemplate'
 import type { ContractFacts } from './facts'
 import { flattenSources } from './flattenSources'
 import { authorDraft, DEFAULT_MAX_ROUNDS, type LoopResult } from './loop'
 import { describeModel } from './model/createModelClient'
 import { type ModelClient, ModelUnavailableError } from './model/ModelClient'
-import { buildPrompt, type ExistingFieldText } from './prompt/buildPrompt'
+import { buildPrompt } from './prompt/buildPrompt'
 import {
   TemplatizationFailedError,
   type TemplatizationTask,
 } from './TemplatizationFailedError'
 import { buildWorklist, isEmptyWorklist, type Worklist } from './worklist'
-import {
-  appendToTemplate,
-  type TemplateAdditions,
-} from './write/appendToTemplate'
-import { deriveIgnoreMethods } from './write/ignoreMethods'
-import { readFieldEntries } from './write/jsoncEntries'
-import {
-  renderTemplateFile,
-  schemaPathFor,
-  type TemplateFileField,
-} from './write/templateFile'
+import { type MergeResult, mergeTemplate } from './write/mergeTemplate'
 import {
   addShape,
   admitsAddress,
@@ -410,17 +398,17 @@ export class Templatizer {
     notes: string[],
   ): string {
     const templateId = chooseTemplateId(this.templateService, facts)
-    const text = renderTemplateFile({
-      schema: schemaPathFor(templateId),
-      header: `Authored by l2b discover --ai on ${this.today()} without a model call: the contract has no view functions with arguments, no constructor parameters and no events. Review before committing.`,
-      headerNotes: notes,
-      ignoreMethods: [],
-      fields: [],
-    })
-    writeNewTemplate(this.templateService, templateId, text, {
-      facts,
-      sources: request.sources,
-    })
+    const header = [
+      `Authored by l2b discover --ai on ${this.today()} without a model call: the contract has no view functions with arguments, no constructor parameters and no events. Review before committing.`,
+      ...notes,
+    ]
+    writeNewTemplate(
+      this.templateService,
+      templateId,
+      (text) =>
+        mergedText(mergeTemplate({ text, isNew: true, additions: {}, header })),
+      { facts, sources: request.sources },
+    )
     this.logger.info(
       `Templatizer wrote ${templateId} for ${subjectOf(facts)} without a model call`,
     )
@@ -436,21 +424,25 @@ export class Templatizer {
   ): Promise<string> {
     const result = await this.runLoop(request, facts, worklist, task)
     const templateId = chooseTemplateId(this.templateService, facts)
-    const text = renderTemplateFile({
-      schema: schemaPathFor(templateId),
-      header: this.header(result),
-      headerNotes: notes,
-      ignoreMethods: deriveIgnoreMethods(worklist, result.draft),
-      fields: draftFields(result),
-    })
-    writeNewTemplate(this.templateService, templateId, text, {
-      facts,
-      sources: request.sources,
-    })
+    writeNewTemplate(
+      this.templateService,
+      templateId,
+      (text) =>
+        mergedText(
+          mergeTemplate({
+            text,
+            isNew: true,
+            additions: result.draft.additions,
+            fieldComments: fieldComments(result),
+            header: [this.header(result), ...notes],
+          }),
+        ),
+      { facts, sources: request.sources },
+    )
     this.logger.info(
       `Templatizer wrote ${templateId} for ${subjectOf(facts)}`,
       {
-        fields: Object.keys(result.draft.fields).length,
+        fields: fieldNames(result).join(', '),
         rounds: result.rounds.length,
       },
     )
@@ -486,10 +478,10 @@ export class Templatizer {
   }
 
   /**
-   * The model is asked about what the template leaves undecided for this
-   * contract, and its fields are appended; failing fields get their notes
-   * either way. Nothing is asked when the template decides every item.
-   * Returns whether it wrote.
+   * The model is shown the template as it is and asked what it misses for
+   * this contract, and what it adds is merged into the template's text.
+   * Nothing is asked when the contract has nothing discovery cannot read by
+   * itself. Returns whether it wrote.
    */
   private async addToExisting(
     request: TemplatizeRequest,
@@ -499,34 +491,46 @@ export class Templatizer {
     task: TemplatizationTask,
   ): Promise<boolean> {
     const { templateId } = existing
-    const remaining = remainingWorklist(worklist, existing)
-    if (isEmptyWorklist(remaining)) {
+    if (isEmptyWorklist(worklist)) {
       this.logger.info(
-        `Templatizer: ${templateId} already decides every item of ${subjectOf(facts)}`,
+        `Templatizer: ${subjectOf(facts)} has nothing to read beyond what discovery reads; ${templateId} is left as it is`,
       )
-      return this.writeAdditions(existing, facts, {})
+      return false
     }
-    const result = await this.runLoop(request, facts, remaining, task, existing)
-    const fields = draftFields(result)
-    const wrote = this.writeAdditions(existing, facts, {
-      provenance: this.header(result, 'Added'),
-      fields,
-    })
-    if (!wrote) {
+    const result = await this.runLoop(request, facts, worklist, task, existing)
+    const oldText = this.templateTextOf(templateId)
+    const text = mergedText(
+      mergeTemplate({
+        text: oldText,
+        isNew: false,
+        additions: result.draft.additions,
+        fieldComments: fieldComments(result),
+        header: [this.header(result, 'Added')],
+      }),
+    )
+    if (text === oldText) {
       this.logger.info(
         `Templatizer found nothing to add to ${templateId} from ${subjectOf(facts)}`,
       )
       return false
     }
+    replaceTemplateText(this.templateService, templateId, text)
     this.logger.info(
       `Templatizer added to ${templateId} for ${subjectOf(facts)}`,
       {
-        existing: existing.fields.length,
         failing: existing.failing.map((field) => field.name).join(', '),
-        added: fields.map((field) => field.name).join(', '),
+        added: fieldNames(result).join(', '),
       },
     )
     return true
+  }
+
+  private templateTextOf(templateId: string): string {
+    const text = this.templateService.readTemplateFile(templateId)
+    if (text === undefined) {
+      throw new Error(`Template ${templateId} has no template.jsonc`)
+    }
+    return text
   }
 
   private analyzeExisting(
@@ -543,36 +547,6 @@ export class Templatizer {
     )
   }
 
-  /**
-   * Appends the model's fields and the notes about failing fields to the
-   * template's text. Nothing is written when there is nothing new: no
-   * fields, and every note already there. Returns whether it wrote.
-   */
-  private writeAdditions(
-    existing: ExistingTemplate,
-    facts: ContractFacts,
-    additions: Pick<TemplateAdditions, 'provenance' | 'fields'>,
-  ): boolean {
-    const oldText = this.templateService.readTemplateFile(existing.templateId)
-    if (oldText === undefined) {
-      throw new Error(`Template ${existing.templateId} has no template.jsonc`)
-    }
-    const { text, insertions } = appendToTemplate(oldText, {
-      ...additions,
-      fieldNotes: Object.fromEntries(
-        existing.failing.map((field) => [
-          field.name,
-          [failureNote(facts.blockNumber, field)],
-        ]),
-      ),
-    })
-    if (insertions.length === 0) {
-      return false
-    }
-    replaceTemplateText(this.templateService, existing.templateId, text)
-    return true
-  }
-
   /** Throws `TemplatizationFailedError` unless a draft is accepted. */
   private async runLoop(
     request: TemplatizeRequest,
@@ -584,11 +558,20 @@ export class Templatizer {
     const artifacts = FileArtifactSink.fresh(
       trailDirectory(this.settings.artifactsRoot, facts.project, facts.address),
     )
+    const templateText =
+      existing === undefined ? '{}' : this.templateTextOf(existing.templateId)
     const { prompt, truncated } = buildPrompt({
       facts,
       worklist,
       existing:
-        existing === undefined ? undefined : this.existingTexts(existing),
+        existing === undefined
+          ? undefined
+          : {
+              templateId: existing.templateId,
+              text: templateText,
+              template: existing.template,
+              failing: existing.failing,
+            },
     })
     const subject = subjectOf(facts)
     if (truncated) {
@@ -605,22 +588,21 @@ export class Templatizer {
         model: this.settings.model,
         artifacts,
         logger: this.logger,
-        // The dry run sees the template the file will hold: the existing
-        // one as it is, or a new one with the ignoreMethods this draft gets.
-        dryRun: (draft) =>
-          dryRunDraft(request.provider, this.handlerExecutor, facts, draft, {
-            config: request.config,
-            base:
-              existing?.template ??
-              StructureContract.parse({
-                ignoreMethods: deriveIgnoreMethods(worklist, draft),
-              }),
-          }),
+        dryRun: (checked) =>
+          dryRunDraft(
+            request.provider,
+            this.handlerExecutor,
+            facts,
+            checked,
+            request.config,
+          ),
       },
       {
         prompt,
         subject,
-        validation: { facts, worklist, existingFieldNames: existing?.fields },
+        // A new template is validated as a merge into an empty one; its
+        // `$schema` is V1's to write.
+        validation: { facts, templateText, isNew: existing === undefined },
         trail: {
           address: facts.address,
           name: facts.name,
@@ -656,25 +638,6 @@ export class Templatizer {
     return result
   }
 
-  /** The existing fields as the researcher wrote them, each marked when it fails here. */
-  private existingTexts(existing: ExistingTemplate): ExistingFieldText[] {
-    const text =
-      this.templateService.readTemplateFile(existing.templateId) ?? ''
-    const failing = new Map(
-      existing.failing.map((field) => [field.name, field.error]),
-    )
-    return readFieldEntries(text).map(({ name, text }) => {
-      const field = existing.template.fields[name]
-      return {
-        name,
-        text,
-        ...(failing.has(name) ? { error: failing.get(name) } : {}),
-        ...(field?.handler === undefined ? {} : { handler: field.handler }),
-        ...(field?.edit === undefined ? {} : { edit: field.edit }),
-      }
-    })
-  }
-
   private header(result: Accepted, verb = 'Authored') {
     // The flag names the run that wrote the line, so a reviewer knows how to
     // reproduce it: a template authored during a revisit run came from --ai-revisit.
@@ -695,17 +658,35 @@ export class Templatizer {
 
 type Accepted = Extract<LoopResult, { status: 'accepted' }>
 
-/** The accepted draft's fields, each with what the dry run saw that the reviewer should check. */
-function draftFields(result: Accepted): TemplateFileField[] {
+/** Above what is added for each field: the model's reason, then what the dry run saw. */
+function fieldComments(result: Accepted): Record<string, string[]> {
   const runs = result.acceptedRound.dryRun?.fields ?? []
-  return Object.entries(result.draft.fields).map(([name, field]) => ({
-    name,
-    reason: field.reason,
-    covers: field.covers,
-    notes: (runs.find((run) => run.name === name)?.notes ?? []).map(reviewNote),
-    handler: field.handler,
-    edit: field.edit,
-  }))
+  return Object.fromEntries(
+    fieldNames(result).map((name) => [
+      name,
+      [
+        ...[result.draft.reasons[name] ?? []].flat(),
+        ...(runs.find((run) => run.name === name)?.notes ?? []).map(reviewNote),
+      ],
+    ]),
+  )
+}
+
+function fieldNames(result: Accepted): string[] {
+  const fields = result.draft.additions.fields
+  return typeof fields === 'object' && fields !== null
+    ? Object.keys(fields)
+    : []
+}
+
+/** A draft that passed the checks merges; one that does not is a bug here. */
+function mergedText(result: MergeResult): string {
+  if ('problems' in result) {
+    throw new Error(
+      `A checked draft does not merge: ${result.problems.map((p) => `${p.path}: ${p.message}`).join('; ')}`,
+    )
+  }
+  return result.text
 }
 
 /**

@@ -1,19 +1,17 @@
 /**
- * The closed list the model must rule on.
+ * What discovery does not read by itself, listed for the model to go
+ * through.
  *
  * Every view/pure function that takes at least one argument is state V1
  * cannot read without a handler (the 5-index probe of single-`uint256`
- * getters is a guess, not a read), so each needs a verdict: one or
- * more fields that cover it, or a skip with a reason. Events are items
- * too, because event-only state (a list of reverted batches, a history of
- * routes) has no getter to put on the list and was silently dropped when
- * events were only offered as a means of enumeration. The constructor is
- * an item when it has parameters: its arguments are state only a
- * `constructorArgs` field can read, and until it was listed no draft of
- * the quick suite ever wrote that field, while four committed templates of
- * the suite have it. Listing all of them here, rather than letting the
- * model pick from the ABI, is what makes "nothing was forgotten" a
- * mechanical check.
+ * getters is a guess, not a read). Events are listed too, because
+ * event-only state (a list of reverted batches, a history of routes) has no
+ * getter to put on the list and was silently dropped when events were only
+ * offered as a means of enumeration. The constructor is listed when it has
+ * parameters: its arguments are state only a `constructorArgs` field can
+ * read, and until it was listed no draft of the quick suite ever wrote that
+ * field, while four committed templates of the suite have it. Nothing
+ * checks that every item was read: most need no field.
  */
 import { utils } from 'ethers'
 import { rewriteSolidityIdentifier } from '../handlers/utils/rewriteSolidityIdentifier'
@@ -27,7 +25,7 @@ export interface WorklistParam {
 }
 
 export interface WorklistItem {
-  /** `name(type,type)`, the token used in `covers` and `skips[].item`. */
+  /** `name(type,type)`. */
   signature: string
   name: string
   /** Full human-readable fragment, so the model sees names and mutability. */
@@ -39,7 +37,6 @@ export interface WorklistItem {
 }
 
 export interface WorklistEvent {
-  /** The event name, the token used in `covers` and `skips[].item`. */
   name: string
   signature: string
   fragment: string
@@ -47,7 +44,7 @@ export interface WorklistEvent {
 }
 
 export interface WorklistConstructor {
-  /** `constructor(type,type)`, the token used in `covers` and `skips[].item`. */
+  /** `constructor(type,type)`. */
   signature: string
   /** With parameter names, so the model sees what the deployment set. */
   fragment: string
@@ -74,7 +71,7 @@ export function buildWorklist(
 ): Worklist {
   const index = AbiIndex.of(abi)
   const items = index.functions
-    .filter(needsVerdict)
+    .filter(needsHandler)
     .map((fragment) => toWorklistItem(fragment, baseline))
     .sort(bySignature)
   const events = uniqueByName(index.events)
@@ -96,18 +93,7 @@ export function isEmptyWorklist(worklist: Worklist): boolean {
   )
 }
 
-/** Every token that needs a verdict: function signatures, the constructor's, then event names. */
-export function worklistTokens(worklist: Worklist): string[] {
-  return [
-    ...worklist.items.map((item) => item.signature),
-    ...(worklist.constructorItem === undefined
-      ? []
-      : [worklist.constructorItem.signature]),
-    ...worklist.events.map((event) => event.name),
-  ]
-}
-
-function needsVerdict(fragment: utils.FunctionFragment): boolean {
+function needsHandler(fragment: utils.FunctionFragment): boolean {
   return (
     fragment.constant &&
     fragment.inputs.length >= 1 &&

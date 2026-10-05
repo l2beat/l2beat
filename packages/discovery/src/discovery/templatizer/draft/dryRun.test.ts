@@ -6,8 +6,7 @@ import { makeEntryStructureConfig } from '../../config/structureUtils'
 import { HandlerExecutor } from '../../handlers/HandlerExecutor'
 import type { IProvider } from '../../provider/IProvider'
 import { loadFixture } from '../test/fixtures'
-import type { Draft, DraftField } from './Draft'
-import { type DryRunOptions, dryRunDraft, runTemplateFields } from './dryRun'
+import { dryRunDraft, runTemplateFields } from './dryRun'
 
 const facts = loadFixture('ScrollChain')
 const BLOCK = facts.blockNumber
@@ -65,43 +64,42 @@ function provider(logs: providers.Log[], calls: Calls = {}): IProvider {
   })
 }
 
-const SEQUENCERS: DraftField = {
+type Field = Record<string, unknown>
+
+const SEQUENCERS: Field = {
   handler: {
     type: 'event',
     select: 'account',
     add: { event: 'UpdateSequencer', where: ['=', '#status', true] },
     remove: { event: 'UpdateSequencer', where: ['!=', '#status', true] },
   },
-  covers: ['isSequencer(address)', 'UpdateSequencer'],
-  reason: 'addSequencer/removeSequencer (onlyOwner) emit UpdateSequencer',
 }
 
-const REVERTED_BATCHES: DraftField = {
+const REVERTED_BATCHES: Field = {
   handler: {
     type: 'event',
     select: 'batchIndex',
     add: { event: 'RevertBatch' },
   },
-  covers: ['RevertBatch'],
-  reason: 'revertBatch (onlyOwner) emits RevertBatch',
 }
 
-function call(method: string, args: (string | number)[]): DraftField {
+function call(method: string, args: (string | number)[]): Field {
+  return { handler: { type: 'call', method, args } }
+}
+
+/** The template the file will hold: `base` as it is, plus the draft's `fields`, all of them added. */
+function draftOf(fields: Record<string, Field>, base?: StructureContract) {
   return {
-    handler: { type: 'call', method, args },
-    covers: [],
-    reason: 'test',
+    template: StructureContract.parse({
+      ...base,
+      fields: { ...base?.fields, ...fields },
+    }),
+    added: Object.keys(fields),
   }
 }
 
-function draftOf(fields: Record<string, DraftField>): Draft {
-  return { fields, skips: [] }
-}
-
-/** The analyzer's config for the address: no override, no project types. */
-const plain = (): DryRunOptions => ({
-  config: makeEntryStructureConfig({}, facts.address),
-})
+/** Discovery's config for the address: no override, no project types. */
+const plain = () => makeEntryStructureConfig({}, facts.address)
 
 describe(dryRunDraft.name, () => {
   const executor = new HandlerExecutor()
@@ -174,7 +172,7 @@ describe(dryRunDraft.name, () => {
     expect(result.findings).toEqual([
       {
         path: 'fields.finalized',
-        message: `dry run at block ${BLOCK} failed: Execution reverted; fix the handler or skip the item`,
+        message: `dry run at block ${BLOCK} failed: Execution reverted; fix the handler or leave the field out`,
       },
     ])
     expect(result.record.fields).toEqual([
@@ -187,7 +185,7 @@ describe(dryRunDraft.name, () => {
     ])
   })
 
-  it('runs with the analyzer’s own types, so a format edit over a project type passes', async () => {
+  it('runs with discovery’s own types, so a format edit over a project type passes', async () => {
     const config = makeEntryStructureConfig(
       {
         types: {
@@ -204,7 +202,7 @@ describe(dryRunDraft.name, () => {
       draftOf({
         tag: { ...call('isBatchFinalized', [1]), edit: ['format', 'BatchTag'] },
       }),
-      { config },
+      config,
     )
 
     expect(result.findings).toEqual([])
@@ -226,8 +224,6 @@ describe(dryRunDraft.name, () => {
         delay: {
           handler: { type: 'hardcoded', value: 3600 },
           edit: ['format', 'FormatSeconds'],
-          covers: [],
-          reason: 'test',
         },
       }),
       plain(),
@@ -236,7 +232,7 @@ describe(dryRunDraft.name, () => {
     expect(result.findings).toEqual([
       {
         path: 'draft',
-        message: `dry run at block ${BLOCK} failed as a whole: The edit of field finalized failed: Assertion Error: String keys only work on objects; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
+        message: `dry run at block ${BLOCK} failed as a whole: The edit of field finalized failed: Assertion Error: String keys only work on objects; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
       },
     ])
     expect(result.record.fields.map((field) => field.size)).toEqual([
@@ -250,28 +246,26 @@ describe(dryRunDraft.name, () => {
       provider([]),
       executor,
       facts,
-      draftOf({
-        lastFinalized: call('isBatchFinalized', [
-          '{{ lastFinalizedBatchIndex }}',
-        ]),
-      }),
-      {
-        ...plain(),
-        base: StructureContract.parse({
-          ignoreMethods: ['lastFinalizedBatchIndex'],
-        }),
-      },
+      draftOf(
+        {
+          lastFinalized: call('isBatchFinalized', [
+            '{{ lastFinalizedBatchIndex }}',
+          ]),
+        },
+        StructureContract.parse({ ignoreMethods: ['lastFinalizedBatchIndex'] }),
+      ),
+      plain(),
     )
 
     expect(result.findings).toEqual([
       {
         path: 'draft',
-        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies: lastFinalized waits for {{ lastFinalizedBatchIndex }}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or skip their items`,
+        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies: lastFinalized waits for {{ lastFinalizedBatchIndex }}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
       },
     ])
   })
 
-  it('accepts an event field that finds no logs, even one covering a getter, and notes it for the reviewer', async () => {
+  it('accepts an event field that finds no logs, and notes it for the reviewer', async () => {
     const result = await dryRunDraft(
       provider([]),
       executor,
@@ -318,8 +312,6 @@ describe(dryRunDraft.name, () => {
               where: ['=', '#account', SEQUENCER_A],
             },
           },
-          covers: ['isSequencer(address)'],
-          reason: 'test',
         },
       }),
       plain(),
@@ -404,7 +396,7 @@ describe(dryRunDraft.name, () => {
     const logs = MANY_ADDRESSES.map((token, i) =>
       log('UpdateSequencer', [token, true], 30 + i),
     )
-    const listing: DraftField = { ...SEQUENCERS, covers: ['UpdateSequencer'] }
+    const listing = SEQUENCERS
 
     const unbounded = await dryRunDraft(
       provider(logs),
@@ -420,7 +412,7 @@ describe(dryRunDraft.name, () => {
       draftOf({
         sequencers: {
           ...listing,
-          handler: { ...listing.handler, ignoreRelative: true },
+          handler: { ...(listing.handler as Field), ignoreRelative: true },
         },
       }),
       plain(),
@@ -447,8 +439,6 @@ describe(dryRunDraft.name, () => {
               MANY_ADDRESSES.map((address) => [`eth:${address}`, true]),
             ),
           },
-          covers: [],
-          reason: 'test',
         },
       }),
       plain(),
@@ -476,10 +466,11 @@ describe(dryRunDraft.name, () => {
       }),
       executor,
       facts,
-      draftOf({
-        batchFinalized: call('isBatchFinalized', ['{{ batchIndex }}']),
-      }),
-      { ...plain(), base },
+      draftOf(
+        { batchFinalized: call('isBatchFinalized', ['{{ batchIndex }}']) },
+        base,
+      ),
+      plain(),
     )
 
     expect(result).toEqual({
@@ -500,8 +491,8 @@ describe(dryRunDraft.name, () => {
       provider(SEQUENCER_LOGS),
       executor,
       facts,
-      draftOf({ sequencers: SEQUENCERS }),
-      { ...plain(), base },
+      draftOf({ sequencers: SEQUENCERS }, base),
+      plain(),
     )
 
     expect(result.findings.map((finding) => finding.path)).toEqual(['draft'])

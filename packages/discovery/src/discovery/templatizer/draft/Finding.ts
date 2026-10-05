@@ -5,10 +5,10 @@
  * a repair round, so each carries the path of the offending value and a
  * message that states both what is wrong and what would be right. Every
  * finding blocks the draft: a check raises one only when the draft is
- * certainly wrong (it does not parse, a verdict is missing or doubled, a
- * claim contradicts the handler's own text, a name would replace a value,
- * V1 refuses to construct or run a field). What is merely worth a look is
- * not a finding but a note written into the template for the reviewer.
+ * certainly wrong (it does not parse, V1's schema refuses it, it would
+ * replace what the template or the baseline has, V1 refuses to construct or
+ * run a field). What is merely worth a look is not a finding but a note
+ * written into the template for the reviewer.
  */
 export interface Finding {
   /** Path into the draft, e.g. `fields.sequencers.handler.add.where`. */

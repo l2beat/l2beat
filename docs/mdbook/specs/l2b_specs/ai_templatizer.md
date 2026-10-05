@@ -103,15 +103,23 @@ broke it.
 
 **1. The templatizer only adds.** It never removes, renames, reorders or
 rewrites anything a human wrote in a template, and it never changes what
-discovery outputs for a value that already existed. For an existing template,
-the new file is the old file's text with blocks inserted: new fields at the end
-of `fields`, and comment lines for the reviewer. The writer checks this before
-writing: removing the inserted blocks must give back the old text byte for
-byte, or the run stops. A field that fails at the current block stays in the
-file and gets a note; the researcher decides what to do with it. The
-`ignoreMethods` of an existing template is never touched. When a contract's
-new code no longer fits its old template, the templatizer does not bend the
-old template to it: the contract gets a template of its own.
+discovery outputs for a value that already existed. The model replies with
+the part of `template.jsonc` it adds, and one writer inserts that into the
+template's text at paths the text does not have yet; a path that exists is an
+error sent back to the model, never a replacement. On an existing template
+only new entries under `fields` are added, and on a field it already has only
+`severity`, `description` and `permissions`, which describe a value without
+changing it; nothing at the top level, since an `ignoreMethods` added to a
+shared template changes what every project using it reports. A new template is
+the same merge into the file discovery creates for it, and there anything
+discovery's schema accepts may be added. The old text survives byte for byte
+outside its whitespace (an object written on one line is spread one member per
+line when it gets a member), and before writing, every value the old text held
+must hold the same in the new one, or the run stops. A field that fails at the
+current block stays as it is; the model is told it fails, and the researcher
+decides what to do with it. When a contract's new code no longer fits its old
+template, the templatizer does not bend the old template to it: the contract
+gets a template of its own.
 
 Why: a template is shared by every contract whose code matches one of its
 shapes, across projects. A field that looks wrong from one contract's code may
@@ -140,23 +148,27 @@ discovery, and one such disagreement, a dry run built without the shared
 wrong about discovery.
 
 **3. Checks block only on structure and on failure.** A draft is rejected only
-when it does not parse, when discovery's own schema rejects it, when a worklist
-item has no verdict, is skipped twice, or is both covered and skipped, when a
-field claims to cover an event its handler does not read, when a field name
-would overwrite a value discovery already produces, or when a field errors in
-the dry run. Nothing else blocks: not an empty result, not a name the
-templatizer finds odd, not a judgment about what an event means. Whatever the
-dry run observes that a reviewer should know becomes a `// review:` comment in
-the template.
+when it does not parse, when discovery's own schema rejects it, when it would
+replace what the template or the baseline already has, when a field it adds
+has no reason, when discovery cannot construct a handler, or when a field
+errors in the dry run. Nothing else blocks: not an empty result, not a name
+the templatizer finds odd, not a judgment about what an event means, and not
+whether every function and event was considered. Whatever the dry run
+observes that a reviewer should know becomes a `// review:` comment in the
+template.
 
 Why: in all recorded runs the model never invented a function, an event or a
-handler type. Its mistakes were a reply that was not JSON, a missed verdict, a
-wrong event overload, a misnamed key. Parsing, coverage and the dry run catch
+handler type. Its mistakes were a reply that was not JSON, a wrong event
+overload, a misnamed key. Parsing, discovery's own schema and the dry run catch
 those. The checks beyond them fired once in 59 real rounds, and the dry run
 would have caught that case too, while the judgment rules rejected correct
-fields several times. Every template also goes through human review before it
-is committed. So the templatizer checks what it can know, writes down what it
-saw, and leaves judgment to the researcher.
+fields several times. A coverage check, which made the model give a verdict on
+every function and event, never fired on the two default models in eight
+quick-suite runs; on two other models it fired 39 times, 32 of them about its
+own bookkeeping (an item given two verdicts), and turning its skips into
+`ignoreMethods` caused the one recorded regression. Every template also goes
+through human review before it is committed. So the templatizer checks what it
+can know, writes down what it saw, and leaves judgment to the researcher.
 
 ## One contract, step by step
 
@@ -191,46 +203,37 @@ passes see it.
    argument, the constructor when it has parameters, and every event. These
    are the things discovery cannot read without being told how; the
    constructor's arguments only a `constructorArgs` field can decode, and a
-   constructor is listed so that field is decided on, not forgotten. If the
-   contract already has a template, the items its fields read and the methods
-   it ignores leave the list; a new field may still read one of them for
-   state the existing fields do not hold, and lists only worklist items in
-   its `covers`. When nothing is left on the list, the model is not asked: a
-   new contract gets a template with no fields, and an existing template gets
-   only its notes.
-3. **Prompt.** One message, in a fixed order: the guidance (what a draft is,
-   the five skip reasons, how to enumerate a mapping, event-only state, roles,
-   references, literals), the draft schema with a worked example, the handler
-   reference for the seven handler types the model may use, the contract
-   facts (identity, proxy values, baseline, the existing template's fields
-   verbatim, the worklist), and the flattened source, last and the only part
-   cut when the prompt is too long. When an existing field uses a handler or
-   an edit form outside the reference, the matching section of the discovery
-   README is added, so the model knows what that field does.
-4. **Draft.** The model replies with one JSON object: `fields`, each with a
-   `handler`, an optional `edit`, the worklist tokens it `covers` and a
-   one-sentence `reason`; and `skips`, each a worklist token with one of five
-   reasons (`computation`, `user-activity`, `unbounded`, `covered`,
-   `not-state`).
-5. **Checks.** The structural checks of rule 3. Errors go back to the model
-   verbatim, numbered, on the same conversation thread, up to the round limit.
-6. **Dry run.** The draft's fields, together with the existing template's
-   fields, run through discovery's handler executor at the run's block. A
-   field that errors goes back to the model. What the run observed is kept for
-   the notes.
+   constructor is listed so that field is considered, not forgotten. The
+   worklist is what the model is asked to go through; most of it needs no
+   field, and nothing checks that every item was read. When the list is
+   empty, the model is not asked: a new contract gets a template with no
+   fields, and an existing template only the new shape.
+3. **Prompt.** One message, in a fixed order: the guidance (what to read and
+   what needs no field, how to enumerate a mapping, event-only state, roles,
+   references, literals), the reply schema with a worked example, the handler
+   reference for the seven handler types the model is shown, the contract
+   facts (identity, proxy values, baseline, the existing template verbatim
+   with the fields that fail at this block, the worklist), and the flattened
+   source, last and the only part cut when the prompt is too long. When an
+   existing field uses a handler or an edit form outside the reference, the
+   matching section of the discovery README is added, so the model knows what
+   that field does.
+4. **Draft.** The model replies with one JSON object in the shape of
+   `template.jsonc`: `fields`, each with a `handler`, an optional `edit` and a
+   one-sentence `reason`, which is written as a comment above the field rather
+   than as a key. The prompt asks for fields only; descriptions, severities,
+   permissions and `ignoreMethods` stay the researcher's.
+5. **Checks.** The checks of rule 3. Errors go back to the model verbatim,
+   numbered, on the same conversation thread, up to the round limit.
+6. **Dry run.** The template the file will hold, the draft merged into it,
+   runs through discovery's handler executor at the run's block. A field the
+   draft adds that errors goes back to the model. What the run observed is
+   kept for the notes.
 7. **Write.** A new template is written to
    `_templates/<project>/<ContractName>/` with its shape, with a short shape
    hash appended to the name when that id is taken, as it is when a changed
-   contract outgrew its old template; an existing template gets the new
-   fields appended. For a new template, `ignoreMethods` holds the
-   probed getters the model skipped as not worth reading or covered by a field
-   of another name, whether that field reads the getter (`call`, `array`) or
-   holds the state it shows (an event fold of the set the 0–4 probe shows five
-   entries of), which is what a researcher writes by hand. A getter skipped as
-   `covered` keeps its probe: that skip is a claim with no field behind it,
-   nothing runs for it, and when it is wrong the probe is the only copy of the
-   data. A covering field runs in the dry run, and an empty fold gets its note
-   above the field. The next discovery pass applies the template.
+   contract outgrew its old template; an existing template gets the draft
+   merged into its text. The next discovery pass applies the template.
 8. **Failure.** If the model does not answer (quota, network, timeout), no
    draft passes within the rounds, or the templatizer hits a bug, discovery
    stops before writing `discovered.json`, with a message naming the contract,
@@ -244,31 +247,30 @@ Checked, and blocks until fixed:
 | Check | Why it can be certain |
 | --- | --- |
 | The reply is one JSON object | Parsing. A stray `}` after the object is tolerated; an object that never closes is reported with the number of braces still open, which a model can act on where a character position was ignored. |
-| Every handler matches discovery's own schema for its type; every `edit` and `where` is a blip program discovery parses | Discovery's own definitions, applied one type at a time so that the message names the wrong key. |
-| Every worklist item is covered by one or more fields or skipped once, never both, and nothing outside the list is named | Counting over a closed list. This is the "nothing was forgotten" check. Several fields may cover one item because they can read different parts of it: one `call` per literal argument, as researchers read a getter keyed by a `uint8`, or one `event` field per projection of an event. |
-| A field covers only events its handler names; a `call` or `array` field covers only the function it calls, and a bare method name that several overloads of one arity answer to covers none of them until it is written as a full fragment | Read off the handler itself. Without this a missed item could hide behind a false claim, and an overload could go unread behind a name that fits two. |
-| A field name is a Solidity identifier, does not start with `$`, and is not the name of a value the baseline, proxy detection or existing template already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array; which function that field reads is resolved as discovery's `array` handler resolves it, so an overload keyed by a narrower integer does not qualify | A field of an existing name replaces that value, which would remove output (rule 1). The exception is what researchers write; resolving the function keeps `foo(uint32)` from taking the place of the probed `foo(uint256)`. |
+| The reply matches discovery's own schema for `template.jsonc`, with no key the schema does not name; every handler matches the definition its `type` names; every `edit` and `where` is a blip program discovery parses | Discovery's own definitions, walked so that the message names the wrong key: every object as strict, since discovery ignores an unknown key where the model meant something, and a handler against the one definition its `type` names. |
+| The reply adds only paths the template does not have: on an existing template, entries under `fields`, and on a field it has, `severity`, `description` or `permissions` | Read off the template's text. This is rule 1. |
+| Every field it adds has a `reason` | Its presence. The reason is what the reviewer reads first. |
+| A field it adds that computes a value does not take the name of a value the baseline or proxy detection already has; the one exception is an `array` over the single-`uint256` getter discovery probes under that name, which replaces the 0–4 probe with the whole array; which function that field reads is resolved as discovery's `array` handler resolves it, so an overload keyed by a narrower integer does not qualify | A field of an existing name replaces that value, which would remove output (rule 1); one that only describes it is allowed. The exception is what researchers write; resolving the function keeps `foo(uint32)` from taking the place of the probed `foo(uint256)`. |
 | Every field constructs with discovery's handler factory and runs without error at the block; a full `method` fragment written for a function of this contract agrees with the ABI's declaration, outputs included | Discovery itself. The one construction failure that is explained rather than only quoted is an `array` over a getter keyed by a type `array` does not take (a `uint8`): discovery's message names no cause, and the model's next try was the same handler spelled differently. Discovery parses a full fragment without looking it up, so a wrong return type calls the right function and decodes the same 32 bytes without an error at the block; this is the one wrong template the dry run cannot catch. |
 
 Deliberately not checked:
 
 | Not checked | Reason |
 | --- | --- |
-| Whether a method or event name exists, or resolves to what the model meant | The dry run errors on a missing one. Which function a bare name resolved to is written as a note. For `covers`, a bare method name is matched to the worklist by name and number of arguments, a full fragment by its signature: a comparison of names the model wrote, not a resolution. When that comparison fits several overloads, the model is asked for the fragment rather than the templatizer guessing which one discovery reads. |
+| Whether every function and event was considered | Nothing blocks on it; the worklist is in the prompt, and the benchmark measures what the model finds. |
+| Whether a method or event name exists, or resolves to what the model meant | The dry run errors on a missing one. Which function a bare name resolved to is written as a note. |
 | Whether `{{ references }}` resolve | The dry run fails on an unresolved one. |
 | Which `edit` or `where` forms are used | Any program discovery parses is allowed. A throwing one fails the dry run; a wrong one is reviewed. |
 | Whether a result is empty | Event-only state can be empty at a block. The note says so. |
 | Whether a name is meaningful, or whether an `accessControl` field is named `accessControl` | Researchers rename freely in review; the guidance states the convention. |
-| Whether an event skipped as activity is really configuration | A judgment. The guidance tells the model how to decide; the researcher checks. |
+| Whether an event left out as activity is really configuration | A judgment. The guidance tells the model how to decide; the researcher checks. |
 | Whether a field would make discovery follow many addresses | The note states the count; the guidance asks for `ignoreRelative` on lists of instances. |
 
 ## Notes for the reviewer
 
 The templatizer writes what it saw as comments, each starting with
-`// review:`, directly above the field concerned:
+`// review:`, directly above a field it added:
 
-- `fails at block N: <error>`: an existing field errored at this block. It was
-  kept.
 - `empty at block N: no logs yet for <events>`: an event fold returned nothing.
 - `reads <fragment>`: a bare method name resolved to this function; check that
   it is the intended one.
@@ -279,12 +281,13 @@ The templatizer writes what it saw as comments, each starting with
   has logs too: …` when the fold is not empty: the field reads one overload of
   the event while another has history.
 
-Above a block of appended fields, one comment states who added them and when:
-`Added by <model>, <effort> effort via l2b discover --ai-revisit on <date>, <n>
-round(s). Review before committing.` A new template carries the same line
-after its `$schema`, starting `Authored by`, with the flag of the run that
-wrote it. Above each new field, the model's reason and the items it covers.
-A note is written once; a rerun that sees the same fact does not repeat it.
+Above the first addition to an existing template, one comment states who added
+it and when: `Added by <model>, <effort> effort via l2b discover --ai-revisit on
+<date>, <n> round(s). Review before committing.` A new template carries the same
+line after its `$schema`, starting `Authored by`, with the flag of the run that
+wrote it. Above each new field, the model's reason, then the notes. Existing
+fields get no notes, even when they fail: a note on a shared template would be
+added on every run, and `discovered.json` already shows the error.
 
 A reviewer reads the template diff as they would a colleague's: the reason,
 the handler, the notes, and the `discovered.json` diff next to it.

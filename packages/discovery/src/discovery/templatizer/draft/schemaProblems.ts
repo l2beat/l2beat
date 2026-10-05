@@ -6,8 +6,15 @@
  * round per mistake and never says which key would be right. Walking the
  * schema's definition instead reports each unexpected key (with the allowed
  * ones), each missing key and each wrong value at its own path, naming what
- * was expected. Leaves are still decided by the schema itself (`safeParse`),
- * so the walk accepts exactly what the schema accepts.
+ * was expected. Leaves are still decided by the schema itself (`safeParse`).
+ *
+ * Every object is walked as strict, whether V1 declares it so or not: the
+ * value is written into a template, where a key no schema names is ignored
+ * by discovery, and so is always a mistake. A union is walked into the one
+ * member the value's `type` names (the handlers), else into the member of
+ * the value's kind with the fewest problems (the two forms of the event
+ * handler), so a wrong key is reported at its key rather than as "expected
+ * one of 33 objects".
  */
 import type { ImpDefinition, Parser } from '@l2beat/validate'
 import { Reference } from '../../handlers/reference'
@@ -121,22 +128,69 @@ function walkUnion(
   path: string,
   problems: SchemaProblem[],
 ): void {
-  if (parses(schema, value)) {
-    return
-  }
+  // Walked even when the value parses: V1's objects that are not strict
+  // accept a misspelt key, which only the walk reports.
   const kind = Array.isArray(value)
     ? ['array']
     : isPlainObject(value)
       ? ['object', 'record']
       : []
-  const variants = definition.values.filter((variant) =>
-    kind.includes(variant.definition.type),
+  const variants = membersOf(definition).filter((variant) =>
+    kind.includes(variant.definition?.type ?? ''),
   )
-  if (variants.length === 1) {
-    walk(variants[0] as Schema, value, path, problems)
+  const types = variants.map(typeLiteralOf)
+  if (isPlainObject(value) && types.length > 1 && !types.includes(undefined)) {
+    const named = variants.filter((_, i) => types[i] === value.type)
+    if (named.length === 0) {
+      const allowed = [...new Set(types as string[])]
+      problems.push({
+        path: appendKey(path, 'type'),
+        message: `expected one of ${allowed.map((t) => JSON.stringify(t)).join(', ')}${nearMiss(String(value.type), allowed)}, got ${show(value.type)}`,
+      })
+      return
+    }
+    problems.push(...fewestProblems(named, value, path))
+    return
+  }
+  if (variants.length > 0) {
+    problems.push(...fewestProblems(variants, value, path))
     return
   }
   checkLeaf(schema, value, path, problems)
+}
+
+/** A union's members, with nested unions (V1's two forms of the event handler) spread in place. */
+function membersOf(
+  definition: Extract<ImpDefinition, { type: 'union' }>,
+): Schema[] {
+  return definition.values.flatMap((member): Schema[] =>
+    member.definition.type === 'union'
+      ? membersOf(member.definition)
+      : [member],
+  )
+}
+
+function fewestProblems(
+  variants: Schema[],
+  value: unknown,
+  path: string,
+): SchemaProblem[] {
+  const walked = variants.map((variant) => {
+    const found: SchemaProblem[] = []
+    walk(variant, value, path, found)
+    return found
+  })
+  return walked.reduce((best, next) =>
+    next.length < best.length ? next : best,
+  )
+}
+
+/** The literal an object schema requires under `type`, as V1's handler definitions have. */
+function typeLiteralOf(schema: Schema): string | undefined {
+  const type = propertyOf(schema, 'type')?.definition
+  return type?.type === 'literal' && typeof type.value === 'string'
+    ? type.value
+    : undefined
 }
 
 function walkObject(
@@ -151,13 +205,11 @@ function walkObject(
     return
   }
   const allowed = Object.keys(definition.schema)
-  if (definition.strict) {
-    for (const key of Object.keys(value).filter((k) => !allowed.includes(k))) {
-      problems.push({
-        path: appendKey(path, key),
-        message: unexpectedKey(key, allowed),
-      })
-    }
+  for (const key of Object.keys(value).filter((k) => !allowed.includes(k))) {
+    problems.push({
+      path: appendKey(path, key),
+      message: unexpectedKey(key, allowed),
+    })
   }
   for (const key of allowed) {
     const child = definition.schema[key] as Schema
@@ -241,12 +293,14 @@ function parses(schema: Schema, value: unknown): boolean {
 }
 
 function unexpectedKey(key: string, allowed: string[]): string {
-  const [hint] = closest(allowed, key, 1)
-  const guess =
-    hint !== undefined && isNearMiss(key, hint)
-      ? ` (did you mean "${hint}"?)`
-      : ''
-  return `unexpected key${guess}; allowed keys are ${allowed.join(', ')}`
+  return `unexpected key${nearMiss(key, allowed)}; allowed keys are ${allowed.join(', ')}`
+}
+
+function nearMiss(word: string, allowed: string[]): string {
+  const [hint] = closest(allowed, word, 1)
+  return hint !== undefined && isNearMiss(word, hint)
+    ? ` (did you mean "${hint}"?)`
+    : ''
 }
 
 /** A typo, not another word: two edits (one swap), or one per three characters. */
@@ -295,12 +349,15 @@ export function describe(schema: Schema): string {
 }
 
 /**
- * The checks inside the seven handler schemas are few and fixed: numbers
- * must be non-negative integers, arrays non-empty, and the string checks are
- * the shared validators in `KNOWN_SCHEMAS` plus the role-hash key.
+ * The checks inside the template and handler schemas are few and fixed:
+ * numbers must be non-negative integers, arrays non-empty, an unknown value
+ * a blip program (`edit`, `where`), and the string checks are the shared
+ * validators in `KNOWN_SCHEMAS` plus the role-hash key.
  */
 function describeCheck(parent: Schema): string {
   switch (parent.definition?.type) {
+    case 'unknown':
+      return 'a blip program discovery parses: an array whose first element is an operator, such as ["format", "FormatSeconds"] or ["=", "#status", true]'
     case 'number':
       return 'a non-negative integer'
     case 'array':

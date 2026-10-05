@@ -1,13 +1,13 @@
 /**
- * The authoring prompt: everything the model needs to draft a template for
- * one contract.
+ * The authoring prompt: everything the model needs to write the part of a
+ * template one contract needs.
  *
- * The prompt is a pure function of the facts, the worklist and the fields
- * of an existing template, in a fixed section order, so two runs over the
- * same contract send byte-identical prompts and any difference between
- * drafts is the model's alone. Section 1 says what is checked (little:
- * parsing, coverage or a skip per item, covers that match the handler, and the
- * handlers run at the block) and then gives the guidance researchers'
+ * The prompt is a pure function of the facts, the worklist and the
+ * existing template, in a fixed section order, so two runs over the same
+ * contract send byte-identical prompts and any difference between drafts is
+ * the model's alone. Section 1 says what is checked (little: parsing,
+ * discovery's schema, that nothing the template has is replaced, and the
+ * fields run at the block) and then gives the guidance researchers'
  * practice has produced; the wording of the research prompt's rules, tuned
  * over several benchmark runs, is kept where it still applies.
  *
@@ -16,9 +16,10 @@
  * evidence for which setter writes which mapping. A cut source is flagged
  * so the caller can record that the model worked from partial evidence.
  */
+import type { StructureContract } from '../../config/StructureConfig'
 import type { ContractValue } from '../../output/types'
 import { AbiIndex } from '../abi/AbiIndex'
-import type { Draft } from '../draft/Draft'
+import type { FailingField } from '../existingTemplate'
 import type { BaselineField, ContractFacts, FlatSource } from '../facts'
 import type {
   Worklist,
@@ -34,23 +35,21 @@ import {
   readmeReferenceFor,
 } from './readmeSections'
 
-/** A field of the existing template, as the researcher wrote it. */
-export interface ExistingFieldText {
-  name: string
-  /** The entry's original JSONC text, comments included. */
+/** The template of this contract when it exists already and is being added to. */
+export interface ExistingTemplateText {
+  templateId: string
+  /** `template.jsonc` as it is, comments included. */
   text: string
-  /** Set when the field errors at this block on this contract. */
-  error?: string
-  /** The field's parsed handler and edit, to know which README sections the model needs. */
-  handler?: { type: string }
-  edit?: unknown
+  /** Parsed, to know which README sections its handlers and edits need. */
+  template: StructureContract
+  /** Its fields that error at this block on this contract. */
+  failing: FailingField[]
 }
 
 export interface PromptInput {
   facts: ContractFacts
   worklist: Worklist
-  /** Set when the contract's template already exists and is being added to. */
-  existing?: ExistingFieldText[]
+  existing?: ExistingTemplateText
 }
 
 export interface PromptOptions {
@@ -70,7 +69,7 @@ export const DEFAULT_SOURCE_CHAR_CAP = 400_000
 
 export const SECTION_HEADERS = {
   rules: '## 1. Role and rules',
-  schema: '## 2. Draft schema and worked example',
+  schema: '## 2. Reply shape and worked example',
   handlers: '## 3. Handlers',
   facts: '## 4. Contract facts',
   source: '## 5. Flattened source',
@@ -85,18 +84,17 @@ export function buildPrompt(
   input: PromptInput,
   options: PromptOptions = {},
 ): AuthoringPrompt {
-  const existing = input.existing ?? []
   const source = renderSources(
     input.facts,
     options.sourceCharCap ?? DEFAULT_SOURCE_CHAR_CAP,
   )
   const prompt = [
-    '# Discovery template draft for one contract',
+    '# Discovery template fields for one contract',
     '',
-    renderRules(existing.length > 0),
+    renderRules(input.existing !== undefined),
     renderSchemaAndExample(),
-    renderHandlerDocs(existing, options.readme),
-    renderFacts(input.facts, input.worklist, existing),
+    renderHandlerDocs(input.existing, options.readme),
+    renderFacts(input.facts, input.worklist, input.existing),
     source.text,
   ].join('\n')
   return { prompt, truncated: source.truncated }
@@ -112,9 +110,9 @@ function renderRules(hasExisting: boolean): string {
   return [
     SECTION_HEADERS.rules,
     '',
-    'You write a *draft* of a discovery template for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Your draft adds a field for each such piece of state, each with one handler that reads it, and gives a verdict on every function and event of the worklist, and on the constructor when section 4 lists it. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
+    'You write the fields a discovery template (`template.jsonc`) needs for one smart contract. Discovery reads the contract at one block: every 0-argument getter has already been read, and every view function with a single `uint256` argument has been probed at indices 0–4; their values are the baseline in section 4. What discovery cannot read without being told how is the state behind view functions that take other arguments (mappings, role tables, whole arrays) and the state that only events reveal. Add a field for each such piece of state, each with one handler that reads it. The worklist in section 4 lists every function and event discovery does not read by itself, and the constructor when it has parameters: go through all of it, though most items need no field. You decide *what* to read and *from where*; you never transform data yourself beyond the two `edit` forms.',
     '',
-    'What is checked: your reply parses as one JSON object matching the schema in section 2, every worklist item is covered by fields or explicitly skipped, a field covers only what its handler names, no field takes the name of a value discovery already produces, and every handler is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
+    'What is checked: your reply parses as one JSON object of the shape in section 2, discovery’s own schema accepts it, it replaces nothing the template or the baseline already has, and every field you add is run at the block in section 4. Errors come back to you to repair, verbatim. Everything else below is guidance from how researchers write templates; follow it, and where this contract calls for something else, use your judgment: the template is reviewed by a researcher before it is committed.',
     '',
     ...[...rules, OUTPUT_RULE].flatMap(renderRule),
     '',
@@ -130,13 +128,13 @@ const RULES: Rule[] = [
   {
     title: 'Shape.',
     lines: [
-      'Use only the seven handler types of section 3 (`call`, `array`, `event`, `accessControl`, `storage`, `constructorArgs`, `hardcoded`), each with only the keys documented for it. `edit` and an event `where` are small programs; the forms researchers use are `["format", "FormatSeconds"]` and `["get", key, …]` for `edit`, and `["=", "#arg", literal]` or `["!=", "#arg", literal]` for `where` (section 3). Do not describe transformations in prose; if no handler fits, skip the item.',
+      'Reply with `fields` and nothing else at the top level, and give each field exactly a `handler`, optionally an `edit`, and a `reason`. Use only the seven handler types of section 3 (`call`, `array`, `event`, `accessControl`, `storage`, `constructorArgs`, `hardcoded`), each with only the keys documented for it. `edit` and an event `where` are small programs; the forms researchers use are `["format", "FormatSeconds"]` and `["get", key, …]` for `edit`, and `["=", "#arg", literal]` or `["!=", "#arg", literal]` for `where` (section 3). Do not describe transformations in prose; if no handler fits, leave the item out. `ignoreMethods`, descriptions, severities, permissions and every other template key are the researcher’s to write.',
     ],
   },
   {
     title: 'Name.',
     lines: [
-      'A field name is a Solidity identifier naming the state the field holds: the getter or mapping it reads (`committedBatches`), the members of a boolean membership mapping (`sequencers` for `isSequencer(address)`), or, for event-only state, the event’s subject in lowerCamelCase (`revertedBatches` for `RevertBatch`). An `accessControl` field is named `accessControl` and a `constructorArgs` field `constructorArgs`. Never reuse a baseline field name: a field of that name replaces the baseline value. The one exception is an `array` field named exactly like the probed single-`uint256` getter it enumerates, which replaces the 0–4 probe with the whole array. Names never start with `$`.',
+      'A field name is a Solidity identifier naming the state the field holds: the getter or mapping it reads (`committedBatches`), the members of a boolean membership mapping (`sequencers` for `isSequencer(address)`), or, for event-only state, the event’s subject in lowerCamelCase (`revertedBatches` for `RevertBatch`). An `accessControl` field is named `accessControl` and a `constructorArgs` field `constructorArgs`. Never give a field the name of a baseline value: a field of that name replaces the value. The one exception is an `array` field named exactly like the probed single-`uint256` getter it enumerates, which replaces the 0–4 probe with the whole array. Names never start with `$`.',
     ],
   },
   {
@@ -146,20 +144,14 @@ const RULES: Rule[] = [
     ],
   },
   {
-    title: 'Selection.',
+    title: 'What to read.',
     lines: [
-      'Give a verdict to every worklist function, to the constructor when it is listed, and to every event listed in section 4. The token is the function signature exactly as listed (`isSequencer(address)`), the constructor’s signature as listed (`constructor(address)`) or the bare event name (`UpdateSequencer`, never its fragment), and it appears either in the `covers` of the field that reads it (several fields may cover the same item, for example `call` fields with different literal `args`, or `event` fields that read different parts of one event) or exactly once as a `skips[].item` with a reason. Leave nothing out, never both cover and skip an item, and name nothing that is not listed. Skip reasons are only the five below; pick the one whose definition fits, not the softest one. They apply to events too, `covered` meaning that a getter or field already holds the state the event announces.',
-      '   - `computation`: a pure function of its inputs, or derivable from values already fetched. Example: `isBatchFinalized(uint256)` is `batchIndex <= lastFinalizedBatchIndex`, a baseline getter; `hashOperation(address,uint256,bytes,bytes32,bytes32)` hashes its arguments.',
-      '   - `user-activity`: per-user, per-message or per-operation state written through unprivileged calls, even when an event would let you enumerate it. Example: `balanceOf(address)`, `isMessageDropped(bytes32)`, `getTimestamp(bytes32)` for operations anyone can schedule; events such as `Transfer`, `Deposit` or `SentMessage` emitted for any caller.',
-      '   - `unbounded`: state written only by privileged callers whose keys cannot be enumerated from events, getters or literals, or which grows with every batch or block the operator posts. Example: `committedBatches(uint256)`, one hash per batch committed by whitelisted sequencers, with no fixed key set to read; the events `CommitBatch` and `FinalizeBatch`, one per batch.',
-      '   - `covered`: the value is already produced by another field or by a value in section 4. Example: `owners(uint256)` next to a `getOwners()` baseline getter; `OwnershipTransferred` next to the `owner` baseline getter; the proxy events `Upgraded`, `AdminChanged` and `BeaconUpgraded`, whose state the proxy values hold. An item answered by a field belongs in that field’s `covers`, not here.',
-      '   - `not-state`: interface checks, version strings and helpers that read no storage of interest. Example: `supportsInterface(bytes4)`, `getFunctionSelector(string)`; the `Initialized` event of an initializer.',
-    ],
-  },
-  {
-    title: 'Covers.',
-    lines: [
-      'A field covers only what it reads. A `call` or `array` field covers the function it calls on this contract; an `event` field covers the events its actions name and, by claim, the getters whose state it reproduces (`sequencers` covers `UpdateSequencer` and `isSequencer(address)`); a `storage`, `constructorArgs` or `hardcoded` field covers a getter only by claim. Every worklist event a field reads is in its `covers` and is never skipped; several fields may read different parts of the same event.',
+      'Go through every worklist function, the constructor when it is listed, and every event listed in section 4, and add a field for each piece of privileged state that no baseline value shows. Several fields may read one item, for example `call` fields with different literal `args`, or `event` fields that read different parts of one event. Leave the rest out; these need no field, and they apply to events too:',
+      '   - A computation: a pure function of its inputs, or derivable from values already fetched. Example: `isBatchFinalized(uint256)` is `batchIndex <= lastFinalizedBatchIndex`, a baseline getter; `hashOperation(address,uint256,bytes,bytes32,bytes32)` hashes its arguments.',
+      '   - User activity: per-user, per-message or per-operation state written through unprivileged calls, even when an event would let you enumerate it. Example: `balanceOf(address)`, `isMessageDropped(bytes32)`, `getTimestamp(bytes32)` for operations anyone can schedule; events such as `Transfer`, `Deposit` or `SentMessage` emitted for any caller.',
+      '   - Unbounded state: written only by privileged callers, but with keys that cannot be enumerated from events, getters or literals, or growing with every batch or block the operator posts. Example: `committedBatches(uint256)`, one hash per batch committed by whitelisted sequencers, with no fixed key set to read; the events `CommitBatch` and `FinalizeBatch`, one per batch.',
+      '   - State already shown: by another field or by a value in section 4. Example: `owners(uint256)` next to a `getOwners()` baseline getter; `OwnershipTransferred` next to the `owner` baseline getter; the proxy events `Upgraded`, `AdminChanged` and `BeaconUpgraded`, whose state the proxy values hold.',
+      '   - Not state: interface checks, version strings and helpers that read no storage of interest. Example: `supportsInterface(bytes4)`, `getFunctionSelector(string)`; the `Initialized` event of an initializer.',
     ],
   },
   {
@@ -171,25 +163,25 @@ const RULES: Rule[] = [
   {
     title: 'Event-only state.',
     lines: [
-      'Some state is observable only through events emitted by privileged functions and has no getter: a list of reverted batches (`RevertBatch`), a history of verifier updates (`UpdateVerifier`), a sequence of upgrades. Give such state an `event` field that covers those events, named after the event’s subject in Solidity terms (the state variable the event announces, or the subject in lowerCamelCase such as `revertedBatches`). Never do this for user-activity events (deposits, withdrawals, messages, transfers) or for the routine per-batch commits and finalizations an operator emits continuously.',
+      'Some state is observable only through events emitted by privileged functions and has no getter: a list of reverted batches (`RevertBatch`), a history of verifier updates (`UpdateVerifier`), a sequence of upgrades. Give such state an `event` field that reads those events, named after the event’s subject in Solidity terms (the state variable the event announces, or the subject in lowerCamelCase such as `revertedBatches`). Never do this for user-activity events (deposits, withdrawals, messages, transfers) or for the routine per-batch commits and finalizations an operator emits continuously.',
     ],
   },
   {
     title: 'Privileged events.',
     lines: [
-      'An event emitted only by functions guarded by an `only*` modifier (`onlyOwner`, `onlyRole(…)`, …), or only in the constructor, announces privileged state: never skip it as `user-activity` or `not-state`. Fold it into an event field (event-only state such as a list of reverted batches, named after its subject), or skip it as `covered` when a getter already exposes the state (e.g. `OwnershipTransferred` next to `owner()`).',
+      'An event emitted only by functions guarded by an `only*` modifier (`onlyOwner`, `onlyRole(…)`, …), or only in the constructor, announces privileged state: it is never user activity or "not state". Fold it into an event field (event-only state such as a list of reverted batches, named after its subject), or leave it out when a getter already shows the state (e.g. `OwnershipTransferred` next to `owner()`).',
     ],
   },
   {
     title: 'Roles.',
     lines: [
-      'For OpenZeppelin AccessControl (`hasRole(bytes32,address)`, `getRoleAdmin(bytes32)`, events `RoleGranted`/`RoleRevoked`/`RoleAdminChanged`) use one `accessControl` handler in a field named `accessControl` that covers whichever of these five are listed. Roles with a `*_ROLE()` getter are named automatically when the role is the keccak256 of the getter’s name; add `roleNames` only for the others (section 3). `getRoleMember(bytes32,uint256)` and `getRoleMemberCount(bytes32)` are skipped as `covered`: the field already lists the members.',
+      'For OpenZeppelin AccessControl (`hasRole(bytes32,address)`, `getRoleAdmin(bytes32)`, events `RoleGranted`/`RoleRevoked`/`RoleAdminChanged`) use one `accessControl` handler in a field named `accessControl`, which reads all five. Roles with a `*_ROLE()` getter are named automatically when the role is the keccak256 of the getter’s name; add `roleNames` only for the others (section 3). `getRoleMember(bytes32,uint256)` and `getRoleMemberCount(bytes32)` need no field: the `accessControl` field already lists the members.',
     ],
   },
   {
     title: 'References.',
     lines: [
-      '`{{ name }}` refers only to a baseline field, a field of your draft, a field of the existing template, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
+      '`{{ name }}` refers only to a baseline field, a field you add, a field of the existing template, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
     ],
   },
   {
@@ -201,34 +193,28 @@ const RULES: Rule[] = [
   {
     title: 'Reason.',
     lines: [
-      '`reason` is one sentence naming the writer function and its modifier (e.g. "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer").',
+      '`reason` is one sentence naming the writer function and its modifier (e.g. "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer"). It is written into the template as a comment above the field, for the reviewer.',
     ],
   },
   {
     title: 'User activity is never fetched.',
     lines: [
-      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: skip them as `user-activity` even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; a field that would make discovery follow more than 20 addresses without it is noted for the reviewer.',
-    ],
-  },
-  {
-    title: 'Only the draft.',
-    lines: [
-      'Write `fields` and `skips` and nothing else. `ignoreMethods` is derived from your skips by the tooling (a skipped probed function is no longer probed at indices 0–4); never write it, nor descriptions, severities, `copy` or any other template key.',
+      'Balances, deposits, withdrawals, per-user nonces, message or operation status by hash, queue contents: leave them out even when an event would let you enumerate them. Every address a field holds is analysed next as part of this system. A field that lists instances rather than parts of the system (every token a factory deployed, every game or pool created) adds `"ignoreRelative": true` to its handler; a field that would make discovery follow more than 20 addresses without it is noted for the reviewer.',
     ],
   },
 ]
 
 const EXISTING_RULE: Rule = {
-  title: 'Existing fields.',
+  title: 'Existing template.',
   lines: [
-    'Section 4 lists the fields the template of this contract already has. They stay exactly as they are and your fields are appended after them: do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. You may reference them as `{{ name }}`. You may also read the same function or event for additional state that the existing fields do not expose; list only remaining worklist tokens in `covers`, or use an empty list.',
+    'Section 4 shows the template this contract already has, verbatim. It stays exactly as it is and your fields are added to it: do not repeat its fields or reuse their names. You may reference them as `{{ name }}`. Read what they do not: worklist items no existing field reads, and more state of an item they read only in part. When the template already reads everything worth reading, reply with `{ "fields": {} }`.',
   ],
 }
 
 const OUTPUT_RULE: Rule = {
   title: 'Output.',
   lines: [
-    'Reply with exactly one JSON object that matches the draft schema in section 2, and nothing else: no prose, no code fence, no comments.',
+    'Reply with exactly one JSON object of the shape in section 2, and nothing else: no prose, no code fence, no comments.',
   ],
 }
 
@@ -236,7 +222,7 @@ function renderSchemaAndExample(): string {
   return [
     SECTION_HEADERS.schema,
     '',
-    'The draft must validate against this JSON schema. Each `handler` must match the one definition its `type` selects (for `event`: `eventSetHandler` when it has `set`, else `eventAddRemoveHandler`). `edit` and `where` are open here; the rules and section 3 restrict them.',
+    'The reply must validate against this JSON schema: discovery’s own definition of a template field, cut to the keys you write. Each `handler` must match the one definition its `type` names (for `event`, the form with `set` or the form with `add`). `edit` and `where` are open here; the rules and section 3 restrict them.',
     '',
     '```json',
     JSON.stringify(draftJsonSchema(), null, 2),
@@ -248,53 +234,46 @@ function renderSchemaAndExample(): string {
     JSON.stringify(WORKED_EXAMPLE, null, 2),
     '```',
     '',
+    WORKED_EXAMPLE_OUTRO,
+    '',
   ].join('\n')
 }
 
 export const WORKED_EXAMPLE_INTRO =
-  'A worked example, abbreviated: part of the draft for Morph’s `Rollup` (a contract outside this run). Challengers are a boolean mapping written only by owner-guarded setters that announce every change; the delay after which proposing becomes permissionless is shown formatted next to its getter; the skips show one item per kind of verdict. A real draft rules on every worklist function and event.'
+  'A worked example, abbreviated: part of the reply for Morph’s `Rollup` (a contract outside this run). Challengers are a boolean mapping written only by owner-guarded setters that announce every change; the delay after which proposing becomes permissionless is shown formatted next to its getter.'
+
+export const WORKED_EXAMPLE_OUTRO =
+  'The rest of its worklist needs no field: `committedBatches(uint256)` and the `CommitBatch` event grow with every batch, `isBatchFinalized(uint256)` is computed from the `lastFinalizedBatchIndex` getter, `batchChallengeReward(address)` is per user, `UpdateRollupDelayPeriod` and `OwnershipTransferred` announce what getters show and `Upgraded` what the proxy values show, and `Initialized` is no state.'
 
 /**
- * Morph's committed Rollup template (`_templates/morph/Rollup`) with the
- * verdicts a draft adds, cut to one example per idiom. It is deliberately
- * not a contract of the benchmark suite: a suite contract's answer in every
- * prompt would inflate exactly the fields the benchmark measures.
+ * Morph's committed Rollup template (`_templates/morph/Rollup`), cut to one
+ * example per idiom. It is deliberately not a contract of the benchmark
+ * suite: a suite contract's answer in every prompt would inflate exactly
+ * the fields the benchmark measures.
  */
-export const WORKED_EXAMPLE: Draft = {
+export const WORKED_EXAMPLE = {
   fields: {
     challengers: {
+      reason:
+        'isChallenger is written only by the owner-guarded challenger setters (onlyOwner), which emit UpdateChallenger with the new status',
       handler: {
         type: 'event',
         select: 'account',
         add: { event: 'UpdateChallenger', where: ['=', '#status', true] },
         remove: { event: 'UpdateChallenger', where: ['!=', '#status', true] },
       },
-      covers: ['isChallenger(address)', 'UpdateChallenger'],
-      reason:
-        'isChallenger is written only by the owner-guarded challenger setters (onlyOwner), which emit UpdateChallenger with the new status',
     },
     rollupDelayPeriodFormatted: {
-      handler: { type: 'call', method: 'rollupDelayPeriod', args: [] },
-      edit: ['format', 'FormatSeconds'],
-      covers: [],
       reason:
         'rollupDelayPeriod (set by the owner, announced by UpdateRollupDelayPeriod) is the censorship escape-hatch delay, shown in readable units',
+      handler: { type: 'call', method: 'rollupDelayPeriod', args: [] },
+      edit: ['format', 'FormatSeconds'],
     },
   },
-  skips: [
-    { item: 'committedBatches(uint256)', reason: 'unbounded' },
-    { item: 'isBatchFinalized(uint256)', reason: 'computation' },
-    { item: 'batchChallengeReward(address)', reason: 'user-activity' },
-    { item: 'CommitBatch', reason: 'unbounded' },
-    { item: 'UpdateRollupDelayPeriod', reason: 'covered' },
-    { item: 'OwnershipTransferred', reason: 'covered' },
-    { item: 'Upgraded', reason: 'covered' },
-    { item: 'Initialized', reason: 'not-state' },
-  ],
 }
 
 function renderHandlerDocs(
-  existing: ExistingFieldText[],
+  existing: ExistingTemplateText | undefined,
   readme: ReadmeIndex | undefined,
 ): string {
   return [
@@ -314,14 +293,15 @@ function renderHandlerDocs(
  * misses.
  */
 function renderReadmeReference(
-  existing: ExistingFieldText[],
+  existing: ExistingTemplateText | undefined,
   readme: ReadmeIndex | undefined,
 ): string[] {
+  const fields = Object.values(existing?.template.fields ?? {})
   const sections = readmeReferenceFor(
-    existing.flatMap((field) =>
+    fields.flatMap((field) =>
       field.handler === undefined ? [] : [field.handler.type],
     ),
-    existing.flatMap((field) => editOperatorsOf(field.edit)),
+    fields.flatMap((field) => editOperatorsOf(field.edit)),
     readme,
   )
   if (sections.length === 0) {
@@ -342,7 +322,7 @@ export const README_REFERENCE_HEADER =
 function renderFacts(
   facts: ContractFacts,
   worklist: Worklist,
-  existing: ExistingFieldText[],
+  existing: ExistingTemplateText | undefined,
 ): string {
   return [
     SECTION_HEADERS.facts,
@@ -426,36 +406,43 @@ function renderValue(value: ContractValue): string {
   return `${text.slice(0, VALUE_CHAR_CAP)}… [${text.length - VALUE_CHAR_CAP} more characters elided]`
 }
 
-/** Absent rather than empty for a new template, so a first draft's prompt does not mention an existing one at all. */
+/** Absent for a new template, so its prompt does not mention an existing one at all. */
 function renderExisting(
-  existing: ExistingFieldText[],
+  existing: ExistingTemplateText | undefined,
   blockNumber: number,
 ): string[] {
-  if (existing.length === 0) {
+  if (existing === undefined) {
     return []
   }
+  const failing = existing.failing.map(
+    (field) =>
+      `- \`${field.name}\` fails at block ${blockNumber}: ${field.error}`,
+  )
   return [
-    `### Existing fields (${existing.length})`,
+    `### The template this contract already has (\`${existing.templateId}\`)`,
     '',
-    'Already in the template of this contract and kept exactly as they are; your fields are appended after them. Do not redefine them or reuse their names, and do not rule on what they read, because those items are not on the worklist. Reference them as `{{ name }}` if useful. A field that fails at this block is marked; it is kept too.',
+    'Kept exactly as it is; your fields are added to it. Reference its fields as `{{ name }}` if useful.',
     '',
-    ...existing.flatMap((field) => [
-      '```jsonc',
-      ...(field.error === undefined
-        ? []
-        : [`// fails at block ${blockNumber}: ${field.error}`]),
-      field.text,
-      '```',
-      '',
-    ]),
+    '```jsonc',
+    existing.text.trimEnd(),
+    '```',
+    '',
+    ...(failing.length === 0
+      ? []
+      : [
+          'These of its fields fail on this contract at this block; they are kept too:',
+          '',
+          ...failing,
+          '',
+        ]),
   ]
 }
 
 function renderWorklistItems(items: WorklistItem[]): string[] {
   return [
-    `### Worklist: functions needing a verdict (${items.length})`,
+    `### Worklist: functions discovery does not read by itself (${items.length})`,
     '',
-    '"(probed)": discovery reads it at indices 0–4 today; skipping it removes that probe, and an `array` field named like it replaces the probe.',
+    '"(probed)": discovery reads it at indices 0–4 today; an `array` field named like it replaces the probe with the whole array.',
     '',
     ...(items.length === 0 ? ['(none)'] : items.map(renderWorklistItem)),
     '',
@@ -467,7 +454,7 @@ function renderWorklistItem(item: WorklistItem): string {
   return `- \`${item.signature}\`: ${item.fragment}${probed}`
 }
 
-/** Absent when the constructor has no parameters: nothing to decode, nothing to rule on. */
+/** Absent when the constructor has no parameters: nothing to decode. */
 function renderWorklistConstructor(
   item: WorklistConstructor | undefined,
 ): string[] {
@@ -475,11 +462,11 @@ function renderWorklistConstructor(
     return []
   }
   return [
-    '### Constructor needing a verdict',
+    '### Constructor',
     '',
     `- \`${item.signature}\`: ${item.fragment}`,
     '',
-    'Only a `constructorArgs` field reads it: the arguments of this address’s deployment, decoded with this constructor (for a proxy, the proxy’s own constructor). It is owed a verdict like any item: that field, or a skip, `covered` when getters or proxy values already show what the arguments set, `not-state` when they set nothing a reviewer would look at.',
+    'Only a `constructorArgs` field reads it: the arguments of this address’s deployment, decoded with this constructor (for a proxy, the proxy’s own constructor). Add that field when the arguments set state a reviewer would look at and no getter or proxy value already shows it.',
     '',
   ]
 }
@@ -489,7 +476,7 @@ function renderWorklistEvents(
   abi: readonly string[],
 ): string[] {
   return [
-    `### Events needing a verdict (${events.length})`,
+    `### Events (${events.length})`,
     '',
     ...(events.length === 0
       ? ['(none declared)']
@@ -516,7 +503,7 @@ function renderWorklistEvent(
 
 /**
  * The proxy's own bundle first, because a reader orients on the entry
- * point; then every implementation in the analyzer's order. One shared
+ * point; then every implementation in discovery's order. One shared
  * budget, so the total prompt size is bounded however many bundles there
  * are.
  */

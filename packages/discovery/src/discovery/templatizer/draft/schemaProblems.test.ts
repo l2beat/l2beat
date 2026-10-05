@@ -60,6 +60,47 @@ describe(schemaProblems.name, () => {
       },
     ])
   })
+
+  it('reports a key no schema names inside objects V1 does not declare strict', () => {
+    const lenient = v.object({ event: v.string() })
+    expect(schemaProblems(lenient, { event: 'A', wher: 1 }, 'a')).toEqual([
+      {
+        path: 'a.wher',
+        message: 'unexpected key; allowed keys are event',
+      },
+    ])
+  })
+
+  it('walks a union into the member its `type` names, spreading nested unions, or names the types', () => {
+    const handler = v.union([
+      v.strictObject({ type: v.literal('call'), args: v.array(v.number()) }),
+      v.union([
+        v.strictObject({ type: v.literal('event'), set: v.string() }),
+        v.strictObject({ type: v.literal('event'), add: v.string() }),
+      ]),
+    ])
+    expect(schemaProblems(handler, { type: 'call' }, 'h')).toEqual([
+      {
+        path: 'h.args',
+        message: 'missing; expected an array, each element a number',
+      },
+    ])
+    expect(
+      schemaProblems(handler, { type: 'event', add: 'X', flatten: 1 }, 'h'),
+    ).toEqual([
+      {
+        path: 'h.flatten',
+        message: 'unexpected key; allowed keys are type, add',
+      },
+    ])
+    expect(schemaProblems(handler, { type: 'evnt' }, 'h')).toEqual([
+      {
+        path: 'h.type',
+        message:
+          'expected one of "call", "event" (did you mean "event"?), got "evnt"',
+      },
+    ])
+  })
 })
 
 describe(appendKey.name, () => {

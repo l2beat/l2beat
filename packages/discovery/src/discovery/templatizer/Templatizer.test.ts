@@ -20,7 +20,6 @@ import { makeEntryStructureConfig } from '../config/structureUtils'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { PerContractSource } from '../source/SourceCodeService'
-import type { Draft } from './draft/Draft'
 import type { PreviousTemplate } from './existingTemplate'
 import { FakeModelClient } from './model/FakeModelClient'
 import { TemplatizationFailedError } from './TemplatizationFailedError'
@@ -49,39 +48,37 @@ describe(Templatizer.name, () => {
     isValidator[who] = active;
     emit ValidatorUpdated(who, active);
   }`
-  const DRAFT: Draft = {
+  const VALIDATORS_HANDLER = {
+    type: 'event',
+    select: 'validator',
+    add: { event: 'ValidatorUpdated', where: ['=', '#active', true] },
+    remove: { event: 'ValidatorUpdated', where: ['!=', '#active', true] },
+  }
+  const DRAFT = {
     fields: {
       validators: {
-        handler: {
-          type: 'event',
-          select: 'validator',
-          add: { event: 'ValidatorUpdated', where: ['=', '#active', true] },
-          remove: {
-            event: 'ValidatorUpdated',
-            where: ['!=', '#active', true],
-          },
-        },
-        covers: ['isValidator(address)', 'ValidatorUpdated'],
         reason:
           'isValidator is written only by setValidator (onlyOwner), which emits ValidatorUpdated',
+        handler: VALIDATORS_HANDLER,
       },
     },
-    skips: [{ item: 'OwnershipTransferred', reason: 'covered' }],
   }
-  const OWNER_HISTORY: Draft = {
+  const OWNER_HISTORY = {
     fields: {
       ownershipHistory: {
+        reason: 'transferOwnership (onlyOwner) emits OwnershipTransferred',
         handler: {
           type: 'event',
           select: 'newOwner',
           add: { event: 'OwnershipTransferred' },
         },
-        covers: ['OwnershipTransferred'],
-        reason: 'transferOwnership (onlyOwner) emits OwnershipTransferred',
       },
     },
-    skips: [{ item: 'isValidator(address)', reason: 'covered' }],
   }
+  /** Fails the checks every round: a field without its reason. */
+  const INVALID = JSON.stringify({
+    fields: { validators: { handler: VALIDATORS_HANDLER } },
+  })
 
   let root: string
   let templateService: TemplateService
@@ -186,11 +183,11 @@ describe(Templatizer.name, () => {
     expect(text).toInclude(
       '// Authored by fake-model via l2b discover --ai on 2026-09-29, 1 round(s). Review before committing.',
     )
-    expect(text).toInclude('// covers: isValidator(address), ValidatorUpdated')
+    expect(text).toInclude(`// ${DRAFT.fields.validators.reason}`)
     expect(templateService.loadContractTemplate('proj/Registry')).toEqual(
       expect.subset({
         fields: {
-          validators: { handler: DRAFT.fields.validators?.handler as never },
+          validators: { handler: VALIDATORS_HANDLER as never },
         },
       }),
     )
@@ -280,7 +277,7 @@ describe(Templatizer.name, () => {
   })
 
   it('stops discovery with a distinct error when no draft passes, and writes nothing', async () => {
-    const invalid = JSON.stringify({ ...DRAFT, skips: [] })
+    const invalid = INVALID
     const model = new FakeModelClient([invalid, invalid, invalid])
 
     const failure = await failureOf(
@@ -343,7 +340,7 @@ describe(Templatizer.name, () => {
   })
 
   it('leaves the contract untemplatized for the benchmark, but still stops when the model does not answer', async () => {
-    const invalid = JSON.stringify({ ...DRAFT, skips: [] })
+    const invalid = INVALID
     const leaving = (model: FakeModelClient) =>
       templatizer(model, {}, { onFailure: 'leave-untemplatized' })
 
@@ -465,8 +462,10 @@ describe(Templatizer.name, () => {
 
       expect(templateId).toEqual('proj/Registry')
       expect(model.calls.length).toEqual(1)
-      expect(model.prompts[0] ?? '').toInclude('### Existing fields (1)')
-      expect(model.prompts[0] ?? '').not.toInclude('- `ValidatorUpdated`')
+      expect(model.prompts[0] ?? '').toInclude(
+        '### The template this contract already has (`proj/Registry`)',
+      )
+      expect(model.prompts[0] ?? '').toInclude('// written by a researcher')
       expect(templateText('proj/Registry')).toInclude(
         '    // Added by fake-model via l2b discover --ai on 2026-09-29, 1 round(s). Review before committing.',
       )
@@ -481,17 +480,14 @@ describe(Templatizer.name, () => {
       ).toEqual(['proj/Registry'])
     })
 
-    it('adds only the shape, without a model call, when the template decides every item', async () => {
-      const deciding = FITTING_TEMPLATE.replace(
-        '"ignoreMethods": ["threshold"]',
-        '"ignoreMethods": ["isValidator"]',
-      ).replace(
-        '  "fields": {',
-        '  "fields": {\n    "owners": {\n      "handler": { "type": "event", "select": "newOwner", "add": { "event": "OwnershipTransferred" } }\n    },',
-      )
+    it('adds only the shape, without a model call, when the contract has nothing discovery cannot read by itself', async () => {
+      const deciding = '{\n  "description": "Keeps the owner."\n}\n'
       writeOldTemplate(deciding)
       const model = new FakeModelClient([])
-      const req = request([bundle('Registry', ADDRESS, BODY)])
+      const req = request(
+        [bundle('Registry', ADDRESS, BODY)],
+        ['function owner() view returns (address)'],
+      )
 
       const templateId = await templatizer(model, {
         [ADDRESS]: 'proj/Registry',
@@ -643,12 +639,8 @@ describe(Templatizer.name, () => {
       ).toEqual(['proj/Registry'])
     })
 
-    it('keeps the template when the failing field already failed on the old code, and notes it once', async () => {
-      const noted = OLD_TEMPLATE.replace(
-        '    "threshold": {',
-        '    // review: fails at block 42: Cannot find a matching method for threshold\n    "threshold": {',
-      )
-      writeOldTemplate(noted)
+    it('keeps the template when the failing field already failed on the old code, and leaves that field as it is', async () => {
+      writeOldTemplate()
       const model = new FakeModelClient([JSON.stringify(OWNER_HISTORY)])
       const req = request([bundle('Registry', ADDRESS, BODY)])
 
@@ -662,7 +654,11 @@ describe(Templatizer.name, () => {
 
       const text = templateText('proj/Registry')
       expect(templateId).toEqual('proj/Registry')
-      expect(text.split('review: fails at block').length - 1).toEqual(1)
+      // What was added sits between the last field and the trailing comment.
+      const added =
+        /,\n {4}\/\/ Added by[\s\S]*\n {4}}(?=\n {4}\/\/ a trailing)/
+      expect(text).toMatchRegex(added)
+      expect(text.replace(added, '')).toEqual(OLD_TEMPLATE)
       expect(text).toInclude('"ownershipHistory": {')
       expect(Object.keys(shapes()).length).toEqual(2)
     })
@@ -725,10 +721,7 @@ describe(Templatizer.name, () => {
       writeOldTemplate(FITTING_TEMPLATE)
       const model = new FakeModelClient([
         JSON.stringify(OWNER_HISTORY),
-        JSON.stringify({
-          fields: {},
-          skips: [{ item: 'isValidator(address)', reason: 'covered' }],
-        }),
+        JSON.stringify({ fields: {} }),
       ])
       const instance = templatizer(model, {
         [ADDRESS]: 'proj/Registry',
@@ -747,7 +740,6 @@ describe(Templatizer.name, () => {
       expect(model.calls.length).toEqual(2)
       // The second prompt is built after the first contract's additions.
       expect(model.prompts[1] ?? '').toInclude('"ownershipHistory": {')
-      expect(model.prompts[1] ?? '').not.toInclude('- `OwnershipTransferred`')
       for (const req of requests) {
         expect(
           templateService.findMatchingTemplates(req.sources, req.address),
@@ -810,9 +802,9 @@ describe(Templatizer.name, () => {
 
       const text = templateText('proj/Registry')
       expect(model.calls.length).toEqual(1)
-      expect(model.prompts[0] ?? '').toInclude('### Existing fields (1)')
-      expect(model.prompts[0] ?? '').toInclude('// written by a researcher')
-      expect(model.prompts[0] ?? '').not.toInclude('- `ValidatorUpdated`')
+      expect(model.prompts[0] ?? '').toInclude(
+        ['```jsonc', MATCHING_TEMPLATE.trimEnd(), '```'].join('\n'),
+      )
       expect(
         text.startsWith(MATCHING_TEMPLATE.slice(0, -'\n  }\n}\n'.length)),
       ).toEqual(true)
@@ -821,7 +813,6 @@ describe(Templatizer.name, () => {
           '    },',
           '    // Added by fake-model via l2b discover --ai-revisit on 2026-09-29, 1 round(s). Review before committing.',
           '    // transferOwnership (onlyOwner) emits OwnershipTransferred',
-          '    // covers: OwnershipTransferred',
           '    // review: empty at block 100: no logs yet for OwnershipTransferred',
           '    "ownershipHistory": {',
         ].join('\n'),
@@ -835,16 +826,9 @@ describe(Templatizer.name, () => {
       ).toEqual(['validators', 'ownershipHistory'])
     })
 
-    it('leaves the template untouched when the model finds nothing to add, however it skipped', async () => {
+    it('leaves the template untouched when the model finds nothing to add', async () => {
       const req = writeMatchingTemplate()
-      const nothing: Draft = {
-        fields: {},
-        skips: [
-          { item: 'isValidator(address)', reason: 'unbounded' },
-          { item: 'OwnershipTransferred', reason: 'covered' },
-        ],
-      }
-      const model = new FakeModelClient([JSON.stringify(nothing)])
+      const model = new FakeModelClient([JSON.stringify({ fields: {} })])
 
       await revisiting(model).revisit(req, 'proj/Registry')
 
@@ -852,7 +836,7 @@ describe(Templatizer.name, () => {
       expect(templateText('proj/Registry')).toEqual(MATCHING_TEMPLATE)
     })
 
-    it('keeps a failing field, notes it, tells the model about it and still asks', async () => {
+    it('keeps a failing field as it is, tells the model about it and still asks', async () => {
       const broken = MATCHING_TEMPLATE.replace(
         '  "fields": {',
         '  "fields": {\n    "threshold": {\n      "handler": { "type": "call", "method": "threshold", "args": [] }\n    },',
@@ -867,10 +851,10 @@ describe(Templatizer.name, () => {
 
       const text = templateText('proj/Registry')
       expect(model.prompts[0] ?? '').toInclude(
-        '// fails at block 100: Execution reverted\n"threshold": {',
+        '- `threshold` fails at block 100: Execution reverted',
       )
-      expect(text).toInclude(
-        '  "fields": {\n    // review: fails at block 100: Execution reverted\n    "threshold": {',
+      expect(text.startsWith(broken.slice(0, -'\n  }\n}\n'.length))).toEqual(
+        true,
       )
       expect(text).toInclude('"ownershipHistory": {')
       expect(
@@ -880,32 +864,7 @@ describe(Templatizer.name, () => {
       ).toEqual(['threshold', 'validators', 'ownershipHistory'])
     })
 
-    it('writes only the notes when the template already decides every item', async () => {
-      const deciding = MATCHING_TEMPLATE.replace(
-        '"ignoreMethods": ["nonce"]',
-        '"ignoreMethods": ["nonce", "isValidator"]',
-      ).replace(
-        '  "fields": {',
-        '  "fields": {\n    "owners": {\n      "handler": { "type": "event", "select": "newOwner", "add": { "event": "OwnershipTransferred" } }\n    },\n    "threshold": {\n      "handler": { "type": "call", "method": "threshold", "args": [] }\n    },',
-      )
-      const req = writeMatchingTemplate(deciding, [
-        ...ABI,
-        'function threshold() view returns (uint256)',
-      ])
-      const model = new FakeModelClient([])
-
-      await revisiting(model).revisit(req, 'proj/Registry')
-
-      expect(model.calls).toEqual([])
-      expect(templateText('proj/Registry')).toEqual(
-        deciding.replace(
-          '    "threshold": {',
-          '    // review: fails at block 100: Execution reverted\n    "threshold": {',
-        ),
-      )
-    })
-
-    it('dry-runs with the project types the analyzer has, so a template field using one does not fail', async () => {
+    it('dry-runs with the project types discovery has, so a template field using one does not fail', async () => {
       const typed = MATCHING_TEMPLATE.replace(
         '  "fields": {',
         '  "fields": {\n    "ownerTag": {\n      "handler": { "type": "call", "method": "owner", "args": [] },\n      "edit": ["format", "OwnerTag"]\n    },',
@@ -1011,7 +970,7 @@ describe(Templatizer.name, () => {
 
     it('stops discovery when the revisit fails, naming the template it would have changed', async () => {
       const req = writeMatchingTemplate()
-      const invalid = JSON.stringify({ fields: {}, skips: [] })
+      const invalid = INVALID
       const model = new FakeModelClient([invalid, invalid, invalid])
 
       const failure = await failureOf(
