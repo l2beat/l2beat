@@ -5,7 +5,7 @@
   "description": "ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.",
   "fields": {
     "VERIFIER": {
-      "template": "zkmoney/HonkVerifier"
+      "template": "zkmoney/ResolverVerifier"
     }
   }
 }

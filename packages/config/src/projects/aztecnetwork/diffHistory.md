@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xec03ab5174612a74b5e36333140d18ddcf2154d8
+
+# Diff at Mon, 05 Oct 2026 09:38:03 GMT:
+
+- id: da551634
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd994874bd99b18ba1f55be2a7905cd3e3005273 block: 1790759557
+- current timestamp: 1790759557
+
+## Description
+
+Ossification review of zk.money: ZkMoneyPortal field severities follow the ossification spec.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790759557 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta._$l2Portal.severity:
+-        "HIGH"
+      fieldMeta._$frozen.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x431f5551f1bf088434baddca14a45cc03c495777
 
 # Diff at Wed, 30 Sep 2026 09:13:57 GMT:

@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x7073767428a6e535ef0f5b692305d8657e0bc1ec
+
+# Diff at Mon, 05 Oct 2026 09:38:12 GMT:
+
+- id: e9f8fef9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd994874bd99b18ba1f55be2a7905cd3e3005273 block: 1790840907
+- current timestamp: 1791192874
+
+## Description
+
+Ossification review of zk.money: ZkMoneyPortal field severities follow the ossification spec.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790840907 (main branch discovery), not current.
+
+```diff
+    contract FrozenNotesRefundVerifier (eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877) [zkmoney/HonkVerifier] {
+    +++ description: UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.
+      description:
+-        "UltraHonk verifier for a zk.money circuit with a hardcoded verification key."
++        "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key."
+    }
+```
+
+```diff
+    contract UnprocessedDepositRefundVerifier (eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5) [zkmoney/HonkVerifier] {
+    +++ description: UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.
+      description:
+-        "UltraHonk verifier for a zk.money circuit with a hardcoded verification key."
++        "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key."
+    }
+```
+
+```diff
+    contract FrozenDepositRefundVerifier (eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe) [zkmoney/HonkVerifier] {
+    +++ description: UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.
+      description:
+-        "UltraHonk verifier for a zk.money circuit with a hardcoded verification key."
++        "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key."
+    }
+```
+
+```diff
+    contract NameRegistry (eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a) [zkmoney/NameRegistry] {
+    +++ description: Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.
+      fieldMeta.resolver:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ResolverVerifier (eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451) [zkmoney/ResolverVerifier] {
+    +++ description: UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address.
+      template:
+-        "zkmoney/HonkVerifier"
++        "zkmoney/ResolverVerifier"
+      description:
+-        "UltraHonk verifier for a zk.money circuit with a hardcoded verification key."
++        "UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address."
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract SIPAFactory (eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc) [zkmoney/SIPAFactory] {
+    +++ description: Deploys zk.money deposit addresses (SIPAs) as deterministic clones. The implementation per portal and intent is blessed once by the owner and cannot be changed afterwards.
+      fieldMeta.blessedImplementations.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta._$l2Portal.severity:
+-        "HIGH"
+      fieldMeta._$frozen.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x86ff4d71f651c62d1c8c8bdee886eb88ecbf0e7a
 
 # Diff at Thu, 01 Oct 2026 07:49:42 GMT:

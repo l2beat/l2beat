@@ -28,6 +28,9 @@
     },
     "accountMetadataRegistry": {
       "severity": "HIGH"
+    },
+    "resolver": {
+      "severity": "HIGH"
     }
   }
 }

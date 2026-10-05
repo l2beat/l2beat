@@ -250,7 +250,9 @@ export const zkmoney: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationHistory: discovery.getOssificationHistory(),
+  // The project starts with the portal. CertManager and NitroValidator were
+  // deployed 37 days earlier.
+  ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

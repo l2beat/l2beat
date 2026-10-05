@@ -12,8 +12,10 @@
   ],
   "ignoreRelatives": ["INBOX", "OUTBOX", "REGISTRY", "ROLLUP", "UNDERLYING"],
   "fields": {
+    // Role holder (spec). The deployer renounced 64 minutes after deployment,
+    // before the first deposit, so it can no longer change.
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -44,13 +46,15 @@
         }
       ]
     },
+    // Not HIGH: written once by initialize, so it cannot change on a live portal.
     "_$l2Portal": {
-      "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds.",
-      "severity": "HIGH"
+      "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
     },
+    // Pause-like, as privacy-pools `dead`: the freeze switches to the refund mode
+    // that the immutable portal already contains. Deposits stop, exits continue.
     "_$frozen": {
       "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "REGISTRY": {
       "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
