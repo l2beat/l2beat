@@ -36,7 +36,7 @@ describe(OpenCodeClient.name, () => {
 
   const cleanTurn = [
     '{"type":"step_start","sessionID":"ses_1","part":{"type":"step-start"}}',
-    '{"type":"text","sessionID":"ses_1","part":{"type":"text","text":"{\\"fields\\":{},\\"skips\\":[]}"}}',
+    '{"type":"text","sessionID":"ses_1","part":{"type":"text","text":"{\\"fields\\":{}}"}}',
     '{"type":"step_finish","sessionID":"ses_1","part":{"type":"step-finish","tokens":{"input":10,"output":3,"reasoning":1,"cache":{"read":100,"write":0}}}}',
   ].join('\n')
   const markupTurn = JSON.stringify({
@@ -119,7 +119,7 @@ describe(OpenCodeClient.name, () => {
     expect(stdin).toEqual('hello model')
 
     expect(turn.threadId).toEqual('ses_1')
-    expect(turn.text).toEqual('{"fields":{},"skips":[]}')
+    expect(turn.text).toEqual('{"fields":{}}')
     expect(turn.model).toEqual('opencode-go/test-model')
     expect(turn.usage).toEqual({
       inputTokens: 110,
@@ -192,7 +192,7 @@ describe(OpenCodeClient.name, () => {
     const turn = await client.start({ prompt: 'p', schema: {} })
 
     expect(calls()).toEqual(2)
-    expect(turn.text).toEqual('{"fields":{},"skips":[]}')
+    expect(turn.text).toEqual('{"fields":{}}')
     expect(turn.events.length).toEqual(5)
     expect(turn.usage).toEqual({
       inputTokens: 165,

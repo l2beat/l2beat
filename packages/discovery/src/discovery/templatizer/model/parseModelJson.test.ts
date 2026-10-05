@@ -37,7 +37,7 @@ describe(parseModelJson.name, () => {
 
   it('says by how many braces an object is never closed', () => {
     expect(
-      parseModelJson('{"fields":{"a":{"x":"{"}},"skips":[]').error,
+      parseModelJson('{"fields":{"a":{"x":"{"}},"other":[]').error,
     ).toEqual(
       'Expected \',\' or \'}\' after property value in JSON at position 36 (line 1 column 37); the object is never closed, there are 1 more "{" than "}"',
     )

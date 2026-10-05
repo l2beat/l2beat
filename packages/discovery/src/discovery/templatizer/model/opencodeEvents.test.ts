@@ -44,7 +44,7 @@ describe(parseOpenCodeEvents.name, () => {
       JSON.stringify({
         type: 'text',
         sessionID: 'ses_1',
-        part: { type: 'text', text: '{"fields":{},"skips":[]}' },
+        part: { type: 'text', text: '{"fields":{}}' },
       }),
     )
     expect(plain.toolParts).toEqual([])
