@@ -1,4 +1,5 @@
-import type { ProjectPrivacyInfo } from '@l2beat/config'
+import type { PrivacyBucketAddress, ProjectPrivacyInfo } from '@l2beat/config'
+import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
@@ -37,16 +38,49 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
     expect(series?.chain).toEqual('ethereum')
     expect(series?.token).toEqual('TOKEN')
   })
+
+  it('derives the chain and configuration id from an explicit chain address', () => {
+    const address = {
+      chain: 'starknet',
+      address: `0x${'0c'.repeat(32)}`,
+    }
+    const project = makeProject({
+      decimals: 18,
+      minimumAmount: '5000000000000000000000',
+      address,
+    })
+
+    const [series] = getPrivacyAnonymitySetSeries(project)
+
+    expect(series?.chain).toEqual('starknet')
+    expect(series?.label).toEqual('≥5000 TOKEN')
+    expect(series?.configurationId).toEqual(
+      createPrivacyAnonymitySetConfigurationId({
+        projectId: 'project',
+        bucketId: 'bucket',
+        chain: address.chain,
+        address: address.address,
+        event: `0x${'22'.repeat(32)}`,
+        extractor: 'fixedAmount',
+        params: { amount: '5000000000000000000000' },
+      }),
+    )
+  })
 })
 
 function makeProject({
   decimals,
   minimumAmount,
   bucketType = 'pool',
+  address = ChainSpecificAddress.fromLong(
+    'ethereum',
+    EthereumAddress(`0x${'11'.repeat(20)}`),
+  ),
 }: {
   decimals: number
   minimumAmount: string
   bucketType?: 'pool' | 'denomination'
+  address?: PrivacyBucketAddress
 }): PrivacyAnonymitySetProject {
   const privacyInfo = mockObject<ProjectPrivacyInfo>({
     tokens: [
@@ -64,10 +98,7 @@ function makeProject({
             id: 'bucket',
             type: bucketType,
             label: 'Token pool',
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              EthereumAddress(`0x${'11'.repeat(20)}`),
-            ),
+            address,
             sinceTimestamp: UnixTime(0),
             anonymitySet: { minimumAmounts: [minimumAmount] },
             deposit: {
