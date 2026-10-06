@@ -15,9 +15,10 @@ export function LiveIndicator({
         size === 'md' && 'ml-[3px] size-3',
       )}
     >
+      {/* the dot alone says live where motion is turned down */}
       <span
         className={cn(
-          'absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75',
+          'absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75 motion-reduce:hidden',
           disabled && 'hidden',
         )}
       />
