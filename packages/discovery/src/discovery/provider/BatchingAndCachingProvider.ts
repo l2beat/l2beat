@@ -797,10 +797,7 @@ async function getAllLogs(
   try {
     return await provider.getLogs(address, topics, fromBlock, toBlock)
   } catch (e) {
-    if (
-      e instanceof Error &&
-      e.message.includes('Log response size exceeded')
-    ) {
+    if (e instanceof Error && isRangeTooLarge(e)) {
       const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
       const [a, b] = await Promise.all([
         getAllLogs(provider, address, topics, fromBlock, midPoint),
@@ -810,4 +807,14 @@ async function getAllLogs(
     }
     throw e
   }
+}
+
+// Alchemy answers a range that is too slow to scan, rather than too big to
+// return, with a timeout that asks for a smaller range; splitting helps
+// with both.
+function isRangeTooLarge(error: Error): boolean {
+  return (
+    error.message.includes('Log response size exceeded') ||
+    error.message.includes('Consider reducing your block range')
+  )
 }

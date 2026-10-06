@@ -45,6 +45,22 @@ export function makeEntryStructureConfig(
   }
 }
 
+/**
+ * The config the analyzer runs an address with once a template matched:
+ * `config` with `template` pushed, on a copy, so the analyzer's own
+ * instance is untouched. The templatizer dry-runs drafts through this, so
+ * that a draft is judged with the same `types`, override and
+ * `ignoreMethods` the real run will have.
+ */
+export function withTemplate(
+  config: StructureContractConfig,
+  template: StructureContract,
+): StructureContractConfig {
+  const copy = { ...config }
+  copy.pushValues(template)
+  return copy
+}
+
 export function mergeStructureContract(
   base: StructureContract,
   override: StructureContract,

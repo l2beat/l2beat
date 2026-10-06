@@ -1,7 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { StructureContract } from './StructureConfig'
-import { makeEntryStructureConfig } from './structureUtils'
+import { makeEntryStructureConfig, withTemplate } from './structureUtils'
 
 describe(makeEntryStructureConfig.name, () => {
   describe('pushValues', () => {
@@ -268,5 +268,40 @@ describe(makeEntryStructureConfig.name, () => {
       })
       expect(config.fields?.handler?.template).toEqual('from override')
     })
+  })
+})
+
+describe(withTemplate.name, () => {
+  const ADDRESS = ChainSpecificAddress.random()
+
+  it('pushes the template onto a copy and leaves the original config untouched', () => {
+    const config = makeEntryStructureConfig(
+      {
+        types: { Global: { typeCaster: 'FormatSeconds' } },
+        overrides: {
+          [ADDRESS.toString()]: StructureContract.parse({
+            ignoreMethods: ['fromOverride'],
+            fields: { own: { severity: 'HIGH' } as never },
+          }),
+        },
+      },
+      ADDRESS,
+    )
+    const before = structuredClone({ ...config, pushValues: undefined })
+
+    const merged = withTemplate(
+      config,
+      StructureContract.parse({
+        ignoreMethods: ['fromTemplate'],
+        fields: { added: { handler: { type: 'hardcoded', value: 1 } } },
+        types: { Local: { typeCaster: 'FormatSeconds' } },
+      }),
+    )
+
+    expect(merged.address).toEqual(ADDRESS)
+    expect(merged.ignoreMethods).toEqual(['fromTemplate', 'fromOverride'])
+    expect(Object.keys(merged.fields)).toEqual(['added', 'own'])
+    expect(Object.keys(merged.types)).toEqual(['Local', 'Global'])
+    expect({ ...config, pushValues: undefined }).toEqual(before)
   })
 })
