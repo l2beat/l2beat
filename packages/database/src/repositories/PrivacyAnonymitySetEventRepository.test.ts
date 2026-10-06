@@ -53,6 +53,14 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
         START + UnixTime.DAY,
       ),
     ).toEqual([])
+    expect(
+      await repository.getDepositCount(
+        'project-a',
+        ['bucket-a'],
+        START,
+        START + UnixTime.DAY,
+      ),
+    ).toEqual(1)
     await repository.deleteByConfigInTimeRange(
       'aaaaaaaaaaaa',
       UnixTime(START + UnixTime.HOUR),
