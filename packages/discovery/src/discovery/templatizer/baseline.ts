@@ -9,7 +9,11 @@
  * own `getHandlers` over the same config, so a name is a getter, a probe or
  * an override field exactly when V1 made it one; nothing here repeats V1's
  * selection. A value no handler produced (a `copy` field of the override)
- * is an override field too.
+ * is an override field too. A field of the override with neither a value
+ * nor an error at this block (an event `set` before its first log) is kept
+ * without either, because its name is taken all the same: the override
+ * wins over a template field of that name, so the dry run would run the
+ * override, not the draft's field.
  */
 import type {
   StructureContract,
@@ -27,15 +31,21 @@ export function buildBaseline(
   handlers: readonly Handler[],
 ): Baseline {
   const byField = new Map(handlers.map((handler) => [handler.field, handler]))
-  const names = new Set([...Object.keys(values), ...Object.keys(errors)])
+  const names = new Set([
+    ...Object.keys(values),
+    ...Object.keys(errors),
+    ...handlers
+      .filter((handler) => kindOf(handler) === 'override')
+      .map((handler) => handler.field),
+  ])
   const fields: [string, BaselineField][] = []
   for (const name of names) {
     const value = values[name]
     const error = errors[name]
-    if (value === undefined && error === undefined) {
+    const kind = kindOf(byField.get(name))
+    if (value === undefined && error === undefined && kind !== 'override') {
       continue
     }
-    const kind = kindOf(byField.get(name))
     fields.push([name, withoutEmpty({ kind, value, error })])
   }
   fields.sort(([a], [b]) => a.localeCompare(b))

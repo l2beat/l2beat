@@ -377,7 +377,7 @@ function renderBaseline(fields: Record<string, BaselineField>): string[] {
   return [
     `### Baseline: values discovery already read (${entries.length})`,
     '',
-    `Every 0-argument getter, and every view function with a single \`uint256\` argument probed at indices ${PROBE_RANGE}. Reference these as \`{{ name }}\`, except one shown as an error alone, which has no value; never fetch them again, and never name a field like one of them, except an \`array\` field named like the probed getter it enumerates.`,
+    `Every 0-argument getter, and every view function with a single \`uint256\` argument probed at indices ${PROBE_RANGE}. Reference these as \`{{ name }}\`, except one shown as an error alone or as no value, which has none; never fetch them again, and never name a field like one of them, except an \`array\` field named like the probed getter it enumerates.`,
     '',
     ...(entries.length === 0
       ? ['(none)']
@@ -402,7 +402,9 @@ function renderBaselineField(name: string, field: BaselineField): string {
  */
 function renderBaselineValue(field: BaselineField): string {
   if (field.error === undefined) {
-    return renderValue(field.value as ContractValue)
+    return field.value === undefined
+      ? 'no value at this block'
+      : renderValue(field.value)
   }
   if (field.value === undefined) {
     return `error: ${field.error}`

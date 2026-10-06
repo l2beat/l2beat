@@ -11,7 +11,9 @@
  * parameters: its arguments are state only a `constructorArgs` field can
  * read, and until it was listed no draft of the quick suite ever wrote that
  * field, while four committed templates of the suite have it. Nothing
- * checks that every item was read: most need no field.
+ * checks that every item was read: most need no field. An anonymous event
+ * is left out: V1's event handler finds logs by the event's topic, which an
+ * anonymous log does not carry.
  */
 import { utils } from 'ethers'
 import { rewriteSolidityIdentifier } from '../handlers/utils/rewriteSolidityIdentifier'
@@ -74,7 +76,7 @@ export function buildWorklist(
     .filter(needsHandler)
     .map((fragment) => toWorklistItem(fragment, baseline))
     .sort(bySignature)
-  const events = uniqueByName(index.events)
+  const events = uniqueByName(index.events.filter((event) => !event.anonymous))
     .map(toWorklistEvent)
     .sort(bySignature)
   const constructorItem = toConstructorItem(index.deploy)
