@@ -2,20 +2,20 @@ import { expect } from 'earl'
 import { parseOpenCodeEvents } from './opencodeEvents'
 
 describe(parseOpenCodeEvents.name, () => {
-  it('reports the whole prompt as input tokens, cached part included, as Codex does', () => {
+  it('reports the whole prompt as input, cache reads and writes included, and the reasoning as part of the output, as Codex does', () => {
     const parsed = parseOpenCodeEvents(
       [
         '{"type":"step_start","sessionID":"ses_1","part":{"type":"step-start"}}',
         '{"type":"text","sessionID":"ses_1","part":{"type":"text","text":"{\\"version\\":1}"}}',
-        '{"type":"step_finish","sessionID":"ses_1","part":{"type":"step-finish","tokens":{"input":129,"output":18,"reasoning":7,"cache":{"read":123848,"write":0}}}}',
+        '{"type":"step_finish","sessionID":"ses_1","part":{"type":"step-finish","tokens":{"input":129,"output":18,"reasoning":7,"cache":{"read":123848,"write":20}}}}',
       ].join('\n'),
     )
     expect(parsed.sessionId).toEqual('ses_1')
     expect(parsed.text).toEqual('{"version":1}')
     expect(parsed.usage).toEqual({
-      inputTokens: 123977,
+      inputTokens: 123997,
       cachedInputTokens: 123848,
-      outputTokens: 18,
+      outputTokens: 25,
       reasoningOutputTokens: 7,
     })
   })
