@@ -23,7 +23,7 @@ export const HANDLER_DOCS = [
   '',
   'A string that is exactly `{{ name }}` stands for the value of another field. References are accepted in `args` and `address` (call), `length` and `indices` (array), `slot` and `offset` (storage), and nowhere else.',
   '',
-  '- `name` is a baseline field, another field you add, or a field of the existing template that has a `handler`; a field with only `copy` gets its value after every handler has run, so it cannot be referenced. `{{ $.address }}` is this contract’s own address, chain-prefixed (`eth:0x…`), which the ABI encoder does not take: in `args`, write the address as a plain `0x…` literal instead.',
+  '- `name` is a baseline field, another field you add, or a field of the existing template that has a `handler` and does not fail; a field with only `copy` gets its value after every handler has run, so it cannot be referenced. `{{ $.address }}` is this contract’s own address, chain-prefixed (`eth:0x…`), which the ABI encoder does not take: in `args`, write the address as a plain `0x…` literal instead.',
   '- Proxy values (`$admin`, `$implementation`, `$pastUpgrades`, …) are not referenceable.',
   '- `{{ name.key }}` reaches into an object value, e.g. `{{ constructorArgs._owner }}` of a `constructorArgs` field with `nameArgs: true`. It cannot index into arrays, and the outputs of a function returning several values are positional, so it cannot reach into those either, nor into a struct a function returns, which section 4 shows as an object but a reference sees as positional.',
   '- A reference resolves to the raw handler value: before `edit`, with addresses unprefixed, so it can be passed straight into `args`.',

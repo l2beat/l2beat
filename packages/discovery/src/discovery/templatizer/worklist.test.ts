@@ -137,15 +137,27 @@ describe(buildWorklist.name, () => {
     expect(isEmptyWorklist(worklist)).toEqual(false)
   })
 
-  it('leaves out an anonymous event, whose logs carry no topic V1 could find them by', () => {
+  it('leaves out the events V1 cannot read: anonymous ones and ones without parameters', () => {
     const worklist = buildWorklist(
       [
         'event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes data) anonymous',
+        'event Paused()',
         'event Rely(address indexed usr)',
       ],
       { fields: {} },
     )
     expect(worklist.events.map((event) => event.name)).toEqual(['Rely'])
+  })
+
+  it('leaves out an overloaded event whose first declaration, the one V1 resolves the name to, is anonymous', () => {
+    const worklist = buildWorklist(
+      [
+        'event Set(address indexed who) anonymous',
+        'event Set(address indexed who, uint256 value)',
+      ],
+      { fields: {} },
+    )
+    expect(worklist.events).toEqual([])
   })
 
   it('is identical for the same ABI in any order', () => {
