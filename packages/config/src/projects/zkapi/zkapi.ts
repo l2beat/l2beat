@@ -116,7 +116,7 @@ export const zkapi: BaseProject = {
   },
   display: {
     description:
-      'An ETH-funded API payment system that hides the deposit behind an API authorization proof.',
+      'An ETH-funded system that helps unlink an onchain payment from the AI inference token it paid for.',
     detailedDescription: readProjectMarkdown(
       'zkapi',
       'detailedDescription',
