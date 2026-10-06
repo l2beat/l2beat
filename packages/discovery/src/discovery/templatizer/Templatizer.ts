@@ -1,11 +1,10 @@
 /**
  * Authors a V1 template for a contract no template matches, and adds to
- * templates that do. It runs after discovery, over what discovery found:
- * every contract left without a template is asked about, one at a time,
- * and discovery then runs again with what was written, which applies the
- * new templates and reaches the contracts their address fields point to.
- * `templatizeDiscovered` is one such pass; the caller repeats discovery and
- * passes until a pass writes nothing.
+ * templates that do. It runs between the levels of discovery
+ * (`BetweenLevels`), over what discovery found so far: every contract left
+ * without a template is asked about, one at a time. The engine then
+ * analyzes again each contract a written template applies to, and follows
+ * the relatives of that analysis into the next level.
  *
  * A contract it was asked about and could not templatize stops the run
  * with a `TemplatizationFailedError`, rather than leaving the contract
@@ -112,7 +111,7 @@ export interface TemplatizeRequest {
 }
 
 export class Templatizer {
-  /** Addresses asked about in this run, each once however many passes see it. */
+  /** Addresses asked about in this run, each once however many levels see it. */
   private readonly asked = new Set<string>()
   /** Templates this run wrote or revisited, which a revisit does not ask about again. */
   private readonly settled = new Set<string>()
@@ -125,11 +124,11 @@ export class Templatizer {
   ) {}
 
   /**
-   * One pass over the analyses of a finished discovery, one contract at a
+   * One pass over the analyses discovery has made so far, one contract at a
    * time, in address order: every contract left without a template, and
    * with `--ai-revisit` every contract a template matched by its shape.
-   * Returns whether anything was written, which is when discovery must run
-   * again.
+   * Contracts asked about in an earlier pass are passed over. Returns
+   * whether anything was written.
    */
   async templatizeDiscovered(
     analyses: readonly Analysis[],
@@ -191,7 +190,7 @@ export class Templatizer {
 
   /**
    * The id of the template written or extended for the contract, or
-   * undefined when a template written earlier in the pass already matches
+   * undefined when a template written earlier in the run already matches
    * it (a contract of the same shape) or the benchmark left it
    * untemplatized.
    */
@@ -456,7 +455,9 @@ export class Templatizer {
    * `--ai-revisit` for a contract its template still matches: the model is
    * asked what the template misses for this contract, and its fields are
    * appended. A template is revisited once per run, on the first contract
-   * in a pass that matches it; one this run authored or extended is not
+   * in address order that matches it when discovery first reaches one; the
+   * engine then analyzes again every contract it matches, at whatever
+   * level. One this run authored or extended is not
    * revisited. A failed revisit stops the run, as a failed authoring does.
    * Returns whether it wrote.
    */

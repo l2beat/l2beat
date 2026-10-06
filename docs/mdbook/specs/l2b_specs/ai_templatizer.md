@@ -6,9 +6,10 @@ discovery how to read a contract. It runs as part of a local `l2b discover`
 run when the researcher asks for it with `--ai`, writes the same `template.jsonc`
 files researchers write, and the researcher reviews them as a git diff before
 committing. This document introduces discovery as far as needed, then
-describes what the templatizer does, the rules it follows, how one contract
-moves through it, what it checks and deliberately leaves alone, how the model
-is driven, how it is benchmarked, and which model is the default and why.
+describes what the templatizer does, the rules it follows, where it plugs
+into discovery, how one contract moves through it, what it checks and
+deliberately leaves alone, how the model is driven, how it is benchmarked,
+and which model is the default and why.
 
 ## Discovery, in short
 
@@ -19,7 +20,10 @@ starts from those and loops: for each address it fetches the ABI and the
 verified source, detects a proxy and reads its implementation, calls every
 view function that takes no arguments, and for every view that takes one
 `uint256` reads indices 0 to 4. Every address found among the values is
-queued and analysed in turn, until no new address appears. The result is
+queued and analysed in turn, until no new address appears. It goes level by
+level: the initial addresses are level 0, the new addresses their values hold
+are level 1, and so on. The addresses of one level are analysed together, and
+the next level starts when all of them are done. The result is
 `discovered.json`, committed next to the config. The differences between runs
 go to `diffHistory.md`, and a monitor watches the same values in production.
 
@@ -64,13 +68,13 @@ model, in the backend as well as locally.
 
 The AI templatizer puts a language model at that one point. It is a step of
 a discovery run, not a separate tool, and it is off unless the researcher
-switches it on with `--ai`. With the flag, discovery first runs as it always
-does. The templatizer then goes through what discovery found, one contract at
-a time: for each verified contract that matched no template, it hands the
-model the contract and the model writes a template. Discovery then runs again,
-from the RPC cache, so the new templates are applied and the contracts their
-fields point to are discovered too; the templatizer goes through what is new,
-and so on until a pass writes nothing. A contract whose code changed since
+switches it on with `--ai`. With the flag, the templatizer runs between the
+levels of discovery. When a level is done, it goes through what discovery
+found so far, one contract at a time: for each verified contract that matched
+no template, it hands the model the contract and the model writes a template.
+Discovery then analyses again every contract a written template applies to,
+and only then goes a level deeper, following the addresses those analyses
+hold. A contract whose code changed since
 the committed `discovered.json`, typically a proxy that was upgraded, matches
 no template either. If its old template still fits the new code, the model is
 asked what that template misses and the new shape joins it; if not, the
@@ -85,7 +89,7 @@ Only a local `l2b discover` can ask a model. The backend never does, so
 
 | Situation | Flag | What happens |
 | --- | --- | --- |
-| A verified contract matches no template | `--ai` | The model authors a new template. The next discovery pass applies it. |
+| A verified contract matches no template | `--ai` | The model authors a new template. Discovery analyses the contract again with it before going deeper. |
 | A contract matches exactly one template by its shape | `--ai-revisit` (implies `--ai`) | The model is asked what the template misses for this contract. Additions are appended. Each template is revisited once per run, on the first contract, in address order, that matches it. |
 | A contract that had a template shows new code, and the template still fits | `--ai` | The model is asked what the template leaves undecided for the new code. Additions are appended and the new shape is added, so the template matches again. |
 | A contract that had a template shows new code, and the template no longer fits | `--ai` | The model authors a template of its own for the new code; its header says why the old one no longer fits. The old template is left as it is. |
@@ -170,6 +174,66 @@ own bookkeeping (an item given two verdicts), and turning its skips into
 through human review before it is committed. So the templatizer checks what it
 can know, writes down what it saw, and leaves judgment to the researcher.
 
+## Between the levels of discovery
+
+The templatizer is a hook of discovery's engine (`BetweenLevels` in
+`DiscoveryEngine.ts`), called when every analysis of a level has finished and
+none of the next level has started. Nothing is in flight then, so the
+templatizer works one contract at a time. It is given every analysis made so
+far and passes over the contracts it was asked about at an earlier level.
+
+The templatizer writes through the same `TemplateService` the analyzer reads.
+After each call, the engine asks the analyzer, for every analysis it holds,
+whether `analyze` would now extend another template, or the same template
+changed since (`AddressAnalyzer.templateChanged`). Those addresses are
+analysed again. That is the contract the model wrote a template for, every
+contract of the same shape, and, once a template was added to, every contract
+it applies to, at whatever level it was found. A template that a referrer's
+field suggested stays the referrer's choice, and the address is analysed
+again with the same suggestion. The engine then calls the templatizer again,
+until a call changes nothing, and only then follows the level's relatives,
+from the analyses as they now are. So a contract's relatives are followed as
+its template makes them, never as discovery saw them without it.
+
+An analysis made again replaces the old one in place. Only an address's first
+analysis counts towards `maxAddresses` and `maxDepth`. An address that a
+contract of an earlier level holds only once analysed again joins the next
+level rather than the level after that contract, which matters only for
+`maxDepth`. A relative that the new analysis no longer holds is dropped by
+the reachability pruning discovery already does, which also runs after
+the last level. A contract whose template still changed right after it was
+analysed again stops the run instead of being analysed forever. Without
+`--ai` the engine calls no hook and never asks about templates.
+
+Why here:
+
+- **Not everything discovery reaches belongs to the project.** Without
+  templates, discovery follows every address a getter returns: a bridge's
+  list of tokens, a registry of instances, a contract that is only mentioned.
+  Researchers cut those with `ignoreRelatives`, `ignoreMethods` and
+  `ignoreDiscovery`. A templatizer that ran after a whole discovery would be
+  asked about all of them, spend model turns on them, and leave templates
+  nobody wants. Between the levels, a contract's template is in place before
+  its relatives are followed, so what the template says not to follow is
+  never reached.
+- **The model cannot cut yet.** It can keep discovery from following a
+  field it adds (`"ignoreRelative": true` on the handler), but not the
+  getters discovery reads by itself; that takes `ignoreRelatives` or
+  `ignoreMethods` at the template's top level, which the model may not write.
+  So on a new project discovery still goes wherever it goes without `--ai`,
+  and the researcher should cut what does not belong in `config.jsonc` before
+  running `--ai` on it. Letting the model, or a classifier, mark relatives
+  not to follow is the next step, and this hook is where that takes effect:
+  at the level where the contract is templatized.
+- **It reuses what the engine had.** Analysing an address again when its
+  template changes, as when a referrer's field suggests one, and dropping
+  what no analysis points to any more, were both there.
+- **Nothing after discovery changes what it follows.** Colouring, when
+  `discovered.json` is written, and permission modelling, a separate command,
+  read the templates and add to the output, so the hook sees everything the
+  structure will hold. A model reviewing the modelled permissions would be a
+  step of its own after the modelling.
+
 ## One contract, step by step
 
 A contract whose code changed starts with a fit check. Every field of the old
@@ -186,10 +250,9 @@ a template for the listed addresses alone, so nothing is added to it.
 
 Contracts go through these steps one at a time, in address order, so each
 one's check and prompt see what the previous ones wrote. A contract that a
-template written earlier in the same pass already matches, because it has
-the same code, is not asked about; the next discovery pass applies that
-template to it. Each contract is asked about once per run, however many
-passes see it.
+template written earlier in the run already matches, because it has the same
+code, is not asked about; discovery analyses it again with that template.
+Each contract is asked about once per run, however many levels see it.
 
 1. **Baseline.** The templatizer runs discovery's handlers on the contract with
    the address's configuration: every 0-argument getter, the 0–4 probe of
@@ -233,7 +296,8 @@ passes see it.
    `_templates/<project>/<ContractName>/` with its shape, with a short shape
    hash appended to the name when that id is taken, as it is when a changed
    contract outgrew its old template; an existing template gets the draft
-   merged into its text. The next discovery pass applies the template.
+   merged into its text. Discovery then analyses again every contract the
+   template applies to, at whatever level it was found.
 8. **Failure.** If the model does not answer (quota, network, timeout), no
    draft passes within the rounds, or the templatizer hits a bug, discovery
    stops before writing `discovered.json`, with a message naming the contract,
@@ -443,13 +507,17 @@ needed to use the numbers above.
 The choices that shape the code, with the reason each was taken, so they are
 not reopened without new evidence.
 
-- **A step after discovery, not inside it.** The templatizer used to run in
-  the analyzer, where every untemplatized contract of a depth reached it at
-  once. That needed a queue of model turns, a map of authorings in flight,
-  turns per template, and a record of where each template had already been
-  applied, and a template extended after a contract used it still left that
-  contract's values stale. Running after discovery, one contract at a time,
-  and then discovering again from the RPC cache needs none of it.
+- **Between the levels of discovery.** The templatizer first ran in the
+  analyzer, where every untemplatized contract of a level reached it at once.
+  That needed a queue of model turns, a map of authorings in flight and a
+  record of where each template had been applied, and a template extended
+  after a contract used it left that contract's values stale. It then ran
+  after discovery and discovered again until nothing was written: simple, but
+  every contract the untemplatized discovery reached was asked about, wanted
+  or not. Between the levels nothing is in flight, the engine's own analysis
+  of an address again keeps values current, and a template is in place before
+  its contract's relatives are followed, which is what lets a template, and
+  later the model, keep discovery from going where it should not.
 - **The reply is the template itself.** The model writes the part of
   `template.jsonc` it adds, which discovery's own schema checks and the
   reviewer reads as is. One writer merges it, insertions only, so a shared

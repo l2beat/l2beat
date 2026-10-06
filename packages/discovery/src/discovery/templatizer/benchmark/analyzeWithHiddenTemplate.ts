@@ -1,7 +1,8 @@
 /**
  * One benchmarked contract, for real: its committed template hidden, the
  * analyzer run, a templatizer pass over the result, and the analyzer run
- * again with whatever the pass wrote, as `--ai` does for a whole project.
+ * again with whatever the pass wrote, as `--ai` does between the levels of a
+ * project's discovery.
  *
  * Isolation is a throwaway copy of `_templates`, not a flag on
  * `TemplateService`: the analyzer, the templatizer and the writer then run
@@ -83,8 +84,8 @@ export async function analyzeWithHiddenTemplate(
     fs.rmSync(trail, { recursive: true, force: true })
     const templateService = new TemplateService(root)
     const proxyDetector = new RecordingProxyDetector()
-    // A new analyzer each time, as a rerun of discovery builds one: the
-    // first one loaded the templates as they were.
+    // A new analyzer each time, because the first one loaded the templates
+    // as they were before the templatizer wrote.
     const analyze = () =>
       new AddressAnalyzer(
         proxyDetector,

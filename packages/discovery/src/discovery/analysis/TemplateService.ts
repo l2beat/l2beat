@@ -153,7 +153,7 @@ export class TemplateService {
   }
 
   findMatchingTemplates(
-    sources: ContractSources,
+    sources: Pick<ContractSources, 'sources'>,
     address: ChainSpecificAddress,
   ): string[] {
     const sourceHash = getHashForMatchingFromSources(sources.sources)
