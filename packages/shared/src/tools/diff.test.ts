@@ -264,6 +264,21 @@ describe('diff', () => {
       ])
     })
 
+    it('sees keys named like prototype members on one side only', () => {
+      expect(diff({ constructor: 1 }, {})).toEqual([
+        { kind: 'remove', path: ['constructor'], lhs: 1 },
+      ])
+      expect(diff({}, { toString: 1 })).toEqual([
+        { kind: 'create', path: ['toString'], rhs: 1 },
+      ])
+    })
+
+    it('ignores inherited properties', () => {
+      const value = Object.assign(Object.create({ inherited: 1 }), { own: 2 })
+      expect(diff(value, value)).toEqual([])
+      expect(diff(Object.create({ inherited: 1 }), {})).toEqual([])
+    })
+
     it('handles identical objects that share reference', () => {
       const shared = { same: true }
       expect(diff([shared, shared], [shared, shared])).toEqual([])
@@ -435,6 +450,40 @@ describe('microdiff tests', () => {
   it('array to object', () => {
     expect(diff({ data: [] }, { data: { val: 'test' } })).toEqual([
       { kind: 'change', path: ['data'], rhs: { val: 'test' }, lhs: [] },
+    ])
+  })
+
+  // Long arrays go through fingerprints and skip their equal ends. The
+  // expected values are what the plain quadratic LCS produced.
+  describe('long arrays', () => {
+    const numbers = Array.from({ length: 30 }, (_, i) => i)
+
+    it('treats objects with keys in another order as equal', () => {
+      const left = numbers.map((i) => ({ a: i, b: [i] }))
+      const right = numbers.map((i) => ({ b: [i], a: i }))
+      expect(diff(left, right)).toEqual([])
+    })
+
+    it('finds a change between equal ends', () => {
+      const right = numbers.map((i) => (i === 15 ? 99 : i))
+      expect(diff(numbers, right)).toEqual([
+        { kind: 'change', path: [15], lhs: 15, rhs: 99 },
+      ])
+    })
+
+    it('finds an insertion between equal ends', () => {
+      const right = [...numbers.slice(0, 10), 42, ...numbers.slice(10)]
+      expect(diff(numbers, right)).toEqual([
+        { kind: 'create', path: [10], rhs: 42 },
+      ])
+    })
+  })
+
+  // The walk back matches the trailing `x, y` first, so the extra `x` is the
+  // first one, not the second.
+  it('keeps the tie-break inside a repeated prefix', () => {
+    expect(diff(['x', 'y'], ['x', 'x', 'y'])).toEqual([
+      { kind: 'create', path: [0], rhs: 'x' },
     ])
   })
 })
