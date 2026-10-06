@@ -32,7 +32,10 @@ const CONCURRENCY = 4
 const POLL_INTERVAL = 1
 /** Blocks reach the node about a second into their slot at the earliest */
 const FIRST_POLL_INTO_SLOT = 1
-/** How long a page's ask is held open when there is nothing new; within the server's 25 s request timeout */
+/**
+ * How long a page's ask takes at most when there is nothing new, the wait for
+ * the first answer included; within the server's 25 s request timeout
+ */
 const LONG_POLL = 20
 const MAX_RETRY_DELAY = 30
 /**
@@ -223,18 +226,21 @@ export class LiveBlobsFeed {
    * pending batch the moment the server has it, rather than at its next ask
    */
   async latestAfter({ after }: LiveBlobsParams) {
+    const askedAt = this.now()
     const blobs = await this.latest()
     if (after === undefined || !blobs || blobs.version > after) return blobs
+    const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
         clearTimeout(timer)
         this.waiting.delete(done)
         resolve()
       }
-      const timer = setTimeout(done, LONG_POLL * 1000)
+      const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
     })
-    return this.latest()
+    // not `latest`, which would wait for a first answer all over again
+    return this.snapshot()
   }
 
   /** Resolves once the backfill running now, if any, is done */
@@ -254,19 +260,25 @@ export class LiveBlobsFeed {
   }
 
   private async poll() {
+    const wasLive = this.failures === 0
+    let changed = false
     try {
       const head = await this.source.headSlot()
       const moved = head !== this.head
+      const missing = slotsMissing(this.blocks, head, head - RECENT_SLOTS)
       const fetched = await this.fetchAll([
-        ...slotsMissing(this.blocks, head, head - RECENT_SLOTS),
+        ...missing,
         ...(moved ? slotsUnsettled(this.blocks, head) : []),
       ])
+      // a block that failed to come with its head, and came on this try
+      const filled =
+        slotsMissing(this.blocks, head, head - RECENT_SLOTS).length <
+        missing.length
       this.head = head
       forgetOld(this.blocks, head)
       this.failures = fetched ? 0 : this.failures + 1
       this.backfill(head)
-      this.tendMempool()
-      this.publish(moved)
+      changed = moved || filled
     } catch (error) {
       // logged once per outage, not on every retry
       if (this.failures === 0) {
@@ -274,6 +286,10 @@ export class LiveBlobsFeed {
       }
       this.failures++
     }
+    // not only when the node answers: with it down, the mempool still has to be let go of
+    this.tendMempool()
+    // the page also shows whether the node is reached, so it hears of that too
+    this.publish(changed || wasLive !== (this.failures === 0))
     this.scheduleNext()
   }
 
@@ -289,18 +305,30 @@ export class LiveBlobsFeed {
   private fetchAll(slots: number[]) {
     return forEachLimited(slots, CONCURRENCY, async (slot) => {
       const block = await this.source.block(slot)
-      this.takeFromPending(block)
+      this.takeFromPending(block, this.blocks.get(slot))
       this.blocks.set(slot, block)
     })
   }
 
-  /** The block's batches wait no more; each notes since when it waited */
-  private takeFromPending(block: LiveBlock) {
-    if (block.status !== 'proposed') return
+  /**
+   * The block's batches wait no more; each notes since when it waited.
+   * `held` is what the slot had before, when it is fetched again: a batch
+   * still there keeps what it noted, as it left the pending ones the first
+   * time, and one the chain dropped with its block may wait again
+   */
+  private takeFromPending(block: LiveBlock, held: LiveBlock | undefined) {
     const now = this.now()
-    for (const batch of block.batches) {
-      const since = this.pending.included(batch.from, batch.nonce, now)
+    const batches = block.status === 'proposed' ? block.batches : []
+    const heldBatches = held?.status === 'proposed' ? held.batches : []
+    for (const batch of batches) {
+      const since =
+        this.pending.included(batch.from, batch.nonce, block.slot, now) ??
+        heldBatches.find((b) => isSameBatch(b, batch))?.pendingSince
       if (since !== undefined) batch.pendingSince = since
+    }
+    for (const batch of heldBatches) {
+      if (batches.some((b) => isSameBatch(b, batch))) continue
+      this.pending.dropped(batch.from, batch.nonce, block.slot)
     }
   }
 
@@ -313,9 +341,9 @@ export class LiveBlobsFeed {
     }
   }
 
-  /** A new version, if the head moved or what is pending changed, for the pages waiting */
-  private publish(headMoved: boolean) {
-    if (!headMoved && this.pending.version === this.pendingVersion) return
+  /** A new version, if the blocks or what is pending changed, for the pages waiting */
+  private publish(blocksChanged: boolean) {
+    if (!blocksChanged && this.pending.version === this.pendingVersion) return
     this.pendingVersion = this.pending.version
     this.version = Math.max(this.version + 1, Math.round(this.now() * 1000))
     for (const done of [...this.waiting]) done()
@@ -353,6 +381,11 @@ export class LiveBlobsFeed {
 }
 
 const NO_MEMPOOL: MempoolSource = { watch: () => {}, stop: () => {} }
+
+/** A sender's nonce names a batch, as in the mempool */
+function isSameBatch(a: LiveBatch, b: LiveBatch) {
+  return a.from === b.from && a.nonce === b.nonce
+}
 
 /** Sums up the blocks back from the head until the first one not known yet */
 function postedWindow(

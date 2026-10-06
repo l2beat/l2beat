@@ -11,6 +11,8 @@ import {
 // read back. Base's batcher stands in for any sender.
 describe(PendingBlobs.name, () => {
   const BASE = '0xbase'
+  /** The slot of the block a batch got into */
+  const SLOT = 1000
 
   it('keeps a fee-bump resend as the same batch, waiting since the first', () => {
     const pending = new PendingBlobs()
@@ -28,7 +30,7 @@ describe(PendingBlobs.name, () => {
     pending.seen(tx({ nonce: 7 }), 100)
     pending.seen(tx({ nonce: 8 }), 101)
 
-    const waitedSince = pending.included(BASE, 7, 112)
+    const waitedSince = pending.included(BASE, 7, SLOT, 112)
 
     expect(waitedSince).toEqual(100)
     expect(pending.list().map((b) => b.nonce)).toEqual([8])
@@ -40,7 +42,7 @@ describe(PendingBlobs.name, () => {
     pending.seen(tx({ nonce: 7, hash: '0xa' }), 100)
     pending.seen(tx({ nonce: 7, hash: '0xb' }), 110)
 
-    expect(pending.included(BASE, 7, 112)).toEqual(100)
+    expect(pending.included(BASE, 7, SLOT, 112)).toEqual(100)
     expect(pending.list()).toEqual([])
   })
 
@@ -50,16 +52,38 @@ describe(PendingBlobs.name, () => {
     pending.seen(tx({ nonce: 8 }), 101)
     pending.seen(tx({ from: '0xother', nonce: 3 }), 102)
 
-    expect(pending.included(BASE, 9, 112)).toEqual(undefined)
+    expect(pending.included(BASE, 9, SLOT, 112)).toEqual(undefined)
     expect(pending.list().map((b) => b.from)).toEqual(['0xother'])
   })
 
   it('does not wait for a block that came before the transaction did', () => {
     const pending = new PendingBlobs()
-    pending.included(BASE, 7, 112)
+    pending.included(BASE, 7, SLOT, 112)
 
     pending.seen(tx({ nonce: 7 }), 113)
     pending.seen(tx({ nonce: 6 }), 113)
+
+    expect(pending.list()).toEqual([])
+  })
+
+  it('waits again for a batch whose block the chain dropped', () => {
+    const pending = new PendingBlobs()
+    pending.included(BASE, 7, SLOT, 112)
+
+    pending.dropped(BASE, 7, SLOT)
+    pending.seen(tx({ nonce: 7 }), 125)
+
+    expect(pending.list().map((b) => b.nonce)).toEqual([7])
+  })
+
+  it('does not wait for a dropped batch that another block took', () => {
+    // the next block took it before the dropped one was heard of
+    const pending = new PendingBlobs()
+    pending.included(BASE, 7, SLOT, 112)
+    pending.included(BASE, 7, SLOT + 1, 124)
+
+    pending.dropped(BASE, 7, SLOT)
+    pending.seen(tx({ nonce: 7 }), 125)
 
     expect(pending.list()).toEqual([])
   })
@@ -93,11 +117,11 @@ describe(PendingBlobs.name, () => {
 
     // heard again from another peer, unchanged
     pending.seen(tx({ nonce: 7 }), 101)
-    pending.included('0xother', 1, 102)
+    pending.included('0xother', 1, SLOT, 102)
     pending.expire(103)
     expect(pending.version).toEqual(after)
 
-    pending.included(BASE, 7, 112)
+    pending.included(BASE, 7, SLOT, 112)
     expect(pending.version).toEqual(after + 1)
   })
 

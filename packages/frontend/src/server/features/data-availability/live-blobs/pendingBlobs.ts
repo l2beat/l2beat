@@ -36,10 +36,14 @@ export class PendingBlobs {
   version = 0
   private readonly byKey = new Map<string, Tracked>()
   /**
-   * The newest nonce each sender got into a block. A transaction can reach
-   * the mempool after its block, and must not then wait for one
+   * The newest nonce each sender got into a block, and the slot of that
+   * block. A transaction can reach the mempool after its block, and must not
+   * then wait for one
    */
-  private readonly usedNonces = new Map<string, { nonce: number; at: number }>()
+  private readonly usedNonces = new Map<
+    string,
+    { nonce: number; slot: number; at: number }
+  >()
 
   /** Oldest first */
   list(): PendingBatch[] {
@@ -70,14 +74,19 @@ export class PendingBlobs {
   }
 
   /**
-   * A block took the sender's `nonce`: the batch is done waiting, and so are
-   * any of its lower nonces, which can no longer be included. Says since
-   * when the batch waited, if it was seen waiting
+   * The block in `slot` took the sender's `nonce`: the batch is done waiting,
+   * and so are any of its lower nonces, which can no longer be included. Says
+   * since when the batch waited, if it was seen waiting
    */
-  included(from: string, nonce: number, now: number): number | undefined {
+  included(
+    from: string,
+    nonce: number,
+    slot: number,
+    now: number,
+  ): number | undefined {
     const used = this.usedNonces.get(from)
     if (!used || nonce >= used.nonce)
-      this.usedNonces.set(from, { nonce, at: now })
+      this.usedNonces.set(from, { nonce, slot, at: now })
     const firstSeenAt = this.byKey.get(keyOf(from, nonce))?.firstSeenAt
     let changed = false
     for (const [key, batch] of this.byKey) {
@@ -88,6 +97,18 @@ export class PendingBlobs {
     }
     if (changed) this.version++
     return firstSeenAt
+  }
+
+  /**
+   * The chain dropped the block in `slot` that took the sender's `nonce`.
+   * Unless another block took the nonce since, the batch is back in the
+   * mempool and may wait again
+   */
+  dropped(from: string, nonce: number, slot: number) {
+    const used = this.usedNonces.get(from)
+    if (used?.nonce === nonce && used.slot === slot) {
+      this.usedNonces.delete(from)
+    }
   }
 
   /** Lets go of batches not heard of for `PENDING_LIFETIME` */
