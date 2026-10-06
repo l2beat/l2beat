@@ -13,7 +13,7 @@ import {
 import { useChainClock } from './chainClock'
 import { useAnimationFrame } from './hooks'
 import { type Landing, useHeldUntilLanded } from './landings'
-import { type Arrival, Pop, RollingNumber } from './liveMotion'
+import { type Arrival, Pop, RollingNumber, writeText } from './liveMotion'
 import type { BlockLimits } from './model'
 import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
 
@@ -130,7 +130,7 @@ function NextSlot({ head }: { head: number | undefined }) {
     )
     if (textRef.current) {
       const left = Math.max(1, Math.ceil((1 - into) * SLOT_SECONDS))
-      textRef.current.textContent = `Next slot in ${left}s`
+      writeText(textRef.current, `Next slot in ${left}s`)
     }
   }, true)
 
