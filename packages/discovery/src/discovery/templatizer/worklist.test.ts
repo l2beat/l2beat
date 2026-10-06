@@ -137,6 +137,17 @@ describe(buildWorklist.name, () => {
     expect(isEmptyWorklist(worklist)).toEqual(false)
   })
 
+  it('leaves out an anonymous event, whose logs carry no topic V1 could find them by', () => {
+    const worklist = buildWorklist(
+      [
+        'event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes data) anonymous',
+        'event Rely(address indexed usr)',
+      ],
+      { fields: {} },
+    )
+    expect(worklist.events.map((event) => event.name)).toEqual(['Rely'])
+  })
+
   it('is identical for the same ABI in any order', () => {
     const facts = loadFixture('SequencerInbox')
 

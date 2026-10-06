@@ -31,7 +31,7 @@ export const HANDLER_DOCS = [
   '',
   '### Relatives',
   '',
-  'Discovery analyses every address a field holds next, as part of this system. `"ignoreRelative": true` on a `call`, `array`, `event`, `accessControl` or `storage` handler keeps the value but stops discovery from following its addresses; use it for fields that list instances (deployed tokens, created games or pools) rather than components.',
+  'Discovery analyses every address in a field’s value next, as part of this system; an address that is only an object key (as `groupBy` makes) is not followed, so keep it in the value when it names a component. `"ignoreRelative": true` on a `call`, `array`, `event`, `accessControl` or `storage` handler keeps the value but stops discovery from following its addresses; use it for fields that list instances (deployed tokens, created games or pools) rather than components.',
   '',
   '### call',
   '',
