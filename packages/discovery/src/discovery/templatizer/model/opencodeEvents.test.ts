@@ -20,6 +20,17 @@ describe(parseOpenCodeEvents.name, () => {
     })
   })
 
+  it('reads text parts that hold only whitespace as no text', () => {
+    const parsed = parseOpenCodeEvents(
+      [
+        '{"type":"text","sessionID":"ses_1","part":{"type":"text","text":""}}',
+        '{"type":"text","sessionID":"ses_1","part":{"type":"text","text":"\\n "}}',
+      ].join('\n'),
+    )
+    expect(parsed.sessionId).toEqual('ses_1')
+    expect(parsed.text).toEqual(undefined)
+  })
+
   it('records a tool part so the turn can be refused', () => {
     const parsed = parseOpenCodeEvents(
       '{"type":"tool","sessionID":"ses_1","part":{"type":"tool","tool":"read"}}',

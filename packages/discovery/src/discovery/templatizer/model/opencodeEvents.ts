@@ -45,7 +45,7 @@ export interface ParsedOpenCodeEvents {
   events: OpenCodeEvent[]
   sessionId?: string
   usage?: ModelUsage
-  /** Concatenated `text` parts, in order. */
+  /** Concatenated `text` parts, in order; undefined when they hold only whitespace. */
   text?: string
   errors: string[]
   /** Parts that only a tool call could have produced. */
@@ -73,8 +73,11 @@ export function parseOpenCodeEvents(jsonl: string): ParsedOpenCodeEvents {
     parsed.events.push(event)
     readEvent(event, parsed, texts)
   }
-  if (texts.length > 0) {
-    parsed.text = texts.join('')
+  // A text part can be empty, and an empty message is no answer: the turn
+  // is then refused as one with no text, and sampled again.
+  const text = texts.join('')
+  if (text.trim() !== '') {
+    parsed.text = text
   }
   return parsed
 }
