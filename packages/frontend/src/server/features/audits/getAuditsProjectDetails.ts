@@ -7,18 +7,22 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getOssificationValueSource } from '../projects/ossification/getOssificationSeries'
 import {
   type AuditCoverageSource,
   auditCoverageSource,
 } from './AuditCoverageSource'
-import { getAuditsOwnReports } from './getAuditsOwnReports'
-import { getAuditsProjectTimeline } from './getAuditsProjectTimeline'
+import { countFullyCoveredContracts } from './countFullyCoveredContracts'
+import { getAuditsOwnReports, parseReportDate } from './getAuditsOwnReports'
+import {
+  getAuditsLaunch,
+  getAuditsProjectTimeline,
+} from './getAuditsProjectTimeline'
 import { toCoverageNumbers } from './getAuditsSummaryEntries'
 import type {
   AuditsContractEntry,
   AuditsProjectDetails,
   AuditsReportEntry,
+  AuditsSharedReport,
   AuditsUnitEntry,
 } from './types'
 
@@ -35,8 +39,8 @@ export async function getAuditsProjectDetails(
     slug,
     optional: [
       'ossificationHistory',
+      'chainConfig',
       'discoveryInfo',
-      'tvsConfig',
       'defiInfo',
       'scalingInfo',
       'privacyInfo',
@@ -83,12 +87,15 @@ export async function getAuditsProjectDetails(
 
   const projectHref = project && getProjectHref(project)
   const timeline = getAuditsProjectTimeline(
-    getAuditsOwnReports(report, auditCoverageSource),
     {
-      history: project?.ossificationHistory,
-      href: projectHref && `${projectHref}#ossification`,
+      audits: getAuditsOwnReports(report, auditCoverageSource),
+      sharedAudits: reports.flatMap(toSharedReport),
+      ossification: {
+        history: project?.ossificationHistory,
+        href: projectHref && `${projectHref}#ossification`,
+      },
+      launch: project ? getAuditsLaunch(project) : null,
     },
-    (project && getOssificationValueSource(project)) ?? null,
     UnixTime.now(),
   )
 
@@ -104,6 +111,7 @@ export async function getAuditsProjectDetails(
     datasetRevision: report.datasetRevision,
     contracts: report.summary.contracts,
     contractsWithoutSource: report.summary.contractsWithoutSource,
+    fullyCoveredContracts: countFullyCoveredContracts(report.contracts),
     coverage: toCoverageNumbers(report.summary),
     uniqueUnits: report.summary.uniqueUnits,
     reports,
@@ -117,11 +125,31 @@ export async function getAuditsProjectDetails(
       })),
     contractEntries,
     projectHref,
-    discoUiHref: project?.discoveryInfo?.hasDiscoUi
-      ? `https://disco.l2beat.com/ui/p/${project.id}`
-      : undefined,
+    discoUiHref:
+      project && hasDiscoUi(project)
+        ? `https://disco.l2beat.com/ui/p/${project.id}`
+        : undefined,
     timeline,
   }
+}
+
+/**
+ * Disco serves every project with a discovered.json, but `hasDiscoUi` is only
+ * derived for scaling projects, see adjustDiscoveryInfo. Privacy and DeFi
+ * projects keep the template's false, so the base timestamp decides.
+ */
+function hasDiscoUi(
+  project:
+    | {
+        discoveryInfo?: {
+          hasDiscoUi: boolean
+          baseTimestamp: number | undefined
+        }
+      }
+    | undefined,
+): boolean {
+  const info = project?.discoveryInfo
+  return info?.hasDiscoUi === true || info?.baseTimestamp !== undefined
 }
 
 function getProjectHref(project: {
@@ -135,6 +163,23 @@ function getProjectHref(project: {
   if (project.defiInfo && env.CLIENT_SIDE_DEFI_ENABLED) {
     return `/defi/projects/${project.slug}`
   }
+}
+
+/** Dated reports of other collections; undated ones have no place on a timeline. */
+function toSharedReport(report: AuditsReportEntry): AuditsSharedReport[] {
+  const timestamp = parseReportDate(report.reportDate, report.id)
+  if (report.origin === 'own' || timestamp === undefined) return []
+  return [
+    {
+      id: report.id,
+      title: report.title,
+      auditor: report.auditor,
+      timestamp,
+      url: report.url,
+      origin: report.origin,
+      collectionName: report.collectionName,
+    },
+  ]
 }
 
 function originOf(report: ProjectAuditCoverage, collection: string) {

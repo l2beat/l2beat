@@ -21,7 +21,7 @@ export function getAuditsOwnReports(
     .listReports()
     .flatMap((ref) => {
       if (!own.has(ref.collection)) return []
-      const timestamp = parseReportDate(ref.reportDate)
+      const timestamp = parseReportDate(ref.reportDate, ref.id)
       if (timestamp === undefined) return []
       return [
         {
@@ -37,11 +37,17 @@ export function getAuditsOwnReports(
     .sort((a, b) => a.timestamp - b.timestamp)
 }
 
-/** Dataset dates are ISO days; anything unparsable is treated as undated. */
+/**
+ * Dataset dates are ISO days. An undated report falls back to the year and
+ * month its id ends with, e.g. `consensys-umbra-2021-03`; anything else is
+ * treated as undated.
+ */
 export function parseReportDate(
   reportDate: string | null,
+  id?: string,
 ): UnixTime | undefined {
-  if (!reportDate) return undefined
-  const ms = Date.parse(reportDate)
+  const date = reportDate ?? id?.match(/(\d{4}-\d{2}(?:-\d{2})?)$/)?.[1]
+  if (!date) return undefined
+  const ms = Date.parse(date)
   return Number.isNaN(ms) ? undefined : UnixTime(Math.floor(ms / 1000))
 }

@@ -1,5 +1,3 @@
-import type { OssificationValueSource } from '~/server/features/projects/ossification/getOssificationSeries'
-
 // View models served to the audits pages. They are derived from the engine's
 // data contract (`@l2beat/audit-diff`) on the server so that page components
 // never depend on the engine directly.
@@ -40,16 +38,32 @@ export interface AuditsOwnReport {
   matched: boolean
 }
 
-/** A year of value with the project's own audits, see AuditsTimelineChart. */
+/** A dated report of another collection that matched deployed code. */
+export interface AuditsSharedReport {
+  id: string
+  title: string
+  auditor: string
+  timestamp: number
+  url?: string
+  origin: AuditMatchOrigin
+  collectionName: string
+}
+
+/**
+ * The project's whole life with its own audits on it, see
+ * AuditsTimelineSparkline. Same scale as AuditsProjectTimeline.
+ */
 export interface AuditsSummaryTimeline {
+  /** Launch, first audit or first critical change, whichever came first. */
   from: number
   to: number
-  /** Own report dates inside the window, ascending. */
+  /** When the project launched; null when unknown. */
+  launch: number | null
+  /** Own report dates, ascending. */
   audits: number[]
-  /** Newest own report, possibly before the window; null when none is dated. */
   latestAudit: number | null
-  /** Evenly spread from `from` to `to`, see sampleTimeline */
-  values: (number | null)[] | null
+  /** Critical changes after the latest audit; null without ossification. */
+  criticalChangesSinceLatestAudit: number | null
 }
 
 export interface AuditsSummaryEntry {
@@ -61,6 +75,8 @@ export interface AuditsSummaryEntry {
   href: string
   contracts: number
   contractsWithoutSource: number
+  /** Contracts whose every unit is identical to audited code. */
+  fullyCoveredContracts: number
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
   /** Reports from the project's own collection that matched a unit. */
@@ -68,7 +84,6 @@ export interface AuditsSummaryEntry {
   /** Reports from every other collection (upstream, stack, libraries, ...). */
   sharedReportsCount: number
   discoveryTimestamp: number
-  valueSource: OssificationValueSource | null
   timeline: AuditsSummaryTimeline
 }
 
@@ -166,19 +181,32 @@ export interface AuditsContextEntry {
 export interface AuditsProjectTimeline {
   /** Dated own reports, ascending. */
   audits: AuditsOwnReport[]
+  /** Dated reports of other collections that matched deployed code, ascending. */
+  sharedAudits: AuditsSharedReport[]
   /** 24h-clustered critical changes from the ossification history, ascending. */
   criticalChanges: number[]
   /** False for projects outside the ossification perimeter. */
   hasOssification: boolean
   /** Where the critical changes are explained. */
   ossificationHref?: string
+  /** When the project launched; null when unknown. */
+  launch: number | null
   latestAudit: AuditsOwnReport | null
-  latestCriticalChange: number | null
+  /**
+   * Seconds per own audit since the launch or the first audit, whichever
+   * came first; null without audits.
+   */
+  averageAuditInterval: number | null
+  /**
+   * Seconds per critical upgrade since the launch; null without ossification
+   * or without upgrades.
+   */
+  averageUpgradeInterval: number | null
   /** Critical changes after the latest audit; null without ossification. */
   criticalChangesSinceLatestAudit: number | null
-  /** Where the MAX range starts: the earliest marker, at least a year ago. */
+  /** Launch, first audit or first critical change, at least a year ago. */
   from: number
-  valueSource: OssificationValueSource | null
+  to: number
 }
 
 export interface AuditsProjectDetails {
@@ -193,6 +221,8 @@ export interface AuditsProjectDetails {
   datasetRevision?: string
   contracts: number
   contractsWithoutSource: number
+  /** Contracts whose every unit is identical to audited code. */
+  fullyCoveredContracts: number
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
   reports: AuditsReportEntry[]

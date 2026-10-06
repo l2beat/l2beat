@@ -10,12 +10,13 @@ import { AuditsDisclaimer } from './AuditsDisclaimer'
 
 type Props = Pick<
   AuditsProjectDetails,
-  'coverage' | 'contracts' | 'discoUiHref'
+  'coverage' | 'contracts' | 'fullyCoveredContracts' | 'discoUiHref'
 >
 
 export function AuditsProjectSummary({
   coverage,
   contracts,
+  fullyCoveredContracts,
   discoUiHref,
 }: Props) {
   const units = totalUnits(coverage.units)
@@ -23,7 +24,17 @@ export function AuditsProjectSummary({
   const { lines } = coverage
   return (
     <>
-      <ChartStats className="lg:grid-cols-3">
+      <ChartStats className="lg:grid-cols-4">
+        <ChartStatsItem
+          label="Fully audited contracts"
+          tooltip="Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered."
+        >
+          {formatShare(fullyCoveredContracts, contracts)}
+          <SecondLine>
+            {formatInteger(fullyCoveredContracts)} of {formatInteger(contracts)}{' '}
+            contracts
+          </SecondLine>
+        </ChartStatsItem>
         <ChartStatsItem
           label="Ever audited"
           tooltip="Share of deployed units (contracts, interfaces, libraries) that have an audited source, identical to it or not. The rest was never audited."
@@ -44,7 +55,7 @@ export function AuditsProjectSummary({
           </SecondLine>
         </ChartStatsItem>
         <ChartStatsItem
-          label="Explore in Disco"
+          label="Explore contracts in Disco"
           tooltip="The contracts and permissions of this project, where each contract's audited and unaudited parts can be inspected."
         >
           {discoUiHref ? (
@@ -55,7 +66,6 @@ export function AuditsProjectSummary({
               className="flex w-fit items-center gap-2 whitespace-nowrap rounded bg-linear-to-r from-[#854220] to-[#DE7B16] px-3 py-1.5 font-medium text-white text-xs md:mt-1"
             >
               <DiscoUiIcon className="h-[14px] w-[67px] fill-white" />
-              <span>Open contracts</span>
               <CustomLinkIcon className="size-3.5 fill-white" />
             </a>
           ) : (

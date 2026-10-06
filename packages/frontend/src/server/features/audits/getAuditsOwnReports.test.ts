@@ -48,6 +48,19 @@ describe(parseReportDate.name, () => {
     expect(parseReportDate(null)).toEqual(undefined)
     expect(parseReportDate('soon')).toEqual(undefined)
   })
+
+  it('falls back to the month or day the id ends with', () => {
+    expect(parseReportDate(null, 'umbra/consensys-umbra-2021-03')).toEqual(
+      parseReportDate('2021-03-01'),
+    )
+    expect(parseReportDate(null, 'own/abdk-audit-2019-11-19')).toEqual(
+      parseReportDate('2019-11-19'),
+    )
+    expect(parseReportDate(null, 'own/certora-safe-1-3-0')).toEqual(undefined)
+    expect(parseReportDate('2024-03-01', 'own/x-2020-01')).toEqual(
+      parseReportDate('2024-03-01'),
+    )
+  })
 })
 
 function ref(id: string, collection: string, reportDate: string | null) {

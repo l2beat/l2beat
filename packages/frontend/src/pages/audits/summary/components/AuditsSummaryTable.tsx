@@ -7,8 +7,9 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { LineCoverageTooltipContent } from '~/components/audits/AuditCoverageBar'
-import { AuditsTimelineChart } from '~/components/audits/AuditsTimelineChart'
+import { AuditsTimelineSparkline } from '~/components/audits/AuditsTimelineSparkline'
 import { formatShare } from '~/components/audits/auditStatus'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -21,8 +22,13 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
-import { linesCoveredShare } from '~/server/features/audits/getAuditsSummaryEntries'
+// Client-safe: only coverage arithmetic, no server dependencies.
+import {
+  fullyCoveredShare,
+  linesCoveredShare,
+} from '~/server/features/audits/countFullyCoveredContracts'
 import type { AuditsSummaryEntry } from '~/server/features/audits/types'
+import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<AuditsSummaryEntry>()
 
@@ -43,18 +49,66 @@ const columns = [
   }),
   columnHelper.display({
     id: 'timeline',
-    header: 'TVS &\naudits (1Y)',
+    header: 'Audit timeline',
     cell: (ctx) => (
-      <AuditsTimelineChart
+      <AuditsTimelineSparkline
         timeline={ctx.row.original.timeline}
-        valueSource={ctx.row.original.valueSource}
+        href={`${ctx.row.original.href}#audit-timeline`}
         className="mx-auto"
       />
     ),
     meta: {
       align: 'center',
       tooltip:
-        "TVS over one year. Ticks below the baseline are the project's own audit reports; an arrow means the latest one predates the window. Heights are normalized per project.",
+        "The project's life from its launch (the circle) to today, with its own audit reports as green ticks. Click one to open the project's full timeline.",
+    },
+  }),
+  columnHelper.accessor(
+    (row) => row.timeline.criticalChangesSinceLatestAudit ?? -1,
+    {
+      id: 'upgradesSinceAudit',
+      header: 'Upgrades since\nlast audit',
+      cell: (ctx) => {
+        const count = ctx.row.original.timeline.criticalChangesSinceLatestAudit
+        return count === null ? (
+          <NotApplicableBadge />
+        ) : (
+          <span
+            className={cn('font-medium text-sm', count > 0 && 'text-negative')}
+          >
+            {formatInteger(count)}
+          </span>
+        )
+      },
+      sortDescFirst: true,
+      meta: {
+        align: 'center',
+        tooltip:
+          "Critical changes to the project's critical contracts after its latest own audit report, as tracked by ossification.",
+      },
+    },
+  ),
+  columnHelper.accessor(fullyCoveredShare, {
+    id: 'fullyCovered',
+    header: 'Fully audited\ncontracts',
+    cell: (ctx) => {
+      const { fullyCoveredContracts, contracts } = ctx.row.original
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {formatShare(fullyCoveredContracts, contracts)}
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {formatInteger(fullyCoveredContracts)} of {formatInteger(contracts)}{' '}
+            contracts
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
+    },
+    sortDescFirst: true,
+    meta: {
+      tooltip:
+        'Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered.',
     },
   }),
   columnHelper.accessor(linesCoveredShare, {
@@ -86,36 +140,12 @@ const columns = [
         'Share of deployed lines identical to audited code, across the critical contracts.',
     },
   }),
-  columnHelper.accessor('ownReportsCount', {
-    header: 'Own\naudits',
-    cell: (ctx) => (
-      <span className="font-medium text-sm">
-        {formatInteger(ctx.getValue())}
-      </span>
-    ),
-    sortDescFirst: true,
-    meta: {
-      align: 'center',
-      tooltip: "The project's own audit reports that matched deployed code.",
-    },
-  }),
-  columnHelper.accessor('sharedReportsCount', {
-    header: 'Shared\naudits',
-    cell: (ctx) => (
-      <span className="font-medium text-sm">
-        {formatInteger(ctx.getValue())}
-      </span>
-    ),
-    sortDescFirst: true,
-    meta: {
-      align: 'center',
-      tooltip:
-        'Reports of upstream code, stacks and libraries that matched deployed code.',
-    },
-  }),
 ]
 
-const initialSorting: SortingState = [{ id: 'linesCovered', desc: true }]
+const initialSorting: SortingState = [
+  { id: 'fullyCovered', desc: true },
+  { id: 'linesCovered', desc: true },
+]
 
 export function AuditsSummaryTable({
   entries,

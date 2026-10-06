@@ -1,4 +1,3 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -79,6 +78,7 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     <AuditsProjectSummary
                       coverage={details.coverage}
                       contracts={details.contracts}
+                      fullyCoveredContracts={details.fullyCoveredContracts}
                       discoUiHref={details.discoUiHref}
                     />
                   </PrimaryCard>
@@ -87,15 +87,7 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     title={SECTIONS[0].title}
                     sectionOrder="1"
                   >
-                    <AuditsTimelineSection
-                      project={{
-                        id: ProjectId(details.projectId),
-                        name: details.name,
-                        shortName: details.shortName,
-                        iconUrl: details.icon,
-                      }}
-                      timeline={details.timeline}
-                    />
+                    <AuditsTimelineSection timeline={details.timeline} />
                   </ProjectSection>
                   <ProjectSection
                     id={SECTIONS[1].id}

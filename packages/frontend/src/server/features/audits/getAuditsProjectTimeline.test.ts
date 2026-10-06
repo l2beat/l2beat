@@ -1,7 +1,11 @@
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getAuditsProjectTimeline } from './getAuditsProjectTimeline'
+import {
+  getAuditsLaunch,
+  getAuditsProjectTimeline,
+  toAuditsSummaryTimeline,
+} from './getAuditsProjectTimeline'
 import type { AuditsOwnReport } from './types'
 
 const DAY = UnixTime.DAY
@@ -33,48 +37,146 @@ describe(getAuditsProjectTimeline.name, () => {
     resets: [],
     observedSince: NOW - 700 * DAY,
   }
+  const ossification = { history, href: '/p#ossification' }
 
   it('counts the critical changes after the latest audit', () => {
     const timeline = getAuditsProjectTimeline(
-      audits,
-      { history, href: '/p#ossification' },
-      'tvs',
+      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
       NOW,
     )
     expect(timeline.hasOssification).toEqual(true)
     expect(timeline.ossificationHref).toEqual('/p#ossification')
     expect(timeline.latestAudit?.id).toEqual('b')
-    expect(timeline.latestCriticalChange).toEqual(NOW - 10 * DAY)
     expect(timeline.criticalChangesSinceLatestAudit).toEqual(2)
-    // MAX reaches back to the earliest marker.
+    expect(timeline.from).toEqual(NOW - 700 * DAY)
+    expect(timeline.to).toEqual(NOW)
+  })
+
+  it('averages the audits and upgrades over the life since the launch', () => {
+    const timeline = getAuditsProjectTimeline(
+      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      NOW,
+    )
+    expect(timeline.averageAuditInterval).toEqual(350 * DAY)
+    expect(timeline.averageUpgradeInterval).toEqual((700 * DAY) / 3)
+  })
+
+  it('averages the audits since the first one when it predates the launch', () => {
+    const timeline = getAuditsProjectTimeline(
+      { audits, sharedAudits: [], ossification, launch: NOW - 400 * DAY },
+      NOW,
+    )
+    expect(timeline.averageAuditInterval).toEqual(250 * DAY)
     expect(timeline.from).toEqual(NOW - 600 * DAY)
+  })
+
+  it('has no interval without audits', () => {
+    const timeline = getAuditsProjectTimeline(
+      { audits: [], sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      NOW,
+    )
+    expect(timeline.averageAuditInterval).toEqual(null)
+    expect(timeline.latestAudit).toEqual(null)
+    expect(timeline.criticalChangesSinceLatestAudit).toEqual(3)
   })
 
   it('shows audits alone without ossification', () => {
     const timeline = getAuditsProjectTimeline(
-      audits,
-      { history: undefined, href: '/p#ossification' },
-      null,
+      {
+        audits,
+        sharedAudits: [],
+        ossification: { history: undefined, href: '/p#ossification' },
+        launch: null,
+      },
       NOW,
     )
     expect(timeline.hasOssification).toEqual(false)
     expect(timeline.ossificationHref).toEqual(undefined)
     expect(timeline.criticalChanges).toEqual([])
     expect(timeline.criticalChangesSinceLatestAudit).toEqual(null)
+    expect(timeline.averageUpgradeInterval).toEqual(null)
     expect(timeline.from).toEqual(NOW - 500 * DAY)
   })
 
   it('never starts later than a year ago', () => {
     const timeline = getAuditsProjectTimeline(
-      [audit('recent', NOW - 30 * DAY)],
-      { history: undefined, href: undefined },
-      null,
+      {
+        audits: [audit('recent', NOW - 30 * DAY)],
+        sharedAudits: [],
+        ossification: { history: undefined, href: undefined },
+        launch: NOW - 60 * DAY,
+      },
       NOW,
     )
     expect(timeline.from).toEqual(NOW - 365 * DAY)
+  })
+
+  it('sorts the shared audits', () => {
+    const timeline = getAuditsProjectTimeline(
+      {
+        audits,
+        sharedAudits: [
+          shared('late', NOW - DAY),
+          shared('early', NOW - 9 * DAY),
+        ],
+        ossification: { history: undefined, href: undefined },
+        launch: null,
+      },
+      NOW,
+    )
+    expect(timeline.sharedAudits.map((a) => a.id)).toEqual(['early', 'late'])
+  })
+
+  it('reduces to the summary timeline', () => {
+    const timeline = getAuditsProjectTimeline(
+      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      NOW,
+    )
+    expect(toAuditsSummaryTimeline(timeline)).toEqual({
+      from: NOW - 700 * DAY,
+      to: NOW,
+      launch: NOW - 700 * DAY,
+      audits: [NOW - 500 * DAY, NOW - 100 * DAY],
+      latestAudit: NOW - 100 * DAY,
+      criticalChangesSinceLatestAudit: 2,
+    })
+  })
+})
+
+describe(getAuditsLaunch.name, () => {
+  it('prefers the ossification perimeter start', () => {
+    expect(
+      getAuditsLaunch({
+        ossificationHistory: {
+          contracts: [],
+          changes: [],
+          resets: [],
+          observedSince: 100,
+        },
+        chainConfig: { sinceTimestamp: UnixTime(50) },
+      }),
+    ).toEqual(100)
+  })
+
+  it('falls back to the chain start, then to nothing', () => {
+    expect(
+      getAuditsLaunch({ chainConfig: { sinceTimestamp: UnixTime(50) } }),
+    ).toEqual(50)
+    expect(getAuditsLaunch({})).toEqual(null)
   })
 })
 
 function audit(id: string, timestamp: number): AuditsOwnReport {
   return { id, title: id, auditor: 'A', timestamp, matched: true }
+}
+
+function shared(id: string, timestamp: number) {
+  return {
+    id,
+    title: id,
+    auditor: 'A',
+    timestamp,
+    origin: 'upstream' as const,
+    collectionName: 'Upstream',
+  }
 }
