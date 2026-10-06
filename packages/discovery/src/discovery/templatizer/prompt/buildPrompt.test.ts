@@ -46,6 +46,14 @@ describe(buildPrompt.name, () => {
     expect(first.truncated).toEqual(false)
   })
 
+  it('leaves no placeholder of the source unresolved', () => {
+    const { prompt } = buildPrompt(scrollChain())
+    expect(prompt).not.toInclude('${')
+    expect(prompt).toInclude(
+      'every view function with a single `uint256` argument has been probed at indices 0–4;',
+    )
+  })
+
   it('renders the five sections once each, in order', () => {
     const { prompt } = buildPrompt(scrollChain())
     const positions = Object.values(SECTION_HEADERS).map((header) =>
